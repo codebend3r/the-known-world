@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# brainstorming companion artifacts (local tooling state)
+.superpowers/
+
+# scraper cache (local, regeneratable)
+.cache/
