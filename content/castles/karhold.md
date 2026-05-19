@@ -12,7 +12,7 @@ sworn-houses: []
 features: []
 coords:
   x: 560
-  y: 240
+  y: 230
 sources: []
 draft: false
 ---

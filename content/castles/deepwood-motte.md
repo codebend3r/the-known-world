@@ -11,8 +11,8 @@ founded:
 sworn-houses: []
 features: []
 coords:
-  x: 220
-  y: 460
+  x: 250
+  y: 470
 sources: []
 draft: false
 ---

@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1400" preserveAspectRatio="xMidYMid meet">
+  <!--
+    Simplified Westeros placeholder. Coordinate system: 0,0 top-left,
+    800 wide × 1400 tall. North fills the top ~600, Neck pinch around
+    y=600, body of the south fills y=600..1380.
+  -->
+
+  <!-- Westeros mainland (simplified continuous coastline) -->
+  <path
+    d="
+      M 180,80
+      Q 280,68 380,72
+      L 540,72
+      Q 620,90 640,140
+      Q 660,220 680,300
+      Q 720,360 700,440
+      Q 680,520 660,560
+      Q 620,600 560,610
+      L 460,610
+      Q 420,612 400,620
+      Q 440,640 480,660
+      Q 540,680 600,720
+      Q 680,760 720,820
+      Q 760,900 740,980
+      Q 720,1020 740,1080
+      Q 760,1140 740,1200
+      Q 700,1240 660,1240
+      L 620,1240
+      Q 600,1260 640,1280
+      Q 720,1300 740,1340
+      Q 720,1370 660,1374
+      L 220,1374
+      Q 180,1370 180,1340
+      Q 200,1290 220,1240
+      Q 160,1230 140,1180
+      Q 120,1100 180,1060
+      Q 140,1020 120,960
+      Q 100,880 140,840
+      Q 180,800 180,760
+      Q 160,720 180,680
+      Q 220,640 240,620
+      Q 220,600 200,570
+      Q 180,520 180,460
+      Q 160,400 140,360
+      Q 120,300 140,240
+      Q 160,180 180,140
+      Z
+    "
+    fill="rgba(180,140,90,0.10)"
+    stroke="#6b4423"
+    stroke-width="2"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+
+  <!-- Bear Island (NW) -->
+  <path
+    d="M 70,300 Q 90,290 120,300 L 135,325 Q 130,350 105,355 L 80,345 Q 60,325 70,300 Z"
+    fill="rgba(180,140,90,0.10)" stroke="#6b4423" stroke-width="2" stroke-linejoin="round"
+  />
+
+  <!-- Iron Islands (W of mainland, cluster of 4 small landmasses) -->
+  <g fill="rgba(180,140,90,0.10)" stroke="#6b4423" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M 60,800 Q 75,790 90,800 L 95,825 Q 88,840 70,838 L 55,825 Z" />
+    <path d="M 90,860 Q 105,855 118,865 L 120,885 Q 110,895 95,890 L 85,878 Z" />
+    <path d="M 50,890 Q 65,885 78,895 L 80,910 Q 70,920 58,915 L 48,905 Z" />
+    <path d="M 85,920 Q 100,918 112,928 L 110,945 Q 98,955 85,948 L 78,935 Z" />
+  </g>
+
+  <!-- Dragonstone (small island, E of Crownlands) -->
+  <path
+    d="M 780,1020 Q 795,1015 805,1030 L 800,1050 Q 788,1058 778,1048 Z"
+    fill="rgba(180,140,90,0.10)" stroke="#6b4423" stroke-width="1.5" stroke-linejoin="round"
+  />
+
+  <!-- Shield Islands (off W coast, near Reach) -->
+  <g fill="rgba(180,140,90,0.10)" stroke="#6b4423" stroke-width="1.5" stroke-linejoin="round">
+    <path d="M 80,1180 Q 92,1176 102,1185 L 100,1198 Q 90,1205 80,1198 Z" />
+    <path d="M 60,1210 Q 72,1206 82,1216 L 80,1228 Q 68,1233 60,1226 Z" />
+    <path d="M 95,1215 Q 107,1212 115,1222 L 112,1235 Q 100,1240 92,1232 Z" />
+  </g>
+
+  <!-- The Wall (dashed line near the top) -->
+  <line x1="195" y1="115" x2="635" y2="100" stroke="#6b4423" stroke-width="3" stroke-dasharray="9 4" />
+  <text x="415" y="58" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#6b4423">Beyond the Wall</text>
+  <text x="415" y="92" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#6b4423">the Wall</text>
+
+  <!-- The Neck (narrow waist marker) -->
+  <text x="440" y="635" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#6b4423">the Neck</text>
+
+  <!-- Region labels (subtle, italic, parchment ink) -->
+  <g font-family="Georgia, serif" font-size="14" font-style="italic" fill="#6b4423" text-anchor="middle" letter-spacing="2px">
+    <text x="400" y="280">the North</text>
+    <text x="640" y="720">the Vale</text>
+    <text x="380" y="740">Riverlands</text>
+    <text x="220" y="900">Westerlands</text>
+    <text x="500" y="900">Crownlands</text>
+    <text x="380" y="1080">the Reach</text>
+    <text x="640" y="1140">Stormlands</text>
+    <text x="500" y="1300">Dorne</text>
+  </g>
+
+  <!-- Sea labels -->
+  <g font-family="Georgia, serif" font-size="11" font-style="italic" fill="#6b4423" opacity="0.7">
+    <text x="60" y="600" text-anchor="middle">Sunset Sea</text>
+    <text x="60" y="615" text-anchor="middle">↓</text>
+    <text x="755" y="500" text-anchor="middle" transform="rotate(90 755 500)">the Narrow Sea</text>
+    <text x="500" y="1395" text-anchor="middle">the Summer Sea</text>
+  </g>
+
+  <!-- Mountains: northern range -->
+  <g stroke="#6b4423" stroke-width="1" fill="none">
+    <path d="M 360,300 l 7,-9 l 7,9 M 374,300 l 7,-9 l 7,9 M 388,300 l 7,-9 l 7,9" />
+    <path d="M 460,340 l 7,-9 l 7,9 M 474,340 l 7,-9 l 7,9" />
+    <path d="M 540,380 l 7,-9 l 7,9 M 554,380 l 7,-9 l 7,9" />
+  </g>
+
+  <!-- Mountains: Vale (Mountains of the Moon) -->
+  <g stroke="#6b4423" stroke-width="1" fill="none">
+    <path d="M 580,760 l 7,-9 l 7,9 M 594,760 l 7,-9 l 7,9 M 608,760 l 7,-9 l 7,9" />
+    <path d="M 600,790 l 7,-9 l 7,9 M 614,790 l 7,-9 l 7,9" />
+  </g>
+
+  <!-- Mountains: Red Mountains (Dorne / Reach border) -->
+  <g stroke="#6b4423" stroke-width="1" fill="none">
+    <path d="M 360,1200 l 6,-8 l 6,8 M 372,1200 l 6,-8 l 6,8 M 384,1200 l 6,-8 l 6,8 M 396,1200 l 6,-8 l 6,8" />
+    <path d="M 470,1220 l 6,-8 l 6,8 M 482,1220 l 6,-8 l 6,8" />
+  </g>
+
+  <!-- Wolfswood (forest dots, west of Winterfell) -->
+  <g fill="#6b4423">
+    <circle cx="220" cy="440" r="2" />
+    <circle cx="235" cy="450" r="2" />
+    <circle cx="215" cy="465" r="2" />
+    <circle cx="245" cy="430" r="2" />
+    <circle cx="260" cy="455" r="2" />
+    <circle cx="230" cy="480" r="2" />
+    <circle cx="250" cy="480" r="2" />
+    <circle cx="270" cy="440" r="2" />
+    <circle cx="215" cy="435" r="2" />
+  </g>
+  <text x="245" y="415" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-style="italic" fill="#6b4423">wolfswood</text>
+
+  <!-- The Trident (three forks) -->
+  <g stroke="#6b4423" stroke-width="1.5" fill="none" opacity="0.55">
+    <path d="M 600,720 Q 540,750 480,770" />
+    <path d="M 580,780 Q 500,790 460,780" />
+    <path d="M 560,810 Q 500,810 470,790" />
+    <path d="M 460,780 Q 360,790 300,830" />
+  </g>
+
+  <!-- White Knife river (in the North) -->
+  <path d="M 400,440 Q 430,500 470,580" stroke="#6b4423" stroke-width="1.5" fill="none" opacity="0.5" />
+
+  <!-- Mander river (in the Reach) -->
+  <path d="M 400,1100 Q 320,1140 220,1170" stroke="#6b4423" stroke-width="1.5" fill="none" opacity="0.5" />
+
+  <!-- Compass rose (top right) -->
+  <g transform="translate(720,160)">
+    <circle r="24" fill="none" stroke="#6b4423" stroke-width="1" />
+    <path d="M 0,-20 L 5,0 L 0,20 L -5,0 Z" fill="#6b4423" />
+    <path d="M -20,0 L 0,5 L 20,0 L 0,-5 Z" fill="#6b4423" opacity="0.5" />
+    <text y="-30" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b4423">N</text>
+  </g>
+</svg>

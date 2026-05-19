@@ -31,7 +31,7 @@ export function NorthMapView({ castles }: Props) {
   return (
     <>
       <MapLayerToggle enabled={enabled} onToggle={toggle} />
-      <MapStage svgUrl="/map/north.svg">
+      <MapStage svgUrl="/map/westeros.svg">
         {visible.map((c) => (
           <MapMarker
             key={c.frontmatter.slug}

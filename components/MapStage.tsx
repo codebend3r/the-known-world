@@ -5,7 +5,7 @@ import { ReactSVGPanZoom, TOOL_AUTO, type Value } from 'react-svg-pan-zoom';
 import type { ReactNode } from 'react';
 
 const VIEWBOX_WIDTH = 800;
-const VIEWBOX_HEIGHT = 1000;
+const VIEWBOX_HEIGHT = 1400;
 
 type Props = {
   children: ReactNode;

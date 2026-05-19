@@ -16,8 +16,8 @@ features:
   - glass-gardens
   - crypt
 coords:
-  x: 440
-  y: 480
+  x: 400
+  y: 430
 sources: []
 draft: false
 ---
