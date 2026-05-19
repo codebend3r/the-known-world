@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid meet">
+  <!-- Coastline (rough placeholder for the North) -->
+  <path
+    d="M 200,40 Q 280,30 380,40 L 540,50 Q 620,80 640,140 L 660,260 Q 700,340 680,440 L 700,560 Q 720,680 700,780 L 660,860 Q 600,920 520,920 L 380,930 Q 280,920 220,860 L 180,760 Q 140,640 160,520 L 140,400 Q 120,280 150,180 L 180,80 Z"
+    fill="rgba(180,140,90,0.10)"
+    stroke="#6b4423"
+    stroke-width="2"
+    stroke-linejoin="round"
+    stroke-linecap="round"
+  />
+
+  <!-- Bear Island (separate small landmass) -->
+  <path
+    d="M 110,290 Q 130,280 160,295 L 180,320 Q 175,345 150,350 L 120,340 Q 100,320 110,290 Z"
+    fill="rgba(180,140,90,0.10)"
+    stroke="#6b4423"
+    stroke-width="2"
+    stroke-linejoin="round"
+  />
+
+  <!-- The Wall (top edge marker) -->
+  <line x1="180" y1="78" x2="640" y2="48" stroke="#6b4423" stroke-width="3" stroke-dasharray="8 4" />
+  <text x="410" y="40" text-anchor="middle" font-family="Georgia, serif" font-size="14" font-style="italic" fill="#6b4423">the Wall</text>
+
+  <!-- The Neck (bottom edge marker) -->
+  <text x="430" y="945" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-style="italic" fill="#6b4423">the Neck</text>
+
+  <!-- Mountain ranges (decorative chevrons) -->
+  <g stroke="#6b4423" stroke-width="1" fill="none">
+    <path d="M 320,260 l 8,-10 l 8,10 M 336,260 l 8,-10 l 8,10 M 352,260 l 8,-10 l 8,10" />
+    <path d="M 420,300 l 8,-10 l 8,10 M 436,300 l 8,-10 l 8,10" />
+    <path d="M 540,360 l 8,-10 l 8,10 M 556,360 l 8,-10 l 8,10" />
+  </g>
+
+  <!-- Forest (wolfswood) -->
+  <g fill="#6b4423">
+    <circle cx="200" cy="500" r="2" />
+    <circle cx="215" cy="510" r="2" />
+    <circle cx="195" cy="525" r="2" />
+    <circle cx="225" cy="490" r="2" />
+    <circle cx="240" cy="515" r="2" />
+    <circle cx="210" cy="540" r="2" />
+    <circle cx="230" cy="540" r="2" />
+    <circle cx="250" cy="500" r="2" />
+    <circle cx="195" cy="495" r="2" />
+  </g>
+  <text x="225" y="475" text-anchor="middle" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#6b4423">wolfswood</text>
+
+  <!-- White Knife river (sketched) -->
+  <path d="M 440,490 Q 460,560 480,640 Q 510,720 540,790" stroke="#6b4423" stroke-width="1.5" fill="none" opacity="0.5" />
+
+  <!-- Compass rose (top right, decorative) -->
+  <g transform="translate(620,120)">
+    <circle r="22" fill="none" stroke="#6b4423" stroke-width="1" />
+    <path d="M 0,-18 L 4,0 L 0,18 L -4,0 Z" fill="#6b4423" />
+    <text y="-26" text-anchor="middle" font-family="Georgia, serif" font-size="11" fill="#6b4423">N</text>
+  </g>
+</svg>
