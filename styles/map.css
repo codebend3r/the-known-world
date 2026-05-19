@@ -42,3 +42,45 @@
 .map-marker:focus .map-marker-label {
   opacity: 1;
 }
+
+.map-layer-toggle {
+  position: relative;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 0 auto 1rem;
+  background: var(--vellum);
+  border: 1px solid rgba(107, 68, 35, 0.4);
+  border-radius: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+}
+
+.map-layer-toggle label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--ink);
+  cursor: pointer;
+  text-transform: capitalize;
+}
+
+.map-layer-toggle input[type="checkbox"] {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid var(--ink-faded);
+  border-radius: 2px;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.map-layer-toggle input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--wax-seal);
+  border-radius: 1px;
+}
