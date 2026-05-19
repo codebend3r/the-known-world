@@ -12,39 +12,32 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  try {
-    const castle = await loadCastle(slug);
-    return {
-      title: `${castle.frontmatter.name} · Atlas of the North`,
-      description: `${castle.frontmatter.name}, ${castle.frontmatter.type} in the North.`,
-    };
-  } catch {
-    return { title: 'Not found' };
-  }
+  const castle = await loadCastle(slug).catch(() => null);
+  if (!castle) return { title: 'Not found' };
+  return {
+    title: `${castle.frontmatter.name} · Atlas of the North`,
+    description: `${castle.frontmatter.name}, ${castle.frontmatter.type} in the North.`,
+  };
 }
 
 export default async function CastlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  let castle;
-  try {
-    castle = await loadCastle(slug);
-  } catch {
-    notFound();
-  }
+  const castle = await loadCastle(slug).catch(() => null);
+  if (!castle) notFound();
 
-  const html = await renderMarkdown(castle!.body);
+  const html = await renderMarkdown(castle.body);
 
   return (
     <ParchmentLayout>
-      <h1>{castle!.frontmatter.name}</h1>
+      <h1>{castle.frontmatter.name}</h1>
       <p className="subtitle">
-        {castle!.frontmatter.type === 'castle' ? 'Castle' : castle!.frontmatter.type}
-        {castle!.frontmatter['liege-house'] && (
-          <> &middot; Seat of House {castle!.frontmatter['liege-house']}</>
+        {castle.frontmatter.type === 'castle' ? 'Castle' : castle.frontmatter.type}
+        {castle.frontmatter['liege-house'] && (
+          <> &middot; Seat of House {castle.frontmatter['liege-house']}</>
         )}
       </p>
       <article dangerouslySetInnerHTML={{ __html: html }} />
-      <Sources sources={castle!.frontmatter.sources} />
+      <Sources sources={castle.frontmatter.sources} />
     </ParchmentLayout>
   );
 }
