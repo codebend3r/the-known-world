@@ -1,0 +1,44 @@
+.map-stage {
+  width: 100%;
+  max-width: 720px;
+  margin: 1.5rem auto;
+  aspect-ratio: 4 / 5;
+  border: 1px solid rgba(107, 68, 35, 0.4);
+  border-radius: 6px;
+  background:
+    radial-gradient(ellipse at top left, rgba(180, 140, 90, 0.18), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(120, 80, 40, 0.15), transparent 60%),
+    linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment-dark) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.map-stage-inner {
+  position: absolute;
+  inset: 0;
+}
+
+.map-marker {
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.map-marker:hover {
+  transform: scale(1.4);
+}
+
+.map-marker-label {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  fill: var(--ink);
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.map-marker:hover .map-marker-label,
+.map-marker:focus .map-marker-label {
+  opacity: 1;
+}

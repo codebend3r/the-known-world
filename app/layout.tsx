@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Cinzel, EB_Garamond, Inter } from 'next/font/google';
 import '../styles/globals.css';
 import '../styles/parchment.css';
+import '../styles/map.css';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });
 const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-eb-garamond', weight: ['400', '500', '600'] });
