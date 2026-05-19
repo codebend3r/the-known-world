@@ -90,3 +90,4 @@ export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
 export type Person = z.infer<typeof PersonSchema>;
 export type Event = z.infer<typeof EventSchema>;
+export type Source = z.infer<typeof SourceSchema>;
