@@ -1,0 +1,50 @@
+.parchment-page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 2rem 6rem;
+  position: relative;
+}
+
+.parchment-page::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(80, 50, 20, 0.06) 1px, transparent 2px),
+    radial-gradient(circle at 74% 58%, rgba(80, 50, 20, 0.05) 1px, transparent 2px),
+    radial-gradient(circle at 42% 80%, rgba(80, 50, 20, 0.06) 1px, transparent 2px);
+  background-size: 90px 90px, 110px 110px, 130px 130px;
+  z-index: 0;
+}
+
+.parchment-page > * { position: relative; z-index: 1; }
+
+.subtitle {
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-faded);
+  margin-top: -0.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+}
+
+.drop-cap::first-letter {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  float: left;
+  line-height: 1;
+  padding: 0.15rem 0.5rem 0 0;
+  color: var(--ink-faded);
+  font-weight: 600;
+}
+
+.sources {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(107, 68, 35, 0.3);
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+}

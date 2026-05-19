@@ -1,0 +1,44 @@
+:root {
+  --parchment-light: #f4e4c1;
+  --parchment-dark: #e8d3a0;
+  --vellum: #f8ecd0;
+  --ink: #3d2817;
+  --ink-faded: #6b4423;
+  --wax-seal: #8b1a1a;
+  --gold-leaf: #d4a259;
+
+  --font-heading: var(--font-cinzel), Georgia, serif;
+  --font-body: var(--font-eb-garamond), Georgia, serif;
+  --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(ellipse at top left, rgba(180, 140, 90, 0.15), transparent 60%),
+    radial-gradient(ellipse at bottom right, rgba(120, 80, 40, 0.18), transparent 60%),
+    linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment-dark) 100%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+h1 { font-size: 2.2rem; font-variant: small-caps; letter-spacing: 2px; text-align: center; }
+h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(107, 68, 35, 0.3); padding-bottom: 0.3rem; }
+h3 { font-size: 1.15rem; color: var(--ink-faded); }
+
+a { color: var(--ink-faded); text-decoration: underline; text-decoration-color: rgba(107, 68, 35, 0.4); }
+a:hover { color: var(--gold-leaf); }
