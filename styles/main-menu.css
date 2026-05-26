@@ -85,3 +85,13 @@
   text-decoration: none;
   color: var(--ink-faded);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .main-menu-tile {
+    transition: none;
+  }
+  .main-menu-tile:hover,
+  .main-menu-tile:focus-visible {
+    transform: none;
+  }
+}
