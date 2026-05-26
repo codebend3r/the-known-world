@@ -23,4 +23,10 @@ describe('MainMenu', () => {
     const pills = screen.getAllByText(/coming soon/i);
     expect(pills).toHaveLength(3);
   });
+
+  it('wraps tiles in a nav landmark labelled "Atlas sections"', () => {
+    render(<MainMenu />);
+    const nav = screen.getByRole('navigation', { name: /atlas sections/i });
+    expect(nav).toBeDefined();
+  });
 });

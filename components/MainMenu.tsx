@@ -4,6 +4,7 @@ const COMPASS = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" strokeWidth="1.5" />
     <path d="M16 5 L19 17 L16 27 L13 17 Z" fill="currentColor" />
+    <path d="M5 16 L16 13 L27 16 L16 19 Z" fill="currentColor" opacity="0.5" />
   </svg>
 );
 
