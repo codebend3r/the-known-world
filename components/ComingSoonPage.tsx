@@ -11,7 +11,9 @@ export function ComingSoonPage({ title }: { title: string }) {
         This section of the atlas has not yet been transcribed.
       </p>
       <p>
-        <Link href="/">← Return to the menu</Link>
+        <Link href="/">
+          <span aria-hidden="true">← </span>Return to the menu
+        </Link>
       </p>
     </>
   );
