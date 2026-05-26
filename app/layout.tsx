@@ -9,8 +9,8 @@ const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-eb-garamo
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', weight: ['400', '500'] });
 
 export const metadata: Metadata = {
-  title: 'Atlas of the North · A Song of Ice and Fire',
-  description: 'An interactive atlas of the North in George R. R. Martin\'s world of Ice and Fire.',
+  title: 'Atlas of the Known World · A Song of Ice and Fire',
+  description: 'An interactive atlas of George R. R. Martin\'s world of Ice and Fire — map, timeline, and encyclopedia.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
