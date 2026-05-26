@@ -280,11 +280,11 @@ A separate Node.js TypeScript CLI inside the same repo (under `scripts/`). Runs 
 **Commands:**
 
 ```bash
-pnpm scrape:castle winterfell        # one castle
-pnpm scrape:house  stark             # one house (+ enumerate its known members)
-pnpm scrape:event  red-wedding       # one event
-pnpm scrape:person eddard-stark      # one person
-pnpm scrape:north  --all             # bulk-seed all known Northern entities
+bun run scrape:castle winterfell        # one castle
+bun run scrape:house  stark             # one house (+ enumerate its known members)
+bun run scrape:event  red-wedding       # one event
+bun run scrape:person eddard-stark      # one person
+bun run scrape:north  --all             # bulk-seed all known Northern entities
 ```
 
 **Mechanics:**

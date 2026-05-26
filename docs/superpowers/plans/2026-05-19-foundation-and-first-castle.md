@@ -6,7 +6,7 @@
 
 **Architecture:** Next.js (app router) with `output: 'export'` for static deployment to Netlify. Markdown frontmatter validated by zod at build time. Content loader (`gray-matter` + `remark`) parses all `.md` files in `content/`. Relation graph built once at build time, made available to pages via a small content module. No runtime backend.
 
-**Tech Stack:** Next.js 15, TypeScript, React 19, `gray-matter`, `remark`, `remark-html`, `zod`, `vitest`, `next/font`, EB Garamond + Cinzel + Inter (Google Fonts). Package manager: pnpm. Deploy: Netlify.
+**Tech Stack:** Next.js 15, TypeScript, React 19, `gray-matter`, `remark`, `remark-html`, `zod`, `vitest`, `next/font`, EB Garamond + Cinzel + Inter (Google Fonts). Package manager: bun. Deploy: Netlify.
 
 **Out of scope for this plan:** the map view, the timeline view, the houses grid, the family tree view, the scraping CLI, the PWA / service worker, OG image generation. Those each get their own plan after this lands.
 
@@ -16,7 +16,7 @@
 
 The repo `game-of-thrones-atlas` is already cloned at `/Users/snowball/Developer/git/game-of-thrones-atlas`. It currently contains only `.gitignore` and `docs/`. All paths below are relative to that directory.
 
-Tooling expected on the machine: `node` (≥ 20), `pnpm` (≥ 9), `git`. If `pnpm` is missing: `npm install -g pnpm`.
+Tooling expected on the machine: `node` (≥ 20), `bun` (≥ 1.3), `git`. If `bun` is missing: `brew install bun` (or `curl -fsSL https://bun.sh/install | bash`).
 
 ---
 
@@ -25,8 +25,8 @@ Tooling expected on the machine: `node` (≥ 20), `pnpm` (≥ 9), `git`. If `pnp
 Files created:
 
 ```
-package.json                              # pnpm manifest
-pnpm-lock.yaml                            # lockfile
+package.json                              # bun manifest
+bun.lock                                  # lockfile
 tsconfig.json                             # TS config
 next.config.mjs                           # Next.js config (static export)
 netlify.toml                              # Netlify build config
@@ -60,29 +60,28 @@ Files modified after creation: none — every file is touched exactly once in th
 ## Task 1: Initialize Next.js project
 
 **Files:**
-- Create: `package.json`, `pnpm-lock.yaml`, `tsconfig.json`, `next.config.mjs`, `app/layout.tsx`, `app/page.tsx`, `.eslintrc.json`, `postcss.config.mjs`, `public/favicon.ico`
+- Create: `package.json`, `bun.lock`, `tsconfig.json`, `next.config.mjs`, `app/layout.tsx`, `app/page.tsx`, `.eslintrc.json`, `postcss.config.mjs`, `public/favicon.ico`
 
 - [ ] **Step 1: Run the Next.js initializer in the current directory**
 
 ```bash
-pnpm create next-app@latest . \
+bun create next-app@latest . \
   --typescript \
   --eslint \
   --app \
   --no-tailwind \
   --no-src-dir \
-  --import-alias '@/*' \
-  --use-pnpm
+  --import-alias '@/*'
 ```
 
-When it asks "directory not empty, continue?" answer **Yes** (the existing `.gitignore` and `docs/` are preserved).
+When it asks "directory not empty, continue?" answer **Yes** (the existing `.gitignore` and `docs/` are preserved). If the wizard prompts for a package manager, choose **bun**.
 
-Expected: a working Next.js scaffold. The dev server starts cleanly with `pnpm dev`.
+Expected: a working Next.js scaffold. The dev server starts cleanly with `bun dev`.
 
 - [ ] **Step 2: Verify it boots**
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 Open `http://localhost:3000` and confirm the default Next.js welcome page renders. Then `Ctrl-C` to stop the server.
@@ -106,7 +105,7 @@ export default nextConfig;
 - [ ] **Step 4: Verify the static build runs**
 
 ```bash
-pnpm build
+bun run build
 ```
 
 Expected: build succeeds; `out/` directory created with HTML, JS, CSS. Sanity-check with `ls out/` (should contain `index.html`, `_next/`, etc.).
@@ -114,7 +113,7 @@ Expected: build succeeds; `out/` directory created with HTML, JS, CSS. Sanity-ch
 - [ ] **Step 5: Commit**
 
 ```bash
-git add package.json pnpm-lock.yaml tsconfig.json next.config.mjs \
+git add package.json bun.lock tsconfig.json next.config.mjs \
         .eslintrc.json postcss.config.mjs app/ public/
 git commit -m "chore: scaffold Next.js app with static export"
 ```
@@ -124,18 +123,18 @@ git commit -m "chore: scaffold Next.js app with static export"
 ## Task 2: Install runtime dependencies
 
 **Files:**
-- Modify: `package.json` (via pnpm)
+- Modify: `package.json` (via bun)
 
 - [ ] **Step 1: Install content/parsing libraries**
 
 ```bash
-pnpm add gray-matter remark remark-html zod
+bun add gray-matter remark remark-html zod
 ```
 
 - [ ] **Step 2: Install dev dependencies (testing)**
 
 ```bash
-pnpm add -D vitest @vitest/ui
+bun add -d vitest @vitest/ui
 ```
 
 - [ ] **Step 3: Verify they're in `package.json`**
@@ -149,7 +148,7 @@ Expected: all five entries present.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add package.json pnpm-lock.yaml
+git add package.json bun.lock
 git commit -m "chore: add content parsing and test dependencies"
 ```
 
@@ -197,7 +196,7 @@ Edit `package.json` so the `"scripts"` block includes:
 - [ ] **Step 3: Verify Vitest can discover (zero tests is fine)**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 Expected: "No test files found" — this is the expected pass before we write any tests.
@@ -375,7 +374,7 @@ describe('EventSchema', () => {
 - [ ] **Step 2: Run the tests — expect failure**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 Expected: all tests fail with "Cannot find module './schemas'" or similar.
@@ -482,7 +481,7 @@ export type Event = z.infer<typeof EventSchema>;
 - [ ] **Step 4: Run the tests — expect pass**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 Expected: all schema tests pass.
@@ -563,7 +562,7 @@ describe('renderMarkdown', () => {
 - [ ] **Step 3: Run — expect failure**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 Expected: content tests fail with "Cannot find module './content'".
@@ -632,7 +631,7 @@ export async function renderMarkdown(source: string): Promise<string> {
 - [ ] **Step 5: Run — expect pass**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 Expected: all schema and content tests pass.
@@ -701,7 +700,7 @@ describe('findOrphanSlugs', () => {
 - [ ] **Step 2: Run — expect failure**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 - [ ] **Step 3: Implement the graph builder**
@@ -810,7 +809,7 @@ export function findOrphanSlugs(set: ContentSet): string[] {
 - [ ] **Step 4: Run — expect pass**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 - [ ] **Step 5: Commit**
@@ -942,7 +941,7 @@ describe('renderMarkdown', () => {
 - [ ] **Step 4: Run — expect pass**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 - [ ] **Step 5: Commit**
@@ -1095,7 +1094,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 - [ ] **Step 4: Verify the dev server renders styled text**
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 Open `http://localhost:3000`. You should see the default Next.js home content rendered on a parchment background with serif fonts. (The page content is still placeholder — that's expected.) `Ctrl-C` when done.
@@ -1174,10 +1173,10 @@ export type Source = z.infer<typeof SourceSchema>;
 
 (`SourceSchema` is defined privately in the file; this line surfaces just the type. If the schema itself was named differently, match it.)
 
-- [ ] **Step 5: Run `pnpm build` to verify the project still compiles**
+- [ ] **Step 5: Run `bun run build` to verify the project still compiles**
 
 ```bash
-pnpm build
+bun run build
 ```
 
 Expected: build passes (the new components aren't used by any page yet, but their imports must resolve).
@@ -1273,7 +1272,7 @@ export default function NotFound() {
 - [ ] **Step 3: Verify in dev mode**
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 Open `http://localhost:3000/castles/winterfell` and confirm: parchment background, Cinzel headings, EB Garamond body, the Godswood and Crypts sections render with their Markdown formatting. `Ctrl-C` when done.
@@ -1281,7 +1280,7 @@ Open `http://localhost:3000/castles/winterfell` and confirm: parchment backgroun
 - [ ] **Step 4: Verify it builds statically**
 
 ```bash
-pnpm build
+bun run build
 ```
 
 Expected: build emits `out/castles/winterfell/index.html`. Sanity-check:
@@ -1344,7 +1343,7 @@ export default async function Home() {
 - [ ] **Step 2: Verify in dev mode**
 
 ```bash
-pnpm dev
+bun dev
 ```
 
 Open `http://localhost:3000` and confirm:
@@ -1359,7 +1358,7 @@ Open `http://localhost:3000` and confirm:
 - [ ] **Step 3: Verify static build**
 
 ```bash
-pnpm build
+bun run build
 ls out/
 ```
 
@@ -1383,7 +1382,7 @@ git commit -m "feat: homepage listing castles in the North"
 
 ```toml
 [build]
-  command = "pnpm build"
+  command = "bun run build"
   publish = "out"
 
 [build.environment]
@@ -1412,7 +1411,7 @@ git commit -m "chore: Netlify build config"
 - [ ] **Step 1: All tests pass**
 
 ```bash
-pnpm test
+bun run test
 ```
 
 Expected: all schema, content, and relation tests pass.
@@ -1420,7 +1419,7 @@ Expected: all schema, content, and relation tests pass.
 - [ ] **Step 2: Lint passes**
 
 ```bash
-pnpm lint
+bun run lint
 ```
 
 Expected: no errors. (Warnings about unused imports are OK if any.)
@@ -1428,7 +1427,7 @@ Expected: no errors. (Warnings about unused imports are OK if any.)
 - [ ] **Step 3: Static build succeeds**
 
 ```bash
-pnpm build
+bun run build
 ```
 
 Expected: clean build, no errors.
@@ -1451,7 +1450,7 @@ Expected:
 npx -y serve out -p 4000
 ```
 
-Open `http://localhost:4000`, navigate from the homepage to Winterfell, and confirm the page works without `pnpm dev`. This proves Netlify will be able to serve it. `Ctrl-C` when done.
+Open `http://localhost:4000`, navigate from the homepage to Winterfell, and confirm the page works without `bun dev`. This proves Netlify will be able to serve it. `Ctrl-C` when done.
 
 - [ ] **Step 6: Push to GitHub**
 
