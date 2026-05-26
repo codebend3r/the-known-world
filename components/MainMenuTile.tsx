@@ -24,7 +24,9 @@ export function MainMenuTile({
       <span className="main-menu-tile__title">{title}</span>
       <span className="main-menu-tile__subtitle">{subtitle}</span>
       {status === 'coming-soon' && (
-        <span className="main-menu-tile__pill">⊙ Coming soon</span>
+        <span className="main-menu-tile__pill" aria-hidden="true">
+          ⊙ Coming soon
+        </span>
       )}
     </Link>
   );

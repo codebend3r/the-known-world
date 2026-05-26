@@ -9,8 +9,10 @@ export default defineConfig({
     environment: 'jsdom',
     include: ['lib/**/*.test.ts', 'components/**/*.test.tsx'],
     env: {
-      // Mirror next.config.ts `trailingSlash: true` so next/link preserves
-      // trailing slashes during vitest runs.
+      // Mirror `trailingSlash: true` from next.config.ts so next/link keeps
+      // trailing slashes in jsdom tests. __NEXT_TRAILING_SLASH is an
+      // internal Next.js variable; see node_modules/next/dist/esm/build/define-env.js
+      // — it may be renamed in a future Next release.
       __NEXT_TRAILING_SLASH: '1',
     },
   },
