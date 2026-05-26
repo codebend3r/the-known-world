@@ -8,5 +8,10 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     include: ['lib/**/*.test.ts', 'components/**/*.test.tsx'],
+    env: {
+      // Mirror next.config.ts `trailingSlash: true` so next/link preserves
+      // trailing slashes during vitest runs.
+      __NEXT_TRAILING_SLASH: '1',
+    },
   },
 });
