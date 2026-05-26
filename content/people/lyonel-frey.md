@@ -1,0 +1,19 @@
+---
+slug: lyonel-frey
+name: Lyonel Frey
+born: null
+died: null
+primary-house: frey
+also-of-houses:
+  - lannister
+parents:
+  - emmon-frey
+  - genna-lannister
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Lyonel_Frey
+    license: CC-BY-SA-3.0
+draft: false
+---
+
+Second son of Emmon Frey and Genna Lannister.
