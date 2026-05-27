@@ -1,0 +1,74 @@
+/*
+ * House sigil sprite: 5 columns × 8 rows, packed left-to-right, top-to-bottom.
+ * Each cell is 273×256 in `public/sprites/house-sigils-001.png` (1365×2048 total).
+ *
+ * `background-size: 500% 800%` scales the sheet so one cell fills the box.
+ * `background-position` uses the N/(N-1)*100% trick: 0%/25%/50%/75%/100%
+ * across the 5 columns, and 0/14.2857/.../100% down the 8 rows.
+ * The size of any rendered sigil is governed by `--sigil-size` on the element.
+ */
+
+.sigil {
+  display: inline-block;
+  width: var(--sigil-size, 6rem);
+  aspect-ratio: 273 / 256;
+  background-image: url('/sprites/house-sigils-001.png');
+  background-size: 500% 800%;
+  background-repeat: no-repeat;
+}
+
+/* Row 1 — Stark · Lannister · Targaryen · Baratheon · Greyjoy */
+.sigil--stark      { background-position:   0%      0%; }
+.sigil--lannister  { background-position:  25%      0%; }
+.sigil--targaryen  { background-position:  50%      0%; }
+.sigil--baratheon  { background-position:  75%      0%; }
+.sigil--greyjoy    { background-position: 100%      0%; }
+
+/* Row 2 — Tully · Arryn · Martell · Tyrell · Bolton */
+.sigil--tully      { background-position:   0%   14.2857%; }
+.sigil--arryn      { background-position:  25%   14.2857%; }
+.sigil--martell    { background-position:  50%   14.2857%; }
+.sigil--tyrell     { background-position:  75%   14.2857%; }
+.sigil--bolton     { background-position: 100%   14.2857%; }
+
+/* Row 3 — Frey · Mormont · Umber · Karstark · Reed */
+.sigil--frey       { background-position:   0%   28.5714%; }
+.sigil--mormont    { background-position:  25%   28.5714%; }
+.sigil--umber      { background-position:  50%   28.5714%; }
+.sigil--karstark   { background-position:  75%   28.5714%; }
+.sigil--reed       { background-position: 100%   28.5714%; }
+
+/* Row 4 — Hightower · Velaryon · Tarly · Blackwood · Bracken */
+.sigil--hightower  { background-position:   0%   42.8571%; }
+.sigil--velaryon   { background-position:  25%   42.8571%; }
+.sigil--tarly      { background-position:  50%   42.8571%; }
+.sigil--blackwood  { background-position:  75%   42.8571%; }
+.sigil--bracken    { background-position: 100%   42.8571%; }
+
+/* Row 5 — Dayne · Yronwood · Royce · Corbray · Redwyne */
+.sigil--dayne      { background-position:   0%   57.1429%; }
+.sigil--yronwood   { background-position:  25%   57.1429%; }
+.sigil--royce      { background-position:  50%   57.1429%; }
+.sigil--corbray    { background-position:  75%   57.1429%; }
+.sigil--redwyne    { background-position: 100%   57.1429%; }
+
+/* Row 6 — Florent · Rowan · Oakheart · Mallister · Piper */
+.sigil--florent    { background-position:   0%   71.4286%; }
+.sigil--rowan      { background-position:  25%   71.4286%; }
+.sigil--oakheart   { background-position:  50%   71.4286%; }
+.sigil--mallister  { background-position:  75%   71.4286%; }
+.sigil--piper      { background-position: 100%   71.4286%; }
+
+/* Row 7 — Manderly · Dustin · Ryswell · Hornwood · Cerwyn */
+.sigil--manderly   { background-position:   0%   85.7143%; }
+.sigil--dustin     { background-position:  25%   85.7143%; }
+.sigil--ryswell    { background-position:  50%   85.7143%; }
+.sigil--hornwood   { background-position:  75%   85.7143%; }
+.sigil--cerwyn     { background-position: 100%   85.7143%; }
+
+/* Row 8 — Swann · Dondarrion · Caron · Estermont · Grafton */
+.sigil--swann      { background-position:   0%  100%; }
+.sigil--dondarrion { background-position:  25%  100%; }
+.sigil--caron      { background-position:  50%  100%; }
+.sigil--estermont  { background-position:  75%  100%; }
+.sigil--grafton    { background-position: 100%  100%; }

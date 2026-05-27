@@ -5,6 +5,7 @@ import '../styles/parchment.css';
 import '../styles/map.css';
 import '../styles/main-menu.css';
 import '../styles/houses.css';
+import '../styles/sigils.css';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });
 const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-eb-garamond', weight: ['400', '500', '600'] });
