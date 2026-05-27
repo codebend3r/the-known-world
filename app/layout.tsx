@@ -4,7 +4,6 @@ import '../styles/globals.css';
 import '../styles/parchment.css';
 import '../styles/map.css';
 import '../styles/main-menu.css';
-import '../styles/sigil.css';
 import '../styles/houses.css';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });

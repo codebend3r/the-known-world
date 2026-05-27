@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { loadAllHouses } from '@/lib/content';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sigil } from '@/components/Sigil';
 
 export const metadata: Metadata = {
   title: 'Houses · Atlas of the Known World',
@@ -30,12 +29,6 @@ export default async function HousesPage() {
         {sorted.map(({ frontmatter, slug }) => (
           <li key={slug} className="house-list__item">
             <Link href={`/houses/${slug}/`} className="house-list__card">
-              <Sigil
-                houseSlug={slug}
-                houseName={shortName(frontmatter.name)}
-                size="4.5rem"
-                decorative
-              />
               <span className="house-list__name">{shortName(frontmatter.name)}</span>
             </Link>
           </li>
