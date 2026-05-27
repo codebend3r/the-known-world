@@ -1,8 +1,3 @@
-export const SIGIL_SPRITE_URL = '/sprites/sigils.webp';
-export const SIGIL_SPRITE_COLS = 5;
-export const SIGIL_SPRITE_ROWS = 8;
-export const SIGIL_CELL_ASPECT_RATIO = '229 / 256';
-
 const SIGIL_ORDER: readonly string[] = [
   'stark',     'lannister', 'targaryen', 'baratheon', 'greyjoy',
   'tully',     'arryn',     'martell',   'tyrell',    'bolton',
@@ -14,22 +9,10 @@ const SIGIL_ORDER: readonly string[] = [
   'swann',     'dondarrion','caron',     'estermont', 'grafton',
 ];
 
-export interface SigilCell {
-  col: number;
-  row: number;
+export function hasSigil(houseSlug: string): boolean {
+  return SIGIL_ORDER.includes(houseSlug);
 }
 
-export function getSigilCell(houseSlug: string): SigilCell | null {
-  const index = SIGIL_ORDER.indexOf(houseSlug);
-  if (index === -1) return null;
-  return {
-    col: index % SIGIL_SPRITE_COLS,
-    row: Math.floor(index / SIGIL_SPRITE_COLS),
-  };
-}
-
-export function getSigilBackgroundPosition(cell: SigilCell): string {
-  const x = (cell.col / (SIGIL_SPRITE_COLS - 1)) * 100;
-  const y = (cell.row / (SIGIL_SPRITE_ROWS - 1)) * 100;
-  return `${x}% ${y}%`;
+export function getSigilSrc(houseSlug: string): string {
+  return `/sprites/sigils/${houseSlug}.webp`;
 }

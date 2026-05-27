@@ -1,4 +1,4 @@
-import { getSigilCell, getSigilBackgroundPosition } from '@/lib/sigils';
+import { hasSigil, getSigilSrc } from '@/lib/sigils';
 
 interface SigilProps {
   houseSlug: string;
@@ -15,22 +15,20 @@ export function Sigil({
   className,
   decorative = false,
 }: SigilProps) {
-  const cell = getSigilCell(houseSlug);
-  if (!cell) return null;
+  if (!hasSigil(houseSlug)) return null;
 
-  const width = typeof size === 'number' ? `${size}px` : size;
+  const height = typeof size === 'number' ? `${size}px` : size;
   const classes = ['sigil', className].filter(Boolean).join(' ');
 
   return (
-    <span
+    // eslint-disable-next-line @next/next/no-img-element -- static export with `images.unoptimized`; sigils have per-house intrinsic dimensions
+    <img
       className={classes}
-      role={decorative ? 'presentation' : 'img'}
-      aria-label={decorative ? undefined : `Sigil of House ${houseName}`}
+      src={getSigilSrc(houseSlug)}
+      alt={decorative ? '' : `Sigil of House ${houseName}`}
+      role={decorative ? 'presentation' : undefined}
       aria-hidden={decorative || undefined}
-      style={{
-        width,
-        backgroundPosition: getSigilBackgroundPosition(cell),
-      }}
+      style={{ height }}
     />
   );
 }
