@@ -106,6 +106,96 @@
   opacity: 0.7;
 }
 
+.header-search {
+  position: relative;
+  width: min(420px, 100%);
+}
+
+.header-search__input {
+  width: 100%;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  padding: 0.5rem 0.85rem;
+  background: rgba(248, 236, 208, 0.55);
+  color: var(--ink);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.header-search__input::placeholder {
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.header-search__input:focus,
+.header-search__input:focus-visible {
+  border-color: var(--gold-leaf);
+  background: rgba(248, 236, 208, 0.9);
+  box-shadow: 0 0 0 2px rgba(212, 162, 89, 0.18);
+}
+
+.header-search__results {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  list-style: none;
+  margin: 0;
+  padding: 0.25rem 0;
+  background: var(--vellum);
+  border: 1px solid rgba(107, 68, 35, 0.3);
+  border-radius: 2px;
+  box-shadow: 0 6px 22px rgba(40, 25, 10, 0.18);
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.header-search__option {
+  margin: 0;
+}
+
+.header-search__option--active {
+  background: rgba(212, 162, 89, 0.18);
+}
+
+.header-search__link {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.header-search__link:hover,
+.header-search__link:focus-visible {
+  background: rgba(212, 162, 89, 0.22);
+  color: var(--ink);
+  outline: none;
+}
+
+.header-search__name {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.2;
+}
+
+.header-search__kind {
+  flex: 0 0 auto;
+  font-family: var(--font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+}
+
 @media (max-width: 480px) {
   .site-header__inner {
     padding: 1.1rem 1rem 0.9rem;
@@ -122,10 +212,14 @@
   .site-header__separator {
     margin: 0;
   }
+  .header-search {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-header__link {
+  .site-header__link,
+  .header-search__input {
     transition: none;
   }
 }

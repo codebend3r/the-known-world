@@ -4,6 +4,7 @@ import { SiteHeader } from './SiteHeader';
 
 vi.mock('next/navigation', () => ({
   usePathname: () => '/houses/',
+  useRouter: () => ({ push: vi.fn() }),
 }));
 
 describe('SiteHeader', () => {
