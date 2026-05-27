@@ -10,6 +10,7 @@ import {
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sources } from '@/components/Sources';
 import { FamilyTree } from '@/components/FamilyTree';
+import { Sigil } from '@/components/Sigil';
 import { buildFamilyTree } from '@/lib/family-tree';
 import type { House } from '@/lib/schemas';
 
@@ -61,6 +62,14 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
 
   return (
     <ParchmentLayout>
+      <div className="house-detail__crest">
+        <Sigil
+          houseSlug={slug}
+          houseName={house.frontmatter.name.replace(/^House\s+/i, '')}
+          size="9rem"
+          decorative
+        />
+      </div>
       <h1>{house.frontmatter.name}</h1>
       <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
 
