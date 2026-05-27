@@ -3,14 +3,14 @@ import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { ComingSoonPage } from '@/components/ComingSoonPage';
 
 export const metadata: Metadata = {
-  title: 'Map · Atlas of the Known World',
-  description: 'The Map section of the atlas — coming soon.',
+  title: 'Maps · Atlas of the Known World',
+  description: 'The Maps section of the atlas — coming soon.',
 };
 
-export default function MapPage() {
+export default function MapsPage() {
   return (
     <ParchmentLayout>
-      <ComingSoonPage title="Map" />
+      <ComingSoonPage title="Maps" />
     </ParchmentLayout>
   );
 }

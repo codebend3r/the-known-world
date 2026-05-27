@@ -1,0 +1,131 @@
+.site-header {
+  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  background:
+    linear-gradient(180deg, rgba(248, 236, 208, 0.55) 0%, rgba(232, 211, 160, 0.25) 100%);
+  position: relative;
+}
+
+.site-header::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gold-leaf) 18%,
+    var(--gold-leaf) 82%,
+    transparent 100%
+  );
+  opacity: 0.65;
+}
+
+.site-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.4rem 2rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-header__title-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+.site-header__title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: 6px;
+  color: var(--ink);
+  text-align: center;
+  line-height: 1;
+}
+
+.site-header__title-link:hover .site-header__title,
+.site-header__title-link:focus-visible .site-header__title {
+  color: var(--gold-leaf);
+}
+
+.site-header__nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+
+.site-header__nav-item {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+}
+
+.site-header__link {
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 3px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink-faded);
+  text-decoration: none;
+  padding: 0.3rem 0.9rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.site-header__link:hover,
+.site-header__link:focus-visible {
+  color: var(--gold-leaf);
+  border-bottom-color: var(--gold-leaf);
+}
+
+.site-header__link--active {
+  color: var(--ink);
+  border-bottom-color: var(--gold-leaf);
+}
+
+.site-header__separator {
+  display: inline-block;
+  color: var(--gold-leaf);
+  font-size: 0.55rem;
+  margin: 0 0.1rem;
+  opacity: 0.7;
+}
+
+@media (max-width: 480px) {
+  .site-header__inner {
+    padding: 1.1rem 1rem 0.9rem;
+  }
+  .site-header__title {
+    font-size: 1.5rem;
+    letter-spacing: 4px;
+  }
+  .site-header__link {
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    padding: 0.25rem 0.55rem;
+  }
+  .site-header__separator {
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header__link {
+    transition: none;
+  }
+}

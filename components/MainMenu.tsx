@@ -52,10 +52,10 @@ export function MainMenu() {
   return (
     <nav className="main-menu" aria-label="Atlas sections">
       <MainMenuTile
-        title="Map"
+        title="Maps"
         subtitle="Survey the realm."
         glyph={COMPASS}
-        href="/map/"
+        href="/maps/"
         status="coming-soon"
       />
       <MainMenuTile
