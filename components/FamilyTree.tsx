@@ -1,0 +1,82 @@
+import type { TreeNode } from '@/lib/family-tree';
+
+function formatLifespan(node: TreeNode): string | null {
+  if (node.born === null && node.died === null) return null;
+  const b = node.born === null ? '?' : String(node.born);
+  const d = node.died === null ? '' : String(node.died);
+  return d ? `${b}–${d}` : `${b}–`;
+}
+
+function PersonLabel({ node }: { node: TreeNode }) {
+  const lifespan = formatLifespan(node);
+  return (
+    <span className="family-tree__person">
+      <span
+        className={
+          'family-tree__name' +
+          (node.placeholder ? ' family-tree__name--placeholder' : '') +
+          (node.external ? ' family-tree__name--external' : '')
+        }
+      >
+        {node.name}
+      </span>
+      {lifespan && <span className="family-tree__lifespan">{lifespan}</span>}
+    </span>
+  );
+}
+
+function NodeRow({ node }: { node: TreeNode }) {
+  return (
+    <div className="family-tree__row">
+      <PersonLabel node={node} />
+      {node.spouses.map((spouse) => (
+        <span key={spouse.slug ?? spouse.name} className="family-tree__spouse">
+          <span className="family-tree__cross" aria-hidden="true">
+            ⚭
+          </span>
+          <span
+            className={
+              'family-tree__name family-tree__name--spouse' +
+              (spouse.placeholder ? ' family-tree__name--placeholder' : '') +
+              (!spouse.inHouse ? ' family-tree__name--external' : '')
+            }
+          >
+            {spouse.name}
+          </span>
+        </span>
+      ))}
+    </div>
+  );
+}
+
+function Branch({ node }: { node: TreeNode }) {
+  return (
+    <li className="family-tree__node">
+      <NodeRow node={node} />
+      {node.children.length > 0 && (
+        <ul className="family-tree__children">
+          {node.children.map((child) => (
+            <Branch key={child.slug} node={child} />
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+}
+
+export function FamilyTree({ roots }: { roots: TreeNode[] }) {
+  if (roots.length === 0) {
+    return (
+      <p className="family-tree__empty">
+        No members of this house have yet been recorded.
+      </p>
+    );
+  }
+  return (
+    <ul className="family-tree">
+      {roots.map((root) => (
+        <Branch key={root.slug} node={root} />
+      ))}
+    </ul>
+  );
+}
