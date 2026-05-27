@@ -88,6 +88,7 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 | `/` | live | Atlas main menu (Map · Timeline · Encyclopedia · Houses) |
 | `/houses/` | live | A–Z list of houses, alphabetized by short name |
 | `/houses/[slug]/` | live | Per-house page: words, seat link, sigil, founded, status, body, family tree |
+| `/people/` | live | A–Z list of people (sigil + name), sorted by first name |
 | `/castles/[slug]/` | live | Per-castle page |
 | `/the-north/` | live | Pan/zoom map of the North with layer toggle |
 | `/map/` | stub | Coming soon |

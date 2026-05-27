@@ -1,0 +1,43 @@
+.people-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 800px) {
+  .people-list {
+    --bleed-max: 1840px;
+    --bleed-width: min(100vw - 3rem, var(--bleed-max));
+    width: var(--bleed-width);
+    margin-left: calc((100% - var(--bleed-width)) / 2);
+  }
+}
+
+.people-list__item {
+  margin: 0;
+}
+
+.people-list__card {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-height: 4.5rem;
+  padding: 0.75rem 1rem;
+  background: var(--vellum);
+  border: 1px solid rgba(107, 68, 35, 0.2);
+  border-radius: 2px;
+  color: var(--ink);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+.people-list__name {
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
