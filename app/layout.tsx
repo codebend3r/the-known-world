@@ -7,10 +7,9 @@ import '../styles/map.css';
 import '../styles/main-menu.css';
 import '../styles/houses.css';
 import '../styles/people.css';
+import '../styles/list-search.css';
 import '../styles/sigils.css';
 import { SiteHeader } from '@/components/SiteHeader';
-import { loadAllHouses, loadAllPeople } from '@/lib/content';
-import { buildSearchIndex } from '@/lib/search-index';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });
 const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-eb-garamond', weight: ['400', '500', '600'] });
@@ -21,13 +20,11 @@ export const metadata: Metadata = {
   description: 'An interactive atlas of George R. R. Martin\'s world of Ice and Fire — map, timeline, and encyclopedia.',
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [houses, people] = await Promise.all([loadAllHouses(), loadAllPeople()]);
-  const searchEntries = buildSearchIndex(houses, people);
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${cinzel.variable} ${ebGaramond.variable} ${inter.variable}`}>
       <body>
-        <SiteHeader searchEntries={searchEntries} />
+        <SiteHeader />
         {children}
       </body>
     </html>

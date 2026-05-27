@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { loadAllPeople } from '@/lib/content';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sigil } from '@/components/Sigil';
+import { FilteredPeopleList, type PersonItem } from '@/components/FilteredPeopleList';
 
 export const metadata: Metadata = {
   title: 'People · Atlas of the Known World',
@@ -10,12 +10,14 @@ export const metadata: Metadata = {
 
 export default async function PeoplePage() {
   const people = await loadAllPeople();
-  const visible = people.filter(
-    (p) => !p.frontmatter.draft && !p.frontmatter.placeholder,
-  );
-  const sorted = [...visible].sort((a, b) =>
-    a.frontmatter.name.localeCompare(b.frontmatter.name),
-  );
+  const items: PersonItem[] = people
+    .filter((p) => !p.frontmatter.draft && !p.frontmatter.placeholder)
+    .map((p) => ({
+      slug: p.frontmatter.slug,
+      name: p.frontmatter.name,
+      primaryHouseSlug: p.frontmatter['primary-house'],
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <ParchmentLayout>
@@ -23,21 +25,7 @@ export default async function PeoplePage() {
       <p className="subtitle">
         The characters of the Known World, listed alphabetically.
       </p>
-      <ul className="people-list">
-        {sorted.map(({ frontmatter, slug }) => (
-          <li key={slug} className="people-list__item">
-            <div className="people-list__card">
-              <Sigil
-                slug={frontmatter['primary-house']}
-                name={frontmatter.name}
-                size="3.25rem"
-                decorative
-              />
-              <span className="people-list__name">{frontmatter.name}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <FilteredPeopleList items={items} />
     </ParchmentLayout>
   );
 }
