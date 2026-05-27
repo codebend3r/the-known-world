@@ -1,7 +1,7 @@
 export const SIGIL_SPRITE_URL = '/sprites/sigil.webp';
 export const SIGIL_SPRITE_COLS = 5;
 export const SIGIL_SPRITE_ROWS = 8;
-export const SIGIL_CELL_ASPECT_RATIO = '273 / 256';
+export const SIGIL_CELL_ASPECT_RATIO = '260 / 280';
 
 const SIGIL_ORDER: readonly string[] = [
   'stark',     'lannister', 'targaryen', 'baratheon', 'greyjoy',
