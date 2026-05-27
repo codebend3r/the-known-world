@@ -91,7 +91,7 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 | `/houses/` | live | A–Z list of houses, alphabetized by short name |
 | `/houses/[slug]/` | live | Per-house page: words, seat link, sigil, founded, status, body, family tree |
 | `/characters/` | live | A–Z list of characters (sigil + name) with debounced filter |
-| `/characters/[slug]/` | stub | Per-character page — placeholder body, full content TBD |
+| `/characters/[slug]/` | live | Per-character page: sigil, born/died, primary house link, titles, body, linked family |
 | `/castles/[slug]/` | live | Per-castle page |
 | `/the-north/` | live | Pan/zoom map of the North with layer toggle |
 | `/map/` | stub | Coming soon |
