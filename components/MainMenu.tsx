@@ -32,6 +32,22 @@ const BOOK = (
   </svg>
 );
 
+const SIGIL = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <path
+      d="M16 3 L27 8 V17 C27 22 22 26 16 29 C10 26 5 22 5 17 V8 Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M16 11 L18 15 L22 15 L19 18 L20 22 L16 20 L12 22 L13 18 L10 15 L14 15 Z"
+      fill="currentColor"
+      opacity="0.7"
+    />
+  </svg>
+);
+
 export function MainMenu() {
   return (
     <nav className="main-menu" aria-label="Atlas sections">
@@ -55,6 +71,12 @@ export function MainMenu() {
         glyph={BOOK}
         href="/encyclopedia/"
         status="coming-soon"
+      />
+      <MainMenuTile
+        title="Houses"
+        subtitle="Read the rolls of the great houses."
+        glyph={SIGIL}
+        href="/houses/"
       />
     </nav>
   );
