@@ -2,18 +2,9 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
-  gap: 1rem;
-}
-
-@media (min-width: 800px) {
-  .people-list {
-    --bleed-max: 1840px;
-    --bleed-width: min(100vw - 3rem, var(--bleed-max));
-    width: var(--bleed-width);
-    margin-left: calc((100% - var(--bleed-width)) / 2);
-  }
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 .people-list__item {
