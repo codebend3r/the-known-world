@@ -1,7 +1,7 @@
 .sigil {
   display: inline-block;
   aspect-ratio: 229 / 256;
-  background-color: var(--parchment-light);
+  background-color: transparent;
   background-image: url('/sprites/sigils.webp');
   background-repeat: no-repeat;
   background-size: 500% 800%;
