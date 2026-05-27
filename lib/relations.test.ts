@@ -21,7 +21,7 @@ describe('buildRelationGraph', () => {
     const houses = [
       house({ slug: 'stark', name: 'House Stark', seat: 'winterfell', liege: null, words: '', sigil: { description: '' }, founded: starkFounded, status: 'extant', 'sworn-from': ['karstark'], 'cadet-houses': [], sources: [] }),
     ];
-    const graph = buildRelationGraph({ castles, houses, people: [], events: [] });
+    const graph = buildRelationGraph({ castles, houses, characters: [], events: [] });
     expect(graph.castleByHouse.get('stark')).toEqual(['winterfell']);
     expect(graph.houseBySeat.get('winterfell')).toBe('stark');
   });
@@ -35,7 +35,7 @@ describe('findOrphanSlugs', () => {
     const houses = [
       house({ slug: 'stark', name: 'House Stark', seat: 'winterfell', liege: null, words: '', sigil: { description: '' }, founded: starkFounded, status: 'extant', 'sworn-from': [], 'cadet-houses': [], sources: [] }),
     ];
-    const orphans = findOrphanSlugs({ castles, houses, people: [], events: [] });
+    const orphans = findOrphanSlugs({ castles, houses, characters: [], events: [] });
     expect(orphans).toContain('ghostvale');
   });
 
@@ -46,7 +46,7 @@ describe('findOrphanSlugs', () => {
     const castles = [
       castle({ slug: 'winterfell', name: 'Winterfell', type: 'castle', 'liege-house': 'stark', 'sworn-houses': [], coords: winterfellCoords, sources: [] }),
     ];
-    const orphans = findOrphanSlugs({ castles, houses, people: [], events: [] });
+    const orphans = findOrphanSlugs({ castles, houses, characters: [], events: [] });
     expect(orphans).toHaveLength(0);
   });
 });

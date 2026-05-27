@@ -51,7 +51,7 @@ export const HouseSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-export const PersonSchema = z.object({
+export const CharacterSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
   born: DateSchema.nullable(),
@@ -88,6 +88,6 @@ export const EventSchema = z.object({
 
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
-export type Person = z.infer<typeof PersonSchema>;
+export type Character = z.infer<typeof CharacterSchema>;
 export type Event = z.infer<typeof EventSchema>;
 export type Source = z.infer<typeof SourceSchema>;

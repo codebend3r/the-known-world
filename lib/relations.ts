@@ -1,18 +1,18 @@
-import type { Castle, House, Person, Event } from './schemas';
+import type { Castle, House, Character, Event } from './schemas';
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 export interface ContentSet {
   castles: Array<Loaded<Castle>>;
   houses: Array<Loaded<House>>;
-  people: Array<Loaded<Person>>;
+  characters: Array<Loaded<Character>>;
   events: Array<Loaded<Event>>;
 }
 
 export interface RelationGraph {
   castleByHouse: Map<string, string[]>;     // house slug → castle slugs whose liege-house is this house
   houseBySeat: Map<string, string>;         // castle slug → house slug whose seat is this castle
-  membersByHouse: Map<string, string[]>;    // house slug → person slugs whose primary-house is this house
+  membersByHouse: Map<string, string[]>;    // house slug → character slugs whose primary-house is this house
   eventsByLocation: Map<string, string[]>;  // castle slug → event slugs located there
 }
 
@@ -35,10 +35,10 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
     houseBySeat.set(house.frontmatter.seat, house.frontmatter.slug);
   }
 
-  for (const person of set.people) {
-    const houseSlug = person.frontmatter['primary-house'];
+  for (const character of set.characters) {
+    const houseSlug = character.frontmatter['primary-house'];
     const existing = membersByHouse.get(houseSlug) ?? [];
-    existing.push(person.frontmatter.slug);
+    existing.push(character.frontmatter.slug);
     membersByHouse.set(houseSlug, existing);
   }
 
@@ -58,7 +58,7 @@ export function findOrphanSlugs(set: ContentSet): string[] {
   const allSlugs = new Set<string>([
     ...set.castles.map((c) => c.frontmatter.slug),
     ...set.houses.map((h) => h.frontmatter.slug),
-    ...set.people.map((p) => p.frontmatter.slug),
+    ...set.characters.map((p) => p.frontmatter.slug),
     ...set.events.map((e) => e.frontmatter.slug),
   ]);
 
@@ -74,11 +74,11 @@ export function findOrphanSlugs(set: ContentSet): string[] {
     for (const s of house.frontmatter['sworn-from']) referenced.add(s);
     for (const s of house.frontmatter['cadet-houses']) referenced.add(s);
   }
-  for (const person of set.people) {
-    referenced.add(person.frontmatter['primary-house']);
-    for (const s of person.frontmatter.parents) referenced.add(s);
-    for (const s of person.frontmatter.spouses) referenced.add(s);
-    for (const s of person.frontmatter.children) referenced.add(s);
+  for (const character of set.characters) {
+    referenced.add(character.frontmatter['primary-house']);
+    for (const s of character.frontmatter.parents) referenced.add(s);
+    for (const s of character.frontmatter.spouses) referenced.add(s);
+    for (const s of character.frontmatter.children) referenced.add(s);
   }
   for (const event of set.events) {
     if (typeof event.frontmatter.location === 'string') referenced.add(event.frontmatter.location);

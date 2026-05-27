@@ -6,7 +6,7 @@ import '../styles/site-header.css';
 import '../styles/map.css';
 import '../styles/main-menu.css';
 import '../styles/houses.css';
-import '../styles/people.css';
+import '../styles/characters.css';
 import '../styles/list-search.css';
 import '../styles/sigils.css';
 import { SiteHeader } from '@/components/SiteHeader';

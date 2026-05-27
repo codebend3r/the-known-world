@@ -1,4 +1,4 @@
-import type { Person } from './schemas';
+import type { Character } from './schemas';
 
 export interface TreeSpouse {
   slug: string | null;
@@ -19,13 +19,13 @@ export interface TreeNode {
   children: TreeNode[];
 }
 
-type LoadedPerson = { frontmatter: Person; body: string; slug: string };
+type LoadedCharacter = { frontmatter: Character; body: string; slug: string };
 
-function birthYear(p: Person): number | null {
+function birthYear(p: Character): number | null {
   return p.born ? p.born.year : null;
 }
 
-function deathYear(p: Person): number | null {
+function deathYear(p: Character): number | null {
   return p.died ? p.died.year : null;
 }
 
@@ -33,7 +33,7 @@ function uniq<T>(items: T[]): T[] {
   return Array.from(new Set(items));
 }
 
-function compareRoots(a: Person, b: Person): number {
+function compareRoots(a: Character, b: Character): number {
   if (a.placeholder !== b.placeholder) return a.placeholder ? 1 : -1;
   const ay = birthYear(a);
   const by = birthYear(b);
@@ -43,7 +43,7 @@ function compareRoots(a: Person, b: Person): number {
   return a.name.localeCompare(b.name);
 }
 
-export function buildFamilyTree(houseSlug: string, people: LoadedPerson[]): TreeNode[] {
+export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): TreeNode[] {
   const peopleBySlug = new Map(people.map((p) => [p.frontmatter.slug, p.frontmatter]));
   const housePeople = people
     .map((p) => p.frontmatter)

@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { buildFamilyTree, type TreeNode } from './family-tree';
-import { PersonSchema } from './schemas';
+import { CharacterSchema } from './schemas';
 
-type PersonInput = Parameters<typeof PersonSchema.parse>[0];
+type CharacterInput = Parameters<typeof CharacterSchema.parse>[0];
 
-function person(data: PersonInput) {
-  const fm = PersonSchema.parse(data);
+function character(data: CharacterInput) {
+  const fm = CharacterSchema.parse(data);
   return { frontmatter: fm, body: '', slug: fm.slug };
 }
 
@@ -23,7 +23,7 @@ function findNode(roots: TreeNode[], slug: string): TreeNode | null {
 describe('buildFamilyTree', () => {
   it('returns no roots when no person belongs to the house', () => {
     const people = [
-      person({
+      character({
         slug: 'jon-stark', name: 'Jon Stark', born: null, died: null,
         'primary-house': 'stark', parents: [], spouses: [], children: [],
       }),
@@ -33,7 +33,7 @@ describe('buildFamilyTree', () => {
 
   it('treats a person as a root when their parents are not in the house', () => {
     const people = [
-      person({
+      character({
         slug: 'gerold', name: 'Gerold', born: null, died: null,
         'primary-house': 'lannister', parents: [], spouses: [], children: [],
       }),
@@ -45,11 +45,11 @@ describe('buildFamilyTree', () => {
 
   it('nests children under their in-house parent', () => {
     const people = [
-      person({
+      character({
         slug: 'tytos', name: 'Tytos', born: { year: 220, era: 'AC', precision: 'year' }, died: null,
         'primary-house': 'lannister', parents: [], spouses: [], children: ['tywin'],
       }),
-      person({
+      character({
         slug: 'tywin', name: 'Tywin', born: { year: 242, era: 'AC', precision: 'year' }, died: null,
         'primary-house': 'lannister', parents: ['tytos'], spouses: [], children: [],
       }),
@@ -63,15 +63,15 @@ describe('buildFamilyTree', () => {
 
   it('renders an in-house spouse inline and does not duplicate them as a root', () => {
     const people = [
-      person({
+      character({
         slug: 'jaehaerys', name: 'Jaehaerys', born: { ...baseDate, year: 225 }, died: null,
         'primary-house': 'targaryen', parents: [], spouses: ['shaera'], children: ['aerys'],
       }),
-      person({
+      character({
         slug: 'shaera', name: 'Shaera', born: { ...baseDate, year: 226 }, died: null,
         'primary-house': 'targaryen', parents: [], spouses: ['jaehaerys'], children: ['aerys'],
       }),
-      person({
+      character({
         slug: 'aerys', name: 'Aerys', born: { ...baseDate, year: 244 }, died: null,
         'primary-house': 'targaryen', parents: ['jaehaerys', 'shaera'], spouses: [], children: [],
       }),
@@ -86,16 +86,16 @@ describe('buildFamilyTree', () => {
 
   it('renders an out-of-house spouse inline without consuming them as a root', () => {
     const people = [
-      person({
+      character({
         slug: 'tytos', name: 'Tytos', born: null, died: null,
         'primary-house': 'lannister', parents: [], spouses: ['jeyne'], children: ['tywin'],
       }),
-      person({
+      character({
         slug: 'jeyne', name: 'Jeyne Marbrand', born: null, died: null,
         'primary-house': 'marbrand', 'also-of-houses': ['lannister'],
         parents: [], spouses: ['tytos'], children: ['tywin'],
       }),
-      person({
+      character({
         slug: 'tywin', name: 'Tywin', born: null, died: null,
         'primary-house': 'lannister', parents: ['tytos', 'jeyne'], spouses: [], children: [],
       }),
@@ -109,15 +109,15 @@ describe('buildFamilyTree', () => {
 
   it('renders out-of-house children as external leaves with no recursion', () => {
     const people = [
-      person({
+      character({
         slug: 'cersei', name: 'Cersei', born: null, died: null,
         'primary-house': 'lannister', parents: [], spouses: ['robert'], children: ['joffrey'],
       }),
-      person({
+      character({
         slug: 'robert', name: 'Robert Baratheon', born: null, died: null,
         'primary-house': 'baratheon', parents: [], spouses: ['cersei'], children: ['joffrey'],
       }),
-      person({
+      character({
         slug: 'joffrey', name: 'Joffrey', born: null, died: null,
         'primary-house': 'baratheon', parents: ['robert', 'cersei'], spouses: [], children: ['phantom'],
       }),
@@ -132,33 +132,33 @@ describe('buildFamilyTree', () => {
 
   it('does not render the same person twice across siblings', () => {
     const people = [
-      person({
+      character({
         slug: 'gerold', name: 'Gerold', born: null, died: null,
         'primary-house': 'lannister', parents: [], spouses: ['unknown'], children: ['tytos', 'father-of-joanna'],
       }),
-      person({
+      character({
         slug: 'unknown', name: 'Unknown', born: null, died: null,
         'primary-house': 'lannister', parents: [], spouses: ['gerold'], children: ['tytos', 'father-of-joanna'],
         placeholder: true, 'placeholder-reason': 'unnamed',
       }),
-      person({
+      character({
         slug: 'tytos', name: 'Tytos', born: { ...baseDate, year: 220 }, died: null,
         'primary-house': 'lannister', parents: ['gerold', 'unknown'], spouses: ['jeyne'], children: ['tywin'],
       }),
-      person({
+      character({
         slug: 'jeyne', name: 'Jeyne Marbrand', born: null, died: null,
         'primary-house': 'marbrand', parents: [], spouses: ['tytos'], children: ['tywin'],
       }),
-      person({
+      character({
         slug: 'father-of-joanna', name: 'Unknown', born: null, died: null,
         'primary-house': 'lannister', parents: ['gerold', 'unknown'], spouses: [], children: ['joanna'],
         placeholder: true, 'placeholder-reason': 'unnamed',
       }),
-      person({
+      character({
         slug: 'tywin', name: 'Tywin', born: { ...baseDate, year: 242 }, died: null,
         'primary-house': 'lannister', parents: ['tytos', 'jeyne'], spouses: ['joanna'], children: [],
       }),
-      person({
+      character({
         slug: 'joanna', name: 'Joanna', born: { ...baseDate, year: 245 }, died: null,
         'primary-house': 'lannister', parents: ['father-of-joanna'], spouses: ['tywin'], children: [],
       }),

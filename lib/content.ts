@@ -3,14 +3,14 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
-import { CastleSchema, HouseSchema, PersonSchema, EventSchema, type Castle, type House, type Person, type Event } from './schemas';
+import { CastleSchema, HouseSchema, CharacterSchema, EventSchema, type Castle, type House, type Character, type Event } from './schemas';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 async function loadFile<T>(
-  type: 'castles' | 'houses' | 'people' | 'events',
+  type: 'castles' | 'houses' | 'characters' | 'events',
   slug: string,
   schema: { parse: (input: unknown) => T },
 ): Promise<Loaded<T>> {
@@ -22,7 +22,7 @@ async function loadFile<T>(
 }
 
 async function loadAll<T>(
-  type: 'castles' | 'houses' | 'people' | 'events',
+  type: 'castles' | 'houses' | 'characters' | 'events',
   schema: { parse: (input: unknown) => T },
 ): Promise<Array<Loaded<T>>> {
   const dir = path.join(CONTENT_ROOT, type);
@@ -40,12 +40,12 @@ async function loadAll<T>(
 
 export const loadCastle = (slug: string) => loadFile<Castle>('castles', slug, CastleSchema);
 export const loadHouse = (slug: string) => loadFile<House>('houses', slug, HouseSchema);
-export const loadPerson = (slug: string) => loadFile<Person>('people', slug, PersonSchema);
+export const loadCharacter = (slug: string) => loadFile<Character>('characters', slug, CharacterSchema);
 export const loadEvent = (slug: string) => loadFile<Event>('events', slug, EventSchema);
 
 export const loadAllCastles = () => loadAll<Castle>('castles', CastleSchema);
 export const loadAllHouses = () => loadAll<House>('houses', HouseSchema);
-export const loadAllPeople = () => loadAll<Person>('people', PersonSchema);
+export const loadAllCharacters = () => loadAll<Character>('characters', CharacterSchema);
 export const loadAllEvents = () => loadAll<Event>('events', EventSchema);
 
 export async function renderMarkdown(source: string): Promise<string> {

@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   CastleSchema,
   HouseSchema,
-  PersonSchema,
+  CharacterSchema,
   EventSchema,
 } from './schemas';
 
@@ -69,8 +69,8 @@ describe('HouseSchema', () => {
   });
 });
 
-describe('PersonSchema', () => {
-  it('parses a named person', () => {
+describe('CharacterSchema', () => {
+  it('parses a named character', () => {
     const input = {
       slug: 'eddard-stark',
       name: 'Eddard Stark',
@@ -87,10 +87,10 @@ describe('PersonSchema', () => {
       sources: [],
       draft: false,
     };
-    expect(() => PersonSchema.parse(input)).not.toThrow();
+    expect(() => CharacterSchema.parse(input)).not.toThrow();
   });
 
-  it('allows a placeholder person with null name dates', () => {
+  it('allows a placeholder character with null name dates', () => {
     const input = {
       slug: 'unnamed-stark-daughter',
       name: 'Unnamed Stark daughter',
@@ -107,7 +107,7 @@ describe('PersonSchema', () => {
       sources: [],
       draft: false,
     };
-    expect(() => PersonSchema.parse(input)).not.toThrow();
+    expect(() => CharacterSchema.parse(input)).not.toThrow();
   });
 });
 

@@ -7,7 +7,7 @@ const ITEMS = [
   { href: '/maps/', label: 'Maps' },
   { href: '/timeline/', label: 'Timeline' },
   { href: '/houses/', label: 'Houses' },
-  { href: '/people/', label: 'People' },
+  { href: '/characters/', label: 'Characters' },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {

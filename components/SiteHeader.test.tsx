@@ -13,19 +13,19 @@ describe('SiteHeader', () => {
     expect(home.getAttribute('href')).toBe('/');
   });
 
-  it('exposes a primary nav with Maps, Timeline, Houses, and People', () => {
+  it('exposes a primary nav with Maps, Timeline, Houses, and Characters', () => {
     render(<SiteHeader />);
     const nav = screen.getByRole('navigation', { name: /primary/i });
     expect(nav).toBeDefined();
 
     const links = screen.getAllByRole('link');
     const navLinks = links.filter((l) =>
-      ['/maps/', '/timeline/', '/houses/', '/people/'].includes(l.getAttribute('href') ?? ''),
+      ['/maps/', '/timeline/', '/houses/', '/characters/'].includes(l.getAttribute('href') ?? ''),
     );
     expect(navLinks).toHaveLength(4);
 
     const labels = navLinks.map((l) => l.textContent?.trim());
-    expect(labels).toEqual(['Maps', 'Timeline', 'Houses', 'People']);
+    expect(labels).toEqual(['Maps', 'Timeline', 'Houses', 'Characters']);
   });
 
   it('marks the current section with aria-current="page"', () => {

@@ -4,7 +4,7 @@ import {
   loadHouse,
   loadAllHouses,
   loadAllCastles,
-  loadAllPeople,
+  loadAllCharacters,
   renderMarkdown,
 } from '@/lib/content';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
@@ -49,16 +49,16 @@ function formatStatus(status: House['status']): string {
 
 export default async function HousePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [house, castles, people] = await Promise.all([
+  const [house, castles, characters] = await Promise.all([
     loadHouse(slug).catch(() => null),
     loadAllCastles(),
-    loadAllPeople(),
+    loadAllCharacters(),
   ]);
   if (!house) notFound();
 
   const seatCastle = castles.find((c) => c.frontmatter.slug === house.frontmatter.seat);
   const html = await renderMarkdown(house.body);
-  const tree = buildFamilyTree(slug, people);
+  const tree = buildFamilyTree(slug, characters);
 
   return (
     <ParchmentLayout>

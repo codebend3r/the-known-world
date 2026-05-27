@@ -36,6 +36,8 @@ app/                Next.js App Router routes
   encyclopedia/     Coming-soon stub
   houses/           Index + per-house pages
     [slug]/         Per-house page with family tree
+  characters/       Index + per-character pages
+    [slug]/         Per-character page (stub)
   castles/[slug]/   Per-castle page
   layout.tsx        Root layout (Cinzel / EB Garamond / Inter fonts)
   not-found.tsx
@@ -56,7 +58,7 @@ lib/                Domain logic (loaders, schemas, helpers)
 content/            Markdown source of truth
   castles/          9 entries (Winterfell, Casterly Rock, Highgarden, …)
   houses/           4 entries (Stark, Lannister, Targaryen, Tyrell)
-  people/           63 entries — characters with parents/spouses/children
+  characters/       characters with parents/spouses/children
 
 styles/             Hand-written CSS (parchment aesthetic)
   globals.css, parchment.css, map.css, main-menu.css, houses.css
@@ -74,7 +76,7 @@ All content is markdown with frontmatter validated by Zod (`lib/schemas.ts`). Cr
 
 - **`House`** — `slug`, `name`, `seat` (castle slug), `liege`, `words`, `sigil.description`, `founded` (date), `status` (`extant` / `extinct` / `exiled` / `hidden`), `sworn-from`, `cadet-houses`, `sources`.
 - **`Castle`** — `slug`, `name`, `type` (`castle` / `town` / `ruin` / `watchtower` / `holdfast`), `sub-region`, `liege-house`, `founded`, `sworn-houses`, `features`, `coords` (`{x, y}` on the basemap), `sources`.
-- **`Person`** — `slug`, `name`, `born` / `died` (date or `null`), `primary-house`, `also-of-houses`, `parents`, `spouses`, `children`, `titles`, `placeholder` (+ reason), `sources`. Placeholder people fill unnamed slots in family trees.
+- **`Character`** — `slug`, `name`, `born` / `died` (date or `null`), `primary-house`, `also-of-houses`, `parents`, `spouses`, `children`, `titles`, `placeholder` (+ reason), `sources`. Placeholder characters fill unnamed slots in family trees.
 - **`Event`** — `slug`, `name`, `type` (`battle` / `siege` / `treaty` / `wedding` / `death` / `betrayal` / `other`), `date`, `location` (castle slug or coords), `participants` (sides + houses), `outcome`, `casualties`, `sources`. Schema is in place; no event entries yet.
 
 Dates use `{year, era, precision}` where `era` is one of `dawn-age`, `age-of-heroes`, `long-night`, `andal-invasion`, `targaryen-conquest`, `roberts-reign`, `game-of-thrones`, `AC`, `BC`, and `precision` is `exact` / `year` / `decade` / `era` / `legendary`.
@@ -88,7 +90,8 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 | `/` | live | Atlas main menu (Map · Timeline · Encyclopedia · Houses) |
 | `/houses/` | live | A–Z list of houses, alphabetized by short name |
 | `/houses/[slug]/` | live | Per-house page: words, seat link, sigil, founded, status, body, family tree |
-| `/people/` | live | A–Z list of people (sigil + name), sorted by first name |
+| `/characters/` | live | A–Z list of characters (sigil + name) with debounced filter |
+| `/characters/[slug]/` | stub | Per-character page — placeholder body, full content TBD |
 | `/castles/[slug]/` | live | Per-castle page |
 | `/the-north/` | live | Pan/zoom map of the North with layer toggle |
 | `/map/` | stub | Coming soon |
@@ -99,7 +102,7 @@ Per-house and per-castle pages are pre-rendered via `generateStaticParams` from 
 
 ## Family tree
 
-`lib/family-tree.ts` builds a hierarchical tree for a house from the `parents` / `children` graph in `content/people/`. Placeholder ancestors fill in unnamed slots (e.g. unknown mothers). Rendered by `components/FamilyTree.tsx` on each house page.
+`lib/family-tree.ts` builds a hierarchical tree for a house from the `parents` / `children` graph in `content/characters/`. Placeholder ancestors fill in unnamed slots (e.g. unknown mothers). Rendered by `components/FamilyTree.tsx` on each house page.
 
 ## Testing
 

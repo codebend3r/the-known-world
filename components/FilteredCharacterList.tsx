@@ -1,20 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { filterByName } from '@/lib/search';
 
-export type PersonItem = {
+export type CharacterItem = {
   slug: string;
   name: string;
   primaryHouseSlug: string;
 };
 
 type Props = {
-  items: PersonItem[];
+  items: CharacterItem[];
 };
 
-export function FilteredPeopleList({ items }: Props) {
+export function FilteredCharacterList({ items }: Props) {
   const [value, setValue] = useState('');
   const [debounced, setDebounced] = useState('');
 
@@ -30,28 +31,31 @@ export function FilteredPeopleList({ items }: Props) {
       <input
         type="search"
         className="list-search"
-        placeholder="Search people…"
+        placeholder="Search characters…"
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        aria-label="Search people"
+        aria-label="Search characters"
         autoComplete="off"
         spellCheck={false}
       />
       {filtered.length === 0 ? (
-        <p className="list-search__empty">No people match &ldquo;{debounced}&rdquo;.</p>
+        <p className="list-search__empty">No characters match &ldquo;{debounced}&rdquo;.</p>
       ) : (
-        <ul className="people-list">
+        <ul className="character-list">
           {filtered.map((item) => (
-            <li key={item.slug} className="people-list__item">
-              <div className="people-list__card">
+            <li key={item.slug} className="character-list__item">
+              <Link
+                href={`/characters/${item.slug}/`}
+                className="character-list__card"
+              >
                 <Sigil
                   slug={item.primaryHouseSlug}
                   name={item.name}
                   size="3.25rem"
                   decorative
                 />
-                <span className="people-list__name">{item.name}</span>
-              </div>
+                <span className="character-list__name">{item.name}</span>
+              </Link>
             </li>
           ))}
         </ul>
