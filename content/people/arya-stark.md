@@ -1,0 +1,20 @@
+---
+slug: arya-stark
+name: Arya Stark
+born:
+  year: 289
+  era: AC
+  precision: year
+died: null
+primary-house: stark
+parents:
+  - eddard-stark
+  - catelyn-stark
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Arya_Stark
+    license: CC-BY-SA-3.0
+draft: false
+---
+
+Younger daughter of Eddard and Catelyn, called *Horseface* by her septas and *Arya Underfoot* by her sister. Studied the water dance at King's Landing under Syrio Forel until her father's fall, then escaped the city disguised as a boy with a stolen sword and a list of names. Crossed the riverlands in the war's long bloody year, took ship from Saltpans, and entered the House of Black and White at Braavos to learn the trade of the Faceless Men.
