@@ -1,29 +1,28 @@
 /*
  * House sigil sprite: 5 columns × 8 rows in `public/sprites/house-sigils-001.png`.
  *
- * Source sheet is 1365 × 2048 src-px. Cells repeat every 273 × 256 src-px;
- * the *visible window* is 273 × 262 — two extra rows at the bottom of each
- * cell so the sigil isn't clipped at the cell edge.
- *
- * `--sigil-size` sets the rendered width (= 273 src-px). Everything else
- * scales from it. Each house just sets `--col` (0-4) and `--row` (0-7).
+ * Source sheet is 1143 × 2048 src-px. Cells are 228.6 × 256 src-px
+ * (1143/5 × 2048/8). `--sigil-size` sets the rendered cell width; the
+ * cell height derives from the 256/228.6 = 1280/1143 aspect ratio.
+ * Each house just sets `--col` (0-4) and `--row` (0-7).
  */
 
 .sigil {
   --sigil-size: 6rem;
+  --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
   --col: 0;
   --row: 0;
 
   display: inline-block;
   width: var(--sigil-size);
-  height: calc(var(--sigil-size) * 262 / 273);
+  height: var(--sigil-h);
   background-image: url('/sprites/house-sigils-001.png');
   background-size:
     calc(var(--sigil-size) * 5)
-    calc(var(--sigil-size) * 2048 / 273);
+    calc(var(--sigil-h) * 8);
   background-position:
     calc(var(--sigil-size) * var(--col) * -1)
-    calc(var(--sigil-size) * 256 / 273 * var(--row) * -1);
+    calc(var(--sigil-h) * var(--row) * -1);
   background-repeat: no-repeat;
 }
 
