@@ -1,8 +1,0 @@
-.sigil {
-  display: inline-block;
-  aspect-ratio: 260 / 280;
-  background-image: url('/sprites/sigil.webp');
-  background-repeat: no-repeat;
-  background-size: 500% 800%;
-  vertical-align: middle;
-}
