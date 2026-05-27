@@ -3,13 +3,19 @@
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
   gap: 1.25rem;
 }
 
-@media (min-width: 600px) {
+/* Break out of the parchment's 720px container on wider screens so the
+   grid can scale up to ~8 columns on large desktops while remaining
+   centered on the viewport. */
+@media (min-width: 800px) {
   .house-list {
-    grid-template-columns: repeat(2, 1fr);
+    --bleed-max: 1840px;
+    --bleed-width: min(100vw - 3rem, var(--bleed-max));
+    width: var(--bleed-width);
+    margin-left: calc((100% - var(--bleed-width)) / 2);
   }
 }
 
