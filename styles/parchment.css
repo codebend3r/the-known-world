@@ -1,7 +1,7 @@
 .parchment-page {
-  max-width: 720px;
+  max-width: min(1280px, max(720px, 75vw));
   margin: 0 auto;
-  padding: 3rem 2rem 6rem;
+  padding: 3rem clamp(1.5rem, 4vw, 3.5rem) 6rem;
   position: relative;
 }
 
