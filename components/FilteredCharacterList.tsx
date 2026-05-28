@@ -17,11 +17,22 @@ type Props = {
   pageSize?: number;
 };
 
+const PAGE_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
+  { value: 10, label: '10' },
+  { value: 30, label: '30' },
+  { value: 60, label: '60' },
+  { value: 100, label: '100' },
+  { value: Infinity, label: 'All' },
+];
+
+const MIN_PAGE_SIZE = 10;
+
 export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
   const [value, setValue] = useState('');
   const [debounced, setDebounced] = useState('');
   const [page, setPage] = useState(1);
   const [lastFilterKey, setLastFilterKey] = useState('');
+  const [size, setSize] = useState(pageSize);
 
   useEffect(() => {
     const t = setTimeout(() => setDebounced(value), 300);
@@ -34,10 +45,16 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
   }
 
   const filtered = filterByName(items, debounced);
-  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const effectiveSize = Number.isFinite(size) ? size : filtered.length || 1;
+  const totalPages = Math.max(1, Math.ceil(filtered.length / effectiveSize));
   const currentPage = Math.min(page, totalPages);
-  const pageStart = (currentPage - 1) * pageSize;
-  const pageItems = filtered.slice(pageStart, pageStart + pageSize);
+  const pageStart = (currentPage - 1) * effectiveSize;
+  const pageItems = filtered.slice(pageStart, pageStart + effectiveSize);
+
+  const handleSizeChange = (next: number) => {
+    setSize(next);
+    setPage(1);
+  };
 
   const renderPagination = (position: 'top' | 'bottom') => (
     <nav
@@ -59,6 +76,22 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       >
         Page {currentPage} of {totalPages}
       </span>
+      <label className="pagination__page-size">
+        Show{' '}
+        <select
+          className="pagination__page-size-select"
+          value={String(size)}
+          onChange={(e) => handleSizeChange(Number(e.target.value))}
+          aria-label="Characters per page"
+        >
+          {PAGE_SIZE_OPTIONS.map((opt) => (
+            <option key={opt.label} value={String(opt.value)}>
+              {opt.label}
+            </option>
+          ))}
+        </select>{' '}
+        per page
+      </label>
       <button
         type="button"
         className="pagination__button"
@@ -70,6 +103,8 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       </button>
     </nav>
   );
+
+  const showPagination = filtered.length > MIN_PAGE_SIZE;
 
   return (
     <>
@@ -87,7 +122,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
         <p className="list-search__empty">No characters match &ldquo;{debounced}&rdquo;.</p>
       ) : (
         <>
-          {totalPages > 1 && renderPagination('top')}
+          {showPagination && renderPagination('top')}
           <ul className="character-list">
             {pageItems.map((item) => {
               const cardClass = item.region
@@ -110,7 +145,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
               );
             })}
           </ul>
-          {totalPages > 1 && renderPagination('bottom')}
+          {showPagination && renderPagination('bottom')}
         </>
       )}
     </>

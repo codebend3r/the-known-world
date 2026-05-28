@@ -78,8 +78,57 @@
   letter-spacing: 1.5px;
 }
 
+.pagination__page-size {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  letter-spacing: 0.5px;
+}
+
+.pagination__page-size-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: rgba(248, 236, 208, 0.6);
+  color: var(--ink);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  padding: 0.3rem 1.6rem 0.3rem 0.55rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  background-image: linear-gradient(
+      45deg,
+      transparent 50%,
+      rgba(107, 68, 35, 0.55) 50%
+    ),
+    linear-gradient(135deg, rgba(107, 68, 35, 0.55) 50%, transparent 50%);
+  background-position:
+    calc(100% - 0.85rem) 55%,
+    calc(100% - 0.55rem) 55%;
+  background-size:
+    0.3rem 0.3rem,
+    0.3rem 0.3rem;
+  background-repeat: no-repeat;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease;
+}
+
+.pagination__page-size-select:hover,
+.pagination__page-size-select:focus-visible {
+  border-color: var(--gold-leaf);
+  color: var(--gold-leaf);
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .pagination__button {
+  .pagination__button,
+  .pagination__page-size-select {
     transition: none;
   }
 }
