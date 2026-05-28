@@ -5,6 +5,10 @@
  * (1143/5 × 2048/8). `--sigil-size` sets the rendered cell width; the
  * cell height derives from the 256/228.6 = 1280/1143 aspect ratio.
  * Each house just sets `--col` (0-4) and `--row` (0-7).
+ *
+ * Per-house overrides: a house can opt out of the sprite and point at a
+ * standalone PNG in `public/sigils/` by overriding `background-image`,
+ * `background-size`, and `background-position` (see `.sigil--stark`).
  */
 
 .sigil {
@@ -27,7 +31,11 @@
 }
 
 /* Row 1 — Stark · Lannister · Targaryen · Baratheon · Greyjoy */
-.sigil--stark      { --col: 0; --row: 0; }
+.sigil--stark {
+  background-image: url('/sigils/stark.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--lannister  { --col: 1; --row: 0; }
 .sigil--targaryen  { --col: 2; --row: 0; }
 .sigil--baratheon  { --col: 3; --row: 0; }
