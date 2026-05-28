@@ -81,3 +81,6 @@
 .sigil--caron      { --col: 2; --row: 7; }
 .sigil--estermont  { --col: 3; --row: 7; }
 .sigil--grafton    { --col: 4; --row: 7; }
+
+/* Aliases — share a sprite cell with another house */
+.sigil--durrandon  { --col: 3; --row: 0; } /* crowned stag, inherited by House Baratheon */

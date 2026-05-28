@@ -9,6 +9,7 @@ const SIGIL_SLUGS = new Set([
   'florent', 'rowan', 'oakheart', 'mallister', 'piper',
   'manderly', 'dustin', 'ryswell', 'hornwood', 'cerwyn',
   'swann', 'dondarrion', 'caron', 'estermont', 'grafton',
+  'durrandon',
 ]);
 
 type Props = {
