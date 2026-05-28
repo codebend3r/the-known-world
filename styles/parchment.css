@@ -10,15 +10,8 @@
      and stretch every other child — pulling centered `h1`/`subtitle`
      text off-axis. */
   grid-template-columns: minmax(0, 1fr);
-  gap: 0;
+  gap: 1rem;
   align-content: start;
-}
-
-/* Block-flow variant for pages that rely on `float` (e.g. house detail
-   with its right-floated `.house-infobox`). Grid containers ignore
-   `float` for layout, so those pages opt out of the page-level grid. */
-.parchment-page--block {
-  display: block;
 }
 
 .parchment-page::before {
@@ -37,7 +30,7 @@
 .parchment-page > * { position: relative; z-index: 1; }
 
 .subtitle {
-  display: flow-root;
+  display: grid;
   text-align: center;
   font-style: italic;
   color: var(--ink-faded);
@@ -49,7 +42,6 @@
 .drop-cap::first-letter {
   font-family: var(--font-heading);
   font-size: 3.2rem;
-  float: left;
   line-height: 1;
   padding: 0.15rem 0.5rem 0 0;
   color: var(--ink-faded);

@@ -35,7 +35,7 @@
 .site-header__title-link {
   text-decoration: none;
   color: inherit;
-  display: inline-block;
+  display: flex;
 }
 
 .site-header__title {
@@ -67,7 +67,7 @@
 }
 
 .site-header__nav-item {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   margin: 0;
 }
@@ -99,7 +99,8 @@
 }
 
 .site-header__separator {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   color: var(--gold-leaf);
   font-size: 0.55rem;
   padding: 0 0.1rem;

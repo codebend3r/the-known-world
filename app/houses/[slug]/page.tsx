@@ -48,30 +48,34 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
   const tree = buildFamilyTree(slug, characters);
 
   return (
-    <ParchmentLayout variant="block">
-      <HouseInfobox
-        house={house.frontmatter}
-        castlesBySlug={castlesBySlug}
-        charactersBySlug={charactersBySlug}
-        housesBySlug={housesBySlug}
-      />
-      <h1>{house.frontmatter.name}</h1>
-      {house.frontmatter.words && (
-        <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
-      )}
+    <ParchmentLayout>
+      <div className="house-detail">
+        <HouseInfobox
+          house={house.frontmatter}
+          castlesBySlug={castlesBySlug}
+          charactersBySlug={charactersBySlug}
+          housesBySlug={housesBySlug}
+        />
+        <div className="house-detail__main">
+          <h1>{house.frontmatter.name}</h1>
+          {house.frontmatter.words && (
+            <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
+          )}
 
-      <article className="house-detail__body" dangerouslySetInnerHTML={{ __html: html }} />
+          <article className="house-detail__body" dangerouslySetInnerHTML={{ __html: html }} />
 
-      <section className="house-detail__tree" aria-labelledby="family-tree-heading">
-        <h2 id="family-tree-heading">Family Tree</h2>
-        <FamilyTree roots={tree} />
-      </section>
+          <section className="house-detail__tree" aria-labelledby="family-tree-heading">
+            <h2 id="family-tree-heading">Family Tree</h2>
+            <FamilyTree roots={tree} />
+          </section>
 
-      <p className="house-detail__back">
-        <Link href="/houses/">← All Houses</Link>
-      </p>
+          <p className="house-detail__back">
+            <Link href="/houses/">← All Houses</Link>
+          </p>
 
-      <Sources sources={house.frontmatter.sources} />
+          <Sources sources={house.frontmatter.sources} />
+        </div>
+      </div>
     </ParchmentLayout>
   );
 }

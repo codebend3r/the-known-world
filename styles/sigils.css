@@ -17,7 +17,7 @@
   --col: 0;
   --row: 0;
 
-  display: inline-block;
+  display: flex;
   width: var(--sigil-size);
   height: var(--sigil-h);
   background-image: url('/sprites/house-sigils-001.png');

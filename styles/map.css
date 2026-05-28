@@ -45,11 +45,13 @@
 
 .map-layer-toggle {
   position: relative;
-  display: inline-flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
-  margin: 0 auto;
+  width: fit-content;
+  max-width: 100%;
+  justify-self: center;
   background: var(--vellum);
   border: 1px solid rgba(107, 68, 35, 0.4);
   border-radius: 4px;
@@ -58,7 +60,7 @@
 }
 
 .map-layer-toggle label {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.4rem;
   color: var(--ink);

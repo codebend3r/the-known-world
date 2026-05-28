@@ -40,7 +40,7 @@ a.character-list__card:focus-visible {
 
 .character-list__sigil {
   flex: 0 0 3.25rem;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 3.25rem;
@@ -99,7 +99,6 @@ a.character-list__card:focus-visible {
 }
 
 .character-detail__portrait img {
-  display: block;
   width: 100%;
   height: auto;
   border: 1px solid rgba(107, 68, 35, 0.35);

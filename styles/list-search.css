@@ -1,5 +1,5 @@
 .list-search {
-  display: block;
+  display: grid;
   width: 100%;
   font-family: var(--font-ui);
   font-size: 0.95rem;
@@ -79,7 +79,7 @@
 }
 
 .pagination__page-size {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 0.4rem;
   font-family: var(--font-ui);
@@ -150,7 +150,7 @@
 }
 
 .view-toggle {
-  display: inline-flex;
+  display: flex;
   border: 1px solid rgba(107, 68, 35, 0.35);
   border-radius: 2px;
   overflow: hidden;
@@ -162,7 +162,7 @@
   background: transparent;
   border: 0;
   padding: 0 0.7rem;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   color: var(--ink-faded);

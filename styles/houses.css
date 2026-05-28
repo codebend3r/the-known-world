@@ -124,12 +124,7 @@
 }
 
 .house-infobox {
-  float: right;
-  width: min(320px, 100%);
-  /* Float requires margin for wrap spacing — grid `gap` doesn't apply
-     to floated elements, so this margin is the only available
-     mechanism. */
-  margin: 5rem 0 1.5rem 1.75rem;
+  width: 100%;
   padding: 1rem 1rem 1.25rem;
   background: rgba(248, 236, 208, 0.6);
   border: 1px solid rgba(107, 68, 35, 0.35);
@@ -204,12 +199,8 @@
 
 @media (max-width: 720px) {
   .house-infobox {
-    float: none;
     width: 90%;
-    /* Float removed at this breakpoint, but the page wrapper is in
-       block-flow (`.parchment-page--block`); margin-auto is the only
-       way to horizontally center a block-level element. */
-    margin: 1rem auto 1.5rem;
+    justify-self: center;
   }
   .house-infobox__row {
     grid-template-columns: 5.5rem 1fr;
@@ -220,17 +211,42 @@
   }
 }
 
-/* Vertical rhythm on the block-flow house-detail page is supplied by
-   each section's `padding-top` (allowed by the no-margin rule) instead
-   of `margin`. The `padding-bottom: 4rem` on `.house-detail__back`
-   creates the gap above the `.sources` separator. */
+.house-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+}
+
+.house-detail__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-content: start;
+}
+
+@media (min-width: 800px) {
+  .house-detail {
+    grid-template-columns: minmax(0, 1fr) clamp(280px, 28%, 340px);
+    column-gap: 2rem;
+    align-items: start;
+  }
+  .house-detail__main {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .house-detail > .house-infobox {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
 .house-detail__tree {
-  padding-top: 2.5rem;
+  padding-top: 1.5rem;
 }
 
 .house-detail__back {
-  padding-top: 3rem;
-  padding-bottom: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
   font-family: var(--font-ui);
   font-size: 0.9rem;
   text-align: center;
@@ -281,7 +297,7 @@
 }
 
 .family-tree > .family-tree__node::before {
-  display: none;
+  content: none;
 }
 
 .family-tree__node::after {
@@ -294,7 +310,7 @@
 }
 
 .family-tree > .family-tree__node::after {
-  display: none;
+  content: none;
 }
 
 .family-tree__node:last-child::before {
@@ -302,11 +318,13 @@
 }
 
 .family-tree__row {
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0.4rem 0.6rem;
   padding: 0.25rem 0.6rem;
+  width: fit-content;
+  max-width: 100%;
   background: rgba(248, 236, 208, 0.6);
   border: 1px solid rgba(107, 68, 35, 0.15);
   border-radius: 2px;
@@ -318,7 +336,7 @@
 }
 
 .family-tree__person {
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
   gap: 0.45rem;
 }
@@ -385,7 +403,7 @@ a.family-tree__name:focus-visible {
 }
 
 .family-tree__spouse {
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
   gap: 0.3rem;
 }
