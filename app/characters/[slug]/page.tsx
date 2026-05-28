@@ -8,6 +8,7 @@ import {
   loadCharacter,
   renderMarkdown,
 } from '@/lib/content';
+import { ageAtDeath } from '@/lib/age';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sigil } from '@/components/Sigil';
 import { Sources } from '@/components/Sources';
@@ -166,7 +167,13 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
         {fm.died && (
           <div>
             <dt>Died</dt>
-            <dd>{formatDate(fm.died)}</dd>
+            <dd>
+              {formatDate(fm.died)}
+              {(() => {
+                const age = ageAtDeath(fm.born, fm.died);
+                return age !== null ? ` (aged ${age})` : null;
+              })()}
+            </dd>
           </div>
         )}
         <div>
