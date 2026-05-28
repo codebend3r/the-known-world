@@ -11,7 +11,8 @@ died:
   precision: year
 primary-house: baratheon
 parents:
-  - unknown-baratheon-ancestors
+  - ormund-baratheon
+  - rhaelle-targaryen
 spouses:
   - cassana-estermont
 children:

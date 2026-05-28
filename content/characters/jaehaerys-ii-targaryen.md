@@ -10,6 +10,9 @@ died:
   era: AC
   precision: year
 primary-house: targaryen
+parents:
+  - aegon-v-targaryen
+  - betha-blackwood
 spouses:
   - shaera-targaryen
 children:

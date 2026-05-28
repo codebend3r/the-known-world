@@ -7,6 +7,9 @@ born:
   precision: year
 died: null
 primary-house: targaryen
+parents:
+  - aegon-v-targaryen
+  - betha-blackwood
 spouses:
   - jaehaerys-ii-targaryen
 children:
