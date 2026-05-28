@@ -205,11 +205,11 @@
 @media (max-width: 720px) {
   .house-infobox {
     float: none;
-    width: 100%;
+    width: 90%;
     /* Float removed at this breakpoint, but the page wrapper is in
-       block-flow (`.parchment-page--block`) so margin remains the
-       most straightforward sibling-spacing tool here. */
-    margin: 0 0 1.5rem;
+       block-flow (`.parchment-page--block`); margin-auto is the only
+       way to horizontally center a block-level element. */
+    margin: 1rem auto 1.5rem;
   }
   .house-infobox__row {
     grid-template-columns: 5.5rem 1fr;
