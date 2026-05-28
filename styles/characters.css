@@ -221,7 +221,7 @@ a.character-list__card:focus-visible {
     flex-basis: 100%;
   }
   .character-detail__body,
-  .character-detail__family {
+  #family-heading {
     padding-left: 1rem;
     padding-right: 1rem;
   }
