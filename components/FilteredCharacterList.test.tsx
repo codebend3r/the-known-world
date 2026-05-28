@@ -8,6 +8,14 @@ const items: CharacterItem[] = [
   { slug: 'tywin-lannister', name: 'Tywin Lannister', primaryHouseSlug: 'lannister' },
 ];
 
+function manyItems(n: number): CharacterItem[] {
+  return Array.from({ length: n }, (_, i) => ({
+    slug: `c-${String(i).padStart(3, '0')}`,
+    name: `Char ${String(i).padStart(3, '0')}`,
+    primaryHouseSlug: 'stark',
+  }));
+}
+
 beforeEach(() => {
   vi.useFakeTimers();
 });
@@ -69,5 +77,53 @@ describe('FilteredCharacterList', () => {
       vi.advanceTimersByTime(300);
     });
     expect(screen.getByText(/no characters match/i)).toBeDefined();
+  });
+
+  it('hides pagination when the filtered list fits on one page', () => {
+    render(<FilteredCharacterList items={items} pageSize={30} />);
+    expect(screen.queryByRole('navigation', { name: /pagination/i })).toBeNull();
+  });
+
+  it('shows the first page of items and a pagination nav when there is overflow', () => {
+    const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
+    expect(container.querySelectorAll('.character-list__item').length).toBe(30);
+    const nav = screen.getByRole('navigation', { name: /pagination/i });
+    expect(nav.textContent).toMatch(/Page 1 of 3/);
+    const prev = screen.getByRole('button', { name: /previous page/i }) as HTMLButtonElement;
+    expect(prev.disabled).toBe(true);
+  });
+
+  it('advances to the next page when Next is clicked', () => {
+    const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
+    const next = screen.getByRole('button', { name: /next page/i });
+    fireEvent.click(next);
+    const firstCardName = container.querySelector('.character-list__name')?.textContent;
+    expect(firstCardName).toBe('Char 030');
+    expect(screen.getByText(/Page 2 of 3/)).toBeDefined();
+  });
+
+  it('disables Next on the last page', () => {
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
+    const next = screen.getByRole('button', { name: /next page/i }) as HTMLButtonElement;
+    fireEvent.click(next);
+    fireEvent.click(next);
+    expect(next.disabled).toBe(true);
+    expect(screen.getByText(/Page 3 of 3/)).toBeDefined();
+  });
+
+  it('resets to page 1 when the search filter changes', () => {
+    const lots: CharacterItem[] = [
+      ...manyItems(60),
+      { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark' },
+    ];
+    render(<FilteredCharacterList items={lots} pageSize={30} />);
+    fireEvent.click(screen.getByRole('button', { name: /next page/i }));
+    expect(screen.getByText(/Page 2/)).toBeDefined();
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'arya' } });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    // Search shrinks results to 1, so pagination disappears entirely.
+    expect(screen.queryByRole('navigation', { name: /pagination/i })).toBeNull();
   });
 });

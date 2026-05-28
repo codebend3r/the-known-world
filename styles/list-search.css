@@ -35,6 +35,57 @@
   padding: 2.5rem 1rem;
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.75rem 0 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--ink-faded);
+}
+
+.pagination__button {
+  appearance: none;
+  background: rgba(248, 236, 208, 0.6);
+  color: var(--ink);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  padding: 0.4rem 0.85rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
+}
+
+.pagination__button:hover:not(:disabled),
+.pagination__button:focus-visible:not(:disabled) {
+  border-color: var(--gold-leaf);
+  color: var(--gold-leaf);
+  outline: none;
+}
+
+.pagination__button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination__status {
+  font-variant: small-caps;
+  letter-spacing: 1.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pagination__button {
+    transition: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .list-search {
     transition: none;
