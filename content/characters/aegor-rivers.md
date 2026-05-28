@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-A Great Bastard of King Aegon IV by Barba Bracken, half-brother to Daemon Blackfyre and lifelong sworn enemy of his other half-brother Brynden Rivers. He bore the Valyrian steel sword Bittersteel for which he was named; he fought beside Daemon on the Redgrass Field, escaped to Essos, and there founded the sellsword brotherhood called the Golden Company — pledged to put a Blackfyre back on the Iron Throne — which long outlived him.
+A Great Bastard of King Aegon IV by Barba Bracken, half-brother to Daemon Blackfyre and lifelong sworn enemy of his other half-brother Brynden Rivers. He bore the Valyrian steel sword Bittersteel for which he was named; he fought beside Daemon on the Redgrass Field, escaped to Essos, and there founded the sellsword brotherhood called the Golden Company, pledged to put a Blackfyre back on the Iron Throne, which long outlived him.

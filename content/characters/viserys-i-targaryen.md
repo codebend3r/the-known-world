@@ -34,4 +34,4 @@ sources:
 draft: false
 ---
 
-First of his name, chosen for the throne over his cousin Rhaenys at the Great Council of 101 AC and crowned at his grandfather Jaehaerys's death two years later. A peaceable, generous king whose chief failing was that he wished to hurt no one — he named his daughter Rhaenyra heir, then sired sons by his second queen, then refused to set right the contradiction. By the time the rot in his flesh took him in 129 AC, he had left his realm a powder-keg of two houses with one name.
+First of his name, chosen for the throne over his cousin Rhaenys at the Great Council of 101 AC and crowned at his grandfather Jaehaerys's death two years later. A peaceable, generous king whose chief failing was that he wished to hurt no one; he named his daughter Rhaenyra heir, then sired sons by his second queen, then refused to set right the contradiction. By the time the rot in his flesh took him in 129 AC, he had left his realm a powder-keg of two houses with one name.

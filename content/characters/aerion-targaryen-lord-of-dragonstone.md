@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Last Lord of Dragonstone before the Conquest, descended in the male line from Gaemon the Glorious. By his Velaryon wife Valaena he fathered Visenya, Aegon, and Rhaenys — the three siblings who would within a generation forge the Seven Kingdoms into one realm and put the dragons of House Targaryen upon the Iron Throne.
+Last Lord of Dragonstone before the Conquest, descended in the male line from Gaemon the Glorious. By his Velaryon wife Valaena he fathered Visenya, Aegon, and Rhaenys, the three siblings who would within a generation forge the Seven Kingdoms into one realm and put the dragons of House Targaryen upon the Iron Throne.

@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-Son and heir to Lord Lyonel Baratheon, wed to Princess Rhaelle Targaryen as part of the long peace-pact after Lyonel's rebellion. He fathered one son, Steffon, who in time would father the three Baratheon brothers — and through whom the Targaryen blood of Rhaelle ran on into the dynasty that finally cast her own house down.
+Son and heir to Lord Lyonel Baratheon, wed to Princess Rhaelle Targaryen as part of the long peace-pact after Lyonel's rebellion. He fathered one son, Steffon, who in time would father the three Baratheon brothers, and through whom the Targaryen blood of Rhaelle ran on into the dynasty that finally cast her own house down.

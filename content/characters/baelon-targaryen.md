@@ -30,4 +30,4 @@ sources:
 draft: false
 ---
 
-Second-surviving son of Jaehaerys I, called Baelon the Spring Prince and Baelon the Brave. He wed his sister Alyssa and fathered three sons; when his elder brother Aemon fell, Baelon was named Prince of Dragonstone over Aemon's daughter Rhaenys — a passing-over of the female line that would echo a quarter-century later in the Dance of the Dragons. A burst belly carried him off in 101 AC, leaving his old father to choose between his sons and his granddaughter's line.
+Second-surviving son of Jaehaerys I, called Baelon the Spring Prince and Baelon the Brave. He wed his sister Alyssa and fathered three sons; when his elder brother Aemon fell, Baelon was named Prince of Dragonstone over Aemon's daughter Rhaenys, a passing-over of the female line that would echo a quarter-century later in the Dance of the Dragons. A burst belly carried him off in 101 AC, leaving his old father to choose between his sons and his granddaughter's line.

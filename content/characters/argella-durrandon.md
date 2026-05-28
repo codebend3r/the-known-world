@@ -21,4 +21,4 @@ sources:
 draft: false
 ---
 
-Only child of Argilac the Arrogant, last Storm King of the Durrandon line. When her father rode out to die against Orys, she declared herself the Storm Queen and shut the gates of Storm's End — only to be bound and delivered to the conqueror by her own garrison. Wed to Orys Baratheon in the days after the surrender; the new house took her father's crowned stag, his words, and his seat.
+Only child of Argilac the Arrogant, last Storm King of the Durrandon line. When her father rode out to die against Orys, she declared herself the Storm Queen and shut the gates of Storm's End, only to be bound and delivered to the conqueror by her own garrison. Wed to Orys Baratheon in the days after the surrender; the new house took her father's crowned stag, his words, and his seat.

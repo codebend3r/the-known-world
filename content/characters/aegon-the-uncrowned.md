@@ -28,4 +28,4 @@ sources:
 draft: false
 ---
 
-Eldest son of Aenys I and heir by every right of birth, set aside when his uncle Maegor seized the throne over his father's still-warm corpse. Six years later he rose in rebellion to claim his birthright, met Maegor in the sky above the Gods Eye, and fell with his dragon Quicksilver to the jaws of Balerion — never crowned, never enthroned, never forgotten.
+Eldest son of Aenys I and heir by every right of birth, set aside when his uncle Maegor seized the throne over his father's still-warm corpse. Six years later he rose in rebellion to claim his birthright, met Maegor in the sky above the Gods Eye, and fell with his dragon Quicksilver to the jaws of Balerion, never crowned, never enthroned, never forgotten.

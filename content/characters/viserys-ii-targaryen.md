@@ -31,4 +31,4 @@ sources:
 draft: false
 ---
 
-Second of his name. Younger brother of Aegon III, taken as a boy hostage to Lys at the Dance's end and ransomed back grown into a shrewd, careful man. He served three of his own line as Hand — Aegon III, Daeron I, and Baelor I — and at Baelor's death finally came to the Iron Throne himself at seven-and-forty. He ruled barely a year before he was poisoned, most said by his own son Aegon.
+Second of his name. Younger brother of Aegon III, taken as a boy hostage to Lys at the Dance's end and ransomed back grown into a shrewd, careful man. He served three of his own line as Hand (Aegon III, Daeron I, and Baelor I), and at Baelor's death finally came to the Iron Throne himself at seven-and-forty. He ruled barely a year before he was poisoned, most said by his own son Aegon.

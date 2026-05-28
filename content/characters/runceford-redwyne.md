@@ -17,4 +17,4 @@ sources:
 draft: false
 ---
 
-Lord of the Arbor and father of Olenna Redwyne. Once betrothed his daughter to Prince Daeron Targaryen — an arrangement Olenna unmade with characteristic mischief.
+Lord of the Arbor and father of Olenna Redwyne. Once betrothed his daughter to Prince Daeron Targaryen, an arrangement Olenna unmade with characteristic mischief.

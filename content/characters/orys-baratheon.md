@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-Aegon the Conqueror's bastard half-brother and his first Hand, founder of House Baratheon. He led the southern arm of the Conquest, struck down Argilac the Arrogant at the Last Storm, then took the dead Storm King's daughter, his castle, his sigil, and his words — making them all Baratheon at once.
+Aegon the Conqueror's bastard half-brother and his first Hand, founder of House Baratheon. He led the southern arm of the Conquest, struck down Argilac the Arrogant at the Last Storm, then took the dead Storm King's daughter, his castle, his sigil, and his words, making them all Baratheon at once.

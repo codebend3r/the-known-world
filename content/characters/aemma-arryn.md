@@ -28,4 +28,4 @@ sources:
 draft: false
 ---
 
-Daughter of Lord Rodrik Arryn and Princess Daella Targaryen, wed to her cousin Viserys before he came to the throne. She bore him Rhaenyra and several stillborn or short-lived sons, and died at the birth of the last — a son, carved from her body by the maesters on Viserys's command, who outlived her by less than a day.
+Daughter of Lord Rodrik Arryn and Princess Daella Targaryen, wed to her cousin Viserys before he came to the throne. She bore him Rhaenyra and several stillborn or short-lived sons, and died at the birth of the last: a son, carved from her body by the maesters on Viserys's command, who outlived her by less than a day.

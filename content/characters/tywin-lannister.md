@@ -31,4 +31,4 @@ sources:
 draft: false
 ---
 
-Lord of Casterly Rock at the time of *A Game of Thrones*. Twice Hand of the King — first to Aerys II Targaryen for twenty years, then to his grandson Joffrey Baratheon. Architect of the Lannister revival after his father's ruinous reign, and one of the most feared men in the Seven Kingdoms.
+Lord of Casterly Rock at the time of *A Game of Thrones*. Twice Hand of the King, first to Aerys II Targaryen for twenty years, then to his grandson Joffrey Baratheon. Architect of the Lannister revival after his father's ruinous reign, and one of the most feared men in the Seven Kingdoms.

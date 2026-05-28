@@ -16,4 +16,4 @@ sources:
 draft: false
 ---
 
-A child of Prince Rhaegel and Alys Arryn — one of a set of twins both of whom died in infancy.
+A child of Prince Rhaegel and Alys Arryn, one of a set of twins both of whom died in infancy.

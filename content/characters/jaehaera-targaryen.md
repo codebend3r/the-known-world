@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-Twin sister of the murdered Jaehaerys, daughter of Aegon II and Helaena. Simple of mind and broken by grief, she was wed at six to her cousin Aegon III to bind the warring branches together at the war's end. She lived seven years more and died falling — or thrown — from the window of her bedchamber in Maegor's Holdfast.
+Twin sister of the murdered Jaehaerys, daughter of Aegon II and Helaena. Simple of mind and broken by grief, she was wed at six to her cousin Aegon III to bind the warring branches together at the war's end. She lived seven years more and died falling, or thrown, from the window of her bedchamber in Maegor's Holdfast.

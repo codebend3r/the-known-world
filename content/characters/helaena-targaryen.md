@@ -29,4 +29,4 @@ sources:
 draft: false
 ---
 
-Sister-wife of Aegon II, gentle and dreamy and given at times to small terrible prophecies. The murder of her son Jaehaerys by Blood and Cheese — sent into the Red Keep by Daemon and Rhaenyra in retribution for Lucerys — broke her wits past mending; she threw herself from her window in Maegor's Holdfast in 130 AC.
+Sister-wife of Aegon II, gentle and dreamy and given at times to small terrible prophecies. The murder of her son Jaehaerys by Blood and Cheese (sent into the Red Keep by Daemon and Rhaenyra in retribution for Lucerys) broke her wits past mending; she threw herself from her window in Maegor's Holdfast in 130 AC.

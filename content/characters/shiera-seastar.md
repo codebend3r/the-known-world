@@ -18,4 +18,4 @@ sources:
 draft: false
 ---
 
-Last of the Great Bastards, daughter of Aegon IV and Serenei of Lys — born with eyes of two different colours, one blue, one green. The most beautiful woman of her age, said to be a sorceress and a student of darker arts. She was the lifelong lover of her half-brother Brynden Rivers, but refused all his offers of marriage, and never wed.
+Last of the Great Bastards, daughter of Aegon IV and Serenei of Lys, born with eyes of two different colours, one blue, one green. The most beautiful woman of her age, said to be a sorceress and a student of darker arts. She was the lifelong lover of her half-brother Brynden Rivers, but refused all his offers of marriage, and never wed.

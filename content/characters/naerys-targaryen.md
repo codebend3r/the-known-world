@@ -27,4 +27,4 @@ sources:
 draft: false
 ---
 
-Sister-wife of Aegon IV, a frail and devout woman who would gladly have taken the veil but for her father Viserys II's command. She bore Aegon two children at fearful cost to her own health — Daeron, the heir, and Daenerys — and died in a hard childbed bringing forth a third. Her name lived on in songs as the lady the Dragonknight loved beyond all measure.
+Sister-wife of Aegon IV, a frail and devout woman who would gladly have taken the veil but for her father Viserys II's command. She bore Aegon two children at fearful cost to her own health (Daeron, the heir, and Daenerys), and died in a hard childbed bringing forth a third. Her name lived on in songs as the lady the Dragonknight loved beyond all measure.

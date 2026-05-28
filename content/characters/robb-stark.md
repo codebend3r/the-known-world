@@ -24,4 +24,4 @@ sources:
 draft: false
 ---
 
-Eldest trueborn son of Eddard and Catelyn, heir to Winterfell. Called the banners after his father's arrest in King's Landing and was crowned King in the North by his bannermen at Riverrun. Won every battle he led — Whispering Wood, Oxcross, the Crag — and lost the war in a single hall, murdered with his mother and most of his lords at the Red Wedding by Lord Walder Frey and Lord Roose Bolton.
+Eldest trueborn son of Eddard and Catelyn, heir to Winterfell. Called the banners after his father's arrest in King's Landing and was crowned King in the North by his bannermen at Riverrun. Won every battle he led (Whispering Wood, Oxcross, the Crag), and lost the war in a single hall, murdered with his mother and most of his lords at the Red Wedding by Lord Walder Frey and Lord Roose Bolton.

@@ -40,4 +40,4 @@ sources:
 draft: false
 ---
 
-Sister-wife of Jaehaerys I, called Good Queen Alysanne. She and her brother eloped and married in defiance of their elders, then forged a partnership of crown and council that remade the realm for half a century. Her royal progresses brought her to every corner of Westeros — she flew Silverwing as far north as the Wall, where her counsel won the Watch the Gift — and she gave Jaehaerys thirteen children, of whom most went before her into the grave.
+Sister-wife of Jaehaerys I, called Good Queen Alysanne. She and her brother eloped and married in defiance of their elders, then forged a partnership of crown and council that remade the realm for half a century. Her royal progresses brought her to every corner of Westeros (she flew Silverwing as far north as the Wall, where her counsel won the Watch the Gift), and she gave Jaehaerys thirteen children, of whom most went before her into the grave.

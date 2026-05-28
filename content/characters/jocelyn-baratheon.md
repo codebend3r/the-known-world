@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Daughter of Lord Boremund Baratheon, sister to Borros's grandsire. She wed Prince Aemon Targaryen and bore him one child, the Princess Rhaenys, before his death by a crossbow bolt at Tarth — making her, briefly, the highest-ranking widow in the realm.
+Daughter of Lord Boremund Baratheon, sister to Borros's grandsire. She wed Prince Aemon Targaryen and bore him one child, the Princess Rhaenys, before his death by a crossbow bolt at Tarth, making her, briefly, the highest-ranking widow in the realm.

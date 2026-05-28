@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-A daughter of Lord Manfred Hightower of Oldtown, first wife of Maegor Targaryen. The marriage produced no children and was loathed by both parties; Maegor set her aside in all but name to take other wives, and after years of estrangement she died at the Hightower in 45 AC — strangled, the whispers said, by tongueless men sent from her husband.
+A daughter of Lord Manfred Hightower of Oldtown, first wife of Maegor Targaryen. The marriage produced no children and was loathed by both parties; Maegor set her aside in all but name to take other wives, and after years of estrangement she died at the Hightower in 45 AC, strangled, the whispers said, by tongueless men sent from her husband.

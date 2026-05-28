@@ -16,4 +16,4 @@ sources:
 draft: false
 ---
 
-A child of Prince Rhaegel and Alys Arryn — twin to Aelora, who like her did not live past infancy.
+A child of Prince Rhaegel and Alys Arryn, twin to Aelora, who like her did not live past infancy.

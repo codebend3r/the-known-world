@@ -29,4 +29,4 @@ sources:
 draft: false
 ---
 
-Only child of Prince Aemon, passed over twice for the Iron Throne — once at her father's death in favour of her uncle Baelon, and again at the Great Council of 101 AC in favour of her cousin Viserys, for no greater fault than that she was a woman. She wed Corlys Velaryon the Sea Snake and bore him Laena and Laenor; she rode the Red Queen Meleys against Aegon II at the Gullet and fell at Rook's Rest, dragon and rider together, to Sunfyre and Vhagar.
+Only child of Prince Aemon, passed over twice for the Iron Throne: once at her father's death in favour of her uncle Baelon, and again at the Great Council of 101 AC in favour of her cousin Viserys, for no greater fault than that she was a woman. She wed Corlys Velaryon the Sea Snake and bore him Laena and Laenor; she rode the Red Queen Meleys against Aegon II at the Gullet and fell at Rook's Rest, dragon and rider together, to Sunfyre and Vhagar.

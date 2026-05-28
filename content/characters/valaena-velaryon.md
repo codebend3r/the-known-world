@@ -21,4 +21,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Velaryon of Driftmark, herself of pure Valyrian blood. She wed Lord Aerion Targaryen of Dragonstone and bore him three children — Visenya, Aegon, and Rhaenys — through whom Velaryon blood entered the Targaryen line at the very root of the dynasty.
+A daughter of House Velaryon of Driftmark, herself of pure Valyrian blood. She wed Lord Aerion Targaryen of Dragonstone and bore him three children (Visenya, Aegon, and Rhaenys) through whom Velaryon blood entered the Targaryen line at the very root of the dynasty.

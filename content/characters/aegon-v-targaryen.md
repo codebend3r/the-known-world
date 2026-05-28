@@ -33,4 +33,4 @@ sources:
 draft: false
 ---
 
-Fifth of his name, called Aegon the Unlikely — fourth-born of a fourth-born, who came to the throne over the heads of nieces, nephews, and his own great-uncle's grandson at the Great Council of 233 AC. As a boy he had wandered the realm as squire to a hedge knight, Ser Duncan the Tall, and the smallfolk loved him for it; as king he won the lords' hatred trying to reform the laws to ease the small folk's lot. He died in fire at Summerhall in 259 AC, trying to hatch dragons from the eggs of his line on the night his grandson Rhaegar was born.
+Fifth of his name, called Aegon the Unlikely, fourth-born of a fourth-born, who came to the throne over the heads of nieces, nephews, and his own great-uncle's grandson at the Great Council of 233 AC. As a boy he had wandered the realm as squire to a hedge knight, Ser Duncan the Tall, and the smallfolk loved him for it; as king he won the lords' hatred trying to reform the laws to ease the small folk's lot. He died in fire at Summerhall in 259 AC, trying to hatch dragons from the eggs of his line on the night his grandson Rhaegar was born.

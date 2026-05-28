@@ -19,4 +19,4 @@ sources:
 draft: false
 ---
 
-The wild daughter of the Old King, who took three boys to her bed at sixteen and was sent to a motherhouse for her sins. She broke out, fled to Volantis, and ended her days the wealthy proprietress of a famous pleasure house in Lys — never reconciled with her father, who refused to speak her name again.
+The wild daughter of the Old King, who took three boys to her bed at sixteen and was sent to a motherhouse for her sins. She broke out, fled to Volantis, and ended her days the wealthy proprietress of a famous pleasure house in Lys, never reconciled with her father, who refused to speak her name again.

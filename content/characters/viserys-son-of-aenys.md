@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Second son of Aenys I. Kept at court as hostage and squire to Maegor after his brother Aegon's rebellion, he was tortured to death in the Red Keep when his mother Alyssa fled with the surviving children — nine days under Tyanna's knives, the chroniclers say, before his heart gave out.
+Second son of Aenys I. Kept at court as hostage and squire to Maegor after his brother Aegon's rebellion, he was tortured to death in the Red Keep when his mother Alyssa fled with the surviving children. Nine days under Tyanna's knives, the chroniclers say, before his heart gave out.

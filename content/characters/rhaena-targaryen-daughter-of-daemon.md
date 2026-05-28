@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-Twin sister of Baela, the quieter of the two — who hatched her own dragon Morning at Dragonstone after the war, the last of the Targaryen dragons to take wing. She wed first Ser Corwyn Corbray, who was killed by outlaws in the Vale; she later married Lord Garmund Hightower of Oldtown and bore him five daughters who would marry into half the great houses of the south.
+Twin sister of Baela, the quieter of the two, who hatched her own dragon Morning at Dragonstone after the war, the last of the Targaryen dragons to take wing. She wed first Ser Corwyn Corbray, who was killed by outlaws in the Vale; she later married Lord Garmund Hightower of Oldtown and bore him five daughters who would marry into half the great houses of the south.

@@ -18,4 +18,4 @@ sources:
 draft: false
 ---
 
-A wild girl found dancing among the ruins of Oldstones in the riverlands, claimed by some to be of the long-vanished royal line of the river kings. Prince Duncan loved her enough to give up a throne; she went with him in turn into the fire at Summerhall. Her woods-witch friend, the dwarfish ghost of High Heart, gave Aegon the prophecy that brought him to that fire — that the prince that was promised would be born of Aerys and Rhaella's line.
+A wild girl found dancing among the ruins of Oldstones in the riverlands, claimed by some to be of the long-vanished royal line of the river kings. Prince Duncan loved her enough to give up a throne; she went with him in turn into the fire at Summerhall. Her woods-witch friend, the dwarfish ghost of High Heart, gave Aegon the prophecy that brought him to that fire, that the prince that was promised would be born of Aerys and Rhaella's line.

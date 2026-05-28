@@ -32,4 +32,4 @@ sources:
 draft: false
 ---
 
-First of his name. In a single year of war, mounted on Balerion the Black Dread and flanked by his sister-wives upon Vhagar and Meraxes, Aegon Targaryen welded the Seven Kingdoms into one realm and forged the Iron Throne from the swords of his fallen foes. He fixed the calendar from the year of his coming, raised the Aegonfort that became King's Landing, and ruled for thirty-seven years — long enough that the realm he built outlived its makers and his dragons both.
+First of his name. In a single year of war, mounted on Balerion the Black Dread and flanked by his sister-wives upon Vhagar and Meraxes, Aegon Targaryen welded the Seven Kingdoms into one realm and forged the Iron Throne from the swords of his fallen foes. He fixed the calendar from the year of his coming, raised the Aegonfort that became King's Landing, and ruled for thirty-seven years, long enough that the realm he built outlived its makers and his dragons both.

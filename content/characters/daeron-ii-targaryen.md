@@ -32,4 +32,4 @@ sources:
 draft: false
 ---
 
-Second of his name, called Daeron the Good. A bookish, gentle king widely whispered to be the trueborn son not of Aegon IV but of Aemon the Dragonknight — his uncle by every official accounting, his father by every honest one. He completed by treaty the conquest his namesake had failed to win by the sword: through his marriage to Myriah Martell and his sister Daenerys's marriage to Prince Maron, Dorne entered the Seven Kingdoms in earnest at last. He died of the Great Spring Sickness in 209 AC, his eldest son and heirs dead within days of him.
+Second of his name, called Daeron the Good. A bookish, gentle king widely whispered to be the trueborn son not of Aegon IV but of Aemon the Dragonknight, his uncle by every official accounting, his father by every honest one. He completed by treaty the conquest his namesake had failed to win by the sword: through his marriage to Myriah Martell and his sister Daenerys's marriage to Prince Maron, Dorne entered the Seven Kingdoms in earnest at last. He died of the Great Spring Sickness in 209 AC, his eldest son and heirs dead within days of him.

@@ -20,4 +20,4 @@ sources:
 draft: false
 ---
 
-Natural son of Lord Eddard Stark, born during the year of Robert's Rebellion. His mother is not named in any chronicle Eddard left behind. Raised at Winterfell alongside his trueborn half-siblings, taught the sword by Ser Rodrik Cassel, and rode with his uncle Benjen to take the black at fifteen. Rose through the Watch from steward to ranger, was taken captive by the wildlings and returned to betray them, and at nineteen was raised to Lord Commander of the Night's Watch — the youngest in living memory.
+Natural son of Lord Eddard Stark, born during the year of Robert's Rebellion. His mother is not named in any chronicle Eddard left behind. Raised at Winterfell alongside his trueborn half-siblings, taught the sword by Ser Rodrik Cassel, and rode with his uncle Benjen to take the black at fifteen. Rose through the Watch from steward to ranger, was taken captive by the wildlings and returned to betray them, and at nineteen was raised to Lord Commander of the Night's Watch, the youngest in living memory.

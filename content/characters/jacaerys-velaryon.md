@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-Eldest son of Rhaenyra by Laenor Velaryon — or, the realm whispered, by Ser Harwin Strong. Named heir to the Iron Throne after his mother. He flew Vermax north to win the Starks and the Manderlys to the black cause, and was killed in the air above the Gullet hauling down the last of Aegon's reinforcement fleet from across the Narrow Sea.
+Eldest son of Rhaenyra by Laenor Velaryon, or, the realm whispered, by Ser Harwin Strong. Named heir to the Iron Throne after his mother. He flew Vermax north to win the Starks and the Manderlys to the black cause, and was killed in the air above the Gullet hauling down the last of Aegon's reinforcement fleet from across the Narrow Sea.

@@ -27,4 +27,4 @@ sources:
 draft: false
 ---
 
-Younger sister-wife of Aegon the Conqueror, beloved by smallfolk for her warmth and her songs. She rode Meraxes in the Conquest and bore Aegon his eldest son Aenys. In the First Dornish War she flew her dragon deep into Dorne and was struck down at the Hellholt — felled with Meraxes by a scorpion bolt, the first dragon and dragonrider lost since the Doom.
+Younger sister-wife of Aegon the Conqueror, beloved by smallfolk for her warmth and her songs. She rode Meraxes in the Conquest and bore Aegon his eldest son Aenys. In the First Dornish War she flew her dragon deep into Dorne and was struck down at the Hellholt, felled with Meraxes by a scorpion bolt, the first dragon and dragonrider lost since the Doom.

@@ -24,4 +24,4 @@ sources:
 draft: false
 ---
 
-A daughter of the elder Stark line wed to her first cousin Rickard of Winterfell, mother of the four trueborn children who would scatter to the four winds — Brandon, Eddard, Lyanna, and Benjen. Died years before the rebellion that took her husband and eldest son; the year and cause are not given in any maester's chronicle.
+A daughter of the elder Stark line wed to her first cousin Rickard of Winterfell, mother of the four trueborn children who would scatter to the four winds: Brandon, Eddard, Lyanna, and Benjen. Died years before the rebellion that took her husband and eldest son; the year and cause are not given in any maester's chronicle.

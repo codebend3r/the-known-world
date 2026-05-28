@@ -34,4 +34,4 @@ sources:
 draft: false
 ---
 
-Fourth of his name. A bloated, greedy, lustful king who fathered bastards on lovers from every region of the realm and on his deathbed legitimised them all — sowing a century of civil wars to come. He hated his pious sister-queen Naerys and his brother Aemon the Dragonknight in equal measure, and his unworthiness was such that some chroniclers laid the doom of the dynasty at his feet.
+Fourth of his name. A bloated, greedy, lustful king who fathered bastards on lovers from every region of the realm and on his deathbed legitimised them all, sowing a century of civil wars to come. He hated his pious sister-queen Naerys and his brother Aemon the Dragonknight in equal measure, and his unworthiness was such that some chroniclers laid the doom of the dynasty at his feet.

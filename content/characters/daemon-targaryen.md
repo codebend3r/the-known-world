@@ -35,4 +35,4 @@ sources:
 draft: false
 ---
 
-Younger brother to King Viserys I and the bright, dangerous edge of his reign. Twice exiled by his brother and twice forgiven, he carved a crown for himself in the Stepstones, fathered children on the Lady of Driftmark and then on his niece-queen Rhaenyra, and flew the Blood Wyrm Caraxes through every great battle of the Dance. He met his elder nephew Aemond above the Gods Eye on Vhagar in single combat — and both of them went down into the lake together.
+Younger brother to King Viserys I and the bright, dangerous edge of his reign. Twice exiled by his brother and twice forgiven, he carved a crown for himself in the Stepstones, fathered children on the Lady of Driftmark and then on his niece-queen Rhaenyra, and flew the Blood Wyrm Caraxes through every great battle of the Dance. He met his elder nephew Aemond above the Gods Eye on Vhagar in single combat, and both of them went down into the lake together.

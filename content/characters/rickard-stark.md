@@ -27,4 +27,4 @@ sources:
 draft: false
 ---
 
-Lord of Winterfell and Warden of the North in the latter years of the Mad King's reign. Married his first cousin Lyarra Stark and fathered four trueborn children. Sought to bind the North closer to the south through the marriages of his children — Brandon to Catelyn Tully, Lyanna to Robert Baratheon — designs the courtiers called his *southron ambitions*. Burned alive in the throne room of the Red Keep in 282 AC, on the orders of Aerys II.
+Lord of Winterfell and Warden of the North in the latter years of the Mad King's reign. Married his first cousin Lyarra Stark and fathered four trueborn children. Sought to bind the North closer to the south through the marriages of his children (Brandon to Catelyn Tully, Lyanna to Robert Baratheon), designs the courtiers called his *southron ambitions*. Burned alive in the throne room of the Red Keep in 282 AC, on the orders of Aerys II.

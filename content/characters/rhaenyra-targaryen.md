@@ -36,4 +36,4 @@ sources:
 draft: false
 ---
 
-Only surviving child of Viserys I by Aemma Arryn, named heir to the Iron Throne at the age of seven and standing in that right for twenty-four years before her brother Aegon was crowned over her by the green council. She raised her banners on Dragonstone, gathered her dragons, took King's Landing for a season, and lost — her sons slain, her dragon brought low, herself fed to the green dragon Sunfyre on the steps of her own keep. The realm called her the Half-Year Queen.
+Only surviving child of Viserys I by Aemma Arryn, named heir to the Iron Throne at the age of seven and standing in that right for twenty-four years before her brother Aegon was crowned over her by the green council. She raised her banners on Dragonstone, gathered her dragons, took King's Landing for a season, and lost: her sons slain, her dragon brought low, herself fed to the green dragon Sunfyre on the steps of her own keep. The realm called her the Half-Year Queen.

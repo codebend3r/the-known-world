@@ -24,4 +24,4 @@ sources:
 draft: false
 ---
 
-Heir to Runestone in the Vale of Arryn, wed by command of Jaehaerys I to the young Prince Daemon to gain him lands and an income — a match Daemon despised and abandoned for the brothels of King's Landing within a year. She died in a fall from her horse in 115 AC, childless; Daemon flew at once to claim her seat and was rebuffed by the Lord of the Eyrie.
+Heir to Runestone in the Vale of Arryn, wed by command of Jaehaerys I to the young Prince Daemon to gain him lands and an income, a match Daemon despised and abandoned for the brothels of King's Landing within a year. She died in a fall from her horse in 115 AC, childless; Daemon flew at once to claim her seat and was rebuffed by the Lord of the Eyrie.

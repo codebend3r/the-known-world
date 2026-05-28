@@ -19,4 +19,4 @@ sources:
 draft: false
 ---
 
-Twin son of Paxter Redwyne and Mina Tyrell, mocked across the Reach as *Slobber* — the more drunken of the unfortunate-named twins.
+Twin son of Paxter Redwyne and Mina Tyrell, mocked across the Reach as *Slobber*, the more drunken of the unfortunate-named twins.

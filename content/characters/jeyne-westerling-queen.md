@@ -20,4 +20,4 @@ sources:
 draft: false
 ---
 
-A maid of the Crag, one of the three "Black Brides" Maegor took in a single ceremony to get an heir on. She died in childbed bringing forth yet another stillborn monstrosity — the death-blow, the realm whispered, to Maegor's last hope of issue.
+A maid of the Crag, one of the three "Black Brides" Maegor took in a single ceremony to get an heir on. She died in childbed bringing forth yet another stillborn monstrosity, the death-blow, the realm whispered, to Maegor's last hope of issue.

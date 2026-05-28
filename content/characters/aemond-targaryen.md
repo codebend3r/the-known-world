@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-Second son of Viserys I by Alicent Hightower, who lost an eye as a boy to his nephew Lucerys's blade at Driftmark — and was rewarded that same night with old Vhagar, largest dragon in the world. He grew up cold, sharp, and unforgiving; he chased Lucerys down through a storm above Shipbreaker Bay and tore him from the sky, opening the war in earnest. He met his uncle Daemon at the Gods Eye and the two of them came down together into the lake.
+Second son of Viserys I by Alicent Hightower, who lost an eye as a boy to his nephew Lucerys's blade at Driftmark, and was rewarded that same night with old Vhagar, largest dragon in the world. He grew up cold, sharp, and unforgiving; he chased Lucerys down through a storm above Shipbreaker Bay and tore him from the sky, opening the war in earnest. He met his uncle Daemon at the Gods Eye and the two of them came down together into the lake.

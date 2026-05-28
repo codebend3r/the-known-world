@@ -28,4 +28,4 @@ sources:
 draft: false
 ---
 
-Lord of Driftmark and the richest man in the Seven Kingdoms, the Sea Snake — so called for nine great voyages east of the Jade Sea aboard his ship of the same name. He wed Princess Rhaenys and made his house the keel of the dragon line; he served Viserys I as Master of Ships, fought for Rhaenyra in the Dance, and after the war's end was the chief Hand to the boy-king Aegon III until his death at seventy-nine.
+Lord of Driftmark and the richest man in the Seven Kingdoms, the Sea Snake, so called for nine great voyages east of the Jade Sea aboard his ship of the same name. He wed Princess Rhaenys and made his house the keel of the dragon line; he served Viserys I as Master of Ships, fought for Rhaenyra in the Dance, and after the war's end was the chief Hand to the boy-king Aegon III until his death at seventy-nine.

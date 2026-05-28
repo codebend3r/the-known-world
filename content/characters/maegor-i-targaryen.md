@@ -32,4 +32,4 @@ sources:
 draft: false
 ---
 
-Only son of Aegon I by Visenya, called Maegor the Cruel. A monstrous warrior who took the throne by force after his half-brother Aenys's death, broke the Faith Militant at the Great Hunt and the field of Stonebridge, and finished the Red Keep — including the dungeons and secret passages whose builders he then put to the sword. He took six wives in pursuit of an heir, sired only stillborn monsters, and was found dead upon the Iron Throne, the points of its blades through his wrists and neck.
+Only son of Aegon I by Visenya, called Maegor the Cruel. A monstrous warrior who took the throne by force after his half-brother Aenys's death, broke the Faith Militant at the Great Hunt and the field of Stonebridge, and finished the Red Keep, including the dungeons and secret passages whose builders he then put to the sword. He took six wives in pursuit of an heir, sired only stillborn monsters, and was found dead upon the Iron Throne, the points of its blades through his wrists and neck.

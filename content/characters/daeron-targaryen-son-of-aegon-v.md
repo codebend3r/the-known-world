@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Third son of Aegon V. Betrothed as a boy to Lady Olenna Redwyne — who broke the match herself — he never married, taking instead a sworn shield with whom he spent his life. He fell at three-and-twenty in the War of the Ninepenny Kings, fighting the last of the Blackfyre pretenders on the Stepstones.
+Third son of Aegon V. Betrothed as a boy to Lady Olenna Redwyne (who broke the match herself), he never married, taking instead a sworn shield with whom he spent his life. He fell at three-and-twenty in the War of the Ninepenny Kings, fighting the last of the Blackfyre pretenders on the Stepstones.

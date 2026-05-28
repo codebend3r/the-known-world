@@ -28,4 +28,4 @@ sources:
 draft: false
 ---
 
-Eldest daughter of Aegon III, sister-wife to Baelor I in name only — he locked her in the Maidenvault and forbade her his bed. She broke out by ropes and by guile and took her cousin Aegon to her bed, conceiving a son, Daemon Waters, who would be legitimised as Daemon Blackfyre and one day raise the first Blackfyre Rebellion.
+Eldest daughter of Aegon III, sister-wife to Baelor I in name only; he locked her in the Maidenvault and forbade her his bed. She broke out by ropes and by guile and took her cousin Aegon to her bed, conceiving a son, Daemon Waters, who would be legitimised as Daemon Blackfyre and one day raise the first Blackfyre Rebellion.

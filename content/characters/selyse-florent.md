@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Eldest daughter of Lord Florent of Brightwater Keep, wed to Stannis Baratheon on Dragonstone. Long, gaunt, and unbeloved by her husband, she found her zeal in the red faith of R'hllor — and has tried, with little success, to bring her grim lord into the same fire.
+Eldest daughter of Lord Florent of Brightwater Keep, wed to Stannis Baratheon on Dragonstone. Long, gaunt, and unbeloved by her husband, she found her zeal in the red faith of R'hllor, and has tried, with little success, to bring her grim lord into the same fire.

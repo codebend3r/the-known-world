@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Dayne of Starfall, wed to Prince Maekar before his accession. She bore him six children — four sons and two daughters — and died long before her husband came to the throne.
+A daughter of House Dayne of Starfall, wed to Prince Maekar before his accession. She bore him six children (four sons and two daughters) and died long before her husband came to the throne.

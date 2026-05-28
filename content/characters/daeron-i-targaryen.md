@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-First of his name, called the Young Dragon. Came to the throne at fourteen and at once turned his realm to the conquest his great-great-great-grandfather had left undone — Dorne fell to him in a summer, was lost within two, and Daeron rode south at eighteen to win it back. He was struck down at a parley beneath the peace-banner by Dornish knives and never returned. His brother Baelor took the throne after him.
+First of his name, called the Young Dragon. Came to the throne at fourteen and at once turned his realm to the conquest his great-great-great-grandfather had left undone. Dorne fell to him in a summer, was lost within two, and Daeron rode south at eighteen to win it back. He was struck down at a parley beneath the peace-banner by Dornish knives and never returned. His brother Baelor took the throne after him.

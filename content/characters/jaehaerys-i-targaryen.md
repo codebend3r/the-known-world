@@ -42,4 +42,4 @@ sources:
 draft: false
 ---
 
-First of his name, called the Old King and the Conciliator. Crowned at fourteen after Maegor's death and ruling for fifty-five years — the longest reign in Targaryen history — Jaehaerys settled the Faith Militant uprising by treaty, codified the laws of the realm, established the Crown's roads and ravenries, and presided with his sister-wife Alysanne over what was remembered as the golden age of the dynasty. He outlived nine of his thirteen children and saw three of his grandsons buried before him; on his death the throne passed to his grandson Viserys.
+First of his name, called the Old King and the Conciliator. Crowned at fourteen after Maegor's death and ruling for fifty-five years (the longest reign in Targaryen history), Jaehaerys settled the Faith Militant uprising by treaty, codified the laws of the realm, established the Crown's roads and ravenries, and presided with his sister-wife Alysanne over what was remembered as the golden age of the dynasty. He outlived nine of his thirteen children and saw three of his grandsons buried before him; on his death the throne passed to his grandson Viserys.

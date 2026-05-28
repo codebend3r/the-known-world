@@ -20,4 +20,4 @@ sources:
 draft: false
 ---
 
-Second son of Mace Tyrell, called *the Gallant*. Reputed by some to be the finest swordsman in the Seven Kingdoms — better even than his more famous brother Loras.
+Second son of Mace Tyrell, called *the Gallant*. Reputed by some to be the finest swordsman in the Seven Kingdoms, better even than his more famous brother Loras.

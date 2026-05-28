@@ -27,4 +27,4 @@ sources:
 draft: false
 ---
 
-A timid, simple girl who never wanted to leave her mother's side. Wed to Lord Rodrik Arryn at sixteen, she bore him a single daughter — Aemma, future queen — and died in the childbed.
+A timid, simple girl who never wanted to leave her mother's side. Wed to Lord Rodrik Arryn at sixteen, she bore him a single daughter (Aemma, future queen), and died in the childbed.

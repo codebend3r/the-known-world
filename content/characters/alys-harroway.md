@@ -20,4 +20,4 @@ sources:
 draft: false
 ---
 
-Daughter of Maegor's Hand Lucas Harroway and his second wife, taken in defiance of king and Faith. She bore Maegor a stillborn monster, and when a second pregnancy ended in the same horror Queen Tyanna whispered that the child was not the king's — whereupon Maegor put Alys and the women of her house to the sword.
+Daughter of Maegor's Hand Lucas Harroway and his second wife, taken in defiance of king and Faith. She bore Maegor a stillborn monster, and when a second pregnancy ended in the same horror Queen Tyanna whispered that the child was not the king's, whereupon Maegor put Alys and the women of her house to the sword.

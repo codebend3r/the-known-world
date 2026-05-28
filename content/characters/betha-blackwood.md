@@ -30,4 +30,4 @@ sources:
 draft: false
 ---
 
-Daughter of Lord Matthos Blackwood of Raventree, called Black Betha for her hair and her temper. Wed in 220 AC to her cousin Aegon — then but a fourth son with no expectation of a throne — and stood by him through the unlikely chain of deaths that put him on the Iron Throne. She bore him five children and died at his side in the fire at Summerhall.
+Daughter of Lord Matthos Blackwood of Raventree, called Black Betha for her hair and her temper. Wed in 220 AC to her cousin Aegon (then but a fourth son with no expectation of a throne), and stood by him through the unlikely chain of deaths that put him on the Iron Throne. She bore him five children and died at his side in the fire at Summerhall.

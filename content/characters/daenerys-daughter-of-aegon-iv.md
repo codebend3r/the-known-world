@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-Only daughter of Aegon IV and Naerys. As a girl she had loved her cousin Daemon Waters, and might have wed him, but her brother Daeron II gave her instead to Prince Maron Martell — the marriage that at long last brought Dorne into the Seven Kingdoms. She bore Maron three children and lived out her years at Sunspear.
+Only daughter of Aegon IV and Naerys. As a girl she had loved her cousin Daemon Waters, and might have wed him, but her brother Daeron II gave her instead to Prince Maron Martell, the marriage that at long last brought Dorne into the Seven Kingdoms. She bore Maron three children and lived out her years at Sunspear.
