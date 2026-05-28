@@ -249,6 +249,11 @@
   border-radius: 2px;
 }
 
+.family-tree__row--placeholder {
+  background: transparent;
+  border: 1px dotted rgba(107, 68, 35, 0.55);
+}
+
 .family-tree__person {
   display: inline-flex;
   align-items: baseline;

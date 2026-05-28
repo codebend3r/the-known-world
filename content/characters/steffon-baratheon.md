@@ -10,6 +10,8 @@ died:
   era: AC
   precision: year
 primary-house: baratheon
+parents:
+  - unknown-baratheon-ancestors
 spouses:
   - cassana-estermont
 children:

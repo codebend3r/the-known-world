@@ -46,8 +46,11 @@ function PersonLabel({ node }: { node: TreeNode }) {
 }
 
 function NodeRow({ node }: { node: TreeNode }) {
+  const rowClass =
+    'family-tree__row' +
+    (node.placeholder ? ' family-tree__row--placeholder' : '');
   return (
-    <div className="family-tree__row">
+    <div className={rowClass}>
       <PersonLabel node={node} />
       {node.spouses.map((spouse) => {
         const className =

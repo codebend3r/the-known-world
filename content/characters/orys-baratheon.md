@@ -12,6 +12,8 @@ died:
 primary-house: baratheon
 spouses:
   - argella-durrandon
+children:
+  - unknown-baratheon-ancestors
 titles:
   - Lord of Storm's End
   - Lord Paramount of the Stormlands
