@@ -1,12 +1,12 @@
 .main-menu {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
-@media (min-width: 800px) {
+@media (max-width: 767.98px) { /* md */
   .main-menu {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 

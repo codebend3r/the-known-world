@@ -13,7 +13,23 @@
   --font-heading: var(--font-cinzel), Georgia, serif;
   --font-body: var(--font-eb-garamond), Georgia, serif;
   --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --bp-xs: 480px;
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
 }
+
+/* Desktop-first breakpoints — default styles target xl. Each @media rule
+   overrides at the named breakpoint AND below. CSS doesn't allow
+   var(--bp-*) inside @media queries, so the raw thresholds below must
+   stay in sync with the --bp-* values above. Convention:
+     (max-width: 479.98px)  → xs
+     (max-width: 639.98px)  → sm
+     (max-width: 767.98px)  → md
+     (max-width: 1023.98px) → lg
+     (max-width: 1279.98px) → xl */
 
 *, *::before, *::after { box-sizing: border-box; }
 
@@ -49,6 +65,6 @@ h3 { font-size: 1.15rem; color: var(--ink-faded); }
 a { color: var(--ink-faded); text-decoration: underline; text-decoration-color: rgba(107, 68, 35, 0.4); }
 a:hover { color: var(--gold-leaf); }
 
-@media (max-width: 720px) {
+@media (max-width: 767.98px) { /* md */
   html, body { font-size: 20px; }
 }
