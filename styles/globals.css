@@ -30,6 +30,8 @@ html, body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
   font-family: var(--font-heading);
   color: var(--ink);
   font-weight: 600;
@@ -37,7 +39,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 { font-size: 2.2rem; font-variant: small-caps; letter-spacing: 2px; text-align: center; }
-h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(107, 68, 35, 0.3); padding-bottom: 0.3rem; }
+h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(107, 68, 35, 0.3); }
 h3 { font-size: 1.15rem; color: var(--ink-faded); }
 
 a { color: var(--ink-faded); text-decoration: underline; text-decoration-color: rgba(107, 68, 35, 0.4); }
