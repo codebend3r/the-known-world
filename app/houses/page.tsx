@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { loadAllHouses } from '@/lib/content';
-import { regionForHouse } from '@/lib/regions';
+import { regionForHouse, regionLabel } from '@/lib/regions';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { FilteredHouseList, type HouseItem } from '@/components/FilteredHouseList';
 
@@ -19,11 +19,15 @@ export default async function HousesPage() {
   const housesBySlug = new Map(visible.map((h) => [h.slug, h.frontmatter]));
 
   const items: HouseItem[] = visible
-    .map((h) => ({
-      slug: h.frontmatter.slug,
-      name: shortName(h.frontmatter.name),
-      region: regionForHouse(h.frontmatter.slug, housesBySlug),
-    }))
+    .map((h) => {
+      const region = regionForHouse(h.frontmatter.slug, housesBySlug);
+      return {
+        slug: h.frontmatter.slug,
+        name: shortName(h.frontmatter.name),
+        region,
+        regionLabel: regionLabel(region),
+      };
+    })
     .sort((a, b) => a.name.localeCompare(b.name));
 
   return (

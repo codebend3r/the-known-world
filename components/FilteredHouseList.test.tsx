@@ -3,13 +3,14 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FilteredHouseList, type HouseItem } from './FilteredHouseList';
 
 const items: HouseItem[] = [
-  { slug: 'stark', name: 'Stark', region: 'north' },
-  { slug: 'lannister', name: 'Lannister', region: 'westerlands' },
-  { slug: 'tully', name: 'Tully', region: 'riverlands' },
+  { slug: 'stark', name: 'Stark', region: 'north', regionLabel: 'The North' },
+  { slug: 'lannister', name: 'Lannister', region: 'westerlands', regionLabel: 'The Westerlands' },
+  { slug: 'tully', name: 'Tully', region: 'riverlands', regionLabel: 'The Riverlands' },
 ];
 
 beforeEach(() => {
   vi.useFakeTimers();
+  window.localStorage.clear();
 });
 
 afterEach(() => {
@@ -71,5 +72,55 @@ describe('FilteredHouseList', () => {
     expect(
       container.querySelector('.house-list__card--region-westerlands'),
     ).not.toBeNull();
+  });
+});
+
+describe('FilteredHouseList view toggle', () => {
+  it('starts in grid view by default', () => {
+    const { container } = render(<FilteredHouseList items={items} />);
+    expect(container.querySelector('ul.house-list')).not.toBeNull();
+    expect(container.querySelector('ul.house-list--list')).toBeNull();
+    expect(
+      screen.getByRole('button', { name: /grid view/i }).getAttribute('aria-pressed'),
+    ).toBe('true');
+  });
+
+  it('switches to list view when the list button is clicked', () => {
+    const { container } = render(<FilteredHouseList items={items} />);
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /list view/i }));
+    });
+    expect(container.querySelector('ul.house-list--list')).not.toBeNull();
+    expect(window.localStorage.getItem('gota:houses-view')).toBe('list');
+  });
+
+  it('hydrates the stored choice from localStorage after mount', () => {
+    window.localStorage.setItem('gota:houses-view', 'list');
+    const { container } = render(<FilteredHouseList items={items} />);
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(container.querySelector('ul.house-list--list')).not.toBeNull();
+  });
+
+  it('ignores invalid stored values and stays in grid view', () => {
+    window.localStorage.setItem('gota:houses-view', 'kanban');
+    const { container } = render(<FilteredHouseList items={items} />);
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(container.querySelector('ul.house-list--list')).toBeNull();
+  });
+
+  it('shows the region label on each list row', () => {
+    const { container } = render(<FilteredHouseList items={items} />);
+    act(() => {
+      fireEvent.click(screen.getByRole('button', { name: /list view/i }));
+    });
+    const regions = container.querySelectorAll('.house-list__region');
+    expect(regions.length).toBe(3);
+    expect(Array.from(regions).map((r) => r.textContent)).toEqual(
+      expect.arrayContaining(['The North', 'The Westerlands', 'The Riverlands']),
+    );
   });
 });
