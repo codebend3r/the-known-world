@@ -27,6 +27,9 @@ titles:
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm
+aliases:
+  - The Unlikely
+  - Egg
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_V_Targaryen

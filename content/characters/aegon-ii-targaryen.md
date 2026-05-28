@@ -26,6 +26,9 @@ titles:
   - Lord of the Seven Kingdoms
   - Protector of the Realm
   - Rider of Sunfyre
+aliases:
+  - The Elder
+  - The Usurper
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_II_Targaryen
