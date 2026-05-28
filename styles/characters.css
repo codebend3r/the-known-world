@@ -124,6 +124,11 @@ a.character-list__card:focus-visible {
   color: var(--ink);
 }
 
+.character-detail__unaffiliated {
+  font-style: italic;
+  color: var(--ink-faded);
+}
+
 .character-detail__titles {
   list-style: none;
   margin: 0;

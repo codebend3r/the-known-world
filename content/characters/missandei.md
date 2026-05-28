@@ -7,7 +7,7 @@ born:
   era: AC
   precision: year
 died: null
-primary-house: targaryen
+primary-house: null
 titles:
   - Scribe to the Queen
 sources:

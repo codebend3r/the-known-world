@@ -10,7 +10,7 @@ died:
   year: 259
   era: AC
   precision: year
-primary-house: targaryen
+primary-house: null
 titles:
   - Ser
   - Lord Commander of the Kingsguard

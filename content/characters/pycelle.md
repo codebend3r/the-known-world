@@ -10,7 +10,7 @@ died:
   year: 300
   era: AC
   precision: year
-primary-house: lannister
+primary-house: null
 titles:
   - Grand Maester
 sources:

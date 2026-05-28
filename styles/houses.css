@@ -337,6 +337,14 @@ a.family-tree__name:focus-visible {
   }
 }
 
+.family-tree__name--m {
+  color: var(--ink-slate);
+}
+
+.family-tree__name--f {
+  color: var(--ink-rose);
+}
+
 .family-tree__name--external {
   color: var(--ink-faded);
   font-style: italic;

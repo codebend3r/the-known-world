@@ -23,7 +23,7 @@ export function regionLabel(slug: RegionSlug | null): string | null {
 }
 
 export function regionForHouse(
-  slug: string,
+  slug: string | null,
   housesBySlug: Map<string, House>,
 ): RegionSlug | null {
   const seen = new Set<string>();

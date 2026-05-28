@@ -13,7 +13,7 @@ const SIGIL_SLUGS = new Set([
 ]);
 
 type Props = {
-  slug: string;
+  slug: string | null;
   name: string;
   size?: string;
   decorative?: boolean;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export function Sigil({ slug, name, size, decorative = false, className }: Props) {
-  if (!SIGIL_SLUGS.has(slug)) return null;
+  if (slug === null || !SIGIL_SLUGS.has(slug)) return null;
 
   const classes = ['sigil', `sigil--${slug}`, className].filter(Boolean).join(' ');
   const style = size ? ({ '--sigil-size': size } as CSSProperties) : undefined;

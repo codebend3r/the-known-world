@@ -38,10 +38,15 @@ function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
   );
 }
 
+function sexClass(sex: 'm' | 'f' | null): string {
+  return sex ? ` family-tree__name--${sex}` : '';
+}
+
 function PersonLabel({ node }: { node: TreeNode }) {
   const lifespan = formatLifespan(node);
   const className =
     'family-tree__name' +
+    sexClass(node.sex) +
     (node.placeholder ? ' family-tree__name--placeholder' : '') +
     (node.external ? ' family-tree__name--external' : '');
   return (
@@ -68,6 +73,7 @@ function NodeRow({ node }: { node: TreeNode }) {
       {node.spouses.map((spouse) => {
         const className =
           'family-tree__name family-tree__name--spouse' +
+          sexClass(spouse.sex) +
           (spouse.placeholder ? ' family-tree__name--placeholder' : '') +
           (!spouse.inHouse ? ' family-tree__name--external' : '');
         return (

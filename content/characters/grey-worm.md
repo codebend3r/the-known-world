@@ -4,7 +4,7 @@ name: Grey Worm
 sex: m
 born: null
 died: null
-primary-house: targaryen
+primary-house: null
 titles:
   - Commander of the Unsullied
 sources:

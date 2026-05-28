@@ -8,7 +8,7 @@ import { filterByName } from '@/lib/search';
 export type CharacterItem = {
   slug: string;
   name: string;
-  primaryHouseSlug: string;
+  primaryHouseSlug: string | null;
   region: string | null;
 };
 

@@ -150,6 +150,18 @@ describe('CharacterSchema', () => {
     expect(parsed.sex).toBeNull();
   });
 
+  it('accepts null primary-house for unaffiliated characters', () => {
+    const input = {
+      slug: 'tormund', name: 'Tormund', sex: 'm',
+      born: null, died: null,
+      'primary-house': null,
+      'also-of-houses': [], parents: [], spouses: [], children: [], titles: [],
+      sources: [], draft: false,
+    };
+    const parsed = CharacterSchema.parse(input);
+    expect(parsed['primary-house']).toBeNull();
+  });
+
   it('rejects sex values other than m, f, or null', () => {
     const input = {
       slug: 'x', name: 'X', sex: 'other',

@@ -4,7 +4,7 @@ name: Varys
 sex: m
 born: null
 died: null
-primary-house: targaryen
+primary-house: null
 titles:
   - The Spider
   - Master of Whisperers

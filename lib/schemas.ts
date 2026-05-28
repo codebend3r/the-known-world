@@ -69,7 +69,7 @@ export const CharacterSchema = z.object({
   sex: z.enum(['m', 'f']).nullable().default(null),
   born: DateSchema.nullable(),
   died: DateSchema.nullable(),
-  'primary-house': z.string(),
+  'primary-house': z.string().nullable(),
   'also-of-houses': z.array(z.string()).default([]),
   parents: z.array(z.string()).default([]),
   spouses: z.array(z.string()).default([]),

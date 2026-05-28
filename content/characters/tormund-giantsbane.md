@@ -4,7 +4,7 @@ name: Tormund Giantsbane
 sex: m
 born: null
 died: null
-primary-house: free-folk
+primary-house: null
 titles:
   - Tall-Talker
   - Husband to Bears

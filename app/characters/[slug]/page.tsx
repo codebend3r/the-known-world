@@ -122,7 +122,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const charactersBySlug = new Map(allCharacters.map((c) => [c.slug, c.frontmatter]));
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
 
-  const primaryHouse = housesBySlug.get(fm['primary-house']);
+  const primaryHouse = fm['primary-house'] ? housesBySlug.get(fm['primary-house']) : undefined;
   const alsoHouses = fm['also-of-houses']
     .map((s) => ({ slug: s, house: housesBySlug.get(s) }))
     .filter((x): x is { slug: string; house: NonNullable<typeof x.house> } => x.house !== undefined);
@@ -183,8 +183,10 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
               <Link href={`/houses/${fm['primary-house']}/`}>
                 {primaryHouse.name}
               </Link>
-            ) : (
+            ) : fm['primary-house'] !== null ? (
               fm['primary-house']
+            ) : (
+              <span className="character-detail__unaffiliated">Unaffiliated</span>
             )}
           </dd>
         </div>

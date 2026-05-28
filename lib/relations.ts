@@ -37,6 +37,7 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
 
   for (const character of set.characters) {
     const houseSlug = character.frontmatter['primary-house'];
+    if (houseSlug === null) continue;
     const existing = membersByHouse.get(houseSlug) ?? [];
     existing.push(character.frontmatter.slug);
     membersByHouse.set(houseSlug, existing);
@@ -75,7 +76,9 @@ export function findOrphanSlugs(set: ContentSet): string[] {
     for (const s of house.frontmatter['cadet-houses']) referenced.add(s);
   }
   for (const character of set.characters) {
-    referenced.add(character.frontmatter['primary-house']);
+    if (character.frontmatter['primary-house']) {
+      referenced.add(character.frontmatter['primary-house']);
+    }
     for (const s of character.frontmatter.parents) referenced.add(s);
     for (const s of character.frontmatter.spouses) referenced.add(s);
     for (const s of character.frontmatter.children) referenced.add(s);
