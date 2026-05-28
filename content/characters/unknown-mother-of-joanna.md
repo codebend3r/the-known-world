@@ -1,6 +1,7 @@
 ---
 slug: unknown-mother-of-joanna
 name: Unknown
+sex: f
 born: null
 died: null
 primary-house: lannister

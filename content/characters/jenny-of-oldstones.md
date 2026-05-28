@@ -1,6 +1,7 @@
 ---
 slug: jenny-of-oldstones
 name: Jenny of Oldstones
+sex: f
 born: null
 died:
   year: 259

@@ -1,6 +1,7 @@
 ---
 slug: garlan-tyrell
 name: Garlan Tyrell
+sex: m
 born:
   year: 279
   era: AC

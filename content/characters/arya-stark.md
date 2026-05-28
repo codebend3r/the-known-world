@@ -1,6 +1,7 @@
 ---
 slug: arya-stark
 name: Arya Stark
+sex: f
 born:
   year: 289
   era: AC

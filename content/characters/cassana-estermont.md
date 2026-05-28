@@ -1,6 +1,7 @@
 ---
 slug: cassana-estermont
 name: Cassana Estermont
+sex: f
 born:
   year: 243
   era: AC

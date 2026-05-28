@@ -1,6 +1,7 @@
 ---
 slug: mina-tyrell
 name: Mina Tyrell
+sex: f
 born:
   year: 262
   era: AC

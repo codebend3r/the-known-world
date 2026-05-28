@@ -1,6 +1,7 @@
 ---
 slug: joy-hill
 name: Joy Hill
+sex: f
 born:
   year: 285
   era: AC

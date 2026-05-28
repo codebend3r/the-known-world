@@ -1,6 +1,7 @@
 ---
 slug: viserra-targaryen
 name: Viserra Targaryen
+sex: f
 born:
   year: 71
   era: AC

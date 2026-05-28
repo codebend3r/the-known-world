@@ -366,6 +366,12 @@ a.family-tree__name:focus-visible {
   font-size: 0.95rem;
 }
 
+.family-tree__gender {
+  color: var(--gold-leaf);
+  font-size: 0.85rem;
+  margin-right: 0.15rem;
+}
+
 .family-tree__children {
   margin-top: 0.2rem;
 }

@@ -1,6 +1,7 @@
 ---
 slug: maegor-i-targaryen
 name: Maegor I Targaryen
+sex: m
 born:
   year: 12
   era: AC

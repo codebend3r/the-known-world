@@ -1,6 +1,7 @@
 ---
 slug: shaera-targaryen
 name: Shaera Targaryen
+sex: f
 born:
   year: 226
   era: AC

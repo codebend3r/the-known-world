@@ -1,6 +1,7 @@
 ---
 slug: genna-lannister
 name: Genna Lannister
+sex: f
 born:
   year: 245
   era: AC

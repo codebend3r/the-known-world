@@ -1,6 +1,7 @@
 ---
 slug: selyse-florent
 name: Selyse Florent
+sex: f
 born:
   year: 263
   era: AC

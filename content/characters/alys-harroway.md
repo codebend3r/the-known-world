@@ -1,6 +1,7 @@
 ---
 slug: alys-harroway
 name: Alys Harroway
+sex: f
 born: null
 died:
   year: 45

@@ -1,6 +1,7 @@
 ---
 slug: aegon-son-of-rhaegar
 name: Aegon Targaryen
+sex: m
 born:
   year: 281
   era: AC

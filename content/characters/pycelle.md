@@ -1,6 +1,7 @@
 ---
 slug: pycelle
 name: Pycelle
+sex: m
 born:
   year: 220
   era: AC

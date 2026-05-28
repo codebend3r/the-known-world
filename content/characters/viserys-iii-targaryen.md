@@ -1,6 +1,7 @@
 ---
 slug: viserys-iii-targaryen
 name: Viserys Targaryen
+sex: m
 born:
   year: 276
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: aerys-ii-targaryen
 name: Aerys II Targaryen
+sex: m
 born:
   year: 244
   era: AC

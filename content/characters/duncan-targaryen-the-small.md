@@ -1,6 +1,7 @@
 ---
 slug: duncan-targaryen-the-small
 name: Duncan Targaryen
+sex: m
 born:
   year: 220
   era: AC

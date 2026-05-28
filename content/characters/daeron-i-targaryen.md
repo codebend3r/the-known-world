@@ -1,6 +1,7 @@
 ---
 slug: daeron-i-targaryen
 name: Daeron I Targaryen
+sex: m
 born:
   year: 143
   era: AC

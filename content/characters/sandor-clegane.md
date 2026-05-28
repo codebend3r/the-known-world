@@ -1,6 +1,7 @@
 ---
 slug: sandor-clegane
 name: Sandor Clegane
+sex: m
 born:
   year: 270
   era: AC

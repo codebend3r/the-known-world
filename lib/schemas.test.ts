@@ -100,6 +100,7 @@ describe('CharacterSchema', () => {
     const input = {
       slug: 'eddard-stark',
       name: 'Eddard Stark',
+      sex: 'm',
       born: { year: 263, era: 'AC', precision: 'year' },
       died: { year: 299, era: 'AC', precision: 'year' },
       'primary-house': 'stark',
@@ -120,6 +121,7 @@ describe('CharacterSchema', () => {
     const input = {
       slug: 'unnamed-stark-daughter',
       name: 'Unnamed Stark daughter',
+      sex: 'f',
       born: null,
       died: null,
       'primary-house': 'stark',
@@ -134,6 +136,29 @@ describe('CharacterSchema', () => {
       draft: false,
     };
     expect(() => CharacterSchema.parse(input)).not.toThrow();
+  });
+
+  it('defaults sex to null when omitted', () => {
+    const input = {
+      slug: 'x', name: 'X',
+      born: null, died: null,
+      'primary-house': 'stark',
+      'also-of-houses': [], parents: [], spouses: [], children: [], titles: [],
+      sources: [], draft: false,
+    };
+    const parsed = CharacterSchema.parse(input);
+    expect(parsed.sex).toBeNull();
+  });
+
+  it('rejects sex values other than m, f, or null', () => {
+    const input = {
+      slug: 'x', name: 'X', sex: 'other',
+      born: null, died: null,
+      'primary-house': 'stark',
+      'also-of-houses': [], parents: [], spouses: [], children: [], titles: [],
+      sources: [], draft: false,
+    };
+    expect(() => CharacterSchema.parse(input)).toThrow();
   });
 });
 

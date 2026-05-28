@@ -1,6 +1,7 @@
 ---
 slug: jena-dondarrion
 name: Jena Dondarrion
+sex: f
 born: null
 died: null
 primary-house: dondarrion

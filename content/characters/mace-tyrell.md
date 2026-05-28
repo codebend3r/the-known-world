@@ -1,6 +1,7 @@
 ---
 slug: mace-tyrell
 name: Mace Tyrell
+sex: m
 born:
   year: 258
   era: AC

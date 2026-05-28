@@ -1,6 +1,7 @@
 ---
 slug: alyssa-targaryen-daughter-of-jaehaerys-i
 name: Alyssa Targaryen
+sex: f
 born:
   year: 60
   era: AC

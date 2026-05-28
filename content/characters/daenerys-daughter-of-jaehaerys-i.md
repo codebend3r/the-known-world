@@ -1,6 +1,7 @@
 ---
 slug: daenerys-daughter-of-jaehaerys-i
 name: Daenerys Targaryen
+sex: f
 born:
   year: 54
   era: AC

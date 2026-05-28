@@ -1,6 +1,7 @@
 ---
 slug: daeron-ii-targaryen
 name: Daeron II Targaryen
+sex: m
 born:
   year: 153
   era: AC

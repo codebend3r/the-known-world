@@ -1,6 +1,7 @@
 ---
 slug: helaena-targaryen
 name: Helaena Targaryen
+sex: f
 born:
   year: 109
   era: AC

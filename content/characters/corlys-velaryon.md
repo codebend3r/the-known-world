@@ -1,6 +1,7 @@
 ---
 slug: corlys-velaryon
 name: Corlys Velaryon
+sex: m
 born:
   year: 53
   era: AC

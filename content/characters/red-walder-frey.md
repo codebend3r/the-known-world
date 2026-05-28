@@ -1,6 +1,7 @@
 ---
 slug: red-walder-frey
 name: Walder Frey
+sex: m
 born:
   year: 284
   era: AC

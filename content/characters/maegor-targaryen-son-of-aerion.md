@@ -1,6 +1,7 @@
 ---
 slug: maegor-targaryen-son-of-aerion
 name: Maegor Targaryen
+sex: m
 born:
   year: 232
   era: AC

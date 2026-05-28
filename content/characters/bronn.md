@@ -1,6 +1,7 @@
 ---
 slug: bronn
 name: Bronn
+sex: m
 born: null
 died: null
 primary-house: stokeworth

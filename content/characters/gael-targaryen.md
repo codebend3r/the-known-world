@@ -1,6 +1,7 @@
 ---
 slug: gael-targaryen
 name: Gael Targaryen
+sex: f
 born:
   year: 80
   era: AC

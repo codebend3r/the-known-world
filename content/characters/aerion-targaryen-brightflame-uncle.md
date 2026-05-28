@@ -1,6 +1,7 @@
 ---
 slug: aerion-targaryen-brightflame-uncle
 name: Aerion Targaryen
+sex: m
 born: null
 died: null
 primary-house: targaryen

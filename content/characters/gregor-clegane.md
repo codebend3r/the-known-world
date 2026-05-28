@@ -1,6 +1,7 @@
 ---
 slug: gregor-clegane
 name: Gregor Clegane
+sex: m
 born:
   year: 265
   era: AC

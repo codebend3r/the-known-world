@@ -1,6 +1,7 @@
 ---
 slug: aemon-son-of-jaehaerys-i
 name: Aemon Targaryen
+sex: m
 born:
   year: 55
   era: AC

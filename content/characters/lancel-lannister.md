@@ -1,6 +1,7 @@
 ---
 slug: lancel-lannister
 name: Lancel Lannister
+sex: m
 born:
   year: 283
   era: AC

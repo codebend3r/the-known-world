@@ -1,6 +1,7 @@
 ---
 slug: aegon-son-of-jaehaerys-i
 name: Aegon Targaryen
+sex: m
 born:
   year: 52
   era: AC

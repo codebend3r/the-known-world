@@ -1,6 +1,7 @@
 ---
 slug: janna-tyrell
 name: Janna Tyrell
+sex: f
 born:
   year: 263
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: tyanna-of-the-tower
 name: Tyanna of the Tower
+sex: f
 born: null
 died:
   year: 48

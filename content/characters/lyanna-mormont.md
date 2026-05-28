@@ -1,6 +1,7 @@
 ---
 slug: lyanna-mormont
 name: Lyanna Mormont
+sex: f
 born:
   year: 290
   era: AC

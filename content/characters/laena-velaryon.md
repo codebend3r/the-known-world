@@ -1,6 +1,7 @@
 ---
 slug: laena-velaryon
 name: Laena Velaryon
+sex: f
 born:
   year: 92
   era: AC

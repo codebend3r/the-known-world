@@ -1,6 +1,7 @@
 ---
 slug: jocelyn-baratheon
 name: Jocelyn Baratheon
+sex: f
 born:
   year: 55
   era: AC

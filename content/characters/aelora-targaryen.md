@@ -1,6 +1,7 @@
 ---
 slug: aelora-targaryen
 name: Aelora Targaryen
+sex: f
 born: null
 died: null
 primary-house: targaryen

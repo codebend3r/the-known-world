@@ -1,6 +1,7 @@
 ---
 slug: brandon-stark
 name: Brandon Stark
+sex: m
 born:
   year: 262
   era: AC

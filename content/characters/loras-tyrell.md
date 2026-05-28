@@ -1,6 +1,7 @@
 ---
 slug: loras-tyrell
 name: Loras Tyrell
+sex: m
 born:
   year: 282
   era: AC

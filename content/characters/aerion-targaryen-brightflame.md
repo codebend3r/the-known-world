@@ -1,6 +1,7 @@
 ---
 slug: aerion-targaryen-brightflame
 name: Aerion Targaryen
+sex: m
 born:
   year: 191
   era: AC

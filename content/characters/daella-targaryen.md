@@ -1,6 +1,7 @@
 ---
 slug: daella-targaryen
 name: Daella Targaryen
+sex: f
 born:
   year: 66
   era: AC

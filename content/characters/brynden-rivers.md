@@ -1,6 +1,7 @@
 ---
 slug: brynden-rivers
 name: Brynden Rivers
+sex: m
 born:
   year: 175
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: maegelle-targaryen
 name: Maegelle Targaryen
+sex: f
 born:
   year: 63
   era: AC

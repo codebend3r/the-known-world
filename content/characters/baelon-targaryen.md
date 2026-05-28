@@ -1,6 +1,7 @@
 ---
 slug: baelon-targaryen
 name: Baelon Targaryen
+sex: m
 born:
   year: 57
   era: AC

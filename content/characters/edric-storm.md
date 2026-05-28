@@ -1,6 +1,7 @@
 ---
 slug: edric-storm
 name: Edric Storm
+sex: m
 born:
   year: 291
   era: AC

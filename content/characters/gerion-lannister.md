@@ -1,6 +1,7 @@
 ---
 slug: gerion-lannister
 name: Gerion Lannister
+sex: m
 born:
   year: 255
   era: AC

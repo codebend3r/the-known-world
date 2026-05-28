@@ -1,6 +1,7 @@
 ---
 slug: jaime-lannister
 name: Jaime Lannister
+sex: m
 born:
   year: 266
   era: AC

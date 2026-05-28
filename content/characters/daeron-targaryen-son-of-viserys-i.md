@@ -1,6 +1,7 @@
 ---
 slug: daeron-targaryen-son-of-viserys-i
 name: Daeron Targaryen
+sex: m
 born:
   year: 114
   era: AC

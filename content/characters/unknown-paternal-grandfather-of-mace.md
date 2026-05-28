@@ -1,6 +1,7 @@
 ---
 slug: unknown-paternal-grandfather-of-mace
 name: Unknown
+sex: m
 born: null
 died: null
 primary-house: tyrell

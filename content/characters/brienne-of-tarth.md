@@ -1,6 +1,7 @@
 ---
 slug: brienne-of-tarth
 name: Brienne of Tarth
+sex: f
 born:
   year: 280
   era: AC

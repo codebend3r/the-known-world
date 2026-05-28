@@ -1,6 +1,7 @@
 ---
 slug: lyonel-frey
 name: Lyonel Frey
+sex: m
 born: null
 died: null
 primary-house: frey

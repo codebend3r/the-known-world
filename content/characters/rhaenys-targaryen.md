@@ -1,6 +1,7 @@
 ---
 slug: rhaenys-targaryen
 name: Rhaenys Targaryen
+sex: f
 born:
   year: -25
   era: BC

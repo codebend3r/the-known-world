@@ -1,6 +1,7 @@
 ---
 slug: laenor-velaryon
 name: Laenor Velaryon
+sex: m
 born:
   year: 94
   era: AC

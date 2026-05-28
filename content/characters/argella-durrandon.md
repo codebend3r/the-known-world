@@ -1,6 +1,7 @@
 ---
 slug: argella-durrandon
 name: Argella Durrandon
+sex: f
 born:
   year: -22
   era: BC

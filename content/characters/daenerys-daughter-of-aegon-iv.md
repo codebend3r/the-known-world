@@ -1,6 +1,7 @@
 ---
 slug: daenerys-daughter-of-aegon-iv
 name: Daenerys Targaryen
+sex: f
 born:
   year: 172
   era: AC

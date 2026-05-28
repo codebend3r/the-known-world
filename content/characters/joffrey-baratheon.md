@@ -1,6 +1,7 @@
 ---
 slug: joffrey-baratheon
 name: Joffrey Baratheon
+sex: m
 born:
   year: 286
   era: AC

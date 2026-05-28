@@ -1,6 +1,7 @@
 ---
 slug: darlessa-marbrand
 name: Darlessa Marbrand
+sex: f
 born: null
 died: null
 primary-house: marbrand

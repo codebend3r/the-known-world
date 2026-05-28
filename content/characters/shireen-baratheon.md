@@ -1,6 +1,7 @@
 ---
 slug: shireen-baratheon
 name: Shireen Baratheon
+sex: f
 born:
   year: 289
   era: AC

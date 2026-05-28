@@ -1,6 +1,7 @@
 ---
 slug: tormund-giantsbane
 name: Tormund Giantsbane
+sex: m
 born: null
 died: null
 primary-house: free-folk

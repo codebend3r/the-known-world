@@ -1,6 +1,7 @@
 ---
 slug: visenya-targaryen
 name: Visenya Targaryen
+sex: f
 born:
   year: -28
   era: BC

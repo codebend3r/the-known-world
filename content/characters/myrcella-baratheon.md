@@ -1,6 +1,7 @@
 ---
 slug: myrcella-baratheon
 name: Myrcella Baratheon
+sex: f
 born:
   year: 290
   era: AC

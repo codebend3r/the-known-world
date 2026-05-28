@@ -1,6 +1,7 @@
 ---
 slug: valarr-targaryen
 name: Valarr Targaryen
+sex: m
 born:
   year: 183
   era: AC

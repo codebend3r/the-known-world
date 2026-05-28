@@ -1,6 +1,7 @@
 ---
 slug: alysanne-targaryen
 name: Alysanne Targaryen
+sex: f
 born:
   year: 36
   era: AC

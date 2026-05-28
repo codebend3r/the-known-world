@@ -1,6 +1,7 @@
 ---
 slug: hobber-redwyne
 name: Hobber Redwyne
+sex: m
 born:
   year: 278
   era: AC

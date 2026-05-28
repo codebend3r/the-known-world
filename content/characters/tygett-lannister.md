@@ -1,6 +1,7 @@
 ---
 slug: tygett-lannister
 name: Tygett Lannister
+sex: m
 born:
   year: 250
   era: AC

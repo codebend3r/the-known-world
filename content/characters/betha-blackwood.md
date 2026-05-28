@@ -1,6 +1,7 @@
 ---
 slug: betha-blackwood
 name: Betha Blackwood
+sex: f
 born:
   year: 203
   era: AC

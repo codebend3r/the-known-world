@@ -1,6 +1,7 @@
 ---
 slug: alicent-hightower
 name: Alicent Hightower
+sex: f
 born:
   year: 87
   era: AC

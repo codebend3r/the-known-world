@@ -1,6 +1,7 @@
 ---
 slug: aemma-arryn
 name: Aemma Arryn
+sex: f
 born:
   year: 82
   era: AC

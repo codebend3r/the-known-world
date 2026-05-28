@@ -1,6 +1,7 @@
 ---
 slug: alyssa-velaryon
 name: Alyssa Velaryon
+sex: f
 born:
   year: 8
   era: AC

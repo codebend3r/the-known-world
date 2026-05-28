@@ -1,6 +1,7 @@
 ---
 slug: daeron-targaryen-son-of-aegon-v
 name: Daeron Targaryen
+sex: m
 born:
   year: 228
   era: AC

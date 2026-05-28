@@ -1,6 +1,7 @@
 ---
 slug: catelyn-stark
 name: Catelyn Stark
+sex: f
 born:
   year: 264
   era: AC

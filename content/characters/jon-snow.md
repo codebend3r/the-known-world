@@ -1,6 +1,7 @@
 ---
 slug: jon-snow
 name: Jon Snow
+sex: m
 born:
   year: 283
   era: AC

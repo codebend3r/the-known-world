@@ -1,6 +1,7 @@
 ---
 slug: aemon-the-dragonknight
 name: Aemon Targaryen
+sex: m
 born:
   year: 136
   era: AC

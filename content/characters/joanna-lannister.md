@@ -1,6 +1,7 @@
 ---
 slug: joanna-lannister
 name: Joanna Lannister
+sex: f
 born:
   year: 245
   era: AC

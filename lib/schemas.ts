@@ -66,6 +66,7 @@ export const HouseSchema = z.object({
 export const CharacterSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
+  sex: z.enum(['m', 'f']).nullable().default(null),
   born: DateSchema.nullable(),
   died: DateSchema.nullable(),
   'primary-house': z.string(),

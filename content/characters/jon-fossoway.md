@@ -1,6 +1,7 @@
 ---
 slug: jon-fossoway
 name: Jon Fossoway
+sex: m
 born: null
 died: null
 primary-house: fossoway

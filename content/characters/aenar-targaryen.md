@@ -1,6 +1,7 @@
 ---
 slug: aenar-targaryen
 name: Aenar Targaryen
+sex: m
 born: null
 died: null
 primary-house: targaryen

@@ -1,6 +1,7 @@
 ---
 slug: gendry
 name: Gendry
+sex: m
 born:
   year: 285
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: tyrion-lannister
 name: Tyrion Lannister
+sex: m
 born:
   year: 273
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: emmon-frey
 name: Emmon Frey
+sex: m
 born: null
 died: null
 primary-house: frey

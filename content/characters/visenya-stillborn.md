@@ -1,6 +1,7 @@
 ---
 slug: visenya-stillborn
 name: Visenya Targaryen
+sex: f
 born:
   year: 129
   era: AC

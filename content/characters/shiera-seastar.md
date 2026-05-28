@@ -1,6 +1,7 @@
 ---
 slug: shiera-seastar
 name: Shiera Seastar
+sex: f
 born:
   year: 177
   era: AC

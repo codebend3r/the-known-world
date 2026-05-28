@@ -1,6 +1,7 @@
 ---
 slug: rhaenyra-targaryen
 name: Rhaenyra Targaryen
+sex: f
 born:
   year: 97
   era: AC

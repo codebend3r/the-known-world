@@ -1,6 +1,7 @@
 ---
 slug: elinor-costayne
 name: Elinor Costayne
+sex: f
 born: null
 died: null
 primary-house: costayne

@@ -1,6 +1,7 @@
 ---
 slug: grey-worm
 name: Grey Worm
+sex: m
 born: null
 died: null
 primary-house: targaryen

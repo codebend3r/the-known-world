@@ -1,6 +1,7 @@
 ---
 slug: jaehaerys-ii-targaryen
 name: Jaehaerys II Targaryen
+sex: m
 born:
   year: 225
   era: AC

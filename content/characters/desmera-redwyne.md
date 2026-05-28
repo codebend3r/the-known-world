@@ -1,6 +1,7 @@
 ---
 slug: desmera-redwyne
 name: Desmera Redwyne
+sex: f
 born:
   year: 285
   era: AC

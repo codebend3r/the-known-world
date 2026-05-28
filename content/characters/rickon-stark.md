@@ -1,6 +1,7 @@
 ---
 slug: rickon-stark
 name: Rickon Stark
+sex: m
 born:
   year: 294
   era: AC

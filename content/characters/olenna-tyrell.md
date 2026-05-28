@@ -1,6 +1,7 @@
 ---
 slug: olenna-tyrell
 name: Olenna Tyrell
+sex: f
 born:
   year: 228
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: valerion-targaryen
 name: Valerion Targaryen
+sex: m
 born:
   year: 73
   era: AC

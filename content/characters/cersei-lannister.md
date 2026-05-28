@@ -1,6 +1,7 @@
 ---
 slug: cersei-lannister
 name: Cersei Lannister
+sex: f
 born:
   year: 266
   era: AC

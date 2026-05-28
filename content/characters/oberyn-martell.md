@@ -1,6 +1,7 @@
 ---
 slug: oberyn-martell
 name: Oberyn Martell
+sex: m
 born:
   year: 257
   era: AC

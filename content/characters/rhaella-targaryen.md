@@ -1,6 +1,7 @@
 ---
 slug: rhaella-targaryen
 name: Rhaella Targaryen
+sex: f
 born:
   year: 245
   era: AC

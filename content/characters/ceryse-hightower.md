@@ -1,6 +1,7 @@
 ---
 slug: ceryse-hightower
 name: Ceryse Hightower
+sex: f
 born:
   year: 7
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: aerea-targaryen
 name: Aerea Targaryen
+sex: f
 born:
   year: 43
   era: AC

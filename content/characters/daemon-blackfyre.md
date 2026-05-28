@@ -1,6 +1,7 @@
 ---
 slug: daemon-blackfyre
 name: Daemon Blackfyre
+sex: m
 born:
   year: 170
   era: AC

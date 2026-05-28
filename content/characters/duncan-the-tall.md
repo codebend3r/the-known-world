@@ -1,6 +1,7 @@
 ---
 slug: duncan-the-tall
 name: Duncan the Tall
+sex: m
 born:
   year: 190
   era: AC

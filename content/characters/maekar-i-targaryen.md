@@ -1,6 +1,7 @@
 ---
 slug: maekar-i-targaryen
 name: Maekar I Targaryen
+sex: m
 born:
   year: 177
   era: AC

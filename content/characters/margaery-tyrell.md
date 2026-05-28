@@ -1,6 +1,7 @@
 ---
 slug: margaery-tyrell
 name: Margaery Tyrell
+sex: f
 born:
   year: 283
   era: AC

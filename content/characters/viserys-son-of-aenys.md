@@ -1,6 +1,7 @@
 ---
 slug: viserys-son-of-aenys
 name: Viserys Targaryen
+sex: m
 born:
   year: 26
   era: AC

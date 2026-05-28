@@ -1,6 +1,7 @@
 ---
 slug: gaemon-son-of-jaehaerys-i
 name: Gaemon Targaryen
+sex: m
 born:
   year: 72
   era: AC

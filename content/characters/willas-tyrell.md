@@ -1,6 +1,7 @@
 ---
 slug: willas-tyrell
 name: Willas Tyrell
+sex: m
 born:
   year: 277
   era: AC

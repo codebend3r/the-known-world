@@ -1,6 +1,7 @@
 ---
 slug: paxter-redwyne
 name: Paxter Redwyne
+sex: m
 born:
   year: 255
   era: AC

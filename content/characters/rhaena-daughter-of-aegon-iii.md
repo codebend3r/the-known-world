@@ -1,6 +1,7 @@
 ---
 slug: rhaena-daughter-of-aegon-iii
 name: Rhaena Targaryen
+sex: f
 born:
   year: 147
   era: AC

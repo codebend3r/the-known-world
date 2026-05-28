@@ -1,6 +1,7 @@
 ---
 slug: ormund-baratheon
 name: Ormund Baratheon
+sex: m
 born: null
 died:
   year: 267

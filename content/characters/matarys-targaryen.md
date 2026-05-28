@@ -1,6 +1,7 @@
 ---
 slug: matarys-targaryen
 name: Matarys Targaryen
+sex: m
 born:
   year: 183
   era: AC

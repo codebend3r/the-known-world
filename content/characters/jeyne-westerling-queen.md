@@ -1,6 +1,7 @@
 ---
 slug: jeyne-westerling-queen
 name: Jeyne Westerling
+sex: f
 born: null
 died:
   year: 48

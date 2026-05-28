@@ -1,6 +1,7 @@
 ---
 slug: kevan-lannister
 name: Kevan Lannister
+sex: m
 born:
   year: 244
   era: AC

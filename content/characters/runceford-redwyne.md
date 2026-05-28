@@ -1,6 +1,7 @@
 ---
 slug: runceford-redwyne
 name: Runceford Redwyne
+sex: m
 born: null
 died: null
 primary-house: redwyne

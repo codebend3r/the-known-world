@@ -1,6 +1,7 @@
 ---
 slug: gerold-lannister-the-golden
 name: Gerold Lannister
+sex: m
 born: null
 died: null
 primary-house: lannister

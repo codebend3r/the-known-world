@@ -1,6 +1,7 @@
 ---
 slug: vaella-targaryen-daughter-of-aenys
 name: Vaella Targaryen
+sex: f
 born:
   year: 37
   era: AC

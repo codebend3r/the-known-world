@@ -1,6 +1,7 @@
 ---
 slug: janei-lannister
 name: Janei Lannister
+sex: f
 born:
   year: 294
   era: AC

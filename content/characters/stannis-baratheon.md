@@ -1,6 +1,7 @@
 ---
 slug: stannis-baratheon
 name: Stannis Baratheon
+sex: m
 born:
   year: 264
   era: AC

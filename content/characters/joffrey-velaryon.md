@@ -1,6 +1,7 @@
 ---
 slug: joffrey-velaryon
 name: Joffrey Velaryon
+sex: m
 born:
   year: 117
   era: AC

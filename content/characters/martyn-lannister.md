@@ -1,6 +1,7 @@
 ---
 slug: martyn-lannister
 name: Martyn Lannister
+sex: m
 born:
   year: 285
   era: AC

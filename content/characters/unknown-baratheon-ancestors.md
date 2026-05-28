@@ -1,6 +1,7 @@
 ---
 slug: unknown-baratheon-ancestors
 name: Unknown Ancestors
+sex: null
 born: null
 died: null
 primary-house: baratheon

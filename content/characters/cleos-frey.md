@@ -1,6 +1,7 @@
 ---
 slug: cleos-frey
 name: Cleos Frey
+sex: m
 born:
   year: 260
   era: AC

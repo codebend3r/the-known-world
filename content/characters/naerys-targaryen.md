@@ -1,6 +1,7 @@
 ---
 slug: naerys-targaryen
 name: Naerys Targaryen
+sex: f
 born:
   year: 138
   era: AC

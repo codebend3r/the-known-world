@@ -1,6 +1,7 @@
 ---
 slug: lucerys-velaryon
 name: Lucerys Velaryon
+sex: m
 born:
   year: 115
   era: AC

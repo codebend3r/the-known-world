@@ -1,6 +1,7 @@
 ---
 slug: aegon-ii-targaryen
 name: Aegon II Targaryen
+sex: m
 born:
   year: 107
   era: AC

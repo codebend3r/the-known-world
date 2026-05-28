@@ -1,6 +1,7 @@
 ---
 slug: rhaella-targaryen-daughter-of-aegon
 name: Rhaella Targaryen
+sex: f
 born:
   year: 43
   era: AC

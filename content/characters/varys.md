@@ -1,6 +1,7 @@
 ---
 slug: varys
 name: Varys
+sex: m
 born: null
 died: null
 primary-house: targaryen

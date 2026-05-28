@@ -1,6 +1,7 @@
 ---
 slug: willem-lannister
 name: Willem Lannister
+sex: m
 born:
   year: 285
   era: AC

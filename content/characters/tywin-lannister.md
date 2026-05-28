@@ -1,6 +1,7 @@
 ---
 slug: tywin-lannister
 name: Tywin Lannister
+sex: m
 born:
   year: 242
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: aegor-rivers
 name: Aegor Rivers
+sex: m
 born:
   year: 172
   era: AC

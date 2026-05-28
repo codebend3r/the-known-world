@@ -1,6 +1,7 @@
 ---
 slug: lyanna-stark
 name: Lyanna Stark
+sex: f
 born:
   year: 266
   era: AC

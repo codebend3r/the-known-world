@@ -1,6 +1,7 @@
 ---
 slug: elaena-targaryen
 name: Elaena Targaryen
+sex: f
 born:
   year: 150
   era: AC

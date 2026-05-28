@@ -26,6 +26,18 @@ function CharacterName({ slug, name, placeholder, className }: NameProps) {
   return <span className={className}>{name}</span>;
 }
 
+function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
+  if (sex === null) return null;
+  return (
+    <span
+      className={`family-tree__gender family-tree__gender--${sex}`}
+      aria-label={sex === 'm' ? 'male' : 'female'}
+    >
+      {sex === 'm' ? '♂' : '♀'}
+    </span>
+  );
+}
+
 function PersonLabel({ node }: { node: TreeNode }) {
   const lifespan = formatLifespan(node);
   const className =
@@ -34,6 +46,7 @@ function PersonLabel({ node }: { node: TreeNode }) {
     (node.external ? ' family-tree__name--external' : '');
   return (
     <span className="family-tree__person">
+      <GenderGlyph sex={node.sex} />
       <CharacterName
         slug={node.slug}
         name={node.name}
@@ -65,6 +78,7 @@ function NodeRow({ node }: { node: TreeNode }) {
             <span className="family-tree__cross" aria-hidden="true">
               ⚭
             </span>
+            <GenderGlyph sex={spouse.sex} />
             <CharacterName
               slug={spouse.slug}
               name={spouse.name}

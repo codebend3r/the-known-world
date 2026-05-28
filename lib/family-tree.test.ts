@@ -130,6 +130,44 @@ describe('buildFamilyTree', () => {
     expect(joffrey.children).toEqual([]);
   });
 
+  it('propagates sex from Character onto the TreeNode and TreeSpouse', () => {
+    const people = [
+      character({
+        slug: 'tytos', name: 'Tytos', sex: 'm', born: null, died: null,
+        'primary-house': 'lannister', parents: [], spouses: ['jeyne'], children: ['tywin', 'genna'],
+      }),
+      character({
+        slug: 'jeyne', name: 'Jeyne Marbrand', sex: 'f', born: null, died: null,
+        'primary-house': 'marbrand', parents: [], spouses: ['tytos'], children: ['tywin', 'genna'],
+      }),
+      character({
+        slug: 'tywin', name: 'Tywin', sex: 'm', born: null, died: null,
+        'primary-house': 'lannister', parents: ['tytos', 'jeyne'], spouses: [], children: [],
+      }),
+      character({
+        slug: 'genna', name: 'Genna', sex: 'f', born: null, died: null,
+        'primary-house': 'lannister', parents: ['tytos', 'jeyne'], spouses: [], children: [],
+      }),
+    ];
+    const tree = buildFamilyTree('lannister', people);
+    expect(tree[0].sex).toBe('m');
+    expect(tree[0].spouses[0].sex).toBe('f');
+    expect(tree[0].children.find((c) => c.slug === 'tywin')?.sex).toBe('m');
+    expect(tree[0].children.find((c) => c.slug === 'genna')?.sex).toBe('f');
+  });
+
+  it('keeps sex as null for unknown spouses', () => {
+    const people = [
+      character({
+        slug: 'lord-x', name: 'Lord X', sex: 'm', born: null, died: null,
+        'primary-house': 'stark', parents: [], spouses: ['mystery-bride'], children: [],
+      }),
+    ];
+    const tree = buildFamilyTree('stark', people);
+    expect(tree[0].spouses[0].slug).toBe('mystery-bride');
+    expect(tree[0].spouses[0].sex).toBeNull();
+  });
+
   it('does not render the same person twice across siblings', () => {
     const people = [
       character({

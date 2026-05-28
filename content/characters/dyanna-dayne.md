@@ -1,6 +1,7 @@
 ---
 slug: dyanna-dayne
 name: Dyanna Dayne
+sex: f
 born: null
 died: null
 primary-house: dayne

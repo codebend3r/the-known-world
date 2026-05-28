@@ -1,6 +1,7 @@
 ---
 slug: petyr-baelish
 name: Petyr Baelish
+sex: m
 born:
   year: 268
   era: AC

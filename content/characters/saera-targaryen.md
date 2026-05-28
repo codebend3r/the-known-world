@@ -1,6 +1,7 @@
 ---
 slug: saera-targaryen
 name: Saera Targaryen
+sex: f
 born:
   year: 67
   era: AC

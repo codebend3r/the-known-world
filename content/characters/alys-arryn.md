@@ -1,6 +1,7 @@
 ---
 slug: alys-arryn
 name: Alys Arryn
+sex: f
 born: null
 died: null
 primary-house: arryn

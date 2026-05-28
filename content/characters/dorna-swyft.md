@@ -1,6 +1,7 @@
 ---
 slug: dorna-swyft
 name: Dorna Swyft
+sex: f
 born: null
 died: null
 primary-house: swyft

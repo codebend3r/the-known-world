@@ -1,6 +1,7 @@
 ---
 slug: tyrek-lannister
 name: Tyrek Lannister
+sex: m
 born:
   year: 286
   era: AC

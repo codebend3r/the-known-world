@@ -1,6 +1,7 @@
 ---
 slug: daeron-targaryen-son-of-maekar
 name: Daeron Targaryen
+sex: m
 born:
   year: 190
   era: AC

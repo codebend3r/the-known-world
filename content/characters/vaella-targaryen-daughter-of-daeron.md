@@ -1,6 +1,7 @@
 ---
 slug: vaella-targaryen-daughter-of-daeron
 name: Vaella Targaryen
+sex: f
 born:
   year: 208
   era: AC

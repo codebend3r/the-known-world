@@ -1,6 +1,7 @@
 ---
 slug: rhaena-targaryen-daughter-of-daemon
 name: Rhaena Targaryen
+sex: f
 born:
   year: 116
   era: AC

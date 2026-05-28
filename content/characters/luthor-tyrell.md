@@ -1,6 +1,7 @@
 ---
 slug: luthor-tyrell
 name: Luthor Tyrell
+sex: m
 born:
   year: 220
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: viserys-i-targaryen
 name: Viserys I Targaryen
+sex: m
 born:
   year: 77
   era: AC

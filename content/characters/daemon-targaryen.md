@@ -1,6 +1,7 @@
 ---
 slug: daemon-targaryen
 name: Daemon Targaryen
+sex: m
 born:
   year: 81
   era: AC

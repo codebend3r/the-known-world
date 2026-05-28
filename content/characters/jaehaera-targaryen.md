@@ -1,6 +1,7 @@
 ---
 slug: jaehaera-targaryen
 name: Jaehaera Targaryen
+sex: f
 born:
   year: 121
   era: AC

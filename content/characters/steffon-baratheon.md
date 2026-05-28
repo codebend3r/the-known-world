@@ -1,6 +1,7 @@
 ---
 slug: steffon-baratheon
 name: Steffon Baratheon
+sex: m
 born:
   year: 240
   era: AC

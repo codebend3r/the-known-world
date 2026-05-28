@@ -1,6 +1,7 @@
 ---
 slug: jaehaerys-i-targaryen
 name: Jaehaerys I Targaryen
+sex: m
 born:
   year: 34
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: benjen-stark
 name: Benjen Stark
+sex: m
 born:
   year: 267
   era: AC

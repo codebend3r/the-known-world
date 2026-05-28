@@ -1,6 +1,7 @@
 ---
 slug: myriah-martell
 name: Myriah Martell
+sex: f
 born:
   year: 152
   era: AC

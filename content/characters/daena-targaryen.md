@@ -1,6 +1,7 @@
 ---
 slug: daena-targaryen
 name: Daena Targaryen
+sex: f
 born:
   year: 145
   era: AC

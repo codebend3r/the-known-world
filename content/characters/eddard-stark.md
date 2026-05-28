@@ -1,6 +1,7 @@
 ---
 slug: eddard-stark
 name: Eddard Stark
+sex: m
 born:
   year: 263
   era: AC

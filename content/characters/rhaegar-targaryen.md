@@ -1,6 +1,7 @@
 ---
 slug: rhaegar-targaryen
 name: Rhaegar Targaryen
+sex: m
 born:
   year: 259
   era: AC

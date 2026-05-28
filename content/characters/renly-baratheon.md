@@ -1,6 +1,7 @@
 ---
 slug: renly-baratheon
 name: Renly Baratheon
+sex: m
 born:
   year: 277
   era: AC

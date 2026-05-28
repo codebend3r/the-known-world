@@ -1,6 +1,7 @@
 ---
 slug: gaemon-targaryen
 name: Gaemon Targaryen
+sex: m
 born: null
 died: null
 primary-house: targaryen

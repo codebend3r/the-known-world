@@ -1,6 +1,7 @@
 ---
 slug: valaena-velaryon
 name: Valaena Velaryon
+sex: f
 born: null
 died: null
 primary-house: velaryon

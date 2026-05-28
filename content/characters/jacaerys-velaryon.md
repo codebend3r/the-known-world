@@ -1,6 +1,7 @@
 ---
 slug: jacaerys-velaryon
 name: Jacaerys Velaryon
+sex: m
 born:
   year: 114
   era: AC

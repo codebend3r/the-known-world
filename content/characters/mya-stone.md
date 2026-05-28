@@ -1,6 +1,7 @@
 ---
 slug: mya-stone
 name: Mya Stone
+sex: f
 born:
   year: 282
   era: AC

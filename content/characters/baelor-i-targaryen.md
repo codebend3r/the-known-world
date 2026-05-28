@@ -1,6 +1,7 @@
 ---
 slug: baelor-i-targaryen
 name: Baelor I Targaryen
+sex: m
 born:
   year: 144
   era: AC

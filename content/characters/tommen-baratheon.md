@@ -1,6 +1,7 @@
 ---
 slug: tommen-baratheon
 name: Tommen Baratheon
+sex: m
 born:
   year: 292
   era: AC

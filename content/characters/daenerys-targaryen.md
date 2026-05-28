@@ -1,6 +1,7 @@
 ---
 slug: daenerys-targaryen
 name: Daenerys Targaryen
+sex: f
 born:
   year: 284
   era: AC

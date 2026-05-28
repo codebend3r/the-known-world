@@ -1,6 +1,7 @@
 ---
 slug: jorah-mormont
 name: Jorah Mormont
+sex: m
 born:
   year: 257
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: rickard-stark
 name: Rickard Stark
+sex: m
 born:
   year: 220
   era: AC

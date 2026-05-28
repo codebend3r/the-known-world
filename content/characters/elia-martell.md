@@ -1,6 +1,7 @@
 ---
 slug: elia-martell
 name: Elia Martell
+sex: f
 born:
   year: 257
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: bran-stark
 name: Bran Stark
+sex: m
 born:
   year: 290
   era: AC

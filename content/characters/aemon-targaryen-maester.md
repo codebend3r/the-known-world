@@ -1,6 +1,7 @@
 ---
 slug: aemon-targaryen-maester
 name: Aemon Targaryen
+sex: m
 born:
   year: 198
   era: AC

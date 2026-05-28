@@ -1,6 +1,7 @@
 ---
 slug: rhaenys-targaryen-queen-who-never-was
 name: Rhaenys Targaryen
+sex: f
 born:
   year: 74
   era: AC

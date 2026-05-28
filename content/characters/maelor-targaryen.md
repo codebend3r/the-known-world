@@ -1,6 +1,7 @@
 ---
 slug: maelor-targaryen
 name: Maelor Targaryen
+sex: m
 born:
   year: 127
   era: AC

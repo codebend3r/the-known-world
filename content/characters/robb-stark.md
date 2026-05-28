@@ -1,6 +1,7 @@
 ---
 slug: robb-stark
 name: Robb Stark
+sex: m
 born:
   year: 283
   era: AC

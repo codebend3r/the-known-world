@@ -1,6 +1,7 @@
 ---
 slug: rhaena-targaryen-daughter-of-aenys
 name: Rhaena Targaryen
+sex: f
 born:
   year: 23
   era: AC

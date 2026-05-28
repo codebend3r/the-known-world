@@ -1,6 +1,7 @@
 ---
 slug: robert-baratheon
 name: Robert Baratheon
+sex: m
 born:
   year: 262
   era: AC

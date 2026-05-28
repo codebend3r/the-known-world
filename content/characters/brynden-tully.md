@@ -1,6 +1,7 @@
 ---
 slug: brynden-tully
 name: Brynden Tully
+sex: m
 born:
   year: 225
   era: AC

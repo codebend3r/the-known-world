@@ -1,6 +1,7 @@
 ---
 slug: aerion-targaryen-lord-of-dragonstone
 name: Aerion Targaryen
+sex: m
 born: null
 died:
   year: -27

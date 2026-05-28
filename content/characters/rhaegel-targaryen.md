@@ -1,6 +1,7 @@
 ---
 slug: rhaegel-targaryen
 name: Rhaegel Targaryen
+sex: m
 born:
   year: 172
   era: AC

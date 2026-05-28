@@ -1,6 +1,7 @@
 ---
 slug: jaehaerys-son-of-aegon-ii
 name: Jaehaerys Targaryen
+sex: m
 born:
   year: 121
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: jeyne-marbrand
 name: Jeyne Marbrand
+sex: f
 born: null
 died: null
 primary-house: marbrand

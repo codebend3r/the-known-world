@@ -1,6 +1,7 @@
 ---
 slug: aegon-the-uncrowned
 name: Aegon Targaryen
+sex: m
 born:
   year: 24
   era: AC

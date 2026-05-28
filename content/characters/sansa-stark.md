@@ -1,6 +1,7 @@
 ---
 slug: sansa-stark
 name: Sansa Stark
+sex: f
 born:
   year: 286
   era: AC

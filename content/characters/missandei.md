@@ -1,6 +1,7 @@
 ---
 slug: missandei
 name: Missandei
+sex: f
 born:
   year: 289
   era: AC

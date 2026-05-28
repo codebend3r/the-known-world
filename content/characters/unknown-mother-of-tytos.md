@@ -1,6 +1,7 @@
 ---
 slug: unknown-mother-of-tytos
 name: Unknown
+sex: f
 born: null
 died: null
 primary-house: lannister

@@ -1,6 +1,7 @@
 ---
 slug: rhaenys-daughter-of-rhaegar
 name: Rhaenys Targaryen
+sex: f
 born:
   year: 280
   era: AC

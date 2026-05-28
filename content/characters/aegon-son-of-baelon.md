@@ -1,6 +1,7 @@
 ---
 slug: aegon-son-of-baelon
 name: Aegon Targaryen
+sex: m
 born:
   year: 87
   era: AC

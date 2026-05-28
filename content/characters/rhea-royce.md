@@ -1,6 +1,7 @@
 ---
 slug: rhea-royce
 name: Rhea Royce
+sex: f
 born:
   year: 82
   era: AC

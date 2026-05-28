@@ -1,6 +1,7 @@
 ---
 slug: lyarra-stark
 name: Lyarra Stark
+sex: f
 born:
   year: 225
   era: AC

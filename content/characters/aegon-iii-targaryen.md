@@ -1,6 +1,7 @@
 ---
 slug: aegon-iii-targaryen
 name: Aegon III Targaryen
+sex: m
 born:
   year: 120
   era: AC

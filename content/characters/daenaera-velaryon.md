@@ -1,6 +1,7 @@
 ---
 slug: daenaera-velaryon
 name: Daenaera Velaryon
+sex: f
 born:
   year: 127
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: tion-frey
 name: Tion Frey
+sex: m
 born: null
 died: null
 primary-house: frey

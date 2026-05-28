@@ -1,6 +1,7 @@
 ---
 slug: baela-targaryen
 name: Baela Targaryen
+sex: f
 born:
   year: 116
   era: AC

@@ -1,6 +1,7 @@
 ---
 slug: horas-redwyne
 name: Horas Redwyne
+sex: m
 born:
   year: 278
   era: AC

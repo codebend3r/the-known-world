@@ -1,6 +1,7 @@
 ---
 slug: vaegon-targaryen
 name: Vaegon Targaryen
+sex: m
 born:
   year: 65
   era: AC

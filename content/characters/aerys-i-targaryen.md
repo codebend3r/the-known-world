@@ -1,6 +1,7 @@
 ---
 slug: aerys-i-targaryen
 name: Aerys I Targaryen
+sex: m
 born:
   year: 171
   era: AC

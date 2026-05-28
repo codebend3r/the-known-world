@@ -1,6 +1,7 @@
 ---
 slug: aenys-i-targaryen
 name: Aenys I Targaryen
+sex: m
 born:
   year: 7
   era: AC

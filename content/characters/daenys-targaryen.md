@@ -1,6 +1,7 @@
 ---
 slug: daenys-targaryen
 name: Daenys Targaryen
+sex: f
 born: null
 died: null
 primary-house: targaryen

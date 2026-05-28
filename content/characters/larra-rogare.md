@@ -1,6 +1,7 @@
 ---
 slug: larra-rogare
 name: Larra Rogare
+sex: f
 born:
   year: 117
   era: AC

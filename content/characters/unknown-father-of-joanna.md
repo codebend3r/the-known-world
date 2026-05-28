@@ -1,6 +1,7 @@
 ---
 slug: unknown-father-of-joanna
 name: Unknown
+sex: m
 born: null
 died: null
 primary-house: lannister

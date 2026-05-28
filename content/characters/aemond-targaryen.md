@@ -1,6 +1,7 @@
 ---
 slug: aemond-targaryen
 name: Aemond Targaryen
+sex: m
 born:
   year: 110
   era: AC

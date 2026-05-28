@@ -1,6 +1,7 @@
 ---
 slug: baelor-breakspear-targaryen
 name: Baelor Targaryen
+sex: m
 born:
   year: 170
   era: AC

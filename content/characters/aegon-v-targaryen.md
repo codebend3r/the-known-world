@@ -1,6 +1,7 @@
 ---
 slug: aegon-v-targaryen
 name: Aegon V Targaryen
+sex: m
 born:
   year: 200
   era: AC

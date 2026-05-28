@@ -1,6 +1,7 @@
 ---
 slug: aelinor-penrose
 name: Aelinor Penrose
+sex: f
 born: null
 died: null
 primary-house: penrose

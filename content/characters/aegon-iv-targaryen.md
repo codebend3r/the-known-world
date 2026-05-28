@@ -1,6 +1,7 @@
 ---
 slug: aegon-iv-targaryen
 name: Aegon IV Targaryen
+sex: m
 born:
   year: 135
   era: AC

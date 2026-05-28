@@ -1,6 +1,7 @@
 ---
 slug: tytos-lannister
 name: Tytos Lannister
+sex: m
 born:
   year: 220
   era: AC
