@@ -18,12 +18,24 @@ An interactive atlas of George R. R. Martin's world of Ice and Fire — map, tim
 
 ```bash
 bun install
-bun dev          # http://localhost:3000
-bun test         # vitest run
+bun dev                  # http://localhost:3000
+bun test                 # vitest run
 bun test:watch
-bun run build    # static export → out/
+bun run build            # static export → out/
 bun run lint
+bun run typecheck        # tsc --noEmit
+bun run system-check     # lint + typecheck + test, in sequence
+bun run prettier         # format every file
+bun run prettier:check   # fail if any file is unformatted
+bun run prettier:quick   # format only staged files
 ```
+
+### Git hooks
+
+Husky installs hooks on `bun install` (via the `prepare` script):
+
+- **`pre-commit`** runs `bun system-check` (lint + typecheck + test).
+- **`pre-push`** runs `bun run build` to confirm the static export still succeeds.
 
 ## Project layout
 
