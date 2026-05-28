@@ -102,7 +102,7 @@
   display: inline-block;
   color: var(--gold-leaf);
   font-size: 0.55rem;
-  margin: 0 0.1rem;
+  padding: 0 0.1rem;
   opacity: 0.7;
 }
 
@@ -120,7 +120,7 @@
     padding: 0.25rem 0.55rem;
   }
   .site-header__separator {
-    margin: 0;
+    padding: 0;
   }
 }
 
