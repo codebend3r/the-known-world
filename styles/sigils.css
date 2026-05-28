@@ -46,7 +46,11 @@
   background-size: contain;
   background-position: center;
 }
-.sigil--baratheon  { --col: 3; --row: 0; }
+.sigil--baratheon {
+  background-image: url('/sigils/baratheon.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--greyjoy    { --col: 4; --row: 0; }
 
 /* Row 2 — Tully · Arryn · Martell · Tyrell · Bolton */
@@ -102,5 +106,9 @@
 .sigil--estermont  { --col: 3; --row: 7; }
 .sigil--grafton    { --col: 4; --row: 7; }
 
-/* Aliases — share a sprite cell with another house */
-.sigil--durrandon  { --col: 3; --row: 0; } /* crowned stag, inherited by House Baratheon */
+/* Aliases — share a sigil with another house */
+.sigil--durrandon {
+  background-image: url('/sigils/baratheon.png');
+  background-size: contain;
+  background-position: center;
+} /* crowned stag, inherited by House Baratheon */
