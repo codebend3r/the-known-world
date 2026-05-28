@@ -56,7 +56,11 @@
 /* Row 2 — Tully · Arryn · Martell · Tyrell · Bolton */
 .sigil--tully      { --col: 0; --row: 1; }
 .sigil--arryn      { --col: 1; --row: 1; }
-.sigil--martell    { --col: 2; --row: 1; }
+.sigil--martell {
+  background-image: url('/sigils/martell.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--tyrell {
   background-image: url('/sigils/tyrell.png');
   background-size: contain;
@@ -73,13 +77,21 @@
 .sigil--mormont    { --col: 1; --row: 2; }
 .sigil--umber      { --col: 2; --row: 2; }
 .sigil--karstark   { --col: 3; --row: 2; }
-.sigil--reed       { --col: 4; --row: 2; }
+.sigil--reed {
+  background-image: url('/sigils/reed.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Row 4 — Hightower · Velaryon · Tarly · Blackwood · Bracken */
 .sigil--hightower  { --col: 0; --row: 3; }
 .sigil--velaryon   { --col: 1; --row: 3; }
 .sigil--tarly      { --col: 2; --row: 3; }
-.sigil--blackwood  { --col: 3; --row: 3; }
+.sigil--blackwood {
+  background-image: url('/sigils/blackwood.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--bracken    { --col: 4; --row: 3; }
 
 /* Row 5 — Dayne · Yronwood · Royce · Corbray · Redwyne */
