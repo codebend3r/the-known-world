@@ -129,7 +129,7 @@
   /* Float requires margin for wrap spacing — grid `gap` doesn't apply
      to floated elements, so this margin is the only available
      mechanism. */
-  margin: 0 0 1.5rem 1.75rem;
+  margin: 5rem 0 1.5rem 1.75rem;
   padding: 1rem 1rem 1.25rem;
   background: rgba(248, 236, 208, 0.6);
   border: 1px solid rgba(107, 68, 35, 0.35);
@@ -213,6 +213,10 @@
   }
   .house-infobox__row {
     grid-template-columns: 5.5rem 1fr;
+  }
+  .house-detail__body {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }
 
