@@ -18,6 +18,13 @@ function shortHouseName(fullName: string): string {
   return fullName.replace(/^House\s+/i, '');
 }
 
+function humanizeSlug(slug: string): string {
+  return slug
+    .split('-')
+    .map((w) => (w.length === 0 ? w : w[0].toUpperCase() + w.slice(1)))
+    .join(' ');
+}
+
 function formatDate(d: House['founded']): string {
   const { year, era, precision } = d;
   if (era === 'AC' || era === 'BC') {
@@ -94,7 +101,7 @@ export function HouseInfobox({
     [
       {
         slug: house.seat,
-        name: castlesBySlug.get(house.seat)?.name ?? house.seat,
+        name: castlesBySlug.get(house.seat)?.name ?? humanizeSlug(house.seat),
       },
     ];
 
@@ -105,7 +112,7 @@ export function HouseInfobox({
 
   const cadets: HouseInfoEntry[] = house['cadet-houses'].map((slug) => ({
     slug,
-    name: housesBySlug.get(slug)?.name ?? slug,
+    name: housesBySlug.get(slug)?.name ?? `House ${humanizeSlug(slug)}`,
   }));
 
   const liegeHouse = house.liege ? housesBySlug.get(house.liege) : null;

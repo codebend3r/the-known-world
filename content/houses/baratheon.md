@@ -13,6 +13,20 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+seats:
+  - name: Storm's End
+    slug: storms-end
+heads:
+  - name: "King Robert I Baratheon"
+    slug: robert-baratheon
+regions:
+  - name: Stormlands
+  - name: Crownlands
+titles:
+  - name: Lord of Storm's End
+  - name: Lord Paramount of the Stormlands
+  - name: King of the Andals, the Rhoynar, and the First Men
+  - name: Lord of the Seven Kingdoms
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Baratheon

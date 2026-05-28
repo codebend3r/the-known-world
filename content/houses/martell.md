@@ -13,6 +13,18 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+seats:
+  - name: Sunspear
+    slug: sunspear
+  - name: Water Gardens
+    slug: water-gardens
+heads:
+  - name: "Prince Doran Nymeros Martell"
+regions:
+  - name: Dorne
+titles:
+  - name: Prince of Dorne
+  - name: Lord of Sunspear
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Martell

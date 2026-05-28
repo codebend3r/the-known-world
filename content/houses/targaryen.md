@@ -5,7 +5,7 @@ seat: dragonstone
 liege: null
 words: "Fire and Blood"
 sigil:
-  description: A three-headed dragon, red on a black field
+  description: A red three-headed dragon breathing fire, on a black field
 founded:
   year: -114
   era: BC
@@ -14,6 +14,47 @@ status: exiled
 sworn-from: []
 cadet-houses:
   - blackfyre
+seats:
+  - name: Dragonstone
+    slug: dragonstone
+    note: formerly
+  - name: Aegonfort
+    slug: aegonfort
+    note: formerly
+  - name: Red Keep
+    slug: red-keep
+    note: formerly
+  - name: Summerhall
+    slug: summerhall
+    note: summer castle, formerly
+  - name: Great Pyramid
+    slug: great-pyramid
+heads:
+  - name: "Queen Daenerys I"
+    slug: daenerys-targaryen
+  - name: "King Aegon VI"
+    slug: aegon-son-of-rhaegar
+    note: disputed
+regions:
+  - name: Valyria
+    note: formerly
+  - name: Crownlands
+    note: formerly
+  - name: "Slaver's Bay"
+titles:
+  - name: Dragonlord
+    note: pre-Doom
+  - name: Lord of Dragonstone
+    note: pre-Conquest
+  - name: King of the Andals, the Rhoynar, and the First Men
+  - name: Lord of the Seven Kingdoms
+  - name: Prince of Dragonstone
+    note: heir apparent
+  - name: Prince of Summerhall
+  - name: Queen of Meereen
+ancestral-weapons:
+  - name: Blackfyre
+  - name: Dark Sister
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Targaryen

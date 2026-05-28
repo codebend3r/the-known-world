@@ -13,6 +13,19 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+seats:
+  - name: The Hightower
+    slug: the-hightower
+heads:
+  - name: "Lord Leyton Hightower"
+regions:
+  - name: The Reach
+titles:
+  - name: Lord of the Hightower
+  - name: Voice of Oldtown
+  - name: Lord of the Port
+  - name: Beacon of the South
+  - name: Defender of the Citadel
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Hightower

@@ -13,6 +13,15 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+seats:
+  - name: Gulltown
+    slug: gulltown
+heads:
+  - name: "Lord Gerold Grafton"
+regions:
+  - name: Vale of Arryn
+titles:
+  - name: Lord of Gulltown
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Grafton
