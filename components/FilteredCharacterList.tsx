@@ -9,6 +9,7 @@ export type CharacterItem = {
   slug: string;
   name: string;
   primaryHouseSlug: string;
+  region: string | null;
 };
 
 type Props = {
@@ -55,22 +56,24 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       ) : (
         <>
           <ul className="character-list">
-            {pageItems.map((item) => (
-              <li key={item.slug} className="character-list__item">
-                <Link
-                  href={`/characters/${item.slug}/`}
-                  className="character-list__card"
-                >
-                  <Sigil
-                    slug={item.primaryHouseSlug}
-                    name={item.name}
-                    size="3.25rem"
-                    decorative
-                  />
-                  <span className="character-list__name">{item.name}</span>
-                </Link>
-              </li>
-            ))}
+            {pageItems.map((item) => {
+              const cardClass = item.region
+                ? `character-list__card character-list__card--region-${item.region}`
+                : 'character-list__card';
+              return (
+                <li key={item.slug} className="character-list__item">
+                  <Link href={`/characters/${item.slug}/`} className={cardClass}>
+                    <Sigil
+                      slug={item.primaryHouseSlug}
+                      name={item.name}
+                      size="3.25rem"
+                      decorative
+                    />
+                    <span className="character-list__name">{item.name}</span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
           {totalPages > 1 && (
             <nav className="pagination" aria-label="Character list pagination">

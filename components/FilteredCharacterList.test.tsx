@@ -3,9 +3,9 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FilteredCharacterList, type CharacterItem } from './FilteredCharacterList';
 
 const items: CharacterItem[] = [
-  { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark' },
-  { slug: 'eddard-stark', name: 'Eddard Stark', primaryHouseSlug: 'stark' },
-  { slug: 'tywin-lannister', name: 'Tywin Lannister', primaryHouseSlug: 'lannister' },
+  { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark', region: 'north' },
+  { slug: 'eddard-stark', name: 'Eddard Stark', primaryHouseSlug: 'stark', region: 'north' },
+  { slug: 'tywin-lannister', name: 'Tywin Lannister', primaryHouseSlug: 'lannister', region: 'westerlands' },
 ];
 
 function manyItems(n: number): CharacterItem[] {
@@ -13,6 +13,7 @@ function manyItems(n: number): CharacterItem[] {
     slug: `c-${String(i).padStart(3, '0')}`,
     name: `Char ${String(i).padStart(3, '0')}`,
     primaryHouseSlug: 'stark',
+    region: 'north',
   }));
 }
 
@@ -43,6 +44,25 @@ describe('FilteredCharacterList', () => {
     expect(
       screen.getByRole('searchbox', { name: /search characters/i }),
     ).toBeDefined();
+  });
+
+  it('applies a region-tinted modifier class per card', () => {
+    const { container } = render(<FilteredCharacterList items={items} />);
+    expect(container.querySelector('.character-list__card--region-north')).not.toBeNull();
+    expect(
+      container.querySelector('.character-list__card--region-westerlands'),
+    ).not.toBeNull();
+  });
+
+  it('falls back to the base card class when no region is known', () => {
+    const noRegion: CharacterItem[] = [
+      { slug: 'x', name: 'X', primaryHouseSlug: 'unknown', region: null },
+    ];
+    const { container } = render(<FilteredCharacterList items={noRegion} />);
+    expect(container.querySelector('.character-list__card')).not.toBeNull();
+    expect(
+      container.querySelector('[class*="character-list__card--region"]'),
+    ).toBeNull();
   });
 
   it('does not filter until the 300ms debounce elapses', () => {

@@ -44,16 +44,18 @@
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 }
 
-/* Heraldic outline tinted by the great kingdom a house is sworn to. */
-.house-list__card--region-north        { border-color: #5d6f7f; }
-.house-list__card--region-vale         { border-color: #4d7caa; }
-.house-list__card--region-riverlands   { border-color: #3d5a7c; }
-.house-list__card--region-westerlands  { border-color: #b13a3a; }
-.house-list__card--region-reach        { border-color: #6f8336; }
-.house-list__card--region-stormlands   { border-color: #c89a31; }
-.house-list__card--region-dorne        { border-color: #c7693a; }
-.house-list__card--region-iron-islands { border-color: #2f4a44; }
-.house-list__card--region-crownlands   { border-color: #5a2a30; }
+/* Heraldic outline tinted by the great kingdom a house is sworn to.
+   Shared with `.character-list__card--region-*` so houses and their
+   characters render with the same regional palette. */
+.house-list__card--region-north,        .character-list__card--region-north        { border-color: #5d6f7f; }
+.house-list__card--region-vale,         .character-list__card--region-vale         { border-color: #4d7caa; }
+.house-list__card--region-riverlands,   .character-list__card--region-riverlands   { border-color: #3d5a7c; }
+.house-list__card--region-westerlands,  .character-list__card--region-westerlands  { border-color: #b13a3a; }
+.house-list__card--region-reach,        .character-list__card--region-reach        { border-color: #6f8336; }
+.house-list__card--region-stormlands,   .character-list__card--region-stormlands   { border-color: #c89a31; }
+.house-list__card--region-dorne,        .character-list__card--region-dorne        { border-color: #c7693a; }
+.house-list__card--region-iron-islands, .character-list__card--region-iron-islands { border-color: #2f4a44; }
+.house-list__card--region-crownlands,   .character-list__card--region-crownlands   { border-color: #5a2a30; }
 
 .house-list__card:hover,
 .house-list__card:focus-visible {

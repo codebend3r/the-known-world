@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { loadAllCharacters } from '@/lib/content';
+import { loadAllCharacters, loadAllHouses } from '@/lib/content';
+import { regionForHouse } from '@/lib/regions';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import {
   FilteredCharacterList,
@@ -12,13 +13,19 @@ export const metadata: Metadata = {
 };
 
 export default async function CharactersPage() {
-  const characters = await loadAllCharacters();
+  const [characters, houses] = await Promise.all([
+    loadAllCharacters(),
+    loadAllHouses(),
+  ]);
+  const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
+
   const items: CharacterItem[] = characters
     .filter((c) => !c.frontmatter.draft && !c.frontmatter.placeholder)
     .map((c) => ({
       slug: c.frontmatter.slug,
       name: c.frontmatter.name,
       primaryHouseSlug: c.frontmatter['primary-house'],
+      region: regionForHouse(c.frontmatter['primary-house'], housesBySlug),
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
