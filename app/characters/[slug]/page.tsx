@@ -136,7 +136,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
   return (
     <ParchmentLayout>
-      {portrait ? (
+      {portrait && (
         <div className="character-detail__portrait">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -146,17 +146,16 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             decoding="async"
           />
         </div>
-      ) : (
-        <div className="character-detail__crest">
-          <Sigil
-            slug={fm['primary-house']}
-            name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
-            size="9rem"
-            decorative
-          />
-        </div>
       )}
-      <h1>{fm.name}</h1>
+      <div className="character-detail__heading">
+        <Sigil
+          slug={fm['primary-house']}
+          name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
+          size="2.6rem"
+          decorative
+        />
+        <h1>{fm.name}</h1>
+      </div>
       {headlineTitle && <p className="subtitle">{headlineTitle}</p>}
 
       <dl className="character-detail__meta">
