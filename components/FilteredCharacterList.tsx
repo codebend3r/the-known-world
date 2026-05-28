@@ -96,12 +96,14 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
               return (
                 <li key={item.slug} className="character-list__item">
                   <Link href={`/characters/${item.slug}/`} className={cardClass}>
-                    <Sigil
-                      slug={item.primaryHouseSlug}
-                      name={item.name}
-                      size="3.25rem"
-                      decorative
-                    />
+                    <span className="character-list__sigil" aria-hidden="true">
+                      <Sigil
+                        slug={item.primaryHouseSlug}
+                        name={item.name}
+                        size="3.25rem"
+                        decorative
+                      />
+                    </span>
                     <span className="character-list__name">{item.name}</span>
                   </Link>
                 </li>

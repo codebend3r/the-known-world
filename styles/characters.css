@@ -38,6 +38,15 @@ a.character-list__card:focus-visible {
   outline: none;
 }
 
+.character-list__sigil {
+  flex: 0 0 3.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
 .character-list__name {
   font-family: var(--font-heading);
   font-variant: small-caps;
