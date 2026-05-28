@@ -72,8 +72,8 @@
 .house-list__name {
   font-family: var(--font-heading);
   font-variant: small-caps;
-  letter-spacing: 3px;
-  font-size: 1.8rem;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
   font-weight: 600;
 }
 

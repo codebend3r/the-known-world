@@ -84,7 +84,7 @@ export function FilteredHouseList({ items }: Props) {
                   <Sigil
                     slug={item.slug}
                     name={item.name}
-                    size={view === 'list' ? '2rem' : '4.5rem'}
+                    size={view === 'list' ? '2rem' : '6rem'}
                     decorative
                   />
                   <span className="house-list__name">{item.name}</span>
