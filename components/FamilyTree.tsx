@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { TreeNode } from '@/lib/family-tree';
 
 function formatLifespan(node: TreeNode): string | null {
@@ -7,19 +8,38 @@ function formatLifespan(node: TreeNode): string | null {
   return d ? `${b}–${d}` : `${b}–`;
 }
 
+type NameProps = {
+  slug: string | null;
+  name: string;
+  placeholder: boolean;
+  className: string;
+};
+
+function CharacterName({ slug, name, placeholder, className }: NameProps) {
+  if (slug && !placeholder) {
+    return (
+      <Link href={`/characters/${slug}/`} className={className}>
+        {name}
+      </Link>
+    );
+  }
+  return <span className={className}>{name}</span>;
+}
+
 function PersonLabel({ node }: { node: TreeNode }) {
   const lifespan = formatLifespan(node);
+  const className =
+    'family-tree__name' +
+    (node.placeholder ? ' family-tree__name--placeholder' : '') +
+    (node.external ? ' family-tree__name--external' : '');
   return (
     <span className="family-tree__person">
-      <span
-        className={
-          'family-tree__name' +
-          (node.placeholder ? ' family-tree__name--placeholder' : '') +
-          (node.external ? ' family-tree__name--external' : '')
-        }
-      >
-        {node.name}
-      </span>
+      <CharacterName
+        slug={node.slug}
+        name={node.name}
+        placeholder={node.placeholder}
+        className={className}
+      />
       {lifespan && <span className="family-tree__lifespan">{lifespan}</span>}
     </span>
   );
@@ -29,22 +49,28 @@ function NodeRow({ node }: { node: TreeNode }) {
   return (
     <div className="family-tree__row">
       <PersonLabel node={node} />
-      {node.spouses.map((spouse) => (
-        <span key={spouse.slug ?? spouse.name} className="family-tree__spouse">
-          <span className="family-tree__cross" aria-hidden="true">
-            ⚭
-          </span>
+      {node.spouses.map((spouse) => {
+        const className =
+          'family-tree__name family-tree__name--spouse' +
+          (spouse.placeholder ? ' family-tree__name--placeholder' : '') +
+          (!spouse.inHouse ? ' family-tree__name--external' : '');
+        return (
           <span
-            className={
-              'family-tree__name family-tree__name--spouse' +
-              (spouse.placeholder ? ' family-tree__name--placeholder' : '') +
-              (!spouse.inHouse ? ' family-tree__name--external' : '')
-            }
+            key={spouse.slug ?? spouse.name}
+            className="family-tree__spouse"
           >
-            {spouse.name}
+            <span className="family-tree__cross" aria-hidden="true">
+              ⚭
+            </span>
+            <CharacterName
+              slug={spouse.slug}
+              name={spouse.name}
+              placeholder={spouse.placeholder}
+              className={className}
+            />
           </span>
-        </span>
-      ))}
+        );
+      })}
     </div>
   );
 }

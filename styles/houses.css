@@ -262,6 +262,26 @@
   font-weight: 500;
 }
 
+a.family-tree__name {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+a.family-tree__name:hover,
+a.family-tree__name:focus-visible {
+  color: var(--gold-leaf);
+  text-decoration: underline;
+  text-decoration-color: rgba(212, 162, 89, 0.45);
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.family-tree__name {
+    transition: none;
+  }
+}
+
 .family-tree__name--external {
   color: var(--ink-faded);
   font-style: italic;
