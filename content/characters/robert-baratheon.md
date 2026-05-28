@@ -10,12 +10,18 @@ died:
   era: AC
   precision: year
 primary-house: baratheon
+parents:
+  - steffon-baratheon
+  - cassana-estermont
 spouses:
   - cersei-lannister
 children:
   - joffrey-baratheon
   - myrcella-baratheon
   - tommen-baratheon
+  - mya-stone
+  - gendry
+  - edric-storm
 titles:
   - King of the Andals and the First Men
   - Lord of the Seven Kingdoms
