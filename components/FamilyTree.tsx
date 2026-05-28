@@ -11,19 +11,33 @@ function formatLifespan(node: TreeNode): string | null {
 type NameProps = {
   slug: string | null;
   name: string;
+  alias: string | null;
   placeholder: boolean;
   className: string;
 };
 
-function CharacterName({ slug, name, placeholder, className }: NameProps) {
+function NameContent({ name, alias }: { name: string; alias: string | null }) {
+  return (
+    <>
+      {name}
+      {alias && <span className="family-tree__alias"> ({alias})</span>}
+    </>
+  );
+}
+
+function CharacterName({ slug, name, alias, placeholder, className }: NameProps) {
   if (slug && !placeholder) {
     return (
       <Link href={`/characters/${slug}/`} className={className}>
-        {name}
+        <NameContent name={name} alias={alias} />
       </Link>
     );
   }
-  return <span className={className}>{name}</span>;
+  return (
+    <span className={className}>
+      <NameContent name={name} alias={alias} />
+    </span>
+  );
 }
 
 function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
@@ -55,6 +69,7 @@ function PersonLabel({ node }: { node: TreeNode }) {
       <CharacterName
         slug={node.slug}
         name={node.name}
+        alias={node.alias}
         placeholder={node.placeholder}
         className={className}
       />
@@ -88,6 +103,7 @@ function NodeRow({ node }: { node: TreeNode }) {
             <CharacterName
               slug={spouse.slug}
               name={spouse.name}
+              alias={spouse.alias}
               placeholder={spouse.placeholder}
               className={className}
             />

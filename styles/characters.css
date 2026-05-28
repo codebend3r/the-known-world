@@ -56,6 +56,16 @@ a.character-list__card:focus-visible {
   line-height: 1.2;
 }
 
+.character-list__alias {
+  font-family: var(--font-body);
+  font-variant: normal;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .character-list__card,
   a.character-list__card:hover,
@@ -71,6 +81,16 @@ a.character-list__card:focus-visible {
   justify-content: center;
   gap: 0.85rem;
   flex-wrap: wrap;
+}
+
+.character-detail__alias {
+  font-family: var(--font-body);
+  font-variant: normal;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  font-size: 0.6em;
+  color: var(--ink-faded);
 }
 
 .character-detail__portrait {

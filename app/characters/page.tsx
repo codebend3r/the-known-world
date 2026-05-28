@@ -24,6 +24,7 @@ export default async function CharactersPage() {
     .map((c) => ({
       slug: c.frontmatter.slug,
       name: c.frontmatter.name,
+      alias: c.frontmatter.aliases[0] ?? null,
       primaryHouseSlug: c.frontmatter['primary-house'],
       region: regionForHouse(c.frontmatter['primary-house'], housesBySlug),
     }))

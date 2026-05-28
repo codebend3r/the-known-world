@@ -8,6 +8,7 @@ import { filterByName } from '@/lib/search';
 export type CharacterItem = {
   slug: string;
   name: string;
+  alias: string | null;
   primaryHouseSlug: string | null;
   region: string | null;
 };
@@ -139,7 +140,12 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                         decorative
                       />
                     </span>
-                    <span className="character-list__name">{item.name}</span>
+                    <span className="character-list__name">
+                      {item.name}
+                      {item.alias && (
+                        <span className="character-list__alias"> ({item.alias})</span>
+                      )}
+                    </span>
                   </Link>
                 </li>
               );

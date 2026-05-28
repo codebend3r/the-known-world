@@ -75,6 +75,7 @@ export const CharacterSchema = z.object({
   spouses: z.array(z.string()).default([]),
   children: z.array(z.string()).default([]),
   titles: z.array(z.string()).default([]),
+  aliases: z.array(z.string()).default([]),
   placeholder: z.boolean().default(false),
   'placeholder-reason': z.enum(['unnamed', 'unwritten', 'uncertain']).nullable().default(null),
   sources: z.array(SourceSchema).default([]),

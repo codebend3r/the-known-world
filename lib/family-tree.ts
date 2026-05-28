@@ -3,6 +3,7 @@ import type { Character } from './schemas';
 export interface TreeSpouse {
   slug: string | null;
   name: string;
+  alias: string | null;
   sex: 'm' | 'f' | null;
   placeholder: boolean;
   inHouse: boolean;
@@ -11,6 +12,7 @@ export interface TreeSpouse {
 export interface TreeNode {
   slug: string;
   name: string;
+  alias: string | null;
   sex: 'm' | 'f' | null;
   placeholder: boolean;
   external: boolean;
@@ -70,6 +72,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
       return {
         slug,
         name: person.name,
+        alias: person.aliases[0] ?? null,
         sex: person.sex,
         placeholder: person.placeholder,
         external: true,
@@ -85,7 +88,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
       const spouse = peopleBySlug.get(spouseSlug);
       const inHouse = houseSlugs.has(spouseSlug);
       if (!spouse) {
-        return { slug: spouseSlug, name: spouseSlug, sex: null, placeholder: true, inHouse: false };
+        return { slug: spouseSlug, name: spouseSlug, alias: null, sex: null, placeholder: true, inHouse: false };
       }
       if (inHouse && !visited.has(spouseSlug)) {
         visited.add(spouseSlug);
@@ -93,6 +96,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
       return {
         slug: spouseSlug,
         name: spouse.name,
+        alias: spouse.aliases[0] ?? null,
         sex: spouse.sex,
         placeholder: spouse.placeholder,
         inHouse,
@@ -111,6 +115,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
     return {
       slug,
       name: person.name,
+      alias: person.aliases[0] ?? null,
       sex: person.sex,
       placeholder: person.placeholder,
       external: false,

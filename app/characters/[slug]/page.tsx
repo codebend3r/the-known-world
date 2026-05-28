@@ -155,7 +155,12 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           size="2.6rem"
           decorative
         />
-        <h1>{fm.name}</h1>
+        <h1>
+          {fm.name}
+          {fm.aliases.length > 0 && (
+            <span className="character-detail__alias"> ({fm.aliases[0]})</span>
+          )}
+        </h1>
       </div>
       {headlineTitle && <p className="subtitle">{headlineTitle}</p>}
 

@@ -3,15 +3,16 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FilteredCharacterList, type CharacterItem } from './FilteredCharacterList';
 
 const items: CharacterItem[] = [
-  { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark', region: 'north' },
-  { slug: 'eddard-stark', name: 'Eddard Stark', primaryHouseSlug: 'stark', region: 'north' },
-  { slug: 'tywin-lannister', name: 'Tywin Lannister', primaryHouseSlug: 'lannister', region: 'westerlands' },
+  { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north' },
+  { slug: 'eddard-stark', name: 'Eddard Stark', alias: null, primaryHouseSlug: 'stark', region: 'north' },
+  { slug: 'tywin-lannister', name: 'Tywin Lannister', alias: null, primaryHouseSlug: 'lannister', region: 'westerlands' },
 ];
 
 function manyItems(n: number): CharacterItem[] {
   return Array.from({ length: n }, (_, i) => ({
     slug: `c-${String(i).padStart(3, '0')}`,
     name: `Char ${String(i).padStart(3, '0')}`,
+    alias: null,
     primaryHouseSlug: 'stark',
     region: 'north',
   }));
@@ -56,13 +57,28 @@ describe('FilteredCharacterList', () => {
 
   it('falls back to the base card class when no region is known', () => {
     const noRegion: CharacterItem[] = [
-      { slug: 'x', name: 'X', primaryHouseSlug: 'unknown', region: null },
+      { slug: 'x', name: 'X', alias: null, primaryHouseSlug: 'unknown', region: null },
     ];
     const { container } = render(<FilteredCharacterList items={noRegion} />);
     expect(container.querySelector('.character-list__card')).not.toBeNull();
     expect(
       container.querySelector('[class*="character-list__card--region"]'),
     ).toBeNull();
+  });
+
+  it('renders the alias in brackets when present', () => {
+    const aliased: CharacterItem[] = [
+      { slug: 'aegon-i', name: 'Aegon I Targaryen', alias: 'The Conqueror', primaryHouseSlug: 'targaryen', region: 'crownlands' },
+      { slug: 'aegon-iv', name: 'Aegon IV Targaryen', alias: 'The Unworthy', primaryHouseSlug: 'targaryen', region: 'crownlands' },
+    ];
+    const { container } = render(<FilteredCharacterList items={aliased} />);
+    const aliases = Array.from(container.querySelectorAll('.character-list__alias')).map((el) => el.textContent);
+    expect(aliases).toEqual([' (The Conqueror)', ' (The Unworthy)']);
+  });
+
+  it('omits the alias span when no alias is set', () => {
+    const { container } = render(<FilteredCharacterList items={items} />);
+    expect(container.querySelector('.character-list__alias')).toBeNull();
   });
 
   it('does not filter until the 300ms debounce elapses', () => {
@@ -204,7 +220,7 @@ describe('FilteredCharacterList', () => {
   it('resets to page 1 when the search filter changes', () => {
     const lots: CharacterItem[] = [
       ...manyItems(60),
-      { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark', region: 'north' },
+      { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north' },
     ];
     render(<FilteredCharacterList items={lots} pageSize={30} />);
     const [nextBtn] = screen.getAllByRole('button', { name: /next page/i });

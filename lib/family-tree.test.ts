@@ -156,6 +156,52 @@ describe('buildFamilyTree', () => {
     expect(tree[0].children.find((c) => c.slug === 'genna')?.sex).toBe('f');
   });
 
+  it('propagates the first alias onto the TreeNode and external children', () => {
+    const people = [
+      character({
+        slug: 'aegon-i', name: 'Aegon I Targaryen', born: null, died: null,
+        'primary-house': 'targaryen', parents: [], spouses: ['rhaenys'],
+        children: ['aenys'], aliases: ['The Conqueror', 'The Dragon'],
+      }),
+      character({
+        slug: 'rhaenys', name: 'Rhaenys Targaryen', born: null, died: null,
+        'primary-house': 'targaryen', parents: [], spouses: ['aegon-i'],
+        children: ['aenys'], aliases: [],
+      }),
+      character({
+        slug: 'aenys', name: 'Aenys I Targaryen', born: null, died: null,
+        'primary-house': 'targaryen', parents: ['aegon-i', 'rhaenys'], spouses: [], children: [],
+        aliases: ['King Aenys'],
+      }),
+    ];
+    const tree = buildFamilyTree('targaryen', people);
+    expect(tree[0].alias).toBe('The Conqueror');
+    expect(tree[0].spouses[0].alias).toBeNull();
+    expect(tree[0].children[0].alias).toBe('King Aenys');
+  });
+
+  it('propagates aliases onto an external (out-of-house) leaf', () => {
+    const people = [
+      character({
+        slug: 'cersei', name: 'Cersei', born: null, died: null,
+        'primary-house': 'lannister', parents: [], spouses: ['robert'], children: ['joffrey'],
+      }),
+      character({
+        slug: 'robert', name: 'Robert Baratheon', born: null, died: null,
+        'primary-house': 'baratheon', parents: [], spouses: ['cersei'], children: ['joffrey'],
+      }),
+      character({
+        slug: 'joffrey', name: 'Joffrey', born: null, died: null,
+        'primary-house': 'baratheon', parents: ['robert', 'cersei'], spouses: [], children: [],
+        aliases: ['The Illborn King'],
+      }),
+    ];
+    const tree = buildFamilyTree('lannister', people);
+    const joffrey = tree[0].children[0];
+    expect(joffrey.external).toBe(true);
+    expect(joffrey.alias).toBe('The Illborn King');
+  });
+
   it('keeps sex as null for unknown spouses', () => {
     const people = [
       character({

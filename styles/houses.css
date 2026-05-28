@@ -363,6 +363,14 @@ a.family-tree__name:focus-visible {
   letter-spacing: 0.5px;
 }
 
+.family-tree__alias {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+}
+
 .family-tree__spouse {
   display: inline-flex;
   align-items: baseline;
