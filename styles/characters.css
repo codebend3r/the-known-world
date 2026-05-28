@@ -100,7 +100,7 @@ a.character-list__card:focus-visible {
 
 .character-detail__portrait img {
   display: block;
-  width: min(560px, 100%);
+  width: 100%;
   height: auto;
   border: 1px solid rgba(107, 68, 35, 0.35);
   border-radius: 2px;
