@@ -214,7 +214,8 @@
   .house-infobox__row {
     grid-template-columns: 5.5rem 1fr;
   }
-  .house-detail__body {
+  .house-detail__body,
+  .family-tree {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
