@@ -119,9 +119,6 @@ export function HouseInfobox({
 
   return (
     <aside className="house-infobox" aria-label={`${house.name} infobox`}>
-      <header className="house-infobox__header">
-        <h2 className="house-infobox__title">{house.name}</h2>
-      </header>
       <div className="house-infobox__sigil">
         <Sigil
           slug={house.slug}
@@ -130,11 +127,6 @@ export function HouseInfobox({
           decorative
         />
       </div>
-      {house.words && (
-        <div className="house-infobox__words">
-          <span>{house.words}</span>
-        </div>
-      )}
 
       <dl className="house-infobox__rows">
         {house.sigil.description && (
