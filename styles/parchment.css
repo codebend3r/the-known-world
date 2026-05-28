@@ -3,6 +3,16 @@
   margin: 0 auto;
   padding: 3rem clamp(1.5rem, 4vw, 3.5rem) 6rem;
   position: relative;
+  display: grid;
+  gap: 2rem;
+  align-content: start;
+}
+
+/* Block-flow variant for pages that rely on `float` (e.g. house detail
+   with its right-floated `.house-infobox`). Grid containers ignore
+   `float` for layout, so those pages opt out of the page-level grid. */
+.parchment-page--block {
+  display: block;
 }
 
 .parchment-page::before {
@@ -25,8 +35,6 @@
   text-align: center;
   font-style: italic;
   color: var(--ink-faded);
-  margin-top: -0.5rem;
-  margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(107, 68, 35, 0.3);
 }
@@ -42,7 +50,6 @@
 }
 
 .sources {
-  margin-top: 4rem;
   padding-top: 1.5rem;
   border-top: 1px solid rgba(107, 68, 35, 0.3);
   font-family: var(--font-ui);

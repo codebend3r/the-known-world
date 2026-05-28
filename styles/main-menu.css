@@ -2,7 +2,6 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
-  margin-top: 2rem;
 }
 
 @media (min-width: 800px) {
@@ -78,7 +77,6 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--ink-faded);
-  margin-bottom: 2rem;
 }
 
 .coming-soon-caption a {
