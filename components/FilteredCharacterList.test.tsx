@@ -204,7 +204,7 @@ describe('FilteredCharacterList', () => {
   it('resets to page 1 when the search filter changes', () => {
     const lots: CharacterItem[] = [
       ...manyItems(60),
-      { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark' },
+      { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark', region: 'north' },
     ];
     render(<FilteredCharacterList items={lots} pageSize={30} />);
     const [nextBtn] = screen.getAllByRole('button', { name: /next page/i });
