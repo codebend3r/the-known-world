@@ -85,6 +85,44 @@
   }
 }
 
+/* List view: same `<ul>`, one row per house. Cap the bleed so rows
+   don't run wider than they need; the grid is the showpiece. */
+.house-list--list {
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 800px) {
+  .house-list--list {
+    --bleed-max: 1280px;
+  }
+}
+
+.house-list--list .house-list__card {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  min-height: 0;
+  padding: 0.65rem 1rem;
+  text-align: left;
+  border-left-width: 3px;
+}
+
+.house-list--list .house-list__name {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.house-list__region {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-variant: small-caps;
+  letter-spacing: 1.5px;
+  color: var(--ink-faded);
+  text-align: right;
+}
+
 .house-infobox {
   float: right;
   width: min(320px, 100%);
