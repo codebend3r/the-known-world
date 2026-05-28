@@ -220,7 +220,8 @@ a.character-list__card:focus-visible {
   .character-detail__relations dt {
     flex-basis: 100%;
   }
-  .character-detail__body {
+  .character-detail__body,
+  .character-detail__family {
     padding-left: 1rem;
     padding-right: 1rem;
   }
