@@ -231,7 +231,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
       {hasFamily && (
         <section className="character-detail__family" aria-labelledby="family-heading">
-          <h2 id="family-heading">Family</h2>
+          <h2 className="character-detail__family-heading" id="family-heading">Family</h2>
           <dl className="character-detail__relations">
             <RelationRow label="Parents" refs={parents} />
             <RelationRow label="Spouses" refs={spouses} />
