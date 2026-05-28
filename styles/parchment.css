@@ -10,7 +10,7 @@
      and stretch every other child — pulling centered `h1`/`subtitle`
      text off-axis. */
   grid-template-columns: minmax(0, 1fr);
-  gap: 2rem;
+  gap: 0;
   align-content: start;
 }
 
@@ -41,7 +41,8 @@
   text-align: center;
   font-style: italic;
   color: var(--ink-faded);
-  padding-bottom: 1rem;
+  padding: 0;
+  margin: 0;
   border-bottom: 1px solid rgba(107, 68, 35, 0.3);
 }
 
@@ -61,10 +62,4 @@
   font-family: var(--font-ui);
   font-size: 0.85rem;
   color: var(--ink-faded);
-}
-
-@media (max-width: 720px) {
-  .parchment-page { gap: 1rem; }
-  .subtitle { padding-bottom: 0.5rem; }
-  .sources { padding-top: 1rem; }
 }
