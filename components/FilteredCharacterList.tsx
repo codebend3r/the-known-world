@@ -39,6 +39,38 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
   const pageStart = (currentPage - 1) * pageSize;
   const pageItems = filtered.slice(pageStart, pageStart + pageSize);
 
+  const renderPagination = (position: 'top' | 'bottom') => (
+    <nav
+      className={`pagination pagination--${position}`}
+      aria-label={`Character list pagination, ${position}`}
+    >
+      <button
+        type="button"
+        className="pagination__button"
+        onClick={() => setPage((p) => Math.max(1, p - 1))}
+        disabled={currentPage === 1}
+        aria-label="Previous page"
+      >
+        ← Prev
+      </button>
+      <span
+        className="pagination__status"
+        {...(position === 'bottom' ? { 'aria-live': 'polite' as const } : {})}
+      >
+        Page {currentPage} of {totalPages}
+      </span>
+      <button
+        type="button"
+        className="pagination__button"
+        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+        disabled={currentPage === totalPages}
+        aria-label="Next page"
+      >
+        Next →
+      </button>
+    </nav>
+  );
+
   return (
     <>
       <input
@@ -55,6 +87,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
         <p className="list-search__empty">No characters match &ldquo;{debounced}&rdquo;.</p>
       ) : (
         <>
+          {totalPages > 1 && renderPagination('top')}
           <ul className="character-list">
             {pageItems.map((item) => {
               const cardClass = item.region
@@ -75,31 +108,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
               );
             })}
           </ul>
-          {totalPages > 1 && (
-            <nav className="pagination" aria-label="Character list pagination">
-              <button
-                type="button"
-                className="pagination__button"
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={currentPage === 1}
-                aria-label="Previous page"
-              >
-                ← Prev
-              </button>
-              <span className="pagination__status" aria-live="polite">
-                Page {currentPage} of {totalPages}
-              </span>
-              <button
-                type="button"
-                className="pagination__button"
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={currentPage === totalPages}
-                aria-label="Next page"
-              >
-                Next →
-              </button>
-            </nav>
-          )}
+          {totalPages > 1 && renderPagination('bottom')}
         </>
       )}
     </>

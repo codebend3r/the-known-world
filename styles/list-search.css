@@ -46,6 +46,10 @@
   color: var(--ink-faded);
 }
 
+.pagination--top {
+  margin: 0.5rem 0 1.75rem;
+}
+
 .pagination__button {
   appearance: none;
   background: rgba(248, 236, 208, 0.6);

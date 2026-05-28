@@ -107,28 +107,41 @@ describe('FilteredCharacterList', () => {
   it('shows the first page of items and a pagination nav when there is overflow', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
     expect(container.querySelectorAll('.character-list__item').length).toBe(30);
-    const nav = screen.getByRole('navigation', { name: /pagination/i });
-    expect(nav.textContent).toMatch(/Page 1 of 3/);
-    const prev = screen.getByRole('button', { name: /previous page/i }) as HTMLButtonElement;
-    expect(prev.disabled).toBe(true);
+    const navs = screen.getAllByRole('navigation', { name: /pagination/i });
+    expect(navs.length).toBe(2);
+    expect(navs[0].textContent).toMatch(/Page 1 of 3/);
+    const prevButtons = screen.getAllByRole('button', { name: /previous page/i }) as HTMLButtonElement[];
+    expect(prevButtons.every((b) => b.disabled)).toBe(true);
   });
 
-  it('advances to the next page when Next is clicked', () => {
+  it('renders a pagination nav above and below the list', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
-    const next = screen.getByRole('button', { name: /next page/i });
-    fireEvent.click(next);
+    const children = Array.from(container.children);
+    const list = children.find((el) => el.classList.contains('character-list'));
+    const navs = children.filter((el) => el.classList.contains('pagination'));
+    expect(navs.length).toBe(2);
+    expect(children.indexOf(navs[0])).toBeLessThan(children.indexOf(list as Element));
+    expect(children.indexOf(navs[1])).toBeGreaterThan(children.indexOf(list as Element));
+    expect(navs[0].classList.contains('pagination--top')).toBe(true);
+    expect(navs[1].classList.contains('pagination--bottom')).toBe(true);
+  });
+
+  it('advances to the next page when Next is clicked from the top nav', () => {
+    const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
+    const [topNext] = screen.getAllByRole('button', { name: /next page/i });
+    fireEvent.click(topNext);
     const firstCardName = container.querySelector('.character-list__name')?.textContent;
     expect(firstCardName).toBe('Char 030');
-    expect(screen.getByText(/Page 2 of 3/)).toBeDefined();
+    expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
   });
 
   it('disables Next on the last page', () => {
     render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
-    const next = screen.getByRole('button', { name: /next page/i }) as HTMLButtonElement;
-    fireEvent.click(next);
-    fireEvent.click(next);
-    expect(next.disabled).toBe(true);
-    expect(screen.getByText(/Page 3 of 3/)).toBeDefined();
+    const nextButtons = screen.getAllByRole('button', { name: /next page/i }) as HTMLButtonElement[];
+    fireEvent.click(nextButtons[0]);
+    fireEvent.click(nextButtons[0]);
+    expect(nextButtons.every((b) => b.disabled)).toBe(true);
+    expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
   });
 
   it('resets to page 1 when the search filter changes', () => {
@@ -137,8 +150,9 @@ describe('FilteredCharacterList', () => {
       { slug: 'arya-stark', name: 'Arya Stark', primaryHouseSlug: 'stark' },
     ];
     render(<FilteredCharacterList items={lots} pageSize={30} />);
-    fireEvent.click(screen.getByRole('button', { name: /next page/i }));
-    expect(screen.getByText(/Page 2/)).toBeDefined();
+    const [nextBtn] = screen.getAllByRole('button', { name: /next page/i });
+    fireEvent.click(nextBtn);
+    expect(screen.getAllByText(/Page 2/).length).toBe(2);
     fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'arya' } });
     act(() => {
       vi.advanceTimersByTime(300);
