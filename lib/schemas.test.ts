@@ -58,6 +58,32 @@ describe('HouseSchema', () => {
     expect(() => HouseSchema.parse(input)).not.toThrow();
   });
 
+  it('parses an infobox-rich house with seats, heads, regions, titles, weapons, and an extinct date', () => {
+    const input = {
+      slug: 'targaryen',
+      name: 'House Targaryen',
+      seat: 'dragonstone',
+      liege: null,
+      words: 'Fire and Blood',
+      sigil: { description: 'A red three-headed dragon on black' },
+      founded: { year: -114, era: 'BC', precision: 'year' },
+      extinct: { year: 283, era: 'AC', precision: 'year' },
+      status: 'exiled',
+      'sworn-from': [],
+      'cadet-houses': ['blackfyre'],
+      seats: [
+        { name: 'Dragonstone', slug: 'dragonstone', note: 'formerly' },
+        { name: 'Great Pyramid', slug: 'great-pyramid' },
+      ],
+      heads: [{ name: 'Queen Daenerys I', slug: 'daenerys-targaryen' }],
+      regions: [{ name: "Slaver's Bay" }],
+      titles: [{ name: 'Dragonlord', note: 'pre-Doom' }],
+      'ancestral-weapons': [{ name: 'Blackfyre' }, { name: 'Dark Sister' }],
+      sources: [],
+    };
+    expect(() => HouseSchema.parse(input)).not.toThrow();
+  });
+
   it('rejects unknown status', () => {
     const input = {
       slug: 'x', name: 'X', seat: 'y', liege: null,

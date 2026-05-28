@@ -36,6 +36,12 @@ export const CastleSchema = z.object({
   draft: z.boolean().default(false),
 });
 
+const HouseInfoEntrySchema = z.object({
+  name: z.string().min(1),
+  slug: z.string().optional(),
+  note: z.string().optional(),
+});
+
 export const HouseSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
@@ -44,9 +50,15 @@ export const HouseSchema = z.object({
   words: z.string(),
   sigil: z.object({ description: z.string() }),
   founded: DateSchema,
+  extinct: DateSchema.optional(),
   status: z.enum(['extant', 'extinct', 'exiled', 'hidden']),
   'sworn-from': z.array(z.string()).default([]),
   'cadet-houses': z.array(z.string()).default([]),
+  seats: z.array(HouseInfoEntrySchema).optional(),
+  heads: z.array(HouseInfoEntrySchema).optional(),
+  regions: z.array(HouseInfoEntrySchema).optional(),
+  titles: z.array(HouseInfoEntrySchema).optional(),
+  'ancestral-weapons': z.array(HouseInfoEntrySchema).optional(),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });
@@ -88,6 +100,7 @@ export const EventSchema = z.object({
 
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
+export type HouseInfoEntry = z.infer<typeof HouseInfoEntrySchema>;
 export type Character = z.infer<typeof CharacterSchema>;
 export type Event = z.infer<typeof EventSchema>;
 export type Source = z.infer<typeof SourceSchema>;

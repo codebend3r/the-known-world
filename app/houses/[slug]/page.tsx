@@ -10,9 +10,8 @@ import {
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sources } from '@/components/Sources';
 import { FamilyTree } from '@/components/FamilyTree';
-import { Sigil } from '@/components/Sigil';
+import { HouseInfobox } from '@/components/HouseInfobox';
 import { buildFamilyTree } from '@/lib/family-tree';
-import type { House } from '@/lib/schemas';
 
 export async function generateStaticParams() {
   const houses = await loadAllHouses();
@@ -31,74 +30,35 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-function formatFounded(founded: House['founded']): string {
-  const { year, era, precision } = founded;
-  if (era === 'AC' || era === 'BC') {
-    return `${Math.abs(year)} ${era}`;
-  }
-  const eraLabel = era
-    .split('-')
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(' ');
-  return precision === 'legendary' ? `${eraLabel} (legendary)` : eraLabel;
-}
-
-function formatStatus(status: House['status']): string {
-  return status[0].toUpperCase() + status.slice(1);
-}
-
 export default async function HousePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [house, castles, characters] = await Promise.all([
+  const [house, allHouses, castles, characters] = await Promise.all([
     loadHouse(slug).catch(() => null),
+    loadAllHouses(),
     loadAllCastles(),
     loadAllCharacters(),
   ]);
   if (!house) notFound();
 
-  const seatCastle = castles.find((c) => c.frontmatter.slug === house.frontmatter.seat);
+  const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
+  const castlesBySlug = new Map(castles.map((c) => [c.slug, c.frontmatter]));
+  const charactersBySlug = new Map(characters.map((c) => [c.slug, c.frontmatter]));
+
   const html = await renderMarkdown(house.body);
   const tree = buildFamilyTree(slug, characters);
 
   return (
     <ParchmentLayout>
-      <div className="house-detail__crest">
-        <Sigil
-          slug={slug}
-          name={house.frontmatter.name.replace(/^House\s+/i, '')}
-          size="9rem"
-          decorative
-        />
-      </div>
+      <HouseInfobox
+        house={house.frontmatter}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+      />
       <h1>{house.frontmatter.name}</h1>
-      <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
-
-      <dl className="house-detail__meta">
-        <div>
-          <dt>Seat</dt>
-          <dd>
-            {seatCastle ? (
-              <Link href={`/castles/${seatCastle.frontmatter.slug}/`}>
-                {seatCastle.frontmatter.name}
-              </Link>
-            ) : (
-              house.frontmatter.seat
-            )}
-          </dd>
-        </div>
-        <div>
-          <dt>Founded</dt>
-          <dd>{formatFounded(house.frontmatter.founded)}</dd>
-        </div>
-        <div>
-          <dt>Status</dt>
-          <dd>{formatStatus(house.frontmatter.status)}</dd>
-        </div>
-        <div>
-          <dt>Sigil</dt>
-          <dd>{house.frontmatter.sigil.description}</dd>
-        </div>
-      </dl>
+      {house.frontmatter.words && (
+        <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
+      )}
 
       <article className="house-detail__body" dangerouslySetInnerHTML={{ __html: html }} />
 
