@@ -21,6 +21,7 @@
 .parchment-page > * { position: relative; z-index: 1; }
 
 .subtitle {
+  display: flow-root;
   text-align: center;
   font-style: italic;
   color: var(--ink-faded);
