@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { regionForHouse } from './regions';
+import { regionForHouse, regionLabel } from './regions';
 import { HouseSchema, type House } from './schemas';
 
 const founded = { year: 0, era: 'AC', precision: 'year' };
@@ -63,5 +63,17 @@ describe('regionForHouse', () => {
 
   it('returns null for a slug that is not in the index', () => {
     expect(regionForHouse('ghost', mapOf([]))).toBeNull();
+  });
+});
+
+describe('regionLabel', () => {
+  it('returns the display name for a known region slug', () => {
+    expect(regionLabel('north')).toBe('The North');
+    expect(regionLabel('iron-islands')).toBe('The Iron Islands');
+    expect(regionLabel('dorne')).toBe('Dorne');
+  });
+
+  it('returns null when the slug is null', () => {
+    expect(regionLabel(null)).toBeNull();
   });
 });

@@ -14,6 +14,14 @@ export const REGIONS = {
 
 export type RegionSlug = (typeof REGIONS)[keyof typeof REGIONS]['slug'];
 
+const REGION_LABELS: Record<RegionSlug, string> = Object.fromEntries(
+  Object.values(REGIONS).map((r) => [r.slug, r.name]),
+) as Record<RegionSlug, string>;
+
+export function regionLabel(slug: RegionSlug | null): string | null {
+  return slug ? REGION_LABELS[slug] : null;
+}
+
 export function regionForHouse(
   slug: string,
   housesBySlug: Map<string, House>,
