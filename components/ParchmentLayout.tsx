@@ -1,5 +1,13 @@
 import type { ReactNode } from 'react';
 
-export function ParchmentLayout({ children }: { children: ReactNode }) {
-  return <main className="parchment-page">{children}</main>;
+type Props = {
+  children: ReactNode;
+  variant?: 'block';
+};
+
+export function ParchmentLayout({ children, variant }: Props) {
+  const className = variant
+    ? `parchment-page parchment-page--${variant}`
+    : 'parchment-page';
+  return <main className={className}>{children}</main>;
 }

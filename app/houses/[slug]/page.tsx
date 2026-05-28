@@ -48,7 +48,7 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
   const tree = buildFamilyTree(slug, characters);
 
   return (
-    <ParchmentLayout>
+    <ParchmentLayout variant="block">
       <HouseInfobox
         house={house.frontmatter}
         castlesBySlug={castlesBySlug}
