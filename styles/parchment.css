@@ -4,6 +4,12 @@
   padding: 3rem clamp(1.5rem, 4vw, 3.5rem) 6rem;
   position: relative;
   display: grid;
+  /* `minmax(0, 1fr)` pins the implicit column to the container's content
+     width. Without it, an item with an explicit wider `width` (e.g.
+     `.house-list` bleeding past the parchment) would inflate the track
+     and stretch every other child — pulling centered `h1`/`subtitle`
+     text off-axis. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 2rem;
   align-content: start;
 }
