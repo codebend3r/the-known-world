@@ -1,7 +1,7 @@
 .parchment-page {
   max-width: min(1280px, max(720px, 75vw));
   margin: 0 auto;
-  padding: 3rem clamp(1.5rem, 4vw, 3.5rem) 6rem;
+  padding: 0;
   position: relative;
   display: grid;
   /* `minmax(0, 1fr)` pins the implicit column to the container's content
@@ -61,4 +61,10 @@
   font-family: var(--font-ui);
   font-size: 0.85rem;
   color: var(--ink-faded);
+}
+
+@media (max-width: 720px) {
+  .parchment-page { gap: 1rem; }
+  .subtitle { padding-bottom: 0.5rem; }
+  .sources { padding-top: 1rem; }
 }
