@@ -36,8 +36,16 @@
   background-size: contain;
   background-position: center;
 }
-.sigil--lannister  { --col: 1; --row: 0; }
-.sigil--targaryen  { --col: 2; --row: 0; }
+.sigil--lannister {
+  background-image: url('/sigils/lannister.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--targaryen {
+  background-image: url('/sigils/targaryen.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--baratheon  { --col: 3; --row: 0; }
 .sigil--greyjoy    { --col: 4; --row: 0; }
 
@@ -45,7 +53,11 @@
 .sigil--tully      { --col: 0; --row: 1; }
 .sigil--arryn      { --col: 1; --row: 1; }
 .sigil--martell    { --col: 2; --row: 1; }
-.sigil--tyrell     { --col: 3; --row: 1; }
+.sigil--tyrell {
+  background-image: url('/sigils/tyrell.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--bolton     { --col: 4; --row: 1; }
 
 /* Row 3 — Frey · Mormont · Umber · Karstark · Reed */
