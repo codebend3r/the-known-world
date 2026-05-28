@@ -1,3 +1,5 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -10,6 +12,21 @@ import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sigil } from '@/components/Sigil';
 import { Sources } from '@/components/Sources';
 import type { Character } from '@/lib/schemas';
+
+const PORTRAIT_EXTENSIONS = ['png', 'webp', 'jpg', 'jpeg'] as const;
+
+async function findPortrait(slug: string): Promise<string | null> {
+  for (const ext of PORTRAIT_EXTENSIONS) {
+    const absPath = path.join(process.cwd(), 'public', 'characters', `${slug}.${ext}`);
+    try {
+      await fs.access(absPath);
+      return `/characters/${slug}.${ext}`;
+    } catch {
+      // not found; try the next extension
+    }
+  }
+  return null;
+}
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();
@@ -95,9 +112,10 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
   const fm = character.frontmatter;
 
-  const [allCharacters, allHouses] = await Promise.all([
+  const [allCharacters, allHouses, portrait] = await Promise.all([
     loadAllCharacters(),
     loadAllHouses(),
+    findPortrait(slug),
   ]);
 
   const charactersBySlug = new Map(allCharacters.map((c) => [c.slug, c.frontmatter]));
@@ -118,14 +136,26 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
   return (
     <ParchmentLayout>
-      <div className="character-detail__crest">
-        <Sigil
-          slug={fm['primary-house']}
-          name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
-          size="9rem"
-          decorative
-        />
-      </div>
+      {portrait ? (
+        <div className="character-detail__portrait">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={portrait}
+            alt={`Portrait of ${fm.name}`}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      ) : (
+        <div className="character-detail__crest">
+          <Sigil
+            slug={fm['primary-house']}
+            name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
+            size="9rem"
+            decorative
+          />
+        </div>
+      )}
       <h1>{fm.name}</h1>
       {headlineTitle && <p className="subtitle">{headlineTitle}</p>}
 
