@@ -17,6 +17,7 @@ Operating rules for this repo. The README covers stack, layout, and routes — t
 
 - The site is a fully static export (`output: 'export'`). No server actions, no route handlers, no dynamic rendering — every route must pre-render at build time.
 - Styles are hand-written CSS in `styles/`. No Tailwind, no CSS-in-JS — preserve the parchment aesthetic.
+- Never use `margin` for layout spacing. Prefer `display: grid` with `gap` and `padding`. Only reach for `margin` when there is genuinely no other option.
 
 ## Content + tests
 
