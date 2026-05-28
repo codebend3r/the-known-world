@@ -214,8 +214,7 @@
   .house-infobox__row {
     grid-template-columns: 5.5rem 1fr;
   }
-  .house-detail__body,
-  .family-tree {
+  .house-detail__body {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -251,6 +250,15 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* Placed after the reset above so source order beats the equal-specificity
+   `padding: 0` declaration. */
+@media (max-width: 720px) {
+  .family-tree {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
 }
 
 .family-tree__node {
