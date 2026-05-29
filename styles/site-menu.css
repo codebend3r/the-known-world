@@ -173,10 +173,17 @@
   background: rgba(212, 162, 89, 0.18);
 }
 
+@media (max-width: 767.98px) { /* md */
+  .site-menu__trigger {
+    align-self: stretch;
+    width: 3rem;
+    height: auto;
+  }
+}
+
 @media (max-width: 479.98px) { /* xs */
   .site-menu__trigger {
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 2.75rem;
   }
   .site-menu__panel {
     width: min(18rem, 88vw);
