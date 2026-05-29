@@ -50,6 +50,12 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
   return (
     <ParchmentLayout>
       <div className="house-detail">
+        <div className="house-detail__heading">
+          <h1>{house.frontmatter.name}</h1>
+          {house.frontmatter.words && (
+            <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
+          )}
+        </div>
         <HouseInfobox
           house={house.frontmatter}
           castlesBySlug={castlesBySlug}
@@ -57,11 +63,6 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
           housesBySlug={housesBySlug}
         />
         <div className="house-detail__main">
-          <h1>{house.frontmatter.name}</h1>
-          {house.frontmatter.words && (
-            <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
-          )}
-
           <article className="house-detail__body" dangerouslySetInnerHTML={{ __html: html }} />
 
           <section className="house-detail__tree" aria-labelledby="family-tree-heading">

@@ -123,7 +123,6 @@ export function HouseInfobox({
         <Sigil
           slug={house.slug}
           name={shortHouseName(house.name)}
-          size="16rem"
           decorative
         />
       </div>

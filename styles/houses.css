@@ -141,6 +141,14 @@
   border-bottom: 1px solid rgba(107, 68, 35, 0.3);
 }
 
+/* Override the sigil's default fixed `--sigil-size` so it shrinks with
+   the infobox column (which is `clamp(280px, 28%, 340px)` minus padding)
+   while never exceeding 16rem. Prevents the sigil overflowing the
+   container at intermediate breakpoints. */
+.house-infobox__sigil .sigil {
+  --sigil-size: min(16rem, 100%);
+}
+
 .house-infobox__rows {
   margin: 0;
   display: flex;
@@ -217,13 +225,21 @@
   padding: 1rem 0 0 0;
 }
 
+.house-detail__heading {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+
 .house-detail__main {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-content: start;
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
 }
 
 .house-detail > .house-infobox {
@@ -236,6 +252,7 @@
     grid-template-columns: minmax(0, 1fr);
     column-gap: 0;
   }
+  .house-detail__heading,
   .house-detail__main,
   .house-detail > .house-infobox {
     grid-column: auto;
