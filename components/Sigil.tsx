@@ -9,7 +9,7 @@ const SIGIL_SLUGS = new Set([
   'florent', 'rowan', 'oakheart', 'mallister', 'piper',
   'manderly', 'dustin', 'ryswell', 'hornwood', 'cerwyn',
   'swann', 'dondarrion', 'caron', 'estermont', 'grafton',
-  'durrandon',
+  'durrandon', 'unknown',
 ]);
 
 type Props = {
@@ -21,9 +21,10 @@ type Props = {
 };
 
 export function Sigil({ slug, name, size, decorative = false, className }: Props) {
-  if (slug === null || !SIGIL_SLUGS.has(slug)) return null;
+  if (slug === null) return null;
 
-  const classes = ['sigil', `sigil--${slug}`, className].filter(Boolean).join(' ');
+  const resolvedSlug = SIGIL_SLUGS.has(slug) ? slug : 'unknown';
+  const classes = ['sigil', `sigil--${resolvedSlug}`, className].filter(Boolean).join(' ');
   const style = size ? ({ '--sigil-size': size } as CSSProperties) : undefined;
 
   return (

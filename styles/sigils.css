@@ -128,3 +128,10 @@
   background-size: contain;
   background-position: center;
 } /* crowned stag, inherited by House Baratheon */
+
+/* Fallback for houses without a dedicated sigil */
+.sigil--unknown {
+  background-image: url('/sigils/unknown.png');
+  background-size: contain;
+  background-position: center;
+}
