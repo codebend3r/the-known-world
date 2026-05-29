@@ -16,7 +16,7 @@ import type { Character } from '@/lib/schemas';
 
 const PORTRAIT_EXTENSIONS = ['png', 'webp', 'jpg', 'jpeg'] as const;
 
-async function findPortrait(slug: string): Promise<string | null> {
+async function findPortrait(slug: string, sex: Character['sex']): Promise<string> {
   for (const ext of PORTRAIT_EXTENSIONS) {
     const absPath = path.join(process.cwd(), 'public', 'characters', `${slug}.${ext}`);
     try {
@@ -26,7 +26,7 @@ async function findPortrait(slug: string): Promise<string | null> {
       // not found; try the next extension
     }
   }
-  return null;
+  return sex === 'f' ? '/characters/unknown-female.png' : '/characters/unknown-male.png';
 }
 
 export async function generateStaticParams() {
@@ -116,7 +116,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const [allCharacters, allHouses, portrait] = await Promise.all([
     loadAllCharacters(),
     loadAllHouses(),
-    findPortrait(slug),
+    findPortrait(slug, fm.sex),
   ]);
 
   const charactersBySlug = new Map(allCharacters.map((c) => [c.slug, c.frontmatter]));
@@ -137,22 +137,20 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
   return (
     <ParchmentLayout>
-      {portrait && (
-        <div className="character-detail__portrait">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={portrait}
-            alt={`Portrait of ${fm.name}`}
-            loading="lazy"
-            decoding="async"
-          />
-        </div>
-      )}
+      <div className="character-detail__portrait">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={portrait}
+          alt={`Portrait of ${fm.name}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
       <div className="character-detail__heading">
         <Sigil
           slug={fm['primary-house']}
           name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
-          size="2.6rem"
+          size="6rem"
           decorative
         />
         <h1>
