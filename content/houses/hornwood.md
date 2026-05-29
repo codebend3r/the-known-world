@@ -21,6 +21,6 @@ sources:
 draft: false
 ---
 
-House Hornwood holds the wide forest lands east of Winterfell, between the wolfswood and the Dreadfort. Theirs is a quiet, prosperous country of hunters and woodsmen, and the Hornwood lords are reckoned good neighbours by every house with a border that touches theirs — except, perhaps, the Boltons.
+House Hornwood holds the wide forest lands east of Winterfell, between the wolfswood and the Dreadfort. Theirs is a quiet, prosperous country of hunters and woodsmen, and the Hornwood lords are reckoned good neighbours by every house with a border that touches theirs, except, perhaps, the Boltons.
 
 Lord Halys Hornwood marches south at his liege lord's call with two hundred lances and twice as many bowmen. His son and only heir, Daryn, rides as squire to Robb Stark, with no surviving brothers to follow if either should fall.

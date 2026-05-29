@@ -1,35 +1,35 @@
-# Game of Thrones Atlas — Design Spec
+# Game of Thrones Atlas: Design Spec
 
 **Date:** 2026-05-19
 **Status:** Approved for planning
 
 ## Overview
 
-A static, parchment-themed web atlas of **the North** — Westeros's largest region. Three first-class views reachable from a top-level mode toggle:
+A static, parchment-themed web atlas of **the North**, Westeros's largest region. Three first-class views reachable from a top-level mode toggle:
 
-- **Map** — pannable, zoomable SVG of the North with pins for castles, towns, ruins, watchtowers, and notable battle sites
-- **Timeline** — vertical era-segmented chronicle from the Age of Heroes to 300 AC
-- **Houses** — grid of every Northern house, each with its own detail page and full-screen family tree
+- **Map**: pannable, zoomable SVG of the North with pins for castles, towns, ruins, watchtowers, and notable battle sites
+- **Timeline**: vertical era-segmented chronicle from the Age of Heroes to 300 AC
+- **Houses**: grid of every Northern house, each with its own detail page and full-screen family tree
 
-Every castle, house, event, and person has a routed, statically-rendered URL — shareable on Reddit, indexable by Google, deep-linkable. Shipped as a Next.js static export on **Netlify**, installable as a PWA on phones.
+Every castle, house, event, and person has a routed, statically-rendered URL: shareable on Reddit, indexable by Google, deep-linkable. Shipped as a Next.js static export on **Netlify**, installable as a PWA on phones.
 
 ## Goals
 
-- Capture the North at depth (~500–1000 words per castle, ~ same per house, full canonical genealogies)
-- Feel like *holding a piece of history* — the visual reference is the World of Ice and Fire interior pages and the Yi Ti / Ghiscari empire chapter openings
+- Capture the North at depth (~500 to 1000 words per castle, ~ same per house, full canonical genealogies)
+- Feel like *holding a piece of history*. The visual reference is the World of Ice and Fire interior pages and the Yi Ti / Ghiscari empire chapter openings
 - Solo, passive, part-time-friendly: ship and iterate without external services to babysit
 - Zero recurring cost beyond a domain
 - Source content from A Wiki of Ice and Fire (CC-BY-SA-4.0) with proper attribution
 
 ## Non-goals (explicit fence)
 
-- ❌ Essos, the Stepstones, the Summer Isles, Sothoryos — North only at launch
+- ❌ Essos, the Stepstones, the Summer Isles, Sothoryos (North only at launch)
 - ❌ User accounts, comments, forums, "favorite" lists
-- ❌ Runtime backend or database — everything is built statically from Markdown in the repo
-- ❌ Real-time updates — content changes ship via redeploy
-- ❌ Search across external content — local index of our own pages only
-- ❌ Native iOS/Android apps — PWA only; Capacitor stays as a deferred future option
-- ❌ Image hosting at scale — only small CC-licensed sigils/illustrations
+- ❌ Runtime backend or database (everything is built statically from Markdown in the repo)
+- ❌ Real-time updates (content changes ship via redeploy)
+- ❌ Search across external content (local index of our own pages only)
+- ❌ Native iOS/Android apps (PWA only; Capacitor stays as a deferred future option)
+- ❌ Image hosting at scale (only small CC-licensed sigils/illustrations)
 
 ## System architecture
 
@@ -185,7 +185,7 @@ The seat of [[stark]] for ~8000 years, Winterfell faced its
 darkest hour during the aftermath of the [[red-wedding]].
 ```
 
-Renders as proper links with hover preview cards. This is where the "deep" content depth pays off — the atlas should feel like a wiki you can fall into.
+Renders as proper links with hover preview cards. This is where the "deep" content depth pays off: the atlas should feel like a wiki you can fall into.
 
 ## Views
 
@@ -221,7 +221,7 @@ Renders as proper links with hover preview cards. This is where the "deep" conte
 
 ### Family Tree view
 
-`/houses/{slug}/tree` — full-screen pan/zoom genealogy.
+`/houses/{slug}/tree`: full-screen pan/zoom genealogy.
 
 - Rendered with **react-flow**, custom parchment-card nodes, hand-styled ink-line edges
 - Layout computed at build time with `dagre`, shipped pre-positioned (react-flow just renders)
@@ -233,7 +233,7 @@ Renders as proper links with hover preview cards. This is where the "deep" conte
   - Solid line: parent → child
   - Double horizontal line: marriage
   - Red dashed line: cadet branch
-- Cross-house relationships are first-class — marriages from House Tully (e.g., Catelyn) show "↗ House Tully" annotation
+- Cross-house relationships are first-class: marriages from House Tully (e.g., Catelyn) show "↗ House Tully" annotation
 - Performance: trees per house are tiny (rarely > 50 nodes), so no virtualization needed
 
 ### Coverage at launch
@@ -257,16 +257,16 @@ Vellum              #f8ecd0               (cards, raised surfaces)
 
 ### Type
 
-- **Headings** — Cinzel (small-caps feel, free, Google Fonts)
-- **Body** — EB Garamond (readable, slightly aged)
-- **UI / chips / data** — Inter (small sizes only, for chrome that shouldn't look historic)
+- **Headings**: Cinzel (small-caps feel, free, Google Fonts)
+- **Body**: EB Garamond (readable, slightly aged)
+- **UI / chips / data**: Inter (small sizes only, for chrome that shouldn't look historic)
 
 ### Texture & motion
 
 - Subtle ink-fleck dots over backgrounds (CSS radial-gradients, ~5% opacity)
 - Drop caps on first paragraph of every content page
 - Soft sepia vignette on map and timeline backgrounds
-- Page transitions: 200ms parchment fade — no slides or flips
+- Page transitions: 200ms parchment fade, no slides or flips
 - Pin hover: gold-leaf ring expansion
 
 ### Design rule that keeps it tight
@@ -297,7 +297,7 @@ bun run scrape:north  --all             # bulk-seed all known Northern entities
 - **Cached:** raw API responses go to `.cache/` so parser iteration doesn't re-hit AWOIAF
 - **Draft flow:** entries with `draft: true` are excluded from the production build but visible at `localhost:3000/_drafts`
 
-**Pipeline shape: semi-automated.** Scraper handles facts (infoboxes, relations, citations); human handles voice and editorial choices on the prose body. LLM-assisted draft generation is *not* part of the production pipeline — too high a hallucination/canon-violation risk for unattended runs.
+**Pipeline shape: semi-automated.** Scraper handles facts (infoboxes, relations, citations); human handles voice and editorial choices on the prose body. LLM-assisted draft generation is *not* part of the production pipeline; it carries too high a hallucination/canon-violation risk for unattended runs.
 
 ### Attribution (CC-BY-SA-4.0)
 
@@ -321,7 +321,7 @@ bun run scrape:north  --all             # bulk-seed all known Northern entities
 All routes statically pre-rendered via `output: 'export'`.
 
 ```
-/                              landing — region picker (only the North active at launch)
+/                              landing (region picker; only the North active at launch)
 /the-north                     region home (defaults to Map view)
 /the-north/timeline            timeline view
 /the-north/houses              houses grid
@@ -385,7 +385,7 @@ game-of-thrones-atlas/
 
 ## Testing posture (deliberately minimal)
 
-- **Schema validation:** zod validates every frontmatter file at build — invalid file fails the build. Catches most real bugs.
+- **Schema validation:** zod validates every frontmatter file at build, and an invalid file fails the build. Catches most real bugs.
 - **Relation graph tests:** Vitest suite checking every `sworn-houses` reference resolves, no orphan slugs, no cycles in parent-child, every `location` slug exists.
 - **No component unit tests.** Solo passive project; manual testing on real North data is faster feedback than maintaining a component suite.
 - **Visual regression:** out of scope.

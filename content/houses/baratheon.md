@@ -37,4 +37,4 @@ draft: false
 
 House Baratheon of Storm's End is one of the Great Houses of Westeros and the principal noble house of the Stormlands. They are the youngest of the great houses, founded in the first year After the Conquest by Orys Baratheon, Aegon's bastard half-brother and his first Hand. Orys slew Argilac the Arrogant, last of the Storm Kings, then took the slain king's daughter to wife along with his sigil, his words, and his seat.
 
-By the events of *A Game of Thrones* the Baratheons have grown into the royal house. Robert Baratheon, called the Demon of the Trident, won the Iron Throne after dashing Prince Rhaegar's chest to ruin on the rubies of his armor — and now wears the crown his hammer earned. His brothers Stannis and Renly hold Dragonstone and Storm's End in his name.
+By the events of *A Game of Thrones* the Baratheons have grown into the royal house. Robert Baratheon, called the Demon of the Trident, won the Iron Throne after dashing Prince Rhaegar's chest to ruin on the rubies of his armor, and now wears the crown his hammer earned. His brothers Stannis and Renly hold Dragonstone and Storm's End in his name.

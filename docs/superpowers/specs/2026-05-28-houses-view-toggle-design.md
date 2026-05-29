@@ -1,4 +1,4 @@
-## Houses grid/list view toggle — Design Spec
+## Houses grid/list view toggle: Design Spec
 
 **Date:** 2026-05-28
 **Status:** Approved for planning
@@ -24,11 +24,11 @@ Add a two-button toggle to `/houses/` so users can switch the existing card grid
 
 ## Behavior
 
-- Two icon-only `<button>`s — grid and list — share a single segmented control with `role="group"` and `aria-label="View"`. Each button has an `aria-pressed` reflecting current view and a visible `aria-label` (`"Grid view"`, `"List view"`).
-- Initial render uses the SSR-safe default: `'grid'`. After mount, a `useEffect` reads `localStorage['gota:houses-view']` and updates the state if a valid stored value exists. This causes one transient grid → list swap on first paint for users whose stored choice is `list` — accepted to avoid hydration mismatch.
+- Two icon-only `<button>`s (one grid, one list) share a single segmented control with `role="group"` and `aria-label="View"`. Each button has an `aria-pressed` reflecting current view and a visible `aria-label` (`"Grid view"`, `"List view"`).
+- Initial render uses the SSR-safe default: `'grid'`. After mount, a `useEffect` reads `localStorage['gota:houses-view']` and updates the state if a valid stored value exists. This causes one transient grid to list swap on first paint for users whose stored choice is `list`, which is accepted to avoid hydration mismatch.
 - Clicking a button updates the state and writes the new value to `localStorage` synchronously.
 - Search and view are independent: filtering applies to both views, the empty-state message renders the same way in both.
-- Reduced-motion users get the same no-transition treatment already applied elsewhere — these buttons have no hover transform to suppress, but their `border-color` transition matches the existing pattern.
+- Reduced-motion users get the same no-transition treatment already applied elsewhere; these buttons have no hover transform to suppress, but their `border-color` transition matches the existing pattern.
 
 ## Visual structure
 
@@ -75,8 +75,8 @@ No content schema changes. No route changes. No changes to `/characters/`.
 export type HouseItem = {
   slug: string;
   name: string;
-  region: RegionSlug | null;       // existing — used for color tint
-  regionLabel: string | null;      // new — displayed in list view
+  region: RegionSlug | null;       // existing, used for color tint
+  regionLabel: string | null;      // new, displayed in list view
 };
 ```
 
@@ -109,9 +109,9 @@ New `ViewToggle.test.tsx`:
 
 ## Risks and trade-offs
 
-- **One-frame flash from grid → list on first paint** for users whose stored choice is list. Accepted — the alternative (inline `<script>` in `<head>` to pre-set a class) is out of proportion for a single-page feature and complicates the static export.
+- **One-frame flash from grid to list on first paint** for users whose stored choice is list. Accepted, because the alternative (inline `<script>` in `<head>` to pre-set a class) is out of proportion for a single-page feature and complicates the static export.
 - **`localStorage` is per-origin**, not per-device synced. Users on multiple devices won't see consistent choice. Acceptable for this site.
-- **Region color treatment differs by view** (border on cards, left bar on rows). This is intentional — applying a full row border looked busy in early sketches — but it means the regional palette has two visual languages now. If we add list view elsewhere, reuse the same modifier pattern to keep them consistent.
+- **Region color treatment differs by view** (border on cards, left bar on rows). This is intentional (applying a full row border looked busy in early sketches) but it means the regional palette has two visual languages now. If we add list view elsewhere, reuse the same modifier pattern to keep them consistent.
 
 ## File diff summary
 

@@ -21,6 +21,6 @@ sources:
 draft: false
 ---
 
-House Velaryon of Driftmark is a house of Valyrian blood that crossed the Narrow Sea before the Doom — earlier than the Targaryens, by some tellings. They settled on the long low island of Driftmark in Blackwater Bay, between Dragonstone and the mouth of the Blackwater, and grew rich on the salt-trade between the Free Cities and the western kingdoms.
+House Velaryon of Driftmark is a house of Valyrian blood that crossed the Narrow Sea before the Doom, earlier than the Targaryens by some tellings. They settled on the long low island of Driftmark in Blackwater Bay, between Dragonstone and the mouth of the Blackwater, and grew rich on the salt-trade between the Free Cities and the western kingdoms.
 
-For three hundred years the Velaryons served as the great admirals of Targaryen kings, three of them rising to Master of Ships, and Velaryon blood is mixed deeply into the dragon line through Queens Alyssa, Aemma, and Rhaenys. With the dragons gone and the Targaryens overthrown, the seahorse banner now flies for the Crown of Robert Baratheon — though the salt and the silver on the Velaryon brow still mark them, in any harbour, as something older than the realm they serve.
+For three hundred years the Velaryons served as the great admirals of Targaryen kings, three of them rising to Master of Ships, and Velaryon blood is mixed deeply into the dragon line through Queens Alyssa, Aemma, and Rhaenys. With the dragons gone and the Targaryens overthrown, the seahorse banner now flies for the Crown of Robert Baratheon, though the salt and the silver on the Velaryon brow still mark them, in any harbour, as something older than the realm they serve.

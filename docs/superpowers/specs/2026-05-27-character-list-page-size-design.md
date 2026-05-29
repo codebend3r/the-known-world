@@ -1,4 +1,4 @@
-## Character list page-size selector — Design Spec
+## Character list page-size selector: Design Spec
 
 **Date:** 2026-05-27
 **Status:** Approved for planning
@@ -12,7 +12,7 @@ Add a page-size `<select>` to the existing pagination bar on the characters list
 
 - Let users widen or narrow the page without leaving the keyboard / screen.
 - Keep the existing API: `FilteredCharacterList` still accepts a `pageSize` prop, which now seeds the *initial* selected size.
-- Match the parchment aesthetic — the new control reuses `--font-ui`, the existing button border, and the gold-leaf focus treatment.
+- Match the parchment aesthetic: the new control reuses `--font-ui`, the existing button border, and the gold-leaf focus treatment.
 
 ## Non-goals
 
@@ -24,7 +24,7 @@ Add a page-size `<select>` to the existing pagination bar on the characters list
 
 - Options, in order: `10`, `30`, `60`, `100`, `All`. `All` means the whole filtered list renders on one page (internally `Infinity`).
 - The selected size is held in `useState`, initialized from the existing `pageSize` prop (default 30).
-- Changing the size always resets `page` to 1 — same reset behavior as a search-filter change.
+- Changing the size always resets `page` to 1, the same reset behavior as a search-filter change.
 - The pagination nav is shown whenever `filtered.length > 10` (the smallest selectable size), so the selector remains reachable even when the current size yields a single page. Inside the nav, Prev/Next disable correctly and the status reads `Page 1 of 1` when there is only one page.
 - Existing behavior preserved: if the filtered list has 10 or fewer items, no pagination nav renders at all.
 
@@ -63,7 +63,7 @@ Add to the existing Vitest suite:
 
 ## Risks and trade-offs
 
-- **Selector always-visible when `filtered.length > 10` is a small behavior change.** Today, a filtered result of 25 items at the default pageSize hides the nav entirely; under this spec it would show a disabled-Prev/Next nav with the selector. Accepted — without it, a user who picks `All` would lose access to the control.
+- **Selector always-visible when `filtered.length > 10` is a small behavior change.** Today, a filtered result of 25 items at the default pageSize hides the nav entirely; under this spec it would show a disabled-Prev/Next nav with the selector. Accepted, because without it a user who picks `All` would lose access to the control.
 - **`pageSize` prop becomes "initial size" rather than "the size."** Existing tests pass it as a literal number; the new state still honors that as the starting value, so callers don't change.
 - **No persistence.** Reloading or navigating away resets to the prop default. If users start asking for stickiness, add a URL param next (preserves the static-export model).
 

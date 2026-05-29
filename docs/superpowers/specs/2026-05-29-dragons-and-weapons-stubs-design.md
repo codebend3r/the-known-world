@@ -1,6 +1,6 @@
 # Dragons + Ancestral Weapons section stubs
 
-Stub two new top-level sections — **Dragons** and **Ancestral Weapons** — so they appear in the main menu alongside Maps, Timeline, Encyclopedia, and Houses. Both ship as coming-soon pages, matching how Maps / Timeline / Encyclopedia are stubbed today.
+Stub two new top-level sections (**Dragons** and **Ancestral Weapons**) so they appear in the main menu alongside Maps, Timeline, Encyclopedia, and Houses. Both ship as coming-soon pages, matching how Maps / Timeline / Encyclopedia are stubbed today.
 
 ## Scope
 
@@ -22,8 +22,8 @@ Out of scope (deliberately deferred):
 
 Both mirror `app/encyclopedia/page.tsx`:
 
-- `app/dragons/page.tsx` — `metadata.title = 'Dragons · Atlas of the Known World'`, renders `<ParchmentLayout><ComingSoonPage title="Dragons" /></ParchmentLayout>`.
-- `app/weapons/page.tsx` — `metadata.title = 'Ancestral Weapons · Atlas of the Known World'`, renders `<ParchmentLayout><ComingSoonPage title="Ancestral Weapons" /></ParchmentLayout>`.
+- `app/dragons/page.tsx`: `metadata.title = 'Dragons · Atlas of the Known World'`, renders `<ParchmentLayout><ComingSoonPage title="Dragons" /></ParchmentLayout>`.
+- `app/weapons/page.tsx`: `metadata.title = 'Ancestral Weapons · Atlas of the Known World'`, renders `<ParchmentLayout><ComingSoonPage title="Ancestral Weapons" /></ParchmentLayout>`.
 
 The URL for ancestral weapons is `/weapons/` (shorter); the menu title remains the full phrase.
 
@@ -51,12 +51,12 @@ Add two new const SVGs at the top of `components/MainMenu.tsx`, following the co
 
 - `viewBox="0 0 32 32"`, `width="32"`, `height="32"`, `aria-hidden="true"`.
 - Strokes use `currentColor` with `strokeWidth="1.5"`.
-- Optional inner shape filled at `0.5`–`0.7` opacity.
+- Optional inner shape filled at `0.5` to `0.7` opacity.
 
 Working shapes:
 
-- **DRAGON** — an outlined wing arc with a small flame or eye accent inside.
-- **SWORD** — a vertical blade (point down) with a horizontal cross-guard and a round pommel.
+- **DRAGON**: an outlined wing arc with a small flame or eye accent inside.
+- **SWORD**: a vertical blade (point down) with a horizontal cross-guard and a round pommel.
 
 Exact path data finalized in implementation; visual goal is a silhouette that reads at 32×32 in the same engraved style as the existing four.
 

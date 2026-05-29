@@ -12,9 +12,9 @@ Add a `sex` field to the character schema in `lib/schemas.ts`:
 sex: z.enum(['m', 'f']).nullable().default(null),
 ```
 
-- `'m'` — male
-- `'f'` — female
-- `null` — unknown / not applicable (used for `placeholder: true` rows such as `unknown-baratheon-ancestors`)
+- `'m'`: male
+- `'f'`: female
+- `null`: unknown / not applicable (used for `placeholder: true` rows such as `unknown-baratheon-ancestors`)
 
 Nullable + defaulting to `null` so any existing file that has not yet been backfilled still parses. This lets the backfill land in one commit without breaking the build mid-edit.
 
@@ -31,7 +31,7 @@ Strategy:
    - `f`: `Queen`, `Princess`, `Lady`, `Septa`, `The Maid`, `Queen Dowager`, etc.
 2. Overrides for known exceptions:
    - `brienne-of-tarth` → `f` (titled `Ser` but female)
-   - placeholder rows (`unknown-baratheon-ancestors`, `unknown-mother-of-*`, `unknown-father-of-*`) — `mother` → `f`, `father` → `m`, generic unknowns → `null`
+   - placeholder rows (`unknown-baratheon-ancestors`, `unknown-mother-of-*`, `unknown-father-of-*`): `mother` → `f`, `father` → `m`, generic unknowns → `null`
    - children and other untitled characters that the title-inference cannot classify get manual `m`/`f` per canon
 3. Manual spot-check of the produced output before committing.
 
@@ -85,7 +85,7 @@ Used:
 - Before each `CharacterName` in `PersonLabel`.
 - Inside each spouse `span` in `NodeRow`, after the existing `⚭` and before the spouse's `CharacterName`.
 
-When `sex === null`, nothing renders — placeholders and unknown-sex rows stay visually unchanged.
+When `sex === null`, nothing renders, so placeholders and unknown-sex rows stay visually unchanged.
 
 ### `styles/houses.css`
 
@@ -103,23 +103,23 @@ Both genders share the same gold-leaf colour; the symbol shape (`♂` vs `♀`) 
 
 ## Testing
 
-- `lib/schemas.test.ts` — extend the existing valid-character fixture to cover `sex: 'm'`, `sex: 'f'`, and `sex: null`. Assert each parses.
-- `lib/family-tree.test.ts` — extend fixture characters with `sex` and assert it propagates onto the produced `TreeNode` and `TreeSpouse` entries.
-- `components/FamilyTree.test.tsx` — DOM-environment is currently broken in the existing test setup (pre-existing issue, unrelated to this work). Skip component-level assertions here.
+- `lib/schemas.test.ts`: extend the existing valid-character fixture to cover `sex: 'm'`, `sex: 'f'`, and `sex: null`. Assert each parses.
+- `lib/family-tree.test.ts`: extend fixture characters with `sex` and assert it propagates onto the produced `TreeNode` and `TreeSpouse` entries.
+- `components/FamilyTree.test.tsx`: DOM-environment is currently broken in the existing test setup (pre-existing issue, unrelated to this work). Skip component-level assertions here.
 
 ## Out of scope
 
 - Recolouring or restyling the rest of the family tree.
 - Showing sex on the character detail page or in the character list.
 - Filtering characters by sex.
-- Recording non-binary or other sex/gender values — every named ASOIAF character has a canonical male/female; this is a deliberate two-value enum with `null` only for placeholders.
+- Recording non-binary or other sex/gender values. Every named ASOIAF character has a canonical male/female; this is a deliberate two-value enum with `null` only for placeholders.
 
 ## File checklist
 
-- `lib/schemas.ts` — add `sex` field
-- `lib/schemas.test.ts` — extend fixtures
-- `lib/family-tree.ts` — plumb `sex` through `TreeNode` / `TreeSpouse`
-- `lib/family-tree.test.ts` — extend fixtures, assert propagation
-- `components/FamilyTree.tsx` — add `GenderGlyph`, use in `PersonLabel` and `NodeRow`
-- `styles/houses.css` — add `.family-tree__gender`
-- `content/characters/*.md` — backfill `sex` in all 193 files
+- `lib/schemas.ts`: add `sex` field
+- `lib/schemas.test.ts`: extend fixtures
+- `lib/family-tree.ts`: plumb `sex` through `TreeNode` / `TreeSpouse`
+- `lib/family-tree.test.ts`: extend fixtures, assert propagation
+- `components/FamilyTree.tsx`: add `GenderGlyph`, use in `PersonLabel` and `NodeRow`
+- `styles/houses.css`: add `.family-tree__gender`
+- `content/characters/*.md`: backfill `sex` in all 193 files

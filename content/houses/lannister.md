@@ -26,4 +26,4 @@ House Lannister of Casterly Rock is one of the Great Houses of Westeros and the 
 
 For thousands of years the Lannisters ruled as Kings of the Rock, until Loren the Last bent the knee on the Field of Fire and was permitted to keep his lands as Lord Paramount and Warden of the West. The unofficial words *A Lannister always pays his debts* are heard far more often than the true words, and are taken as both promise and threat in equal measure.
 
-The Rock's gold mines have made the Lannisters the wealthiest house in the Seven Kingdoms — though by the events of *A Game of Thrones* the deepest seams are quietly running dry, a secret Lord Tywin guards as closely as the Rock itself.
+The Rock's gold mines have made the Lannisters the wealthiest house in the Seven Kingdoms, though by the events of *A Game of Thrones* the deepest seams are quietly running dry, a secret Lord Tywin guards as closely as the Rock itself.

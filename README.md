@@ -1,10 +1,10 @@
 # Atlas of the Known World
 
-An interactive atlas of George R. R. Martin's world of Ice and Fire — map, timeline, encyclopedia, and the rolls of the great houses. Statically generated from a corpus of markdown files with Zod-validated frontmatter, rendered through a parchment-styled UI.
+An interactive atlas of George R. R. Martin's world of Ice and Fire, covering the map, timeline, encyclopedia, and the rolls of the great houses. Statically generated from a corpus of markdown files with Zod-validated frontmatter, rendered through a parchment-styled UI.
 
 ## Stack
 
-- **Next.js 16** (App Router) with `output: 'export'` — every route is pre-rendered to static HTML.
+- **Next.js 16** (App Router) with `output: 'export'`, so every route is pre-rendered to static HTML.
 - **React 19**.
 - **TypeScript 5**.
 - **Bun** for install, scripts, and the Netlify build.
@@ -41,7 +41,7 @@ Husky installs hooks on `bun install` (via the `prepare` script):
 
 ```
 app/                Next.js App Router routes
-  page.tsx          Home — main menu of atlas sections
+  page.tsx          Home, main menu of atlas sections
   the-north/        Regional view: interactive North map
   map/              Coming-soon stub
   timeline/         Coming-soon stub
@@ -86,10 +86,10 @@ next.config.ts      output: 'export', trailingSlash: true
 
 All content is markdown with frontmatter validated by Zod (`lib/schemas.ts`). Cross-references between entries are by slug.
 
-- **`House`** — `slug`, `name`, `seat` (castle slug), `liege`, `words`, `sigil.description`, `founded` (date), `status` (`extant` / `extinct` / `exiled` / `hidden`), `sworn-from`, `cadet-houses`, `sources`.
-- **`Castle`** — `slug`, `name`, `type` (`castle` / `town` / `ruin` / `watchtower` / `holdfast`), `sub-region`, `liege-house`, `founded`, `sworn-houses`, `features`, `coords` (`{x, y}` on the basemap), `sources`.
-- **`Character`** — `slug`, `name`, `born` / `died` (date or `null`), `primary-house`, `also-of-houses`, `parents`, `spouses`, `children`, `titles`, `placeholder` (+ reason), `sources`. Placeholder characters fill unnamed slots in family trees.
-- **`Event`** — `slug`, `name`, `type` (`battle` / `siege` / `treaty` / `wedding` / `death` / `betrayal` / `other`), `date`, `location` (castle slug or coords), `participants` (sides + houses), `outcome`, `casualties`, `sources`. Schema is in place; no event entries yet.
+- **`House`**: `slug`, `name`, `seat` (castle slug), `liege`, `words`, `sigil.description`, `founded` (date), `status` (`extant` / `extinct` / `exiled` / `hidden`), `sworn-from`, `cadet-houses`, `sources`.
+- **`Castle`**: `slug`, `name`, `type` (`castle` / `town` / `ruin` / `watchtower` / `holdfast`), `sub-region`, `liege-house`, `founded`, `sworn-houses`, `features`, `coords` (`{x, y}` on the basemap), `sources`.
+- **`Character`**: `slug`, `name`, `born` / `died` (date or `null`), `primary-house`, `also-of-houses`, `parents`, `spouses`, `children`, `titles`, `placeholder` (+ reason), `sources`. Placeholder characters fill unnamed slots in family trees.
+- **`Event`**: `slug`, `name`, `type` (`battle` / `siege` / `treaty` / `wedding` / `death` / `betrayal` / `other`), `date`, `location` (castle slug or coords), `participants` (sides + houses), `outcome`, `casualties`, `sources`. Schema is in place; no event entries yet.
 
 Dates use `{year, era, precision}` where `era` is one of `dawn-age`, `age-of-heroes`, `long-night`, `andal-invasion`, `targaryen-conquest`, `roberts-reign`, `game-of-thrones`, `AC`, `BC`, and `precision` is `exact` / `year` / `decade` / `era` / `legendary`.
 
@@ -100,9 +100,9 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 | Route | Status | Notes |
 | --- | --- | --- |
 | `/` | live | Atlas main menu (Map · Timeline · Encyclopedia · Houses) |
-| `/houses/` | live | A–Z list of houses, alphabetized by short name |
+| `/houses/` | live | A to Z list of houses, alphabetized by short name |
 | `/houses/[slug]/` | live | Per-house page: words, seat link, sigil, founded, status, body, family tree |
-| `/characters/` | live | A–Z list of characters (sigil + name) with debounced filter |
+| `/characters/` | live | A to Z list of characters (sigil + name) with debounced filter |
 | `/characters/[slug]/` | live | Per-character page: sigil, born/died, primary house link, titles, body, linked family |
 | `/castles/[slug]/` | live | Per-castle page |
 | `/the-north/` | live | Pan/zoom map of the North with layer toggle |
@@ -133,12 +133,12 @@ Netlify builds with `bun run build` and publishes `out/`. The Next config sets `
 
 `docs/superpowers/` holds the specs and implementation plans the work has followed:
 
-- `specs/2026-05-19-game-of-thrones-atlas-design.md` — overall atlas design
-- `specs/2026-05-26-main-menu-design.md` — three-tile main menu
+- `specs/2026-05-19-game-of-thrones-atlas-design.md`: overall atlas design
+- `specs/2026-05-26-main-menu-design.md`: three-tile main menu
 - `plans/2026-05-19-foundation-and-first-castle.md`
 - `plans/2026-05-19-map-view.md`
 - `plans/2026-05-26-main-menu.md`
 
 ## Convention notes
 
-This repo uses a newer Next.js than most training data — read `node_modules/next/dist/docs/` for current APIs before writing route handlers, params, or metadata. See `AGENTS.md`.
+This repo uses a newer Next.js than most training data, so read `node_modules/next/dist/docs/` for current APIs before writing route handlers, params, or metadata. See `AGENTS.md`.

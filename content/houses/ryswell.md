@@ -21,6 +21,6 @@ sources:
 draft: false
 ---
 
-House Ryswell of the Rills holds the rolling country in the west of the North, ground better suited to horses than to ploughs and renowned across the realm for its mounts. Each lord of House Ryswell bears the colour of his own horse upon his arms — Rodrik the lord at the time of *A Game of Thrones* wears a bronze horse-head, while his sons and brothers ride to war with black, red, and grey horseheads of their own.
+House Ryswell of the Rills holds the rolling country in the west of the North, ground better suited to horses than to ploughs and renowned across the realm for its mounts. Each lord of House Ryswell bears the colour of his own horse upon his arms. Rodrik, the lord at the time of *A Game of Thrones*, wears a bronze horse-head, while his sons and brothers ride to war with black, red, and grey horseheads of their own.
 
 The Ryswells are kin to the Boltons twice over: Lord Rodrik's daughter Bethany was Roose Bolton's second wife, and his eldest, Barbrey, became Lady Dustin of Barrowton. Whether either marriage has won the Ryswells more friends than enemies is a question they answer with horses rather than words.

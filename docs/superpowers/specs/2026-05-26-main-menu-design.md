@@ -1,4 +1,4 @@
-# Main Menu — Design Spec
+# Main Menu: Design Spec
 
 **Date:** 2026-05-26
 **Status:** Approved for planning
@@ -19,10 +19,10 @@ The Encyclopedia tile is the next thing slated to be built and will be designed 
 
 ## Non-goals
 
-- ❌ Encyclopedia content, layout, or browse/search — its own spec, next.
-- ❌ A region picker for the Map section — deferred until a second region exists.
-- ❌ A persistent top navigation on every page — out of scope; the menu lives at `/` only.
-- ❌ Real Timeline view — only a stub.
+- ❌ Encyclopedia content, layout, or browse/search (its own spec, next).
+- ❌ A region picker for the Map section (deferred until a second region exists).
+- ❌ A persistent top navigation on every page (out of scope; the menu lives at `/` only).
+- ❌ Real Timeline view (only a stub).
 - ❌ Reworking `ParchmentLayout`, fonts, palette, or any other site chrome.
 
 ## Routes
@@ -33,7 +33,7 @@ The Encyclopedia tile is the next thing slated to be built and will be designed 
 /timeline/         coming-soon stub
 /encyclopedia/     coming-soon stub (replaced when the encyclopedia ships)
 
-/the-north/        unchanged — reachable by direct URL, no longer linked from /
+/the-north/        unchanged; reachable by direct URL, no longer linked from /
 /castles/[slug]/   unchanged
 ```
 
@@ -41,7 +41,7 @@ Three new static routes, one rewritten page. Static export emits one `index.html
 
 ## Encyclopedia scope (forward reference)
 
-The Encyclopedia is a unified browse-and-search surface over all four entity types from the original spec: **castles, houses, people, events**. The original spec's "Houses view" becomes one tab inside it. This menu spec does not implement any of that — it just commits to the name and ensures the tile routes somewhere coherent.
+The Encyclopedia is a unified browse-and-search surface over all four entity types from the original spec: **castles, houses, people, events**. The original spec's "Houses view" becomes one tab inside it. This menu spec does not implement any of that; it just commits to the name and ensures the tile routes somewhere coherent.
 
 ## Components
 
@@ -81,13 +81,13 @@ Three tiles. Desktop: three-column CSS grid (`grid-template-columns: repeat(3, 1
 | 2 | Timeline | Trace the centuries. | hourglass | `/timeline/` | coming-soon |
 | 3 | Encyclopedia | Consult the scribes. | book | `/encyclopedia/` | coming-soon |
 
-**Hover/focus** — 1px gold-leaf border, scale `1.01`, `150ms ease`. Cursor `pointer`. The whole tile is one anchor; tabbing lands on it once. Focus ring is visible (browser default plus the gold-leaf border).
+**Hover/focus:** 1px gold-leaf border, scale `1.01`, `150ms ease`. Cursor `pointer`. The whole tile is one anchor; tabbing lands on it once. Focus ring is visible (browser default plus the gold-leaf border).
 
-**Glyphs** — Inline SVG strings (no extra HTTP fetches for a three-glyph page). Hand-drawn in the parchment style, ~32×32, `fill="currentColor"`, color set to `var(--gold-leaf)`.
+**Glyphs:** Inline SVG strings (no extra HTTP fetches for a three-glyph page). Hand-drawn in the parchment style, ~32×32, `fill="currentColor"`, color set to `var(--gold-leaf)`.
 
-**Wax-seal "Coming soon" pill** — Bottom-right of the tile. Inter, ink-faded color, tiny circle bullet (`⊙`) prefix. Tile remains clickable; the pill is informational only.
+**Wax-seal "Coming soon" pill:** Bottom-right of the tile. Inter, ink-faded color, tiny circle bullet (`⊙`) prefix. Tile remains clickable; the pill is informational only.
 
-**Page chrome** — `ParchmentLayout` wraps everything (unchanged). Above the tile grid: an `<h1>` ("Atlas of the Known World") and a one-line italic EB Garamond subtitle ("Choose a path."). Nothing else.
+**Page chrome:** `ParchmentLayout` wraps everything (unchanged). Above the tile grid: an `<h1>` ("Atlas of the Known World") and a one-line italic EB Garamond subtitle ("Choose a path."). Nothing else.
 
 ## Coming-soon stub
 
@@ -106,7 +106,7 @@ Plain prose. No glyph. No grid. The "Atlas of the Known World" caption at the to
 
 ## Testing
 
-**Static build** — `bun run build` succeeds and emits:
+**Static build:** `bun run build` succeeds and emits:
 - `out/index.html`
 - `out/map/index.html`
 - `out/timeline/index.html`
@@ -114,19 +114,19 @@ Plain prose. No glyph. No grid. The "Atlas of the Known World" caption at the to
 
 The build is the strongest gate: a broken `<Link>` or missing import fails it.
 
-**Vitest component tests** — same setup as `lib/*.test.ts`:
-- `components/MainMenuTile.test.tsx` — renders title, subtitle, glyph; the whole tile is one anchor with the expected `href`; "Coming soon" pill renders only when `status === "coming-soon"`.
-- `components/MainMenu.test.tsx` — renders exactly three tiles with the expected titles, hrefs, and `coming-soon` status on all three.
-- `components/ComingSoonPage.test.tsx` — renders the title and a "Return to the menu" link with `href="/"`.
+**Vitest component tests**, same setup as `lib/*.test.ts`:
+- `components/MainMenuTile.test.tsx`: renders title, subtitle, glyph; the whole tile is one anchor with the expected `href`; "Coming soon" pill renders only when `status === "coming-soon"`.
+- `components/MainMenu.test.tsx`: renders exactly three tiles with the expected titles, hrefs, and `coming-soon` status on all three.
+- `components/ComingSoonPage.test.tsx`: renders the title and a "Return to the menu" link with `href="/"`.
 
-No tests against `app/*/page.tsx` — they are one-line component wrappers; the build covers them.
+No tests against `app/*/page.tsx`, since they are one-line component wrappers; the build covers them.
 
 **Manual verification (acceptance walk)**
 - Visit `/`, click each tile, land on the matching stub, click "Return to the menu", land back at `/`.
 - Resize below 720px wide; tiles stack into one column.
 - Visit `/the-north/` directly; the existing map still loads.
 
-**Out of scope** — axe a11y audit, visual regression snapshots, Lighthouse budget. Worth adding repo-wide later.
+**Out of scope:** axe a11y audit, visual regression snapshots, Lighthouse budget. Worth adding repo-wide later.
 
 ## Risks and trade-offs
 

@@ -1,4 +1,4 @@
-# Houses grid/list view toggle — Implementation Plan
+# Houses grid/list view toggle: Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
@@ -52,9 +52,9 @@ describe('regionLabel', () => {
 });
 ```
 
-- [ ] **Step 2: Run test, expect FAIL** — `bun run test -- lib/regions.test.ts`
+- [ ] **Step 2: Run test, expect FAIL.** `bun run test -- lib/regions.test.ts`
 
-- [ ] **Step 3: Implement helper** — append to `lib/regions.ts`:
+- [ ] **Step 3: Implement helper.** Append to `lib/regions.ts`:
 
 ```ts
 const REGION_LABELS: Record<RegionSlug, string> = Object.fromEntries(
@@ -113,7 +113,7 @@ describe('ViewToggle', () => {
 });
 ```
 
-- [ ] **Step 2: Verify FAIL** — `bun run test -- components/ViewToggle.test.tsx`
+- [ ] **Step 2: Verify FAIL.** `bun run test -- components/ViewToggle.test.tsx`
 
 - [ ] **Step 3: Implement** (`components/ViewToggle.tsx`):
 
@@ -342,7 +342,7 @@ export function FilteredHouseList({ items }: Props) {
 }
 ```
 
-- [ ] **Step 5: Update `app/houses/page.tsx`** — import `regionLabel` and pass it per item:
+- [ ] **Step 5: Update `app/houses/page.tsx`.** Import `regionLabel` and pass it per item:
 
 ```tsx
 import { loadAllHouses } from '@/lib/content';
@@ -367,7 +367,7 @@ const items: HouseItem[] = visible
 
 ---
 
-## Task 4: CSS — search row + view toggle
+## Task 4: CSS for search row + view toggle
 
 **Files:**
 - Modify: `styles/list-search.css`
@@ -436,7 +436,7 @@ const items: HouseItem[] = visible
 
 ---
 
-## Task 5: CSS — list view rows
+## Task 5: CSS for list view rows
 
 **Files:**
 - Modify: `styles/houses.css`
@@ -489,5 +489,5 @@ const items: HouseItem[] = visible
 
 - Spec covered: `regionLabel` helper (Task 1), `ViewToggle` (Task 2), state + persistence + markup + label wiring (Task 3), search-row + toggle CSS (Task 4), list-row CSS (Task 5). ✓
 - No placeholders / TBDs. ✓
-- Type consistency: `HouseItem.regionLabel: string | null`, `ViewMode = 'grid' | 'list'`, `VIEW_STORAGE_KEY = 'gota:houses-view'` — referenced consistently across tasks. ✓
+- Type consistency: `HouseItem.regionLabel: string | null`, `ViewMode = 'grid' | 'list'`, `VIEW_STORAGE_KEY = 'gota:houses-view'`, all referenced consistently across tasks. ✓
 - Test coverage matches the spec's testing section. ✓

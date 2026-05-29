@@ -53,7 +53,7 @@ content/houses/stark.md                   # stub house (for relation testing)
 public/favicon.ico                        # placeholder
 ```
 
-Files modified after creation: none — every file is touched exactly once in this plan.
+Files modified after creation: none. Every file is touched exactly once in this plan.
 
 ---
 
@@ -199,7 +199,7 @@ Edit `package.json` so the `"scripts"` block includes:
 bun run test
 ```
 
-Expected: "No test files found" — this is the expected pass before we write any tests.
+Expected: "No test files found". This is the expected pass before we write any tests.
 
 - [ ] **Step 4: Commit**
 
@@ -371,7 +371,7 @@ describe('EventSchema', () => {
 });
 ```
 
-- [ ] **Step 2: Run the tests — expect failure**
+- [ ] **Step 2: Run the tests, expect failure**
 
 ```bash
 bun run test
@@ -478,7 +478,7 @@ export type Person = z.infer<typeof PersonSchema>;
 export type Event = z.infer<typeof EventSchema>;
 ```
 
-- [ ] **Step 4: Run the tests — expect pass**
+- [ ] **Step 4: Run the tests, expect pass**
 
 ```bash
 bun run test
@@ -559,7 +559,7 @@ describe('renderMarkdown', () => {
 });
 ```
 
-- [ ] **Step 3: Run — expect failure**
+- [ ] **Step 3: Run, expect failure**
 
 ```bash
 bun run test
@@ -628,7 +628,7 @@ export async function renderMarkdown(source: string): Promise<string> {
 }
 ```
 
-- [ ] **Step 5: Run — expect pass**
+- [ ] **Step 5: Run, expect pass**
 
 ```bash
 bun run test
@@ -697,7 +697,7 @@ describe('findOrphanSlugs', () => {
 });
 ```
 
-- [ ] **Step 2: Run — expect failure**
+- [ ] **Step 2: Run, expect failure**
 
 ```bash
 bun run test
@@ -806,7 +806,7 @@ export function findOrphanSlugs(set: ContentSet): string[] {
 }
 ```
 
-- [ ] **Step 4: Run — expect pass**
+- [ ] **Step 4: Run, expect pass**
 
 ```bash
 bun run test
@@ -902,7 +902,7 @@ Delete the fixture and update `lib/content.test.ts` so the loader test uses the 
 rm content/castles/_sample-for-test.md
 ```
 
-Edit `lib/content.test.ts` — replace every `'sample-castle'` slug expectation and `'_sample-for-test'` path with `'winterfell'` and `'Winterfell'`. Replace the body assertions with assertions that match Winterfell's content (e.g., `expect(result.body).toContain('Ancient seat')`). The full updated test file:
+Edit `lib/content.test.ts`. Replace every `'sample-castle'` slug expectation and `'_sample-for-test'` path with `'winterfell'` and `'Winterfell'`. Replace the body assertions with assertions that match Winterfell's content (e.g., `expect(result.body).toContain('Ancient seat')`). The full updated test file:
 
 ```typescript
 import { describe, it, expect } from 'vitest';
@@ -938,7 +938,7 @@ describe('renderMarkdown', () => {
 });
 ```
 
-- [ ] **Step 4: Run — expect pass**
+- [ ] **Step 4: Run, expect pass**
 
 ```bash
 bun run test
@@ -1097,7 +1097,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 bun dev
 ```
 
-Open `http://localhost:3000`. You should see the default Next.js home content rendered on a parchment background with serif fonts. (The page content is still placeholder — that's expected.) `Ctrl-C` when done.
+Open `http://localhost:3000`. You should see the default Next.js home content rendered on a parchment background with serif fonts. (The page content is still placeholder, which is expected.) `Ctrl-C` when done.
 
 - [ ] **Step 5: Commit**
 
@@ -1466,19 +1466,19 @@ Coverage against the spec sections:
 
 | Spec section | Covered here | Deferred to later plan |
 |---|---|---|
-| Overview, non-goals | — (informational) | — |
+| Overview, non-goals | n/a (informational) | n/a |
 | System architecture | Authoring + Build + Runtime all wired (sans scraper) | Scraper-side authoring |
 | Tech stack | Next.js, TS, Markdown, gray-matter, remark, zod, vitest, fonts, Netlify ✓ | react-svg-pan-zoom, react-flow, dagre, next-pwa |
 | Data model | All four schemas ✓; one castle + one house loaded ✓ | People + Events data files (validate via schemas only here) |
-| Map view | — | Plan 2 |
-| Timeline view | — | Plan 3 |
-| Houses view + detail | — | Plan 4 |
-| Family Tree view | — | Plan 5 |
+| Map view | n/a | Plan 2 |
+| Timeline view | n/a | Plan 3 |
+| Houses view + detail | n/a | Plan 4 |
+| Family Tree view | n/a | Plan 5 |
 | Aesthetic / visual system | Palette, fonts, drop caps, parchment textures ✓ | Motion details, OG image generation |
-| Scraping pipeline | — | Plan 6 |
-| PWA & offline | — | Plan 7 |
+| Scraping pipeline | n/a | Plan 6 |
+| PWA & offline | n/a | Plan 7 |
 | Routing | Castle slug route ✓; homepage ✓ | All other entity routes |
-| Project structure | Matches spec — `content/`, `lib/`, `components/`, `app/`, `styles/`, `public/` ✓ | `scripts/` |
-| Testing posture | Schema + relation tests with Vitest ✓ | — |
+| Project structure | Matches spec with `content/`, `lib/`, `components/`, `app/`, `styles/`, `public/` ✓ | `scripts/` |
+| Testing posture | Schema + relation tests with Vitest ✓ | n/a |
 
 No placeholders. No "TBD"s. All step code is concrete. Type names (`Castle`, `House`, `Person`, `Event`, `Source`) used consistently across `lib/schemas.ts`, `lib/content.ts`, `lib/relations.ts`, and the page components.
