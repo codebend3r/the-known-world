@@ -13,6 +13,15 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+seats:
+  - name: Seagard
+    slug: seagard
+heads:
+  - name: "Lord Jason Mallister"
+regions:
+  - name: The Riverlands
+titles:
+  - name: Lord of Seagard
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Mallister
