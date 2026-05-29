@@ -41,13 +41,12 @@ a.character-list__card:focus-visible {
 
 .character-list__portrait {
   flex: 0 0 auto;
-  align-self: stretch;
   display: flex;
   align-items: center;
 }
 
 .character-list__portrait img {
-  height: 100%;
+  height: 5.75rem;
   width: auto;
   display: block;
 }
