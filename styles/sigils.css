@@ -81,7 +81,11 @@
 }
 
 /* Row 3 — Frey · Mormont · Umber · Karstark · Reed */
-.sigil--frey       { --col: 0; --row: 2; }
+.sigil--frey {
+  background-image: url('/sigils/frey.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--mormont {
   background-image: url('/sigils/mormont.png');
   background-size: contain;
