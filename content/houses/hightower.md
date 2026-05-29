@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: reach
 seats:
   - name: The Hightower
     slug: the-hightower

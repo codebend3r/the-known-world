@@ -14,6 +14,7 @@ status: exiled
 sworn-from: []
 cadet-houses:
   - blackfyre
+region: crownlands
 seats:
   - name: Dragonstone
     slug: dragonstone

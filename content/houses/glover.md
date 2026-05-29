@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: north
 seats:
   - name: Deepwood Motte
     slug: deepwood-motte

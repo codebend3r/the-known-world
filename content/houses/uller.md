@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: dorne
 sources: []
 draft: false
 ---

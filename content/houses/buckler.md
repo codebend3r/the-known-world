@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: stormlands
 sources: []
 draft: false
 ---

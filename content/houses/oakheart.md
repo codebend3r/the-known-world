@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: reach
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Oakheart

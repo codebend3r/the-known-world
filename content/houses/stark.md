@@ -14,6 +14,7 @@ status: extant
 sworn-from: []
 cadet-houses:
   - karstark
+region: north
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Stark

@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: crownlands
 sources: []
 draft: false
 ---

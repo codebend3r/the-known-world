@@ -14,6 +14,18 @@ export const REGIONS = {
 
 export type RegionSlug = (typeof REGIONS)[keyof typeof REGIONS]['slug'];
 
+export const REGION_SLUGS = [
+  'north',
+  'vale',
+  'riverlands',
+  'westerlands',
+  'reach',
+  'stormlands',
+  'dorne',
+  'iron-islands',
+  'crownlands',
+] as const satisfies readonly RegionSlug[];
+
 const REGION_LABELS: Record<RegionSlug, string> = Object.fromEntries(
   Object.values(REGIONS).map((r) => [r.slug, r.name]),
 ) as Record<RegionSlug, string>;
@@ -35,6 +47,7 @@ export function regionForHouse(
     }
     const house = housesBySlug.get(current);
     if (!house) return null;
+    if (house.region) return house.region;
     current = house.liege;
   }
   return null;

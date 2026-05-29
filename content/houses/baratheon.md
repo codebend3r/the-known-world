@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: stormlands
 seats:
   - name: Storm's End
     slug: storms-end

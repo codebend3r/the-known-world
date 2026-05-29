@@ -13,6 +13,7 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+region: vale
 seats:
   - name: Gulltown
     slug: gulltown

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { REGION_SLUGS } from './regions';
 
 const EraSchema = z.enum(['dawn-age', 'age-of-heroes', 'long-night', 'andal-invasion', 'targaryen-conquest', 'roberts-reign', 'game-of-thrones', 'AC', 'BC']);
 
@@ -54,6 +55,7 @@ export const HouseSchema = z.object({
   status: z.enum(['extant', 'extinct', 'exiled', 'hidden']),
   'sworn-from': z.array(z.string()).default([]),
   'cadet-houses': z.array(z.string()).default([]),
+  region: z.enum(REGION_SLUGS).optional(),
   seats: z.array(HouseInfoEntrySchema).optional(),
   heads: z.array(HouseInfoEntrySchema).optional(),
   regions: z.array(HouseInfoEntrySchema).optional(),

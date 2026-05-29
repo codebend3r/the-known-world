@@ -4,7 +4,7 @@ import { HouseSchema, type House } from './schemas';
 
 const founded = { year: 0, era: 'AC', precision: 'year' };
 
-function house(data: Partial<Parameters<typeof HouseSchema.parse>[0]> & { slug: string; name: string; seat: string; liege: string | null }): House {
+function house(data: Record<string, unknown> & { slug: string; name: string; seat: string; liege: string | null }): House {
   return HouseSchema.parse({
     words: '',
     sigil: { description: '' },
@@ -44,6 +44,13 @@ describe('regionForHouse', () => {
       house({ slug: 'cadet', name: 'House Cadet', seat: 'somewhere', liege: 'hightower' }),
     ]);
     expect(regionForHouse('cadet', houses)).toBe('reach');
+  });
+
+  it('prefers an explicit `region` field over walking the liege chain', () => {
+    const houses = mapOf([
+      house({ slug: 'allyrion', name: 'House Allyrion', seat: 'godsgrace', liege: null, region: 'dorne' }),
+    ]);
+    expect(regionForHouse('allyrion', houses)).toBe('dorne');
   });
 
   it('returns null when the chain leads to an unknown house', () => {
