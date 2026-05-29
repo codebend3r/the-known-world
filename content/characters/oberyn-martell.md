@@ -12,8 +12,9 @@ died:
   precision: year
 primary-house: martell
 titles:
-  - The Red Viper
   - Prince of Dorne
+aliases:
+  - The Red Viper
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Oberyn_Martell

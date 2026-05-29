@@ -21,6 +21,7 @@ children:
   - rhaella-targaryen-daughter-of-aegon
 titles:
   - Prince of Dragonstone
+aliases:
   - The Uncrowned
 sources:
   - type: awoiaf

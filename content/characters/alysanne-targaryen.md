@@ -31,9 +31,10 @@ children:
   - valerion-targaryen
   - gael-targaryen
 titles:
-  - The Good Queen
   - Queen of the Seven Kingdoms
   - Rider of Silverwing
+aliases:
+  - The Good Queen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Alysanne_Targaryen

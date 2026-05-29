@@ -21,7 +21,6 @@ children:
   - jaehaera-targaryen
   - maelor-targaryen
 titles:
-  - The Elder
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm

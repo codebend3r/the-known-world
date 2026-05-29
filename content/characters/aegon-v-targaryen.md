@@ -23,7 +23,6 @@ children:
   - daeron-targaryen-son-of-aegon-v
   - rhaelle-targaryen
 titles:
-  - The Unlikely
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm

@@ -24,8 +24,6 @@ children:
   - rhaena-daughter-of-aegon-iii
   - elaena-targaryen
 titles:
-  - The Dragonbane
-  - The Broken King
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm

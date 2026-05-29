@@ -9,7 +9,7 @@ parents:
   - aenar-targaryen
 spouses:
   - gaemon-targaryen
-titles:
+aliases:
   - The Dreamer
 sources:
   - type: awoiaf

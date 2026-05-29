@@ -10,8 +10,9 @@ parents:
 spouses:
   - daenys-targaryen
 titles:
-  - The Glorious
   - Lord of Dragonstone
+aliases:
+  - The Glorious
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Gaemon_Targaryen

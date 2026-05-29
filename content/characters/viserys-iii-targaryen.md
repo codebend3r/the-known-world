@@ -12,8 +12,9 @@ parents:
   - aerys-ii-targaryen
   - rhaella-targaryen
 titles:
-  - The Beggar King
   - Pretender to the Iron Throne
+aliases:
+  - The Beggar King
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Viserys_III_Targaryen

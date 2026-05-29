@@ -6,9 +6,10 @@ born: null
 died: null
 primary-house: null
 titles:
-  - The Spider
   - Master of Whisperers
   - Lord Varys
+aliases:
+  - The Spider
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Varys

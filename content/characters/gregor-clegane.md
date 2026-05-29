@@ -13,6 +13,7 @@ died:
 primary-house: clegane
 titles:
   - Ser
+aliases:
   - The Mountain That Rides
 sources:
   - type: awoiaf

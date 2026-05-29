@@ -9,9 +9,10 @@ born:
 died: null
 primary-house: tully
 titles:
-  - The Blackfish
   - Ser
   - Knight of the Bloody Gate
+aliases:
+  - The Blackfish
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brynden_Tully

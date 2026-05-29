@@ -17,9 +17,10 @@ parents:
   - aegon-iv-targaryen
   - daena-targaryen
 titles:
+  - King of the Andals, the Rhoynar, and the First Men
+aliases:
   - The Black Dragon
   - The Pretender
-  - King of the Andals, the Rhoynar, and the First Men
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daemon_I_Blackfyre

@@ -22,10 +22,11 @@ children:
   - rhaegel-targaryen
   - maekar-i-targaryen
 titles:
-  - The Good
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm
+aliases:
+  - The Good
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_II_Targaryen

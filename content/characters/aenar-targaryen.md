@@ -9,8 +9,9 @@ children:
   - gaemon-targaryen
   - daenys-targaryen
 titles:
-  - The Exile
   - Lord of Dragonstone
+aliases:
+  - The Exile
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aenar_Targaryen

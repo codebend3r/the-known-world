@@ -15,6 +15,7 @@ titles:
   - Ser
   - Knight of the Kingsguard
   - Lord Commander of the Kingsguard
+aliases:
   - The Kingslayer
 sources:
   - type: awoiaf

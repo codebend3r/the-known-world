@@ -17,11 +17,12 @@ children:
   - laena-velaryon
   - laenor-velaryon
 titles:
-  - The Sea Snake
   - Lord of the Tides
   - Master of Driftmark
   - Master of Ships
   - Hand of the King
+aliases:
+  - The Sea Snake
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Corlys_Velaryon

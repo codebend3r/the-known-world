@@ -15,8 +15,9 @@ parents:
   - baelor-breakspear-targaryen
   - jena-dondarrion
 titles:
-  - The Young Prince
   - Prince of Dragonstone
+aliases:
+  - The Young Prince
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Valarr_Targaryen

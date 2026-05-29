@@ -31,11 +31,12 @@ children:
   - valerion-targaryen
   - gael-targaryen
 titles:
-  - The Conciliator
-  - The Old King
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm
+aliases:
+  - The Conciliator
+  - The Old King
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jaehaerys_I_Targaryen

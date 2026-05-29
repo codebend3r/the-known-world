@@ -21,9 +21,10 @@ children:
   - daemon-targaryen
   - aegon-son-of-baelon
 titles:
-  - The Brave
   - Prince of Dragonstone
   - Rider of Vhagar
+aliases:
+  - The Brave
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Baelon_Targaryen

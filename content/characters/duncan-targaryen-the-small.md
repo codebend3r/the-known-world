@@ -17,8 +17,9 @@ parents:
 spouses:
   - jenny-of-oldstones
 titles:
-  - The Small
   - Prince of Dragonflies
+aliases:
+  - The Small
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Duncan_Targaryen

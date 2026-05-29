@@ -25,11 +25,12 @@ children:
   - viserys-ii-targaryen
   - visenya-stillborn
 titles:
-  - The Realm's Delight
-  - The Half-Year Queen
   - Princess of Dragonstone
   - Queen of the Seven Kingdoms
   - Rider of Syrax
+aliases:
+  - The Realm's Delight
+  - The Half-Year Queen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaenyra_Targaryen

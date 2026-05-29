@@ -15,9 +15,10 @@ parents:
   - viserys-i-targaryen
   - alicent-hightower
 titles:
-  - Daeron the Daring
   - Prince
   - Rider of Tessarion
+aliases:
+  - Daeron the Daring
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Viserys_I)

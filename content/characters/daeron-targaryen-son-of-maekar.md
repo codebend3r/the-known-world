@@ -17,8 +17,9 @@ parents:
 children:
   - vaella-targaryen-daughter-of-daeron
 titles:
-  - The Drunken
   - Prince of Summerhall
+aliases:
+  - The Drunken
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_Targaryen_(son_of_Maekar_I)

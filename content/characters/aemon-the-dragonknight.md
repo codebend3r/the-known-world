@@ -15,9 +15,10 @@ parents:
   - viserys-ii-targaryen
   - larra-rogare
 titles:
-  - The Dragonknight
   - Prince of Dragonflies
   - Lord Commander of the Kingsguard
+aliases:
+  - The Dragonknight
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aemon_the_Dragonknight

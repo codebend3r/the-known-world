@@ -20,8 +20,9 @@ children:
   - mina-tyrell
   - janna-tyrell
 titles:
-  - The Queen of Thorns
   - Lady Dowager of Highgarden
+aliases:
+  - The Queen of Thorns
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Olenna_Redwyne

@@ -15,8 +15,9 @@ parents:
   - aegon-iv-targaryen
   - barba-bracken
 titles:
-  - Bittersteel
   - Captain-General of the Golden Company
+aliases:
+  - Bittersteel
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegor_Rivers

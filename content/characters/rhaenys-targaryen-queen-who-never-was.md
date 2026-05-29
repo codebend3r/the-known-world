@@ -20,9 +20,10 @@ children:
   - laena-velaryon
   - laenor-velaryon
 titles:
-  - The Queen Who Never Was
   - Princess
   - Rider of Meleys
+aliases:
+  - The Queen Who Never Was
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaenys_Targaryen_(Queen_Who_Never_Was)

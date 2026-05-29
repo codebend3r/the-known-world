@@ -15,8 +15,9 @@ parents:
   - baelor-breakspear-targaryen
   - jena-dondarrion
 titles:
-  - The Ever-Drunken Prince
   - Prince
+aliases:
+  - The Ever-Drunken Prince
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Matarys_Targaryen

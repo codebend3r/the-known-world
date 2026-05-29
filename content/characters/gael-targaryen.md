@@ -16,6 +16,7 @@ parents:
   - alysanne-targaryen
 titles:
   - Princess
+aliases:
   - The Winter Child
 sources:
   - type: awoiaf

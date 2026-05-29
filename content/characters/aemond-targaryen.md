@@ -15,10 +15,11 @@ parents:
   - viserys-i-targaryen
   - alicent-hightower
 titles:
-  - One-Eye
-  - Kinslayer
   - Prince Regent
   - Rider of Vhagar
+aliases:
+  - One-Eye
+  - Kinslayer
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aemond_Targaryen

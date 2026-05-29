@@ -11,7 +11,7 @@ primary-house: lannister
 parents:
   - tywin-lannister
   - joanna-lannister
-titles:
+aliases:
   - The Imp
   - The Halfman
 sources:

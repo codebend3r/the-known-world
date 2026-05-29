@@ -13,6 +13,7 @@ parents:
   - alerie-hightower
 titles:
   - Ser
+aliases:
   - The Knight of Flowers
 sources:
   - type: awoiaf

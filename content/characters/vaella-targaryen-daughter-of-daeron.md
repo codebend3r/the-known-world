@@ -12,6 +12,7 @@ parents:
   - daeron-targaryen-son-of-maekar
 titles:
   - Princess
+aliases:
   - The Simple
 sources:
   - type: awoiaf

@@ -5,7 +5,7 @@ sex: m
 born: null
 died: null
 primary-house: null
-titles:
+aliases:
   - Tall-Talker
   - Husband to Bears
   - Mead-King of Ruddy Hall

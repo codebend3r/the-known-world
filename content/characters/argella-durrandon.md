@@ -13,8 +13,9 @@ also-of-houses:
 spouses:
   - orys-baratheon
 titles:
-  - Storm Queen
   - Lady of Storm's End
+aliases:
+  - Storm Queen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Argella_Durrandon

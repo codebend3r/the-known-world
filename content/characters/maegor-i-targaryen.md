@@ -22,10 +22,11 @@ spouses:
   - jeyne-westerling-queen
   - rhaena-targaryen-daughter-of-aenys
 titles:
-  - The Cruel
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm
+aliases:
+  - The Cruel
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Maegor_I_Targaryen

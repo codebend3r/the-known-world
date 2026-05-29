@@ -20,9 +20,10 @@ children:
   - valarr-targaryen
   - matarys-targaryen
 titles:
-  - Breakspear
   - Prince of Dragonstone
   - Hand of the King
+aliases:
+  - Breakspear
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Baelor_Targaryen

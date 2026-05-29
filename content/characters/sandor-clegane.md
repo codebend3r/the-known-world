@@ -8,7 +8,7 @@ born:
   precision: year
 died: null
 primary-house: clegane
-titles:
+aliases:
   - The Hound
 sources:
   - type: awoiaf

@@ -23,6 +23,7 @@ children:
   - rhaelle-targaryen
 titles:
   - Queen of the Seven Kingdoms
+aliases:
   - Black Betha
 sources:
   - type: awoiaf

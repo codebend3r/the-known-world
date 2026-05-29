@@ -17,6 +17,7 @@ spouses:
   - daemon-targaryen
 titles:
   - Lady of Runestone
+aliases:
   - The Bronze Bitch
 sources:
   - type: awoiaf

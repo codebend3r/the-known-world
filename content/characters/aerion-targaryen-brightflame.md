@@ -17,8 +17,9 @@ parents:
 children:
   - maegor-targaryen-son-of-aerion
 titles:
-  - Brightflame
   - Prince
+aliases:
+  - Brightflame
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aerion_Targaryen

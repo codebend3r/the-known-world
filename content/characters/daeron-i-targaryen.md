@@ -15,10 +15,11 @@ parents:
   - aegon-iii-targaryen
   - daenaera-velaryon
 titles:
-  - The Young Dragon
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm
+aliases:
+  - The Young Dragon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_I_Targaryen

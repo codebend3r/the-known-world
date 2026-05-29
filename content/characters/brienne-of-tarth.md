@@ -9,8 +9,9 @@ born:
 died: null
 primary-house: tarth
 titles:
-  - The Maid of Tarth
   - Ser
+aliases:
+  - The Maid of Tarth
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brienne_of_Tarth

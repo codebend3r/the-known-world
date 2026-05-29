@@ -16,8 +16,6 @@ titles:
   - Khaleesi of the Great Grass Sea
   - Queen of Meereen
   - Queen of the Andals and the Rhoynar and the First Men
-  - Breaker of Chains
-  - Mother of Dragons
   - Protector of the Realm
 aliases:
   - Stormborn

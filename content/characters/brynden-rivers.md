@@ -11,10 +11,11 @@ primary-house: targaryen
 parents:
   - aegon-iv-targaryen
 titles:
-  - Bloodraven
   - Lord Commander of the Kingsguard
   - Hand of the King
   - Lord Commander of the Night's Watch
+aliases:
+  - Bloodraven
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brynden_Rivers

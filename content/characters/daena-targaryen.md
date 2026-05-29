@@ -19,9 +19,10 @@ spouses:
 children:
   - daemon-blackfyre
 titles:
-  - The Defiant
   - Princess
   - Queen of the Seven Kingdoms
+aliases:
+  - The Defiant
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daena_Targaryen

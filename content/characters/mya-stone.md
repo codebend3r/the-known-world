@@ -10,7 +10,7 @@ died: null
 primary-house: baratheon
 parents:
   - robert-baratheon
-titles:
+aliases:
   - Mule-driver of the High Road
 sources:
   - type: awoiaf

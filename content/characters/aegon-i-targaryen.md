@@ -21,8 +21,6 @@ children:
   - aenys-i-targaryen
   - maegor-i-targaryen
 titles:
-  - The Conqueror
-  - The Dragon
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm

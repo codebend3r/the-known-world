@@ -9,11 +9,12 @@ born:
 died: null
 primary-house: baelish
 titles:
-  - Littlefinger
   - Master of Coin
   - Lord of Harrenhal
   - Lord Paramount of the Trident
   - Lord Protector of the Vale
+aliases:
+  - Littlefinger
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Petyr_Baelish
