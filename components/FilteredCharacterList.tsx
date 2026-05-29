@@ -137,7 +137,14 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                   <Link href={`/characters/${item.slug}/`} className={cardClass}>
                     <span className="character-list__portrait" aria-hidden="true">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={item.portrait} alt="" loading="lazy" decoding="async" />
+                      <img
+                        src={item.portrait}
+                        alt=""
+                        width={270}
+                        height={180}
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </span>
                     <span className="character-list__sigil" aria-hidden="true">
                       <Sigil
