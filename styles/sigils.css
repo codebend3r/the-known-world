@@ -51,7 +51,11 @@
   background-size: contain;
   background-position: center;
 }
-.sigil--greyjoy    { --col: 4; --row: 0; }
+.sigil--greyjoy {
+  background-image: url('/sigils/greyjoy.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Row 2 — Tully · Arryn · Martell · Tyrell · Bolton */
 .sigil--tully {
