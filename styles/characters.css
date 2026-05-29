@@ -104,6 +104,7 @@ a.character-list__card:focus-visible {
   letter-spacing: 0;
   font-size: 0.6em;
   color: var(--ink-faded);
+  text-align: left;
 }
 
 .character-detail__portrait {
