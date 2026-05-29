@@ -173,6 +173,13 @@
   }
 }
 
+@media (max-width: 639.98px) { /* sm */
+  .list-search {
+    font-size: 1.05rem;
+    padding: 0.85rem 1rem;
+  }
+}
+
 .list-search-row {
   display: flex;
   align-items: stretch;
