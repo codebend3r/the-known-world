@@ -79,6 +79,10 @@
 @media (max-width: 767.98px) { /* md */
   .site-header__inner {
     padding: 0;
+    grid-template-columns: auto 1fr;
+  }
+  .site-header__spacer {
+    display: none;
   }
   .site-header__title {
     font-size: 1.6rem;
@@ -90,9 +94,6 @@
   }
   .site-header__logo {
     height: 3rem;
-  }
-  .site-header__spacer {
-    width: 3rem;
   }
 }
 
@@ -106,8 +107,5 @@
   }
   .site-header__logo {
     height: 2.5rem;
-  }
-  .site-header__spacer {
-    width: 2.75rem;
   }
 }
