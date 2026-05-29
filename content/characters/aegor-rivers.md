@@ -13,6 +13,7 @@ died:
 primary-house: targaryen
 parents:
   - aegon-iv-targaryen
+  - barba-bracken
 titles:
   - Bittersteel
   - Captain-General of the Golden Company
