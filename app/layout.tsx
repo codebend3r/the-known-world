@@ -3,6 +3,7 @@ import { Cinzel, EB_Garamond, Inter } from 'next/font/google';
 import '../styles/globals.css';
 import '../styles/parchment.css';
 import '../styles/site-header.css';
+import '../styles/site-menu.css';
 import '../styles/map.css';
 import '../styles/main-menu.css';
 import '../styles/houses.css';

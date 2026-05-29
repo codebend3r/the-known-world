@@ -25,21 +25,23 @@
 .site-header__inner {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1.4rem 2rem 1.1rem;
-  display: flex;
-  flex-direction: column;
+  padding: 1.1rem 1.25rem 1rem;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 0.75rem;
 }
 
 .site-header__title-link {
+  grid-column: 2;
+  justify-self: center;
   text-decoration: none;
   color: inherit;
   display: flex;
 }
 
 .site-header__title {
-  margin: 0;
+  padding: 0;
   font-family: var(--font-heading);
   font-variant: small-caps;
   font-weight: 600;
@@ -55,78 +57,30 @@
   color: var(--gold-leaf);
 }
 
-.site-header__nav-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0;
+.site-header__spacer {
+  grid-column: 3;
+  display: block;
+  width: 2.5rem;
+  height: 2.5rem;
 }
 
-.site-header__nav-item {
-  display: flex;
-  align-items: center;
-  margin: 0;
-}
-
-.site-header__link {
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 3px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--ink-faded);
-  text-decoration: none;
-  padding: 0.3rem 0.9rem;
-  border-bottom: 1px solid transparent;
-  transition:
-    color 150ms ease,
-    border-color 150ms ease;
-}
-
-.site-header__link:hover,
-.site-header__link:focus-visible {
-  color: var(--gold-leaf);
-  border-bottom-color: var(--gold-leaf);
-}
-
-.site-header__link--active {
-  color: var(--ink);
-  border-bottom-color: var(--gold-leaf);
-}
-
-.site-header__separator {
-  display: flex;
-  align-items: center;
-  color: var(--gold-leaf);
-  font-size: 0.55rem;
-  padding: 0 0.1rem;
-  opacity: 0.7;
+@media (max-width: 767.98px) { /* md */
+  .site-header__inner {
+    padding: 0.9rem 0.9rem 0.85rem;
+  }
+  .site-header__title {
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+  }
+  .site-header__spacer {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
 }
 
 @media (max-width: 479.98px) { /* xs */
-  .site-header__inner {
-    padding: 1.1rem 1rem 0.9rem;
-  }
   .site-header__title {
-    font-size: 1.5rem;
-    letter-spacing: 4px;
-  }
-  .site-header__link {
-    font-size: 0.85rem;
-    letter-spacing: 2px;
-    padding: 0.25rem 0.55rem;
-  }
-  .site-header__separator {
-    padding: 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .site-header__link {
-    transition: none;
+    font-size: 1.35rem;
+    letter-spacing: 3px;
   }
 }
