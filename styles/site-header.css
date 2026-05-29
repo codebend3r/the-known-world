@@ -38,6 +38,16 @@
   text-decoration: none;
   color: inherit;
   display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+
+.site-header__logo {
+  flex: 0 0 auto;
+  height: 2.5rem;
+  width: auto;
+  display: block;
 }
 
 .site-header__title {
@@ -72,6 +82,12 @@
     font-size: 1.6rem;
     letter-spacing: 4px;
   }
+  .site-header__title-link {
+    gap: 0.5rem;
+  }
+  .site-header__logo {
+    height: 2rem;
+  }
   .site-header__spacer {
     width: 2.25rem;
     height: 2.25rem;
@@ -82,5 +98,11 @@
   .site-header__title {
     font-size: 1.35rem;
     letter-spacing: 3px;
+  }
+  .site-header__title-link {
+    gap: 0.4rem;
+  }
+  .site-header__logo {
+    height: 1.75rem;
   }
 }
