@@ -110,16 +110,18 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
 
   return (
     <>
-      <input
-        type="search"
-        className="list-search"
-        placeholder="Search characters…"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        aria-label="Search characters"
-        autoComplete="off"
-        spellCheck={false}
-      />
+      <div className="list-search-wrap">
+        <input
+          type="search"
+          className="list-search"
+          placeholder="Search characters…"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          aria-label="Search characters"
+          autoComplete="off"
+          spellCheck={false}
+        />
+      </div>
       {filtered.length === 0 ? (
         <p className="list-search__empty">No characters match &ldquo;{debounced}&rdquo;.</p>
       ) : (

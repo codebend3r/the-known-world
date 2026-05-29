@@ -180,6 +180,16 @@
   }
 }
 
+.list-search-wrap {
+  display: grid;
+}
+
+@media (max-width: 639.98px) { /* sm */
+  .list-search-wrap {
+    padding: 0 0.5rem;
+  }
+}
+
 .list-search-row {
   display: flex;
   align-items: stretch;
