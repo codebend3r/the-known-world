@@ -1,5 +1,3 @@
-import fs from 'node:fs/promises';
-import path from 'node:path';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import {
@@ -9,25 +7,11 @@ import {
   renderMarkdown,
 } from '@/lib/content';
 import { ageAtDeath } from '@/lib/age';
+import { findPortrait } from '@/lib/portraits';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sigil } from '@/components/Sigil';
 import { Sources } from '@/components/Sources';
 import type { Character } from '@/lib/schemas';
-
-const PORTRAIT_EXTENSIONS = ['png', 'webp', 'jpg', 'jpeg'] as const;
-
-async function findPortrait(slug: string, sex: Character['sex']): Promise<string> {
-  for (const ext of PORTRAIT_EXTENSIONS) {
-    const absPath = path.join(process.cwd(), 'public', 'characters', `${slug}.${ext}`);
-    try {
-      await fs.access(absPath);
-      return `/characters/${slug}.${ext}`;
-    } catch {
-      // not found; try the next extension
-    }
-  }
-  return sex === 'f' ? '/characters/unknown-female.png' : '/characters/unknown-male.png';
-}
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();

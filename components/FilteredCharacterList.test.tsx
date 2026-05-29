@@ -3,9 +3,9 @@ import { act, fireEvent, render, screen } from '@testing-library/react';
 import { FilteredCharacterList, type CharacterItem } from './FilteredCharacterList';
 
 const items: CharacterItem[] = [
-  { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north' },
-  { slug: 'eddard-stark', name: 'Eddard Stark', alias: null, primaryHouseSlug: 'stark', region: 'north' },
-  { slug: 'tywin-lannister', name: 'Tywin Lannister', alias: null, primaryHouseSlug: 'lannister', region: 'westerlands' },
+  { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north', portrait: '/characters/arya-stark.png' },
+  { slug: 'eddard-stark', name: 'Eddard Stark', alias: null, primaryHouseSlug: 'stark', region: 'north', portrait: '/characters/eddard-stark.png' },
+  { slug: 'tywin-lannister', name: 'Tywin Lannister', alias: null, primaryHouseSlug: 'lannister', region: 'westerlands', portrait: '/characters/tywin-lannister.png' },
 ];
 
 function manyItems(n: number): CharacterItem[] {
@@ -15,6 +15,7 @@ function manyItems(n: number): CharacterItem[] {
     alias: null,
     primaryHouseSlug: 'stark',
     region: 'north',
+    portrait: '/characters/unknown-male.png',
   }));
 }
 
@@ -57,7 +58,7 @@ describe('FilteredCharacterList', () => {
 
   it('falls back to the base card class when no region is known', () => {
     const noRegion: CharacterItem[] = [
-      { slug: 'x', name: 'X', alias: null, primaryHouseSlug: 'unknown', region: null },
+      { slug: 'x', name: 'X', alias: null, primaryHouseSlug: 'unknown', region: null, portrait: '/characters/unknown-male.png' },
     ];
     const { container } = render(<FilteredCharacterList items={noRegion} />);
     expect(container.querySelector('.character-list__card')).not.toBeNull();
@@ -68,17 +69,34 @@ describe('FilteredCharacterList', () => {
 
   it('renders the alias in brackets when present', () => {
     const aliased: CharacterItem[] = [
-      { slug: 'aegon-i', name: 'Aegon I Targaryen', alias: 'The Conqueror', primaryHouseSlug: 'targaryen', region: 'crownlands' },
-      { slug: 'aegon-iv', name: 'Aegon IV Targaryen', alias: 'The Unworthy', primaryHouseSlug: 'targaryen', region: 'crownlands' },
+      { slug: 'aegon-i', name: 'Aegon I Targaryen', alias: 'The Conqueror', primaryHouseSlug: 'targaryen', region: 'crownlands', portrait: '/characters/aegon-i-targaryen.png' },
+      { slug: 'aegon-iv', name: 'Aegon IV Targaryen', alias: 'The Unworthy', primaryHouseSlug: 'targaryen', region: 'crownlands', portrait: '/characters/aegon-iv-targaryen.png' },
     ];
     const { container } = render(<FilteredCharacterList items={aliased} />);
     const aliases = Array.from(container.querySelectorAll('.character-list__alias')).map((el) => el.textContent);
-    expect(aliases).toEqual([' (The Conqueror)', ' (The Unworthy)']);
+    expect(aliases).toEqual(['(The Conqueror)', '(The Unworthy)']);
   });
 
   it('omits the alias span when no alias is set', () => {
     const { container } = render(<FilteredCharacterList items={items} />);
     expect(container.querySelector('.character-list__alias')).toBeNull();
+  });
+
+  it('renders portrait, sigil, name, then alias in that order inside each card', () => {
+    const aliased: CharacterItem[] = [
+      { slug: 'aegon-i', name: 'Aegon I Targaryen', alias: 'The Conqueror', primaryHouseSlug: 'targaryen', region: 'crownlands', portrait: '/characters/aegon-i-targaryen.png' },
+    ];
+    const { container } = render(<FilteredCharacterList items={aliased} />);
+    const card = container.querySelector('.character-list__card');
+    const childClasses = Array.from(card?.children ?? []).map((el) => el.className);
+    expect(childClasses).toEqual([
+      'character-list__portrait',
+      'character-list__sigil',
+      'character-list__name',
+      'character-list__alias',
+    ]);
+    const img = card?.querySelector('.character-list__portrait img') as HTMLImageElement | null;
+    expect(img?.getAttribute('src')).toBe('/characters/aegon-i-targaryen.png');
   });
 
   it('does not filter until the 300ms debounce elapses', () => {
@@ -220,7 +238,7 @@ describe('FilteredCharacterList', () => {
   it('resets to page 1 when the search filter changes', () => {
     const lots: CharacterItem[] = [
       ...manyItems(60),
-      { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north' },
+      { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north', portrait: '/characters/arya-stark.png' },
     ];
     render(<FilteredCharacterList items={lots} pageSize={30} />);
     const [nextBtn] = screen.getAllByRole('button', { name: /next page/i });

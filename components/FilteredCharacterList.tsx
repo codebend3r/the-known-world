@@ -11,6 +11,7 @@ export type CharacterItem = {
   alias: string | null;
   primaryHouseSlug: string | null;
   region: string | null;
+  portrait: string;
 };
 
 type Props = {
@@ -132,6 +133,10 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
               return (
                 <li key={item.slug} className="character-list__item">
                   <Link href={`/characters/${item.slug}/`} className={cardClass}>
+                    <span className="character-list__portrait" aria-hidden="true">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={item.portrait} alt="" loading="lazy" decoding="async" />
+                    </span>
                     <span className="character-list__sigil" aria-hidden="true">
                       <Sigil
                         slug={item.primaryHouseSlug}
@@ -140,12 +145,10 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                         decorative
                       />
                     </span>
-                    <span className="character-list__name">
-                      {item.name}
-                      {item.alias && (
-                        <span className="character-list__alias"> ({item.alias})</span>
-                      )}
-                    </span>
+                    <span className="character-list__name">{item.name}</span>
+                    {item.alias && (
+                      <span className="character-list__alias">({item.alias})</span>
+                    )}
                   </Link>
                 </li>
               );
