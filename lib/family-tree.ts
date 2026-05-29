@@ -7,6 +7,7 @@ export interface TreeSpouse {
   sex: 'm' | 'f' | null;
   placeholder: boolean;
   inHouse: boolean;
+  titles: string[];
 }
 
 export interface TreeNode {
@@ -88,7 +89,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
       const spouse = peopleBySlug.get(spouseSlug);
       const inHouse = houseSlugs.has(spouseSlug);
       if (!spouse) {
-        return { slug: spouseSlug, name: spouseSlug, alias: null, sex: null, placeholder: true, inHouse: false };
+        return { slug: spouseSlug, name: spouseSlug, alias: null, sex: null, placeholder: true, inHouse: false, titles: [] };
       }
       if (inHouse && !visited.has(spouseSlug)) {
         visited.add(spouseSlug);
@@ -100,6 +101,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
         sex: spouse.sex,
         placeholder: spouse.placeholder,
         inHouse,
+        titles: spouse.titles,
       };
     });
 

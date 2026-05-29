@@ -52,6 +52,19 @@ function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
   );
 }
 
+function wasKing(titles: string[]): boolean {
+  return titles.some((t) => t.startsWith('King '));
+}
+
+function KingMark({ titles }: { titles: string[] }) {
+  if (!wasKing(titles)) return null;
+  return (
+    <span className="family-tree__king" aria-label="king" title="King">
+      ♛
+    </span>
+  );
+}
+
 function sexClass(sex: 'm' | 'f' | null): string {
   return sex ? ` family-tree__name--${sex}` : '';
 }
@@ -65,6 +78,7 @@ function PersonLabel({ node }: { node: TreeNode }) {
     (node.external ? ' family-tree__name--external' : '');
   return (
     <span className="family-tree__person">
+      <KingMark titles={node.titles} />
       <GenderGlyph sex={node.sex} />
       <CharacterName
         slug={node.slug}
@@ -99,6 +113,7 @@ function NodeRow({ node }: { node: TreeNode }) {
             <span className="family-tree__cross" aria-hidden="true">
               ⚭
             </span>
+            <KingMark titles={spouse.titles} />
             <GenderGlyph sex={spouse.sex} />
             <CharacterName
               slug={spouse.slug}
