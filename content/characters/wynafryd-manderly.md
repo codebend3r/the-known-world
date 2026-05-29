@@ -21,4 +21,4 @@ sources:
 draft: false
 ---
 
-Elder granddaughter of Lord Wyman, tall and dark-haired and gravely composed at nineteen. Betrothed at her grandfather's pleasure to Ser Rhaegar Frey of the Twins as part of the peace Wyman pretends to keep with the Freys — a betrothal she knows perfectly well her grandfather has no intention of seeing fulfilled.
+Elder granddaughter of Lord Wyman, tall and dark-haired and gravely composed at nineteen. Betrothed at her grandfather's pleasure to Ser Rhaegar Frey of the Twins as part of the peace Wyman pretends to keep with the Freys, a betrothal she knows perfectly well her grandfather has no intention of seeing fulfilled.
