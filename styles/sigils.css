@@ -92,7 +92,11 @@
   background-size: contain;
   background-position: center;
 }
-.sigil--karstark   { --col: 3; --row: 2; }
+.sigil--karstark {
+  background-image: url('/sigils/karstark.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--reed {
   background-image: url('/sigils/reed.png');
   background-size: contain;
@@ -100,7 +104,11 @@
 }
 
 /* Row 4 — Hightower · Velaryon · Tarly · Blackwood · Bracken */
-.sigil--hightower  { --col: 0; --row: 3; }
+.sigil--hightower {
+  background-image: url('/sigils/hightower.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--velaryon {
   background-image: url('/sigils/velaryon.png');
   background-size: contain;
@@ -123,7 +131,11 @@
 }
 
 /* Row 5 — Dayne · Yronwood · Royce · Corbray · Redwyne */
-.sigil--dayne      { --col: 0; --row: 4; }
+.sigil--dayne {
+  background-image: url('/sigils/dayne.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--yronwood   { --col: 1; --row: 4; }
 .sigil--royce      { --col: 2; --row: 4; }
 .sigil--corbray    { --col: 3; --row: 4; }
@@ -137,7 +149,11 @@
 .sigil--piper      { --col: 4; --row: 5; }
 
 /* Row 7 — Manderly · Dustin · Ryswell · Hornwood · Cerwyn */
-.sigil--manderly   { --col: 0; --row: 6; }
+.sigil--manderly {
+  background-image: url('/sigils/manderly.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--dustin     { --col: 1; --row: 6; }
 .sigil--ryswell    { --col: 2; --row: 6; }
 .sigil--hornwood   { --col: 3; --row: 6; }
@@ -149,6 +165,13 @@
 .sigil--caron      { --col: 2; --row: 7; }
 .sigil--estermont  { --col: 3; --row: 7; }
 .sigil--grafton    { --col: 4; --row: 7; }
+
+/* Houses not on the sprite sheet */
+.sigil--glover {
+  background-image: url('/sigils/glover.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Aliases — share a sigil with another house */
 .sigil--durrandon {
