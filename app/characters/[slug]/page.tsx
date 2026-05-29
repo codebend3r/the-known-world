@@ -8,6 +8,7 @@ import {
 } from '@/lib/content';
 import { ageAtDeath } from '@/lib/age';
 import { findPortrait } from '@/lib/portraits';
+import { cdnImage } from '@/lib/cdn-image';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sigil } from '@/components/Sigil';
 import { Sources } from '@/components/Sources';
@@ -124,7 +125,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
       <div className="character-detail__portrait">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={portrait}
+          src={cdnImage(portrait, { w: 1200, fm: 'webp', q: 80 })}
           alt={`Portrait of ${fm.name}`}
           loading="lazy"
           decoding="async"
