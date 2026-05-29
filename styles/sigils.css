@@ -54,8 +54,16 @@
 .sigil--greyjoy    { --col: 4; --row: 0; }
 
 /* Row 2 — Tully · Arryn · Martell · Tyrell · Bolton */
-.sigil--tully      { --col: 0; --row: 1; }
-.sigil--arryn      { --col: 1; --row: 1; }
+.sigil--tully {
+  background-image: url('/sigils/tully.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--arryn {
+  background-image: url('/sigils/arryn.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--martell {
   background-image: url('/sigils/martell.png');
   background-size: contain;
@@ -74,8 +82,16 @@
 
 /* Row 3 — Frey · Mormont · Umber · Karstark · Reed */
 .sigil--frey       { --col: 0; --row: 2; }
-.sigil--mormont    { --col: 1; --row: 2; }
-.sigil--umber      { --col: 2; --row: 2; }
+.sigil--mormont {
+  background-image: url('/sigils/mormont.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--umber {
+  background-image: url('/sigils/umber.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--karstark   { --col: 3; --row: 2; }
 .sigil--reed {
   background-image: url('/sigils/reed.png');
@@ -85,8 +101,16 @@
 
 /* Row 4 — Hightower · Velaryon · Tarly · Blackwood · Bracken */
 .sigil--hightower  { --col: 0; --row: 3; }
-.sigil--velaryon   { --col: 1; --row: 3; }
-.sigil--tarly      { --col: 2; --row: 3; }
+.sigil--velaryon {
+  background-image: url('/sigils/velaryon.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--tarly {
+  background-image: url('/sigils/tarly.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--blackwood {
   background-image: url('/sigils/blackwood.png');
   background-size: contain;
