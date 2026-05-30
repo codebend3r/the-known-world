@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
 import { CastleSchema, HouseSchema, CharacterSchema, EventSchema, type Castle, type House, type Character, type Event } from './schemas';
+import { remarkProseLinks, type ProseLinkIndex } from './prose-links';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');
 
@@ -48,7 +49,12 @@ export const loadAllHouses = () => loadAll<House>('houses', HouseSchema);
 export const loadAllCharacters = () => loadAll<Character>('characters', CharacterSchema);
 export const loadAllEvents = () => loadAll<Event>('events', EventSchema);
 
-export async function renderMarkdown(source: string): Promise<string> {
-  const processed = await remark().use(remarkHtml).process(source);
+export async function renderMarkdown(
+  source: string,
+  opts?: { proseLinks?: ProseLinkIndex },
+): Promise<string> {
+  const pipeline = remark();
+  if (opts?.proseLinks) pipeline.use(remarkProseLinks(opts.proseLinks));
+  const processed = await pipeline.use(remarkHtml).process(source);
   return processed.toString();
 }

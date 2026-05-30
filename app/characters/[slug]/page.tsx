@@ -6,6 +6,7 @@ import {
   loadCharacter,
   renderMarkdown,
 } from '@/lib/content';
+import { buildProseLinkIndex } from '@/lib/prose-links';
 import { ageAtDeath } from '@/lib/age';
 import { findPortrait } from '@/lib/portraits';
 import { cdnImage } from '@/lib/cdn-image';
@@ -117,7 +118,14 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const children = resolveRelations(fm.children, charactersBySlug);
   const hasFamily = parents.length + spouses.length + children.length > 0;
 
-  const html = character.body.trim() ? await renderMarkdown(character.body) : '';
+  const proseLinks = buildProseLinkIndex({
+    allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
+    allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
+    current: { kind: 'character', slug, mentions: fm.mentions },
+  });
+  const html = character.body.trim()
+    ? await renderMarkdown(character.body, { proseLinks })
+    : '';
 
   return (
     <ParchmentLayout>

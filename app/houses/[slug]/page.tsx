@@ -12,6 +12,7 @@ import { Sources } from '@/components/Sources';
 import { FamilyTree } from '@/components/FamilyTree';
 import { HouseInfobox } from '@/components/HouseInfobox';
 import { buildFamilyTree } from '@/lib/family-tree';
+import { buildProseLinkIndex } from '@/lib/prose-links';
 
 export async function generateStaticParams() {
   const houses = await loadAllHouses();
@@ -44,7 +45,12 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
   const castlesBySlug = new Map(castles.map((c) => [c.slug, c.frontmatter]));
   const charactersBySlug = new Map(characters.map((c) => [c.slug, c.frontmatter]));
 
-  const html = await renderMarkdown(house.body);
+  const proseLinks = buildProseLinkIndex({
+    allCharacters: characters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
+    allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
+    current: { kind: 'house', slug, mentions: house.frontmatter.mentions },
+  });
+  const html = await renderMarkdown(house.body, { proseLinks });
   const tree = buildFamilyTree(slug, characters);
 
   return (
