@@ -172,6 +172,10 @@ a.character-list__card:focus-visible {
 .character-detail__meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-areas:
+    ".    ."
+    ".    ."
+    "wide wide";
   gap: 0.6rem 1.5rem;
   padding: 1rem 1.25rem;
   background: rgba(248, 236, 208, 0.5);
@@ -188,7 +192,7 @@ a.character-list__card:focus-visible {
 }
 
 .character-detail__meta-row--wide {
-  grid-column: 1 / -1;
+  grid-area: wide;
   align-items: flex-start;
 }
 
@@ -287,6 +291,10 @@ a.character-list__card:focus-visible {
 @media (max-width: 639.98px) { /* sm */
   .character-detail__meta {
     grid-template-columns: 1fr;
+    grid-template-areas: none;
+  }
+  .character-detail__meta-row--wide {
+    grid-area: auto;
   }
   .character-detail__relations dt {
     flex-basis: 100%;
