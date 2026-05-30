@@ -162,7 +162,11 @@
 .sigil--redwyne    { --col: 4; --row: 4; }
 
 /* Row 6 — Florent · Rowan · Oakheart · Mallister · Piper */
-.sigil--florent    { --col: 0; --row: 5; }
+.sigil--florent {
+  background-image: url('/sigils/florent.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--rowan      { --col: 1; --row: 5; }
 .sigil--oakheart   { --col: 2; --row: 5; }
 .sigil--mallister  { --col: 3; --row: 5; }
