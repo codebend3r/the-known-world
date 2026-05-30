@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { SiteMenu } from './SiteMenu';
+import { SiteMenu } from '@/components/SiteMenu';
 
 vi.mock('next/navigation', () => ({
   usePathname: () => '/houses/',

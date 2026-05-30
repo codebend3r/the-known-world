@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { cdnImage } from './cdn-image';
+import { cdnImage } from '@/lib/cdn-image';
 
 afterEach(() => {
   vi.unstubAllEnvs();

@@ -1,6 +1,6 @@
 'use client';
 
-import styles from './ViewToggle.module.css';
+import styles from '@/components/ViewToggle.module.css';
 
 export type ViewMode = 'grid' | 'list';
 

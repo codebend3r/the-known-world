@@ -1,4 +1,4 @@
-import type { Character } from './schemas';
+import type { Character } from '@/lib/schemas';
 
 export function ageAtDeath(
   born: Character['born'],

@@ -3,8 +3,8 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
-import { CastleSchema, HouseSchema, CharacterSchema, EventSchema, type Castle, type House, type Character, type Event } from './schemas';
-import { remarkProseLinks, type ProseLinkIndex } from './prose-links';
+import { CastleSchema, HouseSchema, CharacterSchema, EventSchema, type Castle, type House, type Character, type Event } from '@/lib/schemas';
+import { remarkProseLinks, type ProseLinkIndex } from '@/lib/prose-links';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');
 

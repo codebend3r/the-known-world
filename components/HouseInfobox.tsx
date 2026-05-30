@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sigil } from './Sigil';
+import { Sigil } from '@/components/Sigil';
 import { cx } from '@/lib/cx';
 import { regionForHouse } from '@/lib/regions';
 import type {
@@ -8,7 +8,7 @@ import type {
   Character,
   HouseInfoEntry,
 } from '@/lib/schemas';
-import styles from './HouseInfobox.module.css';
+import styles from '@/components/HouseInfobox.module.css';
 
 type Props = {
   house: House;

@@ -1,5 +1,5 @@
-import pkg from '../package.json';
-import styles from './SiteFooter.module.css';
+import pkg from '@/package.json';
+import styles from '@/components/SiteFooter.module.css';
 
 export function SiteFooter() {
   return (

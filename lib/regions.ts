@@ -1,4 +1,4 @@
-import type { House } from './schemas';
+import type { House } from '@/lib/schemas';
 
 export const REGIONS = {
   stark: { slug: 'north', name: 'The North' },

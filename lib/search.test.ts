@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { filterByName } from './search';
+import { filterByName } from '@/lib/search';
 
 const items = [
   { name: 'House Stark' },

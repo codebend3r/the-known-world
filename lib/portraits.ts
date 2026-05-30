@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import type { Character } from './schemas';
+import type { Character } from '@/lib/schemas';
 
 const PORTRAIT_EXTENSIONS = ['png', 'webp', 'jpg', 'jpeg'] as const;
 

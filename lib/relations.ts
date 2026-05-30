@@ -1,4 +1,4 @@
-import type { Castle, House, Character, Event } from './schemas';
+import type { Castle, House, Character, Event } from '@/lib/schemas';
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 

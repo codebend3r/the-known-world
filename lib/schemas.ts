@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { REGION_SLUGS } from './regions';
+import { REGION_SLUGS } from '@/lib/regions';
 
 const EraSchema = z.enum(['dawn-age', 'age-of-heroes', 'long-night', 'andal-invasion', 'targaryen-conquest', 'roberts-reign', 'game-of-thrones', 'AC', 'BC']);
 

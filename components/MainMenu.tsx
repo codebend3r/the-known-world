@@ -1,5 +1,5 @@
-import { MainMenuTile } from './MainMenuTile';
-import styles from './MainMenu.module.css';
+import { MainMenuTile } from '@/components/MainMenuTile';
+import styles from '@/components/MainMenu.module.css';
 
 const COMPASS = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">

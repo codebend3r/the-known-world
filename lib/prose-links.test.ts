@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import { buildProseLinkIndex, type ProseLinkIndex } from './prose-links';
-import { renderMarkdown } from './content';
-import type { Character, House } from './schemas';
+import { buildProseLinkIndex, type ProseLinkIndex } from '@/lib/prose-links';
+import { renderMarkdown } from '@/lib/content';
+import type { Character, House } from '@/lib/schemas';
 
 type CharacterFixture = { slug: string; frontmatter: Character };
 type HouseFixture = { slug: string; frontmatter: House };

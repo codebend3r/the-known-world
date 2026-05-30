@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { regionForHouse, regionLabel } from './regions';
-import { HouseSchema, type House } from './schemas';
+import { regionForHouse, regionLabel } from '@/lib/regions';
+import { HouseSchema, type House } from '@/lib/schemas';
 
 const founded = { year: 0, era: 'AC', precision: 'year' };
 

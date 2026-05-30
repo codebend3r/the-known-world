@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { buildRelationGraph, findOrphanSlugs } from './relations';
-import { CastleSchema, HouseSchema } from './schemas';
+import { buildRelationGraph, findOrphanSlugs } from '@/lib/relations';
+import { CastleSchema, HouseSchema } from '@/lib/schemas';
 
 function castle(data: Parameters<typeof CastleSchema.parse>[0]) {
   return { frontmatter: CastleSchema.parse(data), body: '', slug: (data as { slug: string }).slug };

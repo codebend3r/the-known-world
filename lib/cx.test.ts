@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { cx } from './cx';
+import { cx } from '@/lib/cx';
 
 describe('cx', () => {
   it('joins truthy class strings with a single space', () => {

@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { SiteMenu } from './SiteMenu';
-import styles from './SiteHeader.module.css';
+import { SiteMenu } from '@/components/SiteMenu';
+import styles from '@/components/SiteHeader.module.css';
 
 export function SiteHeader() {
   return (

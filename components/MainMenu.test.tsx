@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MainMenu } from './MainMenu';
+import { MainMenu } from '@/components/MainMenu';
 
 describe('MainMenu', () => {
   it('renders three tiles in order: Maps, Timeline, Houses', () => {

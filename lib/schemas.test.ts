@@ -4,7 +4,7 @@ import {
   HouseSchema,
   CharacterSchema,
   EventSchema,
-} from './schemas';
+} from '@/lib/schemas';
 
 describe('CastleSchema', () => {
   it('parses a complete valid castle', () => {

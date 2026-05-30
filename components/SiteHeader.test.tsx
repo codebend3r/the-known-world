@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { SiteHeader } from './SiteHeader';
+import { SiteHeader } from '@/components/SiteHeader';
 
 vi.mock('next/navigation', () => ({
   usePathname: () => '/houses/',

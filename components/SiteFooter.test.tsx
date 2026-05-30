@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { SiteFooter } from './SiteFooter';
-import pkg from '../package.json';
+import { SiteFooter } from '@/components/SiteFooter';
+import pkg from '@/package.json';
 
 describe('SiteFooter', () => {
   it('credits CJ Rivas', () => {

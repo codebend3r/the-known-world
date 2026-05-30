@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { FilteredHouseList, type HouseItem } from './FilteredHouseList';
+import { FilteredHouseList, type HouseItem } from '@/components/FilteredHouseList';
 
 const items: HouseItem[] = [
   { slug: 'stark', name: 'Stark', region: 'north', regionLabel: 'The North' },

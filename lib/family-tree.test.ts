@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { buildFamilyTree, type TreeNode } from './family-tree';
-import { CharacterSchema } from './schemas';
+import { buildFamilyTree, type TreeNode } from '@/lib/family-tree';
+import { CharacterSchema } from '@/lib/schemas';
 
 type CharacterInput = Parameters<typeof CharacterSchema.parse>[0];
 

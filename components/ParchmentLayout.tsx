@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import styles from './ParchmentLayout.module.css';
+import styles from '@/components/ParchmentLayout.module.css';
 
 type Props = {
   children: ReactNode;

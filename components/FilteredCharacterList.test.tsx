@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { FilteredCharacterList, type CharacterItem } from './FilteredCharacterList';
+import { FilteredCharacterList, type CharacterItem } from '@/components/FilteredCharacterList';
 
 const items: CharacterItem[] = [
   { slug: 'arya-stark', name: 'Arya Stark', alias: null, primaryHouseSlug: 'stark', region: 'north', portrait: '/characters/arya-stark.png' },

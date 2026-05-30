@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { ViewToggle } from './ViewToggle';
+import { ViewToggle } from '@/components/ViewToggle';
 
 describe('ViewToggle', () => {
   it('marks the selected button with aria-pressed="true"', () => {

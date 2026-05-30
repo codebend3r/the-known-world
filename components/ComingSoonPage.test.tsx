@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { ComingSoonPage } from './ComingSoonPage';
+import { ComingSoonPage } from '@/components/ComingSoonPage';
 
 describe('ComingSoonPage', () => {
   it('renders the given title as h1', () => {

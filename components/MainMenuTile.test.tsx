@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { MainMenuTile } from './MainMenuTile';
+import { MainMenuTile } from '@/components/MainMenuTile';
 
 describe('MainMenuTile', () => {
   it('renders title, subtitle, and glyph inside one link', () => {

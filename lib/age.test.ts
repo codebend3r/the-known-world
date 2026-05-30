@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { ageAtDeath } from './age';
+import { ageAtDeath } from '@/lib/age';
 
 describe('ageAtDeath', () => {
   it('subtracts year-precision AC dates', () => {

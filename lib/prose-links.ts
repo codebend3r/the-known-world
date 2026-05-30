@@ -1,7 +1,7 @@
 import type { Plugin } from 'unified';
 import type { Root, Text, Link, Parent } from 'mdast';
 import { visitParents, SKIP } from 'unist-util-visit-parents';
-import type { Character, House } from './schemas';
+import type { Character, House } from '@/lib/schemas';
 
 export type ProseLinkTarget = {
   slug: string;

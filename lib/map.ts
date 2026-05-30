@@ -1,4 +1,4 @@
-import type { Castle } from './schemas';
+import type { Castle } from '@/lib/schemas';
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 type CastleType = Castle['type'];

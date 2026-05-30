@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { TreeNode } from '@/lib/family-tree';
 import { cx } from '@/lib/cx';
-import styles from './FamilyTree.module.css';
+import styles from '@/components/FamilyTree.module.css';
 
 function formatLifespan(node: TreeNode): string | null {
   if (node.born === null && node.died === null) return null;

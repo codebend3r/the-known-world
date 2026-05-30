@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Sigil } from './Sigil';
-import { ViewToggle, type ViewMode } from './ViewToggle';
+import { Sigil } from '@/components/Sigil';
+import { ViewToggle, type ViewMode } from '@/components/ViewToggle';
 import { filterByName } from '@/lib/search';
 import { cx } from '@/lib/cx';
-import listSearch from './listSearch.module.css';
-import styles from './FilteredHouseList.module.css';
+import listSearch from '@/components/listSearch.module.css';
+import styles from '@/components/FilteredHouseList.module.css';
 
 export type HouseItem = {
   slug: string;

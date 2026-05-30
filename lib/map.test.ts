@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { selectVisibleCastles, ALL_CASTLE_TYPES } from './map';
-import { CastleSchema } from './schemas';
+import { selectVisibleCastles, ALL_CASTLE_TYPES } from '@/lib/map';
+import { CastleSchema } from '@/lib/schemas';
 
 function castle(over: Partial<Parameters<typeof CastleSchema.parse>[0]>) {
   return {

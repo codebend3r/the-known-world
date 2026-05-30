@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { loadCastle, loadAllCastles, renderMarkdown } from './content';
+import { loadCastle, loadAllCastles, renderMarkdown } from '@/lib/content';
 
 describe('loadCastle', () => {
   it('loads Winterfell', async () => {

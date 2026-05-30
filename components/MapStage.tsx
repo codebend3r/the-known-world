@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ReactSVGPanZoom, TOOL_AUTO, type Value } from 'react-svg-pan-zoom';
 import type { ReactNode } from 'react';
-import styles from './MapStage.module.css';
+import styles from '@/components/MapStage.module.css';
 
 const VIEWBOX_WIDTH = 800;
 const VIEWBOX_HEIGHT = 1400;
