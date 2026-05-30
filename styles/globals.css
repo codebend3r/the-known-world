@@ -11,6 +11,7 @@
   --rose-madder: #a85a6b;
 
   --font-heading: var(--font-cinzel), Georgia, serif;
+  --font-character-name: var(--font-cormorant-unicase), Georgia, serif;
   --font-body: var(--font-eb-garamond), Georgia, serif;
   --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 

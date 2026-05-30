@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Cinzel, EB_Garamond, Inter } from 'next/font/google';
+import { Cinzel, Cormorant_Unicase, EB_Garamond, Inter } from 'next/font/google';
 import '../styles/globals.css';
 import '../styles/parchment.css';
 import '../styles/site-header.css';
@@ -13,6 +13,7 @@ import '../styles/sigils.css';
 import { SiteHeader } from '@/components/SiteHeader';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });
+const cormorantUnicase = Cormorant_Unicase({ subsets: ['latin'], variable: '--font-cormorant-unicase', weight: ['500', '600', '700'] });
 const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-eb-garamond', weight: ['400', '500', '600'] });
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', weight: ['400', '500'] });
 
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${ebGaramond.variable} ${inter.variable}`}>
+    <html lang="en" className={`${cinzel.variable} ${cormorantUnicase.variable} ${ebGaramond.variable} ${inter.variable}`}>
       <body>
         <SiteHeader />
         {children}

@@ -5,6 +5,26 @@ import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { filterByName } from '@/lib/search';
 
+const SEARCH_PARAM = 'search';
+
+function readSearchParam(): string {
+  if (typeof window === 'undefined') return '';
+  return new URLSearchParams(window.location.search).get(SEARCH_PARAM) ?? '';
+}
+
+function writeSearchParam(value: string) {
+  if (typeof window === 'undefined') return;
+  const params = new URLSearchParams(window.location.search);
+  if (value) {
+    params.set(SEARCH_PARAM, value);
+  } else {
+    params.delete(SEARCH_PARAM);
+  }
+  const query = params.toString();
+  const next = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
+  window.history.replaceState(null, '', next);
+}
+
 export type CharacterItem = {
   slug: string;
   name: string;

@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { cdnImage } from '@/lib/cdn-image';
 import { SiteMenu } from './SiteMenu';
 
 export function SiteHeader() {
@@ -8,15 +7,6 @@ export function SiteHeader() {
       <div className="site-header__inner">
         <SiteMenu />
         <Link href="/" className="site-header__title-link">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={cdnImage('/logo.png', { h: 128, fm: 'webp', q: 85 })}
-            alt=""
-            className="site-header__logo"
-            width={1360}
-            height={1360}
-            aria-hidden="true"
-          />
           <p className="site-header__title">The Known World</p>
         </Link>
         <span className="site-header__spacer" aria-hidden="true" />
