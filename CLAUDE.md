@@ -18,6 +18,7 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 - The site is a fully static export (`output: 'export'`). No server actions, no route handlers, no dynamic rendering: every route must pre-render at build time.
 - Styles are hand-written CSS in `styles/`. No Tailwind, no CSS-in-JS: preserve the parchment aesthetic.
 - Never use `margin` for layout spacing. Prefer `display: grid` with `gap` and `padding`. Only reach for `margin` when there is genuinely no other option.
+- Never use `grid-column: 1 / -1` (or other `1 / -1` line shortcuts) to span a child across columns. Declare `grid-template-areas` on the parent alongside `grid-template-columns` and use a named `grid-area` on the child, so the grid's shape is readable from the parent rule.
 
 ## Content + tests
 
