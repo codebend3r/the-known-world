@@ -193,7 +193,7 @@ a.character-list__card:focus-visible {
 
 .character-detail__meta-row--wide {
   grid-area: wide;
-  align-items: flex-start;
+  align-items: baseline;
 }
 
 .character-detail__meta dt {
