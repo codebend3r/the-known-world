@@ -19,7 +19,7 @@ const alegreyaSans = Alegreya_Sans({ subsets: ['latin'], variable: '--font-alegr
 
 export const metadata: Metadata = {
   title: 'Atlas of the Known World · A Song of Ice and Fire',
-  description: 'An interactive atlas of George R. R. Martin\'s world of Ice and Fire — map, timeline, and encyclopedia.',
+  description: 'An interactive atlas of George R. R. Martin\'s world of Ice and Fire — maps, timeline, and the rolls of the great houses.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

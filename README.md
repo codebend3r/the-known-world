@@ -1,6 +1,6 @@
 # Atlas of the Known World
 
-An interactive atlas of George R. R. Martin's world of Ice and Fire, covering the map, timeline, encyclopedia, and the rolls of the great houses. Statically generated from a corpus of markdown files with Zod-validated frontmatter, rendered through a parchment-styled UI.
+An interactive atlas of George R. R. Martin's world of Ice and Fire, covering the maps, timeline, and the rolls of the great houses. Statically generated from a corpus of markdown files with Zod-validated frontmatter, rendered through a parchment-styled UI.
 
 ## Stack
 
@@ -42,10 +42,8 @@ Husky installs hooks on `bun install` (via the `prepare` script):
 ```
 app/                Next.js App Router routes
   page.tsx          Home, main menu of atlas sections
-  the-north/        Regional view: interactive North map
-  map/              Coming-soon stub
+  maps/             Coming-soon stub
   timeline/         Coming-soon stub
-  encyclopedia/     Coming-soon stub
   houses/           Index + per-house pages
     [slug]/         Per-house page with family tree
   characters/       Index + per-character pages
@@ -56,7 +54,7 @@ app/                Next.js App Router routes
 
 components/         React components
   ParchmentLayout, MainMenu, MainMenuTile, ComingSoonPage,
-  MapStage, MapMarker, MapLayerToggle, NorthMapView,
+  MapStage, MapMarker, MapLayerToggle,
   FamilyTree, DropCap, Sources
 
 lib/                Domain logic (loaders, schemas, helpers)
@@ -99,16 +97,14 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 
 | Route | Status | Notes |
 | --- | --- | --- |
-| `/` | live | Atlas main menu (Map · Timeline · Encyclopedia · Houses) |
+| `/` | live | Atlas main menu (Maps · Timeline · Houses) |
 | `/houses/` | live | A to Z list of houses, alphabetized by short name |
 | `/houses/[slug]/` | live | Per-house page: words, seat link, sigil, founded, status, body, family tree |
 | `/characters/` | live | A to Z list of characters (sigil + name) with debounced filter |
 | `/characters/[slug]/` | live | Per-character page: sigil, born/died, primary house link, titles, body, linked family |
 | `/castles/[slug]/` | live | Per-castle page |
-| `/the-north/` | live | Pan/zoom map of the North with layer toggle |
-| `/map/` | stub | Coming soon |
+| `/maps/` | stub | Coming soon |
 | `/timeline/` | stub | Coming soon |
-| `/encyclopedia/` | stub | Coming soon |
 
 Per-house and per-castle pages are pre-rendered via `generateStaticParams` from the content directory.
 

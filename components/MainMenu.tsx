@@ -20,18 +20,6 @@ const HOURGLASS = (
   </svg>
 );
 
-const BOOK = (
-  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-    <path
-      d="M5 6 H15 V26 H5 Z M17 6 H27 V26 H17 Z"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-    />
-    <path d="M16 6 V26" stroke="currentColor" strokeWidth="1.5" fill="none" />
-  </svg>
-);
-
 const SIGIL = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <path
@@ -63,13 +51,6 @@ export function MainMenu() {
         subtitle="Trace the centuries."
         glyph={HOURGLASS}
         href="/timeline/"
-        status="coming-soon"
-      />
-      <MainMenuTile
-        title="Encyclopedia"
-        subtitle="Consult the scribes."
-        glyph={BOOK}
-        href="/encyclopedia/"
         status="coming-soon"
       />
       <MainMenuTile
