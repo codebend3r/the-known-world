@@ -16,6 +16,12 @@ parents:
   - lyarra-stark
 titles:
   - Heir to Winterfell
+mentions:
+  - rickard-stark
+  - catelyn-stark
+  - rhaegar-targaryen
+  - lyanna-stark
+  - aerys-ii-targaryen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brandon_Stark_(brother_of_Eddard)

@@ -23,6 +23,8 @@ children:
   - rickon-stark
 titles:
   - Lady of Winterfell
+aliases:
+  - Catelyn Tully
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Catelyn_Stark

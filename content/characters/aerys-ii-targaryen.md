@@ -26,6 +26,7 @@ titles:
   - Protector of the Realm
 aliases:
   - The Mad King
+  - Aerys II
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aerys_II_Targaryen
