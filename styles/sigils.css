@@ -208,6 +208,16 @@
   background-size: contain;
   background-position: center;
 }
+.sigil--qorgyle {
+  background-image: url('/sigils/qorgyle.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--reyne {
+  background-image: url('/sigils/reyne.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Aliases — share a sigil with another house */
 .sigil--durrandon {
