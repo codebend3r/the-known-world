@@ -1,0 +1,13 @@
+.caption {
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-faded);
+}
+
+.caption a {
+  text-decoration: none;
+  color: var(--ink-faded);
+}

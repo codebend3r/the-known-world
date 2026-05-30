@@ -1,4 +1,5 @@
 import { MainMenuTile } from './MainMenuTile';
+import styles from './MainMenu.module.css';
 
 const COMPASS = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
@@ -38,7 +39,7 @@ const SIGIL = (
 
 export function MainMenu() {
   return (
-    <nav className="main-menu" aria-label="Atlas sections">
+    <nav className={styles.menu} aria-label="Atlas sections">
       <MainMenuTile
         title="Maps"
         subtitle="Survey the realm."

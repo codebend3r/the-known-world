@@ -1,9 +1,10 @@
 import Link from 'next/link';
+import styles from './ComingSoonPage.module.css';
 
 export function ComingSoonPage({ title }: { title: string }) {
   return (
     <>
-      <p className="coming-soon-caption">
+      <p className={styles.caption}>
         <Link href="/">Atlas of the Known World</Link>
       </p>
       <h1>{title}</h1>

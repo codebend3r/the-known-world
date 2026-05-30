@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import styles from './MainMenuTile.module.css';
 
 export type MainMenuTileProps = {
   title: string;
@@ -17,14 +18,14 @@ export function MainMenuTile({
   status,
 }: MainMenuTileProps) {
   return (
-    <Link href={href} className="main-menu-tile">
-      <span className="main-menu-tile__glyph" aria-hidden="true">
+    <Link href={href} className={styles.tile}>
+      <span className={styles.glyph} aria-hidden="true">
         {glyph}
       </span>
-      <span className="main-menu-tile__title">{title}</span>
-      <span className="main-menu-tile__subtitle">{subtitle}</span>
+      <span className={styles.title}>{title}</span>
+      <span className={styles.subtitle}>{subtitle}</span>
       {status === 'coming-soon' && (
-        <span className="main-menu-tile__pill" aria-hidden="true">
+        <span className={styles.pill} aria-hidden="true">
           ⊙ Coming soon
         </span>
       )}
