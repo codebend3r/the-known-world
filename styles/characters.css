@@ -195,9 +195,10 @@ a.character-list__card:focus-visible {
 .character-detail__meta dt {
   flex: 0 0 auto;
   color: var(--ink-faded);
-  font-variant-caps: all-small-caps;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 500;
 }
 
@@ -244,9 +245,10 @@ a.character-list__card:focus-visible {
 .character-detail__relations dt {
   flex: 0 0 5.5rem;
   color: var(--ink-faded);
-  font-variant-caps: all-small-caps;
+  font-family: var(--font-sans);
+  text-transform: uppercase;
   letter-spacing: 1px;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 500;
 }
 
