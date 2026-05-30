@@ -186,7 +186,11 @@
   background-position: center;
 }
 .sigil--dondarrion { --col: 1; --row: 7; }
-.sigil--caron      { --col: 2; --row: 7; }
+.sigil--caron {
+  background-image: url('/sigils/caron.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--estermont  { --col: 3; --row: 7; }
 .sigil--grafton    { --col: 4; --row: 7; }
 
