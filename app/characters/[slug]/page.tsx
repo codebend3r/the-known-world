@@ -118,7 +118,6 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const hasFamily = parents.length + spouses.length + children.length > 0;
 
   const html = character.body.trim() ? await renderMarkdown(character.body) : '';
-  const headlineTitle = fm.titles.length > 0 ? fm.titles[fm.titles.length - 1] : null;
 
   return (
     <ParchmentLayout>
@@ -145,7 +144,6 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           )}
         </h1>
       </div>
-      {headlineTitle && <p className="subtitle">{headlineTitle}</p>}
 
       <dl className="character-detail__meta">
         <div>
