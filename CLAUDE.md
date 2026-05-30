@@ -6,11 +6,11 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 
 - Work directly on `main`. Don't create branches unless explicitly asked.
 - Auto-commit each logical change without asking. Subject must start with `GOTA:` (see the `gota-commit-format` skill).
-- Run `bun test` before committing.
+- Run `bun run test` before committing (this invokes `vitest run`; `bun test` uses Bun's built-in runner, which is not configured for this repo's jsdom-based component tests and reports false failures).
 
 ## Tooling
 
-- All scripts run through Bun: `bun install`, `bun dev`, `bun test`, `bun run build`, `bun run lint`. Never invoke npm or yarn.
+- All scripts run through Bun: `bun install`, `bun dev`, `bun run test`, `bun run build`, `bun run lint`. Never invoke npm or yarn.
 - Pin every `package.json` dependency to an exact version, with no `^` or `~`.
 
 ## Architecture
