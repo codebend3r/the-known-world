@@ -33,7 +33,6 @@
 }
 
 /* Sprite-cell sigils restore the 1143:1280 cell aspect ratio. */
-.rowan,
 .dustin,
 .cerwyn {
   --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
@@ -180,7 +179,11 @@
   background-size: contain;
   background-position: center;
 }
-.rowan      { --col: 1; --row: 5; }
+.rowan {
+  background-image: url('/sigils/rowan.png');
+  background-size: contain;
+  background-position: center;
+}
 .oakheart {
   background-image: url('/sigils/oakheart.png');
   background-size: contain;
