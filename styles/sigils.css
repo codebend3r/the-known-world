@@ -221,6 +221,11 @@
   background-size: contain;
   background-position: center;
 }
+.sigil--crakehall {
+  background-image: url('/sigils/crakehall.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--dalt {
   background-image: url('/sigils/dalt.png');
   background-size: contain;
