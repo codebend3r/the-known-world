@@ -32,7 +32,7 @@ afterEach(() => {
 describe('FilteredCharacterList', () => {
   it('renders every character by default', () => {
     const { container } = render(<FilteredCharacterList items={items} />);
-    expect(container.querySelectorAll('.character-list__item').length).toBe(3);
+    expect(container.querySelectorAll('.item').length).toBe(3);
   });
 
   it('renders each card as a link to /characters/[slug]/', () => {
@@ -52,10 +52,8 @@ describe('FilteredCharacterList', () => {
 
   it('applies a region-tinted modifier class per card', () => {
     const { container } = render(<FilteredCharacterList items={items} />);
-    expect(container.querySelector('.character-list__card--region-north')).not.toBeNull();
-    expect(
-      container.querySelector('.character-list__card--region-westerlands'),
-    ).not.toBeNull();
+    expect(container.querySelector('.cardNorth')).not.toBeNull();
+    expect(container.querySelector('.cardWesterlands')).not.toBeNull();
   });
 
   it('falls back to the base card class when no region is known', () => {
@@ -63,10 +61,8 @@ describe('FilteredCharacterList', () => {
       { slug: 'x', name: 'X', alias: null, primaryHouseSlug: 'unknown', region: null, portrait: '/characters/unknown-male.png' },
     ];
     const { container } = render(<FilteredCharacterList items={noRegion} />);
-    expect(container.querySelector('.character-list__card')).not.toBeNull();
-    expect(
-      container.querySelector('[class*="character-list__card--region"]'),
-    ).toBeNull();
+    expect(container.querySelector('.card')).not.toBeNull();
+    expect(container.querySelector('[data-region]')).toBeNull();
   });
 
   it('renders the alias in brackets when present', () => {
@@ -75,13 +71,13 @@ describe('FilteredCharacterList', () => {
       { slug: 'aegon-iv', name: 'Aegon IV Targaryen', alias: 'The Unworthy', primaryHouseSlug: 'targaryen', region: 'crownlands', portrait: '/characters/aegon-iv-targaryen.png' },
     ];
     const { container } = render(<FilteredCharacterList items={aliased} />);
-    const aliases = Array.from(container.querySelectorAll('.character-list__alias')).map((el) => el.textContent);
+    const aliases = Array.from(container.querySelectorAll('.alias')).map((el) => el.textContent);
     expect(aliases).toEqual(['(The Conqueror)', '(The Unworthy)']);
   });
 
   it('omits the alias span when no alias is set', () => {
     const { container } = render(<FilteredCharacterList items={items} />);
-    expect(container.querySelector('.character-list__alias')).toBeNull();
+    expect(container.querySelector('.alias')).toBeNull();
   });
 
   it('renders portrait, sigil, name, then alias in that order inside each card', () => {
@@ -89,15 +85,10 @@ describe('FilteredCharacterList', () => {
       { slug: 'aegon-i', name: 'Aegon I Targaryen', alias: 'The Conqueror', primaryHouseSlug: 'targaryen', region: 'crownlands', portrait: '/characters/aegon-i-targaryen.png' },
     ];
     const { container } = render(<FilteredCharacterList items={aliased} />);
-    const card = container.querySelector('.character-list__card');
+    const card = container.querySelector('.card');
     const childClasses = Array.from(card?.children ?? []).map((el) => el.className);
-    expect(childClasses).toEqual([
-      'character-list__portrait',
-      'character-list__sigil',
-      'character-list__name',
-      'character-list__alias',
-    ]);
-    const img = card?.querySelector('.character-list__portrait img') as HTMLImageElement | null;
+    expect(childClasses).toEqual(['portrait', 'sigil', 'name', 'alias']);
+    const img = card?.querySelector('.portrait img') as HTMLImageElement | null;
     expect(img?.getAttribute('src')).toBe('/characters/aegon-i-targaryen.png');
   });
 
@@ -108,7 +99,7 @@ describe('FilteredCharacterList', () => {
     act(() => {
       vi.advanceTimersByTime(299);
     });
-    expect(container.querySelectorAll('.character-list__item').length).toBe(3);
+    expect(container.querySelectorAll('.item').length).toBe(3);
   });
 
   it('filters the list once the debounce elapses', () => {
@@ -118,7 +109,7 @@ describe('FilteredCharacterList', () => {
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    const cards = container.querySelectorAll('.character-list__item');
+    const cards = container.querySelectorAll('.item');
     expect(cards.length).toBe(2);
     const names = Array.from(cards).map((el) => el.textContent ?? '');
     expect(names.some((n) => n.includes('Arya Stark'))).toBe(true);
@@ -154,7 +145,7 @@ describe('FilteredCharacterList', () => {
 
   it('shows the first page of items and a pagination nav when there is overflow', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
-    expect(container.querySelectorAll('.character-list__item').length).toBe(30);
+    expect(container.querySelectorAll('.item').length).toBe(30);
     const navs = screen.getAllByRole('navigation', { name: /pagination/i });
     expect(navs.length).toBe(2);
     expect(navs[0].textContent).toMatch(/Page 1 of 3/);
@@ -165,7 +156,7 @@ describe('FilteredCharacterList', () => {
   it('renders a pagination nav above and below the list', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
     const children = Array.from(container.children);
-    const list = children.find((el) => el.classList.contains('character-list'));
+    const list = children.find((el) => el.classList.contains('list'));
     const navs = children.filter((el) => el.classList.contains('pagination'));
     expect(navs.length).toBe(2);
     expect(children.indexOf(navs[0])).toBeLessThan(children.indexOf(list as Element));
@@ -178,7 +169,7 @@ describe('FilteredCharacterList', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
     const [topNext] = screen.getAllByRole('button', { name: /next page/i });
     fireEvent.click(topNext);
-    const firstCardName = container.querySelector('.character-list__name')?.textContent;
+    const firstCardName = container.querySelector('.name')?.textContent;
     expect(firstCardName).toBe('Char 030');
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
   });
@@ -204,7 +195,7 @@ describe('FilteredCharacterList', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
     const [topSelect] = screen.getAllByRole('combobox', { name: /characters per page/i }) as HTMLSelectElement[];
     fireEvent.change(topSelect, { target: { value: '10' } });
-    expect(container.querySelectorAll('.character-list__item').length).toBe(10);
+    expect(container.querySelectorAll('.item').length).toBe(10);
     expect(screen.getAllByText(/Page 1 of 8/).length).toBe(2);
   });
 
@@ -212,7 +203,7 @@ describe('FilteredCharacterList', () => {
     const { container } = render(<FilteredCharacterList items={manyItems(75)} pageSize={30} />);
     const [topSelect] = screen.getAllByRole('combobox', { name: /characters per page/i }) as HTMLSelectElement[];
     fireEvent.change(topSelect, { target: { value: 'Infinity' } });
-    expect(container.querySelectorAll('.character-list__item').length).toBe(75);
+    expect(container.querySelectorAll('.item').length).toBe(75);
     expect(screen.getAllByText(/Page 1 of 1/).length).toBe(2);
     const nextButtons = screen.getAllByRole('button', { name: /next page/i }) as HTMLButtonElement[];
     expect(nextButtons.every((b) => b.disabled)).toBe(true);
@@ -242,7 +233,7 @@ describe('FilteredCharacterList', () => {
     const { container } = render(<FilteredCharacterList items={items} />);
     const input = screen.getByRole('searchbox') as HTMLInputElement;
     expect(input.value).toBe('arya');
-    const cards = container.querySelectorAll('.character-list__item');
+    const cards = container.querySelectorAll('.item');
     expect(cards.length).toBe(1);
     expect(cards[0].textContent).toContain('Arya Stark');
   });

@@ -6,6 +6,19 @@ import { Sigil } from './Sigil';
 import { filterByName } from '@/lib/search';
 import { cx } from '@/lib/cx';
 import listSearch from './listSearch.module.css';
+import styles from './FilteredCharacterList.module.css';
+
+const REGION_CARD_CLASS: Record<string, string | undefined> = {
+  north: styles.cardNorth,
+  vale: styles.cardVale,
+  riverlands: styles.cardRiverlands,
+  westerlands: styles.cardWesterlands,
+  reach: styles.cardReach,
+  stormlands: styles.cardStormlands,
+  dorne: styles.cardDorne,
+  'iron-islands': styles.cardIronIslands,
+  crownlands: styles.cardCrownlands,
+};
 
 const SEARCH_PARAM = 'search';
 
@@ -172,15 +185,18 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       ) : (
         <>
           {showPagination && renderPagination('top')}
-          <ul className="character-list">
+          <ul className={styles.list}>
             {pageItems.map((item) => {
-              const cardClass = item.region
-                ? `character-list__card character-list__card--region-${item.region}`
-                : 'character-list__card';
+              const regionClass = item.region ? REGION_CARD_CLASS[item.region] : undefined;
+              const cardClass = cx(styles.card, regionClass);
               return (
-                <li key={item.slug} className="character-list__item">
-                  <Link href={`/characters/${item.slug}/`} className={cardClass}>
-                    <span className="character-list__portrait" aria-hidden="true">
+                <li key={item.slug} className={styles.item}>
+                  <Link
+                    href={`/characters/${item.slug}/`}
+                    className={cardClass}
+                    {...(item.region ? { 'data-region': item.region } : {})}
+                  >
+                    <span className={styles.portrait} aria-hidden="true">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={item.portrait}
@@ -191,7 +207,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                         decoding="async"
                       />
                     </span>
-                    <span className="character-list__sigil" aria-hidden="true">
+                    <span className={styles.sigil} aria-hidden="true">
                       <Sigil
                         slug={item.primaryHouseSlug}
                         name={item.name}
@@ -199,9 +215,9 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                         decorative
                       />
                     </span>
-                    <span className="character-list__name">{item.name}</span>
+                    <span className={styles.name}>{item.name}</span>
                     {item.alias && (
-                      <span className="character-list__alias">({item.alias})</span>
+                      <span className={styles.alias}>({item.alias})</span>
                     )}
                   </Link>
                 </li>

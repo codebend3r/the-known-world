@@ -10,10 +10,12 @@ import { buildProseLinkIndex } from '@/lib/prose-links';
 import { ageAtDeath } from '@/lib/age';
 import { findPortrait } from '@/lib/portraits';
 import { cdnImage } from '@/lib/cdn-image';
+import { cx } from '@/lib/cx';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sigil } from '@/components/Sigil';
 import { Sources } from '@/components/Sources';
 import type { Character } from '@/lib/schemas';
+import styles from './page.module.css';
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();
@@ -74,7 +76,7 @@ function resolveRelations(
 function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
   if (refs.length === 0) return null;
   return (
-    <div className="character-detail__relations-row">
+    <div className={styles.relationsRow}>
       <dt>{label}</dt>
       <dd>
         {refs.map((r, i) => (
@@ -83,7 +85,7 @@ function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
             {r.linkable ? (
               <Link href={`/characters/${r.slug}/`}>{r.name}</Link>
             ) : (
-              <span className="character-detail__placeholder">{r.name}</span>
+              <span className={styles.placeholder}>{r.name}</span>
             )}
           </span>
         ))}
@@ -129,7 +131,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
   return (
     <ParchmentLayout>
-      <div className="character-detail__portrait">
+      <div className={styles.portrait}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={cdnImage(portrait, { w: 1200, fm: 'webp', q: 80 })}
@@ -138,7 +140,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           decoding="async"
         />
       </div>
-      <div className="character-detail__heading">
+      <div className={styles.heading}>
         <Sigil
           slug={fm['primary-house']}
           name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
@@ -148,18 +150,18 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
         <h1>
           {fm.name}
           {fm.aliases.length > 0 && (
-            <span className="character-detail__alias"> ({fm.aliases[0]})</span>
+            <span className={styles.alias}> ({fm.aliases[0]})</span>
           )}
         </h1>
       </div>
 
-      <dl className="character-detail__meta">
-        <div className="character-detail__meta-row">
+      <dl className={styles.meta}>
+        <div className={styles.metaRow}>
           <dt>Born</dt>
           <dd>{formatDate(fm.born)}</dd>
         </div>
         {fm.died && (
-          <div className="character-detail__meta-row">
+          <div className={styles.metaRow}>
             <dt>Died</dt>
             <dd>
               {formatDate(fm.died)}
@@ -170,7 +172,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             </dd>
           </div>
         )}
-        <div className="character-detail__meta-row">
+        <div className={styles.metaRow}>
           <dt>House</dt>
           <dd>
             {primaryHouse ? (
@@ -180,12 +182,12 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             ) : fm['primary-house'] !== null ? (
               fm['primary-house']
             ) : (
-              <span className="character-detail__unaffiliated">Unaffiliated</span>
+              <span className={styles.unaffiliated}>Unaffiliated</span>
             )}
           </dd>
         </div>
         {alsoHouses.length > 0 && (
-          <div className="character-detail__meta-row">
+          <div className={styles.metaRow}>
             <dt>Also of</dt>
             <dd>
               {alsoHouses.map(({ slug: s, house }, i) => (
@@ -198,10 +200,10 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           </div>
         )}
         {fm.titles.length > 0 && (
-          <div className="character-detail__meta-row character-detail__meta-row--wide">
+          <div className={cx(styles.metaRow, styles.metaRowWide)}>
             <dt>Titles</dt>
             <dd>
-              <ul className="character-detail__titles">
+              <ul className={styles.titles}>
                 {fm.titles.map((t) => (
                   <li key={t}>{t}</li>
                 ))}
@@ -213,15 +215,15 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
       {html && (
         <article
-          className="character-detail__body"
+          className={styles.body}
           dangerouslySetInnerHTML={{ __html: html }}
         />
       )}
 
       {hasFamily && (
-        <section className="character-detail__family" aria-labelledby="family-heading">
-          <h2 className="character-detail__family-heading" id="family-heading">Family</h2>
-          <dl className="character-detail__relations">
+        <section aria-labelledby="family-heading">
+          <h2 id="family-heading">Family</h2>
+          <dl className={styles.relations}>
             <RelationRow label="Parents" refs={parents} />
             <RelationRow label="Spouses" refs={spouses} />
             <RelationRow label="Children" refs={children} />
@@ -229,7 +231,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
         </section>
       )}
 
-      <p className="character-detail__back">
+      <p className={styles.back}>
         <Link href="/characters/">← All Characters</Link>
       </p>
 
