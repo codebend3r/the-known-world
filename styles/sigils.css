@@ -2,18 +2,20 @@
  * House sigil sprite: 5 columns × 8 rows in `public/sprites/house-sigils-001.png`.
  *
  * Source sheet is 1143 × 2048 src-px. Cells are 228.6 × 256 src-px
- * (1143/5 × 2048/8). `--sigil-size` sets the rendered cell width; the
- * cell height derives from the 256/228.6 = 1280/1143 aspect ratio.
- * Each house just sets `--col` (0-4) and `--row` (0-7).
+ * (1143/5 × 2048/8). `--sigil-size` sets the rendered cell width.
  *
- * Per-house overrides: a house can opt out of the sprite and point at a
- * standalone PNG in `public/sigils/` by overriding `background-image`,
- * `background-size`, and `background-position` (see `.sigil--stark`).
+ * The base rule defaults `--sigil-h` to a square, since the majority of
+ * sigils are now standalone PNGs in `public/sigils/` (all 1:1) overriding
+ * `background-image`, `background-size`, and `background-position` (see
+ * `.sigil--stark`). Square element matches the image, no letterboxing.
+ *
+ * Sprite-cell users (no PNG override, just `--col` / `--row`) need the
+ * 1143:1280 cell aspect, which the grouped rule below restores.
  */
 
 .sigil {
   --sigil-size: 6rem;
-  --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
+  --sigil-h: var(--sigil-size);
   --col: 0;
   --row: 0;
 
@@ -28,6 +30,19 @@
     calc(var(--sigil-size) * var(--col) * -1)
     calc(var(--sigil-h) * var(--row) * -1);
   background-repeat: no-repeat;
+}
+
+/* Sprite-cell sigils restore the 1143:1280 cell aspect ratio. */
+.sigil--rowan,
+.sigil--oakheart,
+.sigil--mallister,
+.sigil--dustin,
+.sigil--ryswell,
+.sigil--hornwood,
+.sigil--cerwyn,
+.sigil--estermont,
+.sigil--grafton {
+  --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
 }
 
 /* Row 1 — Stark · Lannister · Targaryen · Baratheon · Greyjoy */
