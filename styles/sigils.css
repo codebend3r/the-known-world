@@ -154,7 +154,11 @@
   background-size: contain;
   background-position: center;
 }
-.sigil--corbray    { --col: 3; --row: 4; }
+.sigil--corbray {
+  background-image: url('/sigils/corbray.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--redwyne    { --col: 4; --row: 4; }
 
 /* Row 6 — Florent · Rowan · Oakheart · Mallister · Piper */
