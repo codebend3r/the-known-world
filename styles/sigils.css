@@ -174,7 +174,11 @@
 .sigil--rowan      { --col: 1; --row: 5; }
 .sigil--oakheart   { --col: 2; --row: 5; }
 .sigil--mallister  { --col: 3; --row: 5; }
-.sigil--piper      { --col: 4; --row: 5; }
+.sigil--piper {
+  background-image: url('/sigils/piper.jpg');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Row 7 — Manderly · Dustin · Ryswell · Hornwood · Cerwyn */
 .sigil--manderly {
@@ -207,6 +211,11 @@
 .sigil--grafton    { --col: 4; --row: 7; }
 
 /* Houses not on the sprite sheet */
+.sigil--chester {
+  background-image: url('/sigils/chester.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--dalt {
   background-image: url('/sigils/dalt.png');
   background-size: contain;
