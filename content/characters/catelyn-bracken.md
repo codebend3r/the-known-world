@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-Third daughter of Lord Jonos Bracken of Stone Hedge, and the eldest of the three girls he sired upon his third wife.
+Third daughter of Lord Jonos Bracken of Stone Hedge, and the eldest of the three girls he sired upon his third wife, sister to Bess and Alysanne and half-sister to Barbara and Jayne by her father's earlier marriages. In the War of the Five Kings Ser Gregor Clegane fell upon Stone Hedge, stole the harvest, burned what he could not carry off, and put one of Lord Jonos's daughters to ravishment within her own halls.

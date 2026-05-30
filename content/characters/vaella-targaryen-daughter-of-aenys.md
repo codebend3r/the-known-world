@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-Youngest child of King Aenys I, born and died in the same year of her father's death.
+Youngest child of King Aenys I Targaryen and Queen Alyssa Velaryon, sister to Rhaena, Aegon, Viserys, Jaehaerys, and Alysanne. She died in the cradle not long after her birth. Years later, pregnant by her second husband Lord Rogar Baratheon, Queen Alyssa recalled Vaella's death and swore she could not suffer another child to die in infancy, for it would rip her heart apart.

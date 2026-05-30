@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-A son of Jaehaerys I and Alysanne who died in his second year of a wasting fever.
+Eleventh child of King Jaehaerys I and Queen Alysanne, born early in 73 AC at the Red Keep after a long and difficult labor, a scrawny thing almost half the size his brother Vaegon had been at birth. He was named for *Gaemon the Glorious*, greatest of the Lords of Dragonstone before the Conquest, but did not live to grow into the name; he died a few days into 74 AC at King's Landing, less than three months old.

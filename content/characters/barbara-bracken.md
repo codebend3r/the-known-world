@@ -14,4 +14,4 @@ sources:
 draft: false
 ---
 
-Eldest daughter of Lord Jonos Bracken of Stone Hedge, born of his first marriage. Little is recorded of her save her name and her place at the head of her five sisters.
+First daughter of Lord Jonos Bracken of Stone Hedge by his first wife, born of the riverlands and named at the head of five sisters: Jayne, Catelyn, Bess, Alysanne, and Hendry. During Ser Gregor Clegane's burning of Stone Hedge in the war of the Five Kings, Barbara or one of her sisters was taken by the Mountain, a wound the Brackens carried into Jaime Lannister's peace at Riverrun.

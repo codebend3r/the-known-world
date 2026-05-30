@@ -27,4 +27,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Marbrand, wed to Lord Tytos Lannister. Mother to Tywin and his siblings.
+A daughter of House Marbrand of Ashemark, given in marriage to Lord Tytos Lannister and brought to Casterly Rock as its lady. She bore him five children who lived: Tywin, Kevan, Genna, Tygett, and Gerion. She died before her husband, and after her passing Tytos grew soft and trusting, taking lowborn women to his bed and letting his bannermen mock his house, until his eldest son came of age to set the Rock to rights.

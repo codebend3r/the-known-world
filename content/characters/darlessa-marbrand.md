@@ -18,4 +18,4 @@ sources:
 draft: false
 ---
 
-Daughter of House Marbrand, wed to Ser Tygett Lannister. Mother of Tyrek.
+A daughter of House Marbrand of Ashemark, wed to Ser Tygett Lannister, the third of Lord Tytos's four sons and a younger brother to Lord Tywin. She bore Tygett a single child, Tyrek, before a pox carried her husband off and left her a widow of the Rock. She does not appear in the books in her own right, surviving only in the appendices as the mother of the squire who vanished in the bread riots of King's Landing.

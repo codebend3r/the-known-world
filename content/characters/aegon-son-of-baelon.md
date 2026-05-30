@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-Third son of Baelon the Brave and Princess Alyssa, born and dead the same day his mother took her death-wounds bearing him.
+Third son of Prince Baelon *the Brave* and Princess Alyssa, daughter of Jaehaerys I, and named for Aegon the Conqueror, he came into the world after a labour so cruel that his father told his mother he would sooner fight a dozen battles than do what she had just done. Princess Alyssa never rose from the birthing bed, and within half a year she was dead. Aegon followed her into the crypts half a year after that, just shy of his first nameday, leaving his elder brothers Viserys and Daemon to grow up motherless in the shadow of his small coffin.

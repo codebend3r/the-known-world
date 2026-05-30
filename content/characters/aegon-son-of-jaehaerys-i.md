@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-Firstborn son of Jaehaerys I and Alysanne, named for his great-grandfather and named heir at his birth. He lived not three days.
+Firstborn child of King Jaehaerys I and Queen Alysanne, come too soon into the world in 52 AC and named by his mother for *Aegon the Conqueror*, her grandsire, and for her own lost brother *Aegon the Uncrowned*. He lived but three days. Alysanne laid the loss at the door of the women who had set upon her at Jonquil's Pool near Maidenpool, holding that had she been suffered to bathe in those healing waters the babe would have drawn breath longer.

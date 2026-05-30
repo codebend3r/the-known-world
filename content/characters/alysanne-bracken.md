@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-Youngest of Lord Jonos Bracken's five daughters, born to his third wife at Stone Hedge.
+Fifth and youngest daughter of Lord Jonos Bracken of Stone Hedge, the third born to his third wife, sister to Barbara, Jayne, Catelyn, and Bess, and to the boy Hendry; her half-brother is the bastard Harry Rivers. During the War of the Five Kings Ser Gregor Clegane sacked Stone Hedge and put it to the torch, and in that burning Alysanne or one of her sisters was raped by the Mountain, a wound her father carried with him when at last he bent the knee to Jaime Lannister at Riverrun.

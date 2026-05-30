@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-Fourth daughter of Lord Jonos Bracken of Stone Hedge, born of his third marriage.
+Fourth daughter of Lord Jonos Bracken of Stone Hedge, and the second by his third wife, born into the old Riverlands feud with neighboring House Blackwood. She counts among her siblings her brother Brandon, heir to Stone Hedge, her sister Barbara, wed to Ser Marq Piper of Pinkmaiden, and her sisters Jayne, Catelyn, and Alysanne.

@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Younger daughter of Luthor Tyrell and Olenna Redwyne, wed to Ser Jon Fossoway of Cider Hall.
+Youngest child of Luthor Tyrell and Olenna Redwyne, sister to Mace and to Mina Redwyne, wed to Ser Jon Fossoway of the green-apple branch; buxom and fond of gossip. She rode south in 299 AC with the retinue that brought her niece Margaery to King's Landing for her wedding to King Joffrey, and traded whispers there with Sansa Stark, then danced with Ser Kevan Lannister at Sansa's own wedding to Tyrion. After Margaery wed King Tommen she stayed on as one of the new queen's ladies, hawking with her in the Kingswood and returning crowned in autumn flowers on the arms of her Redwyne nephews, Ser Horas and Ser Hobber.

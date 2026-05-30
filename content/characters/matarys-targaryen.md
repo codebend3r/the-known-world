@@ -25,4 +25,4 @@ sources:
 draft: false
 ---
 
-Younger of the twin sons of Baelor Breakspear. Like his brother, taken by the Great Spring Sickness in 209 AC after his father.
+Second son of Baelor Breakspear, Prince of Dragonstone, and Lady Jena Dondarrion, and grandson of King Daeron II. Where his elder brother Valarr was called the *Young Prince*, Matarys was dubbed the *Even Younger Prince* by the fool of Lord Gawen Swann, and so he was styled at court. He outlived his father by less than a year, taken in 209 AC by the Great Spring Sickness that swept King's Landing after the Ashford tourney, the same plague that carried off Valarr and his grandfather the king. With the brothers' deaths Baelor Breakspear's line was ended, and the crown passed at last to their uncle Aerys.

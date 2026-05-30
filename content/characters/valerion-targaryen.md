@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-A son of Jaehaerys I and Alysanne born to a struggling pregnancy. He died within the year.
+Twelfth child of King Jaehaerys I and Queen Alysanne, gotten by a troubled labor that left the queen bedridden for half a year. Small and sickly at the breast, as his elder brother Gaemon had been, he was kept by half a dozen nurses and died a fortnight short of his first nameday. Alysanne met the loss with weary resignation, declaring herself better suited now to be a grandmother than a mother.
