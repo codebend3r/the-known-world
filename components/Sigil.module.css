@@ -34,11 +34,8 @@
 
 /* Sprite-cell sigils restore the 1143:1280 cell aspect ratio. */
 .rowan,
-.mallister,
 .dustin,
-.ryswell,
-.cerwyn,
-.grafton {
+.cerwyn {
   --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
 }
 
@@ -189,7 +186,11 @@
   background-size: contain;
   background-position: center;
 }
-.mallister  { --col: 3; --row: 5; }
+.mallister {
+  background-image: url('/sigils/mallister.png');
+  background-size: contain;
+  background-position: center;
+}
 .piper {
   background-image: url('/sigils/piper.png');
   background-size: contain;
@@ -203,7 +204,11 @@
   background-position: center;
 }
 .dustin     { --col: 1; --row: 6; }
-.ryswell    { --col: 2; --row: 6; }
+.ryswell {
+  background-image: url('/sigils/ryswell.png');
+  background-size: contain;
+  background-position: center;
+}
 .hornwood {
   background-image: url('/sigils/hornwood.png');
   background-size: contain;
@@ -232,7 +237,11 @@
   background-size: contain;
   background-position: center;
 }
-.grafton    { --col: 4; --row: 7; }
+.grafton {
+  background-image: url('/sigils/grafton.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Houses not on the sprite sheet */
 .chester {
