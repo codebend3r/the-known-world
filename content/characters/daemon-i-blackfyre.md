@@ -1,6 +1,6 @@
 ---
-slug: daemon-blackfyre
-name: Daemon Blackfyre
+slug: daemon-i-blackfyre
+name: Daemon I Blackfyre
 sex: m
 born:
   year: 170
@@ -16,6 +16,14 @@ also-of-houses:
 parents:
   - aegon-iv-targaryen
   - daena-targaryen
+spouses:
+  - rohanne-of-tyrosh
+children:
+  - aegon-blackfyre-son-of-daemon-i
+  - aemon-blackfyre-son-of-daemon-i
+  - daemon-ii-blackfyre
+  - haegon-blackfyre
+  - calla-blackfyre
 titles:
   - King of the Andals, the Rhoynar, and the First Men
 aliases:

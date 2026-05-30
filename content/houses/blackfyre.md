@@ -26,15 +26,19 @@ seats:
     note: formerly, in exile after 196 AC
 heads:
   - name: "King Daemon I"
-    slug: daemon-blackfyre
+    slug: daemon-i-blackfyre
     note: "the Black Dragon, slain at the Redgrass Field"
   - name: "King Daemon II"
+    slug: daemon-ii-blackfyre
     note: "captured at Whitewalls, died a hostage of the Iron Throne"
   - name: "King Haegon I"
+    slug: haegon-blackfyre
     note: "slain after surrender at the Third Blackfyre Rebellion"
   - name: "King Daemon III"
+    slug: daemon-iii-blackfyre
     note: "slain at Wendwater Bridge by Ser Duncan the Tall"
   - name: "King Maelys I"
+    slug: maelys-i-blackfyre
     note: "the Monstrous, last male Blackfyre, slain on the Stepstones by Ser Barristan Selmy"
 regions:
   - name: Crownlands

@@ -17,7 +17,7 @@ parents:
 spouses:
   - baelor-i-targaryen
 children:
-  - daemon-blackfyre
+  - daemon-i-blackfyre
 titles:
   - Princess
   - Queen of the Seven Kingdoms

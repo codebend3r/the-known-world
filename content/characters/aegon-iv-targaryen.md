@@ -19,7 +19,7 @@ spouses:
 children:
   - daeron-ii-targaryen
   - daenerys-daughter-of-aegon-iv
-  - daemon-blackfyre
+  - daemon-i-blackfyre
   - aegor-rivers
   - brynden-rivers
   - shiera-seastar
