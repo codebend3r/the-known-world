@@ -181,15 +181,15 @@ a.character-list__card:focus-visible {
   font-size: 0.9rem;
 }
 
-.character-detail__meta > div {
+.character-detail__meta-row {
   display: flex;
   gap: 0.5rem;
   align-items: baseline;
 }
 
-.character-detail__meta-wide {
+.character-detail__meta-row--wide {
   grid-column: 1 / -1;
-  align-items: flex-start !important;
+  align-items: flex-start;
 }
 
 .character-detail__meta dt {
@@ -235,7 +235,7 @@ a.character-list__card:focus-visible {
   gap: 0.5rem;
 }
 
-.character-detail__relations > div {
+.character-detail__relations-row {
   display: flex;
   gap: 0.6rem;
   align-items: baseline;

@@ -73,7 +73,7 @@ function resolveRelations(
 function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
   if (refs.length === 0) return null;
   return (
-    <div>
+    <div className="character-detail__relations-row">
       <dt>{label}</dt>
       <dd>
         {refs.map((r, i) => (
@@ -146,12 +146,12 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
       </div>
 
       <dl className="character-detail__meta">
-        <div>
+        <div className="character-detail__meta-row">
           <dt>Born</dt>
           <dd>{formatDate(fm.born)}</dd>
         </div>
         {fm.died && (
-          <div>
+          <div className="character-detail__meta-row">
             <dt>Died</dt>
             <dd>
               {formatDate(fm.died)}
@@ -162,7 +162,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             </dd>
           </div>
         )}
-        <div>
+        <div className="character-detail__meta-row">
           <dt>House</dt>
           <dd>
             {primaryHouse ? (
@@ -177,7 +177,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           </dd>
         </div>
         {alsoHouses.length > 0 && (
-          <div>
+          <div className="character-detail__meta-row">
             <dt>Also of</dt>
             <dd>
               {alsoHouses.map(({ slug: s, house }, i) => (
@@ -190,7 +190,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           </div>
         )}
         {fm.titles.length > 0 && (
-          <div className="character-detail__meta-wide">
+          <div className="character-detail__meta-row character-detail__meta-row--wide">
             <dt>Titles</dt>
             <dd>
               <ul className="character-detail__titles">
