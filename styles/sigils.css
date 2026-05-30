@@ -208,6 +208,11 @@
   background-size: contain;
   background-position: center;
 }
+.sigil--marbrand {
+  background-image: url('/sigils/marbrand.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--qorgyle {
   background-image: url('/sigils/qorgyle.png');
   background-size: contain;
