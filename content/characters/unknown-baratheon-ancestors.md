@@ -8,6 +8,7 @@ primary-house: baratheon
 parents:
   - orys-baratheon
 children:
+  - boremund-baratheon
   - ormund-baratheon
 titles: []
 placeholder: true

@@ -10,6 +10,8 @@ died: null
 primary-house: baratheon
 also-of-houses:
   - targaryen
+parents:
+  - boremund-baratheon
 spouses:
   - aemon-son-of-jaehaerys-i
 children:
