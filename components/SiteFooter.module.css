@@ -58,13 +58,20 @@
 .link {
   font-family: var(--font-ui);
   color: var(--ink-faded);
-  text-decoration: underline;
-  text-decoration-color: rgba(107, 68, 35, 0.4);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 .link:hover,
 .link:focus-visible {
   color: var(--gold-leaf);
+}
+
+.icon {
+  display: block;
+  fill: currentColor;
 }
 
 @media (max-width: 479.98px) { /* xs */

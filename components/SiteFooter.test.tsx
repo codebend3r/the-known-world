@@ -10,7 +10,7 @@ describe('SiteFooter', () => {
 
   it('links to the GitHub profile in a new tab', () => {
     render(<SiteFooter />);
-    const link = screen.getByRole('link', { name: /github\.com\/codebend3r/i });
+    const link = screen.getByRole('link', { name: /github/i });
     expect(link.getAttribute('href')).toBe('https://github.com/codebend3r');
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toContain('noopener');
