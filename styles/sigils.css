@@ -203,6 +203,11 @@
 .sigil--grafton    { --col: 4; --row: 7; }
 
 /* Houses not on the sprite sheet */
+.sigil--dalt {
+  background-image: url('/sigils/dalt.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--glover {
   background-image: url('/sigils/glover.png');
   background-size: contain;
@@ -225,6 +230,11 @@
 }
 .sigil--selmy {
   background-image: url('/sigils/selmy.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--tarth {
+  background-image: url('/sigils/tarth.png');
   background-size: contain;
   background-position: center;
 }
