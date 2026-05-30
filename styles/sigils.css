@@ -144,8 +144,16 @@
   background-size: contain;
   background-position: center;
 }
-.sigil--yronwood   { --col: 1; --row: 4; }
-.sigil--royce      { --col: 2; --row: 4; }
+.sigil--yronwood {
+  background-image: url('/sigils/yronwood.png');
+  background-size: contain;
+  background-position: center;
+}
+.sigil--royce {
+  background-image: url('/sigils/royce.png');
+  background-size: contain;
+  background-position: center;
+}
 .sigil--corbray    { --col: 3; --row: 4; }
 .sigil--redwyne    { --col: 4; --row: 4; }
 
