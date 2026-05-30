@@ -4,6 +4,12 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   resolve: { tsconfigPaths: true },
+  css: {
+    // Preserve raw local names in tests so `styles.foo` resolves to `'foo'`.
+    // Keeps class-string assertions readable without coupling them to
+    // Vite's production hash format.
+    modules: { generateScopedName: '[local]' },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
