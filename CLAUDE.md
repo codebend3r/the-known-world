@@ -24,6 +24,12 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 - Never use `grid-column: 1 / -1` (or other `1 / -1` line shortcuts) to span a child across columns. Declare `grid-template-areas` on the parent alongside `grid-template-columns` and use a named `grid-area` on the child, so the grid's shape is readable from the parent rule.
 - All in-repo imports use the `@/` alias (`@/components/Sigil`, `@/lib/schemas`, `@/components/SiteHeader.module.css`) — never relative paths like `./Foo` or `../package.json`. Applies to source, tests, and CSS-module imports alike. Third-party imports (`next/link`, `react`, etc.) stay bare.
 
+## Code style
+
+- Prefer `reduce` over `for` loops when possible. Never use `for/in` or `for/of` loops; reach for `Array.prototype` methods (`map`, `filter`, `reduce`, `flatMap`, etc.) when the value is an array.
+- Prefer double-bang (`!!value`) for boolean conversion.
+- Prefer optional chaining (`?.`). When optional chaining is used, ALWAYS pair it with nullish coalescing (`??`) to supply a fallback.
+
 ## Content + tests
 
 - All markdown frontmatter in `content/` must validate against the Zod schemas in `lib/schemas.ts`. Cross-references between entries are by slug.
