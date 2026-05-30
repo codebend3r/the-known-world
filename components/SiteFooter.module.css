@@ -3,7 +3,7 @@
   background:
     linear-gradient(0deg, rgba(248, 236, 208, 0.55) 0%, rgba(232, 211, 160, 0.25) 100%);
   position: relative;
-  margin-top: 3rem;
+  margin-top: 10rem;
 }
 
 .footer::before {
