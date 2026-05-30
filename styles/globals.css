@@ -69,6 +69,20 @@ h1 { font-size: 2.2rem; font-variant: small-caps; letter-spacing: 2px; text-alig
 h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(107, 68, 35, 0.3); }
 h3 { font-size: 1.15rem; color: var(--ink-faded); }
 
+/* Typographic primitive: italic page lede under the `h1`. Used by every
+   `ParchmentLayout` page (`app/page.tsx`, houses, castles, not-found, etc.)
+   — kept global alongside the heading rules above so consumers don't each
+   import a typography module. */
+.subtitle {
+  display: grid;
+  text-align: center;
+  font-style: italic;
+  color: var(--ink-faded);
+  padding: 0 0 1rem 0;
+  margin: -1rem 0 0 0;
+  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+}
+
 a { color: var(--ink-faded); text-decoration: underline; text-decoration-color: rgba(107, 68, 35, 0.4); }
 a:hover { color: var(--gold-leaf); }
 

@@ -1,11 +1,12 @@
 import type { Source } from '@/lib/schemas';
+import styles from './Sources.module.css';
 
 type Props = { sources: Source[] };
 
 export function Sources({ sources }: Props) {
   if (sources.length === 0) return null;
   return (
-    <footer className="sources">
+    <footer className={styles.sources}>
       <strong>Sources:</strong>
       <ul>
         {sources.map((s, i) => (

@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Alegreya_Sans, Cinzel, Cormorant_Unicase, EB_Garamond } from 'next/font/google';
 import '../styles/globals.css';
-import '../styles/parchment.css';
 import '../styles/site-header.css';
 import '../styles/site-menu.css';
 import '../styles/map.css';
