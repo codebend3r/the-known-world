@@ -1,14 +1,9 @@
 .parchment-page {
-  max-width: min(1280px, max(720px, 75vw));
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 0;
+  padding: 2rem 0 0 0;
   position: relative;
   display: grid;
-  /* `minmax(0, 1fr)` pins the implicit column to the container's content
-     width. Without it, an item with an explicit wider `width` (e.g.
-     `.house-list` bleeding past the parchment) would inflate the track
-     and stretch every other child — pulling centered `h1`/`subtitle`
-     text off-axis. */
   grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-content: start;

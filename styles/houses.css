@@ -121,24 +121,30 @@
 }
 
 .house-infobox {
+  grid-area: infobox;
+  display: grid;
+  grid-template-columns: 1fr;
   width: 100%;
   padding: 1rem 1rem 1.25rem;
   background: rgba(248, 236, 208, 0.6);
   border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
+  border-radius: 4px;
   box-shadow: 0 2px 12px rgba(40, 25, 10, 0.12);
   font-family: var(--font-ui);
   font-size: 0.82rem;
   color: var(--ink);
   display: grid;
-  gap: 0.85rem;
+  justify-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0;
 }
 
 .house-infobox__sigil {
-  display: flex;
+  display: grid;
   justify-content: center;
-  padding-bottom: 0.85rem;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  padding: 0;
+  margin: 0;
 }
 
 /* The infobox column is `clamp(280px, 28%, 340px)` minus 2rem padding,
@@ -219,33 +225,30 @@
 
 .house-detail {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(280px, 28%, 340px);
-  column-gap: 2rem;
+  grid-template-columns: 1fr 400px;
+  grid-template-areas:
+    "heading heading"
+    "main infobox";
+  gap: 2rem;
   align-items: start;
-  gap: 1rem;
-  padding: 1rem 0 0 0;
+  padding: 0;
 }
 
 .house-detail__heading {
-  grid-column: 1;
-  grid-row: 1;
+  grid-area: heading;
   display: grid;
-  gap: 1rem;
-  align-content: start;
+  gap: 0;
+  place-items: center;
+  place-content: center;
+  margin: 0;
 }
 
 .house-detail__main {
+  grid-area: main;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
   align-content: start;
-  grid-column: 1;
-  grid-row: 2;
-}
-
-.house-detail > .house-infobox {
-  grid-column: 2;
-  grid-row: 1;
 }
 
 @media (max-width: 767.98px) { /* md */
