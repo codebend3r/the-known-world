@@ -11,6 +11,19 @@ died:
   era: AC
   precision: year
 primary-house: martell
+parents:
+  - loreza-martell
+spouses:
+  - ellaria-sand
+children:
+  - obara-sand
+  - nymeria-sand
+  - tyene-sand
+  - sarella-sand
+  - elia-sand
+  - obella-sand
+  - dorea-sand
+  - loreza-sand
 titles:
   - Prince of Dorne
 aliases:

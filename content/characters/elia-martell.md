@@ -13,6 +13,8 @@ died:
 primary-house: martell
 also-of-houses:
   - targaryen
+parents:
+  - loreza-martell
 spouses:
   - rhaegar-targaryen
 children:

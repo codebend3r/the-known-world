@@ -21,6 +21,7 @@ seats:
     slug: water-gardens
 heads:
   - name: "Prince Doran Nymeros Martell"
+    slug: doran-martell
 regions:
   - name: Dorne
 titles:
