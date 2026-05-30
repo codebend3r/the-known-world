@@ -16,6 +16,10 @@
   place-content: center;
 }
 
+.heading h1 {
+  font-family: var(--font-character-name);
+}
+
 .main {
   grid-area: main;
   display: grid;
