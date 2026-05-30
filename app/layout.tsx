@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Alegreya_Sans, Cinzel, Cormorant_Unicase, EB_Garamond } from 'next/font/google';
 import '../styles/globals.css';
 import { SiteHeader } from '@/components/SiteHeader';
+import { SiteFooter } from '@/components/SiteFooter';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });
 const cormorantUnicase = Cormorant_Unicase({ subsets: ['latin'], variable: '--font-cormorant-unicase', weight: ['500', '600', '700'] });
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <SiteHeader />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
