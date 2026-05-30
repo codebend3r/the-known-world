@@ -1,4 +1,4 @@
-.site-menu__trigger {
+.trigger {
   grid-column: 1;
   justify-self: start;
   display: grid;
@@ -17,19 +17,19 @@
     background 150ms ease;
 }
 
-.site-menu__trigger:hover,
-.site-menu__trigger:focus-visible {
+.trigger:hover,
+.trigger:focus-visible {
   color: var(--gold-leaf);
   border-color: var(--gold-leaf);
   background: rgba(248, 236, 208, 0.6);
 }
 
-.site-menu__trigger:focus-visible {
+.trigger:focus-visible {
   outline: 2px solid var(--gold-leaf);
   outline-offset: 2px;
 }
 
-.site-menu__backdrop {
+.backdrop {
   position: fixed;
   inset: 0;
   background: rgba(45, 30, 15, 0.45);
@@ -39,12 +39,12 @@
   z-index: 90;
 }
 
-.site-menu__backdrop--open {
+.backdropOpen {
   opacity: 1;
   pointer-events: auto;
 }
 
-.site-menu__panel {
+.panel {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -62,11 +62,11 @@
   overflow-y: auto;
 }
 
-.site-menu__panel--open {
+.panelOpen {
   transform: translateX(0);
 }
 
-.site-menu__panel::after {
+.panel::after {
   content: '';
   position: absolute;
   top: 0;
@@ -84,7 +84,7 @@
   pointer-events: none;
 }
 
-.site-menu__panel-header {
+.panelHeader {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
@@ -93,7 +93,7 @@
   gap: 0.5rem;
 }
 
-.site-menu__panel-label {
+.panelLabel {
   font-family: var(--font-heading);
   font-variant: small-caps;
   letter-spacing: 4px;
@@ -101,7 +101,7 @@
   color: var(--ink-faded);
 }
 
-.site-menu__close {
+.close {
   display: grid;
   place-items: center;
   width: 2.25rem;
@@ -117,33 +117,33 @@
     border-color 150ms ease;
 }
 
-.site-menu__close:hover,
-.site-menu__close:focus-visible {
+.close:hover,
+.close:focus-visible {
   color: var(--gold-leaf);
   border-color: var(--gold-leaf);
 }
 
-.site-menu__close:focus-visible {
+.close:focus-visible {
   outline: 2px solid var(--gold-leaf);
   outline-offset: 2px;
 }
 
-.site-menu__nav {
+.nav {
   padding: 0.5rem 0;
 }
 
-.site-menu__nav-list {
+.navList {
   list-style: none;
   padding: 0;
   display: grid;
   gap: 0;
 }
 
-.site-menu__nav-item {
+.navItem {
   display: grid;
 }
 
-.site-menu__link {
+.link {
   display: grid;
   padding: 0.85rem 1.5rem;
   font-family: var(--font-heading);
@@ -160,21 +160,21 @@
     border-color 150ms ease;
 }
 
-.site-menu__link:hover,
-.site-menu__link:focus-visible {
+.link:hover,
+.link:focus-visible {
   color: var(--ink);
   background: rgba(212, 162, 89, 0.12);
   border-left-color: var(--gold-leaf);
 }
 
-.site-menu__link--active {
+.linkActive {
   color: var(--ink);
   border-left-color: var(--gold-leaf);
   background: rgba(212, 162, 89, 0.18);
 }
 
 @media (max-width: 767.98px) { /* md */
-  .site-menu__trigger {
+  .trigger {
     align-self: stretch;
     width: 3rem;
     height: auto;
@@ -182,13 +182,13 @@
 }
 
 @media (max-width: 479.98px) { /* xs */
-  .site-menu__trigger {
+  .trigger {
     width: 2.75rem;
   }
-  .site-menu__panel {
+  .panel {
     width: min(18rem, 88vw);
   }
-  .site-menu__link {
+  .link {
     padding: 0.95rem 1.25rem;
     font-size: 1rem;
     letter-spacing: 2.5px;
@@ -196,13 +196,13 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-menu__trigger,
-  .site-menu__close,
-  .site-menu__link {
+  .trigger,
+  .close,
+  .link {
     transition: none;
   }
-  .site-menu__panel,
-  .site-menu__backdrop {
+  .panel,
+  .backdrop {
     transition: none;
   }
 }

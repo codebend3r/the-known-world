@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useId, useRef, useState } from 'react';
+import { cx } from '@/lib/cx';
+import styles from './SiteMenu.module.css';
 
 const ITEMS = [
   { href: '/maps/', label: 'Maps' },
@@ -60,7 +62,7 @@ export function SiteMenu() {
       <button
         ref={triggerRef}
         type="button"
-        className="site-menu__trigger"
+        className={styles.trigger}
         aria-label="Open menu"
         aria-expanded={isOpen}
         aria-controls={panelId}
@@ -77,28 +79,22 @@ export function SiteMenu() {
       </button>
 
       <div
-        className={
-          isOpen
-            ? 'site-menu__backdrop site-menu__backdrop--open'
-            : 'site-menu__backdrop'
-        }
+        className={cx(styles.backdrop, isOpen && styles.backdropOpen)}
         onClick={close}
         aria-hidden="true"
       />
 
       <aside
         id={panelId}
-        className={
-          isOpen ? 'site-menu__panel site-menu__panel--open' : 'site-menu__panel'
-        }
+        className={cx(styles.panel, isOpen && styles.panelOpen)}
         aria-hidden={!isOpen}
       >
-        <div className="site-menu__panel-header">
-          <span className="site-menu__panel-label">Menu</span>
+        <div className={styles.panelHeader}>
+          <span className={styles.panelLabel}>Menu</span>
           <button
             ref={closeRef}
             type="button"
-            className="site-menu__close"
+            className={styles.close}
             aria-label="Close menu"
             onClick={close}
             tabIndex={isOpen ? 0 : -1}
@@ -113,19 +109,15 @@ export function SiteMenu() {
             </svg>
           </button>
         </div>
-        <nav className="site-menu__nav" aria-label="Primary">
-          <ul className="site-menu__nav-list">
+        <nav className={styles.nav} aria-label="Primary">
+          <ul className={styles.navList}>
             {ITEMS.map((item) => {
               const active = isActive(pathname, item.href);
               return (
-                <li key={item.href} className="site-menu__nav-item">
+                <li key={item.href} className={styles.navItem}>
                   <Link
                     href={item.href}
-                    className={
-                      active
-                        ? 'site-menu__link site-menu__link--active'
-                        : 'site-menu__link'
-                    }
+                    className={cx(styles.link, active && styles.linkActive)}
                     aria-current={active ? 'page' : undefined}
                     onClick={close}
                     tabIndex={isOpen ? 0 : -1}
