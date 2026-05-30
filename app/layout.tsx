@@ -9,7 +9,6 @@ import '../styles/main-menu.css';
 import '../styles/houses.css';
 import '../styles/characters.css';
 import '../styles/list-search.css';
-import '../styles/sigils.css';
 import { SiteHeader } from '@/components/SiteHeader';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });

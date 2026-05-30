@@ -1,4 +1,6 @@
 import type { CSSProperties } from 'react';
+import { cx } from '@/lib/cx';
+import styles from './Sigil.module.css';
 
 const SIGIL_SLUGS = new Set([
   'stark', 'lannister', 'targaryen', 'baratheon', 'greyjoy',
@@ -25,7 +27,7 @@ export function Sigil({ slug, name, size, decorative = false, className }: Props
   if (slug === null) return null;
 
   const resolvedSlug = SIGIL_SLUGS.has(slug) ? slug : 'unknown';
-  const classes = ['sigil', `sigil--${resolvedSlug}`, className].filter(Boolean).join(' ');
+  const classes = cx(styles.sigil, styles[resolvedSlug], className);
   const style = size ? ({ '--sigil-size': size } as CSSProperties) : undefined;
 
   return (

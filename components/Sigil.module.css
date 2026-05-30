@@ -7,7 +7,7 @@
  * The base rule defaults `--sigil-h` to a square, since the majority of
  * sigils are now standalone PNGs in `public/sigils/` (all 1:1) overriding
  * `background-image`, `background-size`, and `background-position` (see
- * `.sigil--stark`). Square element matches the image, no letterboxing.
+ * `.stark`). Square element matches the image, no letterboxing.
  *
  * Sprite-cell users (no PNG override, just `--col` / `--row`) need the
  * 1143:1280 cell aspect, which the grouped rule below restores.
@@ -33,259 +33,259 @@
 }
 
 /* Sprite-cell sigils restore the 1143:1280 cell aspect ratio. */
-.sigil--rowan,
-.sigil--oakheart,
-.sigil--mallister,
-.sigil--dustin,
-.sigil--ryswell,
-.sigil--hornwood,
-.sigil--cerwyn,
-.sigil--estermont,
-.sigil--grafton {
+.rowan,
+.oakheart,
+.mallister,
+.dustin,
+.ryswell,
+.hornwood,
+.cerwyn,
+.estermont,
+.grafton {
   --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
 }
 
 /* Row 1 — Stark · Lannister · Targaryen · Baratheon · Greyjoy */
-.sigil--stark {
+.stark {
   background-image: url('/sigils/stark.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--lannister {
+.lannister {
   background-image: url('/sigils/lannister.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--targaryen {
+.targaryen {
   background-image: url('/sigils/targaryen.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--baratheon {
+.baratheon {
   background-image: url('/sigils/baratheon.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--greyjoy {
+.greyjoy {
   background-image: url('/sigils/greyjoy.png');
   background-size: contain;
   background-position: center;
 }
 
 /* Row 2 — Tully · Arryn · Martell · Tyrell · Bolton */
-.sigil--tully {
+.tully {
   background-image: url('/sigils/tully.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--arryn {
+.arryn {
   background-image: url('/sigils/arryn.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--martell {
+.martell {
   background-image: url('/sigils/martell.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--tyrell {
+.tyrell {
   background-image: url('/sigils/tyrell.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--bolton {
+.bolton {
   background-image: url('/sigils/bolton.png');
   background-size: contain;
   background-position: center;
 }
 
 /* Row 3 — Frey · Mormont · Umber · Karstark · Reed */
-.sigil--frey {
+.frey {
   background-image: url('/sigils/frey.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--mormont {
+.mormont {
   background-image: url('/sigils/mormont.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--umber {
+.umber {
   background-image: url('/sigils/umber.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--karstark {
+.karstark {
   background-image: url('/sigils/karstark.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--reed {
+.reed {
   background-image: url('/sigils/reed.png');
   background-size: contain;
   background-position: center;
 }
 
 /* Row 4 — Hightower · Velaryon · Tarly · Blackwood · Bracken */
-.sigil--hightower {
+.hightower {
   background-image: url('/sigils/hightower.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--velaryon {
+.velaryon {
   background-image: url('/sigils/velaryon.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--tarly {
+.tarly {
   background-image: url('/sigils/tarly.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--blackwood {
+.blackwood {
   background-image: url('/sigils/blackwood.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--bracken {
+.bracken {
   background-image: url('/sigils/bracken.png');
   background-size: contain;
   background-position: center;
 }
 
 /* Row 5 — Dayne · Yronwood · Royce · Corbray · Redwyne */
-.sigil--dayne {
+.dayne {
   background-image: url('/sigils/dayne.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--yronwood {
+.yronwood {
   background-image: url('/sigils/yronwood.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--royce {
+.royce {
   background-image: url('/sigils/royce.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--corbray {
+.corbray {
   background-image: url('/sigils/corbray.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--redwyne {
+.redwyne {
   background-image: url('/sigils/redwyne.png');
   background-size: contain;
   background-position: center;
 }
 
 /* Row 6 — Florent · Rowan · Oakheart · Mallister · Piper */
-.sigil--florent {
+.florent {
   background-image: url('/sigils/florent.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--rowan      { --col: 1; --row: 5; }
-.sigil--oakheart   { --col: 2; --row: 5; }
-.sigil--mallister  { --col: 3; --row: 5; }
-.sigil--piper {
+.rowan      { --col: 1; --row: 5; }
+.oakheart   { --col: 2; --row: 5; }
+.mallister  { --col: 3; --row: 5; }
+.piper {
   background-image: url('/sigils/piper.jpg');
   background-size: contain;
   background-position: center;
 }
 
 /* Row 7 — Manderly · Dustin · Ryswell · Hornwood · Cerwyn */
-.sigil--manderly {
+.manderly {
   background-image: url('/sigils/manderly.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--dustin     { --col: 1; --row: 6; }
-.sigil--ryswell    { --col: 2; --row: 6; }
-.sigil--hornwood   { --col: 3; --row: 6; }
-.sigil--cerwyn     { --col: 4; --row: 6; }
+.dustin     { --col: 1; --row: 6; }
+.ryswell    { --col: 2; --row: 6; }
+.hornwood   { --col: 3; --row: 6; }
+.cerwyn     { --col: 4; --row: 6; }
 
 /* Row 8 — Swann · Dondarrion · Caron · Estermont · Grafton */
-.sigil--swann {
+.swann {
   background-image: url('/sigils/swann.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--dondarrion {
+.dondarrion {
   background-image: url('/sigils/dondarrion.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--caron {
+.caron {
   background-image: url('/sigils/caron.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--estermont  { --col: 3; --row: 7; }
-.sigil--grafton    { --col: 4; --row: 7; }
+.estermont  { --col: 3; --row: 7; }
+.grafton    { --col: 4; --row: 7; }
 
 /* Houses not on the sprite sheet */
-.sigil--chester {
+.chester {
   background-image: url('/sigils/chester.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--celtigar {
+.celtigar {
   background-image: url('/sigils/celtigar.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--crakehall {
+.crakehall {
   background-image: url('/sigils/crakehall.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--dalt {
+.dalt {
   background-image: url('/sigils/dalt.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--glover {
+.glover {
   background-image: url('/sigils/glover.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--marbrand {
+.marbrand {
   background-image: url('/sigils/marbrand.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--qorgyle {
+.qorgyle {
   background-image: url('/sigils/qorgyle.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--reyne {
+.reyne {
   background-image: url('/sigils/reyne.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--selmy {
+.selmy {
   background-image: url('/sigils/selmy.png');
   background-size: contain;
   background-position: center;
 }
-.sigil--tarth {
+.tarth {
   background-image: url('/sigils/tarth.png');
   background-size: contain;
   background-position: center;
 }
 
 /* Aliases — share a sigil with another house */
-.sigil--durrandon {
+.durrandon {
   background-image: url('/sigils/baratheon.png');
   background-size: contain;
   background-position: center;
 } /* crowned stag, inherited by House Baratheon */
 
 /* Fallback for houses without a dedicated sigil */
-.sigil--unknown {
+.unknown {
   background-image: url('/sigils/unknown.png');
   background-size: contain;
   background-position: center;
