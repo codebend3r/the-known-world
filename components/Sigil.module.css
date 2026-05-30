@@ -294,6 +294,11 @@
   background-size: contain;
   background-position: center;
 }
+.wyl {
+  background-image: url('/sigils/wyl.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Aliases — share a sigil with another house */
 .durrandon {

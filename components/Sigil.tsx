@@ -10,7 +10,7 @@ const SIGIL_SLUGS = new Set([
   'dayne', 'yronwood', 'royce', 'corbray', 'redwyne',
   'florent', 'rowan', 'oakheart', 'mallister', 'piper',
   'manderly', 'dustin', 'ryswell', 'hornwood', 'cerwyn',
-  'celtigar', 'chester', 'crakehall', 'glover',
+  'celtigar', 'chester', 'crakehall', 'glover', 'reyne', 'selmy', 'wyl',
   'swann', 'dondarrion', 'caron', 'estermont', 'grafton',
   'tarth', 'durrandon', 'unknown',
 ]);
