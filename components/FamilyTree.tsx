@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import type { TreeNode } from '@/lib/family-tree';
+import { cx } from '@/lib/cx';
+import styles from './FamilyTree.module.css';
 
 function formatLifespan(node: TreeNode): string | null {
   if (node.born === null && node.died === null) return null;
@@ -20,7 +22,7 @@ function NameContent({ name, alias }: { name: string; alias: string | null }) {
   return (
     <>
       {name}
-      {alias && <span className="family-tree__alias"> ({alias})</span>}
+      {alias && <span className={styles.alias}> ({alias})</span>}
     </>
   );
 }
@@ -44,7 +46,7 @@ function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
   if (sex === null) return null;
   return (
     <span
-      className={`family-tree__gender family-tree__gender--${sex}`}
+      className={cx(styles.gender, sex === 'm' ? styles.genderM : styles.genderF)}
       aria-label={sex === 'm' ? 'male' : 'female'}
     >
       {sex === 'm' ? '♂' : '♀'}
@@ -59,25 +61,26 @@ function wasKing(titles: string[]): boolean {
 function KingMark({ titles }: { titles: string[] }) {
   if (!wasKing(titles)) return null;
   return (
-    <span className="family-tree__king" aria-label="king" title="King">
+    <span className={styles.king} aria-label="king" title="King">
       ♛
     </span>
   );
 }
 
-function sexClass(sex: 'm' | 'f' | null): string {
-  return sex ? ` family-tree__name--${sex}` : '';
+function sexClass(sex: 'm' | 'f' | null): string | false {
+  return sex ? (sex === 'm' ? styles.nameM : styles.nameF) : false;
 }
 
 function PersonLabel({ node }: { node: TreeNode }) {
   const lifespan = formatLifespan(node);
-  const className =
-    'family-tree__name' +
-    sexClass(node.sex) +
-    (node.placeholder ? ' family-tree__name--placeholder' : '') +
-    (node.external ? ' family-tree__name--external' : '');
+  const className = cx(
+    styles.name,
+    sexClass(node.sex),
+    node.placeholder && styles.namePlaceholder,
+    node.external && styles.nameExternal,
+  );
   return (
-    <span className="family-tree__person">
+    <span className={styles.person}>
       <KingMark titles={node.titles} />
       <GenderGlyph sex={node.sex} />
       <CharacterName
@@ -87,30 +90,29 @@ function PersonLabel({ node }: { node: TreeNode }) {
         placeholder={node.placeholder}
         className={className}
       />
-      {lifespan && <span className="family-tree__lifespan">{lifespan}</span>}
+      {lifespan && <span className={styles.lifespan}>{lifespan}</span>}
     </span>
   );
 }
 
 function NodeRow({ node }: { node: TreeNode }) {
-  const rowClass =
-    'family-tree__row' +
-    (node.placeholder ? ' family-tree__row--placeholder' : '');
+  const rowClass = cx(styles.row, node.placeholder && styles.rowPlaceholder);
   return (
     <div className={rowClass}>
       <PersonLabel node={node} />
       {node.spouses.map((spouse) => {
-        const className =
-          'family-tree__name family-tree__name--spouse' +
-          sexClass(spouse.sex) +
-          (spouse.placeholder ? ' family-tree__name--placeholder' : '') +
-          (!spouse.inHouse ? ' family-tree__name--external' : '');
+        const className = cx(
+          styles.name,
+          sexClass(spouse.sex),
+          spouse.placeholder && styles.namePlaceholder,
+          !spouse.inHouse && styles.nameExternal,
+        );
         return (
           <span
             key={spouse.slug ?? spouse.name}
-            className="family-tree__spouse"
+            className={styles.spouse}
           >
-            <span className="family-tree__cross" aria-hidden="true">
+            <span className={styles.cross} aria-hidden="true">
               ⚭
             </span>
             <KingMark titles={spouse.titles} />
@@ -131,10 +133,10 @@ function NodeRow({ node }: { node: TreeNode }) {
 
 function Branch({ node }: { node: TreeNode }) {
   return (
-    <li className="family-tree__node">
+    <li className={styles.node}>
       <NodeRow node={node} />
       {node.children.length > 0 && (
-        <ul className="family-tree__children">
+        <ul className={styles.children}>
           {node.children.map((child) => (
             <Branch key={child.slug} node={child} />
           ))}
@@ -147,13 +149,13 @@ function Branch({ node }: { node: TreeNode }) {
 export function FamilyTree({ roots }: { roots: TreeNode[] }) {
   if (roots.length === 0) {
     return (
-      <p className="family-tree__empty">
+      <p className={styles.empty}>
         No members of this house have yet been recorded.
       </p>
     );
   }
   return (
-    <ul className="family-tree">
+    <ul className={styles.tree}>
       {roots.map((root) => (
         <Branch key={root.slug} node={root} />
       ))}

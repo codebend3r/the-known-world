@@ -21,6 +21,20 @@
   --bp-md: 768px;
   --bp-lg: 1024px;
   --bp-xl: 1280px;
+
+  /* Regional palette — heraldic border tints used by both the house and
+     character list cards. Kept as design tokens so the two list modules
+     don't each carry the same nine hex values. Add a new region here, not
+     in the module files. */
+  --region-color-north: #5d6f7f;
+  --region-color-vale: #4d7caa;
+  --region-color-riverlands: #3d5a7c;
+  --region-color-westerlands: #b13a3a;
+  --region-color-reach: #6f8336;
+  --region-color-stormlands: #c89a31;
+  --region-color-dorne: #c7693a;
+  --region-color-iron-islands: #2f4a44;
+  --region-color-crownlands: #5a2a30;
 }
 
 /* Desktop-first breakpoints — default styles target xl. Each @media rule

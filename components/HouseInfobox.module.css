@@ -1,0 +1,92 @@
+.infobox {
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
+  padding: 0 0 1.25rem;
+  overflow: hidden;
+  background: rgba(248, 236, 208, 0.6);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(40, 25, 10, 0.12);
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  color: var(--ink);
+  justify-items: stretch;
+  gap: 0;
+}
+
+.sigil {
+  container-type: inline-size;
+  padding: 0;
+}
+
+/* Passed to `<Sigil className=...>` so the sigil fills its container.
+   `100cqw` resolves against `.sigil` (the established container), avoiding
+   the circular trap of percentage sizes. The sprite math still scales
+   correctly because `background-size` derives from `--sigil-size`.
+   Lives on the Sigil element so its declaration follows `Sigil.module.css`
+   in source order and wins at equal specificity. */
+.sigilFill {
+  --sigil-size: 100cqw;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1rem 1rem 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 6.5rem 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+.row dt {
+  font-family: var(--font-sans);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-faded);
+  font-weight: 500;
+}
+
+.row dd {
+  color: var(--ink);
+  line-height: 1.35;
+}
+
+.row ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.row a {
+  color: var(--ink);
+  text-decoration-color: rgba(107, 68, 35, 0.35);
+}
+
+.row a:hover {
+  color: var(--gold-leaf);
+}
+
+.note {
+  color: var(--ink-faded);
+  font-style: italic;
+  font-size: 0.92em;
+}
+
+@media (max-width: 767.98px) { /* md */
+  .infobox {
+    width: 90%;
+    justify-self: center;
+  }
+  .row {
+    grid-template-columns: 5.5rem 1fr;
+  }
+}

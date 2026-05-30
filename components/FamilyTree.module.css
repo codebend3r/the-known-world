@@ -1,0 +1,186 @@
+.tree,
+.children {
+  list-style: none;
+  padding: 0;
+}
+
+/* Placed after the reset above so source order beats the equal-specificity
+   `padding: 0` declaration. */
+@media (max-width: 767.98px) { /* md */
+  .tree {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.node {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-top: 0.4rem;
+}
+
+.tree > .node {
+  padding-left: 0;
+}
+
+.node::before {
+  content: '';
+  position: absolute;
+  left: 0.4rem;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid rgba(107, 68, 35, 0.35);
+}
+
+.tree > .node::before {
+  content: none;
+}
+
+.node::after {
+  content: '';
+  position: absolute;
+  left: 0.4rem;
+  top: 0.85rem;
+  width: 1rem;
+  border-top: 1px solid rgba(107, 68, 35, 0.35);
+}
+
+.tree > .node::after {
+  content: none;
+}
+
+.node:last-child::before {
+  bottom: calc(100% - 0.85rem);
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.6rem;
+  padding: 0.25rem 0.6rem;
+  width: fit-content;
+  max-width: 100%;
+  background: rgba(248, 236, 208, 0.6);
+  border: 1px solid rgba(107, 68, 35, 0.15);
+  border-radius: 2px;
+}
+
+.rowPlaceholder {
+  background: transparent;
+  border: 1px dotted rgba(107, 68, 35, 0.55);
+}
+
+.person {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.name {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+a.name {
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+a.name:hover,
+a.name:focus-visible {
+  color: var(--gold-leaf);
+  text-decoration: underline;
+  text-decoration-color: rgba(212, 162, 89, 0.45);
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.name {
+    transition: none;
+  }
+}
+
+.nameM {
+  color: var(--ink-slate);
+}
+
+.nameF {
+  color: var(--ink-rose);
+}
+
+.nameExternal {
+  color: var(--ink-faded);
+  font-style: italic;
+}
+
+.namePlaceholder {
+  color: var(--ink-faded);
+  font-style: italic;
+  opacity: 0.8;
+}
+
+.lifespan {
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  color: var(--ink-faded);
+  letter-spacing: 0.5px;
+}
+
+.alias {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--ink-faded);
+}
+
+.spouse {
+  display: flex;
+  align-items: baseline;
+  gap: 0.3rem;
+}
+
+.cross {
+  color: var(--gold-leaf);
+  font-size: 0.95rem;
+}
+
+.gender {
+  font-size: 0.85rem;
+  margin-right: 0.15rem;
+}
+
+.genderM {
+  color: var(--gold-leaf);
+}
+
+.genderF {
+  color: var(--rose-madder);
+}
+
+.king {
+  font-size: 0.85rem;
+  color: var(--gold-leaf);
+  margin-right: 0.15rem;
+}
+
+.children {
+  margin-top: 0.2rem;
+}
+
+.empty {
+  font-style: italic;
+  color: var(--ink-faded);
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+@media (max-width: 639.98px) { /* sm */
+  .row {
+    padding: 0.4rem 0.6rem;
+  }
+}

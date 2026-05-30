@@ -5,7 +5,9 @@ import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { ViewToggle, type ViewMode } from './ViewToggle';
 import { filterByName } from '@/lib/search';
+import { cx } from '@/lib/cx';
 import listSearch from './listSearch.module.css';
+import styles from './FilteredHouseList.module.css';
 
 export type HouseItem = {
   slug: string;
@@ -23,6 +25,18 @@ const VIEW_STORAGE_KEY = 'gota:houses-view';
 function isViewMode(value: unknown): value is ViewMode {
   return value === 'grid' || value === 'list';
 }
+
+const REGION_CARD_CLASS: Record<string, string | undefined> = {
+  north: styles.cardNorth,
+  vale: styles.cardVale,
+  riverlands: styles.cardRiverlands,
+  westerlands: styles.cardWesterlands,
+  reach: styles.cardReach,
+  stormlands: styles.cardStormlands,
+  dorne: styles.cardDorne,
+  'iron-islands': styles.cardIronIslands,
+  crownlands: styles.cardCrownlands,
+};
 
 export function FilteredHouseList({ items }: Props) {
   const [value, setValue] = useState('');
@@ -53,8 +67,7 @@ export function FilteredHouseList({ items }: Props) {
     }
   };
 
-  const listClass =
-    view === 'list' ? 'house-list house-list--list' : 'house-list';
+  const listClass = cx(styles.list, view === 'list' && styles.listView);
 
   return (
     <>
@@ -76,11 +89,10 @@ export function FilteredHouseList({ items }: Props) {
       ) : (
         <ul className={listClass}>
           {filtered.map((item) => {
-            const cardClass = item.region
-              ? `house-list__card house-list__card--region-${item.region}`
-              : 'house-list__card';
+            const regionClass = item.region ? REGION_CARD_CLASS[item.region] : undefined;
+            const cardClass = cx(styles.card, regionClass);
             return (
-              <li key={item.slug} className="house-list__item">
+              <li key={item.slug} className={styles.item}>
                 <Link href={`/houses/${item.slug}/`} className={cardClass}>
                   <Sigil
                     slug={item.slug}
@@ -88,9 +100,9 @@ export function FilteredHouseList({ items }: Props) {
                     size={view === 'list' ? '2rem' : '6rem'}
                     decorative
                   />
-                  <span className="house-list__name">{item.name}</span>
+                  <span className={styles.name}>{item.name}</span>
                   {view === 'list' && item.regionLabel && (
-                    <span className="house-list__region">{item.regionLabel}</span>
+                    <span className={styles.region}>{item.regionLabel}</span>
                   )}
                 </Link>
               </li>

@@ -1,17 +1,20 @@
 import Link from 'next/link';
 import { Sigil } from './Sigil';
+import { cx } from '@/lib/cx';
 import type {
   House,
   Castle,
   Character,
   HouseInfoEntry,
 } from '@/lib/schemas';
+import styles from './HouseInfobox.module.css';
 
 type Props = {
   house: House;
   castlesBySlug: Map<string, Castle>;
   charactersBySlug: Map<string, Character>;
   housesBySlug: Map<string, House>;
+  className?: string;
 };
 
 function shortHouseName(fullName: string): string {
@@ -56,7 +59,7 @@ function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
         <span>{entry.name}</span>
       )}
       {entry.note && (
-        <span className="house-infobox__note"> ({entry.note})</span>
+        <span className={styles.note}> ({entry.note})</span>
       )}
     </li>
   );
@@ -72,7 +75,7 @@ type RowProps = {
 function InfoRow({ label, entries, hrefPrefix, exists }: RowProps) {
   if (entries.length === 0) return null;
   return (
-    <div className="house-infobox__row">
+    <div className={styles.row}>
       <dt>{label}</dt>
       <dd>
         <ul>
@@ -95,6 +98,7 @@ export function HouseInfobox({
   castlesBySlug,
   charactersBySlug,
   housesBySlug,
+  className,
 }: Props) {
   const seats: HouseInfoEntry[] =
     house.seats ??
@@ -118,18 +122,19 @@ export function HouseInfobox({
   const liegeHouse = house.liege ? housesBySlug.get(house.liege) : null;
 
   return (
-    <aside className="house-infobox" aria-label={`${house.name} infobox`}>
-      <div className="house-infobox__sigil">
+    <aside className={cx(styles.infobox, className)} aria-label={`${house.name} infobox`}>
+      <div className={styles.sigil}>
         <Sigil
           slug={house.slug}
           name={shortHouseName(house.name)}
           decorative
+          className={styles.sigilFill}
         />
       </div>
 
-      <dl className="house-infobox__rows">
+      <dl className={styles.rows}>
         {house.sigil.description && (
-          <div className="house-infobox__row">
+          <div className={styles.row}>
             <dt>Coat of arms</dt>
             <dd>{house.sigil.description}</dd>
           </div>
@@ -156,7 +161,7 @@ export function HouseInfobox({
 
         <InfoRow label="Titles" entries={titles} />
 
-        <div className="house-infobox__row">
+        <div className={styles.row}>
           <dt>Overlord</dt>
           <dd>
             {liegeHouse ? (
@@ -180,13 +185,13 @@ export function HouseInfobox({
 
         <InfoRow label="Ancestral weapons" entries={weapons} />
 
-        <div className="house-infobox__row">
+        <div className={styles.row}>
           <dt>Founded</dt>
           <dd>{formatDate(house.founded)}</dd>
         </div>
 
         {house.extinct && (
-          <div className="house-infobox__row">
+          <div className={styles.row}>
             <dt>Extinct</dt>
             <dd>{formatDate(house.extinct)}</dd>
           </div>

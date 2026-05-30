@@ -13,6 +13,7 @@ import { FamilyTree } from '@/components/FamilyTree';
 import { HouseInfobox } from '@/components/HouseInfobox';
 import { buildFamilyTree } from '@/lib/family-tree';
 import { buildProseLinkIndex } from '@/lib/prose-links';
+import styles from './page.module.css';
 
 export async function generateStaticParams() {
   const houses = await loadAllHouses();
@@ -55,8 +56,8 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
 
   return (
     <ParchmentLayout>
-      <div className="house-detail">
-        <div className="house-detail__heading">
+      <div className={styles.detail}>
+        <div className={styles.heading}>
           <h1>{house.frontmatter.name}</h1>
           {house.frontmatter.words && (
             <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
@@ -67,16 +68,17 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
           castlesBySlug={castlesBySlug}
           charactersBySlug={charactersBySlug}
           housesBySlug={housesBySlug}
+          className={styles.infobox}
         />
-        <div className="house-detail__main">
-          <article className="house-detail__body" dangerouslySetInnerHTML={{ __html: html }} />
+        <div className={styles.main}>
+          <article className={styles.body} dangerouslySetInnerHTML={{ __html: html }} />
 
-          <section className="house-detail__tree" aria-labelledby="family-tree-heading">
+          <section className={styles.tree} aria-labelledby="family-tree-heading">
             <h2 id="family-tree-heading">Family Tree</h2>
             <FamilyTree roots={tree} />
           </section>
 
-          <p className="house-detail__back">
+          <p className={styles.back}>
             <Link href="/houses/">← All Houses</Link>
           </p>
 

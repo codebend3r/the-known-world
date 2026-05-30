@@ -1,0 +1,121 @@
+/* Break out of the parchment container so the grid can scale up to ~8
+   columns on large desktops while remaining centered on the viewport.
+   Relies on `ParchmentLayout`'s `.page > *` already setting
+   `position: relative`; `left` shifts the wider element back to the
+   viewport centre without using `margin`. The `--md` override re-contains
+   it on mobile. */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
+  gap: 1.25rem;
+  --bleed-max: 1840px;
+  --bleed-width: min(100vw - 3rem, var(--bleed-max));
+  width: var(--bleed-width);
+  left: calc((100% - var(--bleed-width)) / 2);
+}
+
+@media (max-width: 767.98px) { /* md */
+  .list {
+    width: auto;
+    left: auto;
+  }
+}
+
+.item {
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  min-height: 10.5rem;
+  padding: 1rem;
+  background: var(--vellum);
+  border: 2px solid rgba(107, 68, 35, 0.25);
+  border-radius: 2px;
+  color: var(--ink);
+  text-decoration: none;
+  text-align: center;
+  transition:
+    border-color 150ms ease,
+    transform 150ms ease,
+    box-shadow 150ms ease;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+}
+
+/* Regional border tints — colours live in `globals.css` as
+   `--region-color-*` tokens (shared with `FilteredCharacterList`). */
+.cardNorth        { border-color: var(--region-color-north); }
+.cardVale         { border-color: var(--region-color-vale); }
+.cardRiverlands   { border-color: var(--region-color-riverlands); }
+.cardWesterlands  { border-color: var(--region-color-westerlands); }
+.cardReach        { border-color: var(--region-color-reach); }
+.cardStormlands   { border-color: var(--region-color-stormlands); }
+.cardDorne        { border-color: var(--region-color-dorne); }
+.cardIronIslands  { border-color: var(--region-color-iron-islands); }
+.cardCrownlands   { border-color: var(--region-color-crownlands); }
+
+.card:hover,
+.card:focus-visible {
+  border-color: var(--gold-leaf);
+  transform: scale(1.01);
+  box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+  color: var(--ink);
+}
+
+.name {
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+}
+
+/* List view: same `<ul>`, one row per house. Cap the bleed so rows
+   don't run wider than they need; the grid is the showpiece. */
+.listView {
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+  --bleed-max: 1280px;
+}
+
+.listView .card {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  min-height: 0;
+  padding: 0.65rem 1rem;
+  text-align: left;
+  border-left-width: 3px;
+}
+
+.listView .name {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+}
+
+.region {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-variant: small-caps;
+  letter-spacing: 1.5px;
+  color: var(--ink-faded);
+  text-align: right;
+}

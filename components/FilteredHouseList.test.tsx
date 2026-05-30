@@ -66,20 +66,16 @@ describe('FilteredHouseList', () => {
 
   it('applies the region-tinted class to each card', () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    expect(
-      container.querySelector('.house-list__card--region-north'),
-    ).not.toBeNull();
-    expect(
-      container.querySelector('.house-list__card--region-westerlands'),
-    ).not.toBeNull();
+    expect(container.querySelector('.cardNorth')).not.toBeNull();
+    expect(container.querySelector('.cardWesterlands')).not.toBeNull();
   });
 });
 
 describe('FilteredHouseList view toggle', () => {
   it('starts in grid view by default', () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    expect(container.querySelector('ul.house-list')).not.toBeNull();
-    expect(container.querySelector('ul.house-list--list')).toBeNull();
+    expect(container.querySelector('ul.list')).not.toBeNull();
+    expect(container.querySelector('ul.listView')).toBeNull();
     expect(
       screen.getByRole('button', { name: /grid view/i }).getAttribute('aria-pressed'),
     ).toBe('true');
@@ -90,7 +86,7 @@ describe('FilteredHouseList view toggle', () => {
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: /list view/i }));
     });
-    expect(container.querySelector('ul.house-list--list')).not.toBeNull();
+    expect(container.querySelector('ul.listView')).not.toBeNull();
     expect(window.localStorage.getItem('gota:houses-view')).toBe('list');
   });
 
@@ -100,7 +96,7 @@ describe('FilteredHouseList view toggle', () => {
     act(() => {
       vi.advanceTimersByTime(0);
     });
-    expect(container.querySelector('ul.house-list--list')).not.toBeNull();
+    expect(container.querySelector('ul.listView')).not.toBeNull();
   });
 
   it('ignores invalid stored values and stays in grid view', () => {
@@ -117,7 +113,7 @@ describe('FilteredHouseList view toggle', () => {
     act(() => {
       fireEvent.click(screen.getByRole('button', { name: /list view/i }));
     });
-    const regions = container.querySelectorAll('.house-list__region');
+    const regions = container.querySelectorAll('.region');
     expect(regions.length).toBe(3);
     expect(Array.from(regions).map((r) => r.textContent)).toEqual(
       expect.arrayContaining(['The North', 'The Westerlands', 'The Riverlands']),
