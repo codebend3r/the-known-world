@@ -1,9 +1,9 @@
 .detail {
   display: grid;
-  grid-template-columns: 1fr 400px;
+  grid-template-columns: minmax(0, 1fr) 400px;
   grid-template-areas:
     "heading heading"
-    "main infobox";
+    "main    infobox";
   gap: 2rem;
   align-items: start;
 }
@@ -31,14 +31,11 @@
 @media (max-width: 767.98px) { /* md */
   .detail {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "heading"
+      "infobox"
+      "main";
     column-gap: 0;
-  }
-  .heading,
-  .main,
-  .infobox {
-    grid-column: auto;
-    grid-row: auto;
-    grid-area: auto;
   }
   .body {
     padding-left: 1.5rem;

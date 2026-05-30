@@ -211,6 +211,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                       <Sigil
                         slug={item.primaryHouseSlug}
                         name={item.name}
+                        region={item.region}
                         size="3.25rem"
                         decorative
                       />

@@ -11,6 +11,7 @@ import { ageAtDeath } from '@/lib/age';
 import { findPortrait } from '@/lib/portraits';
 import { cdnImage } from '@/lib/cdn-image';
 import { cx } from '@/lib/cx';
+import { regionForHouse } from '@/lib/regions';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sigil } from '@/components/Sigil';
 import { Sources } from '@/components/Sources';
@@ -144,6 +145,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
         <Sigil
           slug={fm['primary-house']}
           name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
+          region={regionForHouse(fm['primary-house'], housesBySlug)}
           size="6rem"
           decorative
         />

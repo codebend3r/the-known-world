@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { cx } from '@/lib/cx';
+import { regionForHouse } from '@/lib/regions';
 import type {
   House,
   Castle,
@@ -127,6 +128,7 @@ export function HouseInfobox({
         <Sigil
           slug={house.slug}
           name={shortHouseName(house.name)}
+          region={regionForHouse(house.slug, housesBySlug)}
           decorative
           className={styles.sigilFill}
         />

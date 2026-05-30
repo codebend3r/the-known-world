@@ -310,6 +310,56 @@
   background-position: center;
 } /* crowned stag, inherited by House Baratheon */
 
+/*
+ * Region fallbacks — used for houses without a dedicated sigil so they
+ * render the kingdom's banner instead of the generic unknown shield.
+ */
+.regionNorth {
+  background-image: url('/sigils/the-north.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionVale {
+  background-image: url('/sigils/the-vale.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionRiverlands {
+  background-image: url('/sigils/the-riverlands.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionWesterlands {
+  background-image: url('/sigils/westerlands.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionReach {
+  background-image: url('/sigils/the-reach.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionStormlands {
+  background-image: url('/sigils/stormlands.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionDorne {
+  background-image: url('/sigils/dorne.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionIronIslands {
+  background-image: url('/sigils/iron-islands.png');
+  background-size: contain;
+  background-position: center;
+}
+.regionCrownlands {
+  background-image: url('/sigils/crownlands.png');
+  background-size: contain;
+  background-position: center;
+}
+
 /* Fallback for houses without a dedicated sigil */
 .unknown {
   background-image: url('/sigils/unknown.png');

@@ -97,6 +97,7 @@ export function FilteredHouseList({ items }: Props) {
                   <Sigil
                     slug={item.slug}
                     name={item.name}
+                    region={item.region}
                     size={view === 'list' ? '2rem' : '6rem'}
                     decorative
                   />
