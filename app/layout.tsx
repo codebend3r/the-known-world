@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Alegreya_Sans, Cinzel, Cormorant_Unicase, EB_Garamond } from 'next/font/google';
 import '../styles/globals.css';
 import { SiteHeader } from '@/components/SiteHeader';
@@ -12,6 +12,14 @@ const alegreyaSans = Alegreya_Sans({ subsets: ['latin'], variable: '--font-alegr
 export const metadata: Metadata = {
   title: 'Atlas of the Known World · A Song of Ice and Fire',
   description: 'An interactive atlas of George R. R. Martin\'s world of Ice and Fire — maps, timeline, and the rolls of the great houses.',
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
