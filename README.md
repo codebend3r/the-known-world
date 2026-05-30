@@ -52,10 +52,11 @@ app/                Next.js App Router routes
   layout.tsx        Root layout (Cinzel / EB Garamond / Inter fonts)
   not-found.tsx
 
-components/         React components
+components/         React components, each paired with a co-located CSS module
   ParchmentLayout, MainMenu, MainMenuTile, ComingSoonPage,
   MapStage, MapMarker, MapLayerToggle,
-  FamilyTree, DropCap, Sources
+  FamilyTree, DropCap, Sources, Sigil, SiteHeader, SiteMenu, ViewToggle,
+  FilteredHouseList, FilteredCharacterList, HouseInfobox
 
 lib/                Domain logic (loaders, schemas, helpers)
   schemas.ts        Zod schemas for Castle / House / Person / Event
@@ -70,8 +71,13 @@ content/            Markdown source of truth
   houses/           4 entries (Stark, Lannister, Targaryen, Tyrell)
   characters/       characters with parents/spouses/children
 
-styles/             Hand-written CSS (parchment aesthetic)
-  globals.css, parchment.css, map.css, main-menu.css, houses.css
+styles/             Single global stylesheet
+  globals.css       Resets, CSS custom properties (--ink-*, --parchment-*,
+                    --region-color-*, --font-*, --bp-*), `html`/`body`/`h1-h3`
+                    rules, and the `.subtitle` typographic primitive.
+
+# All other styles are CSS modules co-located with the React component or
+# page route that owns them — see "Styling" below.
 
 public/map/         westeros.svg basemap
 
@@ -79,6 +85,26 @@ docs/superpowers/   Design specs + implementation plans
 netlify.toml        Build config + 404 redirect
 next.config.ts      output: 'export', trailingSlash: true
 ```
+
+## Styling
+
+Styles are hand-written CSS in two layers:
+
+- **`styles/globals.css`** is the only global stylesheet. It holds resets, CSS custom properties (colour, font, and breakpoint tokens, plus the `--region-color-*` heraldic palette shared by both list views), `html`/`body`/`h1-h3` rules, and the `.subtitle` typographic primitive used by every `ParchmentLayout` page.
+- **CSS modules** carry everything else. Each component owns a sibling `<Component>.module.css` (e.g. `components/SiteHeader.tsx` ↔ `components/SiteHeader.module.css`); each route owns a sibling `page.module.css` (e.g. `app/houses/[slug]/page.module.css`). Two filtered list components share `components/listSearch.module.css` for the search input + pagination apparatus they both render.
+
+Class names inside modules are `camelCase`, dropping BEM noise — the file scope already isolates them. Multiple classes compose through `lib/cx.ts`, a six-line helper that joins truthy class strings:
+
+```tsx
+import styles from './Foo.module.css';
+import { cx } from '@/lib/cx';
+
+<div className={cx(styles.row, isActive && styles.rowActive)} />
+```
+
+Dynamic variant lookups use the indexed form: `styles[`card${capitalize(region)}`]` or a small per-component map. Cross-module styling — when a parent module needs to tweak a child component's element — is done by passing a className prop (`<Sigil className={styles.sigilFill} />`), not by reaching into another module's class names.
+
+Tests assert class strings directly because `vitest.config.ts` sets `test.css.modules.classNameStrategy: 'non-scoped'`, so `styles.foo` resolves to the literal `'foo'` in jsdom. Production builds use Vite's default scoping with hashes.
 
 ## Content model
 
