@@ -34,13 +34,10 @@
 
 /* Sprite-cell sigils restore the 1143:1280 cell aspect ratio. */
 .rowan,
-.oakheart,
 .mallister,
 .dustin,
 .ryswell,
-.hornwood,
 .cerwyn,
-.estermont,
 .grafton {
   --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
 }
@@ -187,7 +184,11 @@
   background-position: center;
 }
 .rowan      { --col: 1; --row: 5; }
-.oakheart   { --col: 2; --row: 5; }
+.oakheart {
+  background-image: url('/sigils/oakheart.png');
+  background-size: contain;
+  background-position: center;
+}
 .mallister  { --col: 3; --row: 5; }
 .piper {
   background-image: url('/sigils/piper.jpg');
@@ -203,7 +204,11 @@
 }
 .dustin     { --col: 1; --row: 6; }
 .ryswell    { --col: 2; --row: 6; }
-.hornwood   { --col: 3; --row: 6; }
+.hornwood {
+  background-image: url('/sigils/hornwood.png');
+  background-size: contain;
+  background-position: center;
+}
 .cerwyn     { --col: 4; --row: 6; }
 
 /* Row 8 — Swann · Dondarrion · Caron · Estermont · Grafton */
@@ -222,7 +227,11 @@
   background-size: contain;
   background-position: center;
 }
-.estermont  { --col: 3; --row: 7; }
+.estermont {
+  background-image: url('/sigils/estermont.png');
+  background-size: contain;
+  background-position: center;
+}
 .grafton    { --col: 4; --row: 7; }
 
 /* Houses not on the sprite sheet */
