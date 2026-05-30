@@ -170,8 +170,8 @@ describe('FilteredCharacterList', () => {
     expect(navs.length).toBe(2);
     expect(children.indexOf(navs[0])).toBeLessThan(children.indexOf(list as Element));
     expect(children.indexOf(navs[1])).toBeGreaterThan(children.indexOf(list as Element));
-    expect(navs[0].classList.contains('pagination--top')).toBe(true);
-    expect(navs[1].classList.contains('pagination--bottom')).toBe(true);
+    expect(navs[0].classList.contains('paginationTop')).toBe(true);
+    expect(navs[1].classList.contains('paginationBottom')).toBe(true);
   });
 
   it('advances to the next page when Next is clicked from the top nav', () => {

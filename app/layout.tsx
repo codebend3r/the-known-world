@@ -3,7 +3,6 @@ import { Alegreya_Sans, Cinzel, Cormorant_Unicase, EB_Garamond } from 'next/font
 import '../styles/globals.css';
 import '../styles/houses.css';
 import '../styles/characters.css';
-import '../styles/list-search.css';
 import { SiteHeader } from '@/components/SiteHeader';
 
 const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });

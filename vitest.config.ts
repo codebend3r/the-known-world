@@ -4,16 +4,17 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   resolve: { tsconfigPaths: true },
-  css: {
-    // Preserve raw local names in tests so `styles.foo` resolves to `'foo'`.
-    // Keeps class-string assertions readable without coupling them to
-    // Vite's production hash format.
-    modules: { generateScopedName: '[local]' },
-  },
   test: {
     globals: true,
     environment: 'jsdom',
     include: ['lib/**/*.test.ts', 'components/**/*.test.tsx'],
+    css: {
+      // Vitest-specific CSS option (separate from Vite's top-level `css`).
+      // `non-scoped` makes `styles.foo` resolve to the literal `'foo'`, so
+      // class-string assertions stay readable without coupling them to
+      // Vite's production hash format.
+      modules: { classNameStrategy: 'non-scoped' },
+    },
     env: {
       // Mirror `trailingSlash: true` from next.config.ts so next/link keeps
       // trailing slashes in jsdom tests. __NEXT_TRAILING_SLASH is an

@@ -1,5 +1,7 @@
 'use client';
 
+import styles from './ViewToggle.module.css';
+
 export type ViewMode = 'grid' | 'list';
 
 type Props = {
@@ -12,10 +14,10 @@ export function ViewToggle({ value, onChange }: Props) {
     if (next !== value) onChange(next);
   };
   return (
-    <div className="view-toggle" role="group" aria-label="View">
+    <div className={styles.toggle} role="group" aria-label="View">
       <button
         type="button"
-        className="view-toggle__button"
+        className={styles.button}
         aria-label="Grid view"
         aria-pressed={value === 'grid'}
         onClick={() => handleSelect('grid')}
@@ -24,7 +26,7 @@ export function ViewToggle({ value, onChange }: Props) {
       </button>
       <button
         type="button"
-        className="view-toggle__button"
+        className={styles.button}
         aria-label="List view"
         aria-pressed={value === 'list'}
         onClick={() => handleSelect('list')}

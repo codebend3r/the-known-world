@@ -1,4 +1,4 @@
-.list-search {
+.input {
   display: grid;
   width: 100%;
   font-family: var(--font-ui);
@@ -15,19 +15,19 @@
     box-shadow 150ms ease;
 }
 
-.list-search::placeholder {
+.input::placeholder {
   color: var(--ink-faded);
   font-style: italic;
 }
 
-.list-search:focus,
-.list-search:focus-visible {
+.input:focus,
+.input:focus-visible {
   border-color: var(--gold-leaf);
   background: rgba(248, 236, 208, 0.9);
   box-shadow: 0 0 0 2px rgba(212, 162, 89, 0.18);
 }
 
-.list-search__empty {
+.empty {
   font-style: italic;
   color: var(--ink-faded);
   text-align: center;
@@ -44,7 +44,13 @@
   color: var(--ink-faded);
 }
 
-.pagination__button {
+/* `.paginationTop` / `.paginationBottom` are marker classes — they carry no
+   styles, but their presence on the element lets tests identify the top
+   vs bottom pagination nav by `classList.contains(...)`. */
+.paginationTop {}
+.paginationBottom {}
+
+.button {
   appearance: none;
   background: rgba(248, 236, 208, 0.6);
   color: var(--ink);
@@ -61,24 +67,24 @@
     color 120ms ease;
 }
 
-.pagination__button:hover:not(:disabled),
-.pagination__button:focus-visible:not(:disabled) {
+.button:hover:not(:disabled),
+.button:focus-visible:not(:disabled) {
   border-color: var(--gold-leaf);
   color: var(--gold-leaf);
   outline: none;
 }
 
-.pagination__button:disabled {
+.button:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
 
-.pagination__status {
+.status {
   font-variant: small-caps;
   letter-spacing: 1.5px;
 }
 
-.pagination__page-size {
+.pageSize {
   display: flex;
   align-items: center;
   gap: 0.4rem;
@@ -88,7 +94,7 @@
   letter-spacing: 0.5px;
 }
 
-.pagination__page-size-select {
+.pageSizeSelect {
   appearance: none;
   -webkit-appearance: none;
   background: rgba(248, 236, 208, 0.6);
@@ -119,16 +125,16 @@
     color 120ms ease;
 }
 
-.pagination__page-size-select:hover,
-.pagination__page-size-select:focus-visible {
+.pageSizeSelect:hover,
+.pageSizeSelect:focus-visible {
   border-color: var(--gold-leaf);
   color: var(--gold-leaf);
   outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pagination__button,
-  .pagination__page-size-select {
+  .button,
+  .pageSizeSelect {
     transition: none;
   }
 }
@@ -168,79 +174,34 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .list-search {
+  .input {
     transition: none;
   }
 }
 
 @media (max-width: 639.98px) { /* sm */
-  .list-search {
+  .input {
     font-size: 1.05rem;
     padding: 0.85rem 1rem;
   }
 }
 
-.list-search-wrap {
+.wrap {
   display: grid;
 }
 
 @media (max-width: 639.98px) { /* sm */
-  .list-search-wrap {
+  .wrap {
     padding: 0 0.5rem;
   }
 }
 
-.list-search-row {
+.row {
   display: flex;
   align-items: stretch;
   gap: 0.75rem;
 }
 
-.list-search-row .list-search {
+.row .input {
   flex: 1;
-}
-
-.view-toggle {
-  display: flex;
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
-  overflow: hidden;
-  background: rgba(248, 236, 208, 0.55);
-}
-
-.view-toggle__button {
-  appearance: none;
-  background: transparent;
-  border: 0;
-  padding: 0 0.7rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--ink-faded);
-  cursor: pointer;
-  transition:
-    background 120ms ease,
-    color 120ms ease;
-}
-
-.view-toggle__button + .view-toggle__button {
-  border-left: 1px solid rgba(107, 68, 35, 0.35);
-}
-
-.view-toggle__button:hover,
-.view-toggle__button:focus-visible {
-  color: var(--gold-leaf);
-  outline: none;
-  background: rgba(248, 236, 208, 0.9);
-}
-
-.view-toggle__button[aria-pressed='true'] {
-  color: var(--ink);
-  background: rgba(212, 162, 89, 0.18);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .view-toggle__button {
-    transition: none;
-  }
 }

@@ -4,6 +4,8 @@ import { useEffect, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { filterByName } from '@/lib/search';
+import { cx } from '@/lib/cx';
+import listSearch from './listSearch.module.css';
 
 const SEARCH_PARAM = 'search';
 
@@ -100,12 +102,15 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
 
   const renderPagination = (position: 'top' | 'bottom') => (
     <nav
-      className={`pagination pagination--${position}`}
+      className={cx(
+        listSearch.pagination,
+        position === 'top' ? listSearch.paginationTop : listSearch.paginationBottom,
+      )}
       aria-label={`Character list pagination, ${position}`}
     >
       <button
         type="button"
-        className="pagination__button"
+        className={listSearch.button}
         onClick={() => setPage((p) => Math.max(1, p - 1))}
         disabled={currentPage === 1}
         aria-label="Previous page"
@@ -113,15 +118,15 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
         ← Prev
       </button>
       <span
-        className="pagination__status"
+        className={listSearch.status}
         {...(position === 'bottom' ? { 'aria-live': 'polite' as const } : {})}
       >
         Page {currentPage} of {totalPages}
       </span>
-      <label className="pagination__page-size">
+      <label className={listSearch.pageSize}>
         Show{' '}
         <select
-          className="pagination__page-size-select"
+          className={listSearch.pageSizeSelect}
           value={String(size)}
           onChange={(e) => handleSizeChange(Number(e.target.value))}
           aria-label="Characters per page"
@@ -136,7 +141,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       </label>
       <button
         type="button"
-        className="pagination__button"
+        className={listSearch.button}
         onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
         disabled={currentPage === totalPages}
         aria-label="Next page"
@@ -150,10 +155,10 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
 
   return (
     <>
-      <div className="list-search-wrap">
+      <div className={listSearch.wrap}>
         <input
           type="search"
-          className="list-search"
+          className={listSearch.input}
           placeholder="Search characters…"
           value={value}
           onChange={(e) => setUserValue(e.target.value)}
@@ -163,7 +168,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className="list-search__empty">No characters match &ldquo;{debounced}&rdquo;.</p>
+        <p className={listSearch.empty}>No characters match &ldquo;{debounced}&rdquo;.</p>
       ) : (
         <>
           {showPagination && renderPagination('top')}

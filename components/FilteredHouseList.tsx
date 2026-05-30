@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { ViewToggle, type ViewMode } from './ViewToggle';
 import { filterByName } from '@/lib/search';
+import listSearch from './listSearch.module.css';
 
 export type HouseItem = {
   slug: string;
@@ -57,10 +58,10 @@ export function FilteredHouseList({ items }: Props) {
 
   return (
     <>
-      <div className="list-search-row">
+      <div className={listSearch.row}>
         <input
           type="search"
-          className="list-search"
+          className={listSearch.input}
           placeholder="Search houses…"
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -71,7 +72,7 @@ export function FilteredHouseList({ items }: Props) {
         <ViewToggle value={view} onChange={handleViewChange} />
       </div>
       {filtered.length === 0 ? (
-        <p className="list-search__empty">No houses match &ldquo;{debounced}&rdquo;.</p>
+        <p className={listSearch.empty}>No houses match &ldquo;{debounced}&rdquo;.</p>
       ) : (
         <ul className={listClass}>
           {filtered.map((item) => {
