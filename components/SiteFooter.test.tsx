@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { SiteFooter } from './SiteFooter';
+import pkg from '../package.json';
 
 describe('SiteFooter', () => {
   it('credits CJ Rivas', () => {
@@ -14,5 +15,10 @@ describe('SiteFooter', () => {
     expect(link.getAttribute('href')).toBe('https://github.com/codebend3r');
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toContain('noopener');
+  });
+
+  it('displays the package.json version', () => {
+    render(<SiteFooter />);
+    expect(screen.getByText(`v${pkg.version}`)).toBeTruthy();
   });
 });

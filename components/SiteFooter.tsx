@@ -1,3 +1,4 @@
+import pkg from '../package.json';
 import styles from './SiteFooter.module.css';
 
 export function SiteFooter() {
@@ -28,6 +29,8 @@ export function SiteFooter() {
             </svg>
             GitHub
           </a>
+          <span className={styles.separator} aria-hidden="true">·</span>
+          <span className={styles.version}>v{pkg.version}</span>
         </p>
       </div>
     </footer>

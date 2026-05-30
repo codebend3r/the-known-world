@@ -74,6 +74,12 @@
   fill: currentColor;
 }
 
+.version {
+  font-family: var(--font-ui);
+  color: var(--ink-faded);
+  font-variant-numeric: tabular-nums;
+}
+
 @media (max-width: 479.98px) { /* xs */
   .credit {
     font-size: 0.85rem;
