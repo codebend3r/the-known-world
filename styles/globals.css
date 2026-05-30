@@ -13,7 +13,7 @@
   --font-heading: var(--font-cinzel), Georgia, serif;
   --font-character-name: var(--font-cormorant-unicase), Georgia, serif;
   --font-body: var(--font-eb-garamond), Georgia, serif;
-  --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-ui: var(--font-eb-garamond), Georgia, serif;
 
   --bp-xs: 480px;
   --bp-sm: 640px;

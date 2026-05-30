@@ -169,8 +169,8 @@
 }
 
 .house-infobox__row dt {
-  font-size: 0.7rem;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-variant-caps: all-small-caps;
   letter-spacing: 1px;
   color: var(--ink-faded);
   font-weight: 500;
