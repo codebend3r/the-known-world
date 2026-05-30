@@ -142,6 +142,7 @@ a.character-list__card:focus-visible {
   font-weight: 600;
   letter-spacing: 1px;
   font-size: 2.6rem;
+  line-height: 1.1;
 }
 
 .character-detail__alias {
