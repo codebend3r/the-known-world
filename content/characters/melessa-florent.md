@@ -7,7 +7,8 @@ died: null
 primary-house: florent
 also-of-houses:
   - tarly
-parents: []
+parents:
+  - alester-florent
 spouses:
   - randyll-tarly
 children:

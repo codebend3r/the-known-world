@@ -10,6 +10,8 @@ died: null
 primary-house: florent
 also-of-houses:
   - baratheon
+parents:
+  - ryam-florent
 spouses:
   - stannis-baratheon
 children:
