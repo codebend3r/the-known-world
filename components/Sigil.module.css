@@ -191,7 +191,7 @@
 }
 .mallister  { --col: 3; --row: 5; }
 .piper {
-  background-image: url('/sigils/piper.jpg');
+  background-image: url('/sigils/piper.png');
   background-size: contain;
   background-position: center;
 }
