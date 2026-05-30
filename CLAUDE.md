@@ -29,6 +29,7 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 - Prefer `reduce` over `for` loops when possible. Never use `for/in` or `for/of` loops; reach for `Array.prototype` methods (`map`, `filter`, `reduce`, `flatMap`, etc.) when the value is an array.
 - Prefer double-bang (`!!value`) for boolean conversion.
 - Prefer optional chaining (`?.`). When optional chaining is used, ALWAYS pair it with nullish coalescing (`??`) to supply a fallback.
+- Prefer a single configurable object parameter over multiple positional parameters so argument order doesn't matter. Don't: `doSomething(foo, bar, hello)`. Do: `doSomething({ foo, bar, hello })`.
 
 ## Content + tests
 
@@ -38,3 +39,9 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 ## Specs
 
 Design specs and implementation plans live in `docs/superpowers/specs/` and `docs/superpowers/plans/`. Check them before extending an existing feature.
+
+## Commits
+
+- Create a commit after every discrete change; do not batch.
+- Subject must start with `GOTA:` followed by a short title (e.g., `GOTA: a short title`).
+- Favor bullet points in the body. Keep it concise and easy to read.
