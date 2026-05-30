@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import { SiteMenu } from './SiteMenu';
+import styles from './SiteHeader.module.css';
 
 export function SiteHeader() {
   return (
-    <header className="site-header">
-      <div className="site-header__inner">
+    <header className={styles.header}>
+      <div className={styles.inner}>
         <SiteMenu />
-        <Link href="/" className="site-header__title-link">
-          <p className="site-header__title">The Known World</p>
+        <Link href="/" className={styles.titleLink}>
+          <p className={styles.title}>The Known World</p>
         </Link>
-        <span className="site-header__spacer" aria-hidden="true" />
+        <span className={styles.spacer} aria-hidden="true" />
       </div>
     </header>
   );
