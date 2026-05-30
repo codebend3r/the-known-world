@@ -1,4 +1,5 @@
 import type { Castle } from '@/lib/schemas';
+import styles from './MapMarker.module.css';
 
 type Props = {
   slug: string;
@@ -10,9 +11,9 @@ type Props = {
 
 export function MapMarker({ slug, name, type, cx, cy }: Props) {
   return (
-    <a href={`/castles/${slug}/`} className="map-marker" tabIndex={0} aria-label={name}>
+    <a href={`/castles/${slug}/`} className={styles.marker} tabIndex={0} aria-label={name}>
       <Glyph type={type} cx={cx} cy={cy} />
-      <text className="map-marker-label" x={cx + 10} y={cy + 4}>
+      <text className={styles.label} x={cx + 10} y={cy + 4}>
         {name}
       </text>
     </a>

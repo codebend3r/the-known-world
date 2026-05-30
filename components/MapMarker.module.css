@@ -1,0 +1,24 @@
+.marker {
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+
+.marker:hover {
+  transform: scale(1.4);
+}
+
+.label {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  fill: var(--ink);
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.marker:hover .label,
+.marker:focus .label {
+  opacity: 1;
+}

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ReactSVGPanZoom, TOOL_AUTO, type Value } from 'react-svg-pan-zoom';
 import type { ReactNode } from 'react';
+import styles from './MapStage.module.css';
 
 const VIEWBOX_WIDTH = 800;
 const VIEWBOX_HEIGHT = 1400;
@@ -28,8 +29,8 @@ export function MapStage({ children, svgUrl }: Props) {
   }, []);
 
   return (
-    <div ref={containerRef} className="map-stage">
-      <div className="map-stage-inner">
+    <div ref={containerRef} className={styles.stage}>
+      <div className={styles.inner}>
         {size && (
           <ReactSVGPanZoom
             width={size.w}

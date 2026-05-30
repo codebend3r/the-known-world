@@ -2,6 +2,7 @@
 
 import type { Castle } from '@/lib/schemas';
 import { ALL_CASTLE_TYPES } from '@/lib/map';
+import styles from './MapLayerToggle.module.css';
 
 type CastleType = Castle['type'];
 
@@ -12,7 +13,7 @@ type Props = {
 
 export function MapLayerToggle({ enabled, onToggle }: Props) {
   return (
-    <div className="map-layer-toggle" role="group" aria-label="Map layers">
+    <div className={styles.toggle} role="group" aria-label="Map layers">
       {ALL_CASTLE_TYPES.map((type) => (
         <label key={type}>
           <input
