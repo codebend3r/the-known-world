@@ -21,10 +21,12 @@ function manyItems(n: number): CharacterItem[] {
 
 beforeEach(() => {
   vi.useFakeTimers();
+  window.history.replaceState(null, '', '/characters/');
 });
 
 afterEach(() => {
   vi.useRealTimers();
+  window.history.replaceState(null, '', '/characters/');
 });
 
 describe('FilteredCharacterList', () => {
@@ -233,6 +235,46 @@ describe('FilteredCharacterList', () => {
     const after = screen.getAllByRole('combobox', { name: /characters per page/i }) as HTMLSelectElement[];
     expect(after[0].value).toBe('100');
     expect(after[1].value).toBe('100');
+  });
+
+  it('hydrates the search input from the ?search= query param on mount', () => {
+    window.history.replaceState(null, '', '/characters/?search=arya');
+    const { container } = render(<FilteredCharacterList items={items} />);
+    const input = screen.getByRole('searchbox') as HTMLInputElement;
+    expect(input.value).toBe('arya');
+    const cards = container.querySelectorAll('.character-list__item');
+    expect(cards.length).toBe(1);
+    expect(cards[0].textContent).toContain('Arya Stark');
+  });
+
+  it('writes the debounced search to the ?search= query param', () => {
+    render(<FilteredCharacterList items={items} />);
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'stark' } });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(window.location.search).toBe('?search=stark');
+  });
+
+  it('removes the ?search= query param when the search is cleared', () => {
+    window.history.replaceState(null, '', '/characters/?search=arya');
+    render(<FilteredCharacterList items={items} />);
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: '' } });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(window.location.search).toBe('');
+  });
+
+  it('preserves other query params and the hash when syncing search', () => {
+    window.history.replaceState(null, '', '/characters/?sort=name#top');
+    render(<FilteredCharacterList items={items} />);
+    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'arya' } });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(window.location.search).toBe('?sort=name&search=arya');
+    expect(window.location.hash).toBe('#top');
   });
 
   it('resets to page 1 when the search filter changes', () => {

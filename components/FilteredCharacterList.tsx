@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { Sigil } from './Sigil';
 import { filterByName } from '@/lib/search';
@@ -23,6 +23,16 @@ function writeSearchParam(value: string) {
   const query = params.toString();
   const next = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
   window.history.replaceState(null, '', next);
+}
+
+function subscribeToPopState(callback: () => void) {
+  if (typeof window === 'undefined') return () => {};
+  window.addEventListener('popstate', callback);
+  return () => window.removeEventListener('popstate', callback);
+}
+
+function getServerSnapshot() {
+  return '';
 }
 
 export type CharacterItem = {
@@ -50,16 +60,26 @@ const PAGE_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
 const MIN_PAGE_SIZE = 10;
 
 export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
-  const [value, setValue] = useState('');
-  const [debounced, setDebounced] = useState('');
+  const urlSearch = useSyncExternalStore(subscribeToPopState, readSearchParam, getServerSnapshot);
+  const [userValue, setUserValue] = useState<string | undefined>(undefined);
+  const [userDebounced, setUserDebounced] = useState<string | undefined>(undefined);
   const [page, setPage] = useState(1);
   const [lastFilterKey, setLastFilterKey] = useState('');
   const [size, setSize] = useState(pageSize);
 
+  const value = userValue ?? urlSearch;
+  const debounced = userDebounced ?? urlSearch;
+
   useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), 300);
+    if (userValue === undefined) return;
+    const t = setTimeout(() => setUserDebounced(userValue), 300);
     return () => clearTimeout(t);
-  }, [value]);
+  }, [userValue]);
+
+  useEffect(() => {
+    if (userDebounced === undefined) return;
+    writeSearchParam(userDebounced);
+  }, [userDebounced]);
 
   if (debounced !== lastFilterKey) {
     setLastFilterKey(debounced);
@@ -136,7 +156,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
           className="list-search"
           placeholder="Search characters…"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setUserValue(e.target.value)}
           aria-label="Search characters"
           autoComplete="off"
           spellCheck={false}
