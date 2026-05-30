@@ -10,7 +10,7 @@ const SIGIL_SLUGS = new Set([
   'manderly', 'dustin', 'ryswell', 'hornwood', 'cerwyn',
   'celtigar', 'chester', 'crakehall', 'glover',
   'swann', 'dondarrion', 'caron', 'estermont', 'grafton',
-  'durrandon', 'unknown',
+  'tarth', 'durrandon', 'unknown',
 ]);
 
 type Props = {
