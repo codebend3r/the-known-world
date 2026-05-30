@@ -141,12 +141,13 @@
   border-bottom: 1px solid rgba(107, 68, 35, 0.3);
 }
 
-/* Override the sigil's default fixed `--sigil-size` so it shrinks with
-   the infobox column (which is `clamp(280px, 28%, 340px)` minus padding)
-   while never exceeding 16rem. Prevents the sigil overflowing the
-   container at intermediate breakpoints. */
+/* The infobox column is `clamp(280px, 28%, 340px)` minus 2rem padding,
+   so the inner width can be as narrow as ~248px. Keep the sigil under
+   that so it never breaks out of the container. A percentage-based
+   `min()` would collapse the sigil's derived height to 0, so a fixed
+   length is required. */
 .house-infobox__sigil .sigil {
-  --sigil-size: min(16rem, 100%);
+  --sigil-size: 14rem;
 }
 
 .house-infobox__rows {
