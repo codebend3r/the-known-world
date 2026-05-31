@@ -4,7 +4,10 @@ import type { NextConfig } from "next";
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   output: "export",
-  images: { unoptimized: true },
+  images: {
+    loader: "custom",
+    loaderFile: "./lib/netlify-image-loader.ts",
+  },
   trailingSlash: true,
   reactStrictMode: true,
   sassOptions: {
