@@ -3,7 +3,12 @@ import path from 'node:path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkHtml from 'remark-html';
-import { CastleSchema, HouseSchema, CharacterSchema, EventSchema, type Castle, type House, type Character, type Event } from '@/lib/schemas';
+import {
+  CastleSchema, HouseSchema, CharacterSchema, EventSchema,
+  WeaponSchema, DragonSchema,
+  type Castle, type House, type Character, type Event,
+  type Weapon, type Dragon,
+} from '@/lib/schemas';
 import { remarkProseLinks, type ProseLinkIndex } from '@/lib/prose-links';
 
 const CONTENT_ROOT = path.join(process.cwd(), 'content');
@@ -11,7 +16,7 @@ const CONTENT_ROOT = path.join(process.cwd(), 'content');
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 async function loadFile<T>(
-  type: 'castles' | 'houses' | 'characters' | 'events',
+  type: 'castles' | 'houses' | 'characters' | 'events' | 'weapons' | 'dragons',
   slug: string,
   schema: { parse: (input: unknown) => T },
 ): Promise<Loaded<T>> {
@@ -23,7 +28,7 @@ async function loadFile<T>(
 }
 
 async function loadAll<T>(
-  type: 'castles' | 'houses' | 'characters' | 'events',
+  type: 'castles' | 'houses' | 'characters' | 'events' | 'weapons' | 'dragons',
   schema: { parse: (input: unknown) => T },
 ): Promise<Array<Loaded<T>>> {
   const dir = path.join(CONTENT_ROOT, type);
@@ -48,6 +53,12 @@ export const loadAllCastles = () => loadAll<Castle>('castles', CastleSchema);
 export const loadAllHouses = () => loadAll<House>('houses', HouseSchema);
 export const loadAllCharacters = () => loadAll<Character>('characters', CharacterSchema);
 export const loadAllEvents = () => loadAll<Event>('events', EventSchema);
+
+export const loadWeapon = (slug: string) => loadFile<Weapon>('weapons', slug, WeaponSchema);
+export const loadDragon = (slug: string) => loadFile<Dragon>('dragons', slug, DragonSchema);
+
+export const loadAllWeapons = () => loadAll<Weapon>('weapons', WeaponSchema);
+export const loadAllDragons = () => loadAll<Dragon>('dragons', DragonSchema);
 
 export async function renderMarkdown(
   source: string,

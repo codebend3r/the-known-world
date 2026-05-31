@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { loadCastle, loadAllCastles, renderMarkdown } from '@/lib/content';
+import {
+  loadCastle, loadAllCastles, renderMarkdown,
+  loadAllWeapons, loadAllDragons, loadWeapon, loadDragon,
+} from '@/lib/content';
 
 describe('loadCastle', () => {
   it('loads Winterfell', async () => {
@@ -49,5 +52,31 @@ describe('renderMarkdown', () => {
       },
     });
     expect(html).toContain('<a href="/characters/catelyn-tully/">Catelyn Tully</a>');
+  });
+});
+
+describe('loadAllWeapons', () => {
+  it('returns an empty array when no weapons exist', async () => {
+    const all = await loadAllWeapons();
+    expect(Array.isArray(all)).toBe(true);
+  });
+});
+
+describe('loadAllDragons', () => {
+  it('returns an empty array when no dragons exist', async () => {
+    const all = await loadAllDragons();
+    expect(Array.isArray(all)).toBe(true);
+  });
+});
+
+describe('loadWeapon', () => {
+  it('throws when the weapon slug does not exist', async () => {
+    await expect(loadWeapon('does-not-exist')).rejects.toThrow();
+  });
+});
+
+describe('loadDragon', () => {
+  it('throws when the dragon slug does not exist', async () => {
+    await expect(loadDragon('does-not-exist')).rejects.toThrow();
   });
 });
