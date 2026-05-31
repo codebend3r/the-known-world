@@ -12,7 +12,7 @@ import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
 import { WeaponInfobox } from "@/components/WeaponInfobox";
-import styles from "@/app/weapons/[slug]/page.module.css";
+import styles from "@/app/weapons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const weapons = await loadAllWeapons();
