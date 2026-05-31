@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "@/components/ComingSoonPage.module.css";
+import styles from "@/components/ComingSoonPage.module.scss";
 
 export function ComingSoonPage({ title }: { title: string }) {
   return (
