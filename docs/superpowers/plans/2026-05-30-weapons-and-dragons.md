@@ -27,27 +27,27 @@
 - `lib/content.ts` (modify) — add `loadWeapon` / `loadAllWeapons` / `loadDragon` / `loadAllDragons`.
 - `lib/prose-links.ts` (modify) — extend `ProseLinkTarget['kind']` and `buildProseLinkIndex` signature.
 - `components/Infobox.tsx` (new) — hoisted `InfoRow`, `InfoEntry`, `humanizeSlug` primitives.
-- `components/Infobox.module.css` (new) — `.row`, `.note` (and related) styles moved from `HouseInfobox.module.css`.
-- `components/WeaponInfobox.tsx` + `.test.tsx` (new — no `.module.css`; reuses `HouseInfobox.module.css` + `Infobox.module.css`).
+- `components/Infobox.module.scss` (new) — `.row`, `.note` (and related) styles moved from `HouseInfobox.module.scss`.
+- `components/WeaponInfobox.tsx` + `.test.tsx` (new — no `.module.scss`; reuses `HouseInfobox.module.scss` + `Infobox.module.scss`).
 - `components/DragonInfobox.tsx` + `.test.tsx` (new — same reuse pattern).
-- `components/FilteredWeaponList.tsx` + `.module.css` + `.test.tsx` (new).
-- `components/FilteredDragonList.tsx` + `.module.css` + `.test.tsx` (new).
+- `components/FilteredWeaponList.tsx` + `.module.scss` + `.test.tsx` (new).
+- `components/FilteredDragonList.tsx` + `.module.scss` + `.test.tsx` (new).
 - `app/weapons/page.tsx` (new — index; no page-local CSS needed).
-- `app/weapons/[slug]/page.tsx` + `page.module.css` (new — detail).
+- `app/weapons/[slug]/page.tsx` + `page.module.scss` (new — detail).
 - `app/dragons/page.tsx` (new — index; no page-local CSS needed).
-- `app/dragons/[slug]/page.tsx` + `page.module.css` (new — detail).
+- `app/dragons/[slug]/page.tsx` + `page.module.scss` (new — detail).
 - `content/weapons/{blackfyre,dark-sister,heartsbane,ice}.md` (new).
 - `content/dragons/{balerion,vhagar,meraxes,caraxes,vermithor,sunfyre,cannibal}.md` (new).
 
 **Modified:**
 
 - `components/HouseInfobox.tsx` / `.test.tsx` — import primitives; resolve weapon slugs; add Dragons row.
-- `components/HouseInfobox.module.css` — remove migrated rules.
-- `components/MainMenu.tsx` / `.module.css` / `.test.tsx` — 5 tiles, `grid-template-areas`.
+- `components/HouseInfobox.module.scss` — remove migrated rules.
+- `components/MainMenu.tsx` / `.module.scss` / `.test.tsx` — 5 tiles, `grid-template-areas`.
 - `components/SiteMenu.tsx` / `.test.tsx` — 6 nav entries.
 - `app/houses/[slug]/page.tsx` — pass `weaponsBySlug` + dragons-for-house; pass weapons + dragons to `buildProseLinkIndex`.
 - `app/characters/[slug]/page.tsx` — surface "Bore" + "Rode"; pass weapons + dragons to `buildProseLinkIndex`.
-- `app/characters/[slug]/page.module.css` — styles for the new sections (if needed).
+- `app/characters/[slug]/page.module.scss` — styles for the new sections (if needed).
 - `content/houses/targaryen.md` — `ancestral-weapons` → `[blackfyre, dark-sister]`.
 - `content/houses/blackfyre.md` — `ancestral-weapons` → `[blackfyre]`.
 - `content/houses/stark.md` — add `ancestral-weapons: [ice]`.
@@ -513,9 +513,9 @@ EOF
 **Files:**
 
 - Create: `components/Infobox.tsx`
-- Create: `components/Infobox.module.css`
+- Create: `components/Infobox.module.scss`
 - Modify: `components/HouseInfobox.tsx`
-- Modify: `components/HouseInfobox.module.css`
+- Modify: `components/HouseInfobox.module.scss`
 
 - [ ] **Step 1: Create the shared module**
 
@@ -524,7 +524,7 @@ Create `components/Infobox.tsx`:
 ```tsx
 import Link from "next/link";
 import type { HouseInfoEntry } from "@/lib/schemas";
-import styles from "@/components/Infobox.module.css";
+import styles from "@/components/Infobox.module.scss";
 
 export function humanizeSlug(slug: string): string {
   return slug
@@ -583,7 +583,7 @@ export function InfoRow({ label, entries, hrefPrefix, exists }: RowProps) {
 }
 ```
 
-Create `components/Infobox.module.css` with the rules currently living in `HouseInfobox.module.css` for `.row` and `.note`:
+Create `components/Infobox.module.scss` with the rules currently living in `HouseInfobox.module.scss` for `.row` and `.note`:
 
 ```css
 .row {
@@ -645,9 +645,9 @@ In `components/HouseInfobox.tsx`:
 - Remove the local `humanizeSlug`, `InfoEntry`, `InfoRow`, `EntryProps`, `RowProps` definitions.
 - Add: `import { InfoRow, humanizeSlug } from '@/components/Infobox';`
 - Remove the unused `Link` and `HouseInfoEntry` imports if they become unused (verify by reading the file after edits).
-- Keep `import styles from '@/components/HouseInfobox.module.css';` — the file still owns `.infobox`, `.sigil`, `.sigilFill`, `.rows`.
+- Keep `import styles from '@/components/HouseInfobox.module.scss';` — the file still owns `.infobox`, `.sigil`, `.sigilFill`, `.rows`.
 
-In `components/HouseInfobox.module.css`, delete the migrated rules: the `.row { ... }`, `.row dt { ... }`, `.row dd { ... }`, `.row ul { ... }`, `.row a { ... }`, `.row a:hover { ... }`, `.note { ... }`, and the `@media` block that overrides `.row` columns. Keep `.infobox`, `.sigil`, `.sigilFill`, `.rows`, and the `.infobox` mobile width override.
+In `components/HouseInfobox.module.scss`, delete the migrated rules: the `.row { ... }`, `.row dt { ... }`, `.row dd { ... }`, `.row ul { ... }`, `.row a { ... }`, `.row a:hover { ... }`, `.note { ... }`, and the `@media` block that overrides `.row` columns. Keep `.infobox`, `.sigil`, `.sigilFill`, `.rows`, and the `.infobox` mobile width override.
 
 - [ ] **Step 3: Run the existing infobox test**
 
@@ -662,13 +662,13 @@ Expected: PASS.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add components/Infobox.tsx components/Infobox.module.css \
-        components/HouseInfobox.tsx components/HouseInfobox.module.css
+git add components/Infobox.tsx components/Infobox.module.scss \
+        components/HouseInfobox.tsx components/HouseInfobox.module.scss
 git commit -m "$(cat <<'EOF'
 GOTA: hoist `InfoRow` / `InfoEntry` / `humanizeSlug` into `components/Infobox`
 
 - shared primitives for the three infobox flavours (`House`, `Weapon`, `Dragon`)
-- `.row` and `.note` styles move from `HouseInfobox.module.css` to `Infobox.module.css`
+- `.row` and `.note` styles move from `HouseInfobox.module.scss` to `Infobox.module.scss`
 - `HouseInfobox` re-imports without behavior change
 EOF
 )"
@@ -683,7 +683,7 @@ EOF
 - Create: `components/WeaponInfobox.tsx`
 - Create: `components/WeaponInfobox.test.tsx`
 - Create: `app/weapons/[slug]/page.tsx`
-- Create: `app/weapons/[slug]/page.module.css`
+- Create: `app/weapons/[slug]/page.module.scss`
 
 - [ ] **Step 1: Write the failing infobox test**
 
@@ -831,8 +831,8 @@ import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { InfoRow, humanizeSlug } from "@/components/Infobox";
 import type { Weapon, House, Character, HouseInfoEntry } from "@/lib/schemas";
-import infoboxStyles from "@/components/HouseInfobox.module.css";
-import styles from "@/components/Infobox.module.css";
+import infoboxStyles from "@/components/HouseInfobox.module.scss";
+import styles from "@/components/Infobox.module.scss";
 
 type Props = {
   weapon: Weapon;
@@ -987,7 +987,7 @@ export function WeaponInfobox({
 }
 ```
 
-Note: `WeaponInfobox` imports `styles` from `@/components/Infobox.module.css` directly (the `.row` shape lives there now). No `WeaponInfobox.module.css` file is needed — `infoboxStyles` covers the shell (`.infobox`, `.sigil`, `.sigilFill`, `.rows`), and `styles` covers the row primitives.
+Note: `WeaponInfobox` imports `styles` from `@/components/Infobox.module.scss` directly (the `.row` shape lives there now). No `WeaponInfobox.module.scss` file is needed — `infoboxStyles` covers the shell (`.infobox`, `.sigil`, `.sigilFill`, `.rows`), and `styles` covers the row primitives.
 
 - [ ] **Step 4: Run the test**
 
@@ -1011,7 +1011,7 @@ import {
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
 import { WeaponInfobox } from "@/components/WeaponInfobox";
-import styles from "@/app/weapons/[slug]/page.module.css";
+import styles from "@/app/weapons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const weapons = await loadAllWeapons();
@@ -1119,7 +1119,7 @@ export default async function WeaponPage({
 }
 ```
 
-Create `app/weapons/[slug]/page.module.css` by copying the entire contents of `app/houses/[slug]/page.module.css` (the two routes have the same detail-layout grid). Delete the `.tree` rule from the copy.
+Create `app/weapons/[slug]/page.module.scss` by copying the entire contents of `app/houses/[slug]/page.module.scss` (the two routes have the same detail-layout grid). Delete the `.tree` rule from the copy.
 
 - [ ] **Step 6: Run system check**
 
@@ -1130,11 +1130,11 @@ Expected: PASS. The route file references content that doesn't exist yet, but `g
 
 ```bash
 git add components/WeaponInfobox.tsx components/WeaponInfobox.test.tsx \
-        'app/weapons/[slug]/page.tsx' 'app/weapons/[slug]/page.module.css'
+        'app/weapons/[slug]/page.tsx' 'app/weapons/[slug]/page.module.scss'
 git commit -m "$(cat <<'EOF'
 GOTA: add `WeaponInfobox` and `/weapons/[slug]/` detail route
 
-- `WeaponInfobox` reuses `Infobox` primitives and `HouseInfobox.module.css` shell
+- `WeaponInfobox` reuses `Infobox` primitives and `HouseInfobox.module.scss` shell
 - detail page mirrors `/houses/[slug]/`: sigil + infobox aside, prose body, sources
 - `generateStaticParams` returns `[]` until weapons are seeded
 EOF
@@ -1150,7 +1150,7 @@ EOF
 - Create: `components/DragonInfobox.tsx`
 - Create: `components/DragonInfobox.test.tsx`
 - Create: `app/dragons/[slug]/page.tsx`
-- Create: `app/dragons/[slug]/page.module.css`
+- Create: `app/dragons/[slug]/page.module.scss`
 
 - [ ] **Step 1: Write the failing infobox test**
 
@@ -1276,8 +1276,8 @@ import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { InfoRow, humanizeSlug } from "@/components/Infobox";
 import type { Dragon, House, Character, HouseInfoEntry } from "@/lib/schemas";
-import infoboxStyles from "@/components/HouseInfobox.module.css";
-import sharedStyles from "@/components/Infobox.module.css";
+import infoboxStyles from "@/components/HouseInfobox.module.scss";
+import sharedStyles from "@/components/Infobox.module.scss";
 
 type Props = {
   dragon: Dragon;
@@ -1439,7 +1439,7 @@ import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
 import { DragonInfobox } from "@/components/DragonInfobox";
 import { humanizeSlug } from "@/components/Infobox";
-import styles from "@/app/dragons/[slug]/page.module.css";
+import styles from "@/app/dragons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const dragons = await loadAllDragons();
@@ -1520,7 +1520,7 @@ export default async function DragonPage({
 }
 ```
 
-Create `app/dragons/[slug]/page.module.css` as a copy of `app/weapons/[slug]/page.module.css`.
+Create `app/dragons/[slug]/page.module.scss` as a copy of `app/weapons/[slug]/page.module.scss`.
 
 - [ ] **Step 6: Run system check**
 
@@ -1531,7 +1531,7 @@ Expected: PASS.
 
 ```bash
 git add components/DragonInfobox.tsx components/DragonInfobox.test.tsx \
-        'app/dragons/[slug]/page.tsx' 'app/dragons/[slug]/page.module.css'
+        'app/dragons/[slug]/page.tsx' 'app/dragons/[slug]/page.module.scss'
 git commit -m "$(cat <<'EOF'
 GOTA: add `DragonInfobox` and `/dragons/[slug]/` detail route
 
@@ -1549,10 +1549,10 @@ EOF
 **Files:**
 
 - Create: `components/FilteredWeaponList.tsx`
-- Create: `components/FilteredWeaponList.module.css`
+- Create: `components/FilteredWeaponList.module.scss`
 - Create: `components/FilteredWeaponList.test.tsx`
 - Create: `app/weapons/page.tsx`
-- Create: `app/weapons/page.module.css`
+- Create: `app/weapons/page.module.scss`
 
 - [ ] **Step 1: Write the failing list test**
 
@@ -1663,8 +1663,8 @@ import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
-import listSearch from "@/components/listSearch.module.css";
-import styles from "@/components/FilteredWeaponList.module.css";
+import listSearch from "@/components/listSearch.module.scss";
+import styles from "@/components/FilteredWeaponList.module.scss";
 
 export type WeaponItem = {
   slug: string;
@@ -1748,7 +1748,7 @@ export function FilteredWeaponList({ items }: Props) {
 }
 ```
 
-Create `components/FilteredWeaponList.module.css` as a copy of `components/FilteredHouseList.module.css` minus the list-view (`.listView`, `.region`) rules — weapons don't have a view toggle. Keep all `.cardNorth` … `.cardCrownlands` rules.
+Create `components/FilteredWeaponList.module.scss` as a copy of `components/FilteredHouseList.module.scss` minus the list-view (`.listView`, `.region`) rules — weapons don't have a view toggle. Keep all `.cardNorth` … `.cardCrownlands` rules.
 
 - [ ] **Step 4: Run the test**
 
@@ -1809,7 +1809,7 @@ export default async function WeaponsPage() {
 }
 ```
 
-Do not create `app/weapons/page.module.css` — the index page needs no page-local CSS (`ParchmentLayout` + `FilteredWeaponList`'s own module cover the layout). The file is omitted from the file map at the top of the plan for the same reason.
+Do not create `app/weapons/page.module.scss` — the index page needs no page-local CSS (`ParchmentLayout` + `FilteredWeaponList`'s own module cover the layout). The file is omitted from the file map at the top of the plan for the same reason.
 
 - [ ] **Step 6: Run system check**
 
@@ -1819,7 +1819,7 @@ Expected: PASS.
 - [ ] **Step 7: Commit**
 
 ```bash
-git add components/FilteredWeaponList.tsx components/FilteredWeaponList.module.css \
+git add components/FilteredWeaponList.tsx components/FilteredWeaponList.module.scss \
         components/FilteredWeaponList.test.tsx app/weapons/page.tsx
 git commit -m "$(cat <<'EOF'
 GOTA: add `FilteredWeaponList` and `/weapons/` index route
@@ -1838,7 +1838,7 @@ EOF
 **Files:**
 
 - Create: `components/FilteredDragonList.tsx`
-- Create: `components/FilteredDragonList.module.css`
+- Create: `components/FilteredDragonList.module.scss`
 - Create: `components/FilteredDragonList.test.tsx`
 - Create: `app/dragons/page.tsx`
 
@@ -1947,8 +1947,8 @@ import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
-import listSearch from "@/components/listSearch.module.css";
-import styles from "@/components/FilteredDragonList.module.css";
+import listSearch from "@/components/listSearch.module.scss";
+import styles from "@/components/FilteredDragonList.module.scss";
 
 export type DragonItem = {
   slug: string;
@@ -2038,7 +2038,7 @@ export function FilteredDragonList({ items }: Props) {
 }
 ```
 
-Create `components/FilteredDragonList.module.css` as a copy of `components/FilteredWeaponList.module.css`. Add at the end:
+Create `components/FilteredDragonList.module.scss` as a copy of `components/FilteredWeaponList.module.scss`. Add at the end:
 
 ```css
 .cardWild {
@@ -2126,7 +2126,7 @@ Expected: PASS.
 - [ ] **Step 7: Commit**
 
 ```bash
-git add components/FilteredDragonList.tsx components/FilteredDragonList.module.css \
+git add components/FilteredDragonList.tsx components/FilteredDragonList.module.scss \
         components/FilteredDragonList.test.tsx app/dragons/page.tsx
 git commit -m "$(cat <<'EOF'
 GOTA: add `FilteredDragonList` and `/dragons/` index route
@@ -2145,7 +2145,7 @@ EOF
 **Files:**
 
 - Modify: `components/MainMenu.tsx`
-- Modify: `components/MainMenu.module.css`
+- Modify: `components/MainMenu.module.scss`
 - Modify: `components/MainMenu.test.tsx`
 - Modify: `components/SiteMenu.tsx`
 - Modify: `components/SiteMenu.test.tsx`
@@ -2271,9 +2271,9 @@ Below the existing Houses tile, append:
 
 (The final visual tuning of `SWORD` and `DRAGON` paths can be refined later; these paths are functional starting points.)
 
-- [ ] **Step 4: Rework `MainMenu.module.css` for 5 tiles via `grid-template-areas`**
+- [ ] **Step 4: Rework `MainMenu.module.scss` for 5 tiles via `grid-template-areas`**
 
-Replace `components/MainMenu.module.css` contents:
+Replace `components/MainMenu.module.scss` contents:
 
 ```css
 .menu {
@@ -2328,7 +2328,7 @@ Replace `components/MainMenu.module.css` contents:
 
 Notes:
 
-- `.menu > :nth-child(N)` assigns `grid-area` by source order. This avoids reaching across module boundaries (each `MainMenuTile` doesn't know its own area name) and stays within `MainMenu.module.css`.
+- `.menu > :nth-child(N)` assigns `grid-area` by source order. This avoids reaching across module boundaries (each `MainMenuTile` doesn't know its own area name) and stays within `MainMenu.module.scss`.
 - Per `CLAUDE.md`, no `grid-column: 1 / -1` — every layout is named-area driven.
 
 - [ ] **Step 5: Run the MainMenu test**
@@ -2387,7 +2387,7 @@ Expected: PASS.
 - [ ] **Step 8: Commit**
 
 ```bash
-git add components/MainMenu.tsx components/MainMenu.module.css components/MainMenu.test.tsx \
+git add components/MainMenu.tsx components/MainMenu.module.scss components/MainMenu.test.tsx \
         components/SiteMenu.tsx components/SiteMenu.test.tsx
 git commit -m "$(cat <<'EOF'
 GOTA: wire weapons + dragons into `MainMenu` (5 tiles) and `SiteMenu`
@@ -2723,7 +2723,7 @@ EOF
 - Modify: `components/HouseInfobox.test.tsx`
 - Modify: `app/houses/[slug]/page.tsx`
 - Modify: `app/characters/[slug]/page.tsx`
-- Modify: `app/characters/[slug]/page.module.css` (only if a new section needs styling)
+- Modify: `app/characters/[slug]/page.module.scss` (only if a new section needs styling)
 
 - [ ] **Step 1: Update the existing HouseInfobox test for slug-resolved weapons + new Dragons row**
 
@@ -2953,7 +2953,7 @@ In the JSX, immediately after the existing `Family` section (and before the `bac
 }
 ```
 
-In `app/characters/[slug]/page.module.css`, append:
+In `app/characters/[slug]/page.module.scss`, append:
 
 ```css
 .crossList {
@@ -2975,7 +2975,7 @@ Expected: PASS.
 ```bash
 git add components/HouseInfobox.tsx components/HouseInfobox.test.tsx \
         'app/houses/[slug]/page.tsx' \
-        'app/characters/[slug]/page.tsx' 'app/characters/[slug]/page.module.css'
+        'app/characters/[slug]/page.tsx' 'app/characters/[slug]/page.module.scss'
 git commit -m "$(cat <<'EOF'
 GOTA: cross-link weapons + dragons from house and character detail pages
 
