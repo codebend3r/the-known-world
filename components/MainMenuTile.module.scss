@@ -16,14 +16,23 @@
     transform 150ms ease,
     box-shadow 150ms ease;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-}
 
-.tile:hover,
-.tile:focus-visible {
-  border-color: var(--gold-leaf);
-  transform: scale(1.01);
-  box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-  color: var(--ink);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--gold-leaf);
+    transform: scale(1.01);
+    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
 }
 
 .glyph {
@@ -56,14 +65,4 @@
   letter-spacing: 0.5px;
   color: var(--ink-faded);
   opacity: 0.85;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tile {
-    transition: none;
-  }
-  .tile:hover,
-  .tile:focus-visible {
-    transform: none;
-  }
 }

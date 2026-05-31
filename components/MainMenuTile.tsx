@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import styles from "@/components/MainMenuTile.module.css";
+import styles from "@/components/MainMenuTile.module.scss";
 
 export type MainMenuTileProps = {
   title: string;
