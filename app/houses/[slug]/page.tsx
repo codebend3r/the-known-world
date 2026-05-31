@@ -15,7 +15,7 @@ import { FamilyTree } from "@/components/FamilyTree";
 import { HouseInfobox } from "@/components/HouseInfobox";
 import { buildFamilyTree } from "@/lib/family-tree";
 import { buildProseLinkIndex } from "@/lib/prose-links";
-import styles from "@/app/houses/[slug]/page.module.css";
+import styles from "@/app/houses/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const houses = await loadAllHouses();
