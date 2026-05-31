@@ -4,6 +4,8 @@
 .children {
   list-style: none;
   padding: 0;
+  display: grid;
+  gap: 0.4rem;
 }
 
 /* Placed after the reset above so source order beats the equal-specificity
@@ -18,7 +20,8 @@
 .node {
   position: relative;
   padding-left: 1.5rem;
-  margin-top: 0.4rem;
+  display: grid;
+  gap: 0.2rem;
 
   &::before {
     content: "";
@@ -152,7 +155,7 @@ a.name {
 
 .gender {
   font-size: 0.85rem;
-  margin-right: 0.15rem;
+  padding-right: 0.15rem;
 }
 
 .genderM {
@@ -166,11 +169,7 @@ a.name {
 .king {
   font-size: 0.85rem;
   color: var(--gold-leaf);
-  margin-right: 0.15rem;
-}
-
-.children {
-  margin-top: 0.2rem;
+  padding-right: 0.15rem;
 }
 
 .empty {
