@@ -242,6 +242,11 @@
 }
 
 /* Houses not on the sprite sheet */
+.blackfyre {
+  background-image: url('/sigils/blackfyre.png');
+  background-size: contain;
+  background-position: center;
+}
 .chester {
   background-image: url('/sigils/chester.png');
   background-size: contain;
