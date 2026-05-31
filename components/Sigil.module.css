@@ -277,6 +277,11 @@
   background-size: contain;
   background-position: center;
 }
+.peake {
+  background-image: url('/sigils/peake.png');
+  background-size: contain;
+  background-position: center;
+}
 .qorgyle {
   background-image: url('/sigils/qorgyle.png');
   background-size: contain;
