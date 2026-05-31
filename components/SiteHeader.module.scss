@@ -6,23 +6,23 @@
     rgba(232, 211, 160, 0.25) 100%
   );
   position: relative;
-}
 
-.header::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    var(--gold-leaf) 18%,
-    var(--gold-leaf) 82%,
-    transparent 100%
-  );
-  opacity: 0.65;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--gold-leaf) 18%,
+      var(--gold-leaf) 82%,
+      transparent 100%
+    );
+    opacity: 0.65;
+  }
 }
 
 .inner {
@@ -33,6 +33,12 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 0.75rem;
+
+  @media (max-width: 767.98px) {
+    /* md */
+    padding: 0;
+    grid-template-columns: auto 1fr;
+  }
 }
 
 .titleLink {
@@ -43,6 +49,22 @@
   align-items: center;
   position: relative;
   gap: 0;
+
+  &:hover .title,
+  &:focus-visible .title {
+    color: var(--gold-leaf);
+  }
+
+  @media (max-width: 767.98px) {
+    /* md */
+    gap: 0.5rem;
+    padding-block: 0.9rem 0.85rem;
+  }
+
+  @media (max-width: 479.98px) {
+    /* xs */
+    gap: 0.4rem;
+  }
 }
 
 .logo {
@@ -54,6 +76,16 @@
   transform: translateX(-50%);
   top: 50%;
   transform: translate(-50%, -50%);
+
+  @media (max-width: 767.98px) {
+    /* md */
+    height: 3rem;
+  }
+
+  @media (max-width: 479.98px) {
+    /* xs */
+    height: 2.5rem;
+  }
 }
 
 .title {
@@ -69,11 +101,18 @@
   white-space: nowrap;
   position: relative;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
 
-.titleLink:hover .title,
-.titleLink:focus-visible .title {
-  color: var(--gold-leaf);
+  @media (max-width: 767.98px) {
+    /* md */
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+  }
+
+  @media (max-width: 479.98px) {
+    /* xs */
+    font-size: 1.35rem;
+    letter-spacing: 3px;
+  }
 }
 
 .spacer {
@@ -81,40 +120,9 @@
   display: block;
   width: 2.5rem;
   height: 2.5rem;
-}
 
-@media (max-width: 767.98px) {
-  /* md */
-  .inner {
-    padding: 0;
-    grid-template-columns: auto 1fr;
-  }
-  .spacer {
+  @media (max-width: 767.98px) {
+    /* md */
     display: none;
-  }
-  .title {
-    font-size: 1.6rem;
-    letter-spacing: 4px;
-  }
-  .titleLink {
-    gap: 0.5rem;
-    padding-block: 0.9rem 0.85rem;
-  }
-  .logo {
-    height: 3rem;
-  }
-}
-
-@media (max-width: 479.98px) {
-  /* xs */
-  .title {
-    font-size: 1.35rem;
-    letter-spacing: 3px;
-  }
-  .titleLink {
-    gap: 0.4rem;
-  }
-  .logo {
-    height: 2.5rem;
   }
 }
