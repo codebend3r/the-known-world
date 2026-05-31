@@ -40,6 +40,7 @@ const SIGIL_SLUGS = new Set([
   "hornwood",
   "cerwyn",
   "blackfyre",
+  "bar-emmon",
   "celtigar",
   "chester",
   "crakehall",
