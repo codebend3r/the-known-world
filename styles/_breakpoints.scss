@@ -1,0 +1,9 @@
+/* Desktop-first breakpoint thresholds. Each value is one tick below the
+   raw breakpoint (479.98 → xs, 639.98 → sm, …) so adjacent `max-width`
+   and `min-width` queries don't overlap at integer boundaries.
+   Consume via `@use "breakpoints" as bp;` and `@media (max-width: bp.$md)`. */
+$xs: 479.98px;
+$sm: 639.98px;
+$md: 767.98px;
+$lg: 1023.98px;
+$xl: 1279.98px;

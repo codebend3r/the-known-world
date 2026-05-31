@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 /* Break out of the parchment container so the grid can scale up to ~8
    columns on large desktops while remaining centered on the viewport.
    Relies on `ParchmentLayout`'s `.page > *` already setting
@@ -13,8 +15,7 @@
   gap: 1rem;
   width: var(--bleed-width);
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     width: auto;
     left: auto;
   }

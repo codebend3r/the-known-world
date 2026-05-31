@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .row {
   display: grid;
   grid-template-columns: 6.5rem 1fr;
@@ -35,8 +37,7 @@
     }
   }
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     grid-template-columns: 5.5rem 1fr;
   }
 }

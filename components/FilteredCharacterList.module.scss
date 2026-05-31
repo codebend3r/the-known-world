@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .list {
   list-style: none;
   padding: 0;
@@ -28,8 +30,7 @@
     transform 150ms ease,
     box-shadow 150ms ease;
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-areas:
@@ -94,8 +95,7 @@ a.card {
     display: block;
   }
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     grid-area: portrait;
     align-self: stretch;
   }
@@ -109,8 +109,7 @@ a.card {
   width: 3.25rem;
   height: 3.25rem;
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     display: none;
   }
 }
@@ -123,8 +122,7 @@ a.card {
   font-weight: 600;
   line-height: 1.2;
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     grid-area: name;
     align-self: end;
     min-width: 0;
@@ -145,8 +143,7 @@ a.card {
   font-size: 0.85rem;
   color: var(--ink-faded);
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     grid-area: alias;
     align-self: start;
     min-width: 0;

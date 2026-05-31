@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .tree,
 .children {
   list-style: none;
@@ -7,8 +9,7 @@
 /* Placed after the reset above so source order beats the equal-specificity
    `padding: 0` declaration. */
 .tree {
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -63,8 +64,7 @@
   border: 1px solid rgba(107, 68, 35, 0.15);
   border-radius: 2px;
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     padding: 0.4rem 0.6rem;
   }
 }

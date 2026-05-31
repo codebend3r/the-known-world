@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .footer {
   border-top: 1px solid rgba(107, 68, 35, 0.3);
   background: linear-gradient(
@@ -45,8 +47,7 @@
   align-items: center;
   gap: 0.5rem;
 
-  @media (max-width: 479.98px) {
-    /* xs */
+  @media (max-width: bp.$xs) {
     font-size: 0.65rem;
     gap: 0.4rem;
   }

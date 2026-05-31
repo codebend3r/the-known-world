@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 :root {
   --parchment-light: #f4e4c1;
   --parchment-dark: #e8d3a0;
@@ -39,14 +41,10 @@
 }
 
 /* Desktop-first breakpoints — default styles target xl. Each @media rule
-   overrides at the named breakpoint AND below. CSS doesn't allow
-   var(--bp-*) inside @media queries, so the raw thresholds below must
-   stay in sync with the --bp-* values above. Convention:
-     (max-width: 479.98px)  → xs
-     (max-width: 639.98px)  → sm
-     (max-width: 767.98px)  → md
-     (max-width: 1023.98px) → lg
-     (max-width: 1279.98px) → xl */
+   overrides at the named breakpoint AND below. The SCSS breakpoint
+   variables in `styles/_breakpoints.scss` (`bp.$xs`, `bp.$sm`, ...) are
+   the source of truth; the `--bp-*` CSS custom properties above are
+   design tokens exposed for any runtime/JS consumer that needs them. */
 
 *,
 *::before,
@@ -81,8 +79,7 @@ body {
   line-height: 1.65;
   min-height: 100vh;
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     font-size: 20px;
   }
 }
@@ -122,8 +119,7 @@ h3 {
   color: var(--ink-faded);
 }
 
-@media (max-width: 639.98px) {
-  /* sm */
+@media (max-width: bp.$sm) {
   h1,
   h2,
   h3 {

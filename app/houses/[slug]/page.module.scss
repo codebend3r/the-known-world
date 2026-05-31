@@ -1,10 +1,11 @@
+@use "breakpoints" as bp;
+
 .body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -19,8 +20,7 @@
   gap: 2rem;
   align-items: start;
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "heading"

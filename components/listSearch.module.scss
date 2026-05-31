@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .input {
   display: grid;
   width: 100%;
@@ -30,8 +32,7 @@
     transition: none;
   }
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     font-size: 1.05rem;
     padding: 0.85rem 1rem;
   }
@@ -53,8 +54,7 @@
   font-size: 0.9rem;
   color: var(--ink-faded);
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     display: grid;
     grid-template-columns: auto 1fr auto;
     grid-template-areas:
@@ -185,8 +185,7 @@
 .wrap {
   display: grid;
 
-  @media (max-width: 639.98px) {
-    /* sm */
+  @media (max-width: bp.$sm) {
     padding: 0 0.5rem;
   }
 }

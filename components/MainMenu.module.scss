@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .menu {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -25,8 +27,7 @@
     grid-area: dragons;
   }
 
-  @media (max-width: 1023.98px) {
-    /* lg */
+  @media (max-width: bp.$lg) {
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
       "maps       timeline"
@@ -34,8 +35,7 @@
       "weapons    dragons";
   }
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     grid-template-columns: 1fr;
     grid-template-areas:
       "maps"

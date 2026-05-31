@@ -1,3 +1,5 @@
+@use "breakpoints" as bp;
+
 .infobox {
   display: grid;
   grid-template-columns: 1fr;
@@ -14,8 +16,7 @@
   justify-items: stretch;
   gap: 0;
 
-  @media (max-width: 767.98px) {
-    /* md */
+  @media (max-width: bp.$md) {
     width: 90%;
     justify-self: center;
   }
