@@ -36,14 +36,12 @@ function shortHouseName(name: string): string {
 
 function uniqueOrdered(forms: string[]): string[] {
   const seen = new Set<string>();
-  const out: string[] = [];
-  for (const f of forms) {
-    if (f.length < 2) continue;
-    if (seen.has(f)) continue;
+  return forms.reduce<string[]>((acc, f) => {
+    if (f.length < 2 || seen.has(f)) return acc;
     seen.add(f);
-    out.push(f);
-  }
-  return out;
+    acc.push(f);
+    return acc;
+  }, []);
 }
 
 export function buildProseLinkIndex(args: {
@@ -59,68 +57,83 @@ export function buildProseLinkIndex(args: {
 }): ProseLinkIndex {
   const { allCharacters, allHouses, allWeapons, allDragons, current } = args;
   const mentioned = new Set(current.mentions);
-  const targets: ProseLinkTarget[] = [];
 
-  for (const c of allCharacters) {
+  const characterTargets = allCharacters.flatMap<ProseLinkTarget>((c) => {
     const fm = c.frontmatter;
-    if (fm.placeholder || fm.draft) continue;
+    if (fm.placeholder || fm.draft) return [];
     const forms = [fm.name, ...fm.aliases];
     if (mentioned.has(fm.slug)) forms.push(firstNameToken(fm.name));
     const surfaceForms = uniqueOrdered(forms);
-    if (surfaceForms.length === 0) continue;
-    targets.push({
-      slug: fm.slug,
-      kind: "character",
-      href: `/characters/${fm.slug}/`,
-      surfaceForms,
-    });
-  }
+    if (surfaceForms.length === 0) return [];
+    return [
+      {
+        slug: fm.slug,
+        kind: "character",
+        href: `/characters/${fm.slug}/`,
+        surfaceForms,
+      },
+    ];
+  });
 
-  for (const h of allHouses) {
+  const houseTargets = allHouses.flatMap<ProseLinkTarget>((h) => {
     const fm = h.frontmatter;
-    if (fm.draft) continue;
+    if (fm.draft) return [];
     const forms = [fm.name];
     if (mentioned.has(fm.slug)) {
       const short = shortHouseName(fm.name);
       if (short && short !== fm.name) forms.push(short);
     }
     const surfaceForms = uniqueOrdered(forms);
-    if (surfaceForms.length === 0) continue;
-    targets.push({
-      slug: fm.slug,
-      kind: "house",
-      href: `/houses/${fm.slug}/`,
-      surfaceForms,
-    });
-  }
+    if (surfaceForms.length === 0) return [];
+    return [
+      {
+        slug: fm.slug,
+        kind: "house",
+        href: `/houses/${fm.slug}/`,
+        surfaceForms,
+      },
+    ];
+  });
 
-  for (const w of allWeapons) {
+  const weaponTargets = allWeapons.flatMap<ProseLinkTarget>((w) => {
     const fm = w.frontmatter;
-    if (fm.draft) continue;
+    if (fm.draft) return [];
     const surfaceForms = uniqueOrdered([fm.name, ...fm.aliases]);
-    if (surfaceForms.length === 0) continue;
-    targets.push({
-      slug: fm.slug,
-      kind: "weapon",
-      href: `/weapons/${fm.slug}/`,
-      surfaceForms,
-    });
-  }
+    if (surfaceForms.length === 0) return [];
+    return [
+      {
+        slug: fm.slug,
+        kind: "weapon",
+        href: `/weapons/${fm.slug}/`,
+        surfaceForms,
+      },
+    ];
+  });
 
-  for (const d of allDragons) {
+  const dragonTargets = allDragons.flatMap<ProseLinkTarget>((d) => {
     const fm = d.frontmatter;
-    if (fm.draft) continue;
+    if (fm.draft) return [];
     const surfaceForms = uniqueOrdered([fm.name, ...fm.aliases]);
-    if (surfaceForms.length === 0) continue;
-    targets.push({
-      slug: fm.slug,
-      kind: "dragon",
-      href: `/dragons/${fm.slug}/`,
-      surfaceForms,
-    });
-  }
+    if (surfaceForms.length === 0) return [];
+    return [
+      {
+        slug: fm.slug,
+        kind: "dragon",
+        href: `/dragons/${fm.slug}/`,
+        surfaceForms,
+      },
+    ];
+  });
 
-  return { targets, selfSlug: current.slug };
+  return {
+    targets: [
+      ...characterTargets,
+      ...houseTargets,
+      ...weaponTargets,
+      ...dragonTargets,
+    ],
+    selfSlug: current.slug,
+  };
 }
 
 function escapeRegex(s: string): string {
@@ -135,15 +148,16 @@ type CompiledIndex = {
 
 function compileIndex(index: ProseLinkIndex): CompiledIndex | null {
   const formToTarget = new Map<string, ProseLinkTarget>();
-  const allForms: string[] = [];
-  for (const t of index.targets) {
-    if (t.slug === index.selfSlug) continue;
-    for (const f of t.surfaceForms) {
-      if (formToTarget.has(f)) continue;
-      formToTarget.set(f, t);
-      allForms.push(f);
-    }
-  }
+  const allForms = index.targets
+    .filter((t) => t.slug !== index.selfSlug)
+    .reduce<string[]>((acc, t) => {
+      t.surfaceForms.forEach((f) => {
+        if (formToTarget.has(f)) return;
+        formToTarget.set(f, t);
+        acc.push(f);
+      });
+      return acc;
+    }, []);
   if (allForms.length === 0) return null;
   allForms.sort((a, b) => b.length - a.length);
   const pattern = new RegExp(
@@ -161,9 +175,7 @@ export function remarkProseLinks(index: ProseLinkIndex): Plugin<[], Root> {
       const usedSlugs = new Set<string>();
 
       visitParents(tree, "text", (node: Text, ancestors: Parent[]) => {
-        for (const a of ancestors) {
-          if (SKIP_ANCESTOR_TYPES.has(a.type)) return SKIP;
-        }
+        if (ancestors.some((a) => SKIP_ANCESTOR_TYPES.has(a.type))) return SKIP;
         const parent = ancestors[ancestors.length - 1];
         if (!parent) return;
         const replacements = scanText(node, compiled, usedSlugs);
