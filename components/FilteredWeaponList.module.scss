@@ -12,11 +12,9 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
   gap: 1rem;
   width: var(--bleed-width);
-}
 
-@media (max-width: 767.98px) {
-  /* md */
-  .list {
+  @media (max-width: 767.98px) {
+    /* md */
     width: auto;
     left: auto;
   }
@@ -45,6 +43,23 @@
     transform 150ms ease,
     box-shadow 150ms ease;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--gold-leaf);
+    transform: scale(1.01);
+    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
 }
 
 /* Regional border tints — colours live in `globals.css` as
@@ -77,28 +92,10 @@
   border-color: var(--region-color-crownlands);
 }
 
-.card:hover,
-.card:focus-visible {
-  border-color: var(--gold-leaf);
-  transform: scale(1.01);
-  box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-  color: var(--ink);
-}
-
 .name {
   font-family: var(--font-heading);
   font-variant: small-caps;
   letter-spacing: 2px;
   font-size: 1.2rem;
   font-weight: 600;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-  .card:hover,
-  .card:focus-visible {
-    transform: none;
-  }
 }
