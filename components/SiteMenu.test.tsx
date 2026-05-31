@@ -19,7 +19,7 @@ describe('SiteMenu', () => {
     expect(links).toHaveLength(0);
   });
 
-  it('reveals the primary nav with Maps, Timeline, Houses, Characters when opened', () => {
+  it('reveals the primary nav with Maps, Timeline, Houses, Characters, Weapons, Dragons when opened', () => {
     render(<SiteMenu />);
     fireEvent.click(screen.getByRole('button', { name: /open menu/i }));
 
@@ -28,16 +28,18 @@ describe('SiteMenu', () => {
 
     const links = screen.getAllByRole('link');
     const navLinks = links.filter((l) =>
-      ['/maps/', '/timeline/', '/houses/', '/characters/'].includes(
+      ['/maps/', '/timeline/', '/houses/', '/characters/', '/weapons/', '/dragons/'].includes(
         l.getAttribute('href') ?? '',
       ),
     );
-    expect(navLinks).toHaveLength(4);
+    expect(navLinks).toHaveLength(6);
     expect(navLinks.map((l) => l.textContent?.trim())).toEqual([
       'Maps',
       'Timeline',
       'Houses',
       'Characters',
+      'Weapons',
+      'Dragons',
     ]);
   });
 

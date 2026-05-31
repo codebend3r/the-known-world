@@ -37,6 +37,27 @@ const SIGIL = (
   </svg>
 );
 
+const SWORD = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <circle cx="16" cy="5" r="1.7" fill="currentColor" opacity="0.6" />
+    <path d="M16 7 V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M9 10 H23" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M13 11 L16 28 L19 11 Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    <path d="M14 14 H18" stroke="currentColor" strokeWidth="1" opacity="0.5" />
+  </svg>
+);
+
+const DRAGON = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <path
+      d="M6 22 Q4 16 8 12 Q14 14 16 18 Q18 14 24 12 Q28 16 26 22 Z"
+      fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"
+    />
+    <path d="M16 18 V26 M14 26 H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <circle cx="16" cy="14" r="1.5" fill="currentColor" opacity="0.6" />
+  </svg>
+);
+
 export function MainMenu() {
   return (
     <nav className={styles.menu} aria-label="Atlas sections">
@@ -59,6 +80,18 @@ export function MainMenu() {
         subtitle="Read the rolls of the great houses."
         glyph={SIGIL}
         href="/houses/"
+      />
+      <MainMenuTile
+        title="Weapons"
+        subtitle="Lift the blades of legend."
+        glyph={SWORD}
+        href="/weapons/"
+      />
+      <MainMenuTile
+        title="Dragons"
+        subtitle="Wake the dragon."
+        glyph={DRAGON}
+        href="/dragons/"
       />
     </nav>
   );

@@ -1,11 +1,36 @@
 .menu {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-areas:
+    "maps    maps    timeline timeline houses  houses"
+    ".       weapons weapons  dragons  dragons .";
   gap: 1.5rem;
+}
+
+.menu > :nth-child(1) { grid-area: maps; }
+.menu > :nth-child(2) { grid-area: timeline; }
+.menu > :nth-child(3) { grid-area: houses; }
+.menu > :nth-child(4) { grid-area: weapons; }
+.menu > :nth-child(5) { grid-area: dragons; }
+
+@media (max-width: 1023.98px) { /* lg */
+  .menu {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "maps     timeline"
+      "houses   weapons"
+      "dragons  dragons";
+  }
 }
 
 @media (max-width: 767.98px) { /* md */
   .menu {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "maps"
+      "timeline"
+      "houses"
+      "weapons"
+      "dragons";
   }
 }

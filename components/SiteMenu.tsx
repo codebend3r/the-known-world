@@ -11,6 +11,8 @@ const ITEMS = [
   { href: '/timeline/', label: 'Timeline' },
   { href: '/houses/', label: 'Houses' },
   { href: '/characters/', label: 'Characters' },
+  { href: '/weapons/', label: 'Weapons' },
+  { href: '/dragons/', label: 'Dragons' },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {
