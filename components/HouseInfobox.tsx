@@ -11,8 +11,8 @@ import type {
   Weapon,
   Dragon,
 } from "@/lib/schemas";
-import styles from "@/components/HouseInfobox.module.css";
-import infoboxStyles from "@/components/Infobox.module.css";
+import styles from "@/components/HouseInfobox.module.scss";
+import infoboxStyles from "@/components/Infobox.module.scss";
 
 type Props = {
   house: House;

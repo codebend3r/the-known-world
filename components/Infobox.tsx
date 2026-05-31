@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { HouseInfoEntry } from "@/lib/schemas";
-import styles from "@/components/Infobox.module.css";
+import styles from "@/components/Infobox.module.scss";
 
 export function humanizeSlug(slug: string): string {
   return slug

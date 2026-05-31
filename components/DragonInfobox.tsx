@@ -3,8 +3,8 @@ import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { InfoRow, humanizeSlug } from "@/components/Infobox";
 import type { Dragon, House, Character, HouseInfoEntry } from "@/lib/schemas";
-import infoboxStyles from "@/components/HouseInfobox.module.css";
-import sharedStyles from "@/components/Infobox.module.css";
+import infoboxStyles from "@/components/HouseInfobox.module.scss";
+import sharedStyles from "@/components/Infobox.module.scss";
 
 type Props = {
   dragon: Dragon;

@@ -13,6 +13,12 @@
   color: var(--ink);
   justify-items: stretch;
   gap: 0;
+
+  @media (max-width: 767.98px) {
+    /* md */
+    width: 90%;
+    justify-self: center;
+  }
 }
 
 .sigil {
@@ -35,12 +41,4 @@
   flex-direction: column;
   gap: 0.55rem;
   padding: 1rem 1rem 0;
-}
-
-@media (max-width: 767.98px) {
-  /* md */
-  .infobox {
-    width: 90%;
-    justify-self: center;
-  }
 }
