@@ -54,8 +54,8 @@ titles:
   - name: Prince of Summerhall
   - name: Queen of Meereen
 ancestral-weapons:
-  - name: Blackfyre
-  - name: Dark Sister
+  - blackfyre
+  - dark-sister
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Targaryen

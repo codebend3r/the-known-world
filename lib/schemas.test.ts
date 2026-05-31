@@ -4,6 +4,8 @@ import {
   HouseSchema,
   CharacterSchema,
   EventSchema,
+  WeaponSchema,
+  DragonSchema,
 } from '@/lib/schemas';
 
 describe('CastleSchema', () => {
@@ -78,7 +80,7 @@ describe('HouseSchema', () => {
       heads: [{ name: 'Queen Daenerys I', slug: 'daenerys-targaryen' }],
       regions: [{ name: "Slaver's Bay" }],
       titles: [{ name: 'Dragonlord', note: 'pre-Doom' }],
-      'ancestral-weapons': [{ name: 'Blackfyre' }, { name: 'Dark Sister' }],
+      'ancestral-weapons': ['blackfyre', 'dark-sister'],
       sources: [],
     };
     expect(() => HouseSchema.parse(input)).not.toThrow();
@@ -208,5 +210,91 @@ describe('EventSchema', () => {
       draft: false,
     };
     expect(() => EventSchema.parse(input)).not.toThrow();
+  });
+});
+
+describe('WeaponSchema', () => {
+  it('parses a Valyrian-steel sword bound to a house', () => {
+    const input = {
+      slug: 'blackfyre',
+      name: 'Blackfyre',
+      type: 'sword',
+      material: 'valyrian-steel',
+      status: 'lost',
+      'origin-house': 'targaryen',
+      'current-house': null,
+      wielders: ['aegon-i-targaryen', 'daemon-i-blackfyre'],
+      aliases: [],
+      mentions: ['targaryen', 'blackfyre'],
+      sources: [{ type: 'awoiaf', url: 'https://example' }],
+      draft: false,
+    };
+    expect(() => WeaponSchema.parse(input)).not.toThrow();
+  });
+
+  it('rejects an unknown material', () => {
+    const input = {
+      slug: 'x', name: 'X', type: 'sword', material: 'mithril',
+      status: 'extant', 'current-house': null,
+      wielders: [], aliases: [], mentions: [], sources: [],
+    };
+    expect(() => WeaponSchema.parse(input)).toThrow();
+  });
+
+  it('defaults arrays and draft when omitted', () => {
+    const input = {
+      slug: 'x', name: 'X', type: 'dagger', material: 'steel',
+      status: 'extant', 'current-house': null,
+      sources: [],
+    };
+    const parsed = WeaponSchema.parse(input);
+    expect(parsed.wielders).toEqual([]);
+    expect(parsed.aliases).toEqual([]);
+    expect(parsed.mentions).toEqual([]);
+    expect(parsed.draft).toBe(false);
+  });
+});
+
+describe('DragonSchema', () => {
+  it('parses a Targaryen dragon with a rider chain', () => {
+    const input = {
+      slug: 'vhagar',
+      name: 'Vhagar',
+      color: 'bronze and green',
+      size: 'monstrous',
+      hatched: { year: -52, era: 'BC', precision: 'decade' },
+      died: { year: 130, era: 'AC', precision: 'year' },
+      status: 'dead',
+      house: 'targaryen',
+      riders: ['visenya-targaryen', 'aemond-targaryen'],
+      aliases: [],
+      mentions: ['targaryen'],
+      sources: [],
+      draft: false,
+    };
+    expect(() => DragonSchema.parse(input)).not.toThrow();
+  });
+
+  it('parses a wild dragon with no house and no riders', () => {
+    const input = {
+      slug: 'cannibal',
+      name: 'The Cannibal',
+      hatched: null, died: null,
+      status: 'wild', house: null,
+      sources: [],
+    };
+    const parsed = DragonSchema.parse(input);
+    expect(parsed.house).toBeNull();
+    expect(parsed.riders).toEqual([]);
+  });
+
+  it('rejects an unknown status', () => {
+    const input = {
+      slug: 'x', name: 'X',
+      hatched: null, died: null,
+      status: 'sleeping', house: null,
+      sources: [],
+    };
+    expect(() => DragonSchema.parse(input)).toThrow();
   });
 });

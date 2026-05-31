@@ -113,7 +113,9 @@ export function HouseInfobox({
   const heads = house.heads ?? [];
   const regions = house.regions ?? [];
   const titles = house.titles ?? [];
-  const weapons = house['ancestral-weapons'] ?? [];
+  const weapons: HouseInfoEntry[] = (house['ancestral-weapons'] ?? []).map(
+    (slug) => ({ slug, name: humanizeSlug(slug) }),
+  );
 
   const cadets: HouseInfoEntry[] = house['cadet-houses'].map((slug) => ({
     slug,

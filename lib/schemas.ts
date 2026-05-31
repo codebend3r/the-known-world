@@ -37,6 +37,52 @@ export const CastleSchema = z.object({
   draft: z.boolean().default(false),
 });
 
+const WeaponTypeSchema = z.enum([
+  'sword', 'greatsword', 'longsword', 'dagger', 'axe', 'spear', 'bow', 'horn', 'other',
+]);
+
+const MaterialSchema = z.enum([
+  'valyrian-steel', 'dragonglass', 'dragonbone', 'steel', 'other',
+]);
+
+const WeaponStatusSchema = z.enum(['extant', 'lost', 'destroyed']);
+
+export const WeaponSchema = z.object({
+  slug: z.string().min(1),
+  name: z.string().min(1),
+  type: WeaponTypeSchema,
+  material: MaterialSchema,
+  forged: DateSchema.optional(),
+  destroyed: DateSchema.optional(),
+  status: WeaponStatusSchema,
+  'origin-house': z.string().optional(),
+  'current-house': z.string().nullable(),
+  wielders: z.array(z.string()).default([]),
+  aliases: z.array(z.string()).default([]),
+  mentions: z.array(z.string()).default([]),
+  sources: z.array(SourceSchema).default([]),
+  draft: z.boolean().default(false),
+});
+
+const DragonStatusSchema = z.enum(['extant', 'dead', 'lost', 'wild']);
+const DragonSizeSchema = z.enum(['hatchling', 'young', 'mature', 'great', 'monstrous']);
+
+export const DragonSchema = z.object({
+  slug: z.string().min(1),
+  name: z.string().min(1),
+  color: z.string().optional(),
+  size: DragonSizeSchema.optional(),
+  hatched: DateSchema.nullable(),
+  died: DateSchema.nullable(),
+  status: DragonStatusSchema,
+  house: z.string().nullable(),
+  riders: z.array(z.string()).default([]),
+  aliases: z.array(z.string()).default([]),
+  mentions: z.array(z.string()).default([]),
+  sources: z.array(SourceSchema).default([]),
+  draft: z.boolean().default(false),
+});
+
 const HouseInfoEntrySchema = z.object({
   name: z.string().min(1),
   slug: z.string().optional(),
@@ -61,7 +107,7 @@ export const HouseSchema = z.object({
   heads: z.array(HouseInfoEntrySchema).optional(),
   regions: z.array(HouseInfoEntrySchema).optional(),
   titles: z.array(HouseInfoEntrySchema).optional(),
-  'ancestral-weapons': z.array(HouseInfoEntrySchema).optional(),
+  'ancestral-weapons': z.array(z.string()).optional(),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });
@@ -110,3 +156,5 @@ export type HouseInfoEntry = z.infer<typeof HouseInfoEntrySchema>;
 export type Character = z.infer<typeof CharacterSchema>;
 export type Event = z.infer<typeof EventSchema>;
 export type Source = z.infer<typeof SourceSchema>;
+export type Weapon = z.infer<typeof WeaponSchema>;
+export type Dragon = z.infer<typeof DragonSchema>;

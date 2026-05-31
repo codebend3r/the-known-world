@@ -55,8 +55,7 @@ titles:
   - name: Captain-General of the Golden Company
     note: by tradition, while the male line endured
 ancestral-weapons:
-  - name: Blackfyre
-    note: the Valyrian steel sword of Aegon the Conqueror, lost with Bittersteel after the Redgrass Field
+  - blackfyre
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Blackfyre
