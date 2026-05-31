@@ -21,9 +21,10 @@ children:
   - aerea-targaryen
   - rhaella-targaryen-daughter-of-aegon
 titles:
-  - Queen in the West
   - Queen of the Seven Kingdoms
   - Lady of Dragonstone
+aliases:
+  - Queen in the West
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaena_Targaryen_(daughter_of_Aenys_I)
