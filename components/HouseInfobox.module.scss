@@ -31,7 +31,7 @@
    `100cqw` resolves against `.sigil` (the established container), avoiding
    the circular trap of percentage sizes. The sprite math still scales
    correctly because `background-size` derives from `--sigil-size`.
-   Lives on the Sigil element so its declaration follows `Sigil.module.css`
+   Lives on the Sigil element so its declaration follows `Sigil.module.scss`
    in source order and wins at equal specificity. */
 .sigilFill {
   --sigil-size: 100cqw;
