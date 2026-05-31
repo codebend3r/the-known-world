@@ -80,3 +80,25 @@ describe('loadDragon', () => {
     await expect(loadDragon('does-not-exist')).rejects.toThrow();
   });
 });
+
+describe('loadWeapon round-trip', () => {
+  it('loads Blackfyre with the canonical Valyrian-steel material', async () => {
+    const result = await loadWeapon('blackfyre');
+    expect(result.frontmatter.slug).toBe('blackfyre');
+    expect(result.frontmatter.material).toBe('valyrian-steel');
+    expect(result.frontmatter.status).toBe('lost');
+  });
+
+  it('lists Eddard among Ice\'s wielders', async () => {
+    const result = await loadWeapon('ice');
+    expect(result.frontmatter.wielders).toContain('eddard-stark');
+  });
+});
+
+describe('loadAllWeapons round-trip', () => {
+  it('returns all four seeded weapons', async () => {
+    const all = await loadAllWeapons();
+    const slugs = all.map((w) => w.frontmatter.slug).sort();
+    expect(slugs).toEqual(['blackfyre', 'dark-sister', 'heartsbane', 'ice']);
+  });
+});

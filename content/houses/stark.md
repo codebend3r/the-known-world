@@ -14,6 +14,8 @@ status: extant
 sworn-from: []
 cadet-houses:
   - karstark
+ancestral-weapons:
+  - ice
 region: north
 sources:
   - type: awoiaf

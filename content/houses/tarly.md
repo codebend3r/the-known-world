@@ -13,6 +13,8 @@ founded:
 status: extant
 sworn-from: []
 cadet-houses: []
+ancestral-weapons:
+  - heartsbane
 region: reach
 sources:
   - type: awoiaf
