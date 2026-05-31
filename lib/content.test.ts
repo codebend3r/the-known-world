@@ -102,3 +102,27 @@ describe('loadAllWeapons round-trip', () => {
     expect(slugs).toEqual(['blackfyre', 'dark-sister', 'heartsbane', 'ice']);
   });
 });
+
+describe('loadDragon round-trip', () => {
+  it('loads Balerion with monstrous size', async () => {
+    const result = await loadDragon('balerion');
+    expect(result.frontmatter.slug).toBe('balerion');
+    expect(result.frontmatter.size).toBe('monstrous');
+  });
+
+  it('parses the Cannibal as a wild dragon (house null, status wild)', async () => {
+    const result = await loadDragon('cannibal');
+    expect(result.frontmatter.house).toBeNull();
+    expect(result.frontmatter.status).toBe('wild');
+  });
+});
+
+describe('loadAllDragons round-trip', () => {
+  it('returns all seven seeded dragons', async () => {
+    const all = await loadAllDragons();
+    const slugs = all.map((d) => d.frontmatter.slug).sort();
+    expect(slugs).toEqual([
+      'balerion', 'cannibal', 'caraxes', 'meraxes', 'sunfyre', 'vermithor', 'vhagar',
+    ]);
+  });
+});
