@@ -3,6 +3,8 @@ import Link from 'next/link';
 import {
   loadAllCharacters,
   loadAllHouses,
+  loadAllWeapons,
+  loadAllDragons,
   loadCharacter,
   renderMarkdown,
 } from '@/lib/content';
@@ -102,11 +104,14 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
 
   const fm = character.frontmatter;
 
-  const [allCharacters, allHouses, portrait] = await Promise.all([
-    loadAllCharacters(),
-    loadAllHouses(),
-    findPortrait(slug, fm.sex),
-  ]);
+  const [allCharacters, allHouses, allWeapons, allDragons, portrait] =
+    await Promise.all([
+      loadAllCharacters(),
+      loadAllHouses(),
+      loadAllWeapons(),
+      loadAllDragons(),
+      findPortrait(slug, fm.sex),
+    ]);
 
   const charactersBySlug = new Map(allCharacters.map((c) => [c.slug, c.frontmatter]));
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
@@ -124,6 +129,8 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const proseLinks = buildProseLinkIndex({
     allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
     allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
+    allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
+    allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
     current: { kind: 'character', slug, mentions: fm.mentions },
   });
   const html = character.body.trim()

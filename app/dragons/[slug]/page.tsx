@@ -3,10 +3,12 @@ import Link from 'next/link';
 import {
   loadDragon,
   loadAllDragons,
+  loadAllWeapons,
   loadAllHouses,
   loadAllCharacters,
   renderMarkdown,
 } from '@/lib/content';
+import { buildProseLinkIndex } from '@/lib/prose-links';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sources } from '@/components/Sources';
 import { DragonInfobox } from '@/components/DragonInfobox';
@@ -39,11 +41,14 @@ export default async function DragonPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [dragon, allHouses, allCharacters] = await Promise.all([
-    loadDragon(slug).catch(() => null),
-    loadAllHouses(),
-    loadAllCharacters(),
-  ]);
+  const [dragon, allHouses, allCharacters, allWeapons, allDragons] =
+    await Promise.all([
+      loadDragon(slug).catch(() => null),
+      loadAllHouses(),
+      loadAllCharacters(),
+      loadAllWeapons(),
+      loadAllDragons(),
+    ]);
   if (!dragon) notFound();
 
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
@@ -52,7 +57,17 @@ export default async function DragonPage({
   );
 
   const fm = dragon.frontmatter;
-  const html = fm && dragon.body.trim() ? await renderMarkdown(dragon.body) : '';
+  const proseLinks = buildProseLinkIndex({
+    allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
+    allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
+    allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
+    allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
+    current: { kind: 'dragon', slug, mentions: dragon.frontmatter.mentions },
+  });
+  const html =
+    fm && dragon.body.trim()
+      ? await renderMarkdown(dragon.body, { proseLinks })
+      : '';
   const house = fm.house ? housesBySlug.get(fm.house) : undefined;
   const subtitle = house
     ? `Of ${house.name}`

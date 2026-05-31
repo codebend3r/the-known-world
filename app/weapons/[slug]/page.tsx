@@ -3,10 +3,12 @@ import Link from 'next/link';
 import {
   loadWeapon,
   loadAllWeapons,
+  loadAllDragons,
   loadAllHouses,
   loadAllCharacters,
   renderMarkdown,
 } from '@/lib/content';
+import { buildProseLinkIndex } from '@/lib/prose-links';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
 import { Sources } from '@/components/Sources';
 import { WeaponInfobox } from '@/components/WeaponInfobox';
@@ -58,11 +60,14 @@ export default async function WeaponPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [weapon, allHouses, allCharacters] = await Promise.all([
-    loadWeapon(slug).catch(() => null),
-    loadAllHouses(),
-    loadAllCharacters(),
-  ]);
+  const [weapon, allHouses, allCharacters, allWeapons, allDragons] =
+    await Promise.all([
+      loadWeapon(slug).catch(() => null),
+      loadAllHouses(),
+      loadAllCharacters(),
+      loadAllWeapons(),
+      loadAllDragons(),
+    ]);
   if (!weapon) notFound();
 
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
@@ -71,7 +76,17 @@ export default async function WeaponPage({
   );
 
   const fm = weapon.frontmatter;
-  const html = fm && weapon.body.trim() ? await renderMarkdown(weapon.body) : '';
+  const proseLinks = buildProseLinkIndex({
+    allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
+    allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
+    allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
+    allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
+    current: { kind: 'weapon', slug, mentions: weapon.frontmatter.mentions },
+  });
+  const html =
+    fm && weapon.body.trim()
+      ? await renderMarkdown(weapon.body, { proseLinks })
+      : '';
   const originHouse = fm['origin-house']
     ? housesBySlug.get(fm['origin-house'])
     : undefined;

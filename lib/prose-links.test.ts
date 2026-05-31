@@ -1,10 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { buildProseLinkIndex, type ProseLinkIndex } from '@/lib/prose-links';
 import { renderMarkdown } from '@/lib/content';
-import type { Character, House } from '@/lib/schemas';
+import type { Character, House, Weapon, Dragon } from '@/lib/schemas';
 
 type CharacterFixture = { slug: string; frontmatter: Character };
 type HouseFixture = { slug: string; frontmatter: House };
+type WeaponFixture = { slug: string; frontmatter: Weapon };
+type DragonFixture = { slug: string; frontmatter: Dragon };
 
 function character(partial: Partial<Character> & Pick<Character, 'slug' | 'name'>): CharacterFixture {
   const fm: Character = {
@@ -73,9 +75,15 @@ const STARK = house({ slug: 'stark', name: 'House Stark' });
 const TARGARYEN = house({ slug: 'targaryen', name: 'House Targaryen' });
 
 function indexFor(args: {
-  current: { kind: 'character' | 'house'; slug: string; mentions?: readonly string[] };
+  current: {
+    kind: 'character' | 'house' | 'weapon' | 'dragon';
+    slug: string;
+    mentions?: readonly string[];
+  };
   characters?: CharacterFixture[];
   houses?: HouseFixture[];
+  weapons?: WeaponFixture[];
+  dragons?: DragonFixture[];
 }): ProseLinkIndex {
   return buildProseLinkIndex({
     allCharacters: args.characters ?? [
@@ -87,6 +95,8 @@ function indexFor(args: {
       AERYS_II,
     ],
     allHouses: args.houses ?? [STARK, TARGARYEN],
+    allWeapons: args.weapons ?? [],
+    allDragons: args.dragons ?? [],
     current: { ...args.current, mentions: args.current.mentions ?? [] },
   });
 }
@@ -265,6 +275,8 @@ describe('buildProseLinkIndex', () => {
     const out = buildProseLinkIndex({
       allCharacters: [RICKARD, CATELYN],
       allHouses: [],
+      allWeapons: [],
+      allDragons: [],
       current: { kind: 'character', slug: 'self', mentions: ['rickard-stark'] },
     });
     const rickard = out.targets.find((t) => t.slug === 'rickard-stark');
@@ -279,6 +291,8 @@ describe('buildProseLinkIndex', () => {
     const out = buildProseLinkIndex({
       allCharacters: [],
       allHouses: [STARK, TARGARYEN],
+      allWeapons: [],
+      allDragons: [],
       current: { kind: 'house', slug: 'self', mentions: ['stark'] },
     });
     const stark = out.targets.find((t) => t.slug === 'stark');
@@ -287,5 +301,73 @@ describe('buildProseLinkIndex', () => {
     expect(stark?.surfaceForms).toContain('House Stark');
     expect(targ?.surfaceForms).not.toContain('Targaryen');
     expect(targ?.surfaceForms).toContain('House Targaryen');
+  });
+});
+
+const weaponBase: Weapon = {
+  slug: 'blackfyre',
+  name: 'Blackfyre',
+  type: 'sword',
+  material: 'valyrian-steel',
+  status: 'lost',
+  'origin-house': 'targaryen',
+  'current-house': null,
+  wielders: [],
+  aliases: [],
+  mentions: [],
+  sources: [],
+  draft: false,
+};
+
+const dragonBase: Dragon = {
+  slug: 'vhagar',
+  name: 'Vhagar',
+  hatched: null,
+  died: null,
+  status: 'dead',
+  house: 'targaryen',
+  riders: [],
+  aliases: [],
+  mentions: [],
+  sources: [],
+  draft: false,
+};
+
+describe('buildProseLinkIndex (weapons and dragons)', () => {
+  it('emits weapon targets with `/weapons/<slug>/` hrefs', () => {
+    const out = buildProseLinkIndex({
+      allCharacters: [],
+      allHouses: [],
+      allWeapons: [{ slug: 'blackfyre', frontmatter: weaponBase }],
+      allDragons: [],
+      current: { kind: 'house', slug: 'targaryen', mentions: [] },
+    });
+    const target = out.targets.find((t) => t.slug === 'blackfyre');
+    expect(target?.href).toBe('/weapons/blackfyre/');
+    expect(target?.kind).toBe('weapon');
+  });
+
+  it('emits dragon targets with `/dragons/<slug>/` hrefs', () => {
+    const out = buildProseLinkIndex({
+      allCharacters: [],
+      allHouses: [],
+      allWeapons: [],
+      allDragons: [{ slug: 'vhagar', frontmatter: dragonBase }],
+      current: { kind: 'house', slug: 'targaryen', mentions: [] },
+    });
+    const target = out.targets.find((t) => t.slug === 'vhagar');
+    expect(target?.href).toBe('/dragons/vhagar/');
+    expect(target?.kind).toBe('dragon');
+  });
+
+  it('does not link a weapon to itself when current.kind=weapon', () => {
+    const out = buildProseLinkIndex({
+      allCharacters: [],
+      allHouses: [],
+      allWeapons: [{ slug: 'blackfyre', frontmatter: weaponBase }],
+      allDragons: [],
+      current: { kind: 'weapon', slug: 'blackfyre', mentions: [] },
+    });
+    expect(out.selfSlug).toBe('blackfyre');
   });
 });

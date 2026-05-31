@@ -5,6 +5,8 @@ import {
   loadAllHouses,
   loadAllCastles,
   loadAllCharacters,
+  loadAllWeapons,
+  loadAllDragons,
   renderMarkdown,
 } from '@/lib/content';
 import { ParchmentLayout } from '@/components/ParchmentLayout';
@@ -34,12 +36,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function HousePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const [house, allHouses, castles, characters] = await Promise.all([
-    loadHouse(slug).catch(() => null),
-    loadAllHouses(),
-    loadAllCastles(),
-    loadAllCharacters(),
-  ]);
+  const [house, allHouses, castles, characters, allWeapons, allDragons] =
+    await Promise.all([
+      loadHouse(slug).catch(() => null),
+      loadAllHouses(),
+      loadAllCastles(),
+      loadAllCharacters(),
+      loadAllWeapons(),
+      loadAllDragons(),
+    ]);
   if (!house) notFound();
 
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
@@ -49,6 +54,8 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
   const proseLinks = buildProseLinkIndex({
     allCharacters: characters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
     allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
+    allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
+    allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
     current: { kind: 'house', slug, mentions: house.frontmatter.mentions },
   });
   const html = await renderMarkdown(house.body, { proseLinks });

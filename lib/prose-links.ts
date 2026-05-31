@@ -1,11 +1,11 @@
 import type { Plugin } from 'unified';
 import type { Root, Text, Link, Parent } from 'mdast';
 import { visitParents, SKIP } from 'unist-util-visit-parents';
-import type { Character, House } from '@/lib/schemas';
+import type { Character, House, Weapon, Dragon } from '@/lib/schemas';
 
 export type ProseLinkTarget = {
   slug: string;
-  kind: 'character' | 'house';
+  kind: 'character' | 'house' | 'weapon' | 'dragon';
   href: string;
   surfaceForms: string[];
 };
@@ -49,9 +49,15 @@ function uniqueOrdered(forms: string[]): string[] {
 export function buildProseLinkIndex(args: {
   allCharacters: ReadonlyArray<{ slug: string; frontmatter: Character }>;
   allHouses: ReadonlyArray<{ slug: string; frontmatter: House }>;
-  current: { kind: 'character' | 'house'; slug: string; mentions: readonly string[] };
+  allWeapons: ReadonlyArray<{ slug: string; frontmatter: Weapon }>;
+  allDragons: ReadonlyArray<{ slug: string; frontmatter: Dragon }>;
+  current: {
+    kind: 'character' | 'house' | 'weapon' | 'dragon';
+    slug: string;
+    mentions: readonly string[];
+  };
 }): ProseLinkIndex {
-  const { allCharacters, allHouses, current } = args;
+  const { allCharacters, allHouses, allWeapons, allDragons, current } = args;
   const mentioned = new Set(current.mentions);
   const targets: ProseLinkTarget[] = [];
 
@@ -84,6 +90,32 @@ export function buildProseLinkIndex(args: {
       slug: fm.slug,
       kind: 'house',
       href: `/houses/${fm.slug}/`,
+      surfaceForms,
+    });
+  }
+
+  for (const w of allWeapons) {
+    const fm = w.frontmatter;
+    if (fm.draft) continue;
+    const surfaceForms = uniqueOrdered([fm.name, ...fm.aliases]);
+    if (surfaceForms.length === 0) continue;
+    targets.push({
+      slug: fm.slug,
+      kind: 'weapon',
+      href: `/weapons/${fm.slug}/`,
+      surfaceForms,
+    });
+  }
+
+  for (const d of allDragons) {
+    const fm = d.frontmatter;
+    if (fm.draft) continue;
+    const surfaceForms = uniqueOrdered([fm.name, ...fm.aliases]);
+    if (surfaceForms.length === 0) continue;
+    targets.push({
+      slug: fm.slug,
+      kind: 'dragon',
+      href: `/dragons/${fm.slug}/`,
       surfaceForms,
     });
   }
