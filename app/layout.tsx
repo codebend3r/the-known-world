@@ -5,7 +5,7 @@ import {
   Cormorant_Unicase,
   EB_Garamond,
 } from "next/font/google";
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
