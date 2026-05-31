@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import {
   loadAllCharacters,
@@ -11,7 +12,6 @@ import {
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ageAtDeath } from "@/lib/age";
 import { findPortrait } from "@/lib/portraits";
-import { cdnImage } from "@/lib/cdn-image";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
@@ -175,12 +175,13 @@ export default async function CharacterPage({
   return (
     <ParchmentLayout>
       <div className={styles.portrait}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={cdnImage(portrait, { w: 1200, fm: "webp", q: 80 })}
+        <Image
+          src={portrait}
           alt={`Portrait of ${fm.name}`}
-          loading="lazy"
-          decoding="async"
+          width={1200}
+          height={1600}
+          sizes="(max-width: 768px) 100vw, 600px"
+          priority
         />
       </div>
       <div className={styles.heading}>
