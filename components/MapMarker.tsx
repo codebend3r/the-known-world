@@ -1,5 +1,5 @@
 import type { Castle } from "@/lib/schemas";
-import styles from "@/components/MapMarker.module.css";
+import styles from "@/components/MapMarker.module.scss";
 
 type Props = {
   slug: string;

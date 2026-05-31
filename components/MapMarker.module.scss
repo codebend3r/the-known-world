@@ -1,10 +1,15 @@
 .marker {
   cursor: pointer;
   transition: transform 0.15s;
-}
 
-.marker:hover {
-  transform: scale(1.4);
+  &:hover {
+    transform: scale(1.4);
+  }
+
+  &:hover .label,
+  &:focus .label {
+    opacity: 1;
+  }
 }
 
 .label {
@@ -16,9 +21,4 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.15s;
-}
-
-.marker:hover .label,
-.marker:focus .label {
-  opacity: 1;
 }
