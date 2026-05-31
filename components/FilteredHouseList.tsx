@@ -6,8 +6,8 @@ import { Sigil } from "@/components/Sigil";
 import { ViewToggle, type ViewMode } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
-import listSearch from "@/components/listSearch.module.css";
-import styles from "@/components/FilteredHouseList.module.css";
+import listSearch from "@/components/listSearch.module.scss";
+import styles from "@/components/FilteredHouseList.module.scss";
 
 export type HouseItem = {
   slug: string;

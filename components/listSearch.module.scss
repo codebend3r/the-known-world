@@ -13,18 +13,28 @@
     border-color 150ms ease,
     background 150ms ease,
     box-shadow 150ms ease;
-}
 
-.input::placeholder {
-  color: var(--ink-faded);
-  font-style: italic;
-}
+  &::placeholder {
+    color: var(--ink-faded);
+    font-style: italic;
+  }
 
-.input:focus,
-.input:focus-visible {
-  border-color: var(--gold-leaf);
-  background: rgba(248, 236, 208, 0.9);
-  box-shadow: 0 0 0 2px rgba(212, 162, 89, 0.18);
+  &:focus,
+  &:focus-visible {
+    border-color: var(--gold-leaf);
+    background: rgba(248, 236, 208, 0.9);
+    box-shadow: 0 0 0 2px rgba(212, 162, 89, 0.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (max-width: 639.98px) {
+    /* sm */
+    font-size: 1.05rem;
+    padding: 0.85rem 1rem;
+  }
 }
 
 .empty {
@@ -42,6 +52,39 @@
   font-family: var(--font-ui);
   font-size: 0.9rem;
   color: var(--ink-faded);
+
+  @media (max-width: 639.98px) {
+    /* sm */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas:
+      "prev status next"
+      "size  size   size";
+    column-gap: 0.6rem;
+    row-gap: 0.5rem;
+    align-items: center;
+    justify-items: center;
+
+    > :nth-child(1) {
+      grid-area: prev;
+      justify-self: start;
+    }
+
+    > :nth-child(2) {
+      grid-area: status;
+      white-space: nowrap;
+    }
+
+    > :nth-child(3) {
+      grid-area: size;
+      white-space: nowrap;
+    }
+
+    > :nth-child(4) {
+      grid-area: next;
+      justify-self: end;
+    }
+  }
 }
 
 /* `.paginationTop` / `.paginationBottom` are marker classes — they carry no
@@ -67,18 +110,22 @@
     border-color 120ms ease,
     background 120ms ease,
     color 120ms ease;
-}
 
-.button:hover:not(:disabled),
-.button:focus-visible:not(:disabled) {
-  border-color: var(--gold-leaf);
-  color: var(--gold-leaf);
-  outline: none;
-}
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled) {
+    border-color: var(--gold-leaf);
+    color: var(--gold-leaf);
+    outline: none;
+  }
 
-.button:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 .status {
@@ -122,78 +169,24 @@
     border-color 120ms ease,
     background-color 120ms ease,
     color 120ms ease;
-}
 
-.pageSizeSelect:hover,
-.pageSizeSelect:focus-visible {
-  border-color: var(--gold-leaf);
-  color: var(--gold-leaf);
-  outline: none;
-}
+  &:hover,
+  &:focus-visible {
+    border-color: var(--gold-leaf);
+    color: var(--gold-leaf);
+    outline: none;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  .button,
-  .pageSizeSelect {
+  @media (prefers-reduced-motion: reduce) {
     transition: none;
-  }
-}
-
-@media (max-width: 639.98px) {
-  /* sm */
-  .pagination {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    grid-template-areas:
-      "prev status next"
-      "size  size   size";
-    column-gap: 0.6rem;
-    row-gap: 0.5rem;
-    align-items: center;
-    justify-items: center;
-  }
-
-  .pagination > :nth-child(1) {
-    grid-area: prev;
-    justify-self: start;
-  }
-
-  .pagination > :nth-child(2) {
-    grid-area: status;
-    white-space: nowrap;
-  }
-
-  .pagination > :nth-child(3) {
-    grid-area: size;
-    white-space: nowrap;
-  }
-
-  .pagination > :nth-child(4) {
-    grid-area: next;
-    justify-self: end;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .input {
-    transition: none;
-  }
-}
-
-@media (max-width: 639.98px) {
-  /* sm */
-  .input {
-    font-size: 1.05rem;
-    padding: 0.85rem 1rem;
   }
 }
 
 .wrap {
   display: grid;
-}
 
-@media (max-width: 639.98px) {
-  /* sm */
-  .wrap {
+  @media (max-width: 639.98px) {
+    /* sm */
     padding: 0 0.5rem;
   }
 }
@@ -202,8 +195,8 @@
   display: flex;
   align-items: stretch;
   gap: 0.75rem;
-}
 
-.row .input {
-  flex: 1;
+  .input {
+    flex: 1;
+  }
 }

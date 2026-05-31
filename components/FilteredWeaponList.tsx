@@ -5,8 +5,8 @@ import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
-import listSearch from "@/components/listSearch.module.css";
-import styles from "@/components/FilteredWeaponList.module.css";
+import listSearch from "@/components/listSearch.module.scss";
+import styles from "@/components/FilteredWeaponList.module.scss";
 
 export type WeaponItem = {
   slug: string;
