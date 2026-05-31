@@ -84,6 +84,31 @@ body {
   }
 }
 
+/* The root layout renders SiteHeader, page content, then SiteFooter as the
+   three direct children of `<body>`. A named-area grid drives the vertical
+   stack so the 10rem gap before the footer is layout (a grid row), not a
+   `margin-top` on the footer module. */
+body {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 1fr 10rem auto;
+  grid-template-areas:
+    "header"
+    "content"
+    "."
+    "footer";
+
+  & > :first-child {
+    grid-area: header;
+  }
+  & > :nth-child(2) {
+    grid-area: content;
+  }
+  & > :last-child {
+    grid-area: footer;
+  }
+}
+
 h1,
 h2,
 h3,
