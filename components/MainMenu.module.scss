@@ -5,41 +5,37 @@
     "maps       maps       timeline   timeline   houses  houses"
     "characters characters weapons    weapons    dragons dragons";
   gap: 1.5rem;
-}
 
-.menu > :nth-child(1) {
-  grid-area: maps;
-}
-.menu > :nth-child(2) {
-  grid-area: timeline;
-}
-.menu > :nth-child(3) {
-  grid-area: houses;
-}
-.menu > :nth-child(4) {
-  grid-area: characters;
-}
-.menu > :nth-child(5) {
-  grid-area: weapons;
-}
-.menu > :nth-child(6) {
-  grid-area: dragons;
-}
+  > :nth-child(1) {
+    grid-area: maps;
+  }
+  > :nth-child(2) {
+    grid-area: timeline;
+  }
+  > :nth-child(3) {
+    grid-area: houses;
+  }
+  > :nth-child(4) {
+    grid-area: characters;
+  }
+  > :nth-child(5) {
+    grid-area: weapons;
+  }
+  > :nth-child(6) {
+    grid-area: dragons;
+  }
 
-@media (max-width: 1023.98px) {
-  /* lg */
-  .menu {
+  @media (max-width: 1023.98px) {
+    /* lg */
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
       "maps       timeline"
       "houses     characters"
       "weapons    dragons";
   }
-}
 
-@media (max-width: 767.98px) {
-  /* md */
-  .menu {
+  @media (max-width: 767.98px) {
+    /* md */
     grid-template-columns: 1fr;
     grid-template-areas:
       "maps"
