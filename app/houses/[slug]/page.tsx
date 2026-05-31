@@ -50,6 +50,10 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
   const castlesBySlug = new Map(castles.map((c) => [c.slug, c.frontmatter]));
   const charactersBySlug = new Map(characters.map((c) => [c.slug, c.frontmatter]));
+  const weaponsBySlug = new Map(allWeapons.map((w) => [w.slug, w.frontmatter]));
+  const dragonsForHouse = allDragons
+    .map((d) => d.frontmatter)
+    .filter((d) => d.house === slug && !d.draft);
 
   const proseLinks = buildProseLinkIndex({
     allCharacters: characters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
@@ -75,6 +79,8 @@ export default async function HousePage({ params }: { params: Promise<{ slug: st
           castlesBySlug={castlesBySlug}
           charactersBySlug={charactersBySlug}
           housesBySlug={housesBySlug}
+          weaponsBySlug={weaponsBySlug}
+          dragonsForHouse={dragonsForHouse}
           className={styles.infobox}
         />
         <div className={styles.main}>

@@ -131,6 +131,14 @@
   font-style: italic;
 }
 
+.crossList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
 .back {
   font-family: var(--font-ui);
   font-size: 0.9rem;

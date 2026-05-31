@@ -126,6 +126,14 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const children = resolveRelations(fm.children, charactersBySlug);
   const hasFamily = parents.length + spouses.length + children.length > 0;
 
+  const bornBy = allWeapons
+    .map((w) => w.frontmatter)
+    .filter((w) => !w.draft && w.wielders.includes(slug));
+
+  const ridden = allDragons
+    .map((d) => d.frontmatter)
+    .filter((d) => !d.draft && d.riders.includes(slug));
+
   const proseLinks = buildProseLinkIndex({
     allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
     allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
@@ -237,6 +245,32 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             <RelationRow label="Spouses" refs={spouses} />
             <RelationRow label="Children" refs={children} />
           </dl>
+        </section>
+      )}
+
+      {bornBy.length > 0 && (
+        <section aria-labelledby="bore-heading">
+          <h2 id="bore-heading">Bore</h2>
+          <ul className={styles.crossList}>
+            {bornBy.map((w) => (
+              <li key={w.slug}>
+                <Link href={`/weapons/${w.slug}/`}>{w.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {ridden.length > 0 && (
+        <section aria-labelledby="rode-heading">
+          <h2 id="rode-heading">Rode</h2>
+          <ul className={styles.crossList}>
+            {ridden.map((d) => (
+              <li key={d.slug}>
+                <Link href={`/dragons/${d.slug}/`}>{d.name}</Link>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

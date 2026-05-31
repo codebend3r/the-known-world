@@ -8,6 +8,8 @@ import type {
   Castle,
   Character,
   HouseInfoEntry,
+  Weapon,
+  Dragon,
 } from '@/lib/schemas';
 import styles from '@/components/HouseInfobox.module.css';
 import infoboxStyles from '@/components/Infobox.module.css';
@@ -17,6 +19,8 @@ type Props = {
   castlesBySlug: Map<string, Castle>;
   charactersBySlug: Map<string, Character>;
   housesBySlug: Map<string, House>;
+  weaponsBySlug: Map<string, Weapon>;
+  dragonsForHouse: Dragon[];
   className?: string;
 };
 
@@ -41,6 +45,8 @@ export function HouseInfobox({
   castlesBySlug,
   charactersBySlug,
   housesBySlug,
+  weaponsBySlug,
+  dragonsForHouse,
   className,
 }: Props) {
   const seats: HouseInfoEntry[] =
@@ -56,8 +62,16 @@ export function HouseInfobox({
   const regions = house.regions ?? [];
   const titles = house.titles ?? [];
   const weapons: HouseInfoEntry[] = (house['ancestral-weapons'] ?? []).map(
-    (slug) => ({ slug, name: humanizeSlug(slug) }),
+    (slug) => ({
+      slug,
+      name: weaponsBySlug.get(slug)?.name ?? humanizeSlug(slug),
+    }),
   );
+
+  const dragons: HouseInfoEntry[] = dragonsForHouse.map((d) => ({
+    slug: d.slug,
+    name: d.name,
+  }));
 
   const cadets: HouseInfoEntry[] = house['cadet-houses'].map((slug) => ({
     slug,
@@ -129,7 +143,19 @@ export function HouseInfobox({
           />
         )}
 
-        <InfoRow label="Ancestral weapons" entries={weapons} />
+        <InfoRow
+          label="Ancestral weapons"
+          entries={weapons}
+          hrefPrefix="/weapons"
+          exists={(s) => weaponsBySlug.has(s)}
+        />
+
+        <InfoRow
+          label="Dragons"
+          entries={dragons}
+          hrefPrefix="/dragons"
+          exists={(s) => dragonsForHouse.some((d) => d.slug === s)}
+        />
 
         <div className={infoboxStyles.row}>
           <dt>Founded</dt>
