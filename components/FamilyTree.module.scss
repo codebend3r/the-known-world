@@ -6,9 +6,9 @@
 
 /* Placed after the reset above so source order beats the equal-specificity
    `padding: 0` declaration. */
-@media (max-width: 767.98px) {
-  /* md */
-  .tree {
+.tree {
+  @media (max-width: 767.98px) {
+    /* md */
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -18,40 +18,37 @@
   position: relative;
   padding-left: 1.5rem;
   margin-top: 0.4rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 0;
+    bottom: 0;
+    border-left: 1px solid rgba(107, 68, 35, 0.35);
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0.4rem;
+    top: 0.85rem;
+    width: 1rem;
+    border-top: 1px solid rgba(107, 68, 35, 0.35);
+  }
+
+  &:last-child::before {
+    bottom: calc(100% - 0.85rem);
+  }
 }
 
 .tree > .node {
   padding-left: 0;
-}
 
-.node::before {
-  content: "";
-  position: absolute;
-  left: 0.4rem;
-  top: 0;
-  bottom: 0;
-  border-left: 1px solid rgba(107, 68, 35, 0.35);
-}
-
-.tree > .node::before {
-  content: none;
-}
-
-.node::after {
-  content: "";
-  position: absolute;
-  left: 0.4rem;
-  top: 0.85rem;
-  width: 1rem;
-  border-top: 1px solid rgba(107, 68, 35, 0.35);
-}
-
-.tree > .node::after {
-  content: none;
-}
-
-.node:last-child::before {
-  bottom: calc(100% - 0.85rem);
+  &::before,
+  &::after {
+    content: none;
+  }
 }
 
 .row {
@@ -65,6 +62,11 @@
   background: rgba(248, 236, 208, 0.6);
   border: 1px solid rgba(107, 68, 35, 0.15);
   border-radius: 2px;
+
+  @media (max-width: 639.98px) {
+    /* sm */
+    padding: 0.4rem 0.6rem;
+  }
 }
 
 .rowPlaceholder {
@@ -89,18 +91,16 @@ a.name {
   text-decoration: none;
   cursor: pointer;
   transition: color 120ms ease;
-}
 
-a.name:hover,
-a.name:focus-visible {
-  color: var(--gold-leaf);
-  text-decoration: underline;
-  text-decoration-color: rgba(212, 162, 89, 0.45);
-  outline: none;
-}
+  &:hover,
+  &:focus-visible {
+    color: var(--gold-leaf);
+    text-decoration: underline;
+    text-decoration-color: rgba(212, 162, 89, 0.45);
+    outline: none;
+  }
 
-@media (prefers-reduced-motion: reduce) {
-  a.name {
+  @media (prefers-reduced-motion: reduce) {
     transition: none;
   }
 }
@@ -178,11 +178,4 @@ a.name:focus-visible {
   color: var(--ink-faded);
   text-align: center;
   padding: 2rem 1rem;
-}
-
-@media (max-width: 639.98px) {
-  /* sm */
-  .row {
-    padding: 0.4rem 0.6rem;
-  }
 }
