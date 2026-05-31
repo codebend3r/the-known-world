@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
-import styles from "@/components/SiteMenu.module.css";
+import styles from "@/components/SiteMenu.module.scss";
 
 const ITEMS = [
   { href: "/maps/", label: "Maps" },
