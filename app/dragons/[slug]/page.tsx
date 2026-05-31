@@ -13,7 +13,7 @@ import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
 import { DragonInfobox } from "@/components/DragonInfobox";
 import { humanizeSlug } from "@/components/Infobox";
-import styles from "@/app/dragons/[slug]/page.module.css";
+import styles from "@/app/dragons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const dragons = await loadAllDragons();
