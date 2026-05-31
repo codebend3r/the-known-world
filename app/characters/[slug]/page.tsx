@@ -18,7 +18,7 @@ import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sigil } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
 import type { Character } from "@/lib/schemas";
-import styles from "@/app/characters/[slug]/page.module.css";
+import styles from "@/app/characters/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();
