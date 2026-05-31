@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { cx } from "@/lib/cx";
 import styles from "@/components/Sigil.module.scss";
 
@@ -57,17 +58,33 @@ const SIGIL_SLUGS = new Set([
   "unknown",
 ]);
 
-const REGION_CLASS: Record<string, string | undefined> = {
-  north: styles.regionNorth,
-  vale: styles.regionVale,
-  riverlands: styles.regionRiverlands,
-  westerlands: styles.regionWesterlands,
-  reach: styles.regionReach,
-  stormlands: styles.regionStormlands,
-  dorne: styles.regionDorne,
-  "iron-islands": styles.regionIronIslands,
-  crownlands: styles.regionCrownlands,
+const REGION_FILE: Record<string, string> = {
+  north: "the-north",
+  vale: "the-vale",
+  riverlands: "the-riverlands",
+  westerlands: "westerlands",
+  reach: "the-reach",
+  stormlands: "stormlands",
+  dorne: "dorne",
+  "iron-islands": "iron-islands",
+  crownlands: "crownlands",
 };
+
+const SLUG_ALIASES: Record<string, string> = {
+  durrandon: "baratheon",
+};
+
+function sigilFile({
+  slug,
+  region,
+}: {
+  slug: string;
+  region?: string | null;
+}): string {
+  if (SIGIL_SLUGS.has(slug)) return SLUG_ALIASES[slug] ?? slug;
+  if (region && REGION_FILE[region]) return REGION_FILE[region];
+  return "unknown";
+}
 
 type Props = {
   slug: string | null;
@@ -88,19 +105,20 @@ export function Sigil({
 }: Props) {
   if (slug === null) return null;
 
-  const variantClass = SIGIL_SLUGS.has(slug)
-    ? styles[slug]
-    : ((region && REGION_CLASS[region]) ?? styles.unknown);
-  const classes = cx(styles.sigil, variantClass, className);
   const style = size ? ({ "--sigil-size": size } as CSSProperties) : undefined;
 
   return (
     <span
-      className={classes}
+      className={cx(styles.sigil, className)}
       style={style}
-      role={decorative ? "presentation" : "img"}
-      aria-label={decorative ? undefined : `Sigil of House ${name}`}
       aria-hidden={decorative || undefined}
-    />
+    >
+      <Image
+        src={`/sigils/${sigilFile({ slug, region })}.png`}
+        alt={decorative ? "" : `Sigil of House ${name}`}
+        fill
+        sizes={size ?? "6rem"}
+      />
+    </span>
   );
 }
