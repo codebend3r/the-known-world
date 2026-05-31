@@ -147,7 +147,7 @@ describe("FilteredCharacterList", () => {
     );
     expect(childClasses).toEqual(["portrait", "sigil", "name", "alias"]);
     const img = card?.querySelector(".portrait img") as HTMLImageElement | null;
-    expect(img?.getAttribute("src")).toBe("/characters/aegon-i-targaryen.png");
+    expect(img?.getAttribute("src") ?? "").toContain("aegon-i-targaryen.png");
   });
 
   it("does not filter until the 300ms debounce elapses", () => {

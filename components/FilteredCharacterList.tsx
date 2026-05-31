@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useSyncExternalStore } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
@@ -209,14 +210,12 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                     {...(item.region ? { "data-region": item.region } : {})}
                   >
                     <span className={styles.portrait} aria-hidden="true">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
+                      <Image
                         src={item.portrait}
                         alt=""
                         width={270}
                         height={180}
-                        loading="lazy"
-                        decoding="async"
+                        sizes="270px"
                       />
                     </span>
                     <span className={styles.sigil} aria-hidden="true">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { loadAllCharacters, loadAllHouses } from "@/lib/content";
 import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
-import { cdnImage } from "@/lib/cdn-image";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import {
   FilteredCharacterList,
@@ -35,7 +34,7 @@ export default async function CharactersPage() {
       alias: c.frontmatter.aliases[0] ?? null,
       primaryHouseSlug: c.frontmatter["primary-house"],
       region: regionForHouse(c.frontmatter["primary-house"], housesBySlug),
-      portrait: cdnImage(portraits[i], { h: 180, fm: "webp", q: 80 }),
+      portrait: portraits[i],
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 
