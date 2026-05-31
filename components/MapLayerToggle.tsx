@@ -2,7 +2,7 @@
 
 import type { Castle } from "@/lib/schemas";
 import { ALL_CASTLE_TYPES } from "@/lib/map";
-import styles from "@/components/MapLayerToggle.module.css";
+import styles from "@/components/MapLayerToggle.module.scss";
 
 type CastleType = Castle["type"];
 

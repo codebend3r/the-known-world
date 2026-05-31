@@ -1,0 +1,43 @@
+.toggle {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  width: fit-content;
+  max-width: 100%;
+  justify-self: center;
+  background: var(--vellum);
+  border: 1px solid rgba(107, 68, 35, 0.4);
+  border-radius: 4px;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--ink);
+    cursor: pointer;
+    text-transform: capitalize;
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid var(--ink-faded);
+    border-radius: 2px;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+
+    &:checked::after {
+      content: "";
+      position: absolute;
+      inset: 2px;
+      background: var(--wax-seal);
+      border-radius: 1px;
+    }
+  }
+}
