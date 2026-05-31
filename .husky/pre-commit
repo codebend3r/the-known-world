@@ -1,1 +1,2 @@
+bun run prettier:quick
 bun system-check
