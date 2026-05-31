@@ -16,41 +16,35 @@ export interface RelationGraph {
   eventsByLocation: Map<string, string[]>; // castle slug → event slugs located there
 }
 
+function pushTo<K>(map: Map<K, string[]>, key: K, value: string) {
+  const existing = map.get(key) ?? [];
+  existing.push(value);
+  map.set(key, existing);
+}
+
 export function buildRelationGraph(set: ContentSet): RelationGraph {
-  const castleByHouse = new Map<string, string[]>();
-  const houseBySeat = new Map<string, string>();
-  const membersByHouse = new Map<string, string[]>();
-  const eventsByLocation = new Map<string, string[]>();
-
-  for (const castle of set.castles) {
+  const castleByHouse = set.castles.reduce((acc, castle) => {
     const houseSlug = castle.frontmatter["liege-house"];
-    if (houseSlug) {
-      const existing = castleByHouse.get(houseSlug) ?? [];
-      existing.push(castle.frontmatter.slug);
-      castleByHouse.set(houseSlug, existing);
-    }
-  }
+    if (houseSlug) pushTo(acc, houseSlug, castle.frontmatter.slug);
+    return acc;
+  }, new Map<string, string[]>());
 
-  for (const house of set.houses) {
-    houseBySeat.set(house.frontmatter.seat, house.frontmatter.slug);
-  }
+  const houseBySeat = set.houses.reduce((acc, house) => {
+    acc.set(house.frontmatter.seat, house.frontmatter.slug);
+    return acc;
+  }, new Map<string, string>());
 
-  for (const character of set.characters) {
+  const membersByHouse = set.characters.reduce((acc, character) => {
     const houseSlug = character.frontmatter["primary-house"];
-    if (houseSlug === null) continue;
-    const existing = membersByHouse.get(houseSlug) ?? [];
-    existing.push(character.frontmatter.slug);
-    membersByHouse.set(houseSlug, existing);
-  }
+    if (houseSlug !== null) pushTo(acc, houseSlug, character.frontmatter.slug);
+    return acc;
+  }, new Map<string, string[]>());
 
-  for (const event of set.events) {
+  const eventsByLocation = set.events.reduce((acc, event) => {
     const loc = event.frontmatter.location;
-    if (typeof loc === "string") {
-      const existing = eventsByLocation.get(loc) ?? [];
-      existing.push(event.frontmatter.slug);
-      eventsByLocation.set(loc, existing);
-    }
-  }
+    if (typeof loc === "string") pushTo(acc, loc, event.frontmatter.slug);
+    return acc;
+  }, new Map<string, string[]>());
 
   return { castleByHouse, houseBySeat, membersByHouse, eventsByLocation };
 }
@@ -63,39 +57,43 @@ export function findOrphanSlugs(set: ContentSet): string[] {
     ...set.events.map((e) => e.frontmatter.slug),
   ]);
 
-  const referenced = new Set<string>();
+  const castleRefs = set.castles.flatMap((castle) => [
+    ...(castle.frontmatter["liege-house"]
+      ? [castle.frontmatter["liege-house"]]
+      : []),
+    ...castle.frontmatter["sworn-houses"],
+  ]);
 
-  for (const castle of set.castles) {
-    if (castle.frontmatter["liege-house"])
-      referenced.add(castle.frontmatter["liege-house"]);
-    for (const s of castle.frontmatter["sworn-houses"]) referenced.add(s);
-  }
-  for (const house of set.houses) {
-    referenced.add(house.frontmatter.seat);
-    if (house.frontmatter.liege) referenced.add(house.frontmatter.liege);
-    for (const s of house.frontmatter["sworn-from"]) referenced.add(s);
-    for (const s of house.frontmatter["cadet-houses"]) referenced.add(s);
-  }
-  for (const character of set.characters) {
-    if (character.frontmatter["primary-house"]) {
-      referenced.add(character.frontmatter["primary-house"]);
-    }
-    for (const s of character.frontmatter.parents) referenced.add(s);
-    for (const s of character.frontmatter.spouses) referenced.add(s);
-    for (const s of character.frontmatter.children) referenced.add(s);
-  }
-  for (const event of set.events) {
-    if (typeof event.frontmatter.location === "string")
-      referenced.add(event.frontmatter.location);
-    for (const p of event.frontmatter.participants) {
-      for (const h of p.houses) referenced.add(h);
-    }
-    for (const s of event.frontmatter.casualties) referenced.add(s);
-  }
+  const houseRefs = set.houses.flatMap((house) => [
+    house.frontmatter.seat,
+    ...(house.frontmatter.liege ? [house.frontmatter.liege] : []),
+    ...house.frontmatter["sworn-from"],
+    ...house.frontmatter["cadet-houses"],
+  ]);
 
-  const orphans: string[] = [];
-  for (const slug of referenced) {
-    if (!allSlugs.has(slug)) orphans.push(slug);
-  }
-  return orphans;
+  const characterRefs = set.characters.flatMap((character) => [
+    ...(character.frontmatter["primary-house"]
+      ? [character.frontmatter["primary-house"]]
+      : []),
+    ...character.frontmatter.parents,
+    ...character.frontmatter.spouses,
+    ...character.frontmatter.children,
+  ]);
+
+  const eventRefs = set.events.flatMap((event) => [
+    ...(typeof event.frontmatter.location === "string"
+      ? [event.frontmatter.location]
+      : []),
+    ...event.frontmatter.participants.flatMap((p) => p.houses),
+    ...event.frontmatter.casualties,
+  ]);
+
+  const referenced = new Set<string>([
+    ...castleRefs,
+    ...houseRefs,
+    ...characterRefs,
+    ...eventRefs,
+  ]);
+
+  return [...referenced].filter((slug) => !allSlugs.has(slug));
 }
