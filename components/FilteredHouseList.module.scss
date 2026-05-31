@@ -12,6 +12,12 @@
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
   gap: 1rem;
   width: var(--bleed-width);
+
+  @media (max-width: 767.98px) {
+    /* md */
+    width: auto;
+    left: auto;
+  }
 }
 
 .item {
@@ -37,6 +43,23 @@
     transform 150ms ease,
     box-shadow 150ms ease;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--gold-leaf);
+    transform: scale(1.01);
+    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    color: var(--ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover,
+    &:focus-visible {
+      transform: none;
+    }
+  }
 }
 
 /* Regional border tints — colours live in `globals.css` as
@@ -69,14 +92,6 @@
   border-color: var(--region-color-crownlands);
 }
 
-.card:hover,
-.card:focus-visible {
-  border-color: var(--gold-leaf);
-  transform: scale(1.01);
-  box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-  color: var(--ink);
-}
-
 .name {
   font-family: var(--font-heading);
   font-variant: small-caps;
@@ -85,38 +100,28 @@
   font-weight: 600;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: none;
-  }
-  .card:hover,
-  .card:focus-visible {
-    transform: none;
-  }
-}
-
 /* List view: same `<ul>`, one row per house. Cap the bleed so rows
    don't run wider than they need; the grid is the showpiece. */
 .listView {
   grid-template-columns: 1fr;
   gap: 0.5rem;
   --bleed-max: 1280px;
-}
 
-.listView .card {
-  display: grid;
-  grid-template-columns: 2.5rem 1fr auto;
-  align-items: center;
-  gap: 1rem;
-  min-height: 0;
-  padding: 0.65rem 1rem;
-  text-align: left;
-  border-left-width: 3px;
-}
+  .card {
+    display: grid;
+    grid-template-columns: 2.5rem 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    min-height: 0;
+    padding: 0.65rem 1rem;
+    text-align: left;
+    border-left-width: 3px;
+  }
 
-.listView .name {
-  font-size: 1.1rem;
-  letter-spacing: 2px;
+  .name {
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+  }
 }
 
 .region {
