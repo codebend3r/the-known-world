@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { cx } from "@/lib/cx";
-import styles from "@/components/Sigil.module.css";
+import styles from "@/components/Sigil.module.scss";
 
 const SIGIL_SLUGS = new Set([
   "stark",
