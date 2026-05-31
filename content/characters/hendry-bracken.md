@@ -4,7 +4,7 @@ name: Hendry Bracken
 sex: m
 born: null
 died:
-  year: 300
+  year: 299
   era: AC
   precision: year
 primary-house: bracken
@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-Nephew of Lord Jonos Bracken of Stone Hedge and, in the absence of a trueborn son, his heir in the latter years of the War of the Five Kings. Slain at his uncle's side during the liberation of Stone Hedge from the ironborn who had seized it in the war's confusion.
+Nephew of Lord Jonos Bracken of Stone Hedge and, in the absence of any trueborn son of his uncle's line, the heir to the keep through the latter years of the War of the Five Kings. He fell in the sack of Stone Hedge that came upon the keep in 299 AC, when Lannister forces broke its walls — the same column under Ser Gregor Clegane that took Barbara or one of her sisters from the rubble.
