@@ -37,6 +37,20 @@ const SIGIL = (
   </svg>
 );
 
+const FIGURE = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <circle cx="16" cy="11" r="5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <path
+      d="M6 28 Q6 19 16 19 Q26 19 26 28"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <circle cx="16" cy="11" r="1.5" fill="currentColor" opacity="0.6" />
+  </svg>
+);
+
 const SWORD = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <circle cx="16" cy="5" r="1.7" fill="currentColor" opacity="0.6" />
@@ -80,6 +94,12 @@ export function MainMenu() {
         subtitle="Read the rolls of the great houses."
         glyph={SIGIL}
         href="/houses/"
+      />
+      <MainMenuTile
+        title="Characters"
+        subtitle="Meet the lords, knights, and kings."
+        glyph={FIGURE}
+        href="/characters/"
       />
       <MainMenuTile
         title="Weapons"
