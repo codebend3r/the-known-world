@@ -1,10 +1,10 @@
-import { Sigil } from '@/components/Sigil';
-import { cx } from '@/lib/cx';
-import { regionForHouse } from '@/lib/regions';
-import { InfoRow, humanizeSlug } from '@/components/Infobox';
-import type { Weapon, House, Character, HouseInfoEntry } from '@/lib/schemas';
-import infoboxStyles from '@/components/HouseInfobox.module.css';
-import styles from '@/components/Infobox.module.css';
+import { Sigil } from "@/components/Sigil";
+import { cx } from "@/lib/cx";
+import { regionForHouse } from "@/lib/regions";
+import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import type { Weapon, House, Character, HouseInfoEntry } from "@/lib/schemas";
+import infoboxStyles from "@/components/HouseInfobox.module.css";
+import styles from "@/components/Infobox.module.css";
 
 type Props = {
   weapon: Weapon;
@@ -14,40 +14,43 @@ type Props = {
 };
 
 function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
-const TYPE_LABEL: Record<Weapon['type'], string> = {
-  sword: 'Sword',
-  greatsword: 'Greatsword',
-  longsword: 'Longsword',
-  dagger: 'Dagger',
-  axe: 'Axe',
-  spear: 'Spear',
-  bow: 'Bow',
-  horn: 'Horn',
-  other: 'Other',
+const TYPE_LABEL: Record<Weapon["type"], string> = {
+  sword: "Sword",
+  greatsword: "Greatsword",
+  longsword: "Longsword",
+  dagger: "Dagger",
+  axe: "Axe",
+  spear: "Spear",
+  bow: "Bow",
+  horn: "Horn",
+  other: "Other",
 };
 
-const MATERIAL_LABEL: Record<Weapon['material'], string> = {
-  'valyrian-steel': 'Valyrian steel',
-  dragonglass: 'Dragonglass',
-  dragonbone: 'Dragonbone',
-  steel: 'Steel',
-  other: 'Other',
+const MATERIAL_LABEL: Record<Weapon["material"], string> = {
+  "valyrian-steel": "Valyrian steel",
+  dragonglass: "Dragonglass",
+  dragonbone: "Dragonbone",
+  steel: "Steel",
+  other: "Other",
 };
 
-const STATUS_LABEL: Record<Weapon['status'], string> = {
-  extant: 'Extant',
-  lost: 'Lost',
-  destroyed: 'Destroyed',
+const STATUS_LABEL: Record<Weapon["status"], string> = {
+  extant: "Extant",
+  lost: "Lost",
+  destroyed: "Destroyed",
 };
 
-function formatDate(d: NonNullable<Weapon['forged']>): string {
+function formatDate(d: NonNullable<Weapon["forged"]>): string {
   const { year, era, precision } = d;
-  if (era === 'AC' || era === 'BC') return `${Math.abs(year)} ${era}`;
-  const label = era.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
-  return precision === 'legendary' ? `${label} (legendary)` : label;
+  if (era === "AC" || era === "BC") return `${Math.abs(year)} ${era}`;
+  const label = era
+    .split("-")
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+  return precision === "legendary" ? `${label} (legendary)` : label;
 }
 
 function houseLabel(slug: string, housesBySlug: Map<string, House>): string {
@@ -60,8 +63,8 @@ export function WeaponInfobox({
   charactersBySlug,
   className,
 }: Props) {
-  const origin = weapon['origin-house'];
-  const current = weapon['current-house'];
+  const origin = weapon["origin-house"];
+  const current = weapon["current-house"];
   const originHouse = origin ? housesBySlug.get(origin) : undefined;
 
   const originEntries: HouseInfoEntry[] = origin
@@ -137,11 +140,11 @@ export function WeaponInfobox({
         ) : (
           <div className={styles.row}>
             <dt>Current house</dt>
-            <dd>{weapon.status === 'destroyed' ? 'Destroyed' : 'Lost'}</dd>
+            <dd>{weapon.status === "destroyed" ? "Destroyed" : "Lost"}</dd>
           </div>
         )}
         <InfoRow
-          label={wielders.length === 1 ? 'Wielder' : 'Wielders'}
+          label={wielders.length === 1 ? "Wielder" : "Wielders"}
           entries={wielders}
           hrefPrefix="/characters"
           exists={(s) => {

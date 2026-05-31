@@ -1,18 +1,60 @@
-import type { CSSProperties } from 'react';
-import { cx } from '@/lib/cx';
-import styles from '@/components/Sigil.module.css';
+import type { CSSProperties } from "react";
+import { cx } from "@/lib/cx";
+import styles from "@/components/Sigil.module.css";
 
 const SIGIL_SLUGS = new Set([
-  'stark', 'lannister', 'targaryen', 'baratheon', 'greyjoy',
-  'tully', 'arryn', 'martell', 'tyrell', 'bolton',
-  'frey', 'mormont', 'umber', 'karstark', 'reed',
-  'hightower', 'velaryon', 'tarly', 'blackwood', 'bracken',
-  'dayne', 'yronwood', 'royce', 'corbray', 'redwyne',
-  'florent', 'rowan', 'oakheart', 'mallister', 'piper',
-  'manderly', 'dustin', 'ryswell', 'hornwood', 'cerwyn',
-  'blackfyre', 'celtigar', 'chester', 'crakehall', 'glover', 'peake', 'reyne', 'selmy', 'wyl',
-  'swann', 'dondarrion', 'caron', 'estermont', 'grafton',
-  'tarth', 'durrandon', 'unknown',
+  "stark",
+  "lannister",
+  "targaryen",
+  "baratheon",
+  "greyjoy",
+  "tully",
+  "arryn",
+  "martell",
+  "tyrell",
+  "bolton",
+  "frey",
+  "mormont",
+  "umber",
+  "karstark",
+  "reed",
+  "hightower",
+  "velaryon",
+  "tarly",
+  "blackwood",
+  "bracken",
+  "dayne",
+  "yronwood",
+  "royce",
+  "corbray",
+  "redwyne",
+  "florent",
+  "rowan",
+  "oakheart",
+  "mallister",
+  "piper",
+  "manderly",
+  "dustin",
+  "ryswell",
+  "hornwood",
+  "cerwyn",
+  "blackfyre",
+  "celtigar",
+  "chester",
+  "crakehall",
+  "glover",
+  "peake",
+  "reyne",
+  "selmy",
+  "wyl",
+  "swann",
+  "dondarrion",
+  "caron",
+  "estermont",
+  "grafton",
+  "tarth",
+  "durrandon",
+  "unknown",
 ]);
 
 const REGION_CLASS: Record<string, string | undefined> = {
@@ -23,7 +65,7 @@ const REGION_CLASS: Record<string, string | undefined> = {
   reach: styles.regionReach,
   stormlands: styles.regionStormlands,
   dorne: styles.regionDorne,
-  'iron-islands': styles.regionIronIslands,
+  "iron-islands": styles.regionIronIslands,
   crownlands: styles.regionCrownlands,
 };
 
@@ -36,20 +78,27 @@ type Props = {
   className?: string;
 };
 
-export function Sigil({ slug, name, region, size, decorative = false, className }: Props) {
+export function Sigil({
+  slug,
+  name,
+  region,
+  size,
+  decorative = false,
+  className,
+}: Props) {
   if (slug === null) return null;
 
   const variantClass = SIGIL_SLUGS.has(slug)
     ? styles[slug]
-    : (region && REGION_CLASS[region]) ?? styles.unknown;
+    : ((region && REGION_CLASS[region]) ?? styles.unknown);
   const classes = cx(styles.sigil, variantClass, className);
-  const style = size ? ({ '--sigil-size': size } as CSSProperties) : undefined;
+  const style = size ? ({ "--sigil-size": size } as CSSProperties) : undefined;
 
   return (
     <span
       className={classes}
       style={style}
-      role={decorative ? 'presentation' : 'img'}
+      role={decorative ? "presentation" : "img"}
       aria-label={decorative ? undefined : `Sigil of House ${name}`}
       aria-hidden={decorative || undefined}
     />

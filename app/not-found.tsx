@@ -1,4 +1,4 @@
-import { ParchmentLayout } from '@/components/ParchmentLayout';
+import { ParchmentLayout } from "@/components/ParchmentLayout";
 
 export default function NotFound() {
   return (

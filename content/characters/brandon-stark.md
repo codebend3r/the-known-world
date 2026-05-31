@@ -29,4 +29,4 @@ sources:
 draft: false
 ---
 
-Eldest son of Lord Rickard and heir to Winterfell, called *the Wild Wolf* for his hot blood and quick temper. Betrothed to Catelyn Tully of Riverrun, though they never wed. Rode south to King's Landing in 282 AC to demand satisfaction of Prince Rhaegar for the abduction of his sister Lyanna; was arrested for threatening a prince of the blood and put to death alongside his father by Aerys II.
+Eldest son of Lord Rickard and heir to Winterfell, called _the Wild Wolf_ for his hot blood and quick temper. Betrothed to Catelyn Tully of Riverrun, though they never wed. Rode south to King's Landing in 282 AC to demand satisfaction of Prince Rhaegar for the abduction of his sister Lyanna; was arrested for threatening a prince of the blood and put to death alongside his father by Aerys II.

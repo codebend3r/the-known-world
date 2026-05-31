@@ -1,29 +1,29 @@
-import type { House } from '@/lib/schemas';
+import type { House } from "@/lib/schemas";
 
 export const REGIONS = {
-  stark: { slug: 'north', name: 'The North' },
-  arryn: { slug: 'vale', name: 'The Vale' },
-  tully: { slug: 'riverlands', name: 'The Riverlands' },
-  lannister: { slug: 'westerlands', name: 'The Westerlands' },
-  tyrell: { slug: 'reach', name: 'The Reach' },
-  baratheon: { slug: 'stormlands', name: 'The Stormlands' },
-  martell: { slug: 'dorne', name: 'Dorne' },
-  greyjoy: { slug: 'iron-islands', name: 'The Iron Islands' },
-  targaryen: { slug: 'crownlands', name: 'The Crownlands' },
+  stark: { slug: "north", name: "The North" },
+  arryn: { slug: "vale", name: "The Vale" },
+  tully: { slug: "riverlands", name: "The Riverlands" },
+  lannister: { slug: "westerlands", name: "The Westerlands" },
+  tyrell: { slug: "reach", name: "The Reach" },
+  baratheon: { slug: "stormlands", name: "The Stormlands" },
+  martell: { slug: "dorne", name: "Dorne" },
+  greyjoy: { slug: "iron-islands", name: "The Iron Islands" },
+  targaryen: { slug: "crownlands", name: "The Crownlands" },
 } as const;
 
-export type RegionSlug = (typeof REGIONS)[keyof typeof REGIONS]['slug'];
+export type RegionSlug = (typeof REGIONS)[keyof typeof REGIONS]["slug"];
 
 export const REGION_SLUGS = [
-  'north',
-  'vale',
-  'riverlands',
-  'westerlands',
-  'reach',
-  'stormlands',
-  'dorne',
-  'iron-islands',
-  'crownlands',
+  "north",
+  "vale",
+  "riverlands",
+  "westerlands",
+  "reach",
+  "stormlands",
+  "dorne",
+  "iron-islands",
+  "crownlands",
 ] as const satisfies readonly RegionSlug[];
 
 const REGION_LABELS: Record<RegionSlug, string> = Object.fromEntries(

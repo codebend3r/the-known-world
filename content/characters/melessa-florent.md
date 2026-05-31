@@ -24,4 +24,4 @@ sources:
 draft: false
 ---
 
-Eldest daughter of Lord Alester Florent of Brightwater Keep, wed to Lord Randyll Tarly of Horn Hill. Bore her lord husband five children: first Samwell, then three daughters in as many years, and at last a second son, Dickon. Close to her gentle eldest, she would sing the *Song of the Seven* with him over the cradle of his baby brother, until her husband forbade it, fearing soft songs would make a soft boy. When Sam was sent to the Wall it was to his mother at Horn Hill that he meant to send Gilly and her child for safekeeping.
+Eldest daughter of Lord Alester Florent of Brightwater Keep, wed to Lord Randyll Tarly of Horn Hill. Bore her lord husband five children: first Samwell, then three daughters in as many years, and at last a second son, Dickon. Close to her gentle eldest, she would sing the _Song of the Seven_ with him over the cradle of his baby brother, until her husband forbade it, fearing soft songs would make a soft boy. When Sam was sent to the Wall it was to his mother at Horn Hill that he meant to send Gilly and her child for safekeeping.

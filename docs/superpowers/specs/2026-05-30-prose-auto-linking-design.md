@@ -17,16 +17,16 @@ Hybrid linker. A new remark plugin walks the markdown AST during `renderMarkdown
 
 ## Decisions
 
-| Decision | Choice |
-| --- | --- |
-| Link source | Hybrid: auto-detect + per-page frontmatter overrides |
-| Target entity kinds | Characters and Houses only (no Castles, no Events) |
-| Short-form policy | Per-page `mentions: [slug, ...]` unlocks first-name (character) and bare-name (house) matching for those slugs |
-| Repeat policy | First occurrence per slug per page only |
-| Self-link policy | Page's own slug is never linked from its own body |
-| Match casing | Case-sensitive, word-boundary anchored |
-| Skip zones | Inside existing `link` / `linkReference`, `code` / `inlineCode`, and `heading` nodes |
-| Italics / emphasis | Walked into; alias inside `*...*` still links |
+| Decision            | Choice                                                                                                         |
+| ------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Link source         | Hybrid: auto-detect + per-page frontmatter overrides                                                           |
+| Target entity kinds | Characters and Houses only (no Castles, no Events)                                                             |
+| Short-form policy   | Per-page `mentions: [slug, ...]` unlocks first-name (character) and bare-name (house) matching for those slugs |
+| Repeat policy       | First occurrence per slug per page only                                                                        |
+| Self-link policy    | Page's own slug is never linked from its own body                                                              |
+| Match casing        | Case-sensitive, word-boundary anchored                                                                         |
+| Skip zones          | Inside existing `link` / `linkReference`, `code` / `inlineCode`, and `heading` nodes                           |
+| Italics / emphasis  | Walked into; alias inside `*...*` still links                                                                  |
 
 ## Frontmatter / schema changes
 
@@ -74,14 +74,14 @@ Tracking "already linked" lives on the plugin instance (one render = one instanc
 
 ```ts
 // lib/prose-links.ts
-import type { Plugin } from 'unified';
-import type { Character, House } from './schemas';
+import type { Plugin } from "unified";
+import type { Character, House } from "./schemas";
 
 export type ProseLinkTarget = {
   slug: string;
-  kind: 'character' | 'house';
-  href: string;             // '/characters/<slug>/' | '/houses/<slug>/'
-  surfaceForms: string[];   // already filtered by `mentions` rules, longest-first
+  kind: "character" | "house";
+  href: string; // '/characters/<slug>/' | '/houses/<slug>/'
+  surfaceForms: string[]; // already filtered by `mentions` rules, longest-first
 };
 
 export type ProseLinkIndex = {
@@ -92,7 +92,11 @@ export type ProseLinkIndex = {
 export function buildProseLinkIndex(args: {
   allCharacters: ReadonlyArray<{ slug: string; frontmatter: Character }>;
   allHouses: ReadonlyArray<{ slug: string; frontmatter: House }>;
-  current: { kind: 'character' | 'house'; slug: string; mentions: readonly string[] };
+  current: {
+    kind: "character" | "house";
+    slug: string;
+    mentions: readonly string[];
+  };
 }): ProseLinkIndex;
 
 export function remarkProseLinks(index: ProseLinkIndex): Plugin;
@@ -137,7 +141,6 @@ mentions:
   - aerys-ii-targaryen
 # ...rest of frontmatter unchanged
 ---
-
 Eldest son of Lord Rickard and heir to Winterfell, called *the Wild Wolf* for his hot blood and quick temper. Betrothed to Catelyn Tully of Riverrun, though they never wed. Rode south to King's Landing in 282 AC to demand satisfaction of Prince Rhaegar for the abduction of his sister Lyanna; was arrested for threatening a prince of the blood and put to death alongside his father by Aerys II.
 ```
 

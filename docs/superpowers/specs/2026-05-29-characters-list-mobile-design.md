@@ -72,9 +72,9 @@ Fix both with a `(max-width: 639.98px)` media query in the existing stylesheets.
 
 ## Components
 
-| File | Kind | Change |
-|---|---|---|
-| `styles/characters.css` | modify | Add a `@media (max-width: 639.98px)` block defining the grid layout for `.character-list__card` and its children. |
+| File                     | Kind   | Change                                                                                                              |
+| ------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------- |
+| `styles/characters.css`  | modify | Add a `@media (max-width: 639.98px)` block defining the grid layout for `.character-list__card` and its children.   |
 | `styles/list-search.css` | modify | Add a `@media (max-width: 639.98px)` block defining the grid layout for `.pagination` and its `:nth-child` mapping. |
 
 No new files. No changes to components, content, or tests.

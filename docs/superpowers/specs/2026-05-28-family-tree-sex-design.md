@@ -47,7 +47,7 @@ Extend the two interfaces:
 export interface TreeSpouse {
   slug: string | null;
   name: string;
-  sex: 'm' | 'f' | null;
+  sex: "m" | "f" | null;
   placeholder: boolean;
   inHouse: boolean;
 }
@@ -55,7 +55,7 @@ export interface TreeSpouse {
 export interface TreeNode {
   slug: string;
   name: string;
-  sex: 'm' | 'f' | null;
+  sex: "m" | "f" | null;
   // ...existing fields
 }
 ```
@@ -67,14 +67,14 @@ Populate `sex` from `person.sex` and `spouse.sex` in `buildFamilyTree`. No other
 New small component:
 
 ```tsx
-function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
+function GenderGlyph({ sex }: { sex: "m" | "f" | null }) {
   if (sex === null) return null;
   return (
     <span
       className={`family-tree__gender family-tree__gender--${sex}`}
-      aria-label={sex === 'm' ? 'male' : 'female'}
+      aria-label={sex === "m" ? "male" : "female"}
     >
-      {sex === 'm' ? '♂' : '♀'}
+      {sex === "m" ? "♂" : "♀"}
     </span>
   );
 }

@@ -19,4 +19,4 @@ sources:
 draft: false
 ---
 
-Born in Flea Bottom to a tavern girl Robert had bedded one night and forgotten, raised in the smithies of King's Landing knowing nothing of his blood. The black hair and the blue eyes were enough to mark him for any who knew how to look, and by the time of *A Game of Thrones* the Hand's men had begun to ask after the smith's apprentice in Tobho Mott's forge.
+Born in Flea Bottom to a tavern girl Robert had bedded one night and forgotten, raised in the smithies of King's Landing knowing nothing of his blood. The black hair and the blue eyes were enough to mark him for any who knew how to look, and by the time of _A Game of Thrones_ the Hand's men had begun to ask after the smith's apprentice in Tobho Mott's forge.

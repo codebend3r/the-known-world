@@ -34,4 +34,4 @@ sources:
 draft: false
 ---
 
-First of his name, King of the Seven Kingdoms after toppling the Targaryen dynasty at the Trident. Wed Cersei Lannister to seal Tywin's loyalty after the war. Killed by a boar in the Kingswood at the dawn of *A Game of Thrones*.
+First of his name, King of the Seven Kingdoms after toppling the Targaryen dynasty at the Trident. Wed Cersei Lannister to seal Tywin's loyalty after the war. Killed by a boar in the Kingswood at the dawn of _A Game of Thrones_.

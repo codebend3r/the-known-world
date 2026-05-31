@@ -31,15 +31,33 @@
 
 /* Regional border tints — colours live in `globals.css` as
    `--region-color-*` tokens (shared with `FilteredHouseList`). */
-.cardNorth        { border-color: var(--region-color-north); }
-.cardVale         { border-color: var(--region-color-vale); }
-.cardRiverlands   { border-color: var(--region-color-riverlands); }
-.cardWesterlands  { border-color: var(--region-color-westerlands); }
-.cardReach        { border-color: var(--region-color-reach); }
-.cardStormlands   { border-color: var(--region-color-stormlands); }
-.cardDorne        { border-color: var(--region-color-dorne); }
-.cardIronIslands  { border-color: var(--region-color-iron-islands); }
-.cardCrownlands   { border-color: var(--region-color-crownlands); }
+.cardNorth {
+  border-color: var(--region-color-north);
+}
+.cardVale {
+  border-color: var(--region-color-vale);
+}
+.cardRiverlands {
+  border-color: var(--region-color-riverlands);
+}
+.cardWesterlands {
+  border-color: var(--region-color-westerlands);
+}
+.cardReach {
+  border-color: var(--region-color-reach);
+}
+.cardStormlands {
+  border-color: var(--region-color-stormlands);
+}
+.cardDorne {
+  border-color: var(--region-color-dorne);
+}
+.cardIronIslands {
+  border-color: var(--region-color-iron-islands);
+}
+.cardCrownlands {
+  border-color: var(--region-color-crownlands);
+}
 
 a.card:hover,
 a.card:focus-visible {
@@ -99,7 +117,8 @@ a.card:focus-visible {
   }
 }
 
-@media (max-width: 639.98px) { /* sm */
+@media (max-width: 639.98px) {
+  /* sm */
   .card {
     display: grid;
     grid-template-columns: auto 1fr;

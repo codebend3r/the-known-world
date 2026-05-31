@@ -23,40 +23,40 @@ Two new collections under `content/`, validated by two new Zod schemas in `lib/s
 
 ### `WeaponSchema`
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| `slug` | `string` | filename slug |
-| `name` | `string` | display name (e.g. `Blackfyre`) |
-| `type` | enum: `sword`, `greatsword`, `longsword`, `dagger`, `axe`, `spear`, `bow`, `horn`, `other` | |
-| `material` | enum: `valyrian-steel`, `dragonglass`, `dragonbone`, `steel`, `other` | |
-| `forged` | `DateSchema` (optional) | |
-| `destroyed` | `DateSchema` (optional) | present only when status is `destroyed` |
-| `status` | enum: `extant`, `lost`, `destroyed` | |
-| `origin-house` | `string` (optional) | house slug |
-| `current-house` | `string \| null` | house slug; `null` for lost / destroyed / un-housed |
-| `wielders` | `string[]` | character slugs, chronological |
-| `aliases` | `string[]` | |
-| `mentions` | `string[]` | for `prose-links` (see below) |
-| `sources` | `SourceSchema[]` | |
-| `draft` | `boolean` (default `false`) | |
+| Field           | Type                                                                                       | Notes                                               |
+| --------------- | ------------------------------------------------------------------------------------------ | --------------------------------------------------- |
+| `slug`          | `string`                                                                                   | filename slug                                       |
+| `name`          | `string`                                                                                   | display name (e.g. `Blackfyre`)                     |
+| `type`          | enum: `sword`, `greatsword`, `longsword`, `dagger`, `axe`, `spear`, `bow`, `horn`, `other` |                                                     |
+| `material`      | enum: `valyrian-steel`, `dragonglass`, `dragonbone`, `steel`, `other`                      |                                                     |
+| `forged`        | `DateSchema` (optional)                                                                    |                                                     |
+| `destroyed`     | `DateSchema` (optional)                                                                    | present only when status is `destroyed`             |
+| `status`        | enum: `extant`, `lost`, `destroyed`                                                        |                                                     |
+| `origin-house`  | `string` (optional)                                                                        | house slug                                          |
+| `current-house` | `string \| null`                                                                           | house slug; `null` for lost / destroyed / un-housed |
+| `wielders`      | `string[]`                                                                                 | character slugs, chronological                      |
+| `aliases`       | `string[]`                                                                                 |                                                     |
+| `mentions`      | `string[]`                                                                                 | for `prose-links` (see below)                       |
+| `sources`       | `SourceSchema[]`                                                                           |                                                     |
+| `draft`         | `boolean` (default `false`)                                                                |                                                     |
 
 ### `DragonSchema`
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| `slug` | `string` | |
-| `name` | `string` | |
-| `color` | `string` (optional) | free-form prose (`"black with red eyes"`) |
-| `size` | enum: `hatchling`, `young`, `mature`, `great`, `monstrous` (optional) | |
-| `hatched` | `DateSchema \| null` | |
-| `died` | `DateSchema \| null` | |
-| `status` | enum: `extant`, `dead`, `lost`, `wild` | |
-| `house` | `string \| null` | house slug; `null` for wild dragons |
-| `riders` | `string[]` | character slugs, chronological |
-| `aliases` | `string[]` | |
-| `mentions` | `string[]` | |
-| `sources` | `SourceSchema[]` | |
-| `draft` | `boolean` (default `false`) | |
+| Field      | Type                                                                  | Notes                                     |
+| ---------- | --------------------------------------------------------------------- | ----------------------------------------- |
+| `slug`     | `string`                                                              |                                           |
+| `name`     | `string`                                                              |                                           |
+| `color`    | `string` (optional)                                                   | free-form prose (`"black with red eyes"`) |
+| `size`     | enum: `hatchling`, `young`, `mature`, `great`, `monstrous` (optional) |                                           |
+| `hatched`  | `DateSchema \| null`                                                  |                                           |
+| `died`     | `DateSchema \| null`                                                  |                                           |
+| `status`   | enum: `extant`, `dead`, `lost`, `wild`                                |                                           |
+| `house`    | `string \| null`                                                      | house slug; `null` for wild dragons       |
+| `riders`   | `string[]`                                                            | character slugs, chronological            |
+| `aliases`  | `string[]`                                                            |                                           |
+| `mentions` | `string[]`                                                            |                                           |
+| `sources`  | `SourceSchema[]`                                                      |                                           |
+| `draft`    | `boolean` (default `false`)                                           |                                           |
 
 ### `HouseSchema` change
 
@@ -69,10 +69,12 @@ This is a breaking content-frontmatter change: every house with an `ancestral-we
 `lib/content.ts` gains the same pair of functions for each collection that the others already have:
 
 ```ts
-export const loadWeapon = (slug: string) => loadFile<Weapon>('weapons', slug, WeaponSchema);
-export const loadDragon = (slug: string) => loadFile<Dragon>('dragons', slug, DragonSchema);
-export const loadAllWeapons = () => loadAll<Weapon>('weapons', WeaponSchema);
-export const loadAllDragons = () => loadAll<Dragon>('dragons', DragonSchema);
+export const loadWeapon = (slug: string) =>
+  loadFile<Weapon>("weapons", slug, WeaponSchema);
+export const loadDragon = (slug: string) =>
+  loadFile<Dragon>("dragons", slug, DragonSchema);
+export const loadAllWeapons = () => loadAll<Weapon>("weapons", WeaponSchema);
+export const loadAllDragons = () => loadAll<Dragon>("dragons", DragonSchema);
 ```
 
 ## Routes
@@ -147,17 +149,17 @@ Both follow `HouseInfobox`'s shape — a `<dl>` of `InfoRow`s topped by a `<Sigi
 
 Rows:
 
-| `WeaponInfobox` | `DragonInfobox` |
-| --- | --- |
-| Type | Color |
-| Material | Size |
-| Forged | Hatched |
-| Destroyed (when applicable) | Died |
-| Status | Status |
-| Origin house → /houses/<slug>/ | House → /houses/<slug>/ (or "Wild") |
+| `WeaponInfobox`                                           | `DragonInfobox`                             |
+| --------------------------------------------------------- | ------------------------------------------- |
+| Type                                                      | Color                                       |
+| Material                                                  | Size                                        |
+| Forged                                                    | Hatched                                     |
+| Destroyed (when applicable)                               | Died                                        |
+| Status                                                    | Status                                      |
+| Origin house → /houses/<slug>/                            | House → /houses/<slug>/ (or "Wild")         |
 | Current house → /houses/<slug>/ (or "Lost" / "Destroyed") | Riders → /characters/<slug>/, chronological |
-| Wielders → /characters/<slug>/, chronological | Aliases |
-| Aliases | |
+| Wielders → /characters/<slug>/, chronological             | Aliases                                     |
+| Aliases                                                   |                                             |
 
 ### Refactor: hoist `InfoRow` / `InfoEntry` out of `HouseInfobox`
 
@@ -215,15 +217,15 @@ Each top tile spans 2 columns; the bottom two centre by flanking with empty cell
 
 ## Cross-linking summary
 
-| From | To | Mechanism |
-| --- | --- | --- |
-| House page → weapons | infobox "Ancestral weapons" row, slug-resolved | `weaponsBySlug` prop |
-| House page → dragons | infobox "Dragons" row | `dragonsForHouse` prop |
-| Character page → weapons | "Bore" section | reverse lookup in `wielders` |
-| Character page → dragons | "Rode" section | reverse lookup in `riders` |
-| Weapon page → house, characters | infobox rows | direct slug links |
-| Dragon page → house, characters | infobox rows | direct slug links |
-| Any prose body → weapons, dragons | inline auto-link | `remarkProseLinks` extension |
+| From                              | To                                             | Mechanism                    |
+| --------------------------------- | ---------------------------------------------- | ---------------------------- |
+| House page → weapons              | infobox "Ancestral weapons" row, slug-resolved | `weaponsBySlug` prop         |
+| House page → dragons              | infobox "Dragons" row                          | `dragonsForHouse` prop       |
+| Character page → weapons          | "Bore" section                                 | reverse lookup in `wielders` |
+| Character page → dragons          | "Rode" section                                 | reverse lookup in `riders`   |
+| Weapon page → house, characters   | infobox rows                                   | direct slug links            |
+| Dragon page → house, characters   | infobox rows                                   | direct slug links            |
+| Any prose body → weapons, dragons | inline auto-link                               | `remarkProseLinks` extension |
 
 ## Initial content
 

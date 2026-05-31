@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-A younger son of Ronald Connington and brother to Ser Ronnet. He is one of the few Conningtons left at Griffin's Roost when Jon Connington and the Golden Company come up the cliffside in *A Dance with Dragons*, and is taken with the keep itself.
+A younger son of Ronald Connington and brother to Ser Ronnet. He is one of the few Conningtons left at Griffin's Roost when Jon Connington and the Golden Company come up the cliffside in _A Dance with Dragons_, and is taken with the keep itself.

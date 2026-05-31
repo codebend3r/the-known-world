@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import type { HouseInfoEntry } from '@/lib/schemas';
-import styles from '@/components/Infobox.module.css';
+import Link from "next/link";
+import type { HouseInfoEntry } from "@/lib/schemas";
+import styles from "@/components/Infobox.module.css";
 
 export function humanizeSlug(slug: string): string {
   return slug
-    .split('-')
+    .split("-")
     .map((w) => (w.length === 0 ? w : w[0].toUpperCase() + w.slice(1)))
-    .join(' ');
+    .join(" ");
 }
 
 type EntryProps = {
@@ -17,9 +17,7 @@ type EntryProps = {
 
 export function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
   const canLink =
-    !!entry.slug &&
-    !!hrefPrefix &&
-    (exists ? exists(entry.slug) : true);
+    !!entry.slug && !!hrefPrefix && (exists ? exists(entry.slug) : true);
   return (
     <li>
       {canLink ? (
@@ -27,9 +25,7 @@ export function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
       ) : (
         <span>{entry.name}</span>
       )}
-      {entry.note && (
-        <span className={styles.note}> ({entry.note})</span>
-      )}
+      {entry.note && <span className={styles.note}> ({entry.note})</span>}
     </li>
   );
 }

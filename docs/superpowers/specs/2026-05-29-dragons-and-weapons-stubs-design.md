@@ -31,9 +31,9 @@ The URL for ancestral weapons is `/weapons/` (shorter); the menu title remains t
 
 Append two tiles to `components/MainMenu.tsx`, after the existing Houses tile, in this order:
 
-| Title | Subtitle | Href | Glyph |
-| --- | --- | --- | --- |
-| Dragons | `Wake the dragon.` | `/dragons/` | Dragon-wing silhouette |
+| Title             | Subtitle                     | Href        | Glyph                                 |
+| ----------------- | ---------------------------- | ----------- | ------------------------------------- |
+| Dragons           | `Wake the dragon.`           | `/dragons/` | Dragon-wing silhouette                |
 | Ancestral Weapons | `Lift the blades of legend.` | `/weapons/` | Sword, point-down, simple cross-guard |
 
 Both pass `status="coming-soon"`. Final tile order:

@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import type { Castle } from '@/lib/schemas';
-import { ALL_CASTLE_TYPES } from '@/lib/map';
-import styles from '@/components/MapLayerToggle.module.css';
+import type { Castle } from "@/lib/schemas";
+import { ALL_CASTLE_TYPES } from "@/lib/map";
+import styles from "@/components/MapLayerToggle.module.css";
 
-type CastleType = Castle['type'];
+type CastleType = Castle["type"];
 
 type Props = {
   enabled: Set<CastleType>;

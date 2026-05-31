@@ -1,5 +1,5 @@
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { MainMenu } from '@/components/MainMenu';
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { MainMenu } from "@/components/MainMenu";
 
 export default function Home() {
   return (

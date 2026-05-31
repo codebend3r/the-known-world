@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-A younger son of Ronald Connington and brother to Ser Ronnet. Like his brother Raymund, he is among the household taken at Griffin's Roost when Jon Connington reclaims the seat for King Aegon VI in *A Dance with Dragons*.
+A younger son of Ronald Connington and brother to Ser Ronnet. Like his brother Raymund, he is among the household taken at Griffin's Roost when Jon Connington reclaims the seat for King Aegon VI in _A Dance with Dragons_.

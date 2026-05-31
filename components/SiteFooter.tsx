@@ -1,5 +1,5 @@
-import pkg from '@/package.json';
-import styles from '@/components/SiteFooter.module.css';
+import pkg from "@/package.json";
+import styles from "@/components/SiteFooter.module.css";
 
 export function SiteFooter() {
   return (
@@ -7,7 +7,9 @@ export function SiteFooter() {
       <div className={styles.inner}>
         <p className={styles.credit}>
           <span className={styles.name}>CJ Rivas</span>
-          <span className={styles.separator} aria-hidden="true">·</span>
+          <span className={styles.separator} aria-hidden="true">
+            ·
+          </span>
           <a
             className={styles.link}
             href="https://github.com/codebend3r"
@@ -29,7 +31,9 @@ export function SiteFooter() {
             </svg>
             GitHub
           </a>
-          <span className={styles.separator} aria-hidden="true">·</span>
+          <span className={styles.separator} aria-hidden="true">
+            ·
+          </span>
           <span className={styles.version}>v{pkg.version}</span>
         </p>
       </div>

@@ -1,5 +1,5 @@
-import type { Source } from '@/lib/schemas';
-import styles from '@/components/Sources.module.css';
+import type { Source } from "@/lib/schemas";
+import styles from "@/components/Sources.module.css";
 
 type Props = { sources: Source[] };
 
@@ -11,9 +11,9 @@ export function Sources({ sources }: Props) {
       <ul>
         {sources.map((s, i) => (
           <li key={i}>
-            {s.type === 'awoiaf' && s.url ? (
+            {s.type === "awoiaf" && s.url ? (
               <a href={s.url} target="_blank" rel="noopener noreferrer">
-                A Wiki of Ice and Fire ({s.license ?? 'CC-BY-SA-4.0'})
+                A Wiki of Ice and Fire ({s.license ?? "CC-BY-SA-4.0"})
               </a>
             ) : (
               <span>{s.ref ?? s.url ?? s.type}</span>

@@ -22,6 +22,7 @@
 ## File map
 
 **Created:**
+
 - `lib/schemas.ts` (modify) — add `WeaponSchema`, `DragonSchema`; change `HouseSchema['ancestral-weapons']`.
 - `lib/content.ts` (modify) — add `loadWeapon` / `loadAllWeapons` / `loadDragon` / `loadAllDragons`.
 - `lib/prose-links.ts` (modify) — extend `ProseLinkTarget['kind']` and `buildProseLinkIndex` signature.
@@ -39,6 +40,7 @@
 - `content/dragons/{balerion,vhagar,meraxes,caraxes,vermithor,sunfyre,cannibal}.md` (new).
 
 **Modified:**
+
 - `components/HouseInfobox.tsx` / `.test.tsx` — import primitives; resolve weapon slugs; add Dragons row.
 - `components/HouseInfobox.module.css` — remove migrated rules.
 - `components/MainMenu.tsx` / `.module.css` / `.test.tsx` — 5 tiles, `grid-template-areas`.
@@ -56,6 +58,7 @@
 ### Task 1: Add `WeaponSchema` + `DragonSchema`; migrate `HouseSchema['ancestral-weapons']`
 
 **Files:**
+
 - Modify: `lib/schemas.ts`
 - Modify: `lib/schemas.test.ts`
 - Modify: `content/houses/targaryen.md`
@@ -74,40 +77,51 @@ import {
   EventSchema,
   WeaponSchema,
   DragonSchema,
-} from '@/lib/schemas';
+} from "@/lib/schemas";
 
-describe('WeaponSchema', () => {
-  it('parses a Valyrian-steel sword bound to a house', () => {
+describe("WeaponSchema", () => {
+  it("parses a Valyrian-steel sword bound to a house", () => {
     const input = {
-      slug: 'blackfyre',
-      name: 'Blackfyre',
-      type: 'sword',
-      material: 'valyrian-steel',
-      status: 'lost',
-      'origin-house': 'targaryen',
-      'current-house': null,
-      wielders: ['aegon-i-targaryen', 'daemon-i-blackfyre'],
+      slug: "blackfyre",
+      name: "Blackfyre",
+      type: "sword",
+      material: "valyrian-steel",
+      status: "lost",
+      "origin-house": "targaryen",
+      "current-house": null,
+      wielders: ["aegon-i-targaryen", "daemon-i-blackfyre"],
       aliases: [],
-      mentions: ['targaryen', 'blackfyre'],
-      sources: [{ type: 'awoiaf', url: 'https://example' }],
+      mentions: ["targaryen", "blackfyre"],
+      sources: [{ type: "awoiaf", url: "https://example" }],
       draft: false,
     };
     expect(() => WeaponSchema.parse(input)).not.toThrow();
   });
 
-  it('rejects an unknown material', () => {
+  it("rejects an unknown material", () => {
     const input = {
-      slug: 'x', name: 'X', type: 'sword', material: 'mithril',
-      status: 'extant', 'current-house': null,
-      wielders: [], aliases: [], mentions: [], sources: [],
+      slug: "x",
+      name: "X",
+      type: "sword",
+      material: "mithril",
+      status: "extant",
+      "current-house": null,
+      wielders: [],
+      aliases: [],
+      mentions: [],
+      sources: [],
     };
     expect(() => WeaponSchema.parse(input)).toThrow();
   });
 
-  it('defaults arrays and draft when omitted', () => {
+  it("defaults arrays and draft when omitted", () => {
     const input = {
-      slug: 'x', name: 'X', type: 'dagger', material: 'steel',
-      status: 'extant', 'current-house': null,
+      slug: "x",
+      name: "X",
+      type: "dagger",
+      material: "steel",
+      status: "extant",
+      "current-house": null,
       sources: [],
     };
     const parsed = WeaponSchema.parse(input);
@@ -118,32 +132,34 @@ describe('WeaponSchema', () => {
   });
 });
 
-describe('DragonSchema', () => {
-  it('parses a Targaryen dragon with a rider chain', () => {
+describe("DragonSchema", () => {
+  it("parses a Targaryen dragon with a rider chain", () => {
     const input = {
-      slug: 'vhagar',
-      name: 'Vhagar',
-      color: 'bronze and green',
-      size: 'monstrous',
-      hatched: { year: -52, era: 'BC', precision: 'decade' },
-      died: { year: 130, era: 'AC', precision: 'year' },
-      status: 'dead',
-      house: 'targaryen',
-      riders: ['visenya-targaryen', 'aemond-targaryen'],
+      slug: "vhagar",
+      name: "Vhagar",
+      color: "bronze and green",
+      size: "monstrous",
+      hatched: { year: -52, era: "BC", precision: "decade" },
+      died: { year: 130, era: "AC", precision: "year" },
+      status: "dead",
+      house: "targaryen",
+      riders: ["visenya-targaryen", "aemond-targaryen"],
       aliases: [],
-      mentions: ['targaryen'],
+      mentions: ["targaryen"],
       sources: [],
       draft: false,
     };
     expect(() => DragonSchema.parse(input)).not.toThrow();
   });
 
-  it('parses a wild dragon with no house and no riders', () => {
+  it("parses a wild dragon with no house and no riders", () => {
     const input = {
-      slug: 'cannibal',
-      name: 'The Cannibal',
-      hatched: null, died: null,
-      status: 'wild', house: null,
+      slug: "cannibal",
+      name: "The Cannibal",
+      hatched: null,
+      died: null,
+      status: "wild",
+      house: null,
       sources: [],
     };
     const parsed = DragonSchema.parse(input);
@@ -151,11 +167,14 @@ describe('DragonSchema', () => {
     expect(parsed.riders).toEqual([]);
   });
 
-  it('rejects an unknown status', () => {
+  it("rejects an unknown status", () => {
     const input = {
-      slug: 'x', name: 'X',
-      hatched: null, died: null,
-      status: 'sleeping', house: null,
+      slug: "x",
+      name: "X",
+      hatched: null,
+      died: null,
+      status: "sleeping",
+      house: null,
       sources: [],
     };
     expect(() => DragonSchema.parse(input)).toThrow();
@@ -174,7 +193,7 @@ Also **replace** the existing `'parses an infobox-rich house ...'` test in the `
 - [ ] **Step 2: Run the failing tests**
 
 Run: `bun run test lib/schemas.test.ts`
-Expected: FAIL — `WeaponSchema` / `DragonSchema` undefined; the updated House test still passes against the *old* `HouseInfoEntry[]` shape until we change the schema.
+Expected: FAIL — `WeaponSchema` / `DragonSchema` undefined; the updated House test still passes against the _old_ `HouseInfoEntry[]` shape until we change the schema.
 
 - [ ] **Step 3: Add the new schemas and migrate `HouseSchema['ancestral-weapons']`**
 
@@ -182,14 +201,26 @@ In `lib/schemas.ts`, **after** the `CastleSchema` definition and before `HouseIn
 
 ```ts
 const WeaponTypeSchema = z.enum([
-  'sword', 'greatsword', 'longsword', 'dagger', 'axe', 'spear', 'bow', 'horn', 'other',
+  "sword",
+  "greatsword",
+  "longsword",
+  "dagger",
+  "axe",
+  "spear",
+  "bow",
+  "horn",
+  "other",
 ]);
 
 const MaterialSchema = z.enum([
-  'valyrian-steel', 'dragonglass', 'dragonbone', 'steel', 'other',
+  "valyrian-steel",
+  "dragonglass",
+  "dragonbone",
+  "steel",
+  "other",
 ]);
 
-const WeaponStatusSchema = z.enum(['extant', 'lost', 'destroyed']);
+const WeaponStatusSchema = z.enum(["extant", "lost", "destroyed"]);
 
 export const WeaponSchema = z.object({
   slug: z.string().min(1),
@@ -199,8 +230,8 @@ export const WeaponSchema = z.object({
   forged: DateSchema.optional(),
   destroyed: DateSchema.optional(),
   status: WeaponStatusSchema,
-  'origin-house': z.string().optional(),
-  'current-house': z.string().nullable(),
+  "origin-house": z.string().optional(),
+  "current-house": z.string().nullable(),
   wielders: z.array(z.string()).default([]),
   aliases: z.array(z.string()).default([]),
   mentions: z.array(z.string()).default([]),
@@ -208,8 +239,14 @@ export const WeaponSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-const DragonStatusSchema = z.enum(['extant', 'dead', 'lost', 'wild']);
-const DragonSizeSchema = z.enum(['hatchling', 'young', 'mature', 'great', 'monstrous']);
+const DragonStatusSchema = z.enum(["extant", "dead", "lost", "wild"]);
+const DragonSizeSchema = z.enum([
+  "hatchling",
+  "young",
+  "mature",
+  "great",
+  "monstrous",
+]);
 
 export const DragonSchema = z.object({
   slug: z.string().min(1),
@@ -293,13 +330,13 @@ Run: `bun run system-check`
 Expected: PASS. `HouseInfobox.tsx` currently reads `house['ancestral-weapons']` as `HouseInfoEntry[]` and passes it directly to `<InfoRow entries=...>`. After the schema change, the type is `string[]`. This is a type error that will surface in typecheck. **Fix it inline** before continuing by changing the `weapons` derivation in `components/HouseInfobox.tsx` from:
 
 ```ts
-const weapons = house['ancestral-weapons'] ?? [];
+const weapons = house["ancestral-weapons"] ?? [];
 ```
 
 to (interim form — Task 10 makes it slug-resolving):
 
 ```ts
-const weapons: HouseInfoEntry[] = (house['ancestral-weapons'] ?? []).map(
+const weapons: HouseInfoEntry[] = (house["ancestral-weapons"] ?? []).map(
   (slug) => ({ slug, name: humanizeSlug(slug) }),
 );
 ```
@@ -329,6 +366,7 @@ EOF
 ### Task 2: Add weapon + dragon content loaders
 
 **Files:**
+
 - Modify: `lib/content.ts`
 - Modify: `lib/content.test.ts`
 
@@ -338,35 +376,40 @@ Append to `lib/content.test.ts`:
 
 ```ts
 import {
-  loadCastle, loadAllCastles, renderMarkdown,
-  loadAllWeapons, loadAllDragons, loadWeapon, loadDragon,
-} from '@/lib/content';
+  loadCastle,
+  loadAllCastles,
+  renderMarkdown,
+  loadAllWeapons,
+  loadAllDragons,
+  loadWeapon,
+  loadDragon,
+} from "@/lib/content";
 
 // ... existing describe blocks ...
 
-describe('loadAllWeapons', () => {
-  it('returns an empty array when no weapons exist', async () => {
+describe("loadAllWeapons", () => {
+  it("returns an empty array when no weapons exist", async () => {
     const all = await loadAllWeapons();
     expect(Array.isArray(all)).toBe(true);
   });
 });
 
-describe('loadAllDragons', () => {
-  it('returns an empty array when no dragons exist', async () => {
+describe("loadAllDragons", () => {
+  it("returns an empty array when no dragons exist", async () => {
     const all = await loadAllDragons();
     expect(Array.isArray(all)).toBe(true);
   });
 });
 
-describe('loadWeapon', () => {
-  it('throws when the weapon slug does not exist', async () => {
-    await expect(loadWeapon('does-not-exist')).rejects.toThrow();
+describe("loadWeapon", () => {
+  it("throws when the weapon slug does not exist", async () => {
+    await expect(loadWeapon("does-not-exist")).rejects.toThrow();
   });
 });
 
-describe('loadDragon', () => {
-  it('throws when the dragon slug does not exist', async () => {
-    await expect(loadDragon('does-not-exist')).rejects.toThrow();
+describe("loadDragon", () => {
+  it("throws when the dragon slug does not exist", async () => {
+    await expect(loadDragon("does-not-exist")).rejects.toThrow();
   });
 });
 ```
@@ -383,18 +426,35 @@ Expected: FAIL — the four new loader functions are not exported.
 In `lib/content.ts`, change the import line:
 
 ```ts
-import { CastleSchema, HouseSchema, CharacterSchema, EventSchema, type Castle, type House, type Character, type Event } from '@/lib/schemas';
+import {
+  CastleSchema,
+  HouseSchema,
+  CharacterSchema,
+  EventSchema,
+  type Castle,
+  type House,
+  type Character,
+  type Event,
+} from "@/lib/schemas";
 ```
 
 to:
 
 ```ts
 import {
-  CastleSchema, HouseSchema, CharacterSchema, EventSchema,
-  WeaponSchema, DragonSchema,
-  type Castle, type House, type Character, type Event,
-  type Weapon, type Dragon,
-} from '@/lib/schemas';
+  CastleSchema,
+  HouseSchema,
+  CharacterSchema,
+  EventSchema,
+  WeaponSchema,
+  DragonSchema,
+  type Castle,
+  type House,
+  type Character,
+  type Event,
+  type Weapon,
+  type Dragon,
+} from "@/lib/schemas";
 ```
 
 Change the `loadFile` / `loadAll` `type` parameter to include the new collections:
@@ -414,11 +474,13 @@ async function loadAll<T>(
 Below the existing `loadAllEvents` export, add:
 
 ```ts
-export const loadWeapon = (slug: string) => loadFile<Weapon>('weapons', slug, WeaponSchema);
-export const loadDragon = (slug: string) => loadFile<Dragon>('dragons', slug, DragonSchema);
+export const loadWeapon = (slug: string) =>
+  loadFile<Weapon>("weapons", slug, WeaponSchema);
+export const loadDragon = (slug: string) =>
+  loadFile<Dragon>("dragons", slug, DragonSchema);
 
-export const loadAllWeapons = () => loadAll<Weapon>('weapons', WeaponSchema);
-export const loadAllDragons = () => loadAll<Dragon>('dragons', DragonSchema);
+export const loadAllWeapons = () => loadAll<Weapon>("weapons", WeaponSchema);
+export const loadAllDragons = () => loadAll<Dragon>("dragons", DragonSchema);
 ```
 
 - [ ] **Step 4: Run the loader tests**
@@ -449,6 +511,7 @@ EOF
 ### Task 3: Hoist `InfoRow` and `InfoEntry` into a shared `Infobox` module
 
 **Files:**
+
 - Create: `components/Infobox.tsx`
 - Create: `components/Infobox.module.css`
 - Modify: `components/HouseInfobox.tsx`
@@ -459,15 +522,15 @@ EOF
 Create `components/Infobox.tsx`:
 
 ```tsx
-import Link from 'next/link';
-import type { HouseInfoEntry } from '@/lib/schemas';
-import styles from '@/components/Infobox.module.css';
+import Link from "next/link";
+import type { HouseInfoEntry } from "@/lib/schemas";
+import styles from "@/components/Infobox.module.css";
 
 export function humanizeSlug(slug: string): string {
   return slug
-    .split('-')
+    .split("-")
     .map((w) => (w.length === 0 ? w : w[0].toUpperCase() + w.slice(1)))
-    .join(' ');
+    .join(" ");
 }
 
 type EntryProps = {
@@ -478,9 +541,7 @@ type EntryProps = {
 
 export function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
   const canLink =
-    !!entry.slug &&
-    !!hrefPrefix &&
-    (exists ? exists(entry.slug) : true);
+    !!entry.slug && !!hrefPrefix && (exists ? exists(entry.slug) : true);
   return (
     <li>
       {canLink ? (
@@ -488,9 +549,7 @@ export function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
       ) : (
         <span>{entry.name}</span>
       )}
-      {entry.note && (
-        <span className={styles.note}> ({entry.note})</span>
-      )}
+      {entry.note && <span className={styles.note}> ({entry.note})</span>}
     </li>
   );
 }
@@ -571,7 +630,8 @@ Create `components/Infobox.module.css` with the rules currently living in `House
   font-size: 0.92em;
 }
 
-@media (max-width: 767.98px) { /* md */
+@media (max-width: 767.98px) {
+  /* md */
   .row {
     grid-template-columns: 5.5rem 1fr;
   }
@@ -619,6 +679,7 @@ EOF
 ### Task 4: Build `WeaponInfobox` + `/weapons/[slug]/` detail route
 
 **Files:**
+
 - Create: `components/WeaponInfobox.tsx`
 - Create: `components/WeaponInfobox.test.tsx`
 - Create: `app/weapons/[slug]/page.tsx`
@@ -629,20 +690,20 @@ EOF
 Create `components/WeaponInfobox.test.tsx`:
 
 ```tsx
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { WeaponInfobox } from '@/components/WeaponInfobox';
-import type { Weapon, House, Character } from '@/lib/schemas';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { WeaponInfobox } from "@/components/WeaponInfobox";
+import type { Weapon, House, Character } from "@/lib/schemas";
 
 const blackfyre: Weapon = {
-  slug: 'blackfyre',
-  name: 'Blackfyre',
-  type: 'sword',
-  material: 'valyrian-steel',
-  status: 'lost',
-  'origin-house': 'targaryen',
-  'current-house': null,
-  wielders: ['aegon-i-targaryen', 'daemon-i-blackfyre'],
+  slug: "blackfyre",
+  name: "Blackfyre",
+  type: "sword",
+  material: "valyrian-steel",
+  status: "lost",
+  "origin-house": "targaryen",
+  "current-house": null,
+  wielders: ["aegon-i-targaryen", "daemon-i-blackfyre"],
   aliases: [],
   mentions: [],
   sources: [],
@@ -650,36 +711,48 @@ const blackfyre: Weapon = {
 };
 
 const targaryen: House = {
-  slug: 'targaryen',
-  name: 'House Targaryen',
-  seat: 'dragonstone',
+  slug: "targaryen",
+  name: "House Targaryen",
+  seat: "dragonstone",
   liege: null,
-  words: 'Fire and Blood',
-  sigil: { description: '' },
-  founded: { year: -114, era: 'BC', precision: 'year' },
-  status: 'exiled',
-  'sworn-from': [], 'cadet-houses': [], mentions: [],
-  sources: [], draft: false,
+  words: "Fire and Blood",
+  sigil: { description: "" },
+  founded: { year: -114, era: "BC", precision: "year" },
+  status: "exiled",
+  "sworn-from": [],
+  "cadet-houses": [],
+  mentions: [],
+  sources: [],
+  draft: false,
 };
 
 const aegon: Character = {
-  slug: 'aegon-i-targaryen',
-  name: 'Aegon I Targaryen',
-  sex: 'm',
-  born: { year: -27, era: 'BC', precision: 'year' },
-  died: { year: 37, era: 'AC', precision: 'year' },
-  'primary-house': 'targaryen',
-  'also-of-houses': [], parents: [], spouses: [], children: [],
-  titles: [], aliases: [], mentions: [],
-  placeholder: false, 'placeholder-reason': null,
-  sources: [], draft: false,
+  slug: "aegon-i-targaryen",
+  name: "Aegon I Targaryen",
+  sex: "m",
+  born: { year: -27, era: "BC", precision: "year" },
+  died: { year: 37, era: "AC", precision: "year" },
+  "primary-house": "targaryen",
+  "also-of-houses": [],
+  parents: [],
+  spouses: [],
+  children: [],
+  titles: [],
+  aliases: [],
+  mentions: [],
+  placeholder: false,
+  "placeholder-reason": null,
+  sources: [],
+  draft: false,
 };
 
-const housesBySlug = new Map<string, House>([['targaryen', targaryen]]);
-const charactersBySlug = new Map<string, Character>([['aegon-i-targaryen', aegon]]);
+const housesBySlug = new Map<string, House>([["targaryen", targaryen]]);
+const charactersBySlug = new Map<string, Character>([
+  ["aegon-i-targaryen", aegon],
+]);
 
-describe('WeaponInfobox', () => {
-  it('renders type, material, and status rows', () => {
+describe("WeaponInfobox", () => {
+  it("renders type, material, and status rows", () => {
     render(
       <WeaponInfobox
         weapon={blackfyre}
@@ -687,12 +760,12 @@ describe('WeaponInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    expect(screen.getByText('Type')).toBeDefined();
-    expect(screen.getByText('Material')).toBeDefined();
-    expect(screen.getByText('Status')).toBeDefined();
+    expect(screen.getByText("Type")).toBeDefined();
+    expect(screen.getByText("Material")).toBeDefined();
+    expect(screen.getByText("Status")).toBeDefined();
   });
 
-  it('links the origin house to its detail page', () => {
+  it("links the origin house to its detail page", () => {
     render(
       <WeaponInfobox
         weapon={blackfyre}
@@ -700,11 +773,11 @@ describe('WeaponInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    const link = screen.getByRole('link', { name: /house targaryen/i });
-    expect(link.getAttribute('href')).toBe('/houses/targaryen/');
+    const link = screen.getByRole("link", { name: /house targaryen/i });
+    expect(link.getAttribute("href")).toBe("/houses/targaryen/");
   });
 
-  it('renders linkable wielders that exist in the characters map', () => {
+  it("renders linkable wielders that exist in the characters map", () => {
     render(
       <WeaponInfobox
         weapon={blackfyre}
@@ -712,11 +785,11 @@ describe('WeaponInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    const link = screen.getByRole('link', { name: /aegon i targaryen/i });
-    expect(link.getAttribute('href')).toBe('/characters/aegon-i-targaryen/');
+    const link = screen.getByRole("link", { name: /aegon i targaryen/i });
+    expect(link.getAttribute("href")).toBe("/characters/aegon-i-targaryen/");
   });
 
-  it('renders unknown wielders as plain text', () => {
+  it("renders unknown wielders as plain text", () => {
     render(
       <WeaponInfobox
         weapon={blackfyre}
@@ -724,8 +797,10 @@ describe('WeaponInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    expect(screen.queryByRole('link', { name: /daemon i blackfyre/i })).toBeNull();
-    expect(screen.getByText('Daemon I Blackfyre')).toBeDefined();
+    expect(
+      screen.queryByRole("link", { name: /daemon i blackfyre/i }),
+    ).toBeNull();
+    expect(screen.getByText("Daemon I Blackfyre")).toBeDefined();
   });
 
   it('shows "Lost" for the current-house row when null and status is lost', () => {
@@ -736,7 +811,7 @@ describe('WeaponInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    expect(screen.getByText('Lost')).toBeDefined();
+    expect(screen.getByText("Lost")).toBeDefined();
   });
 });
 ```
@@ -751,13 +826,13 @@ Expected: FAIL — module not found.
 Create `components/WeaponInfobox.tsx`:
 
 ```tsx
-import { Sigil } from '@/components/Sigil';
-import { cx } from '@/lib/cx';
-import { regionForHouse } from '@/lib/regions';
-import { InfoRow, humanizeSlug } from '@/components/Infobox';
-import type { Weapon, House, Character, HouseInfoEntry } from '@/lib/schemas';
-import infoboxStyles from '@/components/HouseInfobox.module.css';
-import styles from '@/components/Infobox.module.css';
+import { Sigil } from "@/components/Sigil";
+import { cx } from "@/lib/cx";
+import { regionForHouse } from "@/lib/regions";
+import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import type { Weapon, House, Character, HouseInfoEntry } from "@/lib/schemas";
+import infoboxStyles from "@/components/HouseInfobox.module.css";
+import styles from "@/components/Infobox.module.css";
 
 type Props = {
   weapon: Weapon;
@@ -767,40 +842,43 @@ type Props = {
 };
 
 function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
-const TYPE_LABEL: Record<Weapon['type'], string> = {
-  sword: 'Sword',
-  greatsword: 'Greatsword',
-  longsword: 'Longsword',
-  dagger: 'Dagger',
-  axe: 'Axe',
-  spear: 'Spear',
-  bow: 'Bow',
-  horn: 'Horn',
-  other: 'Other',
+const TYPE_LABEL: Record<Weapon["type"], string> = {
+  sword: "Sword",
+  greatsword: "Greatsword",
+  longsword: "Longsword",
+  dagger: "Dagger",
+  axe: "Axe",
+  spear: "Spear",
+  bow: "Bow",
+  horn: "Horn",
+  other: "Other",
 };
 
-const MATERIAL_LABEL: Record<Weapon['material'], string> = {
-  'valyrian-steel': 'Valyrian steel',
-  dragonglass: 'Dragonglass',
-  dragonbone: 'Dragonbone',
-  steel: 'Steel',
-  other: 'Other',
+const MATERIAL_LABEL: Record<Weapon["material"], string> = {
+  "valyrian-steel": "Valyrian steel",
+  dragonglass: "Dragonglass",
+  dragonbone: "Dragonbone",
+  steel: "Steel",
+  other: "Other",
 };
 
-const STATUS_LABEL: Record<Weapon['status'], string> = {
-  extant: 'Extant',
-  lost: 'Lost',
-  destroyed: 'Destroyed',
+const STATUS_LABEL: Record<Weapon["status"], string> = {
+  extant: "Extant",
+  lost: "Lost",
+  destroyed: "Destroyed",
 };
 
-function formatDate(d: NonNullable<Weapon['forged']>): string {
+function formatDate(d: NonNullable<Weapon["forged"]>): string {
   const { year, era, precision } = d;
-  if (era === 'AC' || era === 'BC') return `${Math.abs(year)} ${era}`;
-  const label = era.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
-  return precision === 'legendary' ? `${label} (legendary)` : label;
+  if (era === "AC" || era === "BC") return `${Math.abs(year)} ${era}`;
+  const label = era
+    .split("-")
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+  return precision === "legendary" ? `${label} (legendary)` : label;
 }
 
 function houseLabel(slug: string, housesBySlug: Map<string, House>): string {
@@ -813,8 +891,8 @@ export function WeaponInfobox({
   charactersBySlug,
   className,
 }: Props) {
-  const origin = weapon['origin-house'];
-  const current = weapon['current-house'];
+  const origin = weapon["origin-house"];
+  const current = weapon["current-house"];
   const originHouse = origin ? housesBySlug.get(origin) : undefined;
 
   const originEntries: HouseInfoEntry[] = origin
@@ -890,11 +968,11 @@ export function WeaponInfobox({
         ) : (
           <div className={styles.row}>
             <dt>Current house</dt>
-            <dd>{weapon.status === 'destroyed' ? 'Destroyed' : 'Lost'}</dd>
+            <dd>{weapon.status === "destroyed" ? "Destroyed" : "Lost"}</dd>
           </div>
         )}
         <InfoRow
-          label={wielders.length === 1 ? 'Wielder' : 'Wielders'}
+          label={wielders.length === 1 ? "Wielder" : "Wielders"}
           entries={wielders}
           hrefPrefix="/characters"
           exists={(s) => {
@@ -921,19 +999,19 @@ Expected: PASS.
 Create `app/weapons/[slug]/page.tsx`:
 
 ```tsx
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { notFound } from "next/navigation";
+import Link from "next/link";
 import {
   loadWeapon,
   loadAllWeapons,
   loadAllHouses,
   loadAllCharacters,
   renderMarkdown,
-} from '@/lib/content';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sources } from '@/components/Sources';
-import { WeaponInfobox } from '@/components/WeaponInfobox';
-import styles from '@/app/weapons/[slug]/page.module.css';
+} from "@/lib/content";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { Sources } from "@/components/Sources";
+import { WeaponInfobox } from "@/components/WeaponInfobox";
+import styles from "@/app/weapons/[slug]/page.module.css";
 
 export async function generateStaticParams() {
   const weapons = await loadAllWeapons();
@@ -949,30 +1027,30 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const weapon = await loadWeapon(slug).catch(() => null);
-  if (!weapon) return { title: 'Not found' };
+  if (!weapon) return { title: "Not found" };
   return {
     title: `${weapon.frontmatter.name} · Atlas of the Known World`,
   };
 }
 
 const TYPE_NOUN: Record<string, string> = {
-  sword: 'sword',
-  greatsword: 'greatsword',
-  longsword: 'longsword',
-  dagger: 'dagger',
-  axe: 'axe',
-  spear: 'spear',
-  bow: 'bow',
-  horn: 'horn',
-  other: 'arm',
+  sword: "sword",
+  greatsword: "greatsword",
+  longsword: "longsword",
+  dagger: "dagger",
+  axe: "axe",
+  spear: "spear",
+  bow: "bow",
+  horn: "horn",
+  other: "arm",
 };
 
 const MATERIAL_ADJ: Record<string, string> = {
-  'valyrian-steel': 'Valyrian steel',
-  dragonglass: 'Dragonglass',
-  dragonbone: 'Dragonbone',
-  steel: 'Steel',
-  other: '',
+  "valyrian-steel": "Valyrian steel",
+  dragonglass: "Dragonglass",
+  dragonbone: "Dragonbone",
+  steel: "Steel",
+  other: "",
 };
 
 export default async function WeaponPage({
@@ -994,18 +1072,21 @@ export default async function WeaponPage({
   );
 
   const fm = weapon.frontmatter;
-  const html = fm && weapon.body.trim() ? await renderMarkdown(weapon.body) : '';
-  const originHouse = fm['origin-house']
-    ? housesBySlug.get(fm['origin-house'])
+  const html =
+    fm && weapon.body.trim() ? await renderMarkdown(weapon.body) : "";
+  const originHouse = fm["origin-house"]
+    ? housesBySlug.get(fm["origin-house"])
     : undefined;
 
-  const subtitleParts = [MATERIAL_ADJ[fm.material], TYPE_NOUN[fm.type]].filter(Boolean);
+  const subtitleParts = [MATERIAL_ADJ[fm.material], TYPE_NOUN[fm.type]].filter(
+    Boolean,
+  );
   const subtitle = [
-    subtitleParts.join(' '),
+    subtitleParts.join(" "),
     originHouse ? `of ${originHouse.name}` : null,
   ]
     .filter(Boolean)
-    .join(', ');
+    .join(", ");
 
   return (
     <ParchmentLayout>
@@ -1065,6 +1146,7 @@ EOF
 ### Task 5: Build `DragonInfobox` + `/dragons/[slug]/` detail route
 
 **Files:**
+
 - Create: `components/DragonInfobox.tsx`
 - Create: `components/DragonInfobox.test.tsx`
 - Create: `app/dragons/[slug]/page.tsx`
@@ -1075,34 +1157,37 @@ EOF
 Create `components/DragonInfobox.test.tsx`:
 
 ```tsx
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { DragonInfobox } from '@/components/DragonInfobox';
-import type { Dragon, House, Character } from '@/lib/schemas';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { DragonInfobox } from "@/components/DragonInfobox";
+import type { Dragon, House, Character } from "@/lib/schemas";
 
 const targaryen: House = {
-  slug: 'targaryen',
-  name: 'House Targaryen',
-  seat: 'dragonstone',
+  slug: "targaryen",
+  name: "House Targaryen",
+  seat: "dragonstone",
   liege: null,
-  words: 'Fire and Blood',
-  sigil: { description: '' },
-  founded: { year: -114, era: 'BC', precision: 'year' },
-  status: 'exiled',
-  'sworn-from': [], 'cadet-houses': [], mentions: [],
-  sources: [], draft: false,
+  words: "Fire and Blood",
+  sigil: { description: "" },
+  founded: { year: -114, era: "BC", precision: "year" },
+  status: "exiled",
+  "sworn-from": [],
+  "cadet-houses": [],
+  mentions: [],
+  sources: [],
+  draft: false,
 };
 
 const vhagar: Dragon = {
-  slug: 'vhagar',
-  name: 'Vhagar',
-  color: 'bronze and green',
-  size: 'monstrous',
-  hatched: { year: -52, era: 'BC', precision: 'decade' },
-  died: { year: 130, era: 'AC', precision: 'year' },
-  status: 'dead',
-  house: 'targaryen',
-  riders: ['visenya-targaryen', 'aemond-targaryen'],
+  slug: "vhagar",
+  name: "Vhagar",
+  color: "bronze and green",
+  size: "monstrous",
+  hatched: { year: -52, era: "BC", precision: "decade" },
+  died: { year: 130, era: "AC", precision: "year" },
+  status: "dead",
+  house: "targaryen",
+  riders: ["visenya-targaryen", "aemond-targaryen"],
   aliases: [],
   mentions: [],
   sources: [],
@@ -1110,11 +1195,11 @@ const vhagar: Dragon = {
 };
 
 const cannibal: Dragon = {
-  slug: 'cannibal',
-  name: 'The Cannibal',
+  slug: "cannibal",
+  name: "The Cannibal",
   hatched: null,
   died: null,
-  status: 'wild',
+  status: "wild",
   house: null,
   riders: [],
   aliases: [],
@@ -1123,11 +1208,11 @@ const cannibal: Dragon = {
   draft: false,
 };
 
-const housesBySlug = new Map<string, House>([['targaryen', targaryen]]);
+const housesBySlug = new Map<string, House>([["targaryen", targaryen]]);
 const charactersBySlug = new Map<string, Character>();
 
-describe('DragonInfobox', () => {
-  it('renders the house link for a Targaryen dragon', () => {
+describe("DragonInfobox", () => {
+  it("renders the house link for a Targaryen dragon", () => {
     render(
       <DragonInfobox
         dragon={vhagar}
@@ -1135,11 +1220,11 @@ describe('DragonInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    const link = screen.getByRole('link', { name: /house targaryen/i });
-    expect(link.getAttribute('href')).toBe('/houses/targaryen/');
+    const link = screen.getByRole("link", { name: /house targaryen/i });
+    expect(link.getAttribute("href")).toBe("/houses/targaryen/");
   });
 
-  it('renders the rider chain in order', () => {
+  it("renders the rider chain in order", () => {
     render(
       <DragonInfobox
         dragon={vhagar}
@@ -1147,8 +1232,8 @@ describe('DragonInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    expect(screen.getByText('Visenya Targaryen')).toBeDefined();
-    expect(screen.getByText('Aemond Targaryen')).toBeDefined();
+    expect(screen.getByText("Visenya Targaryen")).toBeDefined();
+    expect(screen.getByText("Aemond Targaryen")).toBeDefined();
   });
 
   it('omits the house row and shows "Wild" for a wild dragon', () => {
@@ -1159,11 +1244,11 @@ describe('DragonInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    expect(screen.getByText('Wild')).toBeDefined();
-    expect(screen.queryByRole('link', { name: /house/i })).toBeNull();
+    expect(screen.getByText("Wild")).toBeDefined();
+    expect(screen.queryByRole("link", { name: /house/i })).toBeNull();
   });
 
-  it('suppresses the sigil for a wild dragon', () => {
+  it("suppresses the sigil for a wild dragon", () => {
     const { container } = render(
       <DragonInfobox
         dragon={cannibal}
@@ -1171,7 +1256,7 @@ describe('DragonInfobox', () => {
         charactersBySlug={charactersBySlug}
       />,
     );
-    expect(container.querySelector('.sigil')).toBeNull();
+    expect(container.querySelector(".sigil")).toBeNull();
   });
 });
 ```
@@ -1186,13 +1271,13 @@ Expected: FAIL — module not found.
 Create `components/DragonInfobox.tsx`:
 
 ```tsx
-import { Sigil } from '@/components/Sigil';
-import { cx } from '@/lib/cx';
-import { regionForHouse } from '@/lib/regions';
-import { InfoRow, humanizeSlug } from '@/components/Infobox';
-import type { Dragon, House, Character, HouseInfoEntry } from '@/lib/schemas';
-import infoboxStyles from '@/components/HouseInfobox.module.css';
-import sharedStyles from '@/components/Infobox.module.css';
+import { Sigil } from "@/components/Sigil";
+import { cx } from "@/lib/cx";
+import { regionForHouse } from "@/lib/regions";
+import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import type { Dragon, House, Character, HouseInfoEntry } from "@/lib/schemas";
+import infoboxStyles from "@/components/HouseInfobox.module.css";
+import sharedStyles from "@/components/Infobox.module.css";
 
 type Props = {
   dragon: Dragon;
@@ -1202,29 +1287,32 @@ type Props = {
 };
 
 function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
-const STATUS_LABEL: Record<Dragon['status'], string> = {
-  extant: 'Extant',
-  dead: 'Dead',
-  lost: 'Lost',
-  wild: 'Wild',
+const STATUS_LABEL: Record<Dragon["status"], string> = {
+  extant: "Extant",
+  dead: "Dead",
+  lost: "Lost",
+  wild: "Wild",
 };
 
-const SIZE_LABEL: Record<NonNullable<Dragon['size']>, string> = {
-  hatchling: 'Hatchling',
-  young: 'Young',
-  mature: 'Mature',
-  great: 'Great',
-  monstrous: 'Monstrous',
+const SIZE_LABEL: Record<NonNullable<Dragon["size"]>, string> = {
+  hatchling: "Hatchling",
+  young: "Young",
+  mature: "Mature",
+  great: "Great",
+  monstrous: "Monstrous",
 };
 
-function formatDate(d: NonNullable<Dragon['hatched']>): string {
+function formatDate(d: NonNullable<Dragon["hatched"]>): string {
   const { year, era, precision } = d;
-  if (era === 'AC' || era === 'BC') return `${Math.abs(year)} ${era}`;
-  const label = era.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
-  return precision === 'legendary' ? `${label} (legendary)` : label;
+  if (era === "AC" || era === "BC") return `${Math.abs(year)} ${era}`;
+  const label = era
+    .split("-")
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+  return precision === "legendary" ? `${label} (legendary)` : label;
 }
 
 export function DragonInfobox({
@@ -1311,7 +1399,7 @@ export function DragonInfobox({
           </div>
         )}
         <InfoRow
-          label={riders.length === 1 ? 'Rider' : 'Riders'}
+          label={riders.length === 1 ? "Rider" : "Riders"}
           entries={riders}
           hrefPrefix="/characters"
           exists={(s) => {
@@ -1338,20 +1426,20 @@ Expected: PASS.
 Create `app/dragons/[slug]/page.tsx`:
 
 ```tsx
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { notFound } from "next/navigation";
+import Link from "next/link";
 import {
   loadDragon,
   loadAllDragons,
   loadAllHouses,
   loadAllCharacters,
   renderMarkdown,
-} from '@/lib/content';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sources } from '@/components/Sources';
-import { DragonInfobox } from '@/components/DragonInfobox';
-import { humanizeSlug } from '@/components/Infobox';
-import styles from '@/app/dragons/[slug]/page.module.css';
+} from "@/lib/content";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { Sources } from "@/components/Sources";
+import { DragonInfobox } from "@/components/DragonInfobox";
+import { humanizeSlug } from "@/components/Infobox";
+import styles from "@/app/dragons/[slug]/page.module.css";
 
 export async function generateStaticParams() {
   const dragons = await loadAllDragons();
@@ -1367,7 +1455,7 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const dragon = await loadDragon(slug).catch(() => null);
-  if (!dragon) return { title: 'Not found' };
+  if (!dragon) return { title: "Not found" };
   return {
     title: `${dragon.frontmatter.name} · Atlas of the Known World`,
   };
@@ -1392,13 +1480,14 @@ export default async function DragonPage({
   );
 
   const fm = dragon.frontmatter;
-  const html = fm && dragon.body.trim() ? await renderMarkdown(dragon.body) : '';
+  const html =
+    fm && dragon.body.trim() ? await renderMarkdown(dragon.body) : "";
   const house = fm.house ? housesBySlug.get(fm.house) : undefined;
   const subtitle = house
     ? `Of ${house.name}`
     : fm.house
       ? `Of House ${humanizeSlug(fm.house)}`
-      : 'A wild dragon';
+      : "A wild dragon";
 
   return (
     <ParchmentLayout>
@@ -1458,6 +1547,7 @@ EOF
 ### Task 6: Build `FilteredWeaponList` + `/weapons/` index route
 
 **Files:**
+
 - Create: `components/FilteredWeaponList.tsx`
 - Create: `components/FilteredWeaponList.module.css`
 - Create: `components/FilteredWeaponList.test.tsx`
@@ -1469,14 +1559,35 @@ EOF
 Create `components/FilteredWeaponList.test.tsx`:
 
 ```tsx
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import { FilteredWeaponList, type WeaponItem } from '@/components/FilteredWeaponList';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  FilteredWeaponList,
+  type WeaponItem,
+} from "@/components/FilteredWeaponList";
 
 const items: WeaponItem[] = [
-  { slug: 'blackfyre',   name: 'Blackfyre',   houseSlug: 'targaryen', region: 'crownlands', regionLabel: 'The Crownlands' },
-  { slug: 'heartsbane',  name: 'Heartsbane',  houseSlug: 'tarly',     region: 'reach',      regionLabel: 'The Reach' },
-  { slug: 'ice',         name: 'Ice',         houseSlug: 'stark',     region: 'north',      regionLabel: 'The North' },
+  {
+    slug: "blackfyre",
+    name: "Blackfyre",
+    houseSlug: "targaryen",
+    region: "crownlands",
+    regionLabel: "The Crownlands",
+  },
+  {
+    slug: "heartsbane",
+    name: "Heartsbane",
+    houseSlug: "tarly",
+    region: "reach",
+    regionLabel: "The Reach",
+  },
+  {
+    slug: "ice",
+    name: "Ice",
+    houseSlug: "stark",
+    region: "north",
+    regionLabel: "The North",
+  },
 ];
 
 beforeEach(() => {
@@ -1487,40 +1598,50 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe('FilteredWeaponList', () => {
-  it('renders every weapon by default', () => {
+describe("FilteredWeaponList", () => {
+  it("renders every weapon by default", () => {
     render(<FilteredWeaponList items={items} />);
-    const links = screen.getAllByRole('link');
+    const links = screen.getAllByRole("link");
     expect(links).toHaveLength(3);
   });
 
-  it('exposes a labelled search input', () => {
+  it("exposes a labelled search input", () => {
     render(<FilteredWeaponList items={items} />);
-    expect(screen.getByRole('searchbox', { name: /search weapons/i })).toBeDefined();
+    expect(
+      screen.getByRole("searchbox", { name: /search weapons/i }),
+    ).toBeDefined();
   });
 
-  it('filters after the 300ms debounce', () => {
+  it("filters after the 300ms debounce", () => {
     render(<FilteredWeaponList items={items} />);
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'ice' } });
-    act(() => { vi.advanceTimersByTime(300); });
-    const links = screen.getAllByRole('link');
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "ice" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
-    expect(links[0].textContent).toContain('Ice');
+    expect(links[0].textContent).toContain("Ice");
   });
 
-  it('renders the empty state when nothing matches', () => {
+  it("renders the empty state when nothing matches", () => {
     render(<FilteredWeaponList items={items} />);
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'zzz' } });
-    act(() => { vi.advanceTimersByTime(300); });
-    expect(screen.queryAllByRole('link')).toHaveLength(0);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "zzz" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
     expect(screen.getByText(/no weapons match/i)).toBeDefined();
   });
 
-  it('applies the region-tinted class to each card', () => {
+  it("applies the region-tinted class to each card", () => {
     const { container } = render(<FilteredWeaponList items={items} />);
-    expect(container.querySelector('.cardNorth')).not.toBeNull();
-    expect(container.querySelector('.cardReach')).not.toBeNull();
-    expect(container.querySelector('.cardCrownlands')).not.toBeNull();
+    expect(container.querySelector(".cardNorth")).not.toBeNull();
+    expect(container.querySelector(".cardReach")).not.toBeNull();
+    expect(container.querySelector(".cardCrownlands")).not.toBeNull();
   });
 });
 ```
@@ -1535,15 +1656,15 @@ Expected: FAIL — module not found.
 Create `components/FilteredWeaponList.tsx`:
 
 ```tsx
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Sigil } from '@/components/Sigil';
-import { filterByName } from '@/lib/search';
-import { cx } from '@/lib/cx';
-import listSearch from '@/components/listSearch.module.css';
-import styles from '@/components/FilteredWeaponList.module.css';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Sigil } from "@/components/Sigil";
+import { filterByName } from "@/lib/search";
+import { cx } from "@/lib/cx";
+import listSearch from "@/components/listSearch.module.css";
+import styles from "@/components/FilteredWeaponList.module.css";
 
 export type WeaponItem = {
   slug: string;
@@ -1565,13 +1686,13 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   reach: styles.cardReach,
   stormlands: styles.cardStormlands,
   dorne: styles.cardDorne,
-  'iron-islands': styles.cardIronIslands,
+  "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
 };
 
 export function FilteredWeaponList({ items }: Props) {
-  const [value, setValue] = useState('');
-  const [debounced, setDebounced] = useState('');
+  const [value, setValue] = useState("");
+  const [debounced, setDebounced] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => setDebounced(value), 300);
@@ -1595,11 +1716,15 @@ export function FilteredWeaponList({ items }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>No weapons match &ldquo;{debounced}&rdquo;.</p>
+        <p className={listSearch.empty}>
+          No weapons match &ldquo;{debounced}&rdquo;.
+        </p>
       ) : (
         <ul className={styles.list}>
           {filtered.map((item) => {
-            const regionClass = item.region ? REGION_CARD_CLASS[item.region] : undefined;
+            const regionClass = item.region
+              ? REGION_CARD_CLASS[item.region]
+              : undefined;
             const cardClass = cx(styles.card, regionClass);
             return (
               <li key={item.slug} className={styles.item}>
@@ -1635,28 +1760,32 @@ Expected: PASS.
 Create `app/weapons/page.tsx`:
 
 ```tsx
-import type { Metadata } from 'next';
-import { loadAllWeapons, loadAllHouses } from '@/lib/content';
-import { regionForHouse, regionLabel } from '@/lib/regions';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { FilteredWeaponList, type WeaponItem } from '@/components/FilteredWeaponList';
+import type { Metadata } from "next";
+import { loadAllWeapons, loadAllHouses } from "@/lib/content";
+import { regionForHouse, regionLabel } from "@/lib/regions";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import {
+  FilteredWeaponList,
+  type WeaponItem,
+} from "@/components/FilteredWeaponList";
 
 export const metadata: Metadata = {
-  title: 'Weapons · Atlas of the Known World',
-  description: 'Named blades, ancestral arms, and lost relics of the realm.',
+  title: "Weapons · Atlas of the Known World",
+  description: "Named blades, ancestral arms, and lost relics of the realm.",
 };
 
 export default async function WeaponsPage() {
-  const [weapons, houses] = await Promise.all([loadAllWeapons(), loadAllHouses()]);
+  const [weapons, houses] = await Promise.all([
+    loadAllWeapons(),
+    loadAllHouses(),
+  ]);
   const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
   const visible = weapons.filter((w) => !w.frontmatter.draft);
 
   const items: WeaponItem[] = visible
     .map((w): WeaponItem => {
       const houseSlug =
-        w.frontmatter['current-house'] ??
-        w.frontmatter['origin-house'] ??
-        null;
+        w.frontmatter["current-house"] ?? w.frontmatter["origin-house"] ?? null;
       const region = houseSlug ? regionForHouse(houseSlug, housesBySlug) : null;
       return {
         slug: w.frontmatter.slug,
@@ -1707,6 +1836,7 @@ EOF
 ### Task 7: Build `FilteredDragonList` + `/dragons/` index route
 
 **Files:**
+
 - Create: `components/FilteredDragonList.tsx`
 - Create: `components/FilteredDragonList.module.css`
 - Create: `components/FilteredDragonList.test.tsx`
@@ -1717,49 +1847,84 @@ EOF
 Create `components/FilteredDragonList.test.tsx`:
 
 ```tsx
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import { FilteredDragonList, type DragonItem } from '@/components/FilteredDragonList';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  FilteredDragonList,
+  type DragonItem,
+} from "@/components/FilteredDragonList";
 
 const items: DragonItem[] = [
-  { slug: 'balerion', name: 'Balerion',     houseSlug: 'targaryen', region: 'crownlands', regionLabel: 'The Crownlands' },
-  { slug: 'vhagar',   name: 'Vhagar',       houseSlug: 'targaryen', region: 'crownlands', regionLabel: 'The Crownlands' },
-  { slug: 'cannibal', name: 'The Cannibal', houseSlug: null,        region: null,         regionLabel: null },
+  {
+    slug: "balerion",
+    name: "Balerion",
+    houseSlug: "targaryen",
+    region: "crownlands",
+    regionLabel: "The Crownlands",
+  },
+  {
+    slug: "vhagar",
+    name: "Vhagar",
+    houseSlug: "targaryen",
+    region: "crownlands",
+    regionLabel: "The Crownlands",
+  },
+  {
+    slug: "cannibal",
+    name: "The Cannibal",
+    houseSlug: null,
+    region: null,
+    regionLabel: null,
+  },
 ];
 
-beforeEach(() => { vi.useFakeTimers(); });
-afterEach(() => { vi.useRealTimers(); });
+beforeEach(() => {
+  vi.useFakeTimers();
+});
+afterEach(() => {
+  vi.useRealTimers();
+});
 
-describe('FilteredDragonList', () => {
-  it('renders every dragon by default', () => {
+describe("FilteredDragonList", () => {
+  it("renders every dragon by default", () => {
     render(<FilteredDragonList items={items} />);
-    expect(screen.getAllByRole('link')).toHaveLength(3);
+    expect(screen.getAllByRole("link")).toHaveLength(3);
   });
 
-  it('exposes a labelled search input', () => {
+  it("exposes a labelled search input", () => {
     render(<FilteredDragonList items={items} />);
-    expect(screen.getByRole('searchbox', { name: /search dragons/i })).toBeDefined();
+    expect(
+      screen.getByRole("searchbox", { name: /search dragons/i }),
+    ).toBeDefined();
   });
 
-  it('filters after the 300ms debounce', () => {
+  it("filters after the 300ms debounce", () => {
     render(<FilteredDragonList items={items} />);
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'cannibal' } });
-    act(() => { vi.advanceTimersByTime(300); });
-    const links = screen.getAllByRole('link');
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "cannibal" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
-    expect(links[0].textContent).toContain('Cannibal');
+    expect(links[0].textContent).toContain("Cannibal");
   });
 
-  it('applies the wild card class to dragons with no house', () => {
+  it("applies the wild card class to dragons with no house", () => {
     const { container } = render(<FilteredDragonList items={items} />);
-    expect(container.querySelector('.cardWild')).not.toBeNull();
+    expect(container.querySelector(".cardWild")).not.toBeNull();
   });
 
-  it('renders the empty state when nothing matches', () => {
+  it("renders the empty state when nothing matches", () => {
     render(<FilteredDragonList items={items} />);
-    fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'zzz' } });
-    act(() => { vi.advanceTimersByTime(300); });
-    expect(screen.queryAllByRole('link')).toHaveLength(0);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "zzz" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
     expect(screen.getByText(/no dragons match/i)).toBeDefined();
   });
 });
@@ -1775,15 +1940,15 @@ Expected: FAIL — module not found.
 Create `components/FilteredDragonList.tsx`:
 
 ```tsx
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Sigil } from '@/components/Sigil';
-import { filterByName } from '@/lib/search';
-import { cx } from '@/lib/cx';
-import listSearch from '@/components/listSearch.module.css';
-import styles from '@/components/FilteredDragonList.module.css';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Sigil } from "@/components/Sigil";
+import { filterByName } from "@/lib/search";
+import { cx } from "@/lib/cx";
+import listSearch from "@/components/listSearch.module.css";
+import styles from "@/components/FilteredDragonList.module.css";
 
 export type DragonItem = {
   slug: string;
@@ -1805,13 +1970,13 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   reach: styles.cardReach,
   stormlands: styles.cardStormlands,
   dorne: styles.cardDorne,
-  'iron-islands': styles.cardIronIslands,
+  "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
 };
 
 export function FilteredDragonList({ items }: Props) {
-  const [value, setValue] = useState('');
-  const [debounced, setDebounced] = useState('');
+  const [value, setValue] = useState("");
+  const [debounced, setDebounced] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => setDebounced(value), 300);
@@ -1835,7 +2000,9 @@ export function FilteredDragonList({ items }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>No dragons match &ldquo;{debounced}&rdquo;.</p>
+        <p className={listSearch.empty}>
+          No dragons match &ldquo;{debounced}&rdquo;.
+        </p>
       ) : (
         <ul className={styles.list}>
           {filtered.map((item) => {
@@ -1903,19 +2070,25 @@ Expected: PASS.
 Create `app/dragons/page.tsx`:
 
 ```tsx
-import type { Metadata } from 'next';
-import { loadAllDragons, loadAllHouses } from '@/lib/content';
-import { regionForHouse, regionLabel } from '@/lib/regions';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { FilteredDragonList, type DragonItem } from '@/components/FilteredDragonList';
+import type { Metadata } from "next";
+import { loadAllDragons, loadAllHouses } from "@/lib/content";
+import { regionForHouse, regionLabel } from "@/lib/regions";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import {
+  FilteredDragonList,
+  type DragonItem,
+} from "@/components/FilteredDragonList";
 
 export const metadata: Metadata = {
-  title: 'Dragons · Atlas of the Known World',
-  description: 'Of the dragons that were and the dragons that are.',
+  title: "Dragons · Atlas of the Known World",
+  description: "Of the dragons that were and the dragons that are.",
 };
 
 export default async function DragonsPage() {
-  const [dragons, houses] = await Promise.all([loadAllDragons(), loadAllHouses()]);
+  const [dragons, houses] = await Promise.all([
+    loadAllDragons(),
+    loadAllHouses(),
+  ]);
   const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
   const visible = dragons.filter((d) => !d.frontmatter.draft);
 
@@ -1970,6 +2143,7 @@ EOF
 ### Task 8: Wire weapons + dragons into `MainMenu` (5 tiles) and `SiteMenu`
 
 **Files:**
+
 - Modify: `components/MainMenu.tsx`
 - Modify: `components/MainMenu.module.css`
 - Modify: `components/MainMenu.test.tsx`
@@ -1981,33 +2155,33 @@ EOF
 Replace `components/MainMenu.test.tsx` contents:
 
 ```tsx
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import { MainMenu } from '@/components/MainMenu';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { MainMenu } from "@/components/MainMenu";
 
-describe('MainMenu', () => {
-  it('renders five tiles in order: Maps, Timeline, Houses, Weapons, Dragons', () => {
+describe("MainMenu", () => {
+  it("renders five tiles in order: Maps, Timeline, Houses, Weapons, Dragons", () => {
     render(<MainMenu />);
-    const links = screen.getAllByRole('link');
+    const links = screen.getAllByRole("link");
     expect(links).toHaveLength(5);
 
-    expect(links[0].textContent).toContain('Maps');
-    expect(links[0].getAttribute('href')).toBe('/maps/');
+    expect(links[0].textContent).toContain("Maps");
+    expect(links[0].getAttribute("href")).toBe("/maps/");
 
-    expect(links[1].textContent).toContain('Timeline');
-    expect(links[1].getAttribute('href')).toBe('/timeline/');
+    expect(links[1].textContent).toContain("Timeline");
+    expect(links[1].getAttribute("href")).toBe("/timeline/");
 
-    expect(links[2].textContent).toContain('Houses');
-    expect(links[2].getAttribute('href')).toBe('/houses/');
+    expect(links[2].textContent).toContain("Houses");
+    expect(links[2].getAttribute("href")).toBe("/houses/");
 
-    expect(links[3].textContent).toContain('Weapons');
-    expect(links[3].getAttribute('href')).toBe('/weapons/');
+    expect(links[3].textContent).toContain("Weapons");
+    expect(links[3].getAttribute("href")).toBe("/weapons/");
 
-    expect(links[4].textContent).toContain('Dragons');
-    expect(links[4].getAttribute('href')).toBe('/dragons/');
+    expect(links[4].textContent).toContain("Dragons");
+    expect(links[4].getAttribute("href")).toBe("/dragons/");
   });
 
-  it('marks Maps and Timeline as coming soon', () => {
+  it("marks Maps and Timeline as coming soon", () => {
     render(<MainMenu />);
     const pills = screen.getAllByText(/coming soon/i);
     expect(pills).toHaveLength(2);
@@ -2015,7 +2189,9 @@ describe('MainMenu', () => {
 
   it('wraps tiles in a nav landmark labelled "Atlas sections"', () => {
     render(<MainMenu />);
-    expect(screen.getByRole('navigation', { name: /atlas sections/i })).toBeDefined();
+    expect(
+      screen.getByRole("navigation", { name: /atlas sections/i }),
+    ).toBeDefined();
   });
 });
 ```
@@ -2033,9 +2209,25 @@ In `components/MainMenu.tsx`, after the existing `SIGIL` const, add:
 const SWORD = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <circle cx="16" cy="5" r="1.7" fill="currentColor" opacity="0.6" />
-    <path d="M16 7 V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M9 10 H23" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M13 11 L16 28 L19 11 Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    <path
+      d="M16 7 V10"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M9 10 H23"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M13 11 L16 28 L19 11 Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
     <path d="M14 14 H18" stroke="currentColor" strokeWidth="1" opacity="0.5" />
   </svg>
 );
@@ -2044,9 +2236,17 @@ const DRAGON = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <path
       d="M6 22 Q4 16 8 12 Q14 14 16 18 Q18 14 24 12 Q28 16 26 22 Z"
-      fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
     />
-    <path d="M16 18 V26 M14 26 H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path
+      d="M16 18 V26 M14 26 H18"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
     <circle cx="16" cy="14" r="1.5" fill="currentColor" opacity="0.6" />
   </svg>
 );
@@ -2085,13 +2285,24 @@ Replace `components/MainMenu.module.css` contents:
   gap: 1.5rem;
 }
 
-.menu > :nth-child(1) { grid-area: maps; }
-.menu > :nth-child(2) { grid-area: timeline; }
-.menu > :nth-child(3) { grid-area: houses; }
-.menu > :nth-child(4) { grid-area: weapons; }
-.menu > :nth-child(5) { grid-area: dragons; }
+.menu > :nth-child(1) {
+  grid-area: maps;
+}
+.menu > :nth-child(2) {
+  grid-area: timeline;
+}
+.menu > :nth-child(3) {
+  grid-area: houses;
+}
+.menu > :nth-child(4) {
+  grid-area: weapons;
+}
+.menu > :nth-child(5) {
+  grid-area: dragons;
+}
 
-@media (max-width: 1023.98px) { /* lg */
+@media (max-width: 1023.98px) {
+  /* lg */
   .menu {
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
@@ -2101,7 +2312,8 @@ Replace `components/MainMenu.module.css` contents:
   }
 }
 
-@media (max-width: 767.98px) { /* md */
+@media (max-width: 767.98px) {
+  /* md */
   .menu {
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -2115,6 +2327,7 @@ Replace `components/MainMenu.module.css` contents:
 ```
 
 Notes:
+
 - `.menu > :nth-child(N)` assigns `grid-area` by source order. This avoids reaching across module boundaries (each `MainMenuTile` doesn't know its own area name) and stays within `MainMenu.module.css`.
 - Per `CLAUDE.md`, no `grid-column: 1 / -1` — every layout is named-area driven.
 
@@ -2129,12 +2342,12 @@ In `components/SiteMenu.tsx`, expand `ITEMS`:
 
 ```ts
 const ITEMS = [
-  { href: '/maps/', label: 'Maps' },
-  { href: '/timeline/', label: 'Timeline' },
-  { href: '/houses/', label: 'Houses' },
-  { href: '/characters/', label: 'Characters' },
-  { href: '/weapons/', label: 'Weapons' },
-  { href: '/dragons/', label: 'Dragons' },
+  { href: "/maps/", label: "Maps" },
+  { href: "/timeline/", label: "Timeline" },
+  { href: "/houses/", label: "Houses" },
+  { href: "/characters/", label: "Characters" },
+  { href: "/weapons/", label: "Weapons" },
+  { href: "/dragons/", label: "Dragons" },
 ] as const;
 ```
 
@@ -2191,6 +2404,7 @@ EOF
 ### Task 9: Extend `prose-links` to weapon + dragon kinds
 
 **Files:**
+
 - Modify: `lib/prose-links.ts`
 - Modify: `lib/prose-links.test.ts`
 - Modify: `app/houses/[slug]/page.tsx`
@@ -2203,19 +2417,19 @@ EOF
 In `lib/prose-links.test.ts`, locate the helper at the top of the file (the one that builds a default `args` shape for `buildProseLinkIndex`). Extend it to accept (and pass through) `allWeapons` and `allDragons` defaulting to `[]`. Then add new test blocks:
 
 ```ts
-import { buildProseLinkIndex, type ProseLinkIndex } from '@/lib/prose-links';
-import type { Weapon, Dragon } from '@/lib/schemas';
+import { buildProseLinkIndex, type ProseLinkIndex } from "@/lib/prose-links";
+import type { Weapon, Dragon } from "@/lib/schemas";
 
 // ... existing helpers ...
 
 const weaponBase: Weapon = {
-  slug: 'blackfyre',
-  name: 'Blackfyre',
-  type: 'sword',
-  material: 'valyrian-steel',
-  status: 'lost',
-  'origin-house': 'targaryen',
-  'current-house': null,
+  slug: "blackfyre",
+  name: "Blackfyre",
+  type: "sword",
+  material: "valyrian-steel",
+  status: "lost",
+  "origin-house": "targaryen",
+  "current-house": null,
   wielders: [],
   aliases: [],
   mentions: [],
@@ -2224,12 +2438,12 @@ const weaponBase: Weapon = {
 };
 
 const dragonBase: Dragon = {
-  slug: 'vhagar',
-  name: 'Vhagar',
+  slug: "vhagar",
+  name: "Vhagar",
   hatched: null,
   died: null,
-  status: 'dead',
-  house: 'targaryen',
+  status: "dead",
+  house: "targaryen",
   riders: [],
   aliases: [],
   mentions: [],
@@ -2237,42 +2451,42 @@ const dragonBase: Dragon = {
   draft: false,
 };
 
-describe('buildProseLinkIndex (weapons and dragons)', () => {
-  it('emits weapon targets with `/weapons/<slug>/` hrefs', () => {
+describe("buildProseLinkIndex (weapons and dragons)", () => {
+  it("emits weapon targets with `/weapons/<slug>/` hrefs", () => {
     const out = buildProseLinkIndex({
       allCharacters: [],
       allHouses: [],
-      allWeapons: [{ slug: 'blackfyre', frontmatter: weaponBase }],
+      allWeapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
       allDragons: [],
-      current: { kind: 'house', slug: 'targaryen', mentions: [] },
+      current: { kind: "house", slug: "targaryen", mentions: [] },
     });
-    const target = out.targets.find((t) => t.slug === 'blackfyre');
-    expect(target?.href).toBe('/weapons/blackfyre/');
-    expect(target?.kind).toBe('weapon');
+    const target = out.targets.find((t) => t.slug === "blackfyre");
+    expect(target?.href).toBe("/weapons/blackfyre/");
+    expect(target?.kind).toBe("weapon");
   });
 
-  it('emits dragon targets with `/dragons/<slug>/` hrefs', () => {
+  it("emits dragon targets with `/dragons/<slug>/` hrefs", () => {
     const out = buildProseLinkIndex({
       allCharacters: [],
       allHouses: [],
       allWeapons: [],
-      allDragons: [{ slug: 'vhagar', frontmatter: dragonBase }],
-      current: { kind: 'house', slug: 'targaryen', mentions: [] },
+      allDragons: [{ slug: "vhagar", frontmatter: dragonBase }],
+      current: { kind: "house", slug: "targaryen", mentions: [] },
     });
-    const target = out.targets.find((t) => t.slug === 'vhagar');
-    expect(target?.href).toBe('/dragons/vhagar/');
-    expect(target?.kind).toBe('dragon');
+    const target = out.targets.find((t) => t.slug === "vhagar");
+    expect(target?.href).toBe("/dragons/vhagar/");
+    expect(target?.kind).toBe("dragon");
   });
 
-  it('does not link a weapon to itself when current.kind=weapon', () => {
+  it("does not link a weapon to itself when current.kind=weapon", () => {
     const out = buildProseLinkIndex({
       allCharacters: [],
       allHouses: [],
-      allWeapons: [{ slug: 'blackfyre', frontmatter: weaponBase }],
+      allWeapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
       allDragons: [],
-      current: { kind: 'weapon', slug: 'blackfyre', mentions: [] },
+      current: { kind: "weapon", slug: "blackfyre", mentions: [] },
     });
-    expect(out.selfSlug).toBe('blackfyre');
+    expect(out.selfSlug).toBe("blackfyre");
   });
 });
 ```
@@ -2291,7 +2505,7 @@ Change the `ProseLinkTarget['kind']` union:
 ```ts
 export type ProseLinkTarget = {
   slug: string;
-  kind: 'character' | 'house' | 'weapon' | 'dragon';
+  kind: "character" | "house" | "weapon" | "dragon";
   href: string;
   surfaceForms: string[];
 };
@@ -2300,7 +2514,7 @@ export type ProseLinkTarget = {
 Update the import to include weapon/dragon types:
 
 ```ts
-import type { Character, House, Weapon, Dragon } from '@/lib/schemas';
+import type { Character, House, Weapon, Dragon } from "@/lib/schemas";
 ```
 
 Change the `buildProseLinkIndex` signature and body:
@@ -2312,7 +2526,7 @@ export function buildProseLinkIndex(args: {
   allWeapons: ReadonlyArray<{ slug: string; frontmatter: Weapon }>;
   allDragons: ReadonlyArray<{ slug: string; frontmatter: Dragon }>;
   current: {
-    kind: 'character' | 'house' | 'weapon' | 'dragon';
+    kind: "character" | "house" | "weapon" | "dragon";
     slug: string;
     mentions: readonly string[];
   };
@@ -2331,7 +2545,7 @@ export function buildProseLinkIndex(args: {
     if (surfaceForms.length === 0) continue;
     targets.push({
       slug: fm.slug,
-      kind: 'weapon',
+      kind: "weapon",
       href: `/weapons/${fm.slug}/`,
       surfaceForms,
     });
@@ -2344,7 +2558,7 @@ export function buildProseLinkIndex(args: {
     if (surfaceForms.length === 0) continue;
     targets.push({
       slug: fm.slug,
-      kind: 'dragon',
+      kind: "dragon",
       href: `/dragons/${fm.slug}/`,
       surfaceForms,
     });
@@ -2383,11 +2597,23 @@ const [house, allHouses, castles, characters, allWeapons, allDragons] =
   ]);
 // ...
 const proseLinks = buildProseLinkIndex({
-  allCharacters: characters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
-  allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
-  allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
-  allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
-  current: { kind: 'house', slug, mentions: house.frontmatter.mentions },
+  allCharacters: characters.map((c) => ({
+    slug: c.slug,
+    frontmatter: c.frontmatter,
+  })),
+  allHouses: allHouses.map((h) => ({
+    slug: h.slug,
+    frontmatter: h.frontmatter,
+  })),
+  allWeapons: allWeapons.map((w) => ({
+    slug: w.slug,
+    frontmatter: w.frontmatter,
+  })),
+  allDragons: allDragons.map((d) => ({
+    slug: d.slug,
+    frontmatter: d.frontmatter,
+  })),
+  current: { kind: "house", slug, mentions: house.frontmatter.mentions },
 });
 ```
 
@@ -2404,18 +2630,30 @@ const [allCharacters, allHouses, allWeapons, allDragons, portrait] =
   ]);
 // ...
 const proseLinks = buildProseLinkIndex({
-  allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
-  allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
-  allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
-  allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
-  current: { kind: 'character', slug, mentions: fm.mentions },
+  allCharacters: allCharacters.map((c) => ({
+    slug: c.slug,
+    frontmatter: c.frontmatter,
+  })),
+  allHouses: allHouses.map((h) => ({
+    slug: h.slug,
+    frontmatter: h.frontmatter,
+  })),
+  allWeapons: allWeapons.map((w) => ({
+    slug: w.slug,
+    frontmatter: w.frontmatter,
+  })),
+  allDragons: allDragons.map((d) => ({
+    slug: d.slug,
+    frontmatter: d.frontmatter,
+  })),
+  current: { kind: "character", slug, mentions: fm.mentions },
 });
 ```
 
 **`app/weapons/[slug]/page.tsx`** — currently calls `renderMarkdown(weapon.body)` with no prose links. Add:
 
 ```tsx
-import { buildProseLinkIndex } from '@/lib/prose-links';
+import { buildProseLinkIndex } from "@/lib/prose-links";
 // ...
 const [weapon, allHouses, allCharacters, allWeapons, allDragons] =
   await Promise.all([
@@ -2428,13 +2666,28 @@ const [weapon, allHouses, allCharacters, allWeapons, allDragons] =
 if (!weapon) notFound();
 // ...
 const proseLinks = buildProseLinkIndex({
-  allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
-  allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
-  allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
-  allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
-  current: { kind: 'weapon', slug, mentions: weapon.frontmatter.mentions },
+  allCharacters: allCharacters.map((c) => ({
+    slug: c.slug,
+    frontmatter: c.frontmatter,
+  })),
+  allHouses: allHouses.map((h) => ({
+    slug: h.slug,
+    frontmatter: h.frontmatter,
+  })),
+  allWeapons: allWeapons.map((w) => ({
+    slug: w.slug,
+    frontmatter: w.frontmatter,
+  })),
+  allDragons: allDragons.map((d) => ({
+    slug: d.slug,
+    frontmatter: d.frontmatter,
+  })),
+  current: { kind: "weapon", slug, mentions: weapon.frontmatter.mentions },
 });
-const html = fm && weapon.body.trim() ? await renderMarkdown(weapon.body, { proseLinks }) : '';
+const html =
+  fm && weapon.body.trim()
+    ? await renderMarkdown(weapon.body, { proseLinks })
+    : "";
 ```
 
 **`app/dragons/[slug]/page.tsx`** — same as weapons but with `loadDragon` / `kind: 'dragon'`.
@@ -2465,6 +2718,7 @@ EOF
 ### Task 10: Resolve weapons in `HouseInfobox`; add Dragons row; surface "Bore" / "Rode" on character pages
 
 **Files:**
+
 - Modify: `components/HouseInfobox.tsx`
 - Modify: `components/HouseInfobox.test.tsx`
 - Modify: `app/houses/[slug]/page.tsx`
@@ -2577,14 +2831,19 @@ Update the import:
 
 ```ts
 import type {
-  House, Castle, Character, HouseInfoEntry, Weapon, Dragon,
-} from '@/lib/schemas';
+  House,
+  Castle,
+  Character,
+  HouseInfoEntry,
+  Weapon,
+  Dragon,
+} from "@/lib/schemas";
 ```
 
 Inside the component, replace the interim `weapons` derivation with:
 
 ```ts
-const weapons: HouseInfoEntry[] = (house['ancestral-weapons'] ?? []).map(
+const weapons: HouseInfoEntry[] = (house["ancestral-weapons"] ?? []).map(
   (slug) => ({
     slug,
     name: weaponsBySlug.get(slug)?.name ?? humanizeSlug(slug),
@@ -2638,7 +2897,7 @@ const dragonsForHouse = allDragons
   weaponsBySlug={weaponsBySlug}
   dragonsForHouse={dragonsForHouse}
   className={styles.infobox}
-/>
+/>;
 ```
 
 - [ ] **Step 5: Run the infobox tests**
@@ -2663,31 +2922,35 @@ const ridden = allDragons
 In the JSX, immediately after the existing `Family` section (and before the `back` link), add:
 
 ```tsx
-{bornBy.length > 0 && (
-  <section aria-labelledby="bore-heading">
-    <h2 id="bore-heading">Bore</h2>
-    <ul className={styles.crossList}>
-      {bornBy.map((w) => (
-        <li key={w.slug}>
-          <Link href={`/weapons/${w.slug}/`}>{w.name}</Link>
-        </li>
-      ))}
-    </ul>
-  </section>
-)}
+{
+  bornBy.length > 0 && (
+    <section aria-labelledby="bore-heading">
+      <h2 id="bore-heading">Bore</h2>
+      <ul className={styles.crossList}>
+        {bornBy.map((w) => (
+          <li key={w.slug}>
+            <Link href={`/weapons/${w.slug}/`}>{w.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 
-{ridden.length > 0 && (
-  <section aria-labelledby="rode-heading">
-    <h2 id="rode-heading">Rode</h2>
-    <ul className={styles.crossList}>
-      {ridden.map((d) => (
-        <li key={d.slug}>
-          <Link href={`/dragons/${d.slug}/`}>{d.name}</Link>
-        </li>
-      ))}
-    </ul>
-  </section>
-)}
+{
+  ridden.length > 0 && (
+    <section aria-labelledby="rode-heading">
+      <h2 id="rode-heading">Rode</h2>
+      <ul className={styles.crossList}>
+        {ridden.map((d) => (
+          <li key={d.slug}>
+            <Link href={`/dragons/${d.slug}/`}>{d.name}</Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
 ```
 
 In `app/characters/[slug]/page.module.css`, append:
@@ -2728,6 +2991,7 @@ EOF
 ### Task 11: Seed weapon content + migrate `stark.md` and `tarly.md`
 
 **Files:**
+
 - Create: `content/weapons/blackfyre.md`
 - Create: `content/weapons/dark-sister.md`
 - Create: `content/weapons/heartsbane.md`
@@ -2831,7 +3095,7 @@ draft: false
 
 Heartsbane is the ancestral Valyrian-steel greatsword of House Tarly of Horn Hill, borne by the Lord of Horn Hill for five hundred years. It is the only Valyrian blade still carried in the Reach.
 
-By the events of *A Game of Thrones* it hangs at the hip of Lord Randyll Tarly, who is reckoned by many the finest battle commander south of the Neck. His firstborn son Samwell is, by Lord Randyll's measure, too soft to inherit the blade, and the question of who will carry Heartsbane after him is one of the few matters on which the lord of Horn Hill is openly uncertain.
+By the events of _A Game of Thrones_ it hangs at the hip of Lord Randyll Tarly, who is reckoned by many the finest battle commander south of the Neck. His firstborn son Samwell is, by Lord Randyll's measure, too soft to inherit the blade, and the question of who will carry Heartsbane after him is one of the few matters on which the lord of Horn Hill is openly uncertain.
 ```
 
 `content/weapons/ice.md`:
@@ -2890,25 +3154,25 @@ ancestral-weapons:
 Append to `lib/content.test.ts`:
 
 ```ts
-describe('loadWeapon round-trip', () => {
-  it('loads Blackfyre with the canonical Valyrian-steel material', async () => {
-    const result = await loadWeapon('blackfyre');
-    expect(result.frontmatter.slug).toBe('blackfyre');
-    expect(result.frontmatter.material).toBe('valyrian-steel');
-    expect(result.frontmatter.status).toBe('lost');
+describe("loadWeapon round-trip", () => {
+  it("loads Blackfyre with the canonical Valyrian-steel material", async () => {
+    const result = await loadWeapon("blackfyre");
+    expect(result.frontmatter.slug).toBe("blackfyre");
+    expect(result.frontmatter.material).toBe("valyrian-steel");
+    expect(result.frontmatter.status).toBe("lost");
   });
 
-  it('lists Eddard among Ice\'s wielders', async () => {
-    const result = await loadWeapon('ice');
-    expect(result.frontmatter.wielders).toContain('eddard-stark');
+  it("lists Eddard among Ice's wielders", async () => {
+    const result = await loadWeapon("ice");
+    expect(result.frontmatter.wielders).toContain("eddard-stark");
   });
 });
 
-describe('loadAllWeapons round-trip', () => {
-  it('returns all four seeded weapons', async () => {
+describe("loadAllWeapons round-trip", () => {
+  it("returns all four seeded weapons", async () => {
     const all = await loadAllWeapons();
     const slugs = all.map((w) => w.frontmatter.slug).sort();
-    expect(slugs).toEqual(['blackfyre', 'dark-sister', 'heartsbane', 'ice']);
+    expect(slugs).toEqual(["blackfyre", "dark-sister", "heartsbane", "ice"]);
   });
 });
 ```
@@ -2940,6 +3204,7 @@ EOF
 ### Task 12: Seed dragon content
 
 **Files:**
+
 - Create: `content/dragons/balerion.md`
 - Create: `content/dragons/vhagar.md`
 - Create: `content/dragons/meraxes.md`
@@ -3200,26 +3465,32 @@ During the Dance the Cannibal was already old, and the seed seekers who came to 
 Append to `lib/content.test.ts`:
 
 ```ts
-describe('loadDragon round-trip', () => {
-  it('loads Balerion with monstrous size', async () => {
-    const result = await loadDragon('balerion');
-    expect(result.frontmatter.slug).toBe('balerion');
-    expect(result.frontmatter.size).toBe('monstrous');
+describe("loadDragon round-trip", () => {
+  it("loads Balerion with monstrous size", async () => {
+    const result = await loadDragon("balerion");
+    expect(result.frontmatter.slug).toBe("balerion");
+    expect(result.frontmatter.size).toBe("monstrous");
   });
 
-  it('parses the Cannibal as a wild dragon (house null, status wild)', async () => {
-    const result = await loadDragon('cannibal');
+  it("parses the Cannibal as a wild dragon (house null, status wild)", async () => {
+    const result = await loadDragon("cannibal");
     expect(result.frontmatter.house).toBeNull();
-    expect(result.frontmatter.status).toBe('wild');
+    expect(result.frontmatter.status).toBe("wild");
   });
 });
 
-describe('loadAllDragons round-trip', () => {
-  it('returns all seven seeded dragons', async () => {
+describe("loadAllDragons round-trip", () => {
+  it("returns all seven seeded dragons", async () => {
     const all = await loadAllDragons();
     const slugs = all.map((d) => d.frontmatter.slug).sort();
     expect(slugs).toEqual([
-      'balerion', 'cannibal', 'caraxes', 'meraxes', 'sunfyre', 'vermithor', 'vhagar',
+      "balerion",
+      "cannibal",
+      "caraxes",
+      "meraxes",
+      "sunfyre",
+      "vermithor",
+      "vhagar",
     ]);
   });
 });

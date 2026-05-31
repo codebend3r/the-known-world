@@ -1,12 +1,12 @@
-import Link from 'next/link';
-import type { TreeNode } from '@/lib/family-tree';
-import { cx } from '@/lib/cx';
-import styles from '@/components/FamilyTree.module.css';
+import Link from "next/link";
+import type { TreeNode } from "@/lib/family-tree";
+import { cx } from "@/lib/cx";
+import styles from "@/components/FamilyTree.module.css";
 
 function formatLifespan(node: TreeNode): string | null {
   if (node.born === null && node.died === null) return null;
-  const b = node.born === null ? '?' : String(node.born);
-  const d = node.died === null ? '' : String(node.died);
+  const b = node.born === null ? "?" : String(node.born);
+  const d = node.died === null ? "" : String(node.died);
   return d ? `${b}–${d}` : `${b}–`;
 }
 
@@ -27,7 +27,13 @@ function NameContent({ name, alias }: { name: string; alias: string | null }) {
   );
 }
 
-function CharacterName({ slug, name, alias, placeholder, className }: NameProps) {
+function CharacterName({
+  slug,
+  name,
+  alias,
+  placeholder,
+  className,
+}: NameProps) {
   if (slug && !placeholder) {
     return (
       <Link href={`/characters/${slug}/`} className={className}>
@@ -42,20 +48,23 @@ function CharacterName({ slug, name, alias, placeholder, className }: NameProps)
   );
 }
 
-function GenderGlyph({ sex }: { sex: 'm' | 'f' | null }) {
+function GenderGlyph({ sex }: { sex: "m" | "f" | null }) {
   if (sex === null) return null;
   return (
     <span
-      className={cx(styles.gender, sex === 'm' ? styles.genderM : styles.genderF)}
-      aria-label={sex === 'm' ? 'male' : 'female'}
+      className={cx(
+        styles.gender,
+        sex === "m" ? styles.genderM : styles.genderF,
+      )}
+      aria-label={sex === "m" ? "male" : "female"}
     >
-      {sex === 'm' ? '♂' : '♀'}
+      {sex === "m" ? "♂" : "♀"}
     </span>
   );
 }
 
 function wasKing(titles: string[]): boolean {
-  return titles.some((t) => t.startsWith('King '));
+  return titles.some((t) => t.startsWith("King "));
 }
 
 function KingMark({ titles }: { titles: string[] }) {
@@ -67,8 +76,8 @@ function KingMark({ titles }: { titles: string[] }) {
   );
 }
 
-function sexClass(sex: 'm' | 'f' | null): string | false {
-  return sex ? (sex === 'm' ? styles.nameM : styles.nameF) : false;
+function sexClass(sex: "m" | "f" | null): string | false {
+  return sex ? (sex === "m" ? styles.nameM : styles.nameF) : false;
 }
 
 function PersonLabel({ node }: { node: TreeNode }) {
@@ -108,10 +117,7 @@ function NodeRow({ node }: { node: TreeNode }) {
           !spouse.inHouse && styles.nameExternal,
         );
         return (
-          <span
-            key={spouse.slug ?? spouse.name}
-            className={styles.spouse}
-          >
+          <span key={spouse.slug ?? spouse.name} className={styles.spouse}>
             <span className={styles.cross} aria-hidden="true">
               ⚭
             </span>

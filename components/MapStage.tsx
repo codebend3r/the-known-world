@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
-import { ReactSVGPanZoom, TOOL_AUTO, type Value } from 'react-svg-pan-zoom';
-import type { ReactNode } from 'react';
-import styles from '@/components/MapStage.module.css';
+import { useEffect, useRef, useState } from "react";
+import { ReactSVGPanZoom, TOOL_AUTO, type Value } from "react-svg-pan-zoom";
+import type { ReactNode } from "react";
+import styles from "@/components/MapStage.module.css";
 
 const VIEWBOX_WIDTH = 800;
 const VIEWBOX_HEIGHT = 1400;
@@ -46,11 +46,22 @@ export function MapStage({ children, svgUrl }: Props) {
             scaleFactorMin={0.5}
             scaleFactorMax={6}
             preventPanOutside={true}
-            toolbarProps={{ position: 'none' }}
-            miniatureProps={{ position: 'none', background: 'transparent', width: 0, height: 0 }}
+            toolbarProps={{ position: "none" }}
+            miniatureProps={{
+              position: "none",
+              background: "transparent",
+              width: 0,
+              height: 0,
+            }}
           >
             <svg width={VIEWBOX_WIDTH} height={VIEWBOX_HEIGHT}>
-              <image href={svgUrl} x={0} y={0} width={VIEWBOX_WIDTH} height={VIEWBOX_HEIGHT} />
+              <image
+                href={svgUrl}
+                x={0}
+                y={0}
+                width={VIEWBOX_WIDTH}
+                height={VIEWBOX_HEIGHT}
+              />
               {children}
             </svg>
           </ReactSVGPanZoom>

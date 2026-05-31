@@ -12,23 +12,24 @@
 
 ## File Structure
 
-| File | Kind | Responsibility |
-|---|---|---|
-| `lib/regions.ts` | modify | Add `regionLabel(slug)` helper. |
-| `lib/regions.test.ts` | modify | Cover the new helper. |
-| `components/ViewToggle.tsx` | new | Stateless segmented control (2 buttons). |
-| `components/ViewToggle.test.tsx` | new | Unit tests for the toggle. |
-| `components/FilteredHouseList.tsx` | modify | View state + hydration effect + new layout. |
-| `components/FilteredHouseList.test.tsx` | modify | Tests for toggle + persistence. |
-| `app/houses/page.tsx` | modify | Compute and pass `regionLabel` per item. |
-| `styles/list-search.css` | modify | `.list-search-row`, `.view-toggle`. |
-| `styles/houses.css` | modify | `.house-list--list` and region-tinted left border. |
+| File                                    | Kind   | Responsibility                                     |
+| --------------------------------------- | ------ | -------------------------------------------------- |
+| `lib/regions.ts`                        | modify | Add `regionLabel(slug)` helper.                    |
+| `lib/regions.test.ts`                   | modify | Cover the new helper.                              |
+| `components/ViewToggle.tsx`             | new    | Stateless segmented control (2 buttons).           |
+| `components/ViewToggle.test.tsx`        | new    | Unit tests for the toggle.                         |
+| `components/FilteredHouseList.tsx`      | modify | View state + hydration effect + new layout.        |
+| `components/FilteredHouseList.test.tsx` | modify | Tests for toggle + persistence.                    |
+| `app/houses/page.tsx`                   | modify | Compute and pass `regionLabel` per item.           |
+| `styles/list-search.css`                | modify | `.list-search-row`, `.view-toggle`.                |
+| `styles/houses.css`                     | modify | `.house-list--list` and region-tinted left border. |
 
 ---
 
 ## Task 1: `regionLabel` helper
 
 **Files:**
+
 - Modify: `lib/regions.ts`
 - Test: `lib/regions.test.ts`
 
@@ -37,16 +38,16 @@
 Append to `lib/regions.test.ts`:
 
 ```ts
-import { regionForHouse, regionLabel } from './regions';
+import { regionForHouse, regionLabel } from "./regions";
 
-describe('regionLabel', () => {
-  it('returns the display name for a known region slug', () => {
-    expect(regionLabel('north')).toBe('The North');
-    expect(regionLabel('iron-islands')).toBe('The Iron Islands');
-    expect(regionLabel('dorne')).toBe('Dorne');
+describe("regionLabel", () => {
+  it("returns the display name for a known region slug", () => {
+    expect(regionLabel("north")).toBe("The North");
+    expect(regionLabel("iron-islands")).toBe("The Iron Islands");
+    expect(regionLabel("dorne")).toBe("Dorne");
   });
 
-  it('returns null when the slug is null', () => {
+  it("returns null when the slug is null", () => {
     expect(regionLabel(null)).toBeNull();
   });
 });
@@ -75,40 +76,49 @@ export function regionLabel(slug: RegionSlug | null): string | null {
 ## Task 2: `ViewToggle` component
 
 **Files:**
+
 - Create: `components/ViewToggle.tsx`
 - Test: `components/ViewToggle.test.tsx`
 
 - [ ] **Step 1: Write the failing test** (`components/ViewToggle.test.tsx`):
 
 ```tsx
-import { describe, it, expect, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { ViewToggle } from './ViewToggle';
+import { describe, it, expect, vi } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { ViewToggle } from "./ViewToggle";
 
-describe('ViewToggle', () => {
+describe("ViewToggle", () => {
   it('marks the selected button with aria-pressed="true"', () => {
     render(<ViewToggle value="grid" onChange={() => {}} />);
-    expect(screen.getByRole('button', { name: /grid view/i }).getAttribute('aria-pressed')).toBe('true');
-    expect(screen.getByRole('button', { name: /list view/i }).getAttribute('aria-pressed')).toBe('false');
+    expect(
+      screen
+        .getByRole("button", { name: /grid view/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
+    expect(
+      screen
+        .getByRole("button", { name: /list view/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("false");
   });
 
-  it('calls onChange when the unselected button is clicked', () => {
+  it("calls onChange when the unselected button is clicked", () => {
     const onChange = vi.fn();
     render(<ViewToggle value="grid" onChange={onChange} />);
-    fireEvent.click(screen.getByRole('button', { name: /list view/i }));
-    expect(onChange).toHaveBeenCalledWith('list');
+    fireEvent.click(screen.getByRole("button", { name: /list view/i }));
+    expect(onChange).toHaveBeenCalledWith("list");
   });
 
-  it('does not call onChange when the selected button is clicked', () => {
+  it("does not call onChange when the selected button is clicked", () => {
     const onChange = vi.fn();
     render(<ViewToggle value="list" onChange={onChange} />);
-    fireEvent.click(screen.getByRole('button', { name: /list view/i }));
+    fireEvent.click(screen.getByRole("button", { name: /list view/i }));
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it('exposes a labelled group', () => {
+  it("exposes a labelled group", () => {
     render(<ViewToggle value="grid" onChange={() => {}} />);
-    expect(screen.getByRole('group', { name: /view/i })).toBeDefined();
+    expect(screen.getByRole("group", { name: /view/i })).toBeDefined();
   });
 });
 ```
@@ -118,9 +128,9 @@ describe('ViewToggle', () => {
 - [ ] **Step 3: Implement** (`components/ViewToggle.tsx`):
 
 ```tsx
-'use client';
+"use client";
 
-export type ViewMode = 'grid' | 'list';
+export type ViewMode = "grid" | "list";
 
 type Props = {
   value: ViewMode;
@@ -137,8 +147,8 @@ export function ViewToggle({ value, onChange }: Props) {
         type="button"
         className="view-toggle__button"
         aria-label="Grid view"
-        aria-pressed={value === 'grid'}
-        onClick={() => handleSelect('grid')}
+        aria-pressed={value === "grid"}
+        onClick={() => handleSelect("grid")}
       >
         <GridIcon />
       </button>
@@ -146,8 +156,8 @@ export function ViewToggle({ value, onChange }: Props) {
         type="button"
         className="view-toggle__button"
         aria-label="List view"
-        aria-pressed={value === 'list'}
-        onClick={() => handleSelect('list')}
+        aria-pressed={value === "list"}
+        onClick={() => handleSelect("list")}
       >
         <ListIcon />
       </button>
@@ -157,7 +167,13 @@ export function ViewToggle({ value, onChange }: Props) {
 
 function GridIcon() {
   return (
-    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden focusable="false">
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
       <rect x="1" y="1" width="6" height="6" fill="currentColor" />
       <rect x="9" y="1" width="6" height="6" fill="currentColor" />
       <rect x="1" y="9" width="6" height="6" fill="currentColor" />
@@ -168,7 +184,13 @@ function GridIcon() {
 
 function ListIcon() {
   return (
-    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden focusable="false">
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
       <rect x="1" y="2" width="14" height="2" fill="currentColor" />
       <rect x="1" y="7" width="14" height="2" fill="currentColor" />
       <rect x="1" y="12" width="14" height="2" fill="currentColor" />
@@ -186,6 +208,7 @@ function ListIcon() {
 ## Task 3: Region label in items, list view markup, and toggle wiring
 
 **Files:**
+
 - Modify: `components/FilteredHouseList.tsx`
 - Modify: `components/FilteredHouseList.test.tsx`
 - Modify: `app/houses/page.tsx`
@@ -195,45 +218,51 @@ function ListIcon() {
 - [ ] **Step 2: Add failing tests for the toggle + list view + persistence:**
 
 ```tsx
-import { ViewToggle } from './ViewToggle'; // not used directly but documents intent
+import { ViewToggle } from "./ViewToggle"; // not used directly but documents intent
 
-describe('FilteredHouseList view toggle', () => {
+describe("FilteredHouseList view toggle", () => {
   beforeEach(() => {
     window.localStorage.clear();
   });
 
-  it('starts in grid view by default', () => {
+  it("starts in grid view by default", () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    expect(container.querySelector('ul.house-list')).not.toBeNull();
-    expect(container.querySelector('ul.house-list--list')).toBeNull();
-    expect(screen.getByRole('button', { name: /grid view/i }).getAttribute('aria-pressed')).toBe('true');
+    expect(container.querySelector("ul.house-list")).not.toBeNull();
+    expect(container.querySelector("ul.house-list--list")).toBeNull();
+    expect(
+      screen
+        .getByRole("button", { name: /grid view/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
   });
 
-  it('switches to list view when the list button is clicked', () => {
+  it("switches to list view when the list button is clicked", () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    fireEvent.click(screen.getByRole('button', { name: /list view/i }));
-    expect(container.querySelector('ul.house-list--list')).not.toBeNull();
-    expect(window.localStorage.getItem('gota:houses-view')).toBe('list');
+    fireEvent.click(screen.getByRole("button", { name: /list view/i }));
+    expect(container.querySelector("ul.house-list--list")).not.toBeNull();
+    expect(window.localStorage.getItem("gota:houses-view")).toBe("list");
   });
 
-  it('hydrates the stored choice from localStorage after mount', async () => {
-    window.localStorage.setItem('gota:houses-view', 'list');
+  it("hydrates the stored choice from localStorage after mount", async () => {
+    window.localStorage.setItem("gota:houses-view", "list");
     const { container } = render(<FilteredHouseList items={items} />);
     await act(async () => {});
-    expect(container.querySelector('ul.house-list--list')).not.toBeNull();
+    expect(container.querySelector("ul.house-list--list")).not.toBeNull();
   });
 
-  it('ignores invalid stored values and stays in grid view', async () => {
-    window.localStorage.setItem('gota:houses-view', 'kanban');
+  it("ignores invalid stored values and stays in grid view", async () => {
+    window.localStorage.setItem("gota:houses-view", "kanban");
     const { container } = render(<FilteredHouseList items={items} />);
     await act(async () => {});
-    expect(container.querySelector('ul.house-list--list')).toBeNull();
+    expect(container.querySelector("ul.house-list--list")).toBeNull();
   });
 
-  it('shows the region label on each list row', () => {
+  it("shows the region label on each list row", () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    fireEvent.click(screen.getByRole('button', { name: /list view/i }));
-    expect(container.querySelector('.house-list__region')?.textContent).toBe('The North');
+    fireEvent.click(screen.getByRole("button", { name: /list view/i }));
+    expect(container.querySelector(".house-list__region")?.textContent).toBe(
+      "The North",
+    );
   });
 });
 ```
@@ -243,13 +272,13 @@ describe('FilteredHouseList view toggle', () => {
 - [ ] **Step 4: Update `components/FilteredHouseList.tsx`:**
 
 ```tsx
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Sigil } from './Sigil';
-import { ViewToggle, type ViewMode } from './ViewToggle';
-import { filterByName } from '@/lib/search';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Sigil } from "./Sigil";
+import { ViewToggle, type ViewMode } from "./ViewToggle";
+import { filterByName } from "@/lib/search";
 
 export type HouseItem = {
   slug: string;
@@ -262,19 +291,19 @@ type Props = {
   items: HouseItem[];
 };
 
-const VIEW_STORAGE_KEY = 'gota:houses-view';
+const VIEW_STORAGE_KEY = "gota:houses-view";
 
 function isViewMode(value: unknown): value is ViewMode {
-  return value === 'grid' || value === 'list';
+  return value === "grid" || value === "list";
 }
 
 export function FilteredHouseList({ items }: Props) {
-  const [value, setValue] = useState('');
-  const [debounced, setDebounced] = useState('');
-  const [view, setView] = useState<ViewMode>('grid');
+  const [value, setValue] = useState("");
+  const [debounced, setDebounced] = useState("");
+  const [view, setView] = useState<ViewMode>("grid");
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     const stored = window.localStorage.getItem(VIEW_STORAGE_KEY);
     if (isViewMode(stored)) setView(stored);
   }, []);
@@ -288,12 +317,13 @@ export function FilteredHouseList({ items }: Props) {
 
   const handleViewChange = (next: ViewMode) => {
     setView(next);
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.localStorage.setItem(VIEW_STORAGE_KEY, next);
     }
   };
 
-  const listClass = view === 'list' ? 'house-list house-list--list' : 'house-list';
+  const listClass =
+    view === "list" ? "house-list house-list--list" : "house-list";
 
   return (
     <>
@@ -311,25 +341,29 @@ export function FilteredHouseList({ items }: Props) {
         <ViewToggle value={view} onChange={handleViewChange} />
       </div>
       {filtered.length === 0 ? (
-        <p className="list-search__empty">No houses match &ldquo;{debounced}&rdquo;.</p>
+        <p className="list-search__empty">
+          No houses match &ldquo;{debounced}&rdquo;.
+        </p>
       ) : (
         <ul className={listClass}>
           {filtered.map((item) => {
             const cardClass = item.region
               ? `house-list__card house-list__card--region-${item.region}`
-              : 'house-list__card';
+              : "house-list__card";
             return (
               <li key={item.slug} className="house-list__item">
                 <Link href={`/houses/${item.slug}/`} className={cardClass}>
                   <Sigil
                     slug={item.slug}
                     name={item.name}
-                    size={view === 'list' ? '2rem' : '4.5rem'}
+                    size={view === "list" ? "2rem" : "4.5rem"}
                     decorative
                   />
                   <span className="house-list__name">{item.name}</span>
-                  {view === 'list' && item.regionLabel && (
-                    <span className="house-list__region">{item.regionLabel}</span>
+                  {view === "list" && item.regionLabel && (
+                    <span className="house-list__region">
+                      {item.regionLabel}
+                    </span>
                   )}
                 </Link>
               </li>
@@ -345,8 +379,8 @@ export function FilteredHouseList({ items }: Props) {
 - [ ] **Step 5: Update `app/houses/page.tsx`.** Import `regionLabel` and pass it per item:
 
 ```tsx
-import { loadAllHouses } from '@/lib/content';
-import { regionForHouse, regionLabel } from '@/lib/regions';
+import { loadAllHouses } from "@/lib/content";
+import { regionForHouse, regionLabel } from "@/lib/regions";
 // ...
 const items: HouseItem[] = visible
   .map((h) => {
@@ -370,6 +404,7 @@ const items: HouseItem[] = visible
 ## Task 4: CSS for search row + view toggle
 
 **Files:**
+
 - Modify: `styles/list-search.css`
 
 - [ ] **Step 1: Append to `styles/list-search.css`:**
@@ -420,7 +455,7 @@ const items: HouseItem[] = visible
   background: rgba(248, 236, 208, 0.9);
 }
 
-.view-toggle__button[aria-pressed='true'] {
+.view-toggle__button[aria-pressed="true"] {
   color: var(--ink);
   background: rgba(212, 162, 89, 0.18);
 }
@@ -439,6 +474,7 @@ const items: HouseItem[] = visible
 ## Task 5: CSS for list view rows
 
 **Files:**
+
 - Modify: `styles/houses.css`
 
 - [ ] **Step 1: Append to `styles/houses.css`:**

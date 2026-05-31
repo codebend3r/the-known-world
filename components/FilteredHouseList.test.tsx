@@ -1,11 +1,24 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { act, fireEvent, render, screen } from '@testing-library/react';
-import { FilteredHouseList, type HouseItem } from '@/components/FilteredHouseList';
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+  FilteredHouseList,
+  type HouseItem,
+} from "@/components/FilteredHouseList";
 
 const items: HouseItem[] = [
-  { slug: 'stark', name: 'Stark', region: 'north', regionLabel: 'The North' },
-  { slug: 'lannister', name: 'Lannister', region: 'westerlands', regionLabel: 'The Westerlands' },
-  { slug: 'tully', name: 'Tully', region: 'riverlands', regionLabel: 'The Riverlands' },
+  { slug: "stark", name: "Stark", region: "north", regionLabel: "The North" },
+  {
+    slug: "lannister",
+    name: "Lannister",
+    region: "westerlands",
+    regionLabel: "The Westerlands",
+  },
+  {
+    slug: "tully",
+    name: "Tully",
+    region: "riverlands",
+    regionLabel: "The Riverlands",
+  },
 ];
 
 beforeEach(() => {
@@ -17,106 +30,112 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe('FilteredHouseList', () => {
-  it('renders every house card by default', () => {
+describe("FilteredHouseList", () => {
+  it("renders every house card by default", () => {
     render(<FilteredHouseList items={items} />);
-    const cards = screen.getAllByRole('link');
+    const cards = screen.getAllByRole("link");
     expect(cards.length).toBe(3);
   });
 
-  it('exposes a labelled search input', () => {
+  it("exposes a labelled search input", () => {
     render(<FilteredHouseList items={items} />);
     expect(
-      screen.getByRole('searchbox', { name: /search houses/i }),
+      screen.getByRole("searchbox", { name: /search houses/i }),
     ).toBeDefined();
   });
 
-  it('does not filter until the 300ms debounce elapses', () => {
+  it("does not filter until the 300ms debounce elapses", () => {
     render(<FilteredHouseList items={items} />);
-    const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: 'stark' } });
+    const input = screen.getByRole("searchbox");
+    fireEvent.change(input, { target: { value: "stark" } });
     act(() => {
       vi.advanceTimersByTime(299);
     });
-    expect(screen.getAllByRole('link').length).toBe(3);
+    expect(screen.getAllByRole("link").length).toBe(3);
   });
 
-  it('filters the list once the debounce elapses', () => {
+  it("filters the list once the debounce elapses", () => {
     render(<FilteredHouseList items={items} />);
-    const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: 'stark' } });
+    const input = screen.getByRole("searchbox");
+    fireEvent.change(input, { target: { value: "stark" } });
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    const cards = screen.getAllByRole('link');
+    const cards = screen.getAllByRole("link");
     expect(cards.length).toBe(1);
-    expect(cards[0].textContent).toContain('Stark');
+    expect(cards[0].textContent).toContain("Stark");
   });
 
-  it('renders the empty state when nothing matches', () => {
+  it("renders the empty state when nothing matches", () => {
     render(<FilteredHouseList items={items} />);
-    const input = screen.getByRole('searchbox');
-    fireEvent.change(input, { target: { value: 'zzz' } });
+    const input = screen.getByRole("searchbox");
+    fireEvent.change(input, { target: { value: "zzz" } });
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    expect(screen.queryAllByRole('link').length).toBe(0);
+    expect(screen.queryAllByRole("link").length).toBe(0);
     expect(screen.getByText(/no houses match/i)).toBeDefined();
   });
 
-  it('applies the region-tinted class to each card', () => {
+  it("applies the region-tinted class to each card", () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    expect(container.querySelector('.cardNorth')).not.toBeNull();
-    expect(container.querySelector('.cardWesterlands')).not.toBeNull();
+    expect(container.querySelector(".cardNorth")).not.toBeNull();
+    expect(container.querySelector(".cardWesterlands")).not.toBeNull();
   });
 });
 
-describe('FilteredHouseList view toggle', () => {
-  it('starts in grid view by default', () => {
+describe("FilteredHouseList view toggle", () => {
+  it("starts in grid view by default", () => {
     const { container } = render(<FilteredHouseList items={items} />);
-    expect(container.querySelector('ul.list')).not.toBeNull();
-    expect(container.querySelector('ul.listView')).toBeNull();
+    expect(container.querySelector("ul.list")).not.toBeNull();
+    expect(container.querySelector("ul.listView")).toBeNull();
     expect(
-      screen.getByRole('button', { name: /grid view/i }).getAttribute('aria-pressed'),
-    ).toBe('true');
+      screen
+        .getByRole("button", { name: /grid view/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
   });
 
-  it('switches to list view when the list button is clicked', () => {
+  it("switches to list view when the list button is clicked", () => {
     const { container } = render(<FilteredHouseList items={items} />);
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /list view/i }));
+      fireEvent.click(screen.getByRole("button", { name: /list view/i }));
     });
-    expect(container.querySelector('ul.listView')).not.toBeNull();
-    expect(window.localStorage.getItem('gota:houses-view')).toBe('list');
+    expect(container.querySelector("ul.listView")).not.toBeNull();
+    expect(window.localStorage.getItem("gota:houses-view")).toBe("list");
   });
 
-  it('hydrates the stored choice from localStorage after mount', () => {
-    window.localStorage.setItem('gota:houses-view', 'list');
-    const { container } = render(<FilteredHouseList items={items} />);
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
-    expect(container.querySelector('ul.listView')).not.toBeNull();
-  });
-
-  it('ignores invalid stored values and stays in grid view', () => {
-    window.localStorage.setItem('gota:houses-view', 'kanban');
+  it("hydrates the stored choice from localStorage after mount", () => {
+    window.localStorage.setItem("gota:houses-view", "list");
     const { container } = render(<FilteredHouseList items={items} />);
     act(() => {
       vi.advanceTimersByTime(0);
     });
-    expect(container.querySelector('ul.house-list--list')).toBeNull();
+    expect(container.querySelector("ul.listView")).not.toBeNull();
   });
 
-  it('shows the region label on each list row', () => {
+  it("ignores invalid stored values and stays in grid view", () => {
+    window.localStorage.setItem("gota:houses-view", "kanban");
     const { container } = render(<FilteredHouseList items={items} />);
     act(() => {
-      fireEvent.click(screen.getByRole('button', { name: /list view/i }));
+      vi.advanceTimersByTime(0);
     });
-    const regions = container.querySelectorAll('.region');
+    expect(container.querySelector("ul.house-list--list")).toBeNull();
+  });
+
+  it("shows the region label on each list row", () => {
+    const { container } = render(<FilteredHouseList items={items} />);
+    act(() => {
+      fireEvent.click(screen.getByRole("button", { name: /list view/i }));
+    });
+    const regions = container.querySelectorAll(".region");
     expect(regions.length).toBe(3);
     expect(Array.from(regions).map((r) => r.textContent)).toEqual(
-      expect.arrayContaining(['The North', 'The Westerlands', 'The Riverlands']),
+      expect.arrayContaining([
+        "The North",
+        "The Westerlands",
+        "The Riverlands",
+      ]),
     );
   });
 });

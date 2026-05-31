@@ -60,6 +60,7 @@ Files modified after creation: none. Every file is touched exactly once in this 
 ## Task 1: Initialize Next.js project
 
 **Files:**
+
 - Create: `package.json`, `bun.lock`, `tsconfig.json`, `next.config.mjs`, `app/layout.tsx`, `app/page.tsx`, `.eslintrc.json`, `postcss.config.mjs`, `public/favicon.ico`
 
 - [ ] **Step 1: Run the Next.js initializer in the current directory**
@@ -93,7 +94,7 @@ Overwrite `next.config.mjs` with:
 ```javascript
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
   reactStrictMode: true,
@@ -123,6 +124,7 @@ git commit -m "chore: scaffold Next.js app with static export"
 ## Task 2: Install runtime dependencies
 
 **Files:**
+
 - Modify: `package.json` (via bun)
 
 - [ ] **Step 1: Install content/parsing libraries**
@@ -157,23 +159,24 @@ git commit -m "chore: add content parsing and test dependencies"
 ## Task 3: Configure Vitest
 
 **Files:**
+
 - Create: `vitest.config.ts`
 - Modify: `package.json` (add test scripts)
 
 - [ ] **Step 1: Create `vitest.config.ts`**
 
 ```typescript
-import { defineConfig } from 'vitest/config';
-import path from 'node:path';
+import { defineConfig } from "vitest/config";
+import path from "node:path";
 
 export default defineConfig({
   test: {
     globals: true,
-    environment: 'node',
-    include: ['lib/**/*.test.ts'],
+    environment: "node",
+    include: ["lib/**/*.test.ts"],
   },
   resolve: {
-    alias: { '@': path.resolve(__dirname, '.') },
+    alias: { "@": path.resolve(__dirname, ".") },
   },
 });
 ```
@@ -213,6 +216,7 @@ git commit -m "chore: configure vitest"
 ## Task 4: Frontmatter schemas with TDD
 
 **Files:**
+
 - Create: `lib/schemas.ts`, `lib/schemas.test.ts`
 
 - [ ] **Step 1: Write the failing schema tests**
@@ -220,112 +224,131 @@ git commit -m "chore: configure vitest"
 Create `lib/schemas.test.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect } from "vitest";
 import {
   CastleSchema,
   HouseSchema,
   PersonSchema,
   EventSchema,
-} from './schemas';
+} from "./schemas";
 
-describe('CastleSchema', () => {
-  it('parses a complete valid castle', () => {
+describe("CastleSchema", () => {
+  it("parses a complete valid castle", () => {
     const input = {
-      slug: 'winterfell',
-      name: 'Winterfell',
-      type: 'castle',
-      'sub-region': 'northern-mountains',
-      'liege-house': 'stark',
-      founded: { year: -8000, era: 'age-of-heroes', precision: 'legendary' },
-      'sworn-houses': ['karstark', 'umber'],
-      features: ['godswood'],
+      slug: "winterfell",
+      name: "Winterfell",
+      type: "castle",
+      "sub-region": "northern-mountains",
+      "liege-house": "stark",
+      founded: { year: -8000, era: "age-of-heroes", precision: "legendary" },
+      "sworn-houses": ["karstark", "umber"],
+      features: ["godswood"],
       coords: { x: 412, y: 280 },
-      sources: [{ type: 'awoiaf', url: 'https://example', license: 'CC-BY-SA-4.0' }],
+      sources: [
+        { type: "awoiaf", url: "https://example", license: "CC-BY-SA-4.0" },
+      ],
       draft: false,
     };
     expect(() => CastleSchema.parse(input)).not.toThrow();
   });
 
-  it('rejects an invalid type', () => {
-    const input = { slug: 'x', name: 'X', type: 'spaceport', coords: { x: 0, y: 0 }, sources: [], draft: false };
+  it("rejects an invalid type", () => {
+    const input = {
+      slug: "x",
+      name: "X",
+      type: "spaceport",
+      coords: { x: 0, y: 0 },
+      sources: [],
+      draft: false,
+    };
     expect(() => CastleSchema.parse(input)).toThrow();
   });
 
-  it('defaults draft to false when omitted', () => {
+  it("defaults draft to false when omitted", () => {
     const input = {
-      slug: 'x', name: 'X', type: 'castle',
-      coords: { x: 0, y: 0 }, sources: [],
+      slug: "x",
+      name: "X",
+      type: "castle",
+      coords: { x: 0, y: 0 },
+      sources: [],
     };
     const parsed = CastleSchema.parse(input);
     expect(parsed.draft).toBe(false);
   });
 });
 
-describe('HouseSchema', () => {
-  it('parses a Great House (null liege)', () => {
+describe("HouseSchema", () => {
+  it("parses a Great House (null liege)", () => {
     const input = {
-      slug: 'stark',
-      name: 'House Stark',
-      seat: 'winterfell',
+      slug: "stark",
+      name: "House Stark",
+      seat: "winterfell",
       liege: null,
-      words: 'Winter is Coming',
-      sigil: { description: 'A grey direwolf on a white field' },
-      founded: { year: -8000, era: 'age-of-heroes', precision: 'legendary' },
-      status: 'extant',
-      'sworn-from': ['karstark'],
-      'cadet-houses': ['greystark'],
+      words: "Winter is Coming",
+      sigil: { description: "A grey direwolf on a white field" },
+      founded: { year: -8000, era: "age-of-heroes", precision: "legendary" },
+      status: "extant",
+      "sworn-from": ["karstark"],
+      "cadet-houses": ["greystark"],
       sources: [],
       draft: false,
     };
     expect(() => HouseSchema.parse(input)).not.toThrow();
   });
 
-  it('rejects unknown status', () => {
+  it("rejects unknown status", () => {
     const input = {
-      slug: 'x', name: 'X', seat: 'y', liege: null,
-      words: '', sigil: { description: '' },
-      founded: { year: 0, era: 'AC', precision: 'year' },
-      status: 'partying', 'sworn-from': [], 'cadet-houses': [], sources: [],
+      slug: "x",
+      name: "X",
+      seat: "y",
+      liege: null,
+      words: "",
+      sigil: { description: "" },
+      founded: { year: 0, era: "AC", precision: "year" },
+      status: "partying",
+      "sworn-from": [],
+      "cadet-houses": [],
+      sources: [],
     };
     expect(() => HouseSchema.parse(input)).toThrow();
   });
 });
 
-describe('PersonSchema', () => {
-  it('parses a named person', () => {
+describe("PersonSchema", () => {
+  it("parses a named person", () => {
     const input = {
-      slug: 'eddard-stark',
-      name: 'Eddard Stark',
-      born: { year: 263, era: 'AC', precision: 'year' },
-      died: { year: 299, era: 'AC', precision: 'year' },
-      'primary-house': 'stark',
-      'also-of-houses': [],
-      parents: ['rickard-stark', 'lyarra-stark'],
-      spouses: ['catelyn-tully'],
-      children: ['robb-stark'],
-      titles: ['Lord of Winterfell'],
+      slug: "eddard-stark",
+      name: "Eddard Stark",
+      born: { year: 263, era: "AC", precision: "year" },
+      died: { year: 299, era: "AC", precision: "year" },
+      "primary-house": "stark",
+      "also-of-houses": [],
+      parents: ["rickard-stark", "lyarra-stark"],
+      spouses: ["catelyn-tully"],
+      children: ["robb-stark"],
+      titles: ["Lord of Winterfell"],
       placeholder: false,
-      'placeholder-reason': null,
+      "placeholder-reason": null,
       sources: [],
       draft: false,
     };
     expect(() => PersonSchema.parse(input)).not.toThrow();
   });
 
-  it('allows a placeholder person with null name dates', () => {
+  it("allows a placeholder person with null name dates", () => {
     const input = {
-      slug: 'unnamed-stark-daughter',
-      name: 'Unnamed Stark daughter',
+      slug: "unnamed-stark-daughter",
+      name: "Unnamed Stark daughter",
       born: null,
       died: null,
-      'primary-house': 'stark',
-      'also-of-houses': [],
-      parents: ['cregan-stark'],
+      "primary-house": "stark",
+      "also-of-houses": [],
+      parents: ["cregan-stark"],
       spouses: [],
       children: [],
       titles: [],
       placeholder: true,
-      'placeholder-reason': 'unnamed',
+      "placeholder-reason": "unnamed",
       sources: [],
       draft: false,
     };
@@ -333,35 +356,35 @@ describe('PersonSchema', () => {
   });
 });
 
-describe('EventSchema', () => {
-  it('parses a battle with both sides', () => {
+describe("EventSchema", () => {
+  it("parses a battle with both sides", () => {
     const input = {
-      slug: 'red-wedding',
-      name: 'The Red Wedding',
-      type: 'betrayal',
-      date: { year: 299, era: 'AC', precision: 'year' },
-      location: 'the-twins',
+      slug: "red-wedding",
+      name: "The Red Wedding",
+      type: "betrayal",
+      date: { year: 299, era: "AC", precision: "year" },
+      location: "the-twins",
       participants: [
-        { side: 'stark', houses: ['stark', 'tully'] },
-        { side: 'frey', houses: ['frey', 'bolton'] },
+        { side: "stark", houses: ["stark", "tully"] },
+        { side: "frey", houses: ["frey", "bolton"] },
       ],
-      outcome: 'stark-defeat',
-      casualties: ['robb-stark'],
+      outcome: "stark-defeat",
+      casualties: ["robb-stark"],
       sources: [],
       draft: false,
     };
     expect(() => EventSchema.parse(input)).not.toThrow();
   });
 
-  it('allows location as coords for field battles', () => {
+  it("allows location as coords for field battles", () => {
     const input = {
-      slug: 'whispering-wood',
-      name: 'Battle of the Whispering Wood',
-      type: 'battle',
-      date: { year: 298, era: 'AC', precision: 'year' },
+      slug: "whispering-wood",
+      name: "Battle of the Whispering Wood",
+      type: "battle",
+      date: { year: 298, era: "AC", precision: "year" },
       location: { x: 300, y: 400 },
       participants: [],
-      outcome: 'stark-victory',
+      outcome: "stark-victory",
       casualties: [],
       sources: [],
       draft: false,
@@ -384,11 +407,21 @@ Expected: all tests fail with "Cannot find module './schemas'" or similar.
 Create `lib/schemas.ts`:
 
 ```typescript
-import { z } from 'zod';
+import { z } from "zod";
 
-const EraSchema = z.enum(['dawn-age', 'age-of-heroes', 'long-night', 'andal-invasion', 'targaryen-conquest', 'roberts-reign', 'game-of-thrones', 'AC', 'BC']);
+const EraSchema = z.enum([
+  "dawn-age",
+  "age-of-heroes",
+  "long-night",
+  "andal-invasion",
+  "targaryen-conquest",
+  "roberts-reign",
+  "game-of-thrones",
+  "AC",
+  "BC",
+]);
 
-const PrecisionSchema = z.enum(['exact', 'year', 'decade', 'era', 'legendary']);
+const PrecisionSchema = z.enum(["exact", "year", "decade", "era", "legendary"]);
 
 const DateSchema = z.object({
   year: z.number().int(),
@@ -397,7 +430,7 @@ const DateSchema = z.object({
 });
 
 const SourceSchema = z.object({
-  type: z.enum(['awoiaf', 'book', 'show', 'other']),
+  type: z.enum(["awoiaf", "book", "show", "other"]),
   url: z.string().url().optional(),
   ref: z.string().optional(),
   license: z.string().optional(),
@@ -411,11 +444,11 @@ const CoordsSchema = z.object({
 export const CastleSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['castle', 'town', 'ruin', 'watchtower', 'holdfast']),
-  'sub-region': z.string().optional(),
-  'liege-house': z.string().optional(),
+  type: z.enum(["castle", "town", "ruin", "watchtower", "holdfast"]),
+  "sub-region": z.string().optional(),
+  "liege-house": z.string().optional(),
   founded: DateSchema.optional(),
-  'sworn-houses': z.array(z.string()).default([]),
+  "sworn-houses": z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),
   coords: CoordsSchema,
   sources: z.array(SourceSchema).default([]),
@@ -430,9 +463,9 @@ export const HouseSchema = z.object({
   words: z.string(),
   sigil: z.object({ description: z.string() }),
   founded: DateSchema,
-  status: z.enum(['extant', 'extinct', 'exiled', 'hidden']),
-  'sworn-from': z.array(z.string()).default([]),
-  'cadet-houses': z.array(z.string()).default([]),
+  status: z.enum(["extant", "extinct", "exiled", "hidden"]),
+  "sworn-from": z.array(z.string()).default([]),
+  "cadet-houses": z.array(z.string()).default([]),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });
@@ -442,14 +475,17 @@ export const PersonSchema = z.object({
   name: z.string().min(1),
   born: DateSchema.nullable(),
   died: DateSchema.nullable(),
-  'primary-house': z.string(),
-  'also-of-houses': z.array(z.string()).default([]),
+  "primary-house": z.string(),
+  "also-of-houses": z.array(z.string()).default([]),
   parents: z.array(z.string()).default([]),
   spouses: z.array(z.string()).default([]),
   children: z.array(z.string()).default([]),
   titles: z.array(z.string()).default([]),
   placeholder: z.boolean().default(false),
-  'placeholder-reason': z.enum(['unnamed', 'unwritten', 'uncertain']).nullable().default(null),
+  "placeholder-reason": z
+    .enum(["unnamed", "unwritten", "uncertain"])
+    .nullable()
+    .default(null),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });
@@ -462,7 +498,15 @@ const ParticipantSchema = z.object({
 export const EventSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['battle', 'siege', 'treaty', 'wedding', 'death', 'betrayal', 'other']),
+  type: z.enum([
+    "battle",
+    "siege",
+    "treaty",
+    "wedding",
+    "death",
+    "betrayal",
+    "other",
+  ]),
   date: DateSchema,
   location: z.union([z.string(), CoordsSchema]),
   participants: z.array(ParticipantSchema).default([]),
@@ -498,6 +542,7 @@ git commit -m "feat: zod schemas for castles, houses, people, events"
 ## Task 5: Content loader with TDD
 
 **Files:**
+
 - Create: `lib/content.ts`, `lib/content.test.ts`
 - Create: `content/castles/_sample-for-test.md` (fixture, temporary)
 
@@ -525,36 +570,36 @@ This is the **body** of the castle entry. It supports normal Markdown.
 Create `lib/content.test.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { loadCastle, loadAllCastles, renderMarkdown } from './content';
+import { describe, it, expect } from "vitest";
+import { loadCastle, loadAllCastles, renderMarkdown } from "./content";
 
-describe('loadCastle', () => {
-  it('loads the sample castle fixture', async () => {
-    const result = await loadCastle('_sample-for-test');
-    expect(result.frontmatter.slug).toBe('sample-castle');
-    expect(result.frontmatter.name).toBe('Sample Castle');
-    expect(result.body).toContain('Sample Castle');
-    expect(result.body).toContain('**body**');
+describe("loadCastle", () => {
+  it("loads the sample castle fixture", async () => {
+    const result = await loadCastle("_sample-for-test");
+    expect(result.frontmatter.slug).toBe("sample-castle");
+    expect(result.frontmatter.name).toBe("Sample Castle");
+    expect(result.body).toContain("Sample Castle");
+    expect(result.body).toContain("**body**");
   });
 
-  it('throws on missing castle', async () => {
-    await expect(loadCastle('does-not-exist')).rejects.toThrow();
+  it("throws on missing castle", async () => {
+    await expect(loadCastle("does-not-exist")).rejects.toThrow();
   });
 });
 
-describe('loadAllCastles', () => {
-  it('returns at least the sample fixture', async () => {
+describe("loadAllCastles", () => {
+  it("returns at least the sample fixture", async () => {
     const all = await loadAllCastles();
     const slugs = all.map((c) => c.frontmatter.slug);
-    expect(slugs).toContain('sample-castle');
+    expect(slugs).toContain("sample-castle");
   });
 });
 
-describe('renderMarkdown', () => {
-  it('converts Markdown body to HTML', async () => {
-    const html = await renderMarkdown('# Hello\n\nA **bold** word.');
-    expect(html).toContain('<h1>Hello</h1>');
-    expect(html).toContain('<strong>bold</strong>');
+describe("renderMarkdown", () => {
+  it("converts Markdown body to HTML", async () => {
+    const html = await renderMarkdown("# Hello\n\nA **bold** word.");
+    expect(html).toContain("<h1>Hello</h1>");
+    expect(html).toContain("<strong>bold</strong>");
   });
 });
 ```
@@ -572,31 +617,40 @@ Expected: content tests fail with "Cannot find module './content'".
 Create `lib/content.ts`:
 
 ```typescript
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import matter from 'gray-matter';
-import { remark } from 'remark';
-import remarkHtml from 'remark-html';
-import { CastleSchema, HouseSchema, PersonSchema, EventSchema, type Castle, type House, type Person, type Event } from './schemas';
+import fs from "node:fs/promises";
+import path from "node:path";
+import matter from "gray-matter";
+import { remark } from "remark";
+import remarkHtml from "remark-html";
+import {
+  CastleSchema,
+  HouseSchema,
+  PersonSchema,
+  EventSchema,
+  type Castle,
+  type House,
+  type Person,
+  type Event,
+} from "./schemas";
 
-const CONTENT_ROOT = path.join(process.cwd(), 'content');
+const CONTENT_ROOT = path.join(process.cwd(), "content");
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 async function loadFile<T>(
-  type: 'castles' | 'houses' | 'people' | 'events',
+  type: "castles" | "houses" | "people" | "events",
   slug: string,
   schema: { parse: (input: unknown) => T },
 ): Promise<Loaded<T>> {
   const filePath = path.join(CONTENT_ROOT, type, `${slug}.md`);
-  const raw = await fs.readFile(filePath, 'utf-8');
+  const raw = await fs.readFile(filePath, "utf-8");
   const parsed = matter(raw);
   const frontmatter = schema.parse(parsed.data);
   return { frontmatter, body: parsed.content, slug };
 }
 
 async function loadAll<T>(
-  type: 'castles' | 'houses' | 'people' | 'events',
+  type: "castles" | "houses" | "people" | "events",
   schema: { parse: (input: unknown) => T },
 ): Promise<Array<Loaded<T>>> {
   const dir = path.join(CONTENT_ROOT, type);
@@ -606,21 +660,25 @@ async function loadAll<T>(
   } catch {
     return [];
   }
-  const mdFiles = files.filter((f) => f.endsWith('.md'));
+  const mdFiles = files.filter((f) => f.endsWith(".md"));
   return Promise.all(
-    mdFiles.map((f) => loadFile<T>(type, f.replace(/\.md$/, ''), schema)),
+    mdFiles.map((f) => loadFile<T>(type, f.replace(/\.md$/, ""), schema)),
   );
 }
 
-export const loadCastle = (slug: string) => loadFile<Castle>('castles', slug, CastleSchema);
-export const loadHouse = (slug: string) => loadFile<House>('houses', slug, HouseSchema);
-export const loadPerson = (slug: string) => loadFile<Person>('people', slug, PersonSchema);
-export const loadEvent = (slug: string) => loadFile<Event>('events', slug, EventSchema);
+export const loadCastle = (slug: string) =>
+  loadFile<Castle>("castles", slug, CastleSchema);
+export const loadHouse = (slug: string) =>
+  loadFile<House>("houses", slug, HouseSchema);
+export const loadPerson = (slug: string) =>
+  loadFile<Person>("people", slug, PersonSchema);
+export const loadEvent = (slug: string) =>
+  loadFile<Event>("events", slug, EventSchema);
 
-export const loadAllCastles = () => loadAll<Castle>('castles', CastleSchema);
-export const loadAllHouses = () => loadAll<House>('houses', HouseSchema);
-export const loadAllPeople = () => loadAll<Person>('people', PersonSchema);
-export const loadAllEvents = () => loadAll<Event>('events', EventSchema);
+export const loadAllCastles = () => loadAll<Castle>("castles", CastleSchema);
+export const loadAllHouses = () => loadAll<House>("houses", HouseSchema);
+export const loadAllPeople = () => loadAll<Person>("people", PersonSchema);
+export const loadAllEvents = () => loadAll<Event>("events", EventSchema);
 
 export async function renderMarkdown(source: string): Promise<string> {
   const processed = await remark().use(remarkHtml).process(source);
@@ -648,6 +706,7 @@ git commit -m "feat: Markdown content loader with frontmatter validation"
 ## Task 6: Relation graph with TDD
 
 **Files:**
+
 - Create: `lib/relations.ts`, `lib/relations.test.ts`
 
 - [ ] **Step 1: Write the failing tests**
@@ -655,43 +714,148 @@ git commit -m "feat: Markdown content loader with frontmatter validation"
 Create `lib/relations.test.ts`:
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { buildRelationGraph, findOrphanSlugs } from './relations';
+import { describe, it, expect } from "vitest";
+import { buildRelationGraph, findOrphanSlugs } from "./relations";
 
-describe('buildRelationGraph', () => {
-  it('builds a graph from castles and houses', () => {
+describe("buildRelationGraph", () => {
+  it("builds a graph from castles and houses", () => {
     const castles = [
-      { frontmatter: { slug: 'winterfell', 'liege-house': 'stark', 'sworn-houses': ['karstark'], type: 'castle', name: 'Winterfell', coords: { x: 0, y: 0 }, sources: [], draft: false }, body: '', slug: 'winterfell' },
+      {
+        frontmatter: {
+          slug: "winterfell",
+          "liege-house": "stark",
+          "sworn-houses": ["karstark"],
+          type: "castle",
+          name: "Winterfell",
+          coords: { x: 0, y: 0 },
+          sources: [],
+          draft: false,
+        },
+        body: "",
+        slug: "winterfell",
+      },
     ];
     const houses = [
-      { frontmatter: { slug: 'stark', seat: 'winterfell', liege: null, name: 'House Stark', words: '', sigil: { description: '' }, founded: { year: 0, era: 'AC', precision: 'year' }, status: 'extant', 'sworn-from': ['karstark'], 'cadet-houses': [], sources: [], draft: false }, body: '', slug: 'stark' },
+      {
+        frontmatter: {
+          slug: "stark",
+          seat: "winterfell",
+          liege: null,
+          name: "House Stark",
+          words: "",
+          sigil: { description: "" },
+          founded: { year: 0, era: "AC", precision: "year" },
+          status: "extant",
+          "sworn-from": ["karstark"],
+          "cadet-houses": [],
+          sources: [],
+          draft: false,
+        },
+        body: "",
+        slug: "stark",
+      },
     ];
-    const graph = buildRelationGraph({ castles, houses: houses as never, people: [], events: [] });
-    expect(graph.castleByHouse.get('stark')).toEqual(['winterfell']);
-    expect(graph.houseBySeat.get('winterfell')).toBe('stark');
+    const graph = buildRelationGraph({
+      castles,
+      houses: houses as never,
+      people: [],
+      events: [],
+    });
+    expect(graph.castleByHouse.get("stark")).toEqual(["winterfell"]);
+    expect(graph.houseBySeat.get("winterfell")).toBe("stark");
   });
 });
 
-describe('findOrphanSlugs', () => {
-  it('returns slugs referenced but not defined', () => {
+describe("findOrphanSlugs", () => {
+  it("returns slugs referenced but not defined", () => {
     const castles = [
-      { frontmatter: { slug: 'winterfell', 'liege-house': 'stark', 'sworn-houses': ['ghostvale'], type: 'castle', name: 'Winterfell', coords: { x: 0, y: 0 }, sources: [], draft: false }, body: '', slug: 'winterfell' },
+      {
+        frontmatter: {
+          slug: "winterfell",
+          "liege-house": "stark",
+          "sworn-houses": ["ghostvale"],
+          type: "castle",
+          name: "Winterfell",
+          coords: { x: 0, y: 0 },
+          sources: [],
+          draft: false,
+        },
+        body: "",
+        slug: "winterfell",
+      },
     ];
     const houses = [
-      { frontmatter: { slug: 'stark', seat: 'winterfell', liege: null, name: 'House Stark', words: '', sigil: { description: '' }, founded: { year: 0, era: 'AC', precision: 'year' }, status: 'extant', 'sworn-from': [], 'cadet-houses': [], sources: [], draft: false }, body: '', slug: 'stark' },
+      {
+        frontmatter: {
+          slug: "stark",
+          seat: "winterfell",
+          liege: null,
+          name: "House Stark",
+          words: "",
+          sigil: { description: "" },
+          founded: { year: 0, era: "AC", precision: "year" },
+          status: "extant",
+          "sworn-from": [],
+          "cadet-houses": [],
+          sources: [],
+          draft: false,
+        },
+        body: "",
+        slug: "stark",
+      },
     ];
-    const orphans = findOrphanSlugs({ castles, houses: houses as never, people: [], events: [] });
-    expect(orphans).toContain('ghostvale');
+    const orphans = findOrphanSlugs({
+      castles,
+      houses: houses as never,
+      people: [],
+      events: [],
+    });
+    expect(orphans).toContain("ghostvale");
   });
 
-  it('returns empty when all references resolve', () => {
+  it("returns empty when all references resolve", () => {
     const houses = [
-      { frontmatter: { slug: 'stark', seat: 'winterfell', liege: null, name: 'House Stark', words: '', sigil: { description: '' }, founded: { year: 0, era: 'AC', precision: 'year' }, status: 'extant', 'sworn-from': [], 'cadet-houses': [], sources: [], draft: false }, body: '', slug: 'stark' },
+      {
+        frontmatter: {
+          slug: "stark",
+          seat: "winterfell",
+          liege: null,
+          name: "House Stark",
+          words: "",
+          sigil: { description: "" },
+          founded: { year: 0, era: "AC", precision: "year" },
+          status: "extant",
+          "sworn-from": [],
+          "cadet-houses": [],
+          sources: [],
+          draft: false,
+        },
+        body: "",
+        slug: "stark",
+      },
     ];
     const castles = [
-      { frontmatter: { slug: 'winterfell', 'liege-house': 'stark', 'sworn-houses': [], type: 'castle', name: 'Winterfell', coords: { x: 0, y: 0 }, sources: [], draft: false }, body: '', slug: 'winterfell' },
+      {
+        frontmatter: {
+          slug: "winterfell",
+          "liege-house": "stark",
+          "sworn-houses": [],
+          type: "castle",
+          name: "Winterfell",
+          coords: { x: 0, y: 0 },
+          sources: [],
+          draft: false,
+        },
+        body: "",
+        slug: "winterfell",
+      },
     ];
-    const orphans = findOrphanSlugs({ castles, houses: houses as never, people: [], events: [] });
+    const orphans = findOrphanSlugs({
+      castles,
+      houses: houses as never,
+      people: [],
+      events: [],
+    });
     expect(orphans).toHaveLength(0);
   });
 });
@@ -708,7 +872,7 @@ bun run test
 Create `lib/relations.ts`:
 
 ```typescript
-import type { Castle, House, Person, Event } from './schemas';
+import type { Castle, House, Person, Event } from "./schemas";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
@@ -720,10 +884,10 @@ export interface ContentSet {
 }
 
 export interface RelationGraph {
-  castleByHouse: Map<string, string[]>;     // house slug → castle slugs whose liege-house is this house
-  houseBySeat: Map<string, string>;         // castle slug → house slug whose seat is this castle
-  membersByHouse: Map<string, string[]>;    // house slug → person slugs whose primary-house is this house
-  eventsByLocation: Map<string, string[]>;  // castle slug → event slugs located there
+  castleByHouse: Map<string, string[]>; // house slug → castle slugs whose liege-house is this house
+  houseBySeat: Map<string, string>; // castle slug → house slug whose seat is this castle
+  membersByHouse: Map<string, string[]>; // house slug → person slugs whose primary-house is this house
+  eventsByLocation: Map<string, string[]>; // castle slug → event slugs located there
 }
 
 export function buildRelationGraph(set: ContentSet): RelationGraph {
@@ -733,7 +897,7 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
   const eventsByLocation = new Map<string, string[]>();
 
   for (const castle of set.castles) {
-    const houseSlug = castle.frontmatter['liege-house'];
+    const houseSlug = castle.frontmatter["liege-house"];
     if (houseSlug) {
       const existing = castleByHouse.get(houseSlug) ?? [];
       existing.push(castle.frontmatter.slug);
@@ -746,7 +910,7 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
   }
 
   for (const person of set.people) {
-    const houseSlug = person.frontmatter['primary-house'];
+    const houseSlug = person.frontmatter["primary-house"];
     const existing = membersByHouse.get(houseSlug) ?? [];
     existing.push(person.frontmatter.slug);
     membersByHouse.set(houseSlug, existing);
@@ -754,7 +918,7 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
 
   for (const event of set.events) {
     const loc = event.frontmatter.location;
-    if (typeof loc === 'string') {
+    if (typeof loc === "string") {
       const existing = eventsByLocation.get(loc) ?? [];
       existing.push(event.frontmatter.slug);
       eventsByLocation.set(loc, existing);
@@ -775,23 +939,25 @@ export function findOrphanSlugs(set: ContentSet): string[] {
   const referenced = new Set<string>();
 
   for (const castle of set.castles) {
-    if (castle.frontmatter['liege-house']) referenced.add(castle.frontmatter['liege-house']);
-    for (const s of castle.frontmatter['sworn-houses']) referenced.add(s);
+    if (castle.frontmatter["liege-house"])
+      referenced.add(castle.frontmatter["liege-house"]);
+    for (const s of castle.frontmatter["sworn-houses"]) referenced.add(s);
   }
   for (const house of set.houses) {
     referenced.add(house.frontmatter.seat);
     if (house.frontmatter.liege) referenced.add(house.frontmatter.liege);
-    for (const s of house.frontmatter['sworn-from']) referenced.add(s);
-    for (const s of house.frontmatter['cadet-houses']) referenced.add(s);
+    for (const s of house.frontmatter["sworn-from"]) referenced.add(s);
+    for (const s of house.frontmatter["cadet-houses"]) referenced.add(s);
   }
   for (const person of set.people) {
-    referenced.add(person.frontmatter['primary-house']);
+    referenced.add(person.frontmatter["primary-house"]);
     for (const s of person.frontmatter.parents) referenced.add(s);
     for (const s of person.frontmatter.spouses) referenced.add(s);
     for (const s of person.frontmatter.children) referenced.add(s);
   }
   for (const event of set.events) {
-    if (typeof event.frontmatter.location === 'string') referenced.add(event.frontmatter.location);
+    if (typeof event.frontmatter.location === "string")
+      referenced.add(event.frontmatter.location);
     for (const p of event.frontmatter.participants) {
       for (const h of p.houses) referenced.add(h);
     }
@@ -824,6 +990,7 @@ git commit -m "feat: relation graph builder + orphan slug detection"
 ## Task 7: Hand-written sample content
 
 **Files:**
+
 - Create: `content/castles/winterfell.md`, `content/houses/stark.md`
 - Delete: `content/castles/_sample-for-test.md` (replaced by Winterfell)
 
@@ -905,35 +1072,35 @@ rm content/castles/_sample-for-test.md
 Edit `lib/content.test.ts`. Replace every `'sample-castle'` slug expectation and `'_sample-for-test'` path with `'winterfell'` and `'Winterfell'`. Replace the body assertions with assertions that match Winterfell's content (e.g., `expect(result.body).toContain('Ancient seat')`). The full updated test file:
 
 ```typescript
-import { describe, it, expect } from 'vitest';
-import { loadCastle, loadAllCastles, renderMarkdown } from './content';
+import { describe, it, expect } from "vitest";
+import { loadCastle, loadAllCastles, renderMarkdown } from "./content";
 
-describe('loadCastle', () => {
-  it('loads Winterfell', async () => {
-    const result = await loadCastle('winterfell');
-    expect(result.frontmatter.slug).toBe('winterfell');
-    expect(result.frontmatter.name).toBe('Winterfell');
-    expect(result.body).toContain('Ancient seat');
+describe("loadCastle", () => {
+  it("loads Winterfell", async () => {
+    const result = await loadCastle("winterfell");
+    expect(result.frontmatter.slug).toBe("winterfell");
+    expect(result.frontmatter.name).toBe("Winterfell");
+    expect(result.body).toContain("Ancient seat");
   });
 
-  it('throws on missing castle', async () => {
-    await expect(loadCastle('does-not-exist')).rejects.toThrow();
+  it("throws on missing castle", async () => {
+    await expect(loadCastle("does-not-exist")).rejects.toThrow();
   });
 });
 
-describe('loadAllCastles', () => {
-  it('returns Winterfell', async () => {
+describe("loadAllCastles", () => {
+  it("returns Winterfell", async () => {
     const all = await loadAllCastles();
     const slugs = all.map((c) => c.frontmatter.slug);
-    expect(slugs).toContain('winterfell');
+    expect(slugs).toContain("winterfell");
   });
 });
 
-describe('renderMarkdown', () => {
-  it('converts Markdown body to HTML', async () => {
-    const html = await renderMarkdown('# Hello\n\nA **bold** word.');
-    expect(html).toContain('<h1>Hello</h1>');
-    expect(html).toContain('<strong>bold</strong>');
+describe("renderMarkdown", () => {
+  it("converts Markdown body to HTML", async () => {
+    const html = await renderMarkdown("# Hello\n\nA **bold** word.");
+    expect(html).toContain("<h1>Hello</h1>");
+    expect(html).toContain("<strong>bold</strong>");
   });
 });
 ```
@@ -956,6 +1123,7 @@ git commit -m "content: add Winterfell castle and Stark house entries"
 ## Task 8: Design tokens and parchment stylesheet
 
 **Files:**
+
 - Create: `styles/globals.css`, `styles/parchment.css`
 - Modify: `app/layout.tsx` (to import the styles + load fonts)
 
@@ -976,15 +1144,32 @@ git commit -m "content: add Winterfell castle and Stark house entries"
   --font-ui: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background:
-    radial-gradient(ellipse at top left, rgba(180, 140, 90, 0.15), transparent 60%),
-    radial-gradient(ellipse at bottom right, rgba(120, 80, 40, 0.18), transparent 60%),
-    linear-gradient(180deg, var(--parchment-light) 0%, var(--parchment-dark) 100%);
+    radial-gradient(
+      ellipse at top left,
+      rgba(180, 140, 90, 0.15),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse at bottom right,
+      rgba(120, 80, 40, 0.18),
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      var(--parchment-light) 0%,
+      var(--parchment-dark) 100%
+    );
   background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-body);
@@ -993,19 +1178,42 @@ html, body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   color: var(--ink);
   font-weight: 600;
   letter-spacing: 1px;
 }
 
-h1 { font-size: 2.2rem; font-variant: small-caps; letter-spacing: 2px; text-align: center; }
-h2 { font-size: 1.4rem; border-bottom: 1px solid rgba(107, 68, 35, 0.3); padding-bottom: 0.3rem; }
-h3 { font-size: 1.15rem; color: var(--ink-faded); }
+h1 {
+  font-size: 2.2rem;
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  text-align: center;
+}
+h2 {
+  font-size: 1.4rem;
+  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  padding-bottom: 0.3rem;
+}
+h3 {
+  font-size: 1.15rem;
+  color: var(--ink-faded);
+}
 
-a { color: var(--ink-faded); text-decoration: underline; text-decoration-color: rgba(107, 68, 35, 0.4); }
-a:hover { color: var(--gold-leaf); }
+a {
+  color: var(--ink-faded);
+  text-decoration: underline;
+  text-decoration-color: rgba(107, 68, 35, 0.4);
+}
+a:hover {
+  color: var(--gold-leaf);
+}
 ```
 
 - [ ] **Step 2: Create `styles/parchment.css`**
@@ -1019,19 +1227,37 @@ a:hover { color: var(--gold-leaf); }
 }
 
 .parchment-page::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
   background-image:
-    radial-gradient(circle at 18% 22%, rgba(80, 50, 20, 0.06) 1px, transparent 2px),
-    radial-gradient(circle at 74% 58%, rgba(80, 50, 20, 0.05) 1px, transparent 2px),
-    radial-gradient(circle at 42% 80%, rgba(80, 50, 20, 0.06) 1px, transparent 2px);
-  background-size: 90px 90px, 110px 110px, 130px 130px;
+    radial-gradient(
+      circle at 18% 22%,
+      rgba(80, 50, 20, 0.06) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 74% 58%,
+      rgba(80, 50, 20, 0.05) 1px,
+      transparent 2px
+    ),
+    radial-gradient(
+      circle at 42% 80%,
+      rgba(80, 50, 20, 0.06) 1px,
+      transparent 2px
+    );
+  background-size:
+    90px 90px,
+    110px 110px,
+    130px 130px;
   z-index: 0;
 }
 
-.parchment-page > * { position: relative; z-index: 1; }
+.parchment-page > * {
+  position: relative;
+  z-index: 1;
+}
 
 .subtitle {
   text-align: center;
@@ -1068,23 +1294,43 @@ a:hover { color: var(--gold-leaf); }
 Replace `app/layout.tsx` entirely:
 
 ```tsx
-import type { Metadata } from 'next';
-import { Cinzel, EB_Garamond, Inter } from 'next/font/google';
-import '../styles/globals.css';
-import '../styles/parchment.css';
+import type { Metadata } from "next";
+import { Cinzel, EB_Garamond, Inter } from "next/font/google";
+import "../styles/globals.css";
+import "../styles/parchment.css";
 
-const cinzel = Cinzel({ subsets: ['latin'], variable: '--font-cinzel', weight: ['400', '600', '700'] });
-const ebGaramond = EB_Garamond({ subsets: ['latin'], variable: '--font-eb-garamond', weight: ['400', '500', '600'] });
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter', weight: ['400', '500'] });
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  weight: ["400", "600", "700"],
+});
+const ebGaramond = EB_Garamond({
+  subsets: ["latin"],
+  variable: "--font-eb-garamond",
+  weight: ["400", "500", "600"],
+});
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  weight: ["400", "500"],
+});
 
 export const metadata: Metadata = {
-  title: 'Atlas of the North · A Song of Ice and Fire',
-  description: 'An interactive atlas of the North in George R. R. Martin\'s world of Ice and Fire.',
+  title: "Atlas of the North · A Song of Ice and Fire",
+  description:
+    "An interactive atlas of the North in George R. R. Martin's world of Ice and Fire.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${ebGaramond.variable} ${inter.variable}`}>
+    <html
+      lang="en"
+      className={`${cinzel.variable} ${ebGaramond.variable} ${inter.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
@@ -1111,12 +1357,13 @@ git commit -m "feat: parchment design tokens, fonts, base typography"
 ## Task 9: ParchmentLayout, DropCap, and Sources components
 
 **Files:**
+
 - Create: `components/ParchmentLayout.tsx`, `components/DropCap.tsx`, `components/Sources.tsx`
 
 - [ ] **Step 1: Create `components/ParchmentLayout.tsx`**
 
 ```tsx
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export function ParchmentLayout({ children }: { children: ReactNode }) {
   return <main className="parchment-page">{children}</main>;
@@ -1126,7 +1373,7 @@ export function ParchmentLayout({ children }: { children: ReactNode }) {
 - [ ] **Step 2: Create `components/DropCap.tsx`**
 
 ```tsx
-import type { ReactNode } from 'react';
+import type { ReactNode } from "react";
 
 export function DropCap({ children }: { children: ReactNode }) {
   return <p className="drop-cap">{children}</p>;
@@ -1136,7 +1383,7 @@ export function DropCap({ children }: { children: ReactNode }) {
 - [ ] **Step 3: Create `components/Sources.tsx`**
 
 ```tsx
-import type { Source } from '@/lib/schemas';
+import type { Source } from "@/lib/schemas";
 
 type Props = { sources: Source[] };
 
@@ -1148,9 +1395,9 @@ export function Sources({ sources }: Props) {
       <ul>
         {sources.map((s, i) => (
           <li key={i}>
-            {s.type === 'awoiaf' && s.url ? (
+            {s.type === "awoiaf" && s.url ? (
               <a href={s.url} target="_blank" rel="noopener noreferrer">
-                A Wiki of Ice and Fire ({s.license ?? 'CC-BY-SA-4.0'})
+                A Wiki of Ice and Fire ({s.license ?? "CC-BY-SA-4.0"})
               </a>
             ) : (
               <span>{s.ref ?? s.url ?? s.type}</span>
@@ -1193,6 +1440,7 @@ git commit -m "feat: ParchmentLayout, DropCap, Sources components"
 ## Task 10: Castle detail page
 
 **Files:**
+
 - Create: `app/castles/[slug]/page.tsx`
 
 - [ ] **Step 1: Create the dynamic route**
@@ -1200,10 +1448,10 @@ git commit -m "feat: ParchmentLayout, DropCap, Sources components"
 Create `app/castles/[slug]/page.tsx`:
 
 ```tsx
-import { notFound } from 'next/navigation';
-import { loadCastle, loadAllCastles, renderMarkdown } from '@/lib/content';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sources } from '@/components/Sources';
+import { notFound } from "next/navigation";
+import { loadCastle, loadAllCastles, renderMarkdown } from "@/lib/content";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { Sources } from "@/components/Sources";
 
 export async function generateStaticParams() {
   const castles = await loadAllCastles();
@@ -1212,7 +1460,11 @@ export async function generateStaticParams() {
     .map((c) => ({ slug: c.frontmatter.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   try {
     const castle = await loadCastle(slug);
@@ -1221,11 +1473,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       description: `${castle.frontmatter.name}, ${castle.frontmatter.type} in the North.`,
     };
   } catch {
-    return { title: 'Not found' };
+    return { title: "Not found" };
   }
 }
 
-export default async function CastlePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CastlePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   let castle;
   try {
@@ -1240,9 +1496,11 @@ export default async function CastlePage({ params }: { params: Promise<{ slug: s
     <ParchmentLayout>
       <h1>{castle.frontmatter.name}</h1>
       <p className="subtitle">
-        {castle.frontmatter.type === 'castle' ? 'Castle' : castle.frontmatter.type}
-        {castle.frontmatter['liege-house'] && (
-          <> &middot; Seat of House {castle.frontmatter['liege-house']}</>
+        {castle.frontmatter.type === "castle"
+          ? "Castle"
+          : castle.frontmatter.type}
+        {castle.frontmatter["liege-house"] && (
+          <> &middot; Seat of House {castle.frontmatter["liege-house"]}</>
         )}
       </p>
       <article dangerouslySetInnerHTML={{ __html: html }} />
@@ -1257,7 +1515,7 @@ export default async function CastlePage({ params }: { params: Promise<{ slug: s
 Create `app/not-found.tsx`:
 
 ```tsx
-import { ParchmentLayout } from '@/components/ParchmentLayout';
+import { ParchmentLayout } from "@/components/ParchmentLayout";
 
 export default function NotFound() {
   return (
@@ -1303,14 +1561,15 @@ git commit -m "feat: castle detail page (statically rendered per slug)"
 ## Task 11: Homepage that links to Winterfell
 
 **Files:**
+
 - Modify: `app/page.tsx` (replace the Next.js default)
 
 - [ ] **Step 1: Replace `app/page.tsx`**
 
 ```tsx
-import Link from 'next/link';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { loadAllCastles } from '@/lib/content';
+import Link from "next/link";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { loadAllCastles } from "@/lib/content";
 
 export default async function Home() {
   const castles = await loadAllCastles();
@@ -1319,19 +1578,24 @@ export default async function Home() {
   return (
     <ParchmentLayout>
       <h1>Atlas of the North</h1>
-      <p className="subtitle">An interactive chronicle of the lands beyond the Neck.</p>
+      <p className="subtitle">
+        An interactive chronicle of the lands beyond the Neck.
+      </p>
 
       <p className="drop-cap">
-        From the Wall to the Neck, the North is the largest of the Seven Kingdoms,
-        a realm of pine and stone, of cold winds and old gods. This atlas charts its
-        castles, its houses, its battles, and the long history of those who shaped it.
+        From the Wall to the Neck, the North is the largest of the Seven
+        Kingdoms, a realm of pine and stone, of cold winds and old gods. This
+        atlas charts its castles, its houses, its battles, and the long history
+        of those who shaped it.
       </p>
 
       <h2>Castles</h2>
       <ul>
         {visible.map((c) => (
           <li key={c.frontmatter.slug}>
-            <Link href={`/castles/${c.frontmatter.slug}/`}>{c.frontmatter.name}</Link>
+            <Link href={`/castles/${c.frontmatter.slug}/`}>
+              {c.frontmatter.name}
+            </Link>
           </li>
         ))}
       </ul>
@@ -1347,6 +1611,7 @@ bun dev
 ```
 
 Open `http://localhost:3000` and confirm:
+
 - Parchment background, "Atlas of the North" headline in Cinzel
 - A subtitle in italic
 - A drop-cap paragraph
@@ -1376,6 +1641,7 @@ git commit -m "feat: homepage listing castles in the North"
 ## Task 12: Netlify deploy config
 
 **Files:**
+
 - Create: `netlify.toml`
 
 - [ ] **Step 1: Create `netlify.toml`**
@@ -1440,6 +1706,7 @@ ls -la out/castles/winterfell/
 ```
 
 Expected:
+
 - `out/index.html` exists
 - `out/castles/winterfell/index.html` exists
 - `out/_next/static/...` contains fonts, CSS, JS chunks
@@ -1464,21 +1731,21 @@ git push origin main
 
 Coverage against the spec sections:
 
-| Spec section | Covered here | Deferred to later plan |
-|---|---|---|
-| Overview, non-goals | n/a (informational) | n/a |
-| System architecture | Authoring + Build + Runtime all wired (sans scraper) | Scraper-side authoring |
-| Tech stack | Next.js, TS, Markdown, gray-matter, remark, zod, vitest, fonts, Netlify ✓ | react-svg-pan-zoom, react-flow, dagre, next-pwa |
-| Data model | All four schemas ✓; one castle + one house loaded ✓ | People + Events data files (validate via schemas only here) |
-| Map view | n/a | Plan 2 |
-| Timeline view | n/a | Plan 3 |
-| Houses view + detail | n/a | Plan 4 |
-| Family Tree view | n/a | Plan 5 |
-| Aesthetic / visual system | Palette, fonts, drop caps, parchment textures ✓ | Motion details, OG image generation |
-| Scraping pipeline | n/a | Plan 6 |
-| PWA & offline | n/a | Plan 7 |
-| Routing | Castle slug route ✓; homepage ✓ | All other entity routes |
-| Project structure | Matches spec with `content/`, `lib/`, `components/`, `app/`, `styles/`, `public/` ✓ | `scripts/` |
-| Testing posture | Schema + relation tests with Vitest ✓ | n/a |
+| Spec section              | Covered here                                                                        | Deferred to later plan                                      |
+| ------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| Overview, non-goals       | n/a (informational)                                                                 | n/a                                                         |
+| System architecture       | Authoring + Build + Runtime all wired (sans scraper)                                | Scraper-side authoring                                      |
+| Tech stack                | Next.js, TS, Markdown, gray-matter, remark, zod, vitest, fonts, Netlify ✓           | react-svg-pan-zoom, react-flow, dagre, next-pwa             |
+| Data model                | All four schemas ✓; one castle + one house loaded ✓                                 | People + Events data files (validate via schemas only here) |
+| Map view                  | n/a                                                                                 | Plan 2                                                      |
+| Timeline view             | n/a                                                                                 | Plan 3                                                      |
+| Houses view + detail      | n/a                                                                                 | Plan 4                                                      |
+| Family Tree view          | n/a                                                                                 | Plan 5                                                      |
+| Aesthetic / visual system | Palette, fonts, drop caps, parchment textures ✓                                     | Motion details, OG image generation                         |
+| Scraping pipeline         | n/a                                                                                 | Plan 6                                                      |
+| PWA & offline             | n/a                                                                                 | Plan 7                                                      |
+| Routing                   | Castle slug route ✓; homepage ✓                                                     | All other entity routes                                     |
+| Project structure         | Matches spec with `content/`, `lib/`, `components/`, `app/`, `styles/`, `public/` ✓ | `scripts/`                                                  |
+| Testing posture           | Schema + relation tests with Vitest ✓                                               | n/a                                                         |
 
 No placeholders. No "TBD"s. All step code is concrete. Type names (`Castle`, `House`, `Person`, `Event`, `Source`) used consistently across `lib/schemas.ts`, `lib/content.ts`, `lib/relations.ts`, and the page components.

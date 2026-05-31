@@ -1,9 +1,9 @@
 export type CdnImageOptions = {
   w?: number;
   h?: number;
-  fit?: 'contain' | 'cover' | 'fill';
-  position?: 'top' | 'bottom' | 'left' | 'right' | 'center';
-  fm?: 'avif' | 'jpg' | 'png' | 'webp' | 'gif' | 'blurhash';
+  fit?: "contain" | "cover" | "fill";
+  position?: "top" | "bottom" | "left" | "right" | "center";
+  fm?: "avif" | "jpg" | "png" | "webp" | "gif" | "blurhash";
   q?: number;
 };
 
@@ -12,7 +12,7 @@ export type CdnImageOptions = {
 // call's return value into HTML at build time (NODE_ENV=production), so the
 // deployed site — and `netlify dev` serving the built `out/` — both hit the CDN.
 export function cdnImage(src: string, options: CdnImageOptions = {}): string {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     return src;
   }
   const params = new URLSearchParams({ url: src });

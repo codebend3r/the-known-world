@@ -1,10 +1,10 @@
-import { Sigil } from '@/components/Sigil';
-import { cx } from '@/lib/cx';
-import { regionForHouse } from '@/lib/regions';
-import { InfoRow, humanizeSlug } from '@/components/Infobox';
-import type { Dragon, House, Character, HouseInfoEntry } from '@/lib/schemas';
-import infoboxStyles from '@/components/HouseInfobox.module.css';
-import sharedStyles from '@/components/Infobox.module.css';
+import { Sigil } from "@/components/Sigil";
+import { cx } from "@/lib/cx";
+import { regionForHouse } from "@/lib/regions";
+import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import type { Dragon, House, Character, HouseInfoEntry } from "@/lib/schemas";
+import infoboxStyles from "@/components/HouseInfobox.module.css";
+import sharedStyles from "@/components/Infobox.module.css";
 
 type Props = {
   dragon: Dragon;
@@ -14,29 +14,32 @@ type Props = {
 };
 
 function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
-const STATUS_LABEL: Record<Dragon['status'], string> = {
-  extant: 'Extant',
-  dead: 'Dead',
-  lost: 'Lost',
-  wild: 'Wild',
+const STATUS_LABEL: Record<Dragon["status"], string> = {
+  extant: "Extant",
+  dead: "Dead",
+  lost: "Lost",
+  wild: "Wild",
 };
 
-const SIZE_LABEL: Record<NonNullable<Dragon['size']>, string> = {
-  hatchling: 'Hatchling',
-  young: 'Young',
-  mature: 'Mature',
-  great: 'Great',
-  monstrous: 'Monstrous',
+const SIZE_LABEL: Record<NonNullable<Dragon["size"]>, string> = {
+  hatchling: "Hatchling",
+  young: "Young",
+  mature: "Mature",
+  great: "Great",
+  monstrous: "Monstrous",
 };
 
-function formatDate(d: NonNullable<Dragon['hatched']>): string {
+function formatDate(d: NonNullable<Dragon["hatched"]>): string {
   const { year, era, precision } = d;
-  if (era === 'AC' || era === 'BC') return `${Math.abs(year)} ${era}`;
-  const label = era.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
-  return precision === 'legendary' ? `${label} (legendary)` : label;
+  if (era === "AC" || era === "BC") return `${Math.abs(year)} ${era}`;
+  const label = era
+    .split("-")
+    .map((w) => w[0].toUpperCase() + w.slice(1))
+    .join(" ");
+  return precision === "legendary" ? `${label} (legendary)` : label;
 }
 
 export function DragonInfobox({
@@ -123,7 +126,7 @@ export function DragonInfobox({
           </div>
         )}
         <InfoRow
-          label={riders.length === 1 ? 'Rider' : 'Riders'}
+          label={riders.length === 1 ? "Rider" : "Riders"}
           entries={riders}
           hrefPrefix="/characters"
           exists={(s) => {

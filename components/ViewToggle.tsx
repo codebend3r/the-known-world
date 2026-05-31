@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import styles from '@/components/ViewToggle.module.css';
+import styles from "@/components/ViewToggle.module.css";
 
-export type ViewMode = 'grid' | 'list';
+export type ViewMode = "grid" | "list";
 
 type Props = {
   value: ViewMode;
@@ -19,8 +19,8 @@ export function ViewToggle({ value, onChange }: Props) {
         type="button"
         className={styles.button}
         aria-label="Grid view"
-        aria-pressed={value === 'grid'}
-        onClick={() => handleSelect('grid')}
+        aria-pressed={value === "grid"}
+        onClick={() => handleSelect("grid")}
       >
         <GridIcon />
       </button>
@@ -28,8 +28,8 @@ export function ViewToggle({ value, onChange }: Props) {
         type="button"
         className={styles.button}
         aria-label="List view"
-        aria-pressed={value === 'list'}
-        onClick={() => handleSelect('list')}
+        aria-pressed={value === "list"}
+        onClick={() => handleSelect("list")}
       >
         <ListIcon />
       </button>
@@ -39,7 +39,13 @@ export function ViewToggle({ value, onChange }: Props) {
 
 function GridIcon() {
   return (
-    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden focusable="false">
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
       <rect x="1" y="1" width="6" height="6" fill="currentColor" />
       <rect x="9" y="1" width="6" height="6" fill="currentColor" />
       <rect x="1" y="9" width="6" height="6" fill="currentColor" />
@@ -50,7 +56,13 @@ function GridIcon() {
 
 function ListIcon() {
   return (
-    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden focusable="false">
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
       <rect x="1" y="2" width="14" height="2" fill="currentColor" />
       <rect x="1" y="7" width="14" height="2" fill="currentColor" />
       <rect x="1" y="12" width="14" height="2" fill="currentColor" />

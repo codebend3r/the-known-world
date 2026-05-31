@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Sigil } from '@/components/Sigil';
-import { filterByName } from '@/lib/search';
-import { cx } from '@/lib/cx';
-import listSearch from '@/components/listSearch.module.css';
-import styles from '@/components/FilteredDragonList.module.css';
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { Sigil } from "@/components/Sigil";
+import { filterByName } from "@/lib/search";
+import { cx } from "@/lib/cx";
+import listSearch from "@/components/listSearch.module.css";
+import styles from "@/components/FilteredDragonList.module.css";
 
 export type DragonItem = {
   slug: string;
@@ -28,13 +28,13 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   reach: styles.cardReach,
   stormlands: styles.cardStormlands,
   dorne: styles.cardDorne,
-  'iron-islands': styles.cardIronIslands,
+  "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
 };
 
 export function FilteredDragonList({ items }: Props) {
-  const [value, setValue] = useState('');
-  const [debounced, setDebounced] = useState('');
+  const [value, setValue] = useState("");
+  const [debounced, setDebounced] = useState("");
 
   useEffect(() => {
     const t = setTimeout(() => setDebounced(value), 300);
@@ -58,7 +58,9 @@ export function FilteredDragonList({ items }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>No dragons match &ldquo;{debounced}&rdquo;.</p>
+        <p className={listSearch.empty}>
+          No dragons match &ldquo;{debounced}&rdquo;.
+        </p>
       ) : (
         <ul className={styles.list}>
           {filtered.map((item) => {

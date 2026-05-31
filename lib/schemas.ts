@@ -1,9 +1,19 @@
-import { z } from 'zod';
-import { REGION_SLUGS } from '@/lib/regions';
+import { z } from "zod";
+import { REGION_SLUGS } from "@/lib/regions";
 
-const EraSchema = z.enum(['dawn-age', 'age-of-heroes', 'long-night', 'andal-invasion', 'targaryen-conquest', 'roberts-reign', 'game-of-thrones', 'AC', 'BC']);
+const EraSchema = z.enum([
+  "dawn-age",
+  "age-of-heroes",
+  "long-night",
+  "andal-invasion",
+  "targaryen-conquest",
+  "roberts-reign",
+  "game-of-thrones",
+  "AC",
+  "BC",
+]);
 
-const PrecisionSchema = z.enum(['exact', 'year', 'decade', 'era', 'legendary']);
+const PrecisionSchema = z.enum(["exact", "year", "decade", "era", "legendary"]);
 
 const DateSchema = z.object({
   year: z.number().int(),
@@ -12,7 +22,7 @@ const DateSchema = z.object({
 });
 
 const SourceSchema = z.object({
-  type: z.enum(['awoiaf', 'book', 'show', 'other']),
+  type: z.enum(["awoiaf", "book", "show", "other"]),
   url: z.url().optional(),
   ref: z.string().optional(),
   license: z.string().optional(),
@@ -26,11 +36,11 @@ const CoordsSchema = z.object({
 export const CastleSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['castle', 'town', 'ruin', 'watchtower', 'holdfast']),
-  'sub-region': z.string().optional(),
-  'liege-house': z.string().optional(),
+  type: z.enum(["castle", "town", "ruin", "watchtower", "holdfast"]),
+  "sub-region": z.string().optional(),
+  "liege-house": z.string().optional(),
   founded: DateSchema.optional(),
-  'sworn-houses': z.array(z.string()).default([]),
+  "sworn-houses": z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),
   coords: CoordsSchema,
   sources: z.array(SourceSchema).default([]),
@@ -38,14 +48,26 @@ export const CastleSchema = z.object({
 });
 
 const WeaponTypeSchema = z.enum([
-  'sword', 'greatsword', 'longsword', 'dagger', 'axe', 'spear', 'bow', 'horn', 'other',
+  "sword",
+  "greatsword",
+  "longsword",
+  "dagger",
+  "axe",
+  "spear",
+  "bow",
+  "horn",
+  "other",
 ]);
 
 const MaterialSchema = z.enum([
-  'valyrian-steel', 'dragonglass', 'dragonbone', 'steel', 'other',
+  "valyrian-steel",
+  "dragonglass",
+  "dragonbone",
+  "steel",
+  "other",
 ]);
 
-const WeaponStatusSchema = z.enum(['extant', 'lost', 'destroyed']);
+const WeaponStatusSchema = z.enum(["extant", "lost", "destroyed"]);
 
 export const WeaponSchema = z.object({
   slug: z.string().min(1),
@@ -55,8 +77,8 @@ export const WeaponSchema = z.object({
   forged: DateSchema.optional(),
   destroyed: DateSchema.optional(),
   status: WeaponStatusSchema,
-  'origin-house': z.string().optional(),
-  'current-house': z.string().nullable(),
+  "origin-house": z.string().optional(),
+  "current-house": z.string().nullable(),
   wielders: z.array(z.string()).default([]),
   aliases: z.array(z.string()).default([]),
   mentions: z.array(z.string()).default([]),
@@ -64,8 +86,14 @@ export const WeaponSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-const DragonStatusSchema = z.enum(['extant', 'dead', 'lost', 'wild']);
-const DragonSizeSchema = z.enum(['hatchling', 'young', 'mature', 'great', 'monstrous']);
+const DragonStatusSchema = z.enum(["extant", "dead", "lost", "wild"]);
+const DragonSizeSchema = z.enum([
+  "hatchling",
+  "young",
+  "mature",
+  "great",
+  "monstrous",
+]);
 
 export const DragonSchema = z.object({
   slug: z.string().min(1),
@@ -98,16 +126,16 @@ export const HouseSchema = z.object({
   sigil: z.object({ description: z.string() }),
   founded: DateSchema,
   extinct: DateSchema.optional(),
-  status: z.enum(['extant', 'extinct', 'exiled', 'hidden']),
-  'sworn-from': z.array(z.string()).default([]),
-  'cadet-houses': z.array(z.string()).default([]),
+  status: z.enum(["extant", "extinct", "exiled", "hidden"]),
+  "sworn-from": z.array(z.string()).default([]),
+  "cadet-houses": z.array(z.string()).default([]),
   mentions: z.array(z.string()).default([]),
   region: z.enum(REGION_SLUGS).optional(),
   seats: z.array(HouseInfoEntrySchema).optional(),
   heads: z.array(HouseInfoEntrySchema).optional(),
   regions: z.array(HouseInfoEntrySchema).optional(),
   titles: z.array(HouseInfoEntrySchema).optional(),
-  'ancestral-weapons': z.array(z.string()).optional(),
+  "ancestral-weapons": z.array(z.string()).optional(),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });
@@ -115,11 +143,11 @@ export const HouseSchema = z.object({
 export const CharacterSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
-  sex: z.enum(['m', 'f']).nullable().default(null),
+  sex: z.enum(["m", "f"]).nullable().default(null),
   born: DateSchema.nullable(),
   died: DateSchema.nullable(),
-  'primary-house': z.string().nullable(),
-  'also-of-houses': z.array(z.string()).default([]),
+  "primary-house": z.string().nullable(),
+  "also-of-houses": z.array(z.string()).default([]),
   parents: z.array(z.string()).default([]),
   spouses: z.array(z.string()).default([]),
   children: z.array(z.string()).default([]),
@@ -127,7 +155,10 @@ export const CharacterSchema = z.object({
   aliases: z.array(z.string()).default([]),
   mentions: z.array(z.string()).default([]),
   placeholder: z.boolean().default(false),
-  'placeholder-reason': z.enum(['unnamed', 'unwritten', 'uncertain']).nullable().default(null),
+  "placeholder-reason": z
+    .enum(["unnamed", "unwritten", "uncertain"])
+    .nullable()
+    .default(null),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });
@@ -140,7 +171,15 @@ const ParticipantSchema = z.object({
 export const EventSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
-  type: z.enum(['battle', 'siege', 'treaty', 'wedding', 'death', 'betrayal', 'other']),
+  type: z.enum([
+    "battle",
+    "siege",
+    "treaty",
+    "wedding",
+    "death",
+    "betrayal",
+    "other",
+  ]),
   date: DateSchema,
   location: z.union([z.string(), CoordsSchema]),
   participants: z.array(ParticipantSchema).default([]),

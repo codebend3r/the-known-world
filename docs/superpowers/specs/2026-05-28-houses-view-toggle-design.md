@@ -46,24 +46,24 @@ Add a two-button toggle to `/houses/` so users can switch the existing card grid
 [sigil 2rem] [House name]                        [Region label]
 ```
 
-  - 3-column row grid: `2.5rem 1fr auto`.
-  - Sigil renders smaller (`size="2rem"`) in list mode.
-  - Region label is `var(--ink-faded)`, small-caps, right-aligned, lives in a `<span>` after the name.
-  - The regional color tint moves from a full border to a 3px left border on the row, keeping the kingdom palette intact without the framed-card look.
-  - Row hover/focus mirrors the grid card: gold-leaf border, no transform.
+- 3-column row grid: `2.5rem 1fr auto`.
+- Sigil renders smaller (`size="2rem"`) in list mode.
+- Region label is `var(--ink-faded)`, small-caps, right-aligned, lives in a `<span>` after the name.
+- The regional color tint moves from a full border to a 3px left border on the row, keeping the kingdom palette intact without the framed-card look.
+- Row hover/focus mirrors the grid card: gold-leaf border, no transform.
 
 ## Components
 
-| File | Kind | Change |
-|---|---|---|
-| `components/FilteredHouseList.tsx` | modify | Add `view` state, `useEffect` hydration from `localStorage`, render new `ViewToggle`. Each item now also receives a `regionLabel` prop so list rows can show the region name. |
-| `components/ViewToggle.tsx` | **new** | Stateless segmented control. Props: `value: 'grid' \| 'list'`, `onChange: (v) => void`. Renders two `<button>`s with inline-SVG icons. |
-| `lib/regions.ts` | modify | Export a `regionLabel(slug)` helper returning the display name for a `RegionSlug` (e.g. `'north'` → `'The North'`). Reuses the existing `REGIONS` map. |
-| `app/houses/page.tsx` | modify | Pass `regionLabel` alongside `region` in each `HouseItem`. |
-| `styles/houses.css` | modify | Add `.house-list--list`, `.house-list__card--row`, region-tinted left-border rules for list rows. |
-| `styles/list-search.css` | modify | Add `.list-search-row` (flex container) and `.view-toggle` / `.view-toggle__button` styles. |
-| `components/FilteredHouseList.test.tsx` | modify | Add coverage for the toggle (see Testing). |
-| `components/ViewToggle.test.tsx` | **new** | Renders both buttons, `aria-pressed` reflects value, clicking fires `onChange`. |
+| File                                    | Kind    | Change                                                                                                                                                                        |
+| --------------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `components/FilteredHouseList.tsx`      | modify  | Add `view` state, `useEffect` hydration from `localStorage`, render new `ViewToggle`. Each item now also receives a `regionLabel` prop so list rows can show the region name. |
+| `components/ViewToggle.tsx`             | **new** | Stateless segmented control. Props: `value: 'grid' \| 'list'`, `onChange: (v) => void`. Renders two `<button>`s with inline-SVG icons.                                        |
+| `lib/regions.ts`                        | modify  | Export a `regionLabel(slug)` helper returning the display name for a `RegionSlug` (e.g. `'north'` → `'The North'`). Reuses the existing `REGIONS` map.                        |
+| `app/houses/page.tsx`                   | modify  | Pass `regionLabel` alongside `region` in each `HouseItem`.                                                                                                                    |
+| `styles/houses.css`                     | modify  | Add `.house-list--list`, `.house-list__card--row`, region-tinted left-border rules for list rows.                                                                             |
+| `styles/list-search.css`                | modify  | Add `.list-search-row` (flex container) and `.view-toggle` / `.view-toggle__button` styles.                                                                                   |
+| `components/FilteredHouseList.test.tsx` | modify  | Add coverage for the toggle (see Testing).                                                                                                                                    |
+| `components/ViewToggle.test.tsx`        | **new** | Renders both buttons, `aria-pressed` reflects value, clicking fires `onChange`.                                                                                               |
 
 No content schema changes. No route changes. No changes to `/characters/`.
 
@@ -75,8 +75,8 @@ No content schema changes. No route changes. No changes to `/characters/`.
 export type HouseItem = {
   slug: string;
   name: string;
-  region: RegionSlug | null;       // existing, used for color tint
-  regionLabel: string | null;      // new, displayed in list view
+  region: RegionSlug | null; // existing, used for color tint
+  regionLabel: string | null; // new, displayed in list view
 };
 ```
 

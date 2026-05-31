@@ -1,11 +1,11 @@
-import type { Plugin } from 'unified';
-import type { Root, Text, Link, Parent } from 'mdast';
-import { visitParents, SKIP } from 'unist-util-visit-parents';
-import type { Character, House, Weapon, Dragon } from '@/lib/schemas';
+import type { Plugin } from "unified";
+import type { Root, Text, Link, Parent } from "mdast";
+import { visitParents, SKIP } from "unist-util-visit-parents";
+import type { Character, House, Weapon, Dragon } from "@/lib/schemas";
 
 export type ProseLinkTarget = {
   slug: string;
-  kind: 'character' | 'house' | 'weapon' | 'dragon';
+  kind: "character" | "house" | "weapon" | "dragon";
   href: string;
   surfaceForms: string[];
 };
@@ -17,11 +17,11 @@ export type ProseLinkIndex = {
 
 const HOUSE_PREFIX = /^House\s+/i;
 const SKIP_ANCESTOR_TYPES = new Set([
-  'link',
-  'linkReference',
-  'code',
-  'inlineCode',
-  'heading',
+  "link",
+  "linkReference",
+  "code",
+  "inlineCode",
+  "heading",
 ]);
 
 function firstNameToken(name: string): string {
@@ -31,7 +31,7 @@ function firstNameToken(name: string): string {
 }
 
 function shortHouseName(name: string): string {
-  return name.replace(HOUSE_PREFIX, '');
+  return name.replace(HOUSE_PREFIX, "");
 }
 
 function uniqueOrdered(forms: string[]): string[] {
@@ -52,7 +52,7 @@ export function buildProseLinkIndex(args: {
   allWeapons: ReadonlyArray<{ slug: string; frontmatter: Weapon }>;
   allDragons: ReadonlyArray<{ slug: string; frontmatter: Dragon }>;
   current: {
-    kind: 'character' | 'house' | 'weapon' | 'dragon';
+    kind: "character" | "house" | "weapon" | "dragon";
     slug: string;
     mentions: readonly string[];
   };
@@ -70,7 +70,7 @@ export function buildProseLinkIndex(args: {
     if (surfaceForms.length === 0) continue;
     targets.push({
       slug: fm.slug,
-      kind: 'character',
+      kind: "character",
       href: `/characters/${fm.slug}/`,
       surfaceForms,
     });
@@ -88,7 +88,7 @@ export function buildProseLinkIndex(args: {
     if (surfaceForms.length === 0) continue;
     targets.push({
       slug: fm.slug,
-      kind: 'house',
+      kind: "house",
       href: `/houses/${fm.slug}/`,
       surfaceForms,
     });
@@ -101,7 +101,7 @@ export function buildProseLinkIndex(args: {
     if (surfaceForms.length === 0) continue;
     targets.push({
       slug: fm.slug,
-      kind: 'weapon',
+      kind: "weapon",
       href: `/weapons/${fm.slug}/`,
       surfaceForms,
     });
@@ -114,7 +114,7 @@ export function buildProseLinkIndex(args: {
     if (surfaceForms.length === 0) continue;
     targets.push({
       slug: fm.slug,
-      kind: 'dragon',
+      kind: "dragon",
       href: `/dragons/${fm.slug}/`,
       surfaceForms,
     });
@@ -124,7 +124,7 @@ export function buildProseLinkIndex(args: {
 }
 
 function escapeRegex(s: string): string {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
 
 type CompiledIndex = {
@@ -147,8 +147,8 @@ function compileIndex(index: ProseLinkIndex): CompiledIndex | null {
   if (allForms.length === 0) return null;
   allForms.sort((a, b) => b.length - a.length);
   const pattern = new RegExp(
-    '\\b(' + allForms.map(escapeRegex).join('|') + ')\\b',
-    'g',
+    "\\b(" + allForms.map(escapeRegex).join("|") + ")\\b",
+    "g",
   );
   return { pattern, formToTarget, selfSlug: index.selfSlug };
 }
@@ -160,7 +160,7 @@ export function remarkProseLinks(index: ProseLinkIndex): Plugin<[], Root> {
       if (!compiled) return;
       const usedSlugs = new Set<string>();
 
-      visitParents(tree, 'text', (node: Text, ancestors: Parent[]) => {
+      visitParents(tree, "text", (node: Text, ancestors: Parent[]) => {
         for (const a of ancestors) {
           if (SKIP_ANCESTOR_TYPES.has(a.type)) return SKIP;
         }
@@ -198,13 +198,13 @@ function scanText(
     const start = match.index;
     const end = start + matched.length;
     if (start > lastIndex) {
-      out.push({ type: 'text', value: value.slice(lastIndex, start) });
+      out.push({ type: "text", value: value.slice(lastIndex, start) });
     }
     out.push({
-      type: 'link',
+      type: "link",
       url: target.href,
       title: null,
-      children: [{ type: 'text', value: matched }],
+      children: [{ type: "text", value: matched }],
     });
     usedSlugs.add(target.slug);
     lastIndex = end;
@@ -212,7 +212,7 @@ function scanText(
   }
   if (!produced) return null;
   if (lastIndex < value.length) {
-    out.push({ type: 'text', value: value.slice(lastIndex) });
+    out.push({ type: "text", value: value.slice(lastIndex) });
   }
   return out;
 }

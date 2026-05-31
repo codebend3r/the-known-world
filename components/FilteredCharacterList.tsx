@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useSyncExternalStore } from 'react';
-import Link from 'next/link';
-import { Sigil } from '@/components/Sigil';
-import { filterByName } from '@/lib/search';
-import { cx } from '@/lib/cx';
-import listSearch from '@/components/listSearch.module.css';
-import styles from '@/components/FilteredCharacterList.module.css';
+import { useEffect, useState, useSyncExternalStore } from "react";
+import Link from "next/link";
+import { Sigil } from "@/components/Sigil";
+import { filterByName } from "@/lib/search";
+import { cx } from "@/lib/cx";
+import listSearch from "@/components/listSearch.module.css";
+import styles from "@/components/FilteredCharacterList.module.css";
 
 const REGION_CARD_CLASS: Record<string, string | undefined> = {
   north: styles.cardNorth,
@@ -16,19 +16,19 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   reach: styles.cardReach,
   stormlands: styles.cardStormlands,
   dorne: styles.cardDorne,
-  'iron-islands': styles.cardIronIslands,
+  "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
 };
 
-const SEARCH_PARAM = 'search';
+const SEARCH_PARAM = "search";
 
 function readSearchParam(): string {
-  if (typeof window === 'undefined') return '';
-  return new URLSearchParams(window.location.search).get(SEARCH_PARAM) ?? '';
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get(SEARCH_PARAM) ?? "";
 }
 
 function writeSearchParam(value: string) {
-  if (typeof window === 'undefined') return;
+  if (typeof window === "undefined") return;
   const params = new URLSearchParams(window.location.search);
   if (value) {
     params.set(SEARCH_PARAM, value);
@@ -36,18 +36,18 @@ function writeSearchParam(value: string) {
     params.delete(SEARCH_PARAM);
   }
   const query = params.toString();
-  const next = `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`;
-  window.history.replaceState(null, '', next);
+  const next = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
+  window.history.replaceState(null, "", next);
 }
 
 function subscribeToPopState(callback: () => void) {
-  if (typeof window === 'undefined') return () => {};
-  window.addEventListener('popstate', callback);
-  return () => window.removeEventListener('popstate', callback);
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener("popstate", callback);
+  return () => window.removeEventListener("popstate", callback);
 }
 
 function getServerSnapshot() {
-  return '';
+  return "";
 }
 
 export type CharacterItem = {
@@ -65,21 +65,27 @@ type Props = {
 };
 
 const PAGE_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
-  { value: 10, label: '10' },
-  { value: 30, label: '30' },
-  { value: 60, label: '60' },
-  { value: 100, label: '100' },
-  { value: Infinity, label: 'All' },
+  { value: 10, label: "10" },
+  { value: 30, label: "30" },
+  { value: 60, label: "60" },
+  { value: 100, label: "100" },
+  { value: Infinity, label: "All" },
 ];
 
 const MIN_PAGE_SIZE = 10;
 
 export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
-  const urlSearch = useSyncExternalStore(subscribeToPopState, readSearchParam, getServerSnapshot);
+  const urlSearch = useSyncExternalStore(
+    subscribeToPopState,
+    readSearchParam,
+    getServerSnapshot,
+  );
   const [userValue, setUserValue] = useState<string | undefined>(undefined);
-  const [userDebounced, setUserDebounced] = useState<string | undefined>(undefined);
+  const [userDebounced, setUserDebounced] = useState<string | undefined>(
+    undefined,
+  );
   const [page, setPage] = useState(1);
-  const [lastFilterKey, setLastFilterKey] = useState('');
+  const [lastFilterKey, setLastFilterKey] = useState("");
   const [size, setSize] = useState(pageSize);
 
   const value = userValue ?? urlSearch;
@@ -113,11 +119,13 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
     setPage(1);
   };
 
-  const renderPagination = (position: 'top' | 'bottom') => (
+  const renderPagination = (position: "top" | "bottom") => (
     <nav
       className={cx(
         listSearch.pagination,
-        position === 'top' ? listSearch.paginationTop : listSearch.paginationBottom,
+        position === "top"
+          ? listSearch.paginationTop
+          : listSearch.paginationBottom,
       )}
       aria-label={`Character list pagination, ${position}`}
     >
@@ -132,12 +140,12 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       </button>
       <span
         className={listSearch.status}
-        {...(position === 'bottom' ? { 'aria-live': 'polite' as const } : {})}
+        {...(position === "bottom" ? { "aria-live": "polite" as const } : {})}
       >
         Page {currentPage} of {totalPages}
       </span>
       <label className={listSearch.pageSize}>
-        Show{' '}
+        Show{" "}
         <select
           className={listSearch.pageSizeSelect}
           value={String(size)}
@@ -149,7 +157,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
               {opt.label}
             </option>
           ))}
-        </select>{' '}
+        </select>{" "}
         per page
       </label>
       <button
@@ -181,20 +189,24 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>No characters match &ldquo;{debounced}&rdquo;.</p>
+        <p className={listSearch.empty}>
+          No characters match &ldquo;{debounced}&rdquo;.
+        </p>
       ) : (
         <>
-          {showPagination && renderPagination('top')}
+          {showPagination && renderPagination("top")}
           <ul className={styles.list}>
             {pageItems.map((item) => {
-              const regionClass = item.region ? REGION_CARD_CLASS[item.region] : undefined;
+              const regionClass = item.region
+                ? REGION_CARD_CLASS[item.region]
+                : undefined;
               const cardClass = cx(styles.card, regionClass);
               return (
                 <li key={item.slug} className={styles.item}>
                   <Link
                     href={`/characters/${item.slug}/`}
                     className={cardClass}
-                    {...(item.region ? { 'data-region': item.region } : {})}
+                    {...(item.region ? { "data-region": item.region } : {})}
                   >
                     <span className={styles.portrait} aria-hidden="true">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -225,7 +237,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
               );
             })}
           </ul>
-          {showPagination && renderPagination('bottom')}
+          {showPagination && renderPagination("bottom")}
         </>
       )}
     </>

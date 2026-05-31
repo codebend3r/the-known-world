@@ -45,16 +45,16 @@ The Encyclopedia is a unified browse-and-search surface over all four entity typ
 
 ## Components
 
-| File | Kind | Purpose |
-|---|---|---|
-| `app/page.tsx` | rewrite | Render `<MainMenu />` inside `ParchmentLayout`. |
-| `components/MainMenu.tsx` | new, server component | Three-up grid of three `<MainMenuTile>`s with fixed content (Map / Timeline / Encyclopedia). |
-| `components/MainMenuTile.tsx` | new, server component | Single tile. Props: `title`, `subtitle`, `glyph`, `href`, `status?: "coming-soon"`. Wraps everything in a single `<Link>` so the whole surface is one focusable anchor. |
-| `components/ComingSoonPage.tsx` | new, server component | Shared body for all three stubs. Props: `title`. Renders the section name, one sentence of body copy, and a "← Return to the menu" link back to `/`. |
-| `app/map/page.tsx` | new | One-liner: `<ComingSoonPage title="Map" />` inside `ParchmentLayout`. |
-| `app/timeline/page.tsx` | new | `<ComingSoonPage title="Timeline" />`. |
-| `app/encyclopedia/page.tsx` | new | `<ComingSoonPage title="Encyclopedia" />`. |
-| `styles/main-menu.css` | new | Tile grid, hover/focus treatment, glyph sizing, wax-seal pill. Imported once from `app/layout.tsx`. |
+| File                            | Kind                  | Purpose                                                                                                                                                                 |
+| ------------------------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `app/page.tsx`                  | rewrite               | Render `<MainMenu />` inside `ParchmentLayout`.                                                                                                                         |
+| `components/MainMenu.tsx`       | new, server component | Three-up grid of three `<MainMenuTile>`s with fixed content (Map / Timeline / Encyclopedia).                                                                            |
+| `components/MainMenuTile.tsx`   | new, server component | Single tile. Props: `title`, `subtitle`, `glyph`, `href`, `status?: "coming-soon"`. Wraps everything in a single `<Link>` so the whole surface is one focusable anchor. |
+| `components/ComingSoonPage.tsx` | new, server component | Shared body for all three stubs. Props: `title`. Renders the section name, one sentence of body copy, and a "← Return to the menu" link back to `/`.                    |
+| `app/map/page.tsx`              | new                   | One-liner: `<ComingSoonPage title="Map" />` inside `ParchmentLayout`.                                                                                                   |
+| `app/timeline/page.tsx`         | new                   | `<ComingSoonPage title="Timeline" />`.                                                                                                                                  |
+| `app/encyclopedia/page.tsx`     | new                   | `<ComingSoonPage title="Encyclopedia" />`.                                                                                                                              |
+| `styles/main-menu.css`          | new                   | Tile grid, hover/focus treatment, glyph sizing, wax-seal pill. Imported once from `app/layout.tsx`.                                                                     |
 
 No client components. No state. No data fetching.
 
@@ -75,11 +75,11 @@ Three tiles. Desktop: three-column CSS grid (`grid-template-columns: repeat(3, 1
 
 **Tile content (fixed in v1)**
 
-| Tile | Title | Subtitle | Glyph | Href | Status |
-|---|---|---|---|---|---|
-| 1 | Map | Survey the realm. | compass | `/map/` | coming-soon |
-| 2 | Timeline | Trace the centuries. | hourglass | `/timeline/` | coming-soon |
-| 3 | Encyclopedia | Consult the scribes. | book | `/encyclopedia/` | coming-soon |
+| Tile | Title        | Subtitle             | Glyph     | Href             | Status      |
+| ---- | ------------ | -------------------- | --------- | ---------------- | ----------- |
+| 1    | Map          | Survey the realm.    | compass   | `/map/`          | coming-soon |
+| 2    | Timeline     | Trace the centuries. | hourglass | `/timeline/`     | coming-soon |
+| 3    | Encyclopedia | Consult the scribes. | book      | `/encyclopedia/` | coming-soon |
 
 **Hover/focus:** 1px gold-leaf border, scale `1.01`, `150ms ease`. Cursor `pointer`. The whole tile is one anchor; tabbing lands on it once. Focus ring is visible (browser default plus the gold-leaf border).
 
@@ -107,6 +107,7 @@ Plain prose. No glyph. No grid. The "Atlas of the Known World" caption at the to
 ## Testing
 
 **Static build:** `bun run build` succeeds and emits:
+
 - `out/index.html`
 - `out/map/index.html`
 - `out/timeline/index.html`
@@ -115,6 +116,7 @@ Plain prose. No glyph. No grid. The "Atlas of the Known World" caption at the to
 The build is the strongest gate: a broken `<Link>` or missing import fails it.
 
 **Vitest component tests**, same setup as `lib/*.test.ts`:
+
 - `components/MainMenuTile.test.tsx`: renders title, subtitle, glyph; the whole tile is one anchor with the expected `href`; "Coming soon" pill renders only when `status === "coming-soon"`.
 - `components/MainMenu.test.tsx`: renders exactly three tiles with the expected titles, hrefs, and `coming-soon` status on all three.
 - `components/ComingSoonPage.test.tsx`: renders the title and a "Return to the menu" link with `href="/"`.
@@ -122,6 +124,7 @@ The build is the strongest gate: a broken `<Link>` or missing import fails it.
 No tests against `app/*/page.tsx`, since they are one-line component wrappers; the build covers them.
 
 **Manual verification (acceptance walk)**
+
 - Visit `/`, click each tile, land on the matching stub, click "Return to the menu", land back at `/`.
 - Resize below 720px wide; tiles stack into one column.
 - Visit `/the-north/` directly; the existing map still loads.

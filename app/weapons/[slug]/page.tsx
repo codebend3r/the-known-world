@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { notFound } from "next/navigation";
+import Link from "next/link";
 import {
   loadWeapon,
   loadAllWeapons,
@@ -7,12 +7,12 @@ import {
   loadAllHouses,
   loadAllCharacters,
   renderMarkdown,
-} from '@/lib/content';
-import { buildProseLinkIndex } from '@/lib/prose-links';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sources } from '@/components/Sources';
-import { WeaponInfobox } from '@/components/WeaponInfobox';
-import styles from '@/app/weapons/[slug]/page.module.css';
+} from "@/lib/content";
+import { buildProseLinkIndex } from "@/lib/prose-links";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { Sources } from "@/components/Sources";
+import { WeaponInfobox } from "@/components/WeaponInfobox";
+import styles from "@/app/weapons/[slug]/page.module.css";
 
 export async function generateStaticParams() {
   const weapons = await loadAllWeapons();
@@ -28,30 +28,30 @@ export async function generateMetadata({
 }) {
   const { slug } = await params;
   const weapon = await loadWeapon(slug).catch(() => null);
-  if (!weapon) return { title: 'Not found' };
+  if (!weapon) return { title: "Not found" };
   return {
     title: `${weapon.frontmatter.name} · Atlas of the Known World`,
   };
 }
 
 const TYPE_NOUN: Record<string, string> = {
-  sword: 'sword',
-  greatsword: 'greatsword',
-  longsword: 'longsword',
-  dagger: 'dagger',
-  axe: 'axe',
-  spear: 'spear',
-  bow: 'bow',
-  horn: 'horn',
-  other: 'arm',
+  sword: "sword",
+  greatsword: "greatsword",
+  longsword: "longsword",
+  dagger: "dagger",
+  axe: "axe",
+  spear: "spear",
+  bow: "bow",
+  horn: "horn",
+  other: "arm",
 };
 
 const MATERIAL_ADJ: Record<string, string> = {
-  'valyrian-steel': 'Valyrian steel',
-  dragonglass: 'Dragonglass',
-  dragonbone: 'Dragonbone',
-  steel: 'Steel',
-  other: '',
+  "valyrian-steel": "Valyrian steel",
+  dragonglass: "Dragonglass",
+  dragonbone: "Dragonbone",
+  steel: "Steel",
+  other: "",
 };
 
 export default async function WeaponPage({
@@ -77,27 +77,41 @@ export default async function WeaponPage({
 
   const fm = weapon.frontmatter;
   const proseLinks = buildProseLinkIndex({
-    allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
-    allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
-    allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
-    allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
-    current: { kind: 'weapon', slug, mentions: weapon.frontmatter.mentions },
+    allCharacters: allCharacters.map((c) => ({
+      slug: c.slug,
+      frontmatter: c.frontmatter,
+    })),
+    allHouses: allHouses.map((h) => ({
+      slug: h.slug,
+      frontmatter: h.frontmatter,
+    })),
+    allWeapons: allWeapons.map((w) => ({
+      slug: w.slug,
+      frontmatter: w.frontmatter,
+    })),
+    allDragons: allDragons.map((d) => ({
+      slug: d.slug,
+      frontmatter: d.frontmatter,
+    })),
+    current: { kind: "weapon", slug, mentions: weapon.frontmatter.mentions },
   });
   const html =
     fm && weapon.body.trim()
       ? await renderMarkdown(weapon.body, { proseLinks })
-      : '';
-  const originHouse = fm['origin-house']
-    ? housesBySlug.get(fm['origin-house'])
+      : "";
+  const originHouse = fm["origin-house"]
+    ? housesBySlug.get(fm["origin-house"])
     : undefined;
 
-  const subtitleParts = [MATERIAL_ADJ[fm.material], TYPE_NOUN[fm.type]].filter(Boolean);
+  const subtitleParts = [MATERIAL_ADJ[fm.material], TYPE_NOUN[fm.type]].filter(
+    Boolean,
+  );
   const subtitle = [
-    subtitleParts.join(' '),
+    subtitleParts.join(" "),
     originHouse ? `of ${originHouse.name}` : null,
   ]
     .filter(Boolean)
-    .join(', ');
+    .join(", ");
 
   return (
     <ParchmentLayout>

@@ -25,4 +25,4 @@ House Tyrell of Highgarden is one of the Great Houses of Westeros and the princi
 
 When Mern IX Gardener and his sons burned upon the Field of Fire, his steward Harlen Tyrell surrendered Highgarden to Aegon the Conqueror and was raised to Lord Paramount of the Mander and Warden of the South. Houses Florent, Peake, and Rowan have all disputed the Tyrell claim at one time or another, holding that their own descent from Garth Greenhand is the truer line.
 
-By the events of *A Game of Thrones* the Tyrells have grown into the second-wealthiest house in the realm, fielding armies larger than any save the Lannisters and feeding the great mass of King's Landing with the harvests of the Reach.
+By the events of _A Game of Thrones_ the Tyrells have grown into the second-wealthiest house in the realm, fielding armies larger than any save the Lannisters and feeding the great mass of King's Landing with the harvests of the Reach.

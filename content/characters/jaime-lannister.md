@@ -24,4 +24,4 @@ sources:
 draft: false
 ---
 
-Twin brother to Cersei and heir apparent to Casterly Rock until Aerys II named him to the Kingsguard. Earned the name *Kingslayer* by killing the Mad King in the throne room during the Sack of King's Landing. Secret father of all three of Cersei's children.
+Twin brother to Cersei and heir apparent to Casterly Rock until Aerys II named him to the Kingsguard. Earned the name _Kingslayer_ by killing the Mad King in the throne room during the Sack of King's Landing. Secret father of all three of Cersei's children.

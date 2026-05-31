@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useEffect, useId, useRef, useState } from 'react';
-import { cx } from '@/lib/cx';
-import styles from '@/components/SiteMenu.module.css';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect, useId, useRef, useState } from "react";
+import { cx } from "@/lib/cx";
+import styles from "@/components/SiteMenu.module.css";
 
 const ITEMS = [
-  { href: '/maps/', label: 'Maps' },
-  { href: '/timeline/', label: 'Timeline' },
-  { href: '/houses/', label: 'Houses' },
-  { href: '/characters/', label: 'Characters' },
-  { href: '/weapons/', label: 'Weapons' },
-  { href: '/dragons/', label: 'Dragons' },
+  { href: "/maps/", label: "Maps" },
+  { href: "/timeline/", label: "Timeline" },
+  { href: "/houses/", label: "Houses" },
+  { href: "/characters/", label: "Characters" },
+  { href: "/weapons/", label: "Weapons" },
+  { href: "/dragons/", label: "Dragons" },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {
   if (!pathname) return false;
-  const normalised = pathname.endsWith('/') ? pathname : `${pathname}/`;
+  const normalised = pathname.endsWith("/") ? pathname : `${pathname}/`;
   return normalised === href || normalised.startsWith(href);
 }
 
@@ -32,16 +32,16 @@ export function SiteMenu() {
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsOpen(false);
+      if (e.key === "Escape") setIsOpen(false);
     };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
     const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = prev;
     };
@@ -120,7 +120,7 @@ export function SiteMenu() {
                   <Link
                     href={item.href}
                     className={cx(styles.link, active && styles.linkActive)}
-                    aria-current={active ? 'page' : undefined}
+                    aria-current={active ? "page" : undefined}
                     onClick={close}
                     tabIndex={isOpen ? 0 : -1}
                   >

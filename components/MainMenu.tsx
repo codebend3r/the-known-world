@@ -1,9 +1,16 @@
-import { MainMenuTile } from '@/components/MainMenuTile';
-import styles from '@/components/MainMenu.module.css';
+import { MainMenuTile } from "@/components/MainMenuTile";
+import styles from "@/components/MainMenu.module.css";
 
 const COMPASS = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-    <circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <circle
+      cx="16"
+      cy="16"
+      r="13"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
     <path d="M16 5 L19 17 L16 27 L13 17 Z" fill="currentColor" />
     <path d="M5 16 L16 13 L27 16 L16 19 Z" fill="currentColor" opacity="0.5" />
   </svg>
@@ -39,7 +46,14 @@ const SIGIL = (
 
 const FIGURE = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
-    <circle cx="16" cy="11" r="5" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <circle
+      cx="16"
+      cy="11"
+      r="5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
     <path
       d="M6 28 Q6 19 16 19 Q26 19 26 28"
       fill="none"
@@ -54,9 +68,25 @@ const FIGURE = (
 const SWORD = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <circle cx="16" cy="5" r="1.7" fill="currentColor" opacity="0.6" />
-    <path d="M16 7 V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M9 10 H23" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    <path d="M13 11 L16 28 L19 11 Z" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    <path
+      d="M16 7 V10"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M9 10 H23"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M13 11 L16 28 L19 11 Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
     <path d="M14 14 H18" stroke="currentColor" strokeWidth="1" opacity="0.5" />
   </svg>
 );
@@ -65,9 +95,17 @@ const DRAGON = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <path
       d="M6 22 Q4 16 8 12 Q14 14 16 18 Q18 14 24 12 Q28 16 26 22 Z"
-      fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
     />
-    <path d="M16 18 V26 M14 26 H18" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    <path
+      d="M16 18 V26 M14 26 H18"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
     <circle cx="16" cy="14" r="1.5" fill="currentColor" opacity="0.6" />
   </svg>
 );

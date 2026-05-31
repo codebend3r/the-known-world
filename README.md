@@ -98,10 +98,10 @@ Styles are hand-written CSS in two layers:
 Class names inside modules are `camelCase`, dropping BEM noise — the file scope already isolates them. Multiple classes compose through `lib/cx.ts`, a six-line helper that joins truthy class strings:
 
 ```tsx
-import styles from './Foo.module.css';
-import { cx } from '@/lib/cx';
+import styles from "./Foo.module.css";
+import { cx } from "@/lib/cx";
 
-<div className={cx(styles.row, isActive && styles.rowActive)} />
+<div className={cx(styles.row, isActive && styles.rowActive)} />;
 ```
 
 Dynamic variant lookups use the indexed form: `styles[`card${capitalize(region)}`]` or a small per-component map. Cross-module styling — when a parent module needs to tweak a child component's element — is done by passing a className prop (`<Sigil className={styles.sigilFill} />`), not by reaching into another module's class names.
@@ -123,16 +123,16 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 
 ## Routes today
 
-| Route | Status | Notes |
-| --- | --- | --- |
-| `/` | live | Atlas main menu (Maps · Timeline · Houses) |
-| `/houses/` | live | A to Z list of houses, alphabetized by short name |
-| `/houses/[slug]/` | live | Per-house page: words, seat link, sigil, founded, status, body, family tree |
-| `/characters/` | live | A to Z list of characters (sigil + name) with debounced filter |
-| `/characters/[slug]/` | live | Per-character page: sigil, born/died, primary house link, titles, body, linked family |
-| `/castles/[slug]/` | live | Per-castle page |
-| `/maps/` | stub | Coming soon |
-| `/timeline/` | stub | Coming soon |
+| Route                 | Status | Notes                                                                                 |
+| --------------------- | ------ | ------------------------------------------------------------------------------------- |
+| `/`                   | live   | Atlas main menu (Maps · Timeline · Houses)                                            |
+| `/houses/`            | live   | A to Z list of houses, alphabetized by short name                                     |
+| `/houses/[slug]/`     | live   | Per-house page: words, seat link, sigil, founded, status, body, family tree           |
+| `/characters/`        | live   | A to Z list of characters (sigil + name) with debounced filter                        |
+| `/characters/[slug]/` | live   | Per-character page: sigil, born/died, primary house link, titles, body, linked family |
+| `/castles/[slug]/`    | live   | Per-castle page                                                                       |
+| `/maps/`              | stub   | Coming soon                                                                           |
+| `/timeline/`          | stub   | Coming soon                                                                           |
 
 Per-house and per-castle pages are pre-rendered via `generateStaticParams` from the content directory.
 

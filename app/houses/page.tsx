@@ -1,16 +1,19 @@
-import type { Metadata } from 'next';
-import { loadAllHouses } from '@/lib/content';
-import { regionForHouse, regionLabel } from '@/lib/regions';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { FilteredHouseList, type HouseItem } from '@/components/FilteredHouseList';
+import type { Metadata } from "next";
+import { loadAllHouses } from "@/lib/content";
+import { regionForHouse, regionLabel } from "@/lib/regions";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import {
+  FilteredHouseList,
+  type HouseItem,
+} from "@/components/FilteredHouseList";
 
 export const metadata: Metadata = {
-  title: 'Houses · Atlas of the Known World',
-  description: 'The rolls of the great houses of the Seven Kingdoms.',
+  title: "Houses · Atlas of the Known World",
+  description: "The rolls of the great houses of the Seven Kingdoms.",
 };
 
 function shortName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
 export default async function HousesPage() {

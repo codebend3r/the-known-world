@@ -16,7 +16,7 @@ Every castle, house, event, and person has a routed, statically-rendered URL: sh
 ## Goals
 
 - Capture the North at depth (~500 to 1000 words per castle, ~ same per house, full canonical genealogies)
-- Feel like *holding a piece of history*. The visual reference is the World of Ice and Fire interior pages and the Yi Ti / Ghiscari empire chapter openings
+- Feel like _holding a piece of history_. The visual reference is the World of Ice and Fire interior pages and the Yi Ti / Ghiscari empire chapter openings
 - Solo, passive, part-time-friendly: ship and iterate without external services to babysit
 - Zero recurring cost beyond a domain
 - Source content from A Wiki of Ice and Fire (CC-BY-SA-4.0) with proper attribution
@@ -76,19 +76,19 @@ Every castle, house, event, and person has a routed, statically-rendered URL: sh
 
 ## Tech stack
 
-| Layer | Choice | Why |
-|---|---|---|
-| Framework | Next.js (app router) with `output: 'export'` | Static export → Netlify, indexable URLs, future Capacitor option |
-| Language | TypeScript | Build-time safety on schemas and relations |
-| Content | Markdown + YAML frontmatter | Writer-friendly + machine-readable; scraper writes it directly |
-| Markdown parser | `gray-matter` + `remark` (with custom `[[slug]]` plugin) | Standard, well-supported |
-| Schema validation | `zod` | Build fails fast on invalid frontmatter |
-| Map | Inline SVG + `react-svg-pan-zoom` | Full parchment styling via CSS, no licensing risk |
-| Family tree | `react-flow` + `dagre` layout | Custom node styling, built-in pan/zoom, computed layout cached at build |
-| Timeline | Custom component, era-segmented | The 8000-year span needs non-linear compression |
-| PWA | `next-pwa` (Workbox under the hood) | Service worker, manifest, offline cache |
-| Fonts | Cinzel (headings), EB Garamond (body), Inter (UI chrome) | All Google Fonts, self-hosted |
-| Deploy | Netlify (static) | Free tier, git-push-to-deploy |
+| Layer             | Choice                                                   | Why                                                                     |
+| ----------------- | -------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Framework         | Next.js (app router) with `output: 'export'`             | Static export → Netlify, indexable URLs, future Capacitor option        |
+| Language          | TypeScript                                               | Build-time safety on schemas and relations                              |
+| Content           | Markdown + YAML frontmatter                              | Writer-friendly + machine-readable; scraper writes it directly          |
+| Markdown parser   | `gray-matter` + `remark` (with custom `[[slug]]` plugin) | Standard, well-supported                                                |
+| Schema validation | `zod`                                                    | Build fails fast on invalid frontmatter                                 |
+| Map               | Inline SVG + `react-svg-pan-zoom`                        | Full parchment styling via CSS, no licensing risk                       |
+| Family tree       | `react-flow` + `dagre` layout                            | Custom node styling, built-in pan/zoom, computed layout cached at build |
+| Timeline          | Custom component, era-segmented                          | The 8000-year span needs non-linear compression                         |
+| PWA               | `next-pwa` (Workbox under the hood)                      | Service worker, manifest, offline cache                                 |
+| Fonts             | Cinzel (headings), EB Garamond (body), Inter (UI chrome) | All Google Fonts, self-hosted                                           |
+| Deploy            | Netlify (static)                                         | Free tier, git-push-to-deploy                                           |
 
 ## Data model
 
@@ -101,16 +101,16 @@ Four primary entity types (`castles`, `houses`, `people`, `events`), each as one
 ```yaml
 slug: winterfell
 name: Winterfell
-type: castle                  # castle | town | ruin | watchtower | holdfast
+type: castle # castle | town | ruin | watchtower | holdfast
 sub-region: northern-mountains
 liege-house: stark
 founded:
-  year: -8000                 # negative = BC, positive = AC
+  year: -8000 # negative = BC, positive = AC
   era: age-of-heroes
-  precision: legendary        # exact | year | decade | era | legendary
+  precision: legendary # exact | year | decade | era | legendary
 sworn-houses: [karstark, umber, mormont, bolton]
 features: [godswood, hot-springs, broken-tower, glass-gardens, crypt]
-coords: { x: 412, y: 280 }    # SVG coordinates on content/map/north.svg
+coords: { x: 412, y: 280 } # SVG coordinates on content/map/north.svg
 sources:
   - { type: awoiaf, url: "...", license: CC-BY-SA-4.0 }
   - { type: book, ref: "AGoT, Catelyn I" }
@@ -124,12 +124,12 @@ draft: false
 ```yaml
 slug: stark
 name: House Stark
-seat: winterfell              # slug of castle
-liege: null                   # null = Great House
+seat: winterfell # slug of castle
+liege: null # null = Great House
 words: "Winter is Coming"
 sigil: { description: "A grey direwolf on a white field" }
 founded: { year: -8000, era: age-of-heroes, precision: legendary }
-status: extant                # extant | extinct | exiled | hidden
+status: extant # extant | extinct | exiled | hidden
 sworn-from: [karstark, umber, mormont, bolton, ...]
 cadet-houses: [karstark, greystark]
 sources: [...]
@@ -146,13 +146,13 @@ name: Eddard Stark
 born: { year: 263, era: AC, precision: year }
 died: { year: 299, era: AC, precision: year }
 primary-house: stark
-also-of-houses: []            # for people of multiple houses by marriage
+also-of-houses: [] # for people of multiple houses by marriage
 parents: [rickard-stark, lyarra-stark]
 spouses: [catelyn-tully]
 children: [robb-stark, sansa-stark, arya-stark, bran-stark, rickon-stark]
 titles: ["Lord of Winterfell", "Warden of the North", "Hand of the King"]
-placeholder: false            # true = canonical but unnamed/unwritten
-placeholder-reason: null      # unnamed | unwritten | uncertain
+placeholder: false # true = canonical but unnamed/unwritten
+placeholder-reason: null # unnamed | unwritten | uncertain
 sources: [...]
 draft: false
 ```
@@ -164,12 +164,12 @@ draft: false
 ```yaml
 slug: red-wedding
 name: The Red Wedding
-type: betrayal                # battle | siege | treaty | wedding | death | other
+type: betrayal # battle | siege | treaty | wedding | death | other
 date: { year: 299, era: AC, precision: year }
-location: the-twins           # slug of castle/town, OR { x, y } for field battles
+location: the-twins # slug of castle/town, OR { x, y } for field battles
 participants:
   - { side: stark, houses: [stark, tully] }
-  - { side: frey,  houses: [frey, bolton] }
+  - { side: frey, houses: [frey, bolton] }
 outcome: stark-defeat
 casualties: [robb-stark, catelyn-stark, grey-wind]
 sources: [...]
@@ -297,7 +297,7 @@ bun run scrape:north  --all             # bulk-seed all known Northern entities
 - **Cached:** raw API responses go to `.cache/` so parser iteration doesn't re-hit AWOIAF
 - **Draft flow:** entries with `draft: true` are excluded from the production build but visible at `localhost:3000/_drafts`
 
-**Pipeline shape: semi-automated.** Scraper handles facts (infoboxes, relations, citations); human handles voice and editorial choices on the prose body. LLM-assisted draft generation is *not* part of the production pipeline; it carries too high a hallucination/canon-violation risk for unattended runs.
+**Pipeline shape: semi-automated.** Scraper handles facts (infoboxes, relations, citations); human handles voice and editorial choices on the prose body. LLM-assisted draft generation is _not_ part of the production pipeline; it carries too high a hallucination/canon-violation risk for unattended runs.
 
 ### Attribution (CC-BY-SA-4.0)
 

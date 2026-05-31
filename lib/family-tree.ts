@@ -1,10 +1,10 @@
-import type { Character } from '@/lib/schemas';
+import type { Character } from "@/lib/schemas";
 
 export interface TreeSpouse {
   slug: string | null;
   name: string;
   alias: string | null;
-  sex: 'm' | 'f' | null;
+  sex: "m" | "f" | null;
   placeholder: boolean;
   inHouse: boolean;
   titles: string[];
@@ -14,7 +14,7 @@ export interface TreeNode {
   slug: string;
   name: string;
   alias: string | null;
-  sex: 'm' | 'f' | null;
+  sex: "m" | "f" | null;
   placeholder: boolean;
   external: boolean;
   born: number | null;
@@ -48,11 +48,16 @@ function compareRoots(a: Character, b: Character): number {
   return a.name.localeCompare(b.name);
 }
 
-export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): TreeNode[] {
-  const peopleBySlug = new Map(people.map((p) => [p.frontmatter.slug, p.frontmatter]));
+export function buildFamilyTree(
+  houseSlug: string,
+  people: LoadedCharacter[],
+): TreeNode[] {
+  const peopleBySlug = new Map(
+    people.map((p) => [p.frontmatter.slug, p.frontmatter]),
+  );
   const housePeople = people
     .map((p) => p.frontmatter)
-    .filter((p) => p['primary-house'] === houseSlug);
+    .filter((p) => p["primary-house"] === houseSlug);
   const houseSlugs = new Set(housePeople.map((p) => p.slug));
 
   const roots = housePeople
@@ -67,7 +72,7 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
     if (visited.has(slug)) return null;
     visited.add(slug);
 
-    const external = person['primary-house'] !== houseSlug;
+    const external = person["primary-house"] !== houseSlug;
 
     if (external) {
       return {
@@ -89,7 +94,15 @@ export function buildFamilyTree(houseSlug: string, people: LoadedCharacter[]): T
       const spouse = peopleBySlug.get(spouseSlug);
       const inHouse = houseSlugs.has(spouseSlug);
       if (!spouse) {
-        return { slug: spouseSlug, name: spouseSlug, alias: null, sex: null, placeholder: true, inHouse: false, titles: [] };
+        return {
+          slug: spouseSlug,
+          name: spouseSlug,
+          alias: null,
+          sex: null,
+          placeholder: true,
+          inHouse: false,
+          titles: [],
+        };
       }
       if (inHouse && !visited.has(spouseSlug)) {
         visited.add(spouseSlug);

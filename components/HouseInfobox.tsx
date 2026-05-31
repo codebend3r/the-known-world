@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import { InfoRow, humanizeSlug } from '@/components/Infobox';
-import { Sigil } from '@/components/Sigil';
-import { cx } from '@/lib/cx';
-import { regionForHouse } from '@/lib/regions';
+import Link from "next/link";
+import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import { Sigil } from "@/components/Sigil";
+import { cx } from "@/lib/cx";
+import { regionForHouse } from "@/lib/regions";
 import type {
   House,
   Castle,
@@ -10,9 +10,9 @@ import type {
   HouseInfoEntry,
   Weapon,
   Dragon,
-} from '@/lib/schemas';
-import styles from '@/components/HouseInfobox.module.css';
-import infoboxStyles from '@/components/Infobox.module.css';
+} from "@/lib/schemas";
+import styles from "@/components/HouseInfobox.module.css";
+import infoboxStyles from "@/components/Infobox.module.css";
 
 type Props = {
   house: House;
@@ -25,19 +25,19 @@ type Props = {
 };
 
 function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
-function formatDate(d: House['founded']): string {
+function formatDate(d: House["founded"]): string {
   const { year, era, precision } = d;
-  if (era === 'AC' || era === 'BC') {
+  if (era === "AC" || era === "BC") {
     return `${Math.abs(year)} ${era}`;
   }
   const eraLabel = era
-    .split('-')
+    .split("-")
     .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(' ');
-  return precision === 'legendary' ? `${eraLabel} (legendary)` : eraLabel;
+    .join(" ");
+  return precision === "legendary" ? `${eraLabel} (legendary)` : eraLabel;
 }
 
 export function HouseInfobox({
@@ -49,19 +49,17 @@ export function HouseInfobox({
   dragonsForHouse,
   className,
 }: Props) {
-  const seats: HouseInfoEntry[] =
-    house.seats ??
-    [
-      {
-        slug: house.seat,
-        name: castlesBySlug.get(house.seat)?.name ?? humanizeSlug(house.seat),
-      },
-    ];
+  const seats: HouseInfoEntry[] = house.seats ?? [
+    {
+      slug: house.seat,
+      name: castlesBySlug.get(house.seat)?.name ?? humanizeSlug(house.seat),
+    },
+  ];
 
   const heads = house.heads ?? [];
   const regions = house.regions ?? [];
   const titles = house.titles ?? [];
-  const weapons: HouseInfoEntry[] = (house['ancestral-weapons'] ?? []).map(
+  const weapons: HouseInfoEntry[] = (house["ancestral-weapons"] ?? []).map(
     (slug) => ({
       slug,
       name: weaponsBySlug.get(slug)?.name ?? humanizeSlug(slug),
@@ -73,7 +71,7 @@ export function HouseInfobox({
     name: d.name,
   }));
 
-  const cadets: HouseInfoEntry[] = house['cadet-houses'].map((slug) => ({
+  const cadets: HouseInfoEntry[] = house["cadet-houses"].map((slug) => ({
     slug,
     name: housesBySlug.get(slug)?.name ?? `House ${humanizeSlug(slug)}`,
   }));
@@ -81,7 +79,10 @@ export function HouseInfobox({
   const liegeHouse = house.liege ? housesBySlug.get(house.liege) : null;
 
   return (
-    <aside className={cx(styles.infobox, className)} aria-label={`${house.name} infobox`}>
+    <aside
+      className={cx(styles.infobox, className)}
+      aria-label={`${house.name} infobox`}
+    >
       <div className={styles.sigil}>
         <Sigil
           slug={house.slug}
@@ -125,7 +126,9 @@ export function HouseInfobox({
           <dt>Overlord</dt>
           <dd>
             {liegeHouse ? (
-              <Link href={`/houses/${liegeHouse.slug}/`}>{liegeHouse.name}</Link>
+              <Link href={`/houses/${liegeHouse.slug}/`}>
+                {liegeHouse.name}
+              </Link>
             ) : house.liege ? (
               <span>{house.liege}</span>
             ) : (
@@ -136,7 +139,7 @@ export function HouseInfobox({
 
         {cadets.length > 0 && (
           <InfoRow
-            label={cadets.length === 1 ? 'Cadet branch' : 'Cadet branches'}
+            label={cadets.length === 1 ? "Cadet branch" : "Cadet branches"}
             entries={cadets}
             hrefPrefix="/houses"
             exists={(s) => housesBySlug.has(s)}

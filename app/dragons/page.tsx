@@ -1,16 +1,22 @@
-import type { Metadata } from 'next';
-import { loadAllDragons, loadAllHouses } from '@/lib/content';
-import { regionForHouse, regionLabel } from '@/lib/regions';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { FilteredDragonList, type DragonItem } from '@/components/FilteredDragonList';
+import type { Metadata } from "next";
+import { loadAllDragons, loadAllHouses } from "@/lib/content";
+import { regionForHouse, regionLabel } from "@/lib/regions";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import {
+  FilteredDragonList,
+  type DragonItem,
+} from "@/components/FilteredDragonList";
 
 export const metadata: Metadata = {
-  title: 'Dragons · Atlas of the Known World',
-  description: 'Of the dragons that were and the dragons that are.',
+  title: "Dragons · Atlas of the Known World",
+  description: "Of the dragons that were and the dragons that are.",
 };
 
 export default async function DragonsPage() {
-  const [dragons, houses] = await Promise.all([loadAllDragons(), loadAllHouses()]);
+  const [dragons, houses] = await Promise.all([
+    loadAllDragons(),
+    loadAllHouses(),
+  ]);
   const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
   const visible = dragons.filter((d) => !d.frontmatter.draft);
 

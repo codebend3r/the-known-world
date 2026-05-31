@@ -6,7 +6,8 @@
 
 /* Placed after the reset above so source order beats the equal-specificity
    `padding: 0` declaration. */
-@media (max-width: 767.98px) { /* md */
+@media (max-width: 767.98px) {
+  /* md */
   .tree {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -24,7 +25,7 @@
 }
 
 .node::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0.4rem;
   top: 0;
@@ -37,7 +38,7 @@
 }
 
 .node::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0.4rem;
   top: 0.85rem;
@@ -179,7 +180,8 @@ a.name:focus-visible {
   padding: 2rem 1rem;
 }
 
-@media (max-width: 639.98px) { /* sm */
+@media (max-width: 639.98px) {
+  /* sm */
   .row {
     padding: 0.4rem 0.6rem;
   }

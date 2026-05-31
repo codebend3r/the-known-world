@@ -17,4 +17,4 @@ sources:
 draft: false
 ---
 
-A child of Prince Rhaegel Targaryen and Alys Arryn of the Eyrie, grandson of King Daeron II, and twin to Princess Aelora. He died in the cradle alongside his sister, leaving his uncle Maekar's line to carry the family hopes, and lending his name a generation later to his cousin's son, the firebrand prince called *Brightflame*.
+A child of Prince Rhaegel Targaryen and Alys Arryn of the Eyrie, grandson of King Daeron II, and twin to Princess Aelora. He died in the cradle alongside his sister, leaving his uncle Maekar's line to carry the family hopes, and lending his name a generation later to his cousin's son, the firebrand prince called _Brightflame_.

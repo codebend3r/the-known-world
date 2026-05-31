@@ -1,12 +1,15 @@
 .header {
   border-bottom: 1px solid rgba(107, 68, 35, 0.3);
-  background:
-    linear-gradient(180deg, rgba(248, 236, 208, 0.55) 0%, rgba(232, 211, 160, 0.25) 100%);
+  background: linear-gradient(
+    180deg,
+    rgba(248, 236, 208, 0.55) 0%,
+    rgba(232, 211, 160, 0.25) 100%
+  );
   position: relative;
 }
 
 .header::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   right: 0;
@@ -80,7 +83,8 @@
   height: 2.5rem;
 }
 
-@media (max-width: 767.98px) { /* md */
+@media (max-width: 767.98px) {
+  /* md */
   .inner {
     padding: 0;
     grid-template-columns: auto 1fr;
@@ -101,7 +105,8 @@
   }
 }
 
-@media (max-width: 479.98px) { /* xs */
+@media (max-width: 479.98px) {
+  /* xs */
   .title {
     font-size: 1.35rem;
     letter-spacing: 3px;

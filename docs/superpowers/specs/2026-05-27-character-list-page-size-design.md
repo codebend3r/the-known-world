@@ -11,7 +11,7 @@ Add a page-size `<select>` to the existing pagination bar on the characters list
 ## Goals
 
 - Let users widen or narrow the page without leaving the keyboard / screen.
-- Keep the existing API: `FilteredCharacterList` still accepts a `pageSize` prop, which now seeds the *initial* selected size.
+- Keep the existing API: `FilteredCharacterList` still accepts a `pageSize` prop, which now seeds the _initial_ selected size.
 - Match the parchment aesthetic: the new control reuses `--font-ui`, the existing button border, and the gold-leaf focus treatment.
 
 ## Non-goals
@@ -42,11 +42,11 @@ Inside each pagination nav, in source order:
 
 ## Components
 
-| File | Kind | Change |
-|---|---|---|
-| `components/FilteredCharacterList.tsx` | modify | Convert `pageSize` from a hardcoded constant to `useState(initialPageSize)`; extend `renderPagination` to include the page-size `<label>` + `<select>`; update the "show pagination" condition to `filtered.length > 10`. |
-| `styles/list-search.css` | modify | Add `.pagination__page-size` (label wrapper) and `.pagination__page-size-select` (the select). Reuse existing tokens. |
-| `components/FilteredCharacterList.test.tsx` | modify | Add coverage for the selector (see Testing). |
+| File                                        | Kind   | Change                                                                                                                                                                                                                    |
+| ------------------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `components/FilteredCharacterList.tsx`      | modify | Convert `pageSize` from a hardcoded constant to `useState(initialPageSize)`; extend `renderPagination` to include the page-size `<label>` + `<select>`; update the "show pagination" condition to `filtered.length > 10`. |
+| `styles/list-search.css`                    | modify | Add `.pagination__page-size` (label wrapper) and `.pagination__page-size-select` (the select). Reuse existing tokens.                                                                                                     |
+| `components/FilteredCharacterList.test.tsx` | modify | Add coverage for the selector (see Testing).                                                                                                                                                                              |
 
 No new files. No changes to the houses list, page routes, or content schemas.
 

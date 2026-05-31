@@ -1,5 +1,5 @@
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
+import { notFound } from "next/navigation";
+import Link from "next/link";
 import {
   loadAllCharacters,
   loadAllHouses,
@@ -7,18 +7,18 @@ import {
   loadAllDragons,
   loadCharacter,
   renderMarkdown,
-} from '@/lib/content';
-import { buildProseLinkIndex } from '@/lib/prose-links';
-import { ageAtDeath } from '@/lib/age';
-import { findPortrait } from '@/lib/portraits';
-import { cdnImage } from '@/lib/cdn-image';
-import { cx } from '@/lib/cx';
-import { regionForHouse } from '@/lib/regions';
-import { ParchmentLayout } from '@/components/ParchmentLayout';
-import { Sigil } from '@/components/Sigil';
-import { Sources } from '@/components/Sources';
-import type { Character } from '@/lib/schemas';
-import styles from '@/app/characters/[slug]/page.module.css';
+} from "@/lib/content";
+import { buildProseLinkIndex } from "@/lib/prose-links";
+import { ageAtDeath } from "@/lib/age";
+import { findPortrait } from "@/lib/portraits";
+import { cdnImage } from "@/lib/cdn-image";
+import { cx } from "@/lib/cx";
+import { regionForHouse } from "@/lib/regions";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { Sigil } from "@/components/Sigil";
+import { Sources } from "@/components/Sources";
+import type { Character } from "@/lib/schemas";
+import styles from "@/app/characters/[slug]/page.module.css";
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();
@@ -27,30 +27,34 @@ export async function generateStaticParams() {
     .map((c) => ({ slug: c.frontmatter.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const character = await loadCharacter(slug).catch(() => null);
-  if (!character) return { title: 'Not found' };
+  if (!character) return { title: "Not found" };
   return {
     title: `${character.frontmatter.name} · Atlas of the Known World`,
   };
 }
 
-function formatDate(d: Character['born']): string {
-  if (!d) return '—';
+function formatDate(d: Character["born"]): string {
+  if (!d) return "—";
   const { year, era, precision } = d;
-  if (era === 'AC' || era === 'BC') {
+  if (era === "AC" || era === "BC") {
     return `${Math.abs(year)} ${era}`;
   }
   const eraLabel = era
-    .split('-')
+    .split("-")
     .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(' ');
-  return precision === 'legendary' ? `${eraLabel} (legendary)` : eraLabel;
+    .join(" ");
+  return precision === "legendary" ? `${eraLabel} (legendary)` : eraLabel;
 }
 
 function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, '');
+  return fullName.replace(/^House\s+/i, "");
 }
 
 type RelationRef = {
@@ -84,7 +88,7 @@ function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
       <dd>
         {refs.map((r, i) => (
           <span key={r.slug}>
-            {i > 0 && ', '}
+            {i > 0 && ", "}
             {r.linkable ? (
               <Link href={`/characters/${r.slug}/`}>{r.name}</Link>
             ) : (
@@ -97,7 +101,11 @@ function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
   );
 }
 
-export default async function CharacterPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CharacterPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const character = await loadCharacter(slug).catch(() => null);
   if (!character) notFound();
@@ -113,13 +121,20 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
       findPortrait(slug, fm.sex),
     ]);
 
-  const charactersBySlug = new Map(allCharacters.map((c) => [c.slug, c.frontmatter]));
+  const charactersBySlug = new Map(
+    allCharacters.map((c) => [c.slug, c.frontmatter]),
+  );
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
 
-  const primaryHouse = fm['primary-house'] ? housesBySlug.get(fm['primary-house']) : undefined;
-  const alsoHouses = fm['also-of-houses']
+  const primaryHouse = fm["primary-house"]
+    ? housesBySlug.get(fm["primary-house"])
+    : undefined;
+  const alsoHouses = fm["also-of-houses"]
     .map((s) => ({ slug: s, house: housesBySlug.get(s) }))
-    .filter((x): x is { slug: string; house: NonNullable<typeof x.house> } => x.house !== undefined);
+    .filter(
+      (x): x is { slug: string; house: NonNullable<typeof x.house> } =>
+        x.house !== undefined,
+    );
 
   const parents = resolveRelations(fm.parents, charactersBySlug);
   const spouses = resolveRelations(fm.spouses, charactersBySlug);
@@ -135,22 +150,34 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
     .filter((d) => !d.draft && d.riders.includes(slug));
 
   const proseLinks = buildProseLinkIndex({
-    allCharacters: allCharacters.map((c) => ({ slug: c.slug, frontmatter: c.frontmatter })),
-    allHouses: allHouses.map((h) => ({ slug: h.slug, frontmatter: h.frontmatter })),
-    allWeapons: allWeapons.map((w) => ({ slug: w.slug, frontmatter: w.frontmatter })),
-    allDragons: allDragons.map((d) => ({ slug: d.slug, frontmatter: d.frontmatter })),
-    current: { kind: 'character', slug, mentions: fm.mentions },
+    allCharacters: allCharacters.map((c) => ({
+      slug: c.slug,
+      frontmatter: c.frontmatter,
+    })),
+    allHouses: allHouses.map((h) => ({
+      slug: h.slug,
+      frontmatter: h.frontmatter,
+    })),
+    allWeapons: allWeapons.map((w) => ({
+      slug: w.slug,
+      frontmatter: w.frontmatter,
+    })),
+    allDragons: allDragons.map((d) => ({
+      slug: d.slug,
+      frontmatter: d.frontmatter,
+    })),
+    current: { kind: "character", slug, mentions: fm.mentions },
   });
   const html = character.body.trim()
     ? await renderMarkdown(character.body, { proseLinks })
-    : '';
+    : "";
 
   return (
     <ParchmentLayout>
       <div className={styles.portrait}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={cdnImage(portrait, { w: 1200, fm: 'webp', q: 80 })}
+          src={cdnImage(portrait, { w: 1200, fm: "webp", q: 80 })}
           alt={`Portrait of ${fm.name}`}
           loading="lazy"
           decoding="async"
@@ -158,9 +185,9 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
       </div>
       <div className={styles.heading}>
         <Sigil
-          slug={fm['primary-house']}
+          slug={fm["primary-house"]}
           name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
-          region={regionForHouse(fm['primary-house'], housesBySlug)}
+          region={regionForHouse(fm["primary-house"], housesBySlug)}
           size="6rem"
           decorative
         />
@@ -193,11 +220,11 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           <dt>House</dt>
           <dd>
             {primaryHouse ? (
-              <Link href={`/houses/${fm['primary-house']}/`}>
+              <Link href={`/houses/${fm["primary-house"]}/`}>
                 {primaryHouse.name}
               </Link>
-            ) : fm['primary-house'] !== null ? (
-              fm['primary-house']
+            ) : fm["primary-house"] !== null ? (
+              fm["primary-house"]
             ) : (
               <span className={styles.unaffiliated}>Unaffiliated</span>
             )}
@@ -209,7 +236,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             <dd>
               {alsoHouses.map(({ slug: s, house }, i) => (
                 <span key={s}>
-                  {i > 0 && ', '}
+                  {i > 0 && ", "}
                   <Link href={`/houses/${s}/`}>{house.name}</Link>
                 </span>
               ))}
