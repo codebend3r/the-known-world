@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { InfoRow, humanizeSlug } from '@/components/Infobox';
 import { Sigil } from '@/components/Sigil';
 import { cx } from '@/lib/cx';
 import { regionForHouse } from '@/lib/regions';
@@ -9,6 +10,7 @@ import type {
   HouseInfoEntry,
 } from '@/lib/schemas';
 import styles from '@/components/HouseInfobox.module.css';
+import infoboxStyles from '@/components/Infobox.module.css';
 
 type Props = {
   house: House;
@@ -22,13 +24,6 @@ function shortHouseName(fullName: string): string {
   return fullName.replace(/^House\s+/i, '');
 }
 
-function humanizeSlug(slug: string): string {
-  return slug
-    .split('-')
-    .map((w) => (w.length === 0 ? w : w[0].toUpperCase() + w.slice(1)))
-    .join(' ');
-}
-
 function formatDate(d: House['founded']): string {
   const { year, era, precision } = d;
   if (era === 'AC' || era === 'BC') {
@@ -39,59 +34,6 @@ function formatDate(d: House['founded']): string {
     .map((w) => w[0].toUpperCase() + w.slice(1))
     .join(' ');
   return precision === 'legendary' ? `${eraLabel} (legendary)` : eraLabel;
-}
-
-type EntryProps = {
-  entry: HouseInfoEntry;
-  hrefPrefix?: string;
-  exists?: (slug: string) => boolean;
-};
-
-function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
-  const canLink =
-    !!entry.slug &&
-    !!hrefPrefix &&
-    (exists ? exists(entry.slug) : true);
-  return (
-    <li>
-      {canLink ? (
-        <Link href={`${hrefPrefix}/${entry.slug}/`}>{entry.name}</Link>
-      ) : (
-        <span>{entry.name}</span>
-      )}
-      {entry.note && (
-        <span className={styles.note}> ({entry.note})</span>
-      )}
-    </li>
-  );
-}
-
-type RowProps = {
-  label: string;
-  entries: HouseInfoEntry[];
-  hrefPrefix?: string;
-  exists?: (slug: string) => boolean;
-};
-
-function InfoRow({ label, entries, hrefPrefix, exists }: RowProps) {
-  if (entries.length === 0) return null;
-  return (
-    <div className={styles.row}>
-      <dt>{label}</dt>
-      <dd>
-        <ul>
-          {entries.map((entry, i) => (
-            <InfoEntry
-              key={`${entry.name}-${i}`}
-              entry={entry}
-              hrefPrefix={hrefPrefix}
-              exists={exists}
-            />
-          ))}
-        </ul>
-      </dd>
-    </div>
-  );
 }
 
 export function HouseInfobox({
@@ -138,7 +80,7 @@ export function HouseInfobox({
 
       <dl className={styles.rows}>
         {house.sigil.description && (
-          <div className={styles.row}>
+          <div className={infoboxStyles.row}>
             <dt>Coat of arms</dt>
             <dd>{house.sigil.description}</dd>
           </div>
@@ -165,7 +107,7 @@ export function HouseInfobox({
 
         <InfoRow label="Titles" entries={titles} />
 
-        <div className={styles.row}>
+        <div className={infoboxStyles.row}>
           <dt>Overlord</dt>
           <dd>
             {liegeHouse ? (
@@ -189,13 +131,13 @@ export function HouseInfobox({
 
         <InfoRow label="Ancestral weapons" entries={weapons} />
 
-        <div className={styles.row}>
+        <div className={infoboxStyles.row}>
           <dt>Founded</dt>
           <dd>{formatDate(house.founded)}</dd>
         </div>
 
         {house.extinct && (
-          <div className={styles.row}>
+          <div className={infoboxStyles.row}>
             <dt>Extinct</dt>
             <dd>{formatDate(house.extinct)}</dd>
           </div>
