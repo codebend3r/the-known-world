@@ -1,5 +1,6 @@
 .sigil {
   --sigil-size: 6rem;
+  display: inline-block;
   position: relative;
   width: var(--sigil-size);
   height: var(--sigil-size);
