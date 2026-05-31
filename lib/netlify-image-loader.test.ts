@@ -6,7 +6,7 @@ afterEach(() => {
 });
 
 describe("netlifyImageLoader", () => {
-  it("returns src verbatim in development", () => {
+  it("appends width and quality to src in development", () => {
     vi.stubEnv("NODE_ENV", "development");
     expect(
       netlifyImageLoader({
@@ -14,7 +14,7 @@ describe("netlifyImageLoader", () => {
         width: 640,
         quality: 80,
       }),
-    ).toBe("/sigils/stark.png");
+    ).toBe("/sigils/stark.png?w=640&q=80");
   });
 
   it("rewrites to /.netlify/images in production", () => {

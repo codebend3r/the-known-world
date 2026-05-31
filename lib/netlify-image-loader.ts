@@ -5,11 +5,11 @@ export default function netlifyImageLoader({
   width,
   quality,
 }: ImageLoaderProps): string {
-  if (process.env.NODE_ENV !== "production") return src;
-  const params = new URLSearchParams({
-    url: src,
-    w: String(width),
-    q: String(quality ?? 75),
-  });
+  const w = String(width);
+  const q = String(quality ?? 75);
+  if (process.env.NODE_ENV !== "production") {
+    return `${src}?w=${w}&q=${q}`;
+  }
+  const params = new URLSearchParams({ url: src, w, q });
   return `/.netlify/images?${params.toString()}`;
 }
