@@ -1,5 +1,5 @@
 import type { Source } from "@/lib/schemas";
-import styles from "@/components/Sources.module.css";
+import styles from "@/components/Sources.module.scss";
 
 type Props = { sources: Source[] };
 
