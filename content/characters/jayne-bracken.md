@@ -14,4 +14,4 @@ sources:
 draft: false
 ---
 
-Second daughter of Lord Jonos Bracken of Stone Hedge by his first wife. She or one of her sisters was set upon by Ser Gregor Clegane when the Mountain put Stone Hedge to the torch in the early days of the War of the Five Kings.
+Second-born daughter of Lord Jonos Bracken of Stone Hedge by his first wife, sister to Barbara who was the eldest and Catelyn, Bess, Alysanne, and Hendry her brother who came after. In the early days of the War of the Five Kings, when Ser Gregor Clegane and his column rode out from King's Landing through the Riverlands to burn the houses of Lord Hoster Tully's bannermen, Stone Hedge was given to the torch and at least one of the lord's daughters carried off into Ser Gregor's keeping for the sport of his marching column. Whether it was Jayne or one of her sisters who took the hands of the Mountain that Rides, the chroniclers themselves do not say.
