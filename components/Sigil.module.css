@@ -1,16 +1,9 @@
 /*
- * House sigil sprite: 5 columns × 8 rows in `public/sprites/house-sigils-001.png`.
- *
- * Source sheet is 1143 × 2048 src-px. Cells are 228.6 × 256 src-px
- * (1143/5 × 2048/8). `--sigil-size` sets the rendered cell width.
- *
- * The base rule defaults `--sigil-h` to a square, since the majority of
- * sigils are now standalone PNGs in `public/sigils/` (all 1:1) overriding
- * `background-image`, `background-size`, and `background-position` (see
- * `.stark`). Square element matches the image, no letterboxing.
- *
- * Sprite-cell users (no PNG override, just `--col` / `--row`) need the
- * 1143:1280 cell aspect, which the grouped rule below restores.
+ * Every house sigil is a standalone 1:1 PNG in `public/sigils/`, applied
+ * by overriding `background-image`, `background-size`, and
+ * `background-position` on the base `.sigil` rule (see `.stark`). The
+ * base rule's sprite-sheet defaults exist only as a fallback; no house
+ * currently uses them.
  */
 
 .sigil {
@@ -30,12 +23,6 @@
     calc(var(--sigil-size) * var(--col) * -1)
     calc(var(--sigil-h) * var(--row) * -1);
   background-repeat: no-repeat;
-}
-
-/* Sprite-cell sigils restore the 1143:1280 cell aspect ratio. */
-.dustin,
-.cerwyn {
-  --sigil-h: calc(var(--sigil-size) * 1280 / 1143);
 }
 
 /* Row 1 — Stark · Lannister · Targaryen · Baratheon · Greyjoy */
@@ -206,7 +193,11 @@
   background-size: contain;
   background-position: center;
 }
-.dustin     { --col: 1; --row: 6; }
+.dustin {
+  background-image: url('/sigils/dustin.png');
+  background-size: contain;
+  background-position: center;
+}
 .ryswell {
   background-image: url('/sigils/ryswell.png');
   background-size: contain;
@@ -217,7 +208,11 @@
   background-size: contain;
   background-position: center;
 }
-.cerwyn     { --col: 4; --row: 6; }
+.cerwyn {
+  background-image: url('/sigils/cerwyn.png');
+  background-size: contain;
+  background-position: center;
+}
 
 /* Row 8 — Swann · Dondarrion · Caron · Estermont · Grafton */
 .swann {
