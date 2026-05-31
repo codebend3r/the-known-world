@@ -90,15 +90,15 @@ next.config.ts      output: 'export', trailingSlash: true
 
 ## Styling
 
-Styles are hand-written CSS in two layers:
+Styles are hand-written SCSS in two layers:
 
-- **`styles/globals.css`** is the only global stylesheet. It holds resets, CSS custom properties (colour, font, and breakpoint tokens, plus the `--region-color-*` heraldic palette shared by both list views), `html`/`body`/`h1-h3` rules, and the `.subtitle` typographic primitive used by every `ParchmentLayout` page.
-- **CSS modules** carry everything else. Each component owns a sibling `<Component>.module.css` (e.g. `components/SiteHeader.tsx` ↔ `components/SiteHeader.module.css`); each route owns a sibling `page.module.css` (e.g. `app/houses/[slug]/page.module.css`). Two filtered list components share `components/listSearch.module.css` for the search input + pagination apparatus they both render.
+- **`styles/globals.scss`** is the only global stylesheet. It holds resets, CSS custom properties (colour, font, and breakpoint tokens, plus the `--region-color-*` heraldic palette shared by both list views), `html`/`body`/`h1-h3` rules, and the `.subtitle` typographic primitive used by every `ParchmentLayout` page.
+- **SCSS modules** carry everything else. Each component owns a sibling `<Component>.module.scss` (e.g. `components/SiteHeader.tsx` ↔ `components/SiteHeader.module.scss`); each route owns a sibling `page.module.scss` (e.g. `app/houses/[slug]/page.module.scss`). Two filtered list components share `components/listSearch.module.scss` for the search input + pagination apparatus they both render.
 
 Class names inside modules are `camelCase`, dropping BEM noise — the file scope already isolates them. Multiple classes compose through `lib/cx.ts`, a six-line helper that joins truthy class strings:
 
 ```tsx
-import styles from "./Foo.module.css";
+import styles from "@/components/Foo.module.scss";
 import { cx } from "@/lib/cx";
 
 <div className={cx(styles.row, isActive && styles.rowActive)} />;
