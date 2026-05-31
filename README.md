@@ -2,6 +2,8 @@
 
 An interactive atlas of George R. R. Martin's world of Ice and Fire, covering the maps, timeline, and the rolls of the great houses. Statically generated from a corpus of markdown files with Zod-validated frontmatter, rendered through a parchment-styled UI.
 
+![The Known World main menu](docs/screenshots/home.png)
+
 ## Stack
 
 - **Next.js 16** (App Router) with `output: 'export'`, so every route is pre-rendered to static HTML.
@@ -133,6 +135,30 @@ Sources point back to AWOIAF (CC-BY-SA-3.0) or to a book / show / other referenc
 | `/timeline/` | stub | Coming soon |
 
 Per-house and per-castle pages are pre-rendered via `generateStaticParams` from the content directory.
+
+### Houses
+
+The A to Z roll of the great and minor houses, each tile showing the family sigil. Click through to a per-house page with its words, seat, founding date, status, body text, and full family tree.
+
+![Houses index](docs/screenshots/houses-index.png)
+
+![House Stark page](docs/screenshots/house-stark.png)
+
+![House Targaryen page](docs/screenshots/house-targaryen.png)
+
+### Characters
+
+A debounced filter over every named character, each row showing the character portrait and primary-house sigil. Per-character pages link back into the family graph and primary house.
+
+![Characters index](docs/screenshots/characters-index.png)
+
+![Jon Snow page](docs/screenshots/character-jon-snow.png)
+
+### Castles
+
+Per-castle pages cover the seat's type, sub-region, liege house, founding date, sworn houses, and notable features.
+
+![Winterfell page](docs/screenshots/castle-winterfell.png)
 
 ## Family tree
 
