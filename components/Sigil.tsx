@@ -60,6 +60,7 @@ const SIGIL_SLUGS = new Set([
   "osgrey",
   "qorgyle",
   "allyrion",
+  "banefort",
   "unknown",
 ]);
 
