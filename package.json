@@ -13,7 +13,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "system-check": "run-s lint typecheck test",
+    "system-check": "run-s prettier:check typecheck lint test",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prettier:quick": "pretty-quick --staged",
