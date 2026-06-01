@@ -45,11 +45,13 @@ function manyItems(n: number): CharacterItem[] {
 
 beforeEach(() => {
   vi.useFakeTimers();
+  window.localStorage.clear();
   window.history.replaceState(null, "", "/characters/");
 });
 
 afterEach(() => {
   vi.useRealTimers();
+  window.localStorage.clear();
   window.history.replaceState(null, "", "/characters/");
 });
 
@@ -372,6 +374,14 @@ describe("FilteredCharacterList", () => {
     expect(window.location.hash).toBe("#top");
   });
 
+  it("renders the search input and view toggle inside the same row", () => {
+    const { container } = render(<FilteredCharacterList items={items} />);
+    const row = container.querySelector(".row");
+    expect(row).not.toBeNull();
+    expect(row?.querySelector("input")).not.toBeNull();
+    expect(row?.querySelector('[role="group"]')).not.toBeNull();
+  });
+
   it("resets to page 1 when the search filter changes", () => {
     const lots: CharacterItem[] = [
       ...manyItems(60),
@@ -398,5 +408,45 @@ describe("FilteredCharacterList", () => {
     expect(
       screen.queryByRole("navigation", { name: /pagination/i }),
     ).toBeNull();
+  });
+});
+
+describe("FilteredCharacterList view toggle", () => {
+  it("starts in grid view by default", () => {
+    const { container } = render(<FilteredCharacterList items={items} />);
+    expect(container.querySelector("ul.list")).not.toBeNull();
+    expect(container.querySelector("ul.listView")).toBeNull();
+    expect(
+      screen
+        .getByRole("button", { name: /grid view/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
+  });
+
+  it("switches to list view when the list button is clicked", () => {
+    const { container } = render(<FilteredCharacterList items={items} />);
+    act(() => {
+      fireEvent.click(screen.getByRole("button", { name: /list view/i }));
+    });
+    expect(container.querySelector("ul.listView")).not.toBeNull();
+    expect(window.localStorage.getItem("gota:characters-view")).toBe("list");
+  });
+
+  it("hydrates the stored choice from localStorage after mount", () => {
+    window.localStorage.setItem("gota:characters-view", "list");
+    const { container } = render(<FilteredCharacterList items={items} />);
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(container.querySelector("ul.listView")).not.toBeNull();
+  });
+
+  it("ignores invalid stored values and stays in grid view", () => {
+    window.localStorage.setItem("gota:characters-view", "kanban");
+    const { container } = render(<FilteredCharacterList items={items} />);
+    act(() => {
+      vi.advanceTimersByTime(0);
+    });
+    expect(container.querySelector("ul.listView")).toBeNull();
   });
 });

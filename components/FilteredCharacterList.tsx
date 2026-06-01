@@ -4,6 +4,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
+import { ViewToggle, type ViewMode } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import listSearch from "@/components/listSearch.module.scss";
@@ -22,6 +23,11 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
 };
 
 const SEARCH_PARAM = "search";
+const VIEW_STORAGE_KEY = "gota:characters-view";
+
+function isViewMode(value: unknown): value is ViewMode {
+  return value === "grid" || value === "list";
+}
 
 function readSearchParam(): string {
   if (typeof window === "undefined") return "";
@@ -88,6 +94,24 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
   const [page, setPage] = useState(1);
   const [lastFilterKey, setLastFilterKey] = useState("");
   const [size, setSize] = useState(pageSize);
+  const [view, setView] = useState<ViewMode>("grid");
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem(VIEW_STORAGE_KEY);
+    // Hydrating client-only state from `localStorage` is exactly the case
+    // an after-mount effect exists for: the server can't read it, and a
+    // lazy `useState` initializer would diverge from the server snapshot.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (isViewMode(stored)) setView(stored);
+  }, []);
+
+  const handleViewChange = (next: ViewMode) => {
+    setView(next);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(VIEW_STORAGE_KEY, next);
+    }
+  };
 
   const value = userValue ?? urlSearch;
   const debounced = userDebounced ?? urlSearch;
@@ -175,9 +199,11 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
 
   const showPagination = filtered.length > MIN_PAGE_SIZE;
 
+  const listClass = cx(styles.list, view === "list" && styles.listView);
+
   return (
     <>
-      <div className={listSearch.wrap}>
+      <div className={listSearch.row}>
         <input
           type="search"
           className={listSearch.input}
@@ -188,6 +214,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
           autoComplete="off"
           spellCheck={false}
         />
+        <ViewToggle value={view} onChange={handleViewChange} />
       </div>
       {filtered.length === 0 ? (
         <p className={listSearch.empty}>
@@ -196,7 +223,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
       ) : (
         <>
           {showPagination && renderPagination("top")}
-          <ul className={styles.list}>
+          <ul className={listClass}>
             {pageItems.map((item) => {
               const regionClass = item.region
                 ? REGION_CARD_CLASS[item.region]
