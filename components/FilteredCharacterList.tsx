@@ -72,16 +72,15 @@ type Props = {
 };
 
 const PAGE_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
-  { value: 10, label: "10" },
-  { value: 30, label: "30" },
-  { value: 60, label: "60" },
-  { value: 100, label: "100" },
-  { value: Infinity, label: "All" },
+  { value: 16, label: "16" },
+  { value: 32, label: "32" },
+  { value: 64, label: "64" },
+  { value: 128, label: "128" },
 ];
 
-const MIN_PAGE_SIZE = 10;
+const MIN_PAGE_SIZE = 16;
 
-export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
+export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
   const urlSearch = useSyncExternalStore(
     subscribeToPopState,
     readSearchParam,
@@ -133,11 +132,10 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
   }
 
   const filtered = filterByName(items, debounced);
-  const effectiveSize = Number.isFinite(size) ? size : filtered.length || 1;
-  const totalPages = Math.max(1, Math.ceil(filtered.length / effectiveSize));
+  const totalPages = Math.max(1, Math.ceil(filtered.length / size));
   const currentPage = Math.min(page, totalPages);
-  const pageStart = (currentPage - 1) * effectiveSize;
-  const pageItems = filtered.slice(pageStart, pageStart + effectiveSize);
+  const pageStart = (currentPage - 1) * size;
+  const pageItems = filtered.slice(pageStart, pageStart + size);
 
   const handleSizeChange = (next: number) => {
     setSize(next);
