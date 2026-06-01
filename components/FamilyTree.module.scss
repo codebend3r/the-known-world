@@ -8,8 +8,8 @@
   gap: 0.4rem;
 }
 
-/* Placed after the reset above so source order beats the equal-specificity
-   `padding: 0` declaration. */
+// Placed after the reset above so source order beats the equal-specificity
+// `padding: 0` declaration.
 .tree {
   @media (max-width: bp.$md) {
     padding-left: 1.5rem;
