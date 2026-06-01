@@ -65,6 +65,7 @@ const SIGIL_SLUGS = new Set([
   "connington",
   "hoare",
   "marbrand",
+  "stokeworth",
   "unknown",
 ]);
 
