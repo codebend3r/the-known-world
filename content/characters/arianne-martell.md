@@ -11,8 +11,6 @@ primary-house: martell
 parents:
   - doran-martell
   - mellario-of-norvos
-spouses: []
-children: []
 titles:
   - Princess of Dorne
   - Heir to Sunspear
