@@ -1,10 +1,10 @@
 @use "breakpoints" as bp;
 
 .trigger {
-  position: absolute;
+  position: fixed;
   top: 0.75rem;
   left: 0.75rem;
-  z-index: 10;
+  z-index: 60;
   display: grid;
   place-items: center;
   width: 2.5rem;

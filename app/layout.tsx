@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "../styles/globals.scss";
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteMenu } from "@/components/SiteMenu";
 import { SiteFooter } from "@/components/SiteFooter";
 
 const cinzel = Cinzel({
@@ -56,6 +57,7 @@ export default function RootLayout({
     >
       <body>
         <SiteHeader />
+        <SiteMenu />
         {children}
         <SiteFooter />
       </body>
