@@ -1,8 +1,10 @@
 @use "breakpoints" as bp;
 
 .trigger {
-  grid-column: 1;
-  justify-self: start;
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 10;
   display: grid;
   place-items: center;
   width: 2.5rem;
@@ -30,14 +32,9 @@
     outline-offset: 2px;
   }
 
-  @media (max-width: bp.$md) {
-    align-self: stretch;
-    width: 3rem;
-    height: auto;
-  }
-
   @media (max-width: bp.$xs) {
-    width: 2.75rem;
+    top: 0.5rem;
+    left: 0.5rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

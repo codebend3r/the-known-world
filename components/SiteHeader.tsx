@@ -10,7 +10,6 @@ export function SiteHeader() {
         <Link href="/" className={styles.titleLink}>
           <p className={styles.title}>The Known World</p>
         </Link>
-        <span className={styles.spacer} aria-hidden="true" />
       </div>
     </header>
   );
