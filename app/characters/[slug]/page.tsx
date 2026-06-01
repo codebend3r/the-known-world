@@ -15,7 +15,7 @@ import { findPortrait } from "@/lib/portraits";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
-import { Sigil } from "@/components/Sigil";
+import { Sigil, SIGIL_SLUGS } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
 import type { Character } from "@/lib/schemas";
 import styles from "@/app/characters/[slug]/page.module.scss";
@@ -186,7 +186,7 @@ export default async function CharacterPage({
       </div>
       <div className={styles.heading}>
         <Sigil
-          slug={fm["primary-house"]}
+          slug={fm["primary-house"] ?? (SIGIL_SLUGS.has(slug) ? slug : null)}
           name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
           region={regionForHouse(fm["primary-house"], housesBySlug)}
           size="6rem"

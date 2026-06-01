@@ -3,7 +3,7 @@ import Image from "next/image";
 import { cx } from "@/lib/cx";
 import styles from "@/components/Sigil.module.scss";
 
-const SIGIL_SLUGS = new Set([
+export const SIGIL_SLUGS = new Set([
   "stark",
   "lannister",
   "targaryen",
@@ -70,6 +70,7 @@ const SIGIL_SLUGS = new Set([
   "freefolk",
   "fossoway-cider-hall",
   "fossoway-new-barrel",
+  "duncan-the-tall",
   "unknown",
 ]);
 
