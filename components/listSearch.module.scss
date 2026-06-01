@@ -87,9 +87,9 @@
   }
 }
 
-/* `.paginationTop` / `.paginationBottom` are marker classes — they carry no
-   styles, but their presence on the element lets tests identify the top
-   vs bottom pagination nav by `classList.contains(...)`. */
+// `.paginationTop` / `.paginationBottom` are marker classes — they carry no
+// styles, but their presence on the element lets tests identify the top
+// vs bottom pagination nav by `classList.contains(...)`.
 .paginationTop {
 }
 .paginationBottom {
