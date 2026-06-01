@@ -12,7 +12,7 @@
 
 ## Conventions reminder
 
-- Commit subjects start with `GOTA:` (see `gota-commit-format` skill); no `Co-Authored-By` trailer, no AI attribution anywhere in commit messages.
+- Commit subjects start with `TKW:` (see `tkw-commit-format` skill); no `Co-Authored-By` trailer, no AI attribution anywhere in commit messages.
 - Run `bun run test` before each commit (this invokes `vitest run` — `bun test` uses Bun's built-in runner and is incompatible with the repo's jsdom setup).
 - All in-repo imports use the `@/` alias.
 
@@ -162,7 +162,7 @@
 - [ ] **Step 5: Commit**
 
   ```
-  GOTA: add Netlify image loader for `next/image`
+  TKW: add Netlify image loader for `next/image`
 
   - new `lib/netlify-image-loader.ts` matches `ImageLoaderProps`
   - `next.config.ts` swaps `unoptimized` for `loader: 'custom'` + `loaderFile`
@@ -237,7 +237,7 @@
 - [ ] **Step 5: Commit**
 
   ```
-  GOTA: render character list thumbnails with `next/image`
+  TKW: render character list thumbnails with `next/image`
 
   - `FilteredCharacterList` uses `<Image>` with fixed `270x180`
   - drops manual `loading` / `decoding` (defaults match)
@@ -299,7 +299,7 @@
 - [ ] **Step 4: Commit**
 
   ```
-  GOTA: render character detail portrait with `next/image`
+  TKW: render character detail portrait with `next/image`
 
   - `<Image priority>` for above-the-fold portrait
   - `width={1200} height={1600}` as aspect-ratio hint; CSS still rules render
@@ -504,7 +504,7 @@
 - [ ] **Step 8: Commit**
 
   ```
-  GOTA: render house sigils with `next/image`
+  TKW: render house sigils with `next/image`
 
   - `Sigil` renders `<Image fill>` inside the existing wrapper span
   - new `sigilFile()` helper handles slug, region fallback, alias, unknown
@@ -540,7 +540,7 @@
 - [ ] **Step 4: Commit**
 
   ```
-  GOTA: drop unused `cdnImage` helper
+  TKW: drop unused `cdnImage` helper
 
   - `lib/cdn-image.ts` superseded by `lib/netlify-image-loader.ts`
   - call sites already migrated to raw `src` strings
@@ -563,4 +563,4 @@
 - `next.config.ts` uses `loader: 'custom'` + `loaderFile`, no `unoptimized`.
 - `bun run build` produces a clean static export with `/.netlify/images?url=...` srcset URLs baked into the HTML.
 - `bun run test` is green.
-- Five commits land on `main`, each with a `GOTA:` subject, in the order listed above.
+- Five commits land on `main`, each with a `TKW:` subject, in the order listed above.

@@ -227,13 +227,13 @@ All tests run under the existing jsdom vitest config via `bun run test`.
 
 ## Commits
 
-Per `CLAUDE.md`, one commit per logical change with the `GOTA:` subject prefix:
+Per `CLAUDE.md`, one commit per logical change with the `TKW:` subject prefix:
 
-1. `GOTA: add Netlify image loader for next/image` — `lib/netlify-image-loader.ts` + test + `next.config.ts` swap.
-2. `GOTA: render character list thumbnails with next/image` — `FilteredCharacterList.tsx` + `app/characters/page.tsx`.
-3. `GOTA: render character detail portrait with next/image` — `app/characters/[slug]/page.tsx`.
-4. `GOTA: render house sigils with next/image` — `Sigil.tsx` + `Sigil.module.scss` + delete `public/sprites/house-sigils-001.png`.
-5. `GOTA: drop unused cdnImage helper` — `lib/cdn-image.ts` + test deletion.
+1. `TKW: add Netlify image loader for next/image` — `lib/netlify-image-loader.ts` + test + `next.config.ts` swap.
+2. `TKW: render character list thumbnails with next/image` — `FilteredCharacterList.tsx` + `app/characters/page.tsx`.
+3. `TKW: render character detail portrait with next/image` — `app/characters/[slug]/page.tsx`.
+4. `TKW: render house sigils with next/image` — `Sigil.tsx` + `Sigil.module.scss` + delete `public/sprites/house-sigils-001.png`.
+5. `TKW: drop unused cdnImage helper` — `lib/cdn-image.ts` + test deletion.
 
 Each commit runs `bun run test` (and where touched, `bun run lint` + `bun run build` smoke check) before landing.
 

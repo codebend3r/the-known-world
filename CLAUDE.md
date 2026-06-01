@@ -5,7 +5,7 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 ## Workflow
 
 - Work directly on `main`. Don't create branches unless explicitly asked.
-- Auto-commit each logical change without asking. Subject must start with `GOTA:` (see the `gota-commit-format` skill).
+- Auto-commit each logical change without asking. Subject must start with `TKW:` (see the `tkw-commit-format` skill).
 
 ## Tooling
 
@@ -42,5 +42,5 @@ Design specs and implementation plans live in `docs/superpowers/specs/` and `doc
 ## Commits
 
 - Create a commit after every discrete change; do not batch.
-- Subject must start with `GOTA:` followed by a short title (e.g., `GOTA: a short title`).
+- Subject must start with `TKW:` followed by a short title (e.g., `TKW: a short title`).
 - Favor bullet points in the body. Keep it concise and easy to read.

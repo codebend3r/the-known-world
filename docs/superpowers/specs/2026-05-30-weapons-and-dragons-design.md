@@ -269,7 +269,7 @@ Verification gates:
 
 ## Commits
 
-Per the `gota-commit-format` skill, one logical change per commit, each `GOTA:`-prefixed:
+Per the `tkw-commit-format` skill, one logical change per commit, each `TKW:`-prefixed:
 
 1. Add `WeaponSchema` + `DragonSchema`; change `HouseSchema['ancestral-weapons']` to slug list; migrate the four affected house files.
 2. Add weapon + dragon content loaders (`loadWeapon` / `loadDragon` / `loadAllWeapons` / `loadAllDragons`).

@@ -12,7 +12,7 @@
 
 ## Conventions reminder
 
-- Commit subjects start with `GOTA:` (see `gota-commit-format` skill); no `Co-Authored-By` trailer, no AI attribution anywhere in commit messages.
+- Commit subjects start with `TKW:` (see `tkw-commit-format` skill); no `Co-Authored-By` trailer, no AI attribution anywhere in commit messages.
 - Run `bun run test` before each commit (this invokes `vitest run` — `bun test` uses Bun's built-in runner and is incompatible with the repo's jsdom setup).
 - All in-repo imports use the `@/` alias.
 - CSS modules use `camelCase` class names; compose with `cx` from `@/lib/cx`.
@@ -350,7 +350,7 @@ git add lib/schemas.ts lib/schemas.test.ts \
         content/houses/targaryen.md content/houses/blackfyre.md \
         components/HouseInfobox.tsx
 git commit -m "$(cat <<'EOF'
-GOTA: add `WeaponSchema` + `DragonSchema`; flatten house `ancestral-weapons`
+TKW: add `WeaponSchema` + `DragonSchema`; flatten house `ancestral-weapons`
 
 - `WeaponSchema` covers type, material, status, origin/current house, wielders chain
 - `DragonSchema` covers color, size, hatched/died, status, house, riders chain
@@ -498,7 +498,7 @@ Expected: PASS.
 ```bash
 git add lib/content.ts lib/content.test.ts
 git commit -m "$(cat <<'EOF'
-GOTA: add `loadWeapon` / `loadAllWeapons` / `loadDragon` / `loadAllDragons`
+TKW: add `loadWeapon` / `loadAllWeapons` / `loadDragon` / `loadAllDragons`
 
 - mirrors the `loadCastle` / `loadHouse` shape
 - empty-dir test confirms `loadAll*` returns `[]` until content lands
@@ -665,7 +665,7 @@ Expected: PASS.
 git add components/Infobox.tsx components/Infobox.module.scss \
         components/HouseInfobox.tsx components/HouseInfobox.module.scss
 git commit -m "$(cat <<'EOF'
-GOTA: hoist `InfoRow` / `InfoEntry` / `humanizeSlug` into `components/Infobox`
+TKW: hoist `InfoRow` / `InfoEntry` / `humanizeSlug` into `components/Infobox`
 
 - shared primitives for the three infobox flavours (`House`, `Weapon`, `Dragon`)
 - `.row` and `.note` styles move from `HouseInfobox.module.scss` to `Infobox.module.scss`
@@ -1132,7 +1132,7 @@ Expected: PASS. The route file references content that doesn't exist yet, but `g
 git add components/WeaponInfobox.tsx components/WeaponInfobox.test.tsx \
         'app/weapons/[slug]/page.tsx' 'app/weapons/[slug]/page.module.scss'
 git commit -m "$(cat <<'EOF'
-GOTA: add `WeaponInfobox` and `/weapons/[slug]/` detail route
+TKW: add `WeaponInfobox` and `/weapons/[slug]/` detail route
 
 - `WeaponInfobox` reuses `Infobox` primitives and `HouseInfobox.module.scss` shell
 - detail page mirrors `/houses/[slug]/`: sigil + infobox aside, prose body, sources
@@ -1533,7 +1533,7 @@ Expected: PASS.
 git add components/DragonInfobox.tsx components/DragonInfobox.test.tsx \
         'app/dragons/[slug]/page.tsx' 'app/dragons/[slug]/page.module.scss'
 git commit -m "$(cat <<'EOF'
-GOTA: add `DragonInfobox` and `/dragons/[slug]/` detail route
+TKW: add `DragonInfobox` and `/dragons/[slug]/` detail route
 
 - `DragonInfobox` shares `Infobox` primitives; suppresses sigil + house row for wild dragons
 - detail page subtitle differentiates housed vs wild
@@ -1822,7 +1822,7 @@ Expected: PASS.
 git add components/FilteredWeaponList.tsx components/FilteredWeaponList.module.scss \
         components/FilteredWeaponList.test.tsx app/weapons/page.tsx
 git commit -m "$(cat <<'EOF'
-GOTA: add `FilteredWeaponList` and `/weapons/` index route
+TKW: add `FilteredWeaponList` and `/weapons/` index route
 
 - debounced A–Z list mirroring `FilteredHouseList` (no view toggle)
 - card region tint resolves through `current-house` → `origin-house` → none
@@ -2129,7 +2129,7 @@ Expected: PASS.
 git add components/FilteredDragonList.tsx components/FilteredDragonList.module.scss \
         components/FilteredDragonList.test.tsx app/dragons/page.tsx
 git commit -m "$(cat <<'EOF'
-GOTA: add `FilteredDragonList` and `/dragons/` index route
+TKW: add `FilteredDragonList` and `/dragons/` index route
 
 - debounced A–Z list; cards tint by house region, wild dragons get a dashed badge
 - card region resolves through `house` slug; `null` => `.cardWild`
@@ -2390,7 +2390,7 @@ Expected: PASS.
 git add components/MainMenu.tsx components/MainMenu.module.scss components/MainMenu.test.tsx \
         components/SiteMenu.tsx components/SiteMenu.test.tsx
 git commit -m "$(cat <<'EOF'
-GOTA: wire weapons + dragons into `MainMenu` (5 tiles) and `SiteMenu`
+TKW: wire weapons + dragons into `MainMenu` (5 tiles) and `SiteMenu`
 
 - `MainMenu` grows to 5 tiles; `grid-template-areas` keeps the 3+2 centred layout
 - `SWORD` + `DRAGON` glyphs match the existing `COMPASS` / `HOURGLASS` / `SIGIL` style
@@ -2704,7 +2704,7 @@ git add lib/prose-links.ts lib/prose-links.test.ts \
         'app/houses/[slug]/page.tsx' 'app/characters/[slug]/page.tsx' \
         'app/weapons/[slug]/page.tsx' 'app/dragons/[slug]/page.tsx'
 git commit -m "$(cat <<'EOF'
-GOTA: extend `prose-links` to weapon + dragon kinds
+TKW: extend `prose-links` to weapon + dragon kinds
 
 - `ProseLinkTarget['kind']` adds `weapon` and `dragon`
 - `buildProseLinkIndex` ingests `allWeapons` + `allDragons`
@@ -2977,7 +2977,7 @@ git add components/HouseInfobox.tsx components/HouseInfobox.test.tsx \
         'app/houses/[slug]/page.tsx' \
         'app/characters/[slug]/page.tsx' 'app/characters/[slug]/page.module.scss'
 git commit -m "$(cat <<'EOF'
-GOTA: cross-link weapons + dragons from house and character detail pages
+TKW: cross-link weapons + dragons from house and character detail pages
 
 - `HouseInfobox` resolves ancestral-weapon slugs to `/weapons/<slug>/` links
 - `HouseInfobox` gains a Dragons row driven by `dragonsForHouse`
@@ -3190,7 +3190,7 @@ git add content/weapons/blackfyre.md content/weapons/dark-sister.md \
         content/houses/stark.md content/houses/tarly.md \
         lib/content.test.ts
 git commit -m "$(cat <<'EOF'
-GOTA: seed `blackfyre`, `dark-sister`, `heartsbane`, `ice`; reference from house frontmatter
+TKW: seed `blackfyre`, `dark-sister`, `heartsbane`, `ice`; reference from house frontmatter
 
 - four AWOIAF-sourced weapon entries cover the canonical ancestral blades
 - `stark.md` + `tarly.md` add `ancestral-weapons` slug references
@@ -3515,7 +3515,7 @@ git add content/dragons/balerion.md content/dragons/vhagar.md \
         content/dragons/cannibal.md \
         lib/content.test.ts
 git commit -m "$(cat <<'EOF'
-GOTA: seed seven canonical dragons
+TKW: seed seven canonical dragons
 
 - Conquest-era: `balerion`, `vhagar`, `meraxes`
 - Dance-era: `caraxes`, `vermithor`, `sunfyre`
