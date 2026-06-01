@@ -20,8 +20,12 @@
   }
 }
 
+// Make the `<li>` a single-cell grid so the inner `<a>` stretches to
+// fill the row's auto height — otherwise the tallest card in a row
+// (one with an alias) leaves its shorter neighbours visually short.
 .item {
   margin: 0;
+  display: grid;
 }
 
 .card {
