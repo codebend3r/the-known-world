@@ -1,6 +1,6 @@
 ---
 slug: freefolk
-name: The Freefolk
+name: Free Folk
 seat: ""
 liege: null
 words: ""
