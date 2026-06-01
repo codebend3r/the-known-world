@@ -12,6 +12,7 @@
   justify-content: center;
   gap: 0.85rem;
   flex-wrap: wrap;
+  width: 100%;
 
   h1 {
     font-family: var(--font-character-name);
@@ -75,6 +76,7 @@
     ".    ."
     "wide wide";
   gap: 0.6rem 1.5rem;
+  width: 100%;
   padding: 1rem 1.25rem;
   background: rgba(248, 236, 208, 0.5);
   border: 1px solid rgba(107, 68, 35, 0.2);
