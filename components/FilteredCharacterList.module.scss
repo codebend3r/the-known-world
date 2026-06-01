@@ -43,8 +43,8 @@
   }
 }
 
-/* Regional border tints — colours live in `globals.css` as
-   `--region-color-*` tokens (shared with `FilteredHouseList`). */
+// Regional border tints — colours live in `globals.scss` as
+// `--region-color-*` tokens (shared with `FilteredHouseList`).
 .cardNorth {
   border-color: var(--region-color-north);
 }
