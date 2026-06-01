@@ -1,10 +1,8 @@
 @use "breakpoints" as bp;
 
-// Break out of the parchment container so the grid can scale up to ~6
-// columns on large desktops while remaining centred on the viewport.
-// `ParchmentLayout`'s `.page > *` already sets `position: relative`, so
-// `width: var(--bleed-width)` widens the element and `left: auto` (the
-// default) keeps it centred. The `--md` override re-contains it on mobile.
+// `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
+// and `.subtitle` size to their content. `justify-self: stretch` opts
+// this grid back out so it fills the full parchment column.
 .list {
   list-style: none;
   padding: 0;
@@ -12,12 +10,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
   gap: 1rem;
-  width: var(--bleed-width);
-
-  @media (max-width: bp.$md) {
-    width: auto;
-    left: auto;
-  }
+  justify-self: stretch;
 }
 
 // Make the `<li>` a single-cell grid so the inner `<a>` stretches to
