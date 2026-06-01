@@ -58,6 +58,7 @@ const SIGIL_SLUGS = new Set([
   "durrandon",
   "webber",
   "osgrey",
+  "qorgyle",
   "unknown",
 ]);
 
