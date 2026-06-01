@@ -96,6 +96,7 @@ type Props = {
   size?: string;
   decorative?: boolean;
   className?: string;
+  priority?: boolean;
 };
 
 export function Sigil({
@@ -105,6 +106,7 @@ export function Sigil({
   size,
   decorative = false,
   className,
+  priority = false,
 }: Props) {
   if (slug === null) return null;
 
@@ -121,6 +123,7 @@ export function Sigil({
         alt={decorative ? "" : `Sigil of House ${name}`}
         fill
         sizes={size ?? "6rem"}
+        priority={priority}
       />
     </span>
   );

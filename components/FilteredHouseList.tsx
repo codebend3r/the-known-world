@@ -22,6 +22,11 @@ type Props = {
 
 const VIEW_STORAGE_KEY = "gota:houses-view";
 
+// Rough first-row count on a wide desktop grid (cards are min 12rem on a
+// `--bleed-width` track). Eagerly loading these covers the LCP candidate
+// without negating lazy-loading for the rest of the list.
+const PRIORITY_COUNT = 8;
+
 function isViewMode(value: unknown): value is ViewMode {
   return value === "grid" || value === "list";
 }
@@ -90,7 +95,7 @@ export function FilteredHouseList({ items }: Props) {
         </p>
       ) : (
         <ul className={listClass}>
-          {filtered.map((item) => {
+          {filtered.map((item, index) => {
             const regionClass = item.region
               ? REGION_CARD_CLASS[item.region]
               : undefined;
@@ -104,6 +109,7 @@ export function FilteredHouseList({ items }: Props) {
                     region={item.region}
                     size={view === "list" ? "2rem" : "6rem"}
                     decorative
+                    priority={index < PRIORITY_COUNT}
                   />
                   <span className={styles.name}>{item.name}</span>
                   {view === "list" && item.regionLabel && (
