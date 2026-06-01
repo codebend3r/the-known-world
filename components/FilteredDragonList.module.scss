@@ -1,9 +1,9 @@
-/* Break out of the parchment container so the grid can scale up to ~8
-   columns on large desktops while remaining centered on the viewport.
-   Relies on `ParchmentLayout`'s `.page > *` already setting
-   `position: relative`; `left` shifts the wider element back to the
-   viewport centre without using `margin`. The `--md` override re-contains
-   it on mobile. */
+// Break out of the parchment container so the grid can scale up to ~8
+// columns on large desktops while remaining centered on the viewport.
+// Relies on `ParchmentLayout`'s `.page > *` already setting
+// `position: relative`; `left` shifts the wider element back to the
+// viewport centre without using `margin`. The `--md` override re-contains
+// it on mobile.
 .list {
   list-style: none;
   padding: 0;
@@ -56,8 +56,8 @@
   }
 }
 
-/* Regional border tints — colours live in `globals.css` as
-   `--region-color-*` tokens (shared with `FilteredCharacterList`). */
+// Regional border tints — colours live in `globals.scss` as
+// `--region-color-*` tokens (shared with `FilteredCharacterList`).
 .cardNorth {
   border-color: var(--region-color-north);
 }
