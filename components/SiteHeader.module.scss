@@ -4,10 +4,14 @@
   border-bottom: 1px solid rgba(107, 68, 35, 0.3);
   background: linear-gradient(
     180deg,
-    rgba(248, 236, 208, 0.55) 0%,
-    rgba(232, 211, 160, 0.25) 100%
+    rgba(248, 236, 208, 0.96) 0%,
+    rgba(232, 211, 160, 0.92) 100%
   );
-  position: relative;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  position: sticky;
+  top: 0;
+  z-index: 50;
 
   &::after {
     content: "";
