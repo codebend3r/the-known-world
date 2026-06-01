@@ -67,6 +67,7 @@ export const SIGIL_SLUGS = new Set([
   "marbrand",
   "stokeworth",
   "whent",
+  "strong",
   "freefolk",
   "fossoway-cider-hall",
   "fossoway-new-barrel",
