@@ -94,6 +94,7 @@ export function WeaponInfobox({
             name={shortHouseName(originHouse.name)}
             region={regionForHouse(originHouse.slug, housesBySlug)}
             decorative
+            priority
             className={infoboxStyles.sigilFill}
           />
         </div>

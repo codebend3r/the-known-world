@@ -89,6 +89,7 @@ export function HouseInfobox({
           name={shortHouseName(house.name)}
           region={regionForHouse(house.slug, housesBySlug)}
           decorative
+          priority
           className={styles.sigilFill}
         />
       </div>

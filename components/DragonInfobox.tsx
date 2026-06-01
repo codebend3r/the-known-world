@@ -78,6 +78,7 @@ export function DragonInfobox({
             name={shortHouseName(house.name)}
             region={regionForHouse(house.slug, housesBySlug)}
             decorative
+            priority
             className={infoboxStyles.sigilFill}
           />
         </div>
