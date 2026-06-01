@@ -25,10 +25,10 @@
   --bp-lg: 1024px;
   --bp-xl: 1280px;
 
-  /* Regional palette — heraldic border tints used by both the house and
-     character list cards. Kept as design tokens so the two list modules
-     don't each carry the same nine hex values. Add a new region here, not
-     in the module files. */
+  // Regional palette — heraldic border tints used by both the house and
+  // character list cards. Kept as design tokens so the two list modules
+  // don't each carry the same nine hex values. Add a new region here, not
+  // in the module files.
   --region-color-north: #5d6f7f;
   --region-color-vale: #4d7caa;
   --region-color-riverlands: #3d5a7c;
@@ -40,11 +40,11 @@
   --region-color-crownlands: #5a2a30;
 }
 
-/* Desktop-first breakpoints — default styles target xl. Each @media rule
-   overrides at the named breakpoint AND below. The SCSS breakpoint
-   variables in `styles/_breakpoints.scss` (`bp.$xs`, `bp.$sm`, ...) are
-   the source of truth; the `--bp-*` CSS custom properties above are
-   design tokens exposed for any runtime/JS consumer that needs them. */
+// Desktop-first breakpoints — default styles target xl. Each @media rule
+// overrides at the named breakpoint AND below. The SCSS breakpoint
+// variables in `styles/_breakpoints.scss` (`bp.$xs`, `bp.$sm`, ...) are
+// the source of truth; the `--bp-*` CSS custom properties above are
+// design tokens exposed for any runtime/JS consumer that needs them.
 
 *,
 *::before,
@@ -84,29 +84,10 @@ body {
   }
 }
 
-/* The root layout renders SiteHeader, page content, then SiteFooter as the
-   three direct children of `<body>`. A named-area grid drives the vertical
-   stack so the 10rem gap before the footer is layout (a grid row), not a
-   `margin-top` on the footer module. */
 body {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 1fr 10rem auto;
-  grid-template-areas:
-    "header"
-    "content"
-    "."
-    "footer";
-
-  & > :first-child {
-    grid-area: header;
-  }
-  & > :nth-child(2) {
-    grid-area: content;
-  }
-  & > :last-child {
-    grid-area: footer;
-  }
+  grid-template-rows: auto 1fr auto;
 }
 
 h1,
@@ -153,10 +134,10 @@ h3 {
   }
 }
 
-/* Typographic primitive: italic page lede under the `h1`. Used by every
-   `ParchmentLayout` page (`app/page.tsx`, houses, castles, not-found, etc.)
-   — kept global alongside the heading rules above so consumers don't each
-   import a typography module. */
+// Typographic primitive: italic page lede under the `h1`. Used by every
+// `ParchmentLayout` page (`app/page.tsx`, houses, castles, not-found, etc.)
+// — kept global alongside the heading rules above so consumers don't each
+// import a typography module.
 .subtitle {
   display: grid;
   text-align: center;
