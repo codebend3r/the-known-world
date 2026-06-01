@@ -80,10 +80,10 @@ export const loadAllDragons = () => loadAll<Dragon>("dragons", DragonSchema);
 ## Routes
 
 ```
-app/weapons/page.tsx                + page.module.css
-app/weapons/[slug]/page.tsx         + page.module.css
-app/dragons/page.tsx                + page.module.css
-app/dragons/[slug]/page.tsx         + page.module.css
+app/weapons/page.tsx                + page.module.scss
+app/weapons/[slug]/page.tsx         + page.module.scss
+app/dragons/page.tsx                + page.module.scss
+app/dragons/[slug]/page.tsx         + page.module.scss
 ```
 
 Both `[slug]/page.tsx` use `generateStaticParams` so `output: 'export'` still pre-renders every entry.
@@ -135,7 +135,7 @@ ParchmentLayout
 
 ### New: `FilteredWeaponList`, `FilteredDragonList`
 
-Both mirror `FilteredHouseList` exactly — debounced search input + paginated A–Z list — and share `components/listSearch.module.css`. Each row uses the existing region tinting:
+Both mirror `FilteredHouseList` exactly — debounced search input + paginated A–Z list — and share `components/listSearch.module.scss`. Each row uses the existing region tinting:
 
 - **Weapons:** `<Sigil />` resolved in fallback order `current-house` → `origin-house` → none + weapon name. When neither is set (e.g. an extant weapon belonging to no house), a neutral tint.
 - **Dragons:** `<Sigil />` of `house` + dragon name. Wild dragons render no sigil and a neutral / `wild` tint (re-use a `--region-color-*` token, or extend `globals.css` with a single new `--region-color-wild`).
@@ -204,7 +204,7 @@ Two new hand-drawn SVGs in the same style as the existing `COMPASS` / `HOURGLASS
 
 **Layout** (per the chosen Option A — 3+2 with the bottom row centred):
 
-`MainMenu.module.css` declares `grid-template-areas` on the parent — never `grid-column: 1 / -1`, per `CLAUDE.md`. On wide breakpoints:
+`MainMenu.module.scss` declares `grid-template-areas` on the parent — never `grid-column: 1 / -1`, per `CLAUDE.md`. On wide breakpoints:
 
 ```css
 grid-template-columns: repeat(6, 1fr);
