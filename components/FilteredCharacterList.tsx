@@ -250,7 +250,7 @@ export function FilteredCharacterList({ items, pageSize = 30 }: Props) {
                         slug={item.primaryHouseSlug}
                         name={item.name}
                         region={item.region}
-                        size="3.25rem"
+                        size={view === "list" ? "3.25rem" : "1.75rem"}
                         decorative
                       />
                     </span>

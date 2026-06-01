@@ -102,21 +102,21 @@ a.card {
 
 // Sigil overlays the top-right corner of the portrait in grid view.
 // Both `.portrait` and `.sigil` claim `grid-area: portrait`, layering
-// the sigil over the image; `place-self` parks it in the corner and
-// the wrapper's padding keeps it off the edge.
+// the sigil over the image; `place-self` parks it in the corner.
+// `aspect-ratio: 1` keeps the badge square even if flex would otherwise
+// shrink its main axis.
 .sigil {
   grid-area: portrait;
   place-self: start end;
-  padding: 0.4rem;
+  box-sizing: border-box;
+  width: 2.5rem;
+  aspect-ratio: 1;
+  padding: 0.35rem;
   background: rgba(248, 236, 208, 0.85);
   border: 1px solid rgba(107, 68, 35, 0.25);
   border-radius: 2px;
-  width: 2.5rem;
-  height: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: content-box;
+  display: grid;
+  place-items: center;
 }
 
 .name {
@@ -198,12 +198,12 @@ a.card {
     flex: 0 0 3.25rem;
     place-self: auto;
     width: 3.25rem;
+    aspect-ratio: auto;
     height: 3.25rem;
     padding: 0;
     background: transparent;
     border: none;
     border-radius: 0;
-    box-sizing: border-box;
 
     @media (max-width: bp.$sm) {
       display: none;
