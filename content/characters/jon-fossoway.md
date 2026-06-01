@@ -4,7 +4,7 @@ name: Jon Fossoway
 sex: m
 born: null
 died: null
-primary-house: fossoway
+primary-house: fossoway-new-barrel
 spouses:
   - janna-tyrell
 titles:

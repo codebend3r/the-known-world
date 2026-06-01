@@ -4,7 +4,7 @@ name: Steffon Fossoway
 sex: m
 born: null
 died: null
-primary-house: fossoway
+primary-house: fossoway-cider-hall
 titles:
   - Lord of Cider Hall
 sources:

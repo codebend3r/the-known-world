@@ -9,7 +9,7 @@ born:
 died: null
 primary-house: tyrell
 also-of-houses:
-  - fossoway
+  - fossoway-new-barrel
 parents:
   - luthor-tyrell
   - olenna-tyrell

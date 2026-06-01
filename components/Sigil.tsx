@@ -68,6 +68,8 @@ const SIGIL_SLUGS = new Set([
   "stokeworth",
   "whent",
   "freefolk",
+  "fossoway-cider-hall",
+  "fossoway-new-barrel",
   "unknown",
 ]);
 

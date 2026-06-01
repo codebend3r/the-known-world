@@ -4,7 +4,9 @@ name: Raymun Fossoway
 sex: m
 born: null
 died: null
-primary-house: fossoway
+primary-house: fossoway-new-barrel
+also-of-houses:
+  - fossoway-cider-hall
 titles:
   - Ser
 aliases:
