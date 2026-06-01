@@ -266,7 +266,10 @@ export default async function CharacterPage({
       )}
 
       {hasFamily && (
-        <section aria-labelledby="family-heading">
+        <section
+          className={styles.familySection}
+          aria-labelledby="family-heading"
+        >
           <h2 id="family-heading">Family</h2>
           <dl className={styles.relations}>
             <RelationRow label="Parents" refs={parents} />

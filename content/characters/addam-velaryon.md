@@ -12,7 +12,7 @@ died:
   precision: year
 primary-house: velaryon
 parents:
-  - laenor-velaryon
+  - corlys-velaryon
 titles:
   - Ser
   - Heir to Driftmark
