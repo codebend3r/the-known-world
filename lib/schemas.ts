@@ -135,6 +135,7 @@ export const HouseSchema = z.object({
   heads: z.array(HouseInfoEntrySchema).optional(),
   regions: z.array(HouseInfoEntrySchema).optional(),
   titles: z.array(HouseInfoEntrySchema).optional(),
+  "notable-members": z.array(HouseInfoEntrySchema).optional(),
   "ancestral-weapons": z.array(z.string()).optional(),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),

@@ -34,6 +34,49 @@ titles:
     note: claimed only when one chief can bring the clans together; vacant by custom in most generations
   - name: Magnar of Thenn
     note: held by the lord of the Thenns, alone among the free folk to keep a hereditary ruler
+notable-members:
+  - name: Mance Rayder
+    slug: mance-rayder
+    note: the King-Beyond-the-Wall at the close of the long summer; a Night's Watch deserter who slew three rivals to put the crown on his head
+  - name: Tormund Giantsbane
+    slug: tormund-giantsbane
+    note: chief of many names (Husband to Bears, Speaker to Gods, Father of Hosts); held the host together after Mance was taken at Castle Black
+  - name: Ygritte
+    slug: ygritte
+    note: spearwife of the Frostfangs; climber and bowwoman who walked the world below the Wall with Jon Snow before falling at Castle Black
+  - name: Craster
+    slug: craster
+    note: a kinless old man of the haunted forest; took his daughters to wife and gave his sons to the cold gods at Craster's Keep
+  - name: Styr, Magnar of Thenn
+    note: hereditary lord of the hidden valley of Thenn; led the climbers over the Wall before Mance's main host and was killed at Castle Black
+  - name: Sigorn of Thenn
+    note: son of Styr; bent the knee at the Wall and was wed to Alys Karstark of Karhold, founding House Thenn
+  - name: Varamyr Sixskins
+    note: warg counsellor to Mance who wore the skins of three wolves, a snow bear, a shadowcat, and an eagle
+  - name: Mag Mar Tun Doh Weg
+    note: called Mag the Mighty; greatest of the giants who rode mammoths in Mance's host; slain at the gate of Castle Black
+  - name: Harma Dogshead
+    note: vanguard captain of Mance's host; bore a dog's head on her standard and is said to have hated dogs
+  - name: The Lord of Bones
+    note: also called Rattleshirt; raider who clothed himself in the bones of his kills and held the gate of Mance's camp
+  - name: The Weeper
+    note: red-eyed raider chief whose host held the eastern flank of Mance's army and would not bend the knee
+  - name: Val
+    note: spearwife sister to Mance's wife Dalla; called the wildling princess by the men of the Watch
+  - name: Dalla
+    note: woods-witch and wife to Mance Rayder; died in childbed during the battle at Castle Black
+  - name: Mother Mole
+    note: woods-witch who gathered the broken remnant of the free folk at the cursed stones of Hardhome after the battle
+  - name: Joramun
+    note: King-Beyond-the-Wall in the Long Night; blew the Horn of Winter and joined a Stark king to put down the Night's King at the Nightfort
+  - name: Gendel and Gorne
+    note: brother-kings who led a host south through the caves beneath the Frostfangs; Gorne slain by the King of Winter, Gendel lost in the dark
+  - name: The Horned King
+    note: a King-Beyond-the-Wall remembered only in fragments of song
+  - name: Bael the Bard
+    note: singer-king who is said to have stolen a Stark maid out of Winterfell with no weapon but a harp
+  - name: Raymun Redbeard
+    note: King-Beyond-the-Wall in the days of Lord Willam Stark; cut down at the Battle of Long Lake by Harmond Umber, the Drunken Giant of Last Hearth
 mentions:
   - mance-rayder
   - tormund-giantsbane

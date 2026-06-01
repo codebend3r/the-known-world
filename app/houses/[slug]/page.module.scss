@@ -58,6 +58,54 @@
   padding-top: 1.5rem;
 }
 
+.notableList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+
+  @media (max-width: bp.$md) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  li {
+    padding: 0.4rem 0.75rem;
+    background: rgba(248, 236, 208, 0.6);
+    border: 1px solid rgba(107, 68, 35, 0.15);
+    border-radius: 2px;
+    line-height: 1.45;
+  }
+}
+
+.notableName {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+a.notableName {
+  text-decoration: none;
+  transition: color 120ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--gold-leaf);
+    text-decoration: underline;
+    text-decoration-color: rgba(212, 162, 89, 0.45);
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.notableNote {
+  font-family: var(--font-body);
+  color: var(--ink-faded);
+}
+
 .back {
   padding-top: 2rem;
   padding-bottom: 3rem;

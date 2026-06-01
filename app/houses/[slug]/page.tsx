@@ -86,6 +86,7 @@ export default async function HousePage({
   });
   const html = await renderMarkdown(house.body, { proseLinks });
   const tree = buildFamilyTree(slug, characters);
+  const notableMembers = house.frontmatter["notable-members"] ?? [];
 
   return (
     <ParchmentLayout>
@@ -111,13 +112,52 @@ export default async function HousePage({
             dangerouslySetInnerHTML={{ __html: html }}
           />
 
-          <section
-            className={styles.tree}
-            aria-labelledby="family-tree-heading"
-          >
-            <h2 id="family-tree-heading">Family Tree</h2>
-            <FamilyTree roots={tree} />
-          </section>
+          {notableMembers.length > 0 ? (
+            <section
+              className={styles.tree}
+              aria-labelledby="notable-members-heading"
+            >
+              <h2 id="notable-members-heading">Notable Members</h2>
+              <ul className={styles.notableList}>
+                {notableMembers.map((member) => {
+                  const character = member.slug
+                    ? charactersBySlug.get(member.slug)
+                    : undefined;
+                  const linkable = !!character && !character.placeholder;
+                  return (
+                    <li key={member.slug ?? member.name}>
+                      {linkable ? (
+                        <Link
+                          href={`/characters/${member.slug}/`}
+                          className={styles.notableName}
+                        >
+                          {member.name}
+                        </Link>
+                      ) : (
+                        <span className={styles.notableName}>
+                          {member.name}
+                        </span>
+                      )}
+                      {member.note && (
+                        <span className={styles.notableNote}>
+                          {" "}
+                          {member.note}
+                        </span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </section>
+          ) : (
+            <section
+              className={styles.tree}
+              aria-labelledby="family-tree-heading"
+            >
+              <h2 id="family-tree-heading">Family Tree</h2>
+              <FamilyTree roots={tree} />
+            </section>
+          )}
 
           <p className={styles.back}>
             <Link href="/houses/">← All Houses</Link>
