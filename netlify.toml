@@ -1,5 +1,17 @@
 [build]
-  command = "bun run prettier:check && bun run typecheck && bun run lint && bun run test && bun run build"
+  command = """
+  set -e
+  echo '💅 Prettier'
+  bun run prettier:check
+  echo '🔎 Typecheck'
+  bun run typecheck
+  echo '🧹 Lint'
+  bun run lint
+  echo '🧪 Test'
+  bun run test
+  echo '🏗️ Build'
+  bun run build
+  """
   publish = "out"
 
 [build.environment]
