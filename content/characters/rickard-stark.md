@@ -11,6 +11,9 @@ died:
   era: AC
   precision: year
 primary-house: stark
+parents:
+  - edwyle-stark
+  - marna-locke
 spouses:
   - lyarra-stark
 children:
