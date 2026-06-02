@@ -12,8 +12,8 @@ died:
   precision: year
 primary-house: lannister
 parents:
-  - unknown-father-of-joanna
-  - unknown-mother-of-joanna
+  - jason-lannister-son-of-gerold
+  - marla-prester
 spouses:
   - tywin-lannister
 children:
