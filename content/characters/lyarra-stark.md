@@ -11,6 +11,9 @@ died:
   era: AC
   precision: decade
 primary-house: stark
+parents:
+  - rodrik-the-wandering-wolf
+  - arya-flint
 spouses:
   - rickard-stark
 children:
@@ -25,4 +28,4 @@ sources:
 draft: false
 ---
 
-A daughter of the elder Stark line wed to her first cousin Rickard of Winterfell, mother of the four trueborn children who would scatter to the four winds: Brandon, Eddard, Lyanna, and Benjen. Died years before the rebellion that took her husband and eldest son; the year and cause are not given in any maester's chronicle.
+Daughter of Rodrik the Wandering Wolf and Arya Flint, and a first cousin once removed of her husband Lord Rickard Stark of Winterfell (Rickard's grandfather Willam and her own father Rodrik were brothers, both sons of Lord Beron). She bore Rickard four trueborn children who would scatter to the four winds: Brandon, Eddard, Lyanna, and Benjen. She died years before the rebellion that took her husband and eldest son; the year and cause are not given in any maester's chronicle.
