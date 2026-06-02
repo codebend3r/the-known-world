@@ -8,16 +8,16 @@ import { cx } from "@/lib/cx";
 import styles from "@/components/SiteMenu.module.scss";
 
 const ITEMS = [
-  { href: "/maps/", label: "Maps", icon: "/menu-icons/map.jpg" },
-  { href: "/timeline/", label: "Timeline", icon: "/menu-icons/timeline.jpg" },
-  { href: "/houses/", label: "Houses", icon: "/menu-icons/houses.jpg" },
+  { href: "/maps/", label: "Maps", icon: "/menu-icons/map.png" },
+  { href: "/timeline/", label: "Timeline", icon: "/menu-icons/timeline.png" },
+  { href: "/houses/", label: "Houses", icon: "/menu-icons/houses.png" },
   {
     href: "/characters/",
     label: "Characters",
-    icon: "/menu-icons/characters.jpg",
+    icon: "/menu-icons/characters.png",
   },
-  { href: "/weapons/", label: "Weapons", icon: "/menu-icons/weapons.jpg" },
-  { href: "/dragons/", label: "Dragons", icon: "/menu-icons/weapons.jpg" },
+  { href: "/weapons/", label: "Weapons", icon: "/menu-icons/weapons.png" },
+  { href: "/dragons/", label: "Dragons", icon: "/menu-icons/weapons.png" },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {
