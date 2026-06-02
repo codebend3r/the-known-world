@@ -13,7 +13,7 @@ died:
 primary-house: lannister
 parents:
   - gerold-lannister-the-golden
-  - unknown-mother-of-tytos
+  - rohanne-webber
 spouses:
   - jeyne-marbrand
 children:
