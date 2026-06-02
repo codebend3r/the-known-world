@@ -5,11 +5,17 @@ sex: m
 born: null
 died: null
 primary-house: lannister
+parents:
+  - damon-lannister-the-grey-lion
+  - cerissa-brax
 spouses:
-  - unknown-mother-of-tytos
+  - alysanne-farman
+  - rohanne-webber
 children:
+  - tywald-lannister
+  - tion-lannister-son-of-gerold
   - tytos-lannister
-  - unknown-father-of-joanna
+  - jason-lannister-son-of-gerold
 titles:
   - Lord of Casterly Rock
   - Shield of Lannisport
