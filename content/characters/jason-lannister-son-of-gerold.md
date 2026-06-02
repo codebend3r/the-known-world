@@ -22,6 +22,10 @@ children:
   - lynora-hill
   - stafford-lannister
   - joanna-lannister
+  - unknown-son-of-marla-prester-1
+  - unknown-son-of-marla-prester-2
+  - unknown-daughter-of-marla-prester-1
+  - unknown-daughter-of-marla-prester-2
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jason_Lannister_(son_of_Gerold)
