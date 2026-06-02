@@ -11,6 +11,24 @@ died:
   era: AC
   precision: year
 primary-house: stark
+parents:
+  - rickon-stark-son-of-benjen
+  - gilliane-glover
+spouses:
+  - arra-norrey
+  - alysanne-blackwood
+  - lynara-stark
+children:
+  - rickon-stark-son-of-cregan
+  - sarra-stark
+  - alys-stark-daughter-of-cregan
+  - raya-stark
+  - myriah-stark-daughter-of-cregan
+  - jonnel-stark
+  - edric-stark-son-of-cregan
+  - lyanna-stark-daughter-of-cregan
+  - barthogan-stark
+  - brandon-stark-son-of-cregan
 titles:
   - Lord of Winterfell
   - Warden of the North
