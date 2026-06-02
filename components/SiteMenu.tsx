@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState } from "react";
@@ -7,12 +8,16 @@ import { cx } from "@/lib/cx";
 import styles from "@/components/SiteMenu.module.scss";
 
 const ITEMS = [
-  { href: "/maps/", label: "Maps" },
-  { href: "/timeline/", label: "Timeline" },
-  { href: "/houses/", label: "Houses" },
-  { href: "/characters/", label: "Characters" },
-  { href: "/weapons/", label: "Weapons" },
-  { href: "/dragons/", label: "Dragons" },
+  { href: "/maps/", label: "Maps", icon: "/menu-icons/map.jpg" },
+  { href: "/timeline/", label: "Timeline", icon: "/menu-icons/timeline.jpg" },
+  { href: "/houses/", label: "Houses", icon: "/menu-icons/houses.jpg" },
+  {
+    href: "/characters/",
+    label: "Characters",
+    icon: "/menu-icons/characters.jpg",
+  },
+  { href: "/weapons/", label: "Weapons", icon: "/menu-icons/weapons.jpg" },
+  { href: "/dragons/", label: "Dragons", icon: "/menu-icons/weapons.jpg" },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {
@@ -124,7 +129,16 @@ export function SiteMenu() {
                     onClick={close}
                     tabIndex={isOpen ? 0 : -1}
                   >
-                    {item.label}
+                    <span className={styles.linkIcon} aria-hidden="true">
+                      <Image
+                        src={item.icon}
+                        alt=""
+                        width={48}
+                        height={48}
+                        sizes="48px"
+                      />
+                    </span>
+                    <span className={styles.linkLabel}>{item.label}</span>
                   </Link>
                 </li>
               );
