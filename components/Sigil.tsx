@@ -74,6 +74,14 @@ export const SIGIL_SLUGS = new Set([
   "fossoway-cider-hall",
   "fossoway-new-barrel",
   "duncan-the-tall",
+  "clegane",
+  "payne",
+  "tarbeck",
+  "dalt",
+  "harroway",
+  "lothston",
+  "mooton",
+  "poole",
   "unknown",
 ]);
 
