@@ -126,9 +126,13 @@ describe("FilteredCharacterList", () => {
     expect(aliases).toEqual(["(The Conqueror)", "(The Unworthy)"]);
   });
 
-  it("omits the alias span when no alias is set", () => {
+  it("renders an empty alias span when no alias is set", () => {
     const { container } = render(<FilteredCharacterList items={items} />);
-    expect(container.querySelector(".alias")).toBeNull();
+    const aliases = Array.from(container.querySelectorAll(".alias")).map(
+      (el) => el.textContent,
+    );
+    expect(aliases.length).toBeGreaterThan(0);
+    expect(aliases.every((text) => text === "")).toBe(true);
   });
 
   it("renders portrait, sigil, name, then alias in that order inside each card", () => {

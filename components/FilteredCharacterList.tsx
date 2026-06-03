@@ -227,6 +227,8 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
                 ? REGION_CARD_CLASS[item.region]
                 : undefined;
               const cardClass = cx(styles.card, regionClass);
+              const computedAlias = !!item.alias ? `(${item?.alias})` : "";
+
               return (
                 <li key={item.slug} className={styles.item}>
                   <Link
@@ -253,9 +255,7 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
                       />
                     </span>
                     <span className={styles.name}>{item.name}</span>
-                    {item.alias && (
-                      <span className={styles.alias}>({item.alias})</span>
-                    )}
+                    <span className={styles.alias}>{computedAlias}</span>
                   </Link>
                 </li>
               );
