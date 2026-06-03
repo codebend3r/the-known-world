@@ -83,6 +83,7 @@ export const SIGIL_SLUGS = new Set([
   "mooton",
   "poole",
   "fisher",
+  "gardener",
   "unknown",
 ]);
 
