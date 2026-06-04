@@ -8,6 +8,19 @@ import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import { ViewToggle, type ViewMode } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import {
+  DIR_PARAM,
+  DEFAULT_DIR,
+  MIN_PAGE_SIZE,
+  PAGE_SIZE_OPTIONS,
+  SEARCH_PARAM,
+  SIZE_PARAM,
+  getServerSnapshot,
+  parseUrlSearch,
+  readUrlSearch,
+  subscribeToUrlChange,
+  writeUrlParam,
+} from "@/lib/listUrlState";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredCharacterList.module.scss";
 
@@ -23,87 +36,11 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   crownlands: styles.cardCrownlands,
 };
 
-const SEARCH_PARAM = "search";
-const DIR_PARAM = "dir";
-const SIZE_PARAM = "size";
-// `history.replaceState` does not fire `popstate`, so writes to the URL would
-// be invisible to `useSyncExternalStore`. Dispatching this synthetic event
-// after every write keeps the snapshot in sync.
-const URL_CHANGE_EVENT = "tkw:urlchange";
 const VIEW_STORAGE_KEY = "gota:characters-view";
-const DEFAULT_DIR: SortDirection = "asc";
 const DEFAULT_PAGE_SIZE = 32;
-
-const PAGE_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
-  { value: 16, label: "16" },
-  { value: 32, label: "32" },
-  { value: 64, label: "64" },
-  { value: 128, label: "128" },
-];
-const PAGE_SIZE_VALUES = new Set(PAGE_SIZE_OPTIONS.map((o) => o.value));
-const MIN_PAGE_SIZE = 16;
 
 function isViewMode(value: unknown): value is ViewMode {
   return value === "grid" || value === "list";
-}
-
-function isSortDirection(value: unknown): value is SortDirection {
-  return value === "asc" || value === "desc";
-}
-
-function readUrlSearch(): string {
-  if (typeof window === "undefined") return "";
-  return window.location.search;
-}
-
-function getServerSnapshot(): string {
-  return "";
-}
-
-function subscribeToUrlChange(callback: () => void) {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener("popstate", callback);
-  window.addEventListener(URL_CHANGE_EVENT, callback);
-  return () => {
-    window.removeEventListener("popstate", callback);
-    window.removeEventListener(URL_CHANGE_EVENT, callback);
-  };
-}
-
-function parseUrlSearch(
-  searchString: string,
-  defaultSize: number,
-): { search: string; dir: SortDirection; size: number } {
-  const params = new URLSearchParams(searchString);
-  const dirRaw = params.get(DIR_PARAM);
-  const sizeRaw = Number(params.get(SIZE_PARAM));
-  return {
-    search: params.get(SEARCH_PARAM) ?? "",
-    dir: isSortDirection(dirRaw) ? dirRaw : DEFAULT_DIR,
-    size: PAGE_SIZE_VALUES.has(sizeRaw) ? sizeRaw : defaultSize,
-  };
-}
-
-function writeUrlParam({
-  name,
-  value,
-  defaultValue,
-}: {
-  name: string;
-  value: string;
-  defaultValue: string;
-}) {
-  if (typeof window === "undefined") return;
-  const params = new URLSearchParams(window.location.search);
-  if (!value || value === defaultValue) {
-    params.delete(name);
-  } else {
-    params.set(name, value);
-  }
-  const query = params.toString();
-  const next = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
-  window.history.replaceState(null, "", next);
-  window.dispatchEvent(new Event(URL_CHANGE_EVENT));
 }
 
 export type CharacterItem = {
