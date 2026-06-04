@@ -17,7 +17,7 @@ const ITEMS = [
     icon: "/menu-icons/characters.png",
   },
   { href: "/weapons/", label: "Weapons", icon: "/menu-icons/weapons.png" },
-  { href: "/dragons/", label: "Dragons", icon: "/menu-icons/weapons.png" },
+  { href: "/dragons/", label: "Dragons", icon: "/menu-icons/dragons.png" },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {
