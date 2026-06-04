@@ -180,7 +180,7 @@ export default async function CharacterPage({
           alt={`Portrait of ${fm.name}`}
           width={1200}
           height={1600}
-          sizes="(max-width: 768px) 100vw, 600px"
+          sizes="(max-width: 768px) 100vw, 1100px"
           priority
         />
       </div>
