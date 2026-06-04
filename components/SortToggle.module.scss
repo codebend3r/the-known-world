@@ -1,0 +1,44 @@
+.toggle {
+  display: flex;
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  overflow: hidden;
+  background: rgba(248, 236, 208, 0.55);
+}
+
+.button {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  justify-content: center;
+  color: var(--ink-faded);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+
+  & + & {
+    border-left: 1px solid rgba(107, 68, 35, 0.35);
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--gold-leaf);
+    outline: none;
+    background: rgba(248, 236, 208, 0.9);
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--ink);
+    background: rgba(212, 162, 89, 0.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}

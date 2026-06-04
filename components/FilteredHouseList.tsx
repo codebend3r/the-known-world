@@ -1,11 +1,28 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
+import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import { ViewToggle, type ViewMode } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import {
+  DIR_PARAM,
+  DEFAULT_DIR,
+  DEFAULT_PAGE,
+  MIN_PAGE_SIZE,
+  PAGE_PARAM,
+  PAGE_SIZE_OPTIONS,
+  SEARCH_PARAM,
+  SIZE_PARAM,
+  getServerSnapshot,
+  parseUrlSearch,
+  readUrlSearch,
+  subscribeToUrlChange,
+  writeUrlParam,
+  writeUrlParams,
+} from "@/lib/listUrlState";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList.module.scss";
 
@@ -18,9 +35,11 @@ export type HouseItem = {
 
 type Props = {
   items: HouseItem[];
+  pageSize?: number;
 };
 
 const VIEW_STORAGE_KEY = "gota:houses-view";
+const DEFAULT_PAGE_SIZE = 32;
 
 // Rough first-row count on a wide desktop grid (cards are min 12rem on a
 // `--bleed-width` track). Eagerly loading these covers the LCP candidate
@@ -43,9 +62,24 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   crownlands: styles.cardCrownlands,
 };
 
-export function FilteredHouseList({ items }: Props) {
-  const [value, setValue] = useState("");
-  const [debounced, setDebounced] = useState("");
+export function FilteredHouseList({
+  items,
+  pageSize = DEFAULT_PAGE_SIZE,
+}: Props) {
+  const urlSnapshot = useSyncExternalStore(
+    subscribeToUrlChange,
+    readUrlSearch,
+    getServerSnapshot,
+  );
+  const urlState = useMemo(
+    () => parseUrlSearch(urlSnapshot, pageSize),
+    [urlSnapshot, pageSize],
+  );
+
+  const [userValue, setUserValue] = useState<string | undefined>(undefined);
+  const [userDebounced, setUserDebounced] = useState<string | undefined>(
+    undefined,
+  );
   const [view, setView] = useState<ViewMode>("grid");
 
   useEffect(() => {
@@ -58,13 +92,6 @@ export function FilteredHouseList({ items }: Props) {
     if (isViewMode(stored)) setView(stored);
   }, []);
 
-  useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), 300);
-    return () => clearTimeout(t);
-  }, [value]);
-
-  const filtered = filterByName(items, debounced);
-
   const handleViewChange = (next: ViewMode) => {
     setView(next);
     if (typeof window !== "undefined") {
@@ -72,21 +99,130 @@ export function FilteredHouseList({ items }: Props) {
     }
   };
 
+  const value = userValue ?? urlState.search;
+  const debounced = userDebounced ?? urlState.search;
+  const dir = urlState.dir;
+  const size = urlState.size;
+  const page = urlState.page;
+
+  useEffect(() => {
+    if (userValue === undefined) return;
+    const t = setTimeout(() => setUserDebounced(userValue), 300);
+    return () => clearTimeout(t);
+  }, [userValue]);
+
+  useEffect(() => {
+    if (userDebounced === undefined) return;
+    writeUrlParams([
+      { name: SEARCH_PARAM, value: userDebounced, defaultValue: "" },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
+  }, [userDebounced]);
+
+  const sorted = useMemo(() => {
+    const arr = [...items].sort((a, b) => a.name.localeCompare(b.name));
+    return dir === "desc" ? arr.reverse() : arr;
+  }, [items, dir]);
+
+  const filtered = filterByName(sorted, debounced);
+  const totalPages = Math.max(1, Math.ceil(filtered.length / size));
+  const currentPage = Math.min(page, totalPages);
+  const pageStart = (currentPage - 1) * size;
+  const pageItems = filtered.slice(pageStart, pageStart + size);
+
+  const writePage = (next: number) => {
+    writeUrlParam({
+      name: PAGE_PARAM,
+      value: String(next),
+      defaultValue: String(DEFAULT_PAGE),
+    });
+  };
+
+  const handleSizeChange = (next: number) => {
+    writeUrlParams([
+      { name: SIZE_PARAM, value: String(next), defaultValue: String(pageSize) },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
+  };
+
+  const handleDirChange = (next: SortDirection) => {
+    writeUrlParams([
+      { name: DIR_PARAM, value: next, defaultValue: DEFAULT_DIR },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
+  };
+
+  const renderPagination = (position: "top" | "bottom") => (
+    <nav
+      className={cx(
+        listSearch.pagination,
+        position === "top"
+          ? listSearch.paginationTop
+          : listSearch.paginationBottom,
+      )}
+      aria-label={`House list pagination, ${position}`}
+    >
+      <button
+        type="button"
+        className={listSearch.button}
+        onClick={() => writePage(Math.max(1, currentPage - 1))}
+        disabled={currentPage === 1}
+        aria-label="Previous page"
+      >
+        ← Prev
+      </button>
+      <span
+        className={listSearch.status}
+        {...(position === "bottom" ? { "aria-live": "polite" as const } : {})}
+      >
+        Page {currentPage} of {totalPages}
+      </span>
+      <label className={listSearch.pageSize}>
+        Show{" "}
+        <select
+          className={listSearch.pageSizeSelect}
+          value={String(size)}
+          onChange={(e) => handleSizeChange(Number(e.target.value))}
+          aria-label="Houses per page"
+        >
+          {PAGE_SIZE_OPTIONS.map((opt) => (
+            <option key={opt.label} value={String(opt.value)}>
+              {opt.label}
+            </option>
+          ))}
+        </select>{" "}
+        per page
+      </label>
+      <button
+        type="button"
+        className={listSearch.button}
+        onClick={() => writePage(Math.min(totalPages, currentPage + 1))}
+        disabled={currentPage === totalPages}
+        aria-label="Next page"
+      >
+        Next →
+      </button>
+    </nav>
+  );
+
+  const showPagination = filtered.length > MIN_PAGE_SIZE;
+
   const listClass = cx(styles.list, view === "list" && styles.listView);
 
   return (
     <>
-      <div className={listSearch.row}>
+      <div className={listSearch.rowWithSort}>
         <input
           type="search"
           className={listSearch.input}
           placeholder="Search houses…"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setUserValue(e.target.value)}
           aria-label="Search houses"
           autoComplete="off"
           spellCheck={false}
         />
+        <SortToggle value={dir} onChange={handleDirChange} />
         <ViewToggle value={view} onChange={handleViewChange} />
       </div>
       {filtered.length === 0 ? (
@@ -94,32 +230,36 @@ export function FilteredHouseList({ items }: Props) {
           No houses match &ldquo;{debounced}&rdquo;.
         </p>
       ) : (
-        <ul className={listClass}>
-          {filtered.map((item, index) => {
-            const regionClass = item.region
-              ? REGION_CARD_CLASS[item.region]
-              : undefined;
-            const cardClass = cx(styles.card, regionClass);
-            return (
-              <li key={item.slug} className={styles.item}>
-                <Link href={`/houses/${item.slug}/`} className={cardClass}>
-                  <Sigil
-                    slug={item.slug}
-                    name={item.name}
-                    region={item.region}
-                    size={view === "list" ? "2rem" : "6rem"}
-                    decorative
-                    priority={index < PRIORITY_COUNT}
-                  />
-                  <span className={styles.name}>{item.name}</span>
-                  {view === "list" && item.regionLabel && (
-                    <span className={styles.region}>{item.regionLabel}</span>
-                  )}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+        <>
+          {showPagination && renderPagination("top")}
+          <ul className={listClass}>
+            {pageItems.map((item, index) => {
+              const regionClass = item.region
+                ? REGION_CARD_CLASS[item.region]
+                : undefined;
+              const cardClass = cx(styles.card, regionClass);
+              return (
+                <li key={item.slug} className={styles.item}>
+                  <Link href={`/houses/${item.slug}/`} className={cardClass}>
+                    <Sigil
+                      slug={item.slug}
+                      name={item.name}
+                      region={item.region}
+                      size={view === "list" ? "2rem" : "6rem"}
+                      decorative
+                      priority={index < PRIORITY_COUNT}
+                    />
+                    <span className={styles.name}>{item.name}</span>
+                    {view === "list" && item.regionLabel && (
+                      <span className={styles.region}>{item.regionLabel}</span>
+                    )}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          {showPagination && renderPagination("bottom")}
+        </>
       )}
     </>
   );

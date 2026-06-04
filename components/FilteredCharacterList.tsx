@@ -1,12 +1,29 @@
 "use client";
 
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
+import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import { ViewToggle, type ViewMode } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import {
+  DIR_PARAM,
+  DEFAULT_DIR,
+  DEFAULT_PAGE,
+  MIN_PAGE_SIZE,
+  PAGE_PARAM,
+  PAGE_SIZE_OPTIONS,
+  SEARCH_PARAM,
+  SIZE_PARAM,
+  getServerSnapshot,
+  parseUrlSearch,
+  readUrlSearch,
+  subscribeToUrlChange,
+  writeUrlParam,
+  writeUrlParams,
+} from "@/lib/listUrlState";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredCharacterList.module.scss";
 
@@ -22,39 +39,11 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   crownlands: styles.cardCrownlands,
 };
 
-const SEARCH_PARAM = "search";
 const VIEW_STORAGE_KEY = "gota:characters-view";
+const DEFAULT_PAGE_SIZE = 32;
 
 function isViewMode(value: unknown): value is ViewMode {
   return value === "grid" || value === "list";
-}
-
-function readSearchParam(): string {
-  if (typeof window === "undefined") return "";
-  return new URLSearchParams(window.location.search).get(SEARCH_PARAM) ?? "";
-}
-
-function writeSearchParam(value: string) {
-  if (typeof window === "undefined") return;
-  const params = new URLSearchParams(window.location.search);
-  if (value) {
-    params.set(SEARCH_PARAM, value);
-  } else {
-    params.delete(SEARCH_PARAM);
-  }
-  const query = params.toString();
-  const next = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
-  window.history.replaceState(null, "", next);
-}
-
-function subscribeToPopState(callback: () => void) {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener("popstate", callback);
-  return () => window.removeEventListener("popstate", callback);
-}
-
-function getServerSnapshot() {
-  return "";
 }
 
 export type CharacterItem = {
@@ -71,28 +60,24 @@ type Props = {
   pageSize?: number;
 };
 
-const PAGE_SIZE_OPTIONS: ReadonlyArray<{ value: number; label: string }> = [
-  { value: 16, label: "16" },
-  { value: 32, label: "32" },
-  { value: 64, label: "64" },
-  { value: 128, label: "128" },
-];
-
-const MIN_PAGE_SIZE = 16;
-
-export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
-  const urlSearch = useSyncExternalStore(
-    subscribeToPopState,
-    readSearchParam,
+export function FilteredCharacterList({
+  items,
+  pageSize = DEFAULT_PAGE_SIZE,
+}: Props) {
+  const urlSnapshot = useSyncExternalStore(
+    subscribeToUrlChange,
+    readUrlSearch,
     getServerSnapshot,
   );
+  const urlState = useMemo(
+    () => parseUrlSearch(urlSnapshot, pageSize),
+    [urlSnapshot, pageSize],
+  );
+
   const [userValue, setUserValue] = useState<string | undefined>(undefined);
   const [userDebounced, setUserDebounced] = useState<string | undefined>(
     undefined,
   );
-  const [page, setPage] = useState(1);
-  const [lastFilterKey, setLastFilterKey] = useState("");
-  const [size, setSize] = useState(pageSize);
   const [view, setView] = useState<ViewMode>("grid");
 
   useEffect(() => {
@@ -112,8 +97,11 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
     }
   };
 
-  const value = userValue ?? urlSearch;
-  const debounced = userDebounced ?? urlSearch;
+  const value = userValue ?? urlState.search;
+  const debounced = userDebounced ?? urlState.search;
+  const dir = urlState.dir;
+  const size = urlState.size;
+  const page = urlState.page;
 
   useEffect(() => {
     if (userValue === undefined) return;
@@ -123,23 +111,43 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
 
   useEffect(() => {
     if (userDebounced === undefined) return;
-    writeSearchParam(userDebounced);
+    writeUrlParams([
+      { name: SEARCH_PARAM, value: userDebounced, defaultValue: "" },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
   }, [userDebounced]);
 
-  if (debounced !== lastFilterKey) {
-    setLastFilterKey(debounced);
-    setPage(1);
-  }
+  const sorted = useMemo(() => {
+    const arr = [...items].sort((a, b) => a.name.localeCompare(b.name));
+    return dir === "desc" ? arr.reverse() : arr;
+  }, [items, dir]);
 
-  const filtered = filterByName(items, debounced);
+  const filtered = filterByName(sorted, debounced);
   const totalPages = Math.max(1, Math.ceil(filtered.length / size));
   const currentPage = Math.min(page, totalPages);
   const pageStart = (currentPage - 1) * size;
   const pageItems = filtered.slice(pageStart, pageStart + size);
 
+  const writePage = (next: number) => {
+    writeUrlParam({
+      name: PAGE_PARAM,
+      value: String(next),
+      defaultValue: String(DEFAULT_PAGE),
+    });
+  };
+
   const handleSizeChange = (next: number) => {
-    setSize(next);
-    setPage(1);
+    writeUrlParams([
+      { name: SIZE_PARAM, value: String(next), defaultValue: String(pageSize) },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
+  };
+
+  const handleDirChange = (next: SortDirection) => {
+    writeUrlParams([
+      { name: DIR_PARAM, value: next, defaultValue: DEFAULT_DIR },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
   };
 
   const renderPagination = (position: "top" | "bottom") => (
@@ -155,7 +163,7 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
       <button
         type="button"
         className={listSearch.button}
-        onClick={() => setPage((p) => Math.max(1, p - 1))}
+        onClick={() => writePage(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
         aria-label="Previous page"
       >
@@ -186,7 +194,7 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
       <button
         type="button"
         className={listSearch.button}
-        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+        onClick={() => writePage(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
         aria-label="Next page"
       >
@@ -201,7 +209,7 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
 
   return (
     <>
-      <div className={listSearch.row}>
+      <div className={listSearch.rowWithSort}>
         <input
           type="search"
           className={listSearch.input}
@@ -212,6 +220,7 @@ export function FilteredCharacterList({ items, pageSize = 32 }: Props) {
           autoComplete="off"
           spellCheck={false}
         />
+        <SortToggle value={dir} onChange={handleDirChange} />
         <ViewToggle value={view} onChange={handleViewChange} />
       </div>
       {filtered.length === 0 ? (
