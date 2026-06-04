@@ -13,6 +13,9 @@ died:
 primary-house: velaryon
 also-of-houses:
   - targaryen
+parents:
+  - aethan-velaryon
+  - alarra-massey
 spouses:
   - aenys-i-targaryen
 children:

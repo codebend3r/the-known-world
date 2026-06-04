@@ -13,6 +13,9 @@ died:
 primary-house: velaryon
 also-of-houses:
   - targaryen
+parents:
+  - daeron-velaryon
+  - hazel-harte
 spouses:
   - aegon-iii-targaryen
 children:

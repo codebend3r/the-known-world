@@ -13,6 +13,7 @@ died:
 primary-house: velaryon
 parents:
   - corlys-velaryon
+  - marilda
 titles:
   - Ser
   - Heir to Driftmark

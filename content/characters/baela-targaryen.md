@@ -14,6 +14,10 @@ primary-house: targaryen
 parents:
   - daemon-targaryen
   - laena-velaryon
+spouses:
+  - alyn-velaryon
+children:
+  - laena-velaryon-daughter-of-alyn
 titles:
   - Princess
   - Lady of Driftmark

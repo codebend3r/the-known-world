@@ -11,11 +11,15 @@ died:
   era: AC
   precision: year
 primary-house: velaryon
+parents:
+  - corwyn-velaryon
 spouses:
   - rhaenys-targaryen-queen-who-never-was
 children:
   - laena-velaryon
   - laenor-velaryon
+  - addam-velaryon
+  - alyn-velaryon
 titles:
   - Lord of the Tides
   - Master of Driftmark

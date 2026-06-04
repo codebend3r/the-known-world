@@ -14,6 +14,9 @@ status: extant
 sworn-from: []
 cadet-houses: []
 region: crownlands
+heads:
+  - name: "Lord Monterys Velaryon"
+    slug: monterys-velaryon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Velaryon
