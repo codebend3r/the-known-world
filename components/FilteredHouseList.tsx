@@ -10,7 +10,9 @@ import { cx } from "@/lib/cx";
 import {
   DIR_PARAM,
   DEFAULT_DIR,
+  DEFAULT_PAGE,
   MIN_PAGE_SIZE,
+  PAGE_PARAM,
   PAGE_SIZE_OPTIONS,
   SEARCH_PARAM,
   SIZE_PARAM,
@@ -19,6 +21,7 @@ import {
   readUrlSearch,
   subscribeToUrlChange,
   writeUrlParam,
+  writeUrlParams,
 } from "@/lib/listUrlState";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList.module.scss";
@@ -77,8 +80,6 @@ export function FilteredHouseList({
   const [userDebounced, setUserDebounced] = useState<string | undefined>(
     undefined,
   );
-  const [page, setPage] = useState(1);
-  const [lastResetKey, setLastResetKey] = useState("");
   const [view, setView] = useState<ViewMode>("grid");
 
   useEffect(() => {
@@ -102,6 +103,7 @@ export function FilteredHouseList({
   const debounced = userDebounced ?? urlState.search;
   const dir = urlState.dir;
   const size = urlState.size;
+  const page = urlState.page;
 
   useEffect(() => {
     if (userValue === undefined) return;
@@ -111,18 +113,11 @@ export function FilteredHouseList({
 
   useEffect(() => {
     if (userDebounced === undefined) return;
-    writeUrlParam({
-      name: SEARCH_PARAM,
-      value: userDebounced,
-      defaultValue: "",
-    });
+    writeUrlParams([
+      { name: SEARCH_PARAM, value: userDebounced, defaultValue: "" },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
   }, [userDebounced]);
-
-  const resetKey = `${debounced}|${dir}|${size}`;
-  if (resetKey !== lastResetKey) {
-    setLastResetKey(resetKey);
-    setPage(1);
-  }
 
   const sorted = useMemo(() => {
     const arr = [...items].sort((a, b) => a.name.localeCompare(b.name));
@@ -135,20 +130,26 @@ export function FilteredHouseList({
   const pageStart = (currentPage - 1) * size;
   const pageItems = filtered.slice(pageStart, pageStart + size);
 
-  const handleSizeChange = (next: number) => {
+  const writePage = (next: number) => {
     writeUrlParam({
-      name: SIZE_PARAM,
+      name: PAGE_PARAM,
       value: String(next),
-      defaultValue: String(pageSize),
+      defaultValue: String(DEFAULT_PAGE),
     });
   };
 
+  const handleSizeChange = (next: number) => {
+    writeUrlParams([
+      { name: SIZE_PARAM, value: String(next), defaultValue: String(pageSize) },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
+  };
+
   const handleDirChange = (next: SortDirection) => {
-    writeUrlParam({
-      name: DIR_PARAM,
-      value: next,
-      defaultValue: DEFAULT_DIR,
-    });
+    writeUrlParams([
+      { name: DIR_PARAM, value: next, defaultValue: DEFAULT_DIR },
+      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
+    ]);
   };
 
   const renderPagination = (position: "top" | "bottom") => (
@@ -164,7 +165,7 @@ export function FilteredHouseList({
       <button
         type="button"
         className={listSearch.button}
-        onClick={() => setPage((p) => Math.max(1, p - 1))}
+        onClick={() => writePage(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
         aria-label="Previous page"
       >
@@ -195,7 +196,7 @@ export function FilteredHouseList({
       <button
         type="button"
         className={listSearch.button}
-        onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+        onClick={() => writePage(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
         aria-label="Next page"
       >

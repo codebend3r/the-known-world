@@ -3,11 +3,13 @@ import type { SortDirection } from "@/components/SortToggle";
 export const SEARCH_PARAM = "search";
 export const DIR_PARAM = "dir";
 export const SIZE_PARAM = "size";
+export const PAGE_PARAM = "page";
 // `history.replaceState` does not fire `popstate`, so writes to the URL would
 // be invisible to `useSyncExternalStore`. Dispatching this synthetic event
 // after every write keeps the snapshot in sync.
 export const URL_CHANGE_EVENT = "tkw:urlchange";
 export const DEFAULT_DIR: SortDirection = "asc";
+export const DEFAULT_PAGE = 1;
 
 export const PAGE_SIZE_OPTIONS: ReadonlyArray<{
   value: number;
@@ -49,33 +51,39 @@ export function subscribeToUrlChange(callback: () => void) {
 export function parseUrlSearch(
   searchString: string,
   defaultSize: number,
-): { search: string; dir: SortDirection; size: number } {
+): { search: string; dir: SortDirection; size: number; page: number } {
   const params = new URLSearchParams(searchString);
   const dirRaw = params.get(DIR_PARAM);
   const sizeRaw = Number(params.get(SIZE_PARAM));
+  const pageRaw = Number(params.get(PAGE_PARAM));
   return {
     search: params.get(SEARCH_PARAM) ?? "",
     dir: isSortDirection(dirRaw) ? dirRaw : DEFAULT_DIR,
     size: PAGE_SIZE_VALUES.has(sizeRaw) ? sizeRaw : defaultSize,
+    page: Number.isInteger(pageRaw) && pageRaw >= 1 ? pageRaw : DEFAULT_PAGE,
   };
 }
 
-export function writeUrlParam({
-  name,
-  value,
-  defaultValue,
-}: {
+export type UrlParamUpdate = {
   name: string;
   value: string;
   defaultValue: string;
-}) {
+};
+
+export function writeUrlParam(update: UrlParamUpdate) {
+  writeUrlParams([update]);
+}
+
+export function writeUrlParams(updates: ReadonlyArray<UrlParamUpdate>) {
   if (typeof window === "undefined") return;
-  const params = new URLSearchParams(window.location.search);
-  if (!value || value === defaultValue) {
-    params.delete(name);
-  } else {
-    params.set(name, value);
-  }
+  const params = updates.reduce((acc, { name, value, defaultValue }) => {
+    if (!value || value === defaultValue) {
+      acc.delete(name);
+    } else {
+      acc.set(name, value);
+    }
+    return acc;
+  }, new URLSearchParams(window.location.search));
   const query = params.toString();
   const next = `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`;
   window.history.replaceState(null, "", next);

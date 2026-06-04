@@ -537,6 +537,84 @@ describe("FilteredCharacterList page size persistence", () => {
   });
 });
 
+describe("FilteredCharacterList page persistence", () => {
+  it("hydrates the current page from ?page=3 on mount", () => {
+    window.history.replaceState(null, "", "/characters/?page=3");
+    const { container } = render(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
+    expect(container.querySelectorAll(".item").length).toBe(11);
+    expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
+    const firstCardName = container.querySelector(".name")?.textContent;
+    expect(firstCardName).toBe("Char 064");
+  });
+
+  it("writes ?page=2 when Next is clicked from page 1", () => {
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    const [topNext] = screen.getAllByRole("button", { name: /next page/i });
+    fireEvent.click(topNext);
+    expect(window.location.search).toBe("?page=2");
+  });
+
+  it("removes ?page= when Prev returns to page 1", () => {
+    window.history.replaceState(null, "", "/characters/?page=2");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    const [topPrev] = screen.getAllByRole("button", { name: /previous page/i });
+    fireEvent.click(topPrev);
+    expect(window.location.search).toBe("");
+  });
+
+  it("resets ?page= when the search filter changes", () => {
+    window.history.replaceState(null, "", "/characters/?page=2");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "char" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(window.location.search).toBe("?search=char");
+  });
+
+  it("resets ?page= when the sort direction changes", () => {
+    window.history.replaceState(null, "", "/characters/?page=2");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
+    expect(window.location.search).toBe("?dir=desc");
+  });
+
+  it("resets ?page= when the page size changes", () => {
+    window.history.replaceState(null, "", "/characters/?page=2");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    const [topSelect] = screen.getAllByRole("combobox", {
+      name: /characters per page/i,
+    }) as HTMLSelectElement[];
+    fireEvent.change(topSelect, { target: { value: "64" } });
+    expect(window.location.search).toBe("?size=64");
+  });
+
+  it("ignores an invalid ?page= value and falls back to page 1", () => {
+    window.history.replaceState(null, "", "/characters/?page=abc");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    expect(screen.getAllByText(/Page 1 of 3/).length).toBe(2);
+  });
+
+  it("ignores a ?page= value below 1 and falls back to page 1", () => {
+    window.history.replaceState(null, "", "/characters/?page=0");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    expect(screen.getAllByText(/Page 1 of 3/).length).toBe(2);
+  });
+
+  it("preserves other query params and the hash when paginating", () => {
+    window.history.replaceState(null, "", "/characters/?dir=desc#top");
+    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    const [topNext] = screen.getAllByRole("button", { name: /next page/i });
+    fireEvent.click(topNext);
+    expect(window.location.search).toBe("?dir=desc&page=2");
+    expect(window.location.hash).toBe("#top");
+  });
+});
+
 describe("FilteredCharacterList view toggle", () => {
   it("starts in grid view by default", () => {
     const { container } = render(<FilteredCharacterList items={items} />);
