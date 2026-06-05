@@ -11,6 +11,8 @@ primary-house: baratheon
 parents:
   - rogar-baratheon
   - alyssa-velaryon
+children:
+  - borros-baratheon
 titles:
   - Lord of Storm's End
   - Lord Paramount of the Stormlands
