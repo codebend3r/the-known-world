@@ -9,7 +9,7 @@ died:
   precision: year
 primary-house: baratheon
 parents:
-  - unknown-baratheon-ancestors
+  - lyonel-baratheon
 spouses:
   - rhaelle-targaryen
 children:
