@@ -6,9 +6,8 @@ born: null
 died: null
 primary-house: baratheon
 parents:
-  - unknown-baratheon-ancestors
-children:
-  - jocelyn-baratheon
+  - rogar-baratheon
+  - alyssa-velaryon
 titles:
   - Lord of Storm's End
   - Lord Paramount of the Stormlands
