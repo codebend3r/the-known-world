@@ -11,6 +11,7 @@ primary-house: baratheon
 also-of-houses:
   - targaryen
 parents:
+  - rogar-baratheon
   - alyssa-velaryon
 spouses:
   - aemon-son-of-jaehaerys-i

@@ -18,6 +18,7 @@ parents:
   - alarra-massey
 spouses:
   - aenys-i-targaryen
+  - rogar-baratheon
 children:
   - rhaena-targaryen-daughter-of-aenys
   - aegon-the-uncrowned
@@ -25,6 +26,8 @@ children:
   - jaehaerys-i-targaryen
   - alysanne-targaryen
   - vaella-targaryen-daughter-of-aenys
+  - boremund-baratheon
+  - jocelyn-baratheon
 titles:
   - Queen of the Seven Kingdoms
   - Queen Regent

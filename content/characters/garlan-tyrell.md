@@ -11,8 +11,11 @@ primary-house: tyrell
 parents:
   - mace-tyrell
   - alerie-hightower
+spouses:
+  - leonette-fossoway
 titles:
   - Ser
+  - Lord of Brightwater Keep
 aliases:
   - The Gallant
 sources:

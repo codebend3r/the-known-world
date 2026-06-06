@@ -21,6 +21,7 @@ children:
   - myrcella-baratheon
   - tommen-baratheon
   - mya-stone
+  - bella
   - gendry
   - edric-storm
 titles:

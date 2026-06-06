@@ -10,6 +10,8 @@ died: null
 primary-house: lannister
 also-of-houses:
   - baratheon
+spouses:
+  - gowen-baratheon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tya_Lannister
