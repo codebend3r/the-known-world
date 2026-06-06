@@ -21,6 +21,7 @@ const LABEL_GAP = 8;
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 8;
 const WHEEL_SENSITIVITY = 0.0015;
+const PINCH_WHEEL_SENSITIVITY = 0.03;
 const BUTTON_STEP = 1.25;
 const PRESET_SCALES = [0.5, 1, 2, 4, 8] as const;
 const INITIAL_SCALE = 2; // the new "100%", the legible default
@@ -335,8 +336,11 @@ export function FamilyTreeChart({ chart }: Props) {
       e.preventDefault();
       const { point } = getScreenToViewBox(svg, bounds);
       const { x: viewBoxX, y: viewBoxY } = point(e.clientX, e.clientY);
+      const sensitivity = e.ctrlKey
+        ? PINCH_WHEEL_SENSITIVITY
+        : WHEEL_SENSITIVITY;
       setTransform((t) => {
-        const factor = 1 - e.deltaY * WHEEL_SENSITIVITY;
+        const factor = 1 - e.deltaY * sensitivity;
         const next = clampScale(t.scale * factor);
         if (next === t.scale) return t;
         return zoomAtPoint(t, next, viewBoxX, viewBoxY);

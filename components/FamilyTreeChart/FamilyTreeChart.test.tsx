@@ -253,6 +253,38 @@ describe("FamilyTreeChart — wheel zoom", () => {
       parseFloat(matchInitial![1]),
     );
   });
+
+  it("zooms much further for the same deltaY when ctrlKey is set (trackpad pinch)", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 100, y: 100 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const wheelOnly = render(<FamilyTreeChart chart={chart} />);
+    const svg1 = wheelOnly.container.querySelector("svg")!;
+    const inner1 = svg1.querySelector("g[data-pan-root]") as SVGGElement;
+    fireEvent.wheel(svg1, { deltaY: -10, clientX: 200, clientY: 150 });
+    const wheelScale = parseFloat(
+      inner1.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/)![1],
+    );
+    wheelOnly.unmount();
+
+    const pinch = render(<FamilyTreeChart chart={chart} />);
+    const svg2 = pinch.container.querySelector("svg")!;
+    const inner2 = svg2.querySelector("g[data-pan-root]") as SVGGElement;
+    fireEvent.wheel(svg2, {
+      deltaY: -10,
+      clientX: 200,
+      clientY: 150,
+      ctrlKey: true,
+    });
+    const pinchScale = parseFloat(
+      inner2.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/)![1],
+    );
+
+    expect(pinchScale).toBeGreaterThan(wheelScale);
+  });
 });
 
 describe("FamilyTreeChart — pinch zoom", () => {
