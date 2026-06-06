@@ -101,7 +101,7 @@ describe("layoutFamilyTree", () => {
     ]);
     const c1 = result.persons.find((p) => p.slug === "c1")!;
     const c2 = result.persons.find((p) => p.slug === "c2")!;
-    const s1 = result.persons.find((p) => p.slug === "s1")!;
+    const s1 = result.persons.find((p) => p.slug === "c1::spouse::0")!;
     expect(s1.x).toBe(c1.x + SPOUSE_GAP + DOT_R * 2);
     expect(c2.x - s1.x).toBe(DOT_R * 2 + H_SPACING);
   });
@@ -115,7 +115,7 @@ describe("layoutFamilyTree", () => {
       }),
     ]);
     const p = result.persons.find((x) => x.slug === "p")!;
-    const ps = result.persons.find((x) => x.slug === "ps")!;
+    const ps = result.persons.find((x) => x.slug === "p::spouse::0")!;
     expect(result.childEdges.length).toBeGreaterThan(0);
     const edge = result.childEdges[0];
     expect(edge.from.x).toBe((p.x + ps.x) / 2);
@@ -135,7 +135,7 @@ describe("layoutFamilyTree", () => {
     expect(result.persons.find((p) => p.slug === "ex")).toBeDefined();
   });
 
-  it("emits one spouseEdge per person-spouse pair", () => {
+  it("emits one spouseEdge per person-spouse pair with unique identifiers", () => {
     const result = layoutFamilyTree([
       node({
         slug: "p",
@@ -146,5 +146,13 @@ describe("layoutFamilyTree", () => {
       }),
     ]);
     expect(result.spouseEdges.length).toBe(2);
+    expect(result.spouseEdges.map((e) => e.spouseSlug)).toEqual([
+      "p::spouse::0",
+      "p::spouse::1",
+    ]);
+    const spouseSlugs = result.persons
+      .filter((p) => p.isSpouse)
+      .map((p) => p.slug);
+    expect(spouseSlugs).toEqual(["p::spouse::0", "p::spouse::1"]);
   });
 });

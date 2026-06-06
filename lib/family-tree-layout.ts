@@ -98,11 +98,12 @@ function placePerson(
 
 function placeSpouse(
   s: EnrichedTreeSpouse,
+  identifier: string,
   x: number,
   y: number,
 ): LayoutPerson {
   return {
-    slug: s.slug ?? `${s.name}-spouse`,
+    slug: identifier,
     name: s.name,
     alias: s.alias,
     sex: s.sex,
@@ -160,10 +161,11 @@ function placeSubtree(
 
   n.spouses.forEach((s, i) => {
     const sX = spousePosition(personX, i);
-    ctx.persons.push(placeSpouse(s, sX, y));
+    const identifier = `${n.slug}::spouse::${i}`;
+    ctx.persons.push(placeSpouse(s, identifier, sX, y));
     ctx.spouseEdges.push({
       personSlug: n.slug,
-      spouseSlug: s.slug ?? `${s.name}-spouse`,
+      spouseSlug: identifier,
     });
   });
 
