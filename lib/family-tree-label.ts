@@ -1,6 +1,7 @@
 const ROMAN_NUMERAL = /^[IVXLCDM]+$/;
-const LABEL_CHAR_WIDTH = 5.5;
-const LABEL_HORIZONTAL_PADDING = 6;
+export const LABEL_CHAR_WIDTH = 5.5;
+export const LABEL_HORIZONTAL_PADDING = 6;
+export const LABEL_FONT_SIZE = 9;
 
 export function wasKing(titles: ReadonlyArray<string>): boolean {
   return titles.some((t) => t.startsWith("King "));
