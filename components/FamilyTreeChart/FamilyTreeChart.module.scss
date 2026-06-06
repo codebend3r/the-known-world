@@ -1,0 +1,142 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: clamp(500px, 75vh, 900px);
+  overflow: hidden;
+  border: 1px solid rgba(107, 68, 35, 0.25);
+  border-radius: 2px;
+  background: rgba(248, 236, 208, 0.45);
+  touch-action: none;
+  user-select: none;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+
+  &.dragging {
+    cursor: grabbing;
+  }
+}
+
+.dot {
+  fill: rgba(248, 236, 208, 0.85);
+  stroke: rgba(107, 68, 35, 0.6);
+  stroke-width: 1.5;
+}
+
+.dotPlaceholder {
+  stroke-dasharray: 3 2;
+  opacity: 0.7;
+}
+
+.dotExternal {
+  opacity: 0.55;
+}
+
+.label {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  fill: var(--ink-faded);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.labelBg {
+  fill: #f8ecd0;
+  pointer-events: none;
+}
+
+.cross {
+  font-family: var(--font-body);
+  font-size: 10px;
+  fill: var(--gold-leaf);
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+.edge {
+  stroke: rgba(107, 68, 35, 0.5);
+  stroke-width: 1;
+  fill: none;
+}
+
+.empty {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-style: italic;
+  color: var(--ink-faded);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.controls {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.4rem;
+  background: rgba(248, 236, 208, 0.92);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  font-family: var(--font-ui);
+  z-index: 1;
+}
+
+.controlRow {
+  display: flex;
+  gap: 0.2rem;
+  justify-content: center;
+}
+
+.controlButton {
+  appearance: none;
+  background: transparent;
+  border: 1px solid rgba(107, 68, 35, 0.25);
+  border-radius: 2px;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.4rem;
+  min-width: 1.5rem;
+  color: var(--ink-faded);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--gold-leaf);
+    background: rgba(212, 162, 89, 0.18);
+    outline: none;
+  }
+
+  &[aria-pressed="true"] {
+    color: var(--ink);
+    background: rgba(212, 162, 89, 0.28);
+    border-color: rgba(212, 162, 89, 0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.controlReset {
+  width: 100%;
+}
+
+.containerFullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  border: 0;
+  border-radius: 0;
+  background: rgb(248, 236, 208);
+}

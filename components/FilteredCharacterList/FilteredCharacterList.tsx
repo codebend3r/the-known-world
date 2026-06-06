@@ -5,7 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
-import { ViewToggle, type ViewMode } from "@/components/ViewToggle";
+import {
+  ViewToggle,
+  GridIcon,
+  ListIcon,
+  type ViewMode,
+} from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import {
@@ -38,6 +43,11 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
 };
+
+const VIEW_OPTIONS = [
+  { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },
+  { value: "list" as const, label: "List view", icon: <ListIcon /> },
+];
 
 const VIEW_STORAGE_KEY = "gota:characters-view";
 const DEFAULT_PAGE_SIZE = 32;
@@ -221,7 +231,11 @@ export function FilteredCharacterList({
           spellCheck={false}
         />
         <SortToggle value={dir} onChange={handleDirChange} />
-        <ViewToggle value={view} onChange={handleViewChange} />
+        <ViewToggle
+          options={VIEW_OPTIONS}
+          value={view}
+          onChange={handleViewChange}
+        />
       </div>
       {filtered.length === 0 ? (
         <p className={listSearch.empty}>

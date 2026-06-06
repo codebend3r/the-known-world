@@ -1,71 +1,46 @@
 "use client";
 
+import type { ReactNode } from "react";
 import styles from "@/components/ViewToggle/ViewToggle.module.scss";
 
 export type ViewMode = "grid" | "list";
 
-type Props = {
-  value: ViewMode;
-  onChange: (value: ViewMode) => void;
+type Option<T extends string> = {
+  value: T;
+  label: string;
+  icon: ReactNode;
 };
 
-export function ViewToggle({ value, onChange }: Props) {
-  const handleSelect = (next: ViewMode) => {
+type Props<T extends string> = {
+  options: Option<T>[];
+  value: T;
+  onChange: (next: T) => void;
+  ariaLabel?: string;
+};
+
+export function ViewToggle<T extends string>({
+  options,
+  value,
+  onChange,
+  ariaLabel = "View",
+}: Props<T>) {
+  const handleSelect = (next: T) => {
     if (next !== value) onChange(next);
   };
   return (
-    <div className={styles.toggle} role="group" aria-label="View">
-      <button
-        type="button"
-        className={styles.button}
-        aria-label="Grid view"
-        aria-pressed={value === "grid"}
-        onClick={() => handleSelect("grid")}
-      >
-        <GridIcon />
-      </button>
-      <button
-        type="button"
-        className={styles.button}
-        aria-label="List view"
-        aria-pressed={value === "list"}
-        onClick={() => handleSelect("list")}
-      >
-        <ListIcon />
-      </button>
+    <div className={styles.toggle} role="group" aria-label={ariaLabel}>
+      {options.map((option) => (
+        <button
+          key={option.value}
+          type="button"
+          className={styles.button}
+          aria-label={option.label}
+          aria-pressed={value === option.value}
+          onClick={() => handleSelect(option.value)}
+        >
+          {option.icon}
+        </button>
+      ))}
     </div>
-  );
-}
-
-function GridIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <rect x="1" y="1" width="6" height="6" fill="currentColor" />
-      <rect x="9" y="1" width="6" height="6" fill="currentColor" />
-      <rect x="1" y="9" width="6" height="6" fill="currentColor" />
-      <rect x="9" y="9" width="6" height="6" fill="currentColor" />
-    </svg>
-  );
-}
-
-function ListIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <rect x="1" y="2" width="14" height="2" fill="currentColor" />
-      <rect x="1" y="7" width="14" height="2" fill="currentColor" />
-      <rect x="1" y="12" width="14" height="2" fill="currentColor" />
-    </svg>
   );
 }

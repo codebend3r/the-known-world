@@ -11,7 +11,10 @@ import {
 } from "@/lib/content";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
-import { FamilyTree } from "@/components/FamilyTree";
+import { FamilyTreeViews } from "@/components/FamilyTreeViews";
+import { enrichTreeWithPortraits } from "@/lib/family-tree-portraits";
+import { layoutFamilyTree } from "@/lib/family-tree-layout";
+import { findPortrait } from "@/lib/portraits";
 import { HouseInfobox } from "@/components/HouseInfobox";
 import { buildFamilyTree } from "@/lib/family-tree";
 import { buildProseLinkIndex } from "@/lib/prose-links";
@@ -86,6 +89,8 @@ export default async function HousePage({
   });
   const html = await renderMarkdown(house.body, { proseLinks });
   const tree = buildFamilyTree(slug, characters);
+  const enriched = await enrichTreeWithPortraits(tree, findPortrait);
+  const chart = layoutFamilyTree(enriched);
   const notableMembers = house.frontmatter["notable-members"] ?? [];
 
   return (
@@ -154,8 +159,11 @@ export default async function HousePage({
               className={styles.tree}
               aria-labelledby="family-tree-heading"
             >
-              <h2 id="family-tree-heading">Family Tree</h2>
-              <FamilyTree roots={tree} />
+              <FamilyTreeViews
+                headingId="family-tree-heading"
+                roots={tree}
+                chart={chart}
+              />
             </section>
           )}
 
