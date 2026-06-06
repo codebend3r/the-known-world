@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
 
@@ -186,30 +186,9 @@ describe("FamilyTreeChart — pan", () => {
     const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
     const before = inner.getAttribute("transform") ?? "";
 
-    svg.dispatchEvent(
-      new PointerEvent("pointerdown", {
-        pointerId: 1,
-        clientX: 50,
-        clientY: 50,
-        bubbles: true,
-      }),
-    );
-    svg.dispatchEvent(
-      new PointerEvent("pointermove", {
-        pointerId: 1,
-        clientX: 130,
-        clientY: 90,
-        bubbles: true,
-      }),
-    );
-    svg.dispatchEvent(
-      new PointerEvent("pointerup", {
-        pointerId: 1,
-        clientX: 130,
-        clientY: 90,
-        bubbles: true,
-      }),
-    );
+    fireEvent.pointerDown(svg, { pointerId: 1, clientX: 50, clientY: 50 });
+    fireEvent.pointerMove(svg, { pointerId: 1, clientX: 130, clientY: 90 });
+    fireEvent.pointerUp(svg, { pointerId: 1, clientX: 130, clientY: 90 });
 
     const after = inner.getAttribute("transform") ?? "";
     expect(after).not.toBe(before);

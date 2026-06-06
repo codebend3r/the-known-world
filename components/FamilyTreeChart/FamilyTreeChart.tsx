@@ -50,18 +50,17 @@ type DragState = {
   startTy: number;
 };
 
-function formatTransform(t: Transform): string {
-  return `translate(${t.tx} ${t.ty}) scale(${t.scale})`;
-}
-
 type Props = {
   chart: LaidOutChart;
 };
 
 export function FamilyTreeChart({ chart }: Props) {
   const clipPrefix = useId();
-  const transformRef = useRef<Transform>({ scale: 1, tx: 0, ty: 0 });
-  const panRootRef = useRef<SVGGElement | null>(null);
+  const [transform, setTransform] = useState<Transform>({
+    scale: 1,
+    tx: 0,
+    ty: 0,
+  });
   const dragRef = useRef<DragState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -77,11 +76,6 @@ export function FamilyTreeChart({ chart }: Props) {
 
   const { bounds } = chart;
 
-  const applyTransform = (next: Transform) => {
-    transformRef.current = next;
-    panRootRef.current?.setAttribute("transform", formatTransform(next));
-  };
-
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
     (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
@@ -89,8 +83,8 @@ export function FamilyTreeChart({ chart }: Props) {
       pointerId: e.pointerId,
       startClientX: e.clientX,
       startClientY: e.clientY,
-      startTx: transformRef.current.tx,
-      startTy: transformRef.current.ty,
+      startTx: transform.tx,
+      startTy: transform.ty,
     };
     setIsDragging(true);
   };
@@ -98,11 +92,11 @@ export function FamilyTreeChart({ chart }: Props) {
   const onPointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
     const d = dragRef.current;
     if (!d || d.pointerId !== e.pointerId) return;
-    applyTransform({
-      ...transformRef.current,
+    setTransform((t) => ({
+      ...t,
       tx: d.startTx + (e.clientX - d.startClientX),
       ty: d.startTy + (e.clientY - d.startClientY),
-    });
+    }));
   };
 
   const endDrag = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -137,7 +131,10 @@ export function FamilyTreeChart({ chart }: Props) {
               </clipPath>
             ))}
         </defs>
-        <g ref={panRootRef} data-pan-root transform="translate(0 0) scale(1)">
+        <g
+          data-pan-root
+          transform={`translate(${transform.tx} ${transform.ty}) scale(${transform.scale})`}
+        >
           {chart.childEdges.map((edge, i) => (
             <path
               key={`edge-${i}`}
