@@ -198,10 +198,53 @@ describe("FamilyTreeChart — rendering", () => {
         person({ slug: "p", name: "Person", x: 50 }),
         person({ slug: "sp", name: "Spouse", isSpouse: true, x: 100 }),
       ],
-      spouseEdges: [{ personSlug: "p", spouseSlug: "sp" }],
+      spouseEdges: [{ personSlug: "p", spouseSlug: "sp", midX: 75, midY: 50 }],
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     expect(container.querySelectorAll("text[data-cross]").length).toBe(1);
+  });
+
+  it("renders one ⚭ glyph per spouseEdge at the precomputed midpoints", () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({ slug: "viserys", name: "Viserys", x: 100 }),
+        person({
+          slug: "viserys::spouse::0",
+          characterSlug: "aemma",
+          name: "Aemma",
+          isSpouse: true,
+          x: 200,
+        }),
+        person({
+          slug: "viserys::spouse::1",
+          characterSlug: "alicent",
+          name: "Alicent",
+          isSpouse: true,
+          x: 300,
+        }),
+      ],
+      spouseEdges: [
+        {
+          personSlug: "viserys",
+          spouseSlug: "viserys::spouse::0",
+          midX: 150,
+          midY: 50,
+        },
+        {
+          personSlug: "viserys",
+          spouseSlug: "viserys::spouse::1",
+          midX: 250,
+          midY: 50,
+        },
+      ],
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const crosses = container.querySelectorAll("text[data-cross]");
+    expect(crosses.length).toBe(2);
+    const xs = Array.from(crosses).map((t) => t.getAttribute("x"));
+    expect(xs).toContain("150");
+    expect(xs).toContain("250");
   });
 
   it("links an external spouse using their characterSlug", () => {

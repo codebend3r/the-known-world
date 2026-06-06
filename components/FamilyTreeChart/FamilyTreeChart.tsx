@@ -228,14 +228,6 @@ export function FamilyTreeChart({ chart }: Props) {
 
   const { bounds } = chart;
 
-  const personMap = useMemo(() => {
-    const map = new Map<string, LayoutPerson>();
-    chart.persons.forEach((p) => {
-      map.set(`${p.slug}-${p.isSpouse ? "s" : "n"}`, p);
-    });
-    return map;
-  }, [chart.persons]);
-
   const clipPathsMemo = useMemo(
     () =>
       chart.persons
@@ -262,23 +254,17 @@ export function FamilyTreeChart({ chart }: Props) {
             d={childPath(edge)}
           />
         ))}
-        {chart.spouseEdges.map((edge, i) => {
-          const personA = personMap.get(`${edge.personSlug}-n`);
-          const personB = personMap.get(`${edge.spouseSlug}-s`);
-          if (!personA || !personB) return null;
-          const midX = (personA.x + personB.x) / 2;
-          return (
-            <text
-              key={`cross-${i}`}
-              data-cross
-              className={styles.cross}
-              x={midX}
-              y={personA.y + 3}
-            >
-              ⚭
-            </text>
-          );
-        })}
+        {chart.spouseEdges.map((edge, i) => (
+          <text
+            key={`cross-${i}`}
+            data-cross
+            className={styles.cross}
+            x={edge.midX}
+            y={edge.midY + 3}
+          >
+            ⚭
+          </text>
+        ))}
         {chart.persons.map((p) => {
           const dotEl = (
             <>
@@ -328,7 +314,7 @@ export function FamilyTreeChart({ chart }: Props) {
         })}
       </>
     ),
-    [chart, clipPrefix, personMap],
+    [chart, clipPrefix],
   );
 
   useEffect(() => {

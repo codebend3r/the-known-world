@@ -42,6 +42,10 @@
   fill: var(--ink-faded);
   text-anchor: middle;
   pointer-events: none;
+  paint-order: stroke fill;
+  stroke: #f8ecd0;
+  stroke-width: 4;
+  stroke-linejoin: round;
 }
 
 .cross {

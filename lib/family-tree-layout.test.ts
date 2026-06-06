@@ -176,4 +176,28 @@ describe("layoutFamilyTree", () => {
     const phantom = result.persons.find((p) => p.slug === "phantom");
     expect(phantom!.characterSlug).toBeNull();
   });
+
+  it("computes spouse-edge midpoints between adjacent dots, not always from the person", () => {
+    const result = layoutFamilyTree([
+      node({
+        slug: "viserys",
+        spouses: [
+          spouse({ slug: "aemma", name: "Aemma", inHouse: false }),
+          spouse({ slug: "alicent", name: "Alicent", inHouse: false }),
+        ],
+      }),
+    ]);
+    const viserys = result.persons.find(
+      (p) => p.slug === "viserys" && !p.isSpouse,
+    )!;
+    const aemma = result.persons.find((p) => p.slug === "viserys::spouse::0")!;
+    const alicent = result.persons.find(
+      (p) => p.slug === "viserys::spouse::1",
+    )!;
+    expect(result.spouseEdges).toHaveLength(2);
+    expect(result.spouseEdges[0].midX).toBe((viserys.x + aemma.x) / 2);
+    expect(result.spouseEdges[1].midX).toBe((aemma.x + alicent.x) / 2);
+    expect(result.spouseEdges[0].midY).toBe(viserys.y);
+    expect(result.spouseEdges[1].midY).toBe(viserys.y);
+  });
 });

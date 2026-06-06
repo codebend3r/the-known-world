@@ -33,6 +33,8 @@ export interface LayoutPerson {
 export interface LayoutSpouseEdge {
   personSlug: string;
   spouseSlug: string;
+  midX: number;
+  midY: number;
 }
 
 export interface LayoutChildEdge {
@@ -166,9 +168,12 @@ function placeSubtree(
     const sX = spousePosition(personX, i);
     const identifier = `${n.slug}::spouse::${i}`;
     ctx.persons.push(placeSpouse(s, identifier, sX, y));
+    const leftX = i === 0 ? personX : spousePosition(personX, i - 1);
     ctx.spouseEdges.push({
       personSlug: n.slug,
       spouseSlug: identifier,
+      midX: (leftX + sX) / 2,
+      midY: y,
     });
   });
 
