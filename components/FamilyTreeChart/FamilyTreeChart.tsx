@@ -3,6 +3,7 @@
 import {
   useEffect,
   useId,
+  useMemo,
   useRef,
   useState,
   useSyncExternalStore,
@@ -24,6 +25,21 @@ const BUTTON_STEP = 1.25;
 const PRESET_SCALES = [0.25, 0.5, 1, 2] as const;
 const SCALE_EPSILON = 0.001;
 const ANIM_MS = 200;
+
+// Width matches DOT_R * 2 * devicePixelRatio for retina (~56 css px -> request 96 source px).
+// Netlify image CDN serves resized/compressed copies of the originals in `/public/characters/*`.
+const PORTRAIT_SOURCE_WIDTH = 96;
+const PORTRAIT_QUALITY = 75;
+
+function optimizedPortrait(path: string): string {
+  if (process.env.NODE_ENV !== "production") return path;
+  const params = new URLSearchParams({
+    url: path,
+    w: String(PORTRAIT_SOURCE_WIDTH),
+    q: String(PORTRAIT_QUALITY),
+  });
+  return `/.netlify/images?${params.toString()}`;
+}
 
 function formatLabel(name: string): string {
   const parts = name.trim().split(/\s+/);
@@ -149,6 +165,109 @@ export function FamilyTreeChart({ chart }: Props) {
   );
 
   const { bounds } = chart;
+
+  const personMap = useMemo(() => {
+    const map = new Map<string, LayoutPerson>();
+    chart.persons.forEach((p) => {
+      map.set(`${p.slug}-${p.isSpouse ? "s" : "n"}`, p);
+    });
+    return map;
+  }, [chart.persons]);
+
+  const clipPathsMemo = useMemo(
+    () =>
+      chart.persons
+        .filter((p) => p.portrait !== null)
+        .map((p) => (
+          <clipPath
+            id={`${clipPrefix}-clip-${p.slug}`}
+            key={`${clipPrefix}-clip-${p.slug}`}
+          >
+            <circle cx={p.x} cy={p.y} r={DOT_R - 1} />
+          </clipPath>
+        )),
+    [chart.persons, clipPrefix],
+  );
+
+  const bodyMemo = useMemo(
+    () => (
+      <>
+        {chart.childEdges.map((edge, i) => (
+          <path
+            key={`edge-${i}`}
+            data-child-edge
+            className={styles.edge}
+            d={childPath(edge)}
+          />
+        ))}
+        {chart.spouseEdges.map((edge, i) => {
+          const personA = personMap.get(`${edge.personSlug}-n`);
+          const personB = personMap.get(`${edge.spouseSlug}-s`);
+          if (!personA || !personB) return null;
+          const midX = (personA.x + personB.x) / 2;
+          return (
+            <text
+              key={`cross-${i}`}
+              data-cross
+              className={styles.cross}
+              x={midX}
+              y={personA.y + 3}
+            >
+              ⚭
+            </text>
+          );
+        })}
+        {chart.persons.map((p) => {
+          const dotEl = (
+            <>
+              <circle
+                data-person
+                cx={p.x}
+                cy={p.y}
+                r={DOT_R}
+                className={dotClassName(p)}
+              />
+              {p.portrait !== null && (
+                <image
+                  href={optimizedPortrait(p.portrait)}
+                  x={p.x - DOT_R}
+                  y={p.y - DOT_R}
+                  width={DOT_R * 2}
+                  height={DOT_R * 2}
+                  preserveAspectRatio="xMidYMid slice"
+                  clipPath={`url(#${clipPrefix}-clip-${p.slug})`}
+                />
+              )}
+            </>
+          );
+          const label = (
+            <text className={styles.label} x={p.x} y={p.y - DOT_R - LABEL_GAP}>
+              {formatLabel(p.name)}
+            </text>
+          );
+          const title = <title>{formatTitle(p)}</title>;
+          const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
+          if (isLinkable(p)) {
+            return (
+              <a key={key} href={`/characters/${p.slug}/`}>
+                {title}
+                {dotEl}
+                {label}
+              </a>
+            );
+          }
+          return (
+            <g key={key}>
+              {title}
+              {dotEl}
+              {label}
+            </g>
+          );
+        })}
+      </>
+    ),
+    [chart, clipPrefix, personMap],
+  );
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -327,102 +446,12 @@ export function FamilyTreeChart({ chart }: Props) {
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
       >
-        <defs>
-          {chart.persons
-            .filter((p) => p.portrait !== null)
-            .map((p) => (
-              <clipPath
-                id={`${clipPrefix}-clip-${p.slug}`}
-                key={`${clipPrefix}-clip-${p.slug}`}
-              >
-                <circle cx={p.x} cy={p.y} r={DOT_R - 1} />
-              </clipPath>
-            ))}
-        </defs>
+        <defs>{clipPathsMemo}</defs>
         <g
           data-pan-root
           transform={`translate(${transform.tx} ${transform.ty}) scale(${transform.scale})`}
         >
-          {chart.childEdges.map((edge, i) => (
-            <path
-              key={`edge-${i}`}
-              data-child-edge
-              className={styles.edge}
-              d={childPath(edge)}
-            />
-          ))}
-          {chart.spouseEdges.map((edge, i) => {
-            const personA = chart.persons.find(
-              (p) => p.slug === edge.personSlug && !p.isSpouse,
-            );
-            const personB = chart.persons.find(
-              (p) => p.slug === edge.spouseSlug && p.isSpouse,
-            );
-            if (!personA || !personB) return null;
-            const midX = (personA.x + personB.x) / 2;
-            return (
-              <text
-                key={`cross-${i}`}
-                data-cross
-                className={styles.cross}
-                x={midX}
-                y={personA.y + 3}
-              >
-                ⚭
-              </text>
-            );
-          })}
-          {chart.persons.map((p) => {
-            const dotEl = (
-              <>
-                <circle
-                  data-person
-                  cx={p.x}
-                  cy={p.y}
-                  r={DOT_R}
-                  className={dotClassName(p)}
-                />
-                {p.portrait !== null && (
-                  <image
-                    href={p.portrait}
-                    x={p.x - DOT_R}
-                    y={p.y - DOT_R}
-                    width={DOT_R * 2}
-                    height={DOT_R * 2}
-                    preserveAspectRatio="xMidYMid slice"
-                    clipPath={`url(#${clipPrefix}-clip-${p.slug})`}
-                  />
-                )}
-              </>
-            );
-            const label = (
-              <text
-                className={styles.label}
-                x={p.x}
-                y={p.y - DOT_R - LABEL_GAP}
-              >
-                {formatLabel(p.name)}
-              </text>
-            );
-            const title = <title>{formatTitle(p)}</title>;
-            const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
-            if (isLinkable(p)) {
-              return (
-                <a key={key} href={`/characters/${p.slug}/`}>
-                  {title}
-                  {dotEl}
-                  {label}
-                </a>
-              );
-            }
-            return (
-              <g key={key}>
-                {title}
-                {dotEl}
-                {label}
-              </g>
-            );
-          })}
+          {bodyMemo}
         </g>
       </svg>
       <div className={styles.controls} role="group" aria-label="Chart controls">
