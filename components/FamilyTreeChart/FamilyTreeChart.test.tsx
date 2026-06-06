@@ -301,7 +301,7 @@ describe("FamilyTreeChart — rendering", () => {
     expect(container.querySelector("a[href]")).toBeNull();
   });
 
-  it("renders a #f8ecd0 <rect data-label-bg> after the <text> for each label", () => {
+  it("renders a #f8ecd0 <rect data-label-bg> before the <text> so SVG paint order puts it behind", () => {
     const chart: LaidOutChart = {
       ...EMPTY,
       persons: [person({ slug: "ned", name: "Eddard Stark" })],
@@ -311,11 +311,10 @@ describe("FamilyTreeChart — rendering", () => {
     expect(rect).not.toBeNull();
     expect(rect!.getAttribute("width")).toMatch(/^\d+$/);
     expect(rect!.getAttribute("height")).toMatch(/^\d+$/);
-    // rect comes AFTER its sibling text element in DOM order
     const text = container.querySelector("text:not([data-cross])");
     const parent = rect!.parentNode!;
     const children = Array.from(parent.childNodes);
-    expect(children.indexOf(rect!)).toBeGreaterThan(children.indexOf(text!));
+    expect(children.indexOf(rect!)).toBeLessThan(children.indexOf(text!));
   });
 });
 

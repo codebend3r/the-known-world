@@ -308,8 +308,8 @@ export function FamilyTreeChart({ chart }: Props) {
               <a key={key} href={`/characters/${p.characterSlug}/`}>
                 {title}
                 {dotEl}
-                {label}
                 {labelBg}
+                {label}
               </a>
             );
           }
@@ -317,8 +317,8 @@ export function FamilyTreeChart({ chart }: Props) {
             <g key={key}>
               {title}
               {dotEl}
-              {label}
               {labelBg}
+              {label}
             </g>
           );
         })}
