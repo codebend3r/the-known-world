@@ -10,6 +10,7 @@ parents:
   - argella-durrandon
 children:
   - rogar-baratheon
+  - borys-baratheon
 titles:
   - Lord of Storm's End
   - Lord Paramount of the Stormlands
