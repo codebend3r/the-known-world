@@ -1,7 +1,23 @@
-import { describe, it, expect } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, it, expect, afterEach, vi } from "vitest";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
+
+function mockMatchMedia(matches: boolean) {
+  vi.stubGlobal(
+    "matchMedia",
+    vi.fn().mockImplementation((query: string) => ({
+      matches,
+      media: query,
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      addListener: () => {},
+      removeListener: () => {},
+      onchange: null,
+      dispatchEvent: () => false,
+    })),
+  );
+}
 
 function person(overrides: Partial<LayoutPerson> = {}): LayoutPerson {
   const slug = overrides.slug ?? "p";
@@ -446,7 +462,7 @@ describe("FamilyTreeChart — pinch zoom", () => {
 });
 
 describe("FamilyTreeChart — control panel", () => {
-  it("renders zoom in, zoom out, five presets, and reset buttons", () => {
+  it("renders zoom in, zoom out, six presets, and reset buttons", () => {
     const chart: LaidOutChart = {
       persons: [person({ slug: "a", x: 50, y: 50 })],
       spouseEdges: [],
@@ -461,6 +477,7 @@ describe("FamilyTreeChart — control panel", () => {
     expect(screen.getByRole("button", { name: /100%/ })).toBeDefined();
     expect(screen.getByRole("button", { name: /200%/ })).toBeDefined();
     expect(screen.getByRole("button", { name: /400%/ })).toBeDefined();
+    expect(screen.getByRole("button", { name: /800%/ })).toBeDefined();
     expect(screen.getByRole("button", { name: /reset/i })).toBeDefined();
   });
 
@@ -535,6 +552,60 @@ describe("FamilyTreeChart — control panel", () => {
     const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
     expect(parseFloat(m![1])).toBe(8);
+  });
+
+  it("clicking 800% sets the scale to 16", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /800%/ }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(m![1])).toBe(16);
+  });
+});
+
+describe("FamilyTreeChart — mobile initial scale", () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it("jumps to scale 4 after mount when matchMedia reports mobile", async () => {
+    mockMatchMedia(true);
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = await act(async () =>
+      render(<FamilyTreeChart chart={chart} />),
+    );
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(m![1])).toBe(4);
+  });
+
+  it("clicking reset on mobile restores scale to 4", async () => {
+    mockMatchMedia(true);
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = await act(async () =>
+      render(<FamilyTreeChart chart={chart} />),
+    );
+    fireEvent.click(screen.getByRole("button", { name: /800%/ }));
+    fireEvent.click(screen.getByRole("button", { name: /reset/i }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(m![1])).toBe(4);
   });
 });
 
