@@ -265,7 +265,7 @@ describe("FamilyTreeChart — pinch zoom", () => {
 });
 
 describe("FamilyTreeChart — control panel", () => {
-  it("renders zoom in, zoom out, four presets, and reset buttons", () => {
+  it("renders zoom in, zoom out, five presets, and reset buttons", () => {
     const chart: LaidOutChart = {
       persons: [person({ slug: "a", x: 50, y: 50 })],
       spouseEdges: [],
@@ -279,10 +279,11 @@ describe("FamilyTreeChart — control panel", () => {
     expect(screen.getByRole("button", { name: /50%/ })).toBeDefined();
     expect(screen.getByRole("button", { name: /100%/ })).toBeDefined();
     expect(screen.getByRole("button", { name: /200%/ })).toBeDefined();
+    expect(screen.getByRole("button", { name: /400%/ })).toBeDefined();
     expect(screen.getByRole("button", { name: /reset/i })).toBeDefined();
   });
 
-  it("clicking 200% sets the scale on the inner <g> to 2", () => {
+  it("clicking 200% sets the scale on the inner <g> to 4", () => {
     const chart: LaidOutChart = {
       persons: [person({ slug: "a", x: 50, y: 50 })],
       spouseEdges: [],
@@ -293,10 +294,10 @@ describe("FamilyTreeChart — control panel", () => {
     fireEvent.click(screen.getByRole("button", { name: /200%/ }));
     const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
     const transform = inner.getAttribute("transform") ?? "";
-    expect(transform).toMatch(/scale\(2(\.0+)?\)/);
+    expect(transform).toMatch(/scale\(4(\.0+)?\)/);
   });
 
-  it("clicking 100% sets scale to 1 and marks the preset as pressed", () => {
+  it("clicking 100% sets scale to 2 and marks the preset as pressed", () => {
     const chart: LaidOutChart = {
       persons: [person({ slug: "a", x: 50, y: 50 })],
       spouseEdges: [],
@@ -307,7 +308,7 @@ describe("FamilyTreeChart — control panel", () => {
     fireEvent.click(screen.getByRole("button", { name: /200%/ }));
     fireEvent.click(screen.getByRole("button", { name: /100%/ }));
     const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
-    expect(inner.getAttribute("transform")).toMatch(/scale\(1(\.0+)?\)/);
+    expect(inner.getAttribute("transform")).toMatch(/scale\(2(\.0+)?\)/);
     expect(
       screen.getByRole("button", { name: /100%/ }).getAttribute("aria-pressed"),
     ).toBe("true");
@@ -324,10 +325,10 @@ describe("FamilyTreeChart — control panel", () => {
     fireEvent.click(screen.getByRole("button", { name: /zoom in/i }));
     const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
-    expect(parseFloat(m![1])).toBeCloseTo(1.25, 2);
+    expect(parseFloat(m![1])).toBeCloseTo(2.5, 2);
   });
 
-  it("clicking reset restores scale to 1 after zooming", () => {
+  it("clicking reset restores scale to 2 (the new initial) after zooming", () => {
     const chart: LaidOutChart = {
       persons: [person({ slug: "a", x: 50, y: 50 })],
       spouseEdges: [],
@@ -335,9 +336,23 @@ describe("FamilyTreeChart — control panel", () => {
       bounds: { width: 400, height: 300 },
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
-    fireEvent.click(screen.getByRole("button", { name: /200%/ }));
+    fireEvent.click(screen.getByRole("button", { name: /400%/ }));
     fireEvent.click(screen.getByRole("button", { name: /reset/i }));
     const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
-    expect(inner.getAttribute("transform")).toMatch(/scale\(1(\.0+)?\)/);
+    expect(inner.getAttribute("transform")).toMatch(/scale\(2(\.0+)?\)/);
+  });
+
+  it("clicking 400% sets the scale to 8", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /400%/ }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(m![1])).toBe(8);
   });
 });

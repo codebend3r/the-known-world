@@ -18,11 +18,12 @@ import styles from "@/components/FamilyTreeChart/FamilyTreeChart.module.scss";
 
 const { DOT_R } = LAYOUT_CONSTANTS;
 const LABEL_GAP = 8;
-const MIN_SCALE = 0.25;
-const MAX_SCALE = 4;
+const MIN_SCALE = 0.5;
+const MAX_SCALE = 8;
 const WHEEL_SENSITIVITY = 0.0015;
 const BUTTON_STEP = 1.25;
-const PRESET_SCALES = [0.25, 0.5, 1, 2] as const;
+const PRESET_SCALES = [0.5, 1, 2, 4, 8] as const;
+const INITIAL_SCALE = 2; // the new "100%", the legible default
 const SCALE_EPSILON = 0.001;
 const ANIM_MS = 200;
 
@@ -77,6 +78,18 @@ function zoomAtPoint(
     tx: anchorX - px * newScale,
     ty: anchorY - py * newScale,
   };
+}
+
+function initialCenteredTransform(bounds: {
+  width: number;
+  height: number;
+}): Transform {
+  return zoomAtPoint(
+    { scale: 1, tx: 0, ty: 0 },
+    INITIAL_SCALE,
+    bounds.width / 2,
+    bounds.height / 2,
+  );
 }
 
 function pointerListToArray(map: Map<number, Pointer>): Pointer[] {
@@ -147,11 +160,9 @@ type Props = {
 
 export function FamilyTreeChart({ chart }: Props) {
   const clipPrefix = useId();
-  const [transform, setTransform] = useState<Transform>({
-    scale: 1,
-    tx: 0,
-    ty: 0,
-  });
+  const [transform, setTransform] = useState<Transform>(() =>
+    initialCenteredTransform(chart.bounds),
+  );
   const dragRef = useRef<DragState | null>(null);
   const pointersRef = useRef<Map<number, Pointer>>(new Map());
   const pinchRef = useRef<PinchState | null>(null);
@@ -346,7 +357,7 @@ export function FamilyTreeChart({ chart }: Props) {
   };
 
   const reset = () => {
-    animateTo({ scale: 1, tx: 0, ty: 0 });
+    animateTo(initialCenteredTransform(bounds));
   };
 
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -479,11 +490,11 @@ export function FamilyTreeChart({ chart }: Props) {
               key={preset}
               type="button"
               className={styles.controlButton}
-              aria-label={`Zoom to ${Math.round(preset * 100)}%`}
+              aria-label={`Zoom to ${Math.round(preset * 50)}%`}
               aria-pressed={Math.abs(transform.scale - preset) < SCALE_EPSILON}
               onClick={() => zoomTo(preset)}
             >
-              {Math.round(preset * 100)}%
+              {Math.round(preset * 50)}%
             </button>
           ))}
         </div>
