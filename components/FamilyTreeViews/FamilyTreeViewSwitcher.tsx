@@ -8,6 +8,7 @@ import {
   subscribeToUrlChange,
   writeUrlParam,
 } from "@/lib/listUrlState";
+import { useIsMobile } from "@/lib/useIsMobile";
 import styles from "@/components/FamilyTreeViews/FamilyTreeViews.module.scss";
 
 export type TreeViewMode = "list" | "chart";
@@ -38,6 +39,7 @@ export function FamilyTreeViewSwitcher({ list, chart, headingId }: Props) {
     getServerSnapshot,
   );
   const mode = useMemo(() => parseMode(urlSnapshot), [urlSnapshot]);
+  const isMobile = useIsMobile();
 
   const onModeChange = (next: TreeViewMode) => {
     writeUrlParam({
@@ -46,6 +48,19 @@ export function FamilyTreeViewSwitcher({ list, chart, headingId }: Props) {
       defaultValue: DEFAULT_MODE,
     });
   };
+
+  if (isMobile) {
+    return (
+      <>
+        <div className={styles.heading}>
+          <h2 className={styles.title} id={headingId}>
+            Family Tree
+          </h2>
+        </div>
+        {chart}
+      </>
+    );
+  }
 
   return (
     <>
