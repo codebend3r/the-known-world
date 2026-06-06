@@ -263,3 +263,81 @@ describe("FamilyTreeChart — pinch zoom", () => {
     expect(parseFloat(match![1])).toBeGreaterThan(1);
   });
 });
+
+describe("FamilyTreeChart — control panel", () => {
+  it("renders zoom in, zoom out, four presets, and reset buttons", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    render(<FamilyTreeChart chart={chart} />);
+    expect(screen.getByRole("button", { name: /zoom in/i })).toBeDefined();
+    expect(screen.getByRole("button", { name: /zoom out/i })).toBeDefined();
+    expect(screen.getByRole("button", { name: /25%/ })).toBeDefined();
+    expect(screen.getByRole("button", { name: /50%/ })).toBeDefined();
+    expect(screen.getByRole("button", { name: /100%/ })).toBeDefined();
+    expect(screen.getByRole("button", { name: /200%/ })).toBeDefined();
+    expect(screen.getByRole("button", { name: /reset/i })).toBeDefined();
+  });
+
+  it("clicking 200% sets the scale on the inner <g> to 2", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /200%/ }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const transform = inner.getAttribute("transform") ?? "";
+    expect(transform).toMatch(/scale\(2(\.0+)?\)/);
+  });
+
+  it("clicking 100% sets scale to 1 and marks the preset as pressed", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /200%/ }));
+    fireEvent.click(screen.getByRole("button", { name: /100%/ }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    expect(inner.getAttribute("transform")).toMatch(/scale\(1(\.0+)?\)/);
+    expect(
+      screen.getByRole("button", { name: /100%/ }).getAttribute("aria-pressed"),
+    ).toBe("true");
+  });
+
+  it("clicking + increases scale by the button step factor", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /zoom in/i }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(m![1])).toBeCloseTo(1.25, 2);
+  });
+
+  it("clicking reset restores scale to 1 after zooming", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /200%/ }));
+    fireEvent.click(screen.getByRole("button", { name: /reset/i }));
+    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    expect(inner.getAttribute("transform")).toMatch(/scale\(1(\.0+)?\)/);
+  });
+});

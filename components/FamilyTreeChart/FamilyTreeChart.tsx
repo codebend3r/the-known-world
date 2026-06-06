@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 import { cx } from "@/lib/cx";
 import {
   LAYOUT_CONSTANTS,
@@ -14,6 +20,10 @@ const LABEL_GAP = 8;
 const MIN_SCALE = 0.25;
 const MAX_SCALE = 4;
 const WHEEL_SENSITIVITY = 0.0015;
+const BUTTON_STEP = 1.25;
+const PRESET_SCALES = [0.25, 0.5, 1, 2] as const;
+const SCALE_EPSILON = 0.001;
+const ANIM_MS = 200;
 
 function formatLabel(name: string): string {
   const parts = name.trim().split(/\s+/);
@@ -65,6 +75,26 @@ function midpoint(a: Pointer, b: Pointer): Pointer {
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
 }
 
+function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
+}
+
+function subscribeReducedMotion(onChange: () => void): () => void {
+  if (typeof window === "undefined" || !window.matchMedia) return () => {};
+  const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+  mql.addEventListener("change", onChange);
+  return () => mql.removeEventListener("change", onChange);
+}
+
+function getReducedMotionSnapshot(): boolean {
+  if (typeof window === "undefined" || !window.matchMedia) return true;
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function getReducedMotionServerSnapshot(): boolean {
+  return true;
+}
+
 function isLinkable(p: LayoutPerson): boolean {
   return !p.placeholder && !p.external && !p.isSpouse;
 }
@@ -111,6 +141,12 @@ export function FamilyTreeChart({ chart }: Props) {
   const pinchRef = useRef<PinchState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const svgRef = useRef<SVGSVGElement | null>(null);
+  const animationRef = useRef<number | null>(null);
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot,
+  );
 
   const { bounds } = chart;
 
@@ -144,6 +180,55 @@ export function FamilyTreeChart({ chart }: Props) {
       </div>
     );
   }
+
+  const animateTo = (target: Transform) => {
+    if (animationRef.current !== null) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    if (prefersReducedMotion || typeof window === "undefined") {
+      setTransform(target);
+      return;
+    }
+    const from = transform;
+    let start: number | null = null;
+    const tick = (now: number) => {
+      if (start === null) start = now;
+      const t = Math.min(1, (now - start) / ANIM_MS);
+      const e = easeOutCubic(t);
+      setTransform({
+        scale: from.scale + (target.scale - from.scale) * e,
+        tx: from.tx + (target.tx - from.tx) * e,
+        ty: from.ty + (target.ty - from.ty) * e,
+      });
+      if (t < 1) {
+        animationRef.current = requestAnimationFrame(tick);
+      } else {
+        animationRef.current = null;
+      }
+    };
+    animationRef.current = requestAnimationFrame(tick);
+  };
+
+  const boxCenter = () => ({
+    x: bounds.width / 2,
+    y: bounds.height / 2,
+  });
+
+  const zoomBy = (factor: number) => {
+    const c = boxCenter();
+    const next = clampScale(transform.scale * factor);
+    animateTo(zoomAtPoint(transform, next, c.x, c.y));
+  };
+
+  const zoomTo = (scale: number) => {
+    const c = boxCenter();
+    animateTo(zoomAtPoint(transform, clampScale(scale), c.x, c.y));
+  };
+
+  const reset = () => {
+    animateTo({ scale: 1, tx: 0, ty: 0 });
+  };
 
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
@@ -340,6 +425,48 @@ export function FamilyTreeChart({ chart }: Props) {
           })}
         </g>
       </svg>
+      <div className={styles.controls} role="group" aria-label="Chart controls">
+        <div className={styles.controlRow}>
+          <button
+            type="button"
+            className={styles.controlButton}
+            aria-label="Zoom in"
+            onClick={() => zoomBy(BUTTON_STEP)}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            className={styles.controlButton}
+            aria-label="Zoom out"
+            onClick={() => zoomBy(1 / BUTTON_STEP)}
+          >
+            −
+          </button>
+        </div>
+        <div className={styles.controlRow}>
+          {PRESET_SCALES.map((preset) => (
+            <button
+              key={preset}
+              type="button"
+              className={styles.controlButton}
+              aria-label={`Zoom to ${Math.round(preset * 100)}%`}
+              aria-pressed={Math.abs(transform.scale - preset) < SCALE_EPSILON}
+              onClick={() => zoomTo(preset)}
+            >
+              {Math.round(preset * 100)}%
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className={cx(styles.controlButton, styles.controlReset)}
+          aria-label="Reset zoom"
+          onClick={reset}
+        >
+          ⟲ Reset
+        </button>
+      </div>
     </div>
   );
 }
