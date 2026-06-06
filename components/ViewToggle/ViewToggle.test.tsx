@@ -1,10 +1,17 @@
 import { describe, it, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ViewToggle } from "@/components/ViewToggle";
+import { ViewToggle, GridIcon, ListIcon } from "@/components/ViewToggle";
 
-describe("ViewToggle", () => {
-  it('marks the selected button with aria-pressed="true"', () => {
-    render(<ViewToggle value="grid" onChange={() => {}} />);
+const TWO_OPTIONS = [
+  { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },
+  { value: "list" as const, label: "List view", icon: <ListIcon /> },
+];
+
+describe("ViewToggle (polymorphic)", () => {
+  it('marks the selected option with aria-pressed="true"', () => {
+    render(
+      <ViewToggle options={TWO_OPTIONS} value="grid" onChange={() => {}} />,
+    );
     expect(
       screen
         .getByRole("button", { name: /grid view/i })
@@ -17,22 +24,54 @@ describe("ViewToggle", () => {
     ).toBe("false");
   });
 
-  it("calls onChange when the unselected button is clicked", () => {
+  it("calls onChange when an unselected option is clicked", () => {
     const onChange = vi.fn();
-    render(<ViewToggle value="grid" onChange={onChange} />);
+    render(
+      <ViewToggle options={TWO_OPTIONS} value="grid" onChange={onChange} />,
+    );
     fireEvent.click(screen.getByRole("button", { name: /list view/i }));
     expect(onChange).toHaveBeenCalledWith("list");
   });
 
-  it("does not call onChange when the selected button is clicked", () => {
+  it("does not call onChange when the selected option is clicked", () => {
     const onChange = vi.fn();
-    render(<ViewToggle value="list" onChange={onChange} />);
+    render(
+      <ViewToggle options={TWO_OPTIONS} value="list" onChange={onChange} />,
+    );
     fireEvent.click(screen.getByRole("button", { name: /list view/i }));
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("exposes a labelled group", () => {
-    render(<ViewToggle value="grid" onChange={() => {}} />);
-    expect(screen.getByRole("group", { name: /view/i })).toBeDefined();
+  it("exposes a labelled group using the default ariaLabel", () => {
+    render(
+      <ViewToggle options={TWO_OPTIONS} value="grid" onChange={() => {}} />,
+    );
+    expect(screen.getByRole("group", { name: /^view$/i })).toBeDefined();
+  });
+
+  it("uses a custom ariaLabel when provided", () => {
+    render(
+      <ViewToggle
+        options={TWO_OPTIONS}
+        value="grid"
+        onChange={() => {}}
+        ariaLabel="Family tree view"
+      />,
+    );
+    expect(
+      screen.getByRole("group", { name: /family tree view/i }),
+    ).toBeDefined();
+  });
+
+  it("renders a third option (smoke test for the generic)", () => {
+    const THREE = [
+      { value: "a" as const, label: "Option A", icon: <span>A</span> },
+      { value: "b" as const, label: "Option B", icon: <span>B</span> },
+      { value: "c" as const, label: "Option C", icon: <span>C</span> },
+    ];
+    const onChange = vi.fn();
+    render(<ViewToggle options={THREE} value="b" onChange={onChange} />);
+    fireEvent.click(screen.getByRole("button", { name: /option c/i }));
+    expect(onChange).toHaveBeenCalledWith("c");
   });
 });
