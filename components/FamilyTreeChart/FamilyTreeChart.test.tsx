@@ -168,3 +168,50 @@ describe("FamilyTreeChart — rendering", () => {
     expect(container.querySelectorAll("text[data-cross]").length).toBe(1);
   });
 });
+
+describe("FamilyTreeChart — pan", () => {
+  function chartWith(persons: LayoutPerson[]): LaidOutChart {
+    return {
+      persons,
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+  }
+
+  it("translates the inner <g> when the user drags the SVG", () => {
+    const chart = chartWith([person({ slug: "a", x: 100, y: 100 })]);
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const before = inner.getAttribute("transform") ?? "";
+
+    svg.dispatchEvent(
+      new PointerEvent("pointerdown", {
+        pointerId: 1,
+        clientX: 50,
+        clientY: 50,
+        bubbles: true,
+      }),
+    );
+    svg.dispatchEvent(
+      new PointerEvent("pointermove", {
+        pointerId: 1,
+        clientX: 130,
+        clientY: 90,
+        bubbles: true,
+      }),
+    );
+    svg.dispatchEvent(
+      new PointerEvent("pointerup", {
+        pointerId: 1,
+        clientX: 130,
+        clientY: 90,
+        bubbles: true,
+      }),
+    );
+
+    const after = inner.getAttribute("transform") ?? "";
+    expect(after).not.toBe(before);
+  });
+});

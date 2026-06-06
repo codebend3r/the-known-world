@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import {
   LAYOUT_CONSTANTS,
@@ -40,12 +40,30 @@ function childPath(edge: LaidOutChart["childEdges"][number]): string {
   return `M ${from.x} ${from.y} V ${busY} H ${to.x} V ${to.y}`;
 }
 
+type Transform = { scale: number; tx: number; ty: number };
+
+type DragState = {
+  pointerId: number;
+  startClientX: number;
+  startClientY: number;
+  startTx: number;
+  startTy: number;
+};
+
+function formatTransform(t: Transform): string {
+  return `translate(${t.tx} ${t.ty}) scale(${t.scale})`;
+}
+
 type Props = {
   chart: LaidOutChart;
 };
 
 export function FamilyTreeChart({ chart }: Props) {
   const clipPrefix = useId();
+  const transformRef = useRef<Transform>({ scale: 1, tx: 0, ty: 0 });
+  const panRootRef = useRef<SVGGElement | null>(null);
+  const dragRef = useRef<DragState | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   if (chart.persons.length === 0) {
     return (
@@ -59,14 +77,53 @@ export function FamilyTreeChart({ chart }: Props) {
 
   const { bounds } = chart;
 
+  const applyTransform = (next: Transform) => {
+    transformRef.current = next;
+    panRootRef.current?.setAttribute("transform", formatTransform(next));
+  };
+
+  const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
+    if (e.button !== 0 && e.pointerType === "mouse") return;
+    (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+    dragRef.current = {
+      pointerId: e.pointerId,
+      startClientX: e.clientX,
+      startClientY: e.clientY,
+      startTx: transformRef.current.tx,
+      startTy: transformRef.current.ty,
+    };
+    setIsDragging(true);
+  };
+
+  const onPointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
+    const d = dragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    applyTransform({
+      ...transformRef.current,
+      tx: d.startTx + (e.clientX - d.startClientX),
+      ty: d.startTy + (e.clientY - d.startClientY),
+    });
+  };
+
+  const endDrag = (e: React.PointerEvent<SVGSVGElement>) => {
+    const d = dragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    dragRef.current = null;
+    setIsDragging(false);
+  };
+
   return (
     <div className={styles.container}>
       <svg
-        className={styles.svg}
+        className={cx(styles.svg, isDragging && styles.dragging)}
         viewBox={`0 0 ${bounds.width} ${bounds.height}`}
         preserveAspectRatio="xMidYMid meet"
         role="img"
         aria-label="Family tree chart"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={endDrag}
+        onPointerCancel={endDrag}
       >
         <defs>
           {chart.persons
@@ -80,7 +137,7 @@ export function FamilyTreeChart({ chart }: Props) {
               </clipPath>
             ))}
         </defs>
-        <g>
+        <g ref={panRootRef} data-pan-root transform="translate(0 0) scale(1)">
           {chart.childEdges.map((edge, i) => (
             <path
               key={`edge-${i}`}
