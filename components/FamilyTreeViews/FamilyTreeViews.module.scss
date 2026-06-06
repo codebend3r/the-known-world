@@ -1,0 +1,17 @@
+.heading {
+  display: grid;
+  grid-template-areas: "title toggle";
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 0 0.5rem 0;
+}
+
+.title {
+  grid-area: title;
+  margin: 0;
+}
+
+.toggle {
+  grid-area: toggle;
+}
