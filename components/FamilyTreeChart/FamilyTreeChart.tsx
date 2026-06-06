@@ -19,11 +19,8 @@ function formatLabel(name: string): string {
   return `${parts[0]} ${last.charAt(0).toUpperCase()}.`;
 }
 
-function formatTitle(person: LayoutPerson): string | null {
-  if (person.alias) return `${person.name} (${person.alias})`;
-  const label = formatLabel(person.name);
-  if (label === person.name) return null;
-  return person.name;
+function formatTitle(person: LayoutPerson): string {
+  return person.alias ? `${person.name} (${person.alias})` : person.name;
 }
 
 function dotClassName(p: LayoutPerson): string {
@@ -145,9 +142,7 @@ export function FamilyTreeChart({ chart }: Props) {
                 {formatLabel(p.name)}
               </text>
             );
-            const titleText = formatTitle(p);
-            const title =
-              titleText !== null ? <title>{titleText}</title> : null;
+            const title = <title>{formatTitle(p)}</title>;
             const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
             if (isLinkable(p)) {
               return (

@@ -56,11 +56,14 @@ describe("FamilyTreeChart — rendering", () => {
       ...EMPTY,
       persons: [person({ slug: "varys", name: "Varys" })],
     };
-    render(<FamilyTreeChart chart={chart} />);
-    expect(screen.getByText("Varys")).toBeDefined();
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const labelText = Array.from(container.querySelectorAll("text"))
+      .map((t) => t.textContent)
+      .find((t) => t === "Varys");
+    expect(labelText).toBe("Varys");
   });
 
-  it("renders a <title> with the full name (and alias if present)", () => {
+  it("renders a <title> with the full name + alias in parentheses", () => {
     const chart: LaidOutChart = {
       ...EMPTY,
       persons: [person({ slug: "es", name: "Eddard Stark", alias: "Ned" })],
@@ -70,6 +73,22 @@ describe("FamilyTreeChart — rendering", () => {
       (t) => t.textContent,
     );
     expect(titles).toContain("Eddard Stark (Ned)");
+  });
+
+  it("renders a <title> with just the name when there is no alias, including single-word names", () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({ slug: "varys", name: "Varys" }),
+        person({ slug: "es", name: "Eddard Stark", x: 100 }),
+      ],
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const titles = Array.from(container.querySelectorAll("title")).map(
+      (t) => t.textContent,
+    );
+    expect(titles).toContain("Varys");
+    expect(titles).toContain("Eddard Stark");
   });
 
   it("renders an <image> when portrait is non-null and none when null", () => {
