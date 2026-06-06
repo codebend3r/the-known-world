@@ -42,11 +42,22 @@ function optimizedPortrait(path: string): string {
   return `/.netlify/images?${params.toString()}`;
 }
 
-function formatLabel(name: string): string {
-  const parts = name.trim().split(/\s+/);
+const ROMAN_NUMERAL = /^[IVXLCDM]+$/;
+
+function wasKing(titles: ReadonlyArray<string>): boolean {
+  return titles.some((t) => t.startsWith("King "));
+}
+
+function formatLabel(person: LayoutPerson): string {
+  const parts = person.name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0];
   const last = parts[parts.length - 1];
-  return `${parts[0]} ${last.charAt(0).toUpperCase()}.`;
+  const lastInitial = `${last.charAt(0).toUpperCase()}.`;
+  if (wasKing(person.titles)) {
+    const numeral = parts.slice(1, -1).find((p) => ROMAN_NUMERAL.test(p));
+    if (numeral) return `${parts[0]} ${numeral} ${lastInitial}`;
+  }
+  return `${parts[0]} ${lastInitial}`;
 }
 
 function formatTitle(person: LayoutPerson): string {
@@ -290,7 +301,7 @@ export function FamilyTreeChart({ chart }: Props) {
           );
           const label = (
             <text className={styles.label} x={p.x} y={p.y - DOT_R - LABEL_GAP}>
-              {formatLabel(p.name)}
+              {formatLabel(p)}
             </text>
           );
           const title = <title>{formatTitle(p)}</title>;

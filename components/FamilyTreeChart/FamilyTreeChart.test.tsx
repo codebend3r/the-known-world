@@ -155,6 +155,40 @@ describe("FamilyTreeChart — rendering", () => {
     expect(container.querySelectorAll("path[data-child-edge]").length).toBe(1);
   });
 
+  it('includes the regnal numeral in the label for kings with names like "Aegon IV Targaryen"', () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({
+          slug: "aegon-iv",
+          name: "Aegon IV Targaryen",
+          titles: ["King of the Andals, the Rhoynar, and the First Men"],
+        }),
+      ],
+    };
+    render(<FamilyTreeChart chart={chart} />);
+    expect(screen.getByText("Aegon IV T.")).toBeDefined();
+  });
+
+  it("does not include the middle word for non-kings even when it matches a Roman numeral pattern", () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({
+          slug: "imaginary",
+          name: "Some V Person",
+          titles: [],
+        }),
+      ],
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const labels = Array.from(container.querySelectorAll("text"))
+      .map((t) => t.textContent)
+      .filter((t) => t === "Some P." || t === "Some V P.");
+    expect(labels).toContain("Some P.");
+    expect(labels).not.toContain("Some V P.");
+  });
+
   it("renders ⚭ glyph and second circle for each spouse edge", () => {
     const chart: LaidOutChart = {
       ...EMPTY,
