@@ -1,7 +1,6 @@
 import path from "node:path";
 import type { NextConfig } from "next";
 
-/** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
   output: "export",
   images: {
@@ -9,9 +8,8 @@ const nextConfig: NextConfig = {
     loaderFile: "./lib/netlify-image-loader.ts",
   },
   trailingSlash: true,
-  reactStrictMode: true,
   sassOptions: {
-    loadPaths: [path.join(process.cwd(), "styles")],
+    loadPaths: [path.join(__dirname, "styles")],
   },
   turbopack: {
     root: __dirname,
