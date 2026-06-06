@@ -13,6 +13,7 @@ children:
   - borys-baratheon
   - garon-baratheon
   - ronnal-baratheon
+  - orryn-baratheon
 titles:
   - Lord of Storm's End
   - Lord Paramount of the Stormlands
