@@ -19,6 +19,8 @@ titles:
   - Lord of Storm's End
   - Lord Paramount of the Stormlands
   - Hand of the King
+aliases:
+  - Orys One-Hand
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Orys_Baratheon
