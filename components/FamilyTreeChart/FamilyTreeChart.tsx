@@ -27,6 +27,7 @@ const PRESET_SCALES = [0.5, 1, 2, 4, 8] as const;
 const INITIAL_SCALE = 2; // the new "100%", the legible default
 const SCALE_EPSILON = 0.001;
 const ANIM_MS = 200;
+const DRAG_THRESHOLD = 3; // px
 
 // Width matches DOT_R * 2 * devicePixelRatio for retina (~56 css px -> request 96 source px).
 // Netlify image CDN serves resized/compressed copies of the originals in `/public/characters/*`.
@@ -173,7 +174,7 @@ function getReducedMotionServerSnapshot(): boolean {
 }
 
 function isLinkable(p: LayoutPerson): boolean {
-  return !p.placeholder && !p.external && !p.isSpouse;
+  return !p.placeholder && p.characterSlug !== null;
 }
 
 function childPath(edge: LaidOutChart["childEdges"][number]): string {
@@ -189,6 +190,7 @@ type DragState = {
   startClientY: number;
   startTx: number;
   startTy: number;
+  captured: boolean;
 };
 
 type Pointer = { x: number; y: number };
@@ -309,7 +311,7 @@ export function FamilyTreeChart({ chart }: Props) {
           const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
           if (isLinkable(p)) {
             return (
-              <a key={key} href={`/characters/${p.slug}/`}>
+              <a key={key} href={`/characters/${p.characterSlug}/`}>
                 {title}
                 {dotEl}
                 {label}
@@ -429,7 +431,6 @@ export function FamilyTreeChart({ chart }: Props) {
 
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
-    (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     if (pointersRef.current.size === 1) {
       dragRef.current = {
@@ -438,9 +439,12 @@ export function FamilyTreeChart({ chart }: Props) {
         startClientY: e.clientY,
         startTx: transform.tx,
         startTy: transform.ty,
+        captured: false,
       };
-      setIsDragging(true);
+      // No pointer capture and no isDragging yet, wait for movement past
+      // DRAG_THRESHOLD so taps still reach the underlying <a> as plain clicks.
     } else if (pointersRef.current.size === 2 && svgRef.current) {
+      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
       const [a, b] = pointerListToArray(pointersRef.current);
       const m = midpoint(a, b);
       const { point } = getScreenToViewBox(svgRef.current, bounds);
@@ -485,11 +489,21 @@ export function FamilyTreeChart({ chart }: Props) {
 
     const d = dragRef.current;
     if (!d || d.pointerId !== e.pointerId) return;
+    const dx = e.clientX - d.startClientX;
+    const dy = e.clientY - d.startClientY;
+    if (!d.captured) {
+      if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) {
+        return;
+      }
+      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+      d.captured = true;
+      setIsDragging(true);
+    }
     const { deltaScale } = getScreenToViewBox(svgRef.current, bounds);
     setTransform((t) => ({
       ...t,
-      tx: d.startTx + (e.clientX - d.startClientX) * deltaScale,
-      ty: d.startTy + (e.clientY - d.startClientY) * deltaScale,
+      tx: d.startTx + dx * deltaScale,
+      ty: d.startTy + dy * deltaScale,
     }));
   };
 
@@ -504,6 +518,7 @@ export function FamilyTreeChart({ chart }: Props) {
         startClientY: remaining.y,
         startTx: transform.tx,
         startTy: transform.ty,
+        captured: true,
       };
       setIsDragging(true);
       return;

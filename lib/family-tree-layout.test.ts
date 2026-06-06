@@ -155,4 +155,25 @@ describe("layoutFamilyTree", () => {
       .map((p) => p.slug);
     expect(spouseSlugs).toEqual(["p::spouse::0", "p::spouse::1"]);
   });
+
+  it("sets characterSlug to the spouse's real slug, distinct from the unique layout slug", () => {
+    const result = layoutFamilyTree([
+      node({
+        slug: "elia",
+        spouses: [spouse({ slug: "rhaegar", name: "Rhaegar", inHouse: false })],
+      }),
+    ]);
+    const rhaegar = result.persons.find((p) => p.isSpouse);
+    expect(rhaegar).toBeDefined();
+    expect(rhaegar!.slug).toBe("elia::spouse::0");
+    expect(rhaegar!.characterSlug).toBe("rhaegar");
+  });
+
+  it("characterSlug is null for placeholder persons", () => {
+    const result = layoutFamilyTree([
+      node({ slug: "phantom", placeholder: true }),
+    ]);
+    const phantom = result.persons.find((p) => p.slug === "phantom");
+    expect(phantom!.characterSlug).toBeNull();
+  });
 });

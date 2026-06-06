@@ -15,6 +15,7 @@ const { DOT_R, H_SPACING, V_SPACING, SPOUSE_GAP, PADDING } = LAYOUT_CONSTANTS;
 
 export interface LayoutPerson {
   slug: string;
+  characterSlug: string | null;
   name: string;
   alias: string | null;
   sex: "m" | "f" | null;
@@ -81,6 +82,7 @@ function placePerson(
 ): LayoutPerson {
   return {
     slug: n.slug,
+    characterSlug: n.placeholder ? null : n.slug,
     name: n.name,
     alias: n.alias,
     sex: n.sex,
@@ -104,6 +106,7 @@ function placeSpouse(
 ): LayoutPerson {
   return {
     slug: identifier,
+    characterSlug: s.slug && !s.placeholder ? s.slug : null,
     name: s.name,
     alias: s.alias,
     sex: s.sex,

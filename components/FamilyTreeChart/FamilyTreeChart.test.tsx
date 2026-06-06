@@ -4,8 +4,10 @@ import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
 
 function person(overrides: Partial<LayoutPerson> = {}): LayoutPerson {
+  const slug = overrides.slug ?? "p";
   return {
-    slug: "p",
+    slug,
+    characterSlug: slug,
     name: "Person",
     alias: null,
     sex: null,
@@ -200,6 +202,60 @@ describe("FamilyTreeChart — rendering", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     expect(container.querySelectorAll("text[data-cross]").length).toBe(1);
+  });
+
+  it("links an external spouse using their characterSlug", () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({
+          slug: "elia::spouse::0",
+          characterSlug: "rhaegar-targaryen",
+          name: "Rhaegar Targaryen",
+          isSpouse: true,
+          external: true,
+          portrait: "/characters/rhaegar-targaryen.png",
+        }),
+      ],
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const a = container.querySelector("a[href]");
+    expect(a?.getAttribute("href")).toBe("/characters/rhaegar-targaryen/");
+  });
+
+  it("renders a portrait <image> for an external spouse when one is set", () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({
+          slug: "elia::spouse::0",
+          characterSlug: "rhaegar-targaryen",
+          name: "Rhaegar Targaryen",
+          isSpouse: true,
+          external: true,
+          portrait: "/characters/rhaegar-targaryen.png",
+        }),
+      ],
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    expect(container.querySelectorAll("image").length).toBe(1);
+  });
+
+  it("does not wrap a spouse with no characterSlug in an anchor", () => {
+    const chart: LaidOutChart = {
+      ...EMPTY,
+      persons: [
+        person({
+          slug: "a::spouse::0",
+          characterSlug: null,
+          name: "Mystery",
+          isSpouse: true,
+          external: true,
+        }),
+      ],
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    expect(container.querySelector("a[href]")).toBeNull();
   });
 });
 
@@ -483,5 +539,40 @@ describe("FamilyTreeChart — fullscreen", () => {
     expect(document.body.style.overflow).toBe("hidden");
     fireEvent.click(screen.getByRole("button", { name: /exit fullscreen/i }));
     expect(document.body.style.overflow).toBe("");
+  });
+});
+
+describe("FamilyTreeChart — click vs drag", () => {
+  function chartWith(persons: LayoutPerson[]): LaidOutChart {
+    return {
+      persons,
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+  }
+
+  it("does not start a pan when the cursor moves less than the threshold", () => {
+    const chart = chartWith([person({ slug: "a", x: 100, y: 100 })]);
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const before = inner.getAttribute("transform") ?? "";
+    fireEvent.pointerDown(svg, { pointerId: 1, clientX: 50, clientY: 50 });
+    fireEvent.pointerMove(svg, { pointerId: 1, clientX: 51, clientY: 51 });
+    fireEvent.pointerUp(svg, { pointerId: 1, clientX: 51, clientY: 51 });
+    expect(inner.getAttribute("transform") ?? "").toBe(before);
+  });
+
+  it("starts a pan once movement crosses the threshold", () => {
+    const chart = chartWith([person({ slug: "a", x: 100, y: 100 })]);
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const before = inner.getAttribute("transform") ?? "";
+    fireEvent.pointerDown(svg, { pointerId: 1, clientX: 50, clientY: 50 });
+    fireEvent.pointerMove(svg, { pointerId: 1, clientX: 130, clientY: 90 });
+    fireEvent.pointerUp(svg, { pointerId: 1, clientX: 130, clientY: 90 });
+    expect(inner.getAttribute("transform") ?? "").not.toBe(before);
   });
 });

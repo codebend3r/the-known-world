@@ -69,7 +69,7 @@ describe("enrichTreeWithPortraits", () => {
     expect(find).not.toHaveBeenCalled();
   });
 
-  it("calls findPortrait for in-house spouses and sets null for external spouses", async () => {
+  it("calls findPortrait for any spouse with a valid slug, regardless of house", async () => {
     const find = vi.fn(async (slug: string) => `/characters/${slug}.png`);
     const tree: TreeNode[] = [
       node({
@@ -82,8 +82,21 @@ describe("enrichTreeWithPortraits", () => {
     ];
     const [n] = await enrichTreeWithPortraits(tree, find);
     expect(n.spouses[0].portrait).toBe("/characters/in.png");
-    expect(n.spouses[1].portrait).toBeNull();
+    expect(n.spouses[1].portrait).toBe("/characters/out.png");
     expect(find).toHaveBeenCalledWith("in", "f");
+    expect(find).toHaveBeenCalledWith("out", "f");
+  });
+
+  it("returns null portrait for a spouse with no slug (unnamed)", async () => {
+    const find = vi.fn(async (slug: string) => `/characters/${slug}.png`);
+    const tree: TreeNode[] = [
+      node({
+        slug: "p",
+        spouses: [spouse({ slug: null, name: "Mystery", inHouse: false })],
+      }),
+    ];
+    const [n] = await enrichTreeWithPortraits(tree, find);
+    expect(n.spouses[0].portrait).toBeNull();
   });
 
   it("memoizes per-slug so duplicate slugs hit findPortrait once", async () => {
