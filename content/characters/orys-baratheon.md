@@ -14,6 +14,7 @@ primary-house: baratheon
 spouses:
   - argella-durrandon
 children:
+  - davos-baratheon
   - unknown-baratheon-ancestors
 titles:
   - Lord of Storm's End

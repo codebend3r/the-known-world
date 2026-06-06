@@ -12,7 +12,7 @@ died:
   precision: year
 primary-house: baratheon
 parents:
-  - unknown-baratheon-ancestors
+  - davos-baratheon
 spouses:
   - alyssa-velaryon
 children:
