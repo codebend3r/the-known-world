@@ -220,3 +220,46 @@ describe("FamilyTreeChart — wheel zoom", () => {
     );
   });
 });
+
+describe("FamilyTreeChart — pinch zoom", () => {
+  it("scales when two pointers spread apart", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 100, y: 100 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+
+    fireEvent.pointerDown(svg, {
+      pointerId: 1,
+      pointerType: "touch",
+      clientX: 100,
+      clientY: 100,
+    });
+    fireEvent.pointerDown(svg, {
+      pointerId: 2,
+      pointerType: "touch",
+      clientX: 200,
+      clientY: 100,
+    });
+    fireEvent.pointerMove(svg, {
+      pointerId: 1,
+      pointerType: "touch",
+      clientX: 50,
+      clientY: 100,
+    });
+    fireEvent.pointerMove(svg, {
+      pointerId: 2,
+      pointerType: "touch",
+      clientX: 250,
+      clientY: 100,
+    });
+
+    const transform = inner.getAttribute("transform") ?? "";
+    const match = transform.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(match![1])).toBeGreaterThan(1);
+  });
+});

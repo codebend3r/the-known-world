@@ -53,6 +53,18 @@ function zoomAtPoint(
   };
 }
 
+function pointerListToArray(map: Map<number, Pointer>): Pointer[] {
+  return Array.from(map.values());
+}
+
+function distance(a: Pointer, b: Pointer): number {
+  return Math.hypot(b.x - a.x, b.y - a.y);
+}
+
+function midpoint(a: Pointer, b: Pointer): Pointer {
+  return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
+}
+
 function isLinkable(p: LayoutPerson): boolean {
   return !p.placeholder && !p.external && !p.isSpouse;
 }
@@ -72,6 +84,17 @@ type DragState = {
   startTy: number;
 };
 
+type Pointer = { x: number; y: number };
+
+type PinchState = {
+  startDistance: number;
+  startScale: number;
+  startTx: number;
+  startTy: number;
+  anchorViewBoxX: number;
+  anchorViewBoxY: number;
+};
+
 type Props = {
   chart: LaidOutChart;
 };
@@ -84,6 +107,8 @@ export function FamilyTreeChart({ chart }: Props) {
     ty: 0,
   });
   const dragRef = useRef<DragState | null>(null);
+  const pointersRef = useRef<Map<number, Pointer>>(new Map());
+  const pinchRef = useRef<PinchState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -123,17 +148,58 @@ export function FamilyTreeChart({ chart }: Props) {
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
     (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-    dragRef.current = {
-      pointerId: e.pointerId,
-      startClientX: e.clientX,
-      startClientY: e.clientY,
-      startTx: transform.tx,
-      startTy: transform.ty,
-    };
-    setIsDragging(true);
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pointersRef.current.size === 1) {
+      dragRef.current = {
+        pointerId: e.pointerId,
+        startClientX: e.clientX,
+        startClientY: e.clientY,
+        startTx: transform.tx,
+        startTy: transform.ty,
+      };
+      setIsDragging(true);
+    } else if (pointersRef.current.size === 2 && svgRef.current) {
+      const [a, b] = pointerListToArray(pointersRef.current);
+      const m = midpoint(a, b);
+      const rect = svgRef.current.getBoundingClientRect();
+      pinchRef.current = {
+        startDistance: distance(a, b),
+        startScale: transform.scale,
+        startTx: transform.tx,
+        startTy: transform.ty,
+        anchorViewBoxX: ((m.x - rect.left) / rect.width) * bounds.width,
+        anchorViewBoxY: ((m.y - rect.top) / rect.height) * bounds.height,
+      };
+      dragRef.current = null;
+      setIsDragging(false);
+    }
   };
 
   const onPointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
+    const stored = pointersRef.current.get(e.pointerId);
+    if (!stored) return;
+    pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+    const pinch = pinchRef.current;
+    if (pinch && pointersRef.current.size === 2) {
+      const [a, b] = pointerListToArray(pointersRef.current);
+      const ratio = distance(a, b) / pinch.startDistance;
+      const nextScale = clampScale(pinch.startScale * ratio);
+      setTransform(() =>
+        zoomAtPoint(
+          {
+            scale: pinch.startScale,
+            tx: pinch.startTx,
+            ty: pinch.startTy,
+          },
+          nextScale,
+          pinch.anchorViewBoxX,
+          pinch.anchorViewBoxY,
+        ),
+      );
+      return;
+    }
+
     const d = dragRef.current;
     if (!d || d.pointerId !== e.pointerId) return;
     setTransform((t) => ({
@@ -144,8 +210,20 @@ export function FamilyTreeChart({ chart }: Props) {
   };
 
   const endDrag = (e: React.PointerEvent<SVGSVGElement>) => {
-    const d = dragRef.current;
-    if (!d || d.pointerId !== e.pointerId) return;
+    pointersRef.current.delete(e.pointerId);
+    if (pointersRef.current.size < 2) pinchRef.current = null;
+    if (pointersRef.current.size === 1) {
+      const [remaining] = pointerListToArray(pointersRef.current);
+      dragRef.current = {
+        pointerId: Array.from(pointersRef.current.keys())[0],
+        startClientX: remaining.x,
+        startClientY: remaining.y,
+        startTx: transform.tx,
+        startTy: transform.ty,
+      };
+      setIsDragging(true);
+      return;
+    }
     dragRef.current = null;
     setIsDragging(false);
   };
