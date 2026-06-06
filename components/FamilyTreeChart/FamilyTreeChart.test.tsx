@@ -194,3 +194,29 @@ describe("FamilyTreeChart — pan", () => {
     expect(after).not.toBe(before);
   });
 });
+
+describe("FamilyTreeChart — wheel zoom", () => {
+  it("increases scale on negative deltaY", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 100, y: 100 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const initial = inner.getAttribute("transform") ?? "";
+    fireEvent.wheel(svg, {
+      deltaY: -500,
+      clientX: 200,
+      clientY: 150,
+    });
+    const after = inner.getAttribute("transform") ?? "";
+    const matchInitial = initial.match(/scale\(([0-9.]+)\)/);
+    const matchAfter = after.match(/scale\(([0-9.]+)\)/);
+    expect(parseFloat(matchAfter![1])).toBeGreaterThan(
+      parseFloat(matchInitial![1]),
+    );
+  });
+});

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import {
   LAYOUT_CONSTANTS,
@@ -11,6 +11,9 @@ import styles from "@/components/FamilyTreeChart/FamilyTreeChart.module.scss";
 
 const { DOT_R } = LAYOUT_CONSTANTS;
 const LABEL_GAP = 8;
+const MIN_SCALE = 0.25;
+const MAX_SCALE = 4;
+const WHEEL_SENSITIVITY = 0.0015;
 
 function formatLabel(name: string): string {
   const parts = name.trim().split(/\s+/);
@@ -29,6 +32,25 @@ function dotClassName(p: LayoutPerson): string {
     p.placeholder && styles.dotPlaceholder,
     p.external && styles.dotExternal,
   );
+}
+
+function clampScale(scale: number): number {
+  return Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale));
+}
+
+function zoomAtPoint(
+  current: Transform,
+  newScale: number,
+  anchorX: number,
+  anchorY: number,
+): Transform {
+  const px = (anchorX - current.tx) / current.scale;
+  const py = (anchorY - current.ty) / current.scale;
+  return {
+    scale: newScale,
+    tx: anchorX - px * newScale,
+    ty: anchorY - py * newScale,
+  };
 }
 
 function isLinkable(p: LayoutPerson): boolean {
@@ -63,6 +85,30 @@ export function FamilyTreeChart({ chart }: Props) {
   });
   const dragRef = useRef<DragState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const svgRef = useRef<SVGSVGElement | null>(null);
+
+  const { bounds } = chart;
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const rect = svg.getBoundingClientRect();
+      const anchorX = e.clientX - rect.left;
+      const anchorY = e.clientY - rect.top;
+      setTransform((t) => {
+        const factor = 1 - e.deltaY * WHEEL_SENSITIVITY;
+        const next = clampScale(t.scale * factor);
+        if (next === t.scale) return t;
+        const viewBoxX = (anchorX / rect.width) * bounds.width;
+        const viewBoxY = (anchorY / rect.height) * bounds.height;
+        return zoomAtPoint(t, next, viewBoxX, viewBoxY);
+      });
+    };
+    svg.addEventListener("wheel", onWheel, { passive: false });
+    return () => svg.removeEventListener("wheel", onWheel);
+  }, [bounds.width, bounds.height]);
 
   if (chart.persons.length === 0) {
     return (
@@ -73,8 +119,6 @@ export function FamilyTreeChart({ chart }: Props) {
       </div>
     );
   }
-
-  const { bounds } = chart;
 
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
@@ -109,6 +153,7 @@ export function FamilyTreeChart({ chart }: Props) {
   return (
     <div className={styles.container}>
       <svg
+        ref={svgRef}
         className={cx(styles.svg, isDragging && styles.dragging)}
         viewBox={`0 0 ${bounds.width} ${bounds.height}`}
         preserveAspectRatio="xMidYMid meet"
