@@ -3,6 +3,7 @@
 import {
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -208,6 +209,8 @@ type Props = {
   chart: LaidOutChart;
 };
 
+type LabelBbox = { x: number; y: number; width: number; height: number };
+
 export function FamilyTreeChart({ chart }: Props) {
   const clipPrefix = useId();
   const [transform, setTransform] = useState<Transform>(() =>
@@ -218,6 +221,9 @@ export function FamilyTreeChart({ chart }: Props) {
   const pinchRef = useRef<PinchState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [labelBboxes, setLabelBboxes] = useState<Map<string, LabelBbox>>(
+    new Map(),
+  );
   const svgRef = useRef<SVGSVGElement | null>(null);
   const animationRef = useRef<number | null>(null);
   const prefersReducedMotion = useSyncExternalStore(
@@ -288,8 +294,25 @@ export function FamilyTreeChart({ chart }: Props) {
               )}
             </>
           );
+          const labelKey = `${p.slug}-${p.isSpouse ? "s" : "n"}-label`;
+          const bbox = labelBboxes.get(labelKey);
+          const labelBg = bbox ? (
+            <rect
+              className={styles.labelBg}
+              x={bbox.x}
+              y={bbox.y}
+              width={bbox.width}
+              height={bbox.height}
+              data-label-bg
+            />
+          ) : null;
           const label = (
-            <text className={styles.label} x={p.x} y={p.y - DOT_R - LABEL_GAP}>
+            <text
+              data-label-key={labelKey}
+              className={styles.label}
+              x={p.x}
+              y={p.y - DOT_R - LABEL_GAP}
+            >
               {formatLabel(p)}
             </text>
           );
@@ -300,6 +323,7 @@ export function FamilyTreeChart({ chart }: Props) {
               <a key={key} href={`/characters/${p.characterSlug}/`}>
                 {title}
                 {dotEl}
+                {labelBg}
                 {label}
               </a>
             );
@@ -308,13 +332,14 @@ export function FamilyTreeChart({ chart }: Props) {
             <g key={key}>
               {title}
               {dotEl}
+              {labelBg}
               {label}
             </g>
           );
         })}
       </>
     ),
-    [chart, clipPrefix],
+    [chart, clipPrefix, labelBboxes],
   );
 
   useEffect(() => {
@@ -355,6 +380,49 @@ export function FamilyTreeChart({ chart }: Props) {
       document.body.style.overflow = prev;
     };
   }, [isFullscreen]);
+
+  useLayoutEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const labels = svg.querySelectorAll<SVGTextElement>("text[data-label-key]");
+    const next = new Map<string, LabelBbox>();
+    labels.forEach((textEl) => {
+      const key = textEl.getAttribute("data-label-key");
+      if (!key) return;
+      let bbox: { x: number; y: number; width: number; height: number };
+      try {
+        bbox = textEl.getBBox();
+      } catch {
+        return;
+      }
+      if (!bbox.width || !bbox.height) return;
+      next.set(key, {
+        x: Math.round(bbox.x),
+        y: Math.round(bbox.y),
+        width: Math.round(bbox.width),
+        height: Math.round(bbox.height),
+      });
+    });
+    setLabelBboxes((prev) => {
+      if (prev.size === next.size) {
+        let same = true;
+        next.forEach((v, k) => {
+          const p = prev.get(k);
+          if (
+            !p ||
+            p.x !== v.x ||
+            p.y !== v.y ||
+            p.width !== v.width ||
+            p.height !== v.height
+          ) {
+            same = false;
+          }
+        });
+        if (same) return prev;
+      }
+      return next;
+    });
+  }, [chart]);
 
   if (chart.persons.length === 0) {
     return (

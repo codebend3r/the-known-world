@@ -300,6 +300,34 @@ describe("FamilyTreeChart — rendering", () => {
     const { container } = render(<FamilyTreeChart chart={chart} />);
     expect(container.querySelector("a[href]")).toBeNull();
   });
+
+  it("renders a parchment <rect> behind each label sized to the measured bbox", () => {
+    // jsdom doesn't define `getBBox` on any SVG prototype; the chart
+    // calls it on plain SVGElement-typed text nodes, so we stub it
+    // directly on SVGElement.prototype for this test.
+    const proto = SVGElement.prototype as unknown as {
+      getBBox?: () => { x: number; y: number; width: number; height: number };
+    };
+    const original = proto.getBBox;
+    proto.getBBox = function () {
+      return { x: 10, y: 20, width: 50.6, height: 9.2 };
+    };
+    try {
+      const chart: LaidOutChart = {
+        ...EMPTY,
+        persons: [person({ slug: "ned", name: "Eddard Stark" })],
+      };
+      const { container } = render(<FamilyTreeChart chart={chart} />);
+      const rect = container.querySelector("rect[data-label-bg]");
+      expect(rect).not.toBeNull();
+      expect(rect!.getAttribute("x")).toBe("10");
+      expect(rect!.getAttribute("y")).toBe("20");
+      expect(rect!.getAttribute("width")).toBe("51");
+      expect(rect!.getAttribute("height")).toBe("9");
+    } finally {
+      proto.getBBox = original;
+    }
+  });
 });
 
 describe("FamilyTreeChart — pan", () => {
