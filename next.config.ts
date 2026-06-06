@@ -13,6 +13,9 @@ const nextConfig: NextConfig = {
   sassOptions: {
     loadPaths: [path.join(process.cwd(), "styles")],
   },
+  turbopack: {
+    root: __dirname,
+  },
 };
 
 export default nextConfig;
