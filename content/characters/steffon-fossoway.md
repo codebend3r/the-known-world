@@ -6,7 +6,8 @@ born: null
 died: null
 primary-house: fossoway-cider-hall
 titles:
-  - Lord of Cider Hall
+  - Ser
+  - Heir to Cider Hall
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Steffon_Fossoway
@@ -14,4 +15,4 @@ sources:
 draft: false
 ---
 
-Lord of Cider Hall and head of House Fossoway in the years of the First Blackfyre Rebellion. When Daemon I Blackfyre raised his black dragon against King Daeron II in 196 AC, Lord Steffon called his banners for the pretender and bore the red apple of his house into the rebel host. He fell upon the Redgrass Field, and with him died the undivided line of his fathers: Cider Hall passed under attainder until restored, while his younger brother Ser Raymun (who had kept faith with the king and worn a green apple in token of it) was raised to lord and founded the cadet branch that bears that fruit still.
+Knight of the red-apple Fossoways and heir to Cider Hall in the closing years of King Aerys I, present with his cousin Ser Raymun at the great tourney at Ashford Meadow in 209 AC. When Prince Aerion Brightflame fell upon the Dornish puppeteer Tanselle, Steffon and Raymun parted the crowd with their men-at-arms in defense of Ser Duncan the Tall, and Steffon pledged the hedge knight his sword and swore to find five other lances for the trial of seven that Prince Baelor Breakspear had set against the prince's accusers. By dawn of the day of the trial he had taken Aerion's silver instead, switched sides, and stood among the prince's seven with the promise of a lordship at his cousin's expense — when Raymun put on a green apple in token of the break, Steffon called him "still green" in mockery and rode out under the red. He was unhorsed by Ser Duncan in the press and walked from the field a forsworn man, his lordship-to-be denied him with Prince Baelor's death and his cousin's loyal apple raised up at Cider Hall's expense to the cadet seat of New Barrel.
