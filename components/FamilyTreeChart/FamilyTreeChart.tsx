@@ -80,6 +80,42 @@ function zoomAtPoint(
   };
 }
 
+type ScreenToViewBox = {
+  /** Convert screen coordinates to viewBox coordinates. */
+  point: (clientX: number, clientY: number) => { x: number; y: number };
+  /** Multiply a screen-pixel delta by this to get a viewBox-unit delta. */
+  deltaScale: number;
+};
+
+function getScreenToViewBox(
+  svg: SVGSVGElement | null,
+  bounds: { width: number; height: number },
+): ScreenToViewBox {
+  const rect = svg?.getBoundingClientRect();
+  if (!rect || !rect.width || !rect.height) {
+    return {
+      point: (clientX, clientY) => ({ x: clientX, y: clientY }),
+      deltaScale: 1,
+    };
+  }
+  const renderedScale = Math.min(
+    rect.width / bounds.width,
+    rect.height / bounds.height,
+  );
+  const renderedW = bounds.width * renderedScale;
+  const renderedH = bounds.height * renderedScale;
+  const offsetX = (rect.width - renderedW) / 2;
+  const offsetY = (rect.height - renderedH) / 2;
+  const deltaScale = 1 / renderedScale;
+  return {
+    point: (clientX, clientY) => ({
+      x: (clientX - rect.left - offsetX) * deltaScale,
+      y: (clientY - rect.top - offsetY) * deltaScale,
+    }),
+    deltaScale,
+  };
+}
+
 function initialCenteredTransform(bounds: {
   width: number;
   height: number;
@@ -286,21 +322,18 @@ export function FamilyTreeChart({ chart }: Props) {
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      const rect = svg.getBoundingClientRect();
-      const anchorX = e.clientX - rect.left;
-      const anchorY = e.clientY - rect.top;
+      const { point } = getScreenToViewBox(svg, bounds);
+      const { x: viewBoxX, y: viewBoxY } = point(e.clientX, e.clientY);
       setTransform((t) => {
         const factor = 1 - e.deltaY * WHEEL_SENSITIVITY;
         const next = clampScale(t.scale * factor);
         if (next === t.scale) return t;
-        const viewBoxX = (anchorX / rect.width) * bounds.width;
-        const viewBoxY = (anchorY / rect.height) * bounds.height;
         return zoomAtPoint(t, next, viewBoxX, viewBoxY);
       });
     };
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
-  }, [bounds.width, bounds.height]);
+  }, [bounds]);
 
   useEffect(() => {
     if (!isFullscreen) return;
@@ -395,14 +428,15 @@ export function FamilyTreeChart({ chart }: Props) {
     } else if (pointersRef.current.size === 2 && svgRef.current) {
       const [a, b] = pointerListToArray(pointersRef.current);
       const m = midpoint(a, b);
-      const rect = svgRef.current.getBoundingClientRect();
+      const { point } = getScreenToViewBox(svgRef.current, bounds);
+      const anchor = point(m.x, m.y);
       pinchRef.current = {
         startDistance: distance(a, b),
         startScale: transform.scale,
         startTx: transform.tx,
         startTy: transform.ty,
-        anchorViewBoxX: ((m.x - rect.left) / rect.width) * bounds.width,
-        anchorViewBoxY: ((m.y - rect.top) / rect.height) * bounds.height,
+        anchorViewBoxX: anchor.x,
+        anchorViewBoxY: anchor.y,
       };
       dragRef.current = null;
       setIsDragging(false);
@@ -436,10 +470,11 @@ export function FamilyTreeChart({ chart }: Props) {
 
     const d = dragRef.current;
     if (!d || d.pointerId !== e.pointerId) return;
+    const { deltaScale } = getScreenToViewBox(svgRef.current, bounds);
     setTransform((t) => ({
       ...t,
-      tx: d.startTx + (e.clientX - d.startClientX),
-      ty: d.startTy + (e.clientY - d.startClientY),
+      tx: d.startTx + (e.clientX - d.startClientX) * deltaScale,
+      ty: d.startTy + (e.clientY - d.startClientY) * deltaScale,
     }));
   };
 
