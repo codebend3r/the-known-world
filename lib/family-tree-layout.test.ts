@@ -46,9 +46,10 @@ describe("layoutFamilyTree", () => {
     const result = layoutFamilyTree([node({ slug: "a" })]);
     const a = result.persons.find((p) => p.slug === "a");
     expect(a).toBeDefined();
-    expect(a!.x).toBe(PADDING + DOT_R);
+    const slotW = Math.max(DOT_R * 2, "Person".length * 5.5 + 12);
+    expect(a!.x).toBe(PADDING + slotW / 2);
     expect(a!.y).toBe(PADDING + DOT_R);
-    expect(result.bounds.width).toBe(PADDING * 2 + DOT_R * 2);
+    expect(result.bounds.width).toBe(PADDING * 2 + slotW / 2 + DOT_R);
     expect(result.bounds.height).toBe(PADDING * 2 + DOT_R * 2);
   });
 
@@ -65,8 +66,9 @@ describe("layoutFamilyTree", () => {
     ]);
     const xs = (slug: string) => result.persons.find((p) => p.slug === slug)!.x;
     const [c1, c2, c3] = [xs("c1"), xs("c2"), xs("c3")];
-    expect(c2 - c1).toBe(DOT_R * 2 + H_SPACING);
-    expect(c3 - c2).toBe(DOT_R * 2 + H_SPACING);
+    const expectedSlotW = Math.max(DOT_R * 2, "Person".length * 5.5 + 12);
+    expect(c2 - c1).toBe(expectedSlotW + H_SPACING);
+    expect(c3 - c2).toBe(expectedSlotW + H_SPACING);
     expect(xs("p")).toBe((c1 + c3) / 2);
     expect(result.persons.find((p) => p.slug === "p")!.y).toBe(PADDING + DOT_R);
     expect(result.persons.find((p) => p.slug === "c1")!.y).toBe(
@@ -102,8 +104,11 @@ describe("layoutFamilyTree", () => {
     const c1 = result.persons.find((p) => p.slug === "c1")!;
     const c2 = result.persons.find((p) => p.slug === "c2")!;
     const s1 = result.persons.find((p) => p.slug === "c1::spouse::0")!;
-    expect(s1.x).toBe(c1.x + SPOUSE_GAP + DOT_R * 2);
-    expect(c2.x - s1.x).toBe(DOT_R * 2 + H_SPACING);
+    const c1SlotW = Math.max(DOT_R * 2, "Person".length * 5.5 + 12);
+    const s1SlotW = Math.max(DOT_R * 2, "S1".length * 5.5 + 12);
+    const c2SlotW = Math.max(DOT_R * 2, "Person".length * 5.5 + 12);
+    expect(s1.x).toBeCloseTo(c1.x + c1SlotW / 2 + SPOUSE_GAP + s1SlotW / 2, 5);
+    expect(c2.x - s1.x).toBeCloseTo(s1SlotW / 2 + H_SPACING + c2SlotW / 2, 5);
   });
 
   it("descends children edges from the spouse-pair midpoint", () => {

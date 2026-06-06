@@ -10,6 +10,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { cx } from "@/lib/cx";
+import { formatLabelText } from "@/lib/family-tree-label";
 import {
   LAYOUT_CONSTANTS,
   type LaidOutChart,
@@ -45,22 +46,8 @@ function optimizedPortrait(path: string): string {
   return `/.netlify/images?${params.toString()}`;
 }
 
-const ROMAN_NUMERAL = /^[IVXLCDM]+$/;
-
-function wasKing(titles: ReadonlyArray<string>): boolean {
-  return titles.some((t) => t.startsWith("King "));
-}
-
 function formatLabel(person: LayoutPerson): string {
-  const parts = person.name.trim().split(/\s+/);
-  if (parts.length === 1) return parts[0];
-  const last = parts[parts.length - 1];
-  const lastInitial = `${last.charAt(0).toUpperCase()}.`;
-  if (wasKing(person.titles)) {
-    const numeral = parts.slice(1, -1).find((p) => ROMAN_NUMERAL.test(p));
-    if (numeral) return `${parts[0]} ${numeral} ${lastInitial}`;
-  }
-  return `${parts[0]} ${lastInitial}`;
+  return formatLabelText(person.name, person.titles);
 }
 
 function formatTitle(person: LayoutPerson): string {
@@ -382,46 +369,69 @@ export function FamilyTreeChart({ chart }: Props) {
   }, [isFullscreen]);
 
   useLayoutEffect(() => {
-    const svg = svgRef.current;
-    if (!svg) return;
-    const labels = svg.querySelectorAll<SVGTextElement>("text[data-label-key]");
-    const next = new Map<string, LabelBbox>();
-    labels.forEach((textEl) => {
-      const key = textEl.getAttribute("data-label-key");
-      if (!key) return;
-      let bbox: { x: number; y: number; width: number; height: number };
-      try {
-        bbox = textEl.getBBox();
-      } catch {
-        return;
-      }
-      if (!bbox.width || !bbox.height) return;
-      next.set(key, {
-        x: Math.round(bbox.x),
-        y: Math.round(bbox.y),
-        width: Math.round(bbox.width),
-        height: Math.round(bbox.height),
-      });
-    });
-    setLabelBboxes((prev) => {
-      if (prev.size === next.size) {
-        let same = true;
-        next.forEach((v, k) => {
-          const p = prev.get(k);
-          if (
-            !p ||
-            p.x !== v.x ||
-            p.y !== v.y ||
-            p.width !== v.width ||
-            p.height !== v.height
-          ) {
-            same = false;
-          }
+    const measure = () => {
+      const svg = svgRef.current;
+      if (!svg) return;
+      const labels = svg.querySelectorAll<SVGTextElement>(
+        "text[data-label-key]",
+      );
+      const next = new Map<string, LabelBbox>();
+      labels.forEach((textEl) => {
+        const key = textEl.getAttribute("data-label-key");
+        if (!key) return;
+        let bbox: { x: number; y: number; width: number; height: number };
+        try {
+          bbox = textEl.getBBox();
+        } catch {
+          return;
+        }
+        if (!bbox.width || !bbox.height) return;
+        next.set(key, {
+          x: Math.round(bbox.x),
+          y: Math.round(bbox.y),
+          width: Math.round(bbox.width),
+          height: Math.round(bbox.height),
         });
-        if (same) return prev;
-      }
-      return next;
-    });
+      });
+      setLabelBboxes((prev) => {
+        if (prev.size === next.size) {
+          let same = true;
+          next.forEach((v, k) => {
+            const p = prev.get(k);
+            if (
+              !p ||
+              p.x !== v.x ||
+              p.y !== v.y ||
+              p.width !== v.width ||
+              p.height !== v.height
+            ) {
+              same = false;
+            }
+          });
+          if (same) return prev;
+        }
+        return next;
+      });
+    };
+
+    measure();
+    let rafId: number | null = null;
+    if (
+      typeof window !== "undefined" &&
+      typeof requestAnimationFrame === "function"
+    ) {
+      rafId = requestAnimationFrame(measure);
+    }
+    let cancelled = false;
+    if (typeof document !== "undefined" && document.fonts?.ready) {
+      document.fonts.ready.then(() => {
+        if (!cancelled) measure();
+      });
+    }
+    return () => {
+      cancelled = true;
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, [chart]);
 
   if (chart.persons.length === 0) {
