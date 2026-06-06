@@ -356,3 +356,66 @@ describe("FamilyTreeChart — control panel", () => {
     expect(parseFloat(m![1])).toBe(8);
   });
 });
+
+describe("FamilyTreeChart — fullscreen", () => {
+  it("renders a fullscreen toggle button labelled 'Open fullscreen' by default", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    render(<FamilyTreeChart chart={chart} />);
+    expect(
+      screen.getByRole("button", { name: /open fullscreen/i }),
+    ).toBeDefined();
+  });
+
+  it("toggles the container's fullscreen state when clicked", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    const outer = container.querySelector("[data-fullscreen]");
+    expect(outer).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: /open fullscreen/i }));
+    expect(container.querySelector("[data-fullscreen]")).not.toBeNull();
+    expect(
+      screen.getByRole("button", { name: /exit fullscreen/i }),
+    ).toBeDefined();
+    fireEvent.click(screen.getByRole("button", { name: /exit fullscreen/i }));
+    expect(container.querySelector("[data-fullscreen]")).toBeNull();
+  });
+
+  it("closes when Escape is pressed while fullscreen", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    const { container } = render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /open fullscreen/i }));
+    expect(container.querySelector("[data-fullscreen]")).not.toBeNull();
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(container.querySelector("[data-fullscreen]")).toBeNull();
+  });
+
+  it("locks body scroll while fullscreen and restores on exit", () => {
+    const chart: LaidOutChart = {
+      persons: [person({ slug: "a", x: 50, y: 50 })],
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+    document.body.style.overflow = "";
+    render(<FamilyTreeChart chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /open fullscreen/i }));
+    expect(document.body.style.overflow).toBe("hidden");
+    fireEvent.click(screen.getByRole("button", { name: /exit fullscreen/i }));
+    expect(document.body.style.overflow).toBe("");
+  });
+});

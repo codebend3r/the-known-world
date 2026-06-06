@@ -124,3 +124,13 @@
 .controlReset {
   width: 100%;
 }
+
+.containerFullscreen {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+  border: 0;
+  border-radius: 0;
+}

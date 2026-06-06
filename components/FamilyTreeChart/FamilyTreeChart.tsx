@@ -167,6 +167,7 @@ export function FamilyTreeChart({ chart }: Props) {
   const pointersRef = useRef<Map<number, Pointer>>(new Map());
   const pinchRef = useRef<PinchState | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const animationRef = useRef<number | null>(null);
   const prefersReducedMotion = useSyncExternalStore(
@@ -300,6 +301,24 @@ export function FamilyTreeChart({ chart }: Props) {
     svg.addEventListener("wheel", onWheel, { passive: false });
     return () => svg.removeEventListener("wheel", onWheel);
   }, [bounds.width, bounds.height]);
+
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsFullscreen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [isFullscreen]);
+
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [isFullscreen]);
 
   if (chart.persons.length === 0) {
     return (
@@ -444,7 +463,13 @@ export function FamilyTreeChart({ chart }: Props) {
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={cx(
+        styles.container,
+        isFullscreen && styles.containerFullscreen,
+      )}
+      data-fullscreen={isFullscreen || undefined}
+    >
       <svg
         ref={svgRef}
         className={cx(styles.svg, isDragging && styles.dragging)}
@@ -505,6 +530,14 @@ export function FamilyTreeChart({ chart }: Props) {
           onClick={reset}
         >
           ⟲ Reset
+        </button>
+        <button
+          type="button"
+          className={cx(styles.controlButton, styles.controlReset)}
+          aria-label={isFullscreen ? "Exit fullscreen" : "Open fullscreen"}
+          onClick={() => setIsFullscreen((v) => !v)}
+        >
+          {isFullscreen ? "⛶ Exit fullscreen" : "⛶ Fullscreen"}
         </button>
       </div>
     </div>
