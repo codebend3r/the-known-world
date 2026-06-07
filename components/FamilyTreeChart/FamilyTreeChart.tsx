@@ -19,17 +19,19 @@ import {
   type LaidOutChart,
   type LayoutPerson,
 } from "@/lib/family-tree-layout";
+import { useIsMobile } from "@/lib/useIsMobile";
 import styles from "@/components/FamilyTreeChart/FamilyTreeChart.module.scss";
 
 const { DOT_R } = LAYOUT_CONSTANTS;
 const LABEL_GAP = 8;
 const MIN_SCALE = 0.5;
-const MAX_SCALE = 8;
+const MAX_SCALE = 16;
 const WHEEL_SENSITIVITY = 0.0015;
 const PINCH_WHEEL_SENSITIVITY = 0.03;
 const BUTTON_STEP = 1.25;
-const PRESET_SCALES = [0.5, 1, 2, 4, 8] as const;
+const PRESET_SCALES = [0.5, 1, 2, 4, 8, 16] as const;
 const INITIAL_SCALE = 2; // the new "100%", the legible default
+const MOBILE_INITIAL_SCALE = 4; // viewBox shrinks to fit narrow viewports, so start at "200%"
 const SCALE_EPSILON = 0.001;
 const ANIM_MS = 200;
 const DRAG_THRESHOLD = 3; // px
@@ -120,13 +122,13 @@ function getScreenToViewBox(
   };
 }
 
-function initialCenteredTransform(bounds: {
-  width: number;
-  height: number;
-}): Transform {
+function initialCenteredTransform(
+  bounds: { width: number; height: number },
+  scale: number,
+): Transform {
   return zoomAtPoint(
     { scale: 1, tx: 0, ty: 0 },
-    INITIAL_SCALE,
+    scale,
     bounds.width / 2,
     bounds.height / 2,
   );
@@ -202,7 +204,7 @@ type Props = {
 export function FamilyTreeChart({ chart }: Props) {
   const clipPrefix = useId();
   const [transform, setTransform] = useState<Transform>(() =>
-    initialCenteredTransform(chart.bounds),
+    initialCenteredTransform(chart.bounds, INITIAL_SCALE),
   );
   const dragRef = useRef<DragState | null>(null);
   const pointersRef = useRef<Map<number, Pointer>>(new Map());
@@ -216,6 +218,8 @@ export function FamilyTreeChart({ chart }: Props) {
     getReducedMotionSnapshot,
     getReducedMotionServerSnapshot,
   );
+  const isMobile = useIsMobile();
+  const didApplyMobileInitialRef = useRef(false);
 
   const { bounds } = chart;
 
@@ -366,6 +370,19 @@ export function FamilyTreeChart({ chart }: Props) {
     };
   }, [isFullscreen]);
 
+  // One-shot post-mount bump: `useIsMobile` returns false during SSR/hydration
+  // (so `useState` starts at `INITIAL_SCALE` to match server HTML), then on
+  // mount we snap to the mobile scale if the live matchMedia says we're on a
+  // small viewport. Deriving this in `useState` would cause a hydration
+  // mismatch on the `<g>` transform attribute.
+  useEffect(() => {
+    if (didApplyMobileInitialRef.current) return;
+    if (!isMobile) return;
+    didApplyMobileInitialRef.current = true;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setTransform(initialCenteredTransform(chart.bounds, MOBILE_INITIAL_SCALE));
+  }, [isMobile, chart.bounds]);
+
   if (chart.persons.length === 0) {
     return (
       <div className={styles.container}>
@@ -422,7 +439,8 @@ export function FamilyTreeChart({ chart }: Props) {
   };
 
   const reset = () => {
-    animateTo(initialCenteredTransform(bounds));
+    const scale = isMobile ? MOBILE_INITIAL_SCALE : INITIAL_SCALE;
+    animateTo(initialCenteredTransform(bounds, scale));
   };
 
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
