@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render } from "@testing-library/react";
+import { act, render } from "@testing-library/react";
 import type { ReactNode } from "react";
 
 vi.mock("react-svg-pan-zoom", () => ({
@@ -63,7 +63,9 @@ describe("MapStage", () => {
     );
     const stageEl = container.querySelector(".stage") as HTMLElement;
     stubSize(stageEl, 640, 1120);
-    observers[0].cb([] as unknown as ResizeObserverEntry[]);
+    act(() => {
+      observers[0].cb([] as unknown as ResizeObserverEntry[]);
+    });
     const pz = await findByTestId("pan-zoom");
     expect(pz.getAttribute("data-w")).toBe("640");
     expect(pz.getAttribute("data-h")).toBe("1120");
@@ -77,7 +79,9 @@ describe("MapStage", () => {
     );
     const stageEl = container.querySelector(".stage") as HTMLElement;
     stubSize(stageEl, 800, 1400);
-    observers[0].cb([] as unknown as ResizeObserverEntry[]);
+    act(() => {
+      observers[0].cb([] as unknown as ResizeObserverEntry[]);
+    });
     await findByTestId("pan-zoom");
     const img = container.querySelector("image");
     expect(img?.getAttribute("href")).toBe("/the-world.svg");
@@ -92,7 +96,9 @@ describe("MapStage", () => {
     );
     const stageEl = container.querySelector(".stage") as HTMLElement;
     stubSize(stageEl, 100, 100);
-    observers[0].cb([] as unknown as ResizeObserverEntry[]);
+    act(() => {
+      observers[0].cb([] as unknown as ResizeObserverEntry[]);
+    });
     await findByTestId("pan-zoom");
     const svg = container.querySelector("svg");
     expect(svg?.getAttribute("width")).toBe("800");
