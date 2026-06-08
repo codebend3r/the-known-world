@@ -1,0 +1,17 @@
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import { ParchmentLayout } from "@/components/ParchmentLayout";
+
+describe("ParchmentLayout", () => {
+  it("renders its children inside a `main` landmark with the page class", () => {
+    render(
+      <ParchmentLayout>
+        <p>contents</p>
+      </ParchmentLayout>,
+    );
+    const main = screen.getByRole("main");
+    expect(main.tagName).toBe("MAIN");
+    expect(main.className).toBe("page");
+    expect(main.textContent).toBe("contents");
+  });
+});

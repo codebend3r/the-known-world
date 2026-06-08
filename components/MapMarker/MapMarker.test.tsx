@@ -1,0 +1,94 @@
+import { describe, it, expect } from "vitest";
+import { render } from "@testing-library/react";
+import { MapMarker } from "@/components/MapMarker";
+import type { Castle } from "@/lib/schemas";
+
+type CastleType = Castle["type"];
+
+function renderMarker(props: {
+  slug: string;
+  name: string;
+  type: CastleType;
+  cx?: number;
+  cy?: number;
+}) {
+  const { slug, name, type, cx = 100, cy = 200 } = props;
+  return render(
+    <svg>
+      <MapMarker slug={slug} name={name} type={type} cx={cx} cy={cy} />
+    </svg>,
+  );
+}
+
+describe("MapMarker", () => {
+  it("renders an anchor pointing at the trailing-slash castle URL with the name as aria-label", () => {
+    const { container } = renderMarker({
+      slug: "winterfell",
+      name: "Winterfell",
+      type: "castle",
+    });
+    const link = container.querySelector("a");
+    expect(link?.getAttribute("href")).toBe("/castles/winterfell/");
+    expect(link?.getAttribute("aria-label")).toBe("Winterfell");
+    expect(link?.getAttribute("tabindex")).toBe("0");
+  });
+
+  it("renders the name as the label text offset from the marker centre", () => {
+    const { container } = renderMarker({
+      slug: "winterfell",
+      name: "Winterfell",
+      type: "castle",
+      cx: 50,
+      cy: 60,
+    });
+    const text = container.querySelector("text");
+    expect(text?.textContent).toBe("Winterfell");
+    expect(text?.getAttribute("x")).toBe("60");
+    expect(text?.getAttribute("y")).toBe("64");
+  });
+
+  it("renders a large red circle for `castle`", () => {
+    const { container } = renderMarker({
+      slug: "x",
+      name: "X",
+      type: "castle",
+    });
+    const circle = container.querySelector("circle");
+    expect(circle?.getAttribute("r")).toBe("6");
+    expect(circle?.getAttribute("fill")).toBe("#8b1a1a");
+  });
+
+  it("renders a small parchment circle for `town`", () => {
+    const { container } = renderMarker({ slug: "x", name: "X", type: "town" });
+    const circle = container.querySelector("circle");
+    expect(circle?.getAttribute("r")).toBe("4");
+    expect(circle?.getAttribute("fill")).toBe("#f8ecd0");
+  });
+
+  it("renders a two-line cross for `ruin`", () => {
+    const { container } = renderMarker({ slug: "x", name: "X", type: "ruin" });
+    const lines = container.querySelectorAll("line");
+    expect(lines).toHaveLength(2);
+  });
+
+  it("renders a tower silhouette (two rects) for `watchtower`", () => {
+    const { container } = renderMarker({
+      slug: "x",
+      name: "X",
+      type: "watchtower",
+    });
+    const rects = container.querySelectorAll("rect");
+    expect(rects).toHaveLength(2);
+  });
+
+  it("renders a filled square for `holdfast`", () => {
+    const { container } = renderMarker({
+      slug: "x",
+      name: "X",
+      type: "holdfast",
+    });
+    const rects = container.querySelectorAll("rect");
+    expect(rects).toHaveLength(1);
+    expect(rects[0]?.getAttribute("fill")).toBe("#8b1a1a");
+  });
+});
