@@ -122,4 +122,91 @@ describe("WeaponInfobox", () => {
     // Status row says "Lost" and Current house row says "Lost" — two matches.
     expect(screen.getAllByText("Lost")).toHaveLength(2);
   });
+
+  it('shows "Destroyed" for the current-house row when null and status is destroyed', () => {
+    const destroyed: Weapon = {
+      ...blackfyre,
+      status: "destroyed",
+    };
+    render(
+      <WeaponInfobox
+        weapon={destroyed}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    // Status row + Current house row both say "Destroyed".
+    expect(screen.getAllByText("Destroyed")).toHaveLength(2);
+  });
+
+  it("links the current house to its detail page when set", () => {
+    const inherited: Weapon = {
+      ...blackfyre,
+      "current-house": "targaryen",
+    };
+    render(
+      <WeaponInfobox
+        weapon={inherited}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("Current house")).toBeDefined();
+    // Origin and current both link to House Targaryen → two links.
+    const links = screen.getAllByRole("link", { name: /house targaryen/i });
+    expect(links.length).toBeGreaterThanOrEqual(2);
+    links.forEach((l) =>
+      expect(l.getAttribute("href")).toBe("/houses/targaryen/"),
+    );
+  });
+
+  it('renders a "Forged" row with a year+era for an AC/BC date', () => {
+    const dated: Weapon = {
+      ...blackfyre,
+      forged: { year: 100, era: "BC", precision: "year" },
+    };
+    render(
+      <WeaponInfobox
+        weapon={dated}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("Forged")).toBeDefined();
+    expect(screen.getByText("100 BC")).toBeDefined();
+  });
+
+  it("humanizes a legendary-era forging date with the `(legendary)` suffix", () => {
+    const ancient: Weapon = {
+      ...blackfyre,
+      forged: { year: 0, era: "age-of-heroes", precision: "legendary" },
+    };
+    render(
+      <WeaponInfobox
+        weapon={ancient}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("Age Of Heroes (legendary)")).toBeDefined();
+  });
+
+  it("renders a Destroyed date row when the weapon has a destruction date", () => {
+    const broken: Weapon = {
+      ...blackfyre,
+      status: "destroyed",
+      destroyed: { year: 130, era: "AC", precision: "year" },
+    };
+    render(
+      <WeaponInfobox
+        weapon={broken}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    // "Destroyed" appears as the row label, the status value, and the
+    // current-house value — three matches in total.
+    expect(screen.getAllByText("Destroyed")).toHaveLength(3);
+    expect(screen.getByText("130 AC")).toBeDefined();
+  });
 });

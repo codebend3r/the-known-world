@@ -8,7 +8,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     include: ["lib/**/*.test.ts", "components/**/*.test.tsx"],
-    reporters: [["default", { summary: false }]],
+    reporters: ["dot"],
     css: {
       // Vitest-specific CSS option (separate from Vite's top-level `css`).
       // `non-scoped` makes `styles.foo` resolve to the literal `'foo'`, so
@@ -36,7 +36,7 @@ export default defineConfig({
       ],
       thresholds: {
         statements: 85,
-        branches: 75,
+        branches: 80,
         functions: 85,
         lines: 90,
       },

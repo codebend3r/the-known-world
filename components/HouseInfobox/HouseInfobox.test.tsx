@@ -147,4 +147,135 @@ describe("HouseInfobox", () => {
     );
     expect(screen.getByText(/none; sovereign/i)).toBeDefined();
   });
+
+  it("renders the liege as a plain span when the liege slug is not in the houses map", () => {
+    const targaryenSworn: House = {
+      ...targaryen,
+      liege: "valyrian-freehold",
+    };
+    render(
+      <HouseInfobox
+        house={targaryenSworn}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(
+      screen.queryByRole("link", { name: /valyrian-freehold/i }),
+    ).toBeNull();
+    expect(screen.getByText("valyrian-freehold")).toBeDefined();
+  });
+
+  it('renders a singular "Cadet branch" row when exactly one cadet is set', () => {
+    const targaryenWithCadet: House = {
+      ...targaryen,
+      "cadet-houses": ["blackfyre"],
+    };
+    render(
+      <HouseInfobox
+        house={targaryenWithCadet}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Cadet branch")).toBeDefined();
+    expect(screen.queryByText("Cadet branches")).toBeNull();
+    expect(screen.getByText("House Blackfyre")).toBeDefined();
+  });
+
+  it('renders a plural "Cadet branches" row with multiple cadets', () => {
+    const targaryenWithCadets: House = {
+      ...targaryen,
+      "cadet-houses": ["blackfyre", "velaryon"],
+    };
+    render(
+      <HouseInfobox
+        house={targaryenWithCadets}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Cadet branches")).toBeDefined();
+    expect(screen.queryByText("Cadet branch")).toBeNull();
+  });
+
+  it("renders the Founded row with the year + era for AC/BC dates", () => {
+    render(
+      <HouseInfobox
+        house={targaryen}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Founded")).toBeDefined();
+    expect(screen.getByText("114 BC")).toBeDefined();
+  });
+
+  it("humanizes a legendary-era founding date with the `(legendary)` suffix", () => {
+    const legendaryHouse: House = {
+      ...targaryen,
+      founded: { year: 0, era: "age-of-heroes", precision: "legendary" },
+    };
+    render(
+      <HouseInfobox
+        house={legendaryHouse}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Age Of Heroes (legendary)")).toBeDefined();
+  });
+
+  it("humanizes a non-legendary fantasy era without the suffix", () => {
+    const fantasyHouse: House = {
+      ...targaryen,
+      founded: { year: 0, era: "andal-invasion", precision: "era" },
+    };
+    render(
+      <HouseInfobox
+        house={fantasyHouse}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Andal Invasion")).toBeDefined();
+    expect(screen.queryByText(/legendary/i)).toBeNull();
+  });
+
+  it("renders an Extinct row when the house has an extinct date", () => {
+    const extinctHouse: House = {
+      ...targaryen,
+      extinct: { year: 283, era: "AC", precision: "year" },
+    };
+    render(
+      <HouseInfobox
+        house={extinctHouse}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Extinct")).toBeDefined();
+    expect(screen.getByText("283 AC")).toBeDefined();
+  });
 });

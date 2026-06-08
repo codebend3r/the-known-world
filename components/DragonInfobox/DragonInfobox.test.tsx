@@ -100,4 +100,56 @@ describe("DragonInfobox", () => {
     );
     expect(container.querySelector(".sigil")).toBeNull();
   });
+
+  it("humanizes a legendary-era hatched date with the `(legendary)` suffix", () => {
+    const legendary: Dragon = {
+      ...vhagar,
+      hatched: { year: 0, era: "age-of-heroes", precision: "legendary" },
+      died: null,
+    };
+    render(
+      <DragonInfobox
+        dragon={legendary}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("Age Of Heroes (legendary)")).toBeDefined();
+  });
+
+  it("humanizes a non-legendary fantasy era without the suffix", () => {
+    const fantasy: Dragon = {
+      ...vhagar,
+      hatched: { year: 0, era: "andal-invasion", precision: "era" },
+      died: null,
+    };
+    render(
+      <DragonInfobox
+        dragon={fantasy}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("Andal Invasion")).toBeDefined();
+    expect(screen.queryByText(/legendary/i)).toBeNull();
+  });
+
+  it('falls back to a humanized "House X" label when the house slug is missing from the map', () => {
+    const orphaned: Dragon = {
+      ...vhagar,
+      house: "unknown-house",
+    };
+    render(
+      <DragonInfobox
+        dragon={orphaned}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("House Unknown House")).toBeDefined();
+    // No /houses/unknown-house/ link because the slug isn't in housesBySlug.
+    expect(
+      screen.queryByRole("link", { name: /house unknown house/i }),
+    ).toBeNull();
+  });
 });
