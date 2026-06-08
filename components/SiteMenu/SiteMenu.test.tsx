@@ -80,7 +80,12 @@ describe("SiteMenu", () => {
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
 
-    fireEvent.click(screen.getByRole("link", { name: /maps/i }));
+    const mapsLink = screen.getByRole("link", { name: /maps/i });
+    // jsdom doesn't implement document navigation; cancel the anchor's
+    // default action so it doesn't print "Not implemented: navigation to
+    // another Document". React's onClick={close} still runs.
+    mapsLink.addEventListener("click", (e) => e.preventDefault());
+    fireEvent.click(mapsLink);
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
   });
 
