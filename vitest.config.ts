@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     include: ["lib/**/*.test.ts", "components/**/*.test.tsx"],
+    reporters: ["dot"],
     css: {
       // Vitest-specific CSS option (separate from Vite's top-level `css`).
       // `non-scoped` makes `styles.foo` resolve to the literal `'foo'`, so
@@ -21,6 +22,18 @@ export default defineConfig({
       // internal Next.js variable; see node_modules/next/dist/esm/build/define-env.js
       // — it may be renamed in a future Next release.
       __NEXT_TRAILING_SLASH: "1",
+    },
+    coverage: {
+      provider: "istanbul",
+      reporter: ["text", "text-summary", "html", "lcov"],
+      reportsDirectory: "./coverage",
+      include: ["components/**/*.{ts,tsx}", "lib/**/*.ts"],
+      exclude: [
+        "**/*.test.{ts,tsx}",
+        "**/index.ts",
+        "**/*.d.ts",
+        "components/**/*.module.scss",
+      ],
     },
   },
 });
