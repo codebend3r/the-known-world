@@ -41,6 +41,7 @@ export const SIGIL_SLUGS = new Set([
   "cerwyn",
   "blackfyre",
   "bar-emmon",
+  "cargyll",
   "celtigar",
   "chester",
   "crakehall",
