@@ -4,7 +4,7 @@ name: Bronn
 sex: m
 born: null
 died: null
-primary-house: unknown
+primary-house: null
 titles:
   - Ser
   - Lord of Stokeworth
