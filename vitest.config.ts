@@ -34,6 +34,12 @@ export default defineConfig({
         "**/*.d.ts",
         "components/**/*.module.scss",
       ],
+      thresholds: {
+        statements: 85,
+        branches: 75,
+        functions: 85,
+        lines: 90,
+      },
     },
   },
 });
