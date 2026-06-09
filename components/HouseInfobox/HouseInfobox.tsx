@@ -88,6 +88,7 @@ export function HouseInfobox({
           slug={house.slug}
           name={shortHouseName(house.name)}
           region={regionForHouse(house.slug, housesBySlug)}
+          sizes="(max-width: 768px) 90vw, 400px"
           decorative
           priority
           className={styles.sigilFill}
