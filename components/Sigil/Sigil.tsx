@@ -91,6 +91,21 @@ export const SIGIL_SLUGS = new Set([
   "qoherys",
   "towers",
   "toyne",
+  "ball",
+  "blackmont",
+  "fowler",
+  "morrigen",
+  "trant",
+  "uller",
+  "bronn",
+  "belmore",
+  "blount",
+  "brax",
+  "buckler",
+  "bulwer",
+  "cassel",
+  "costayne",
+  "manwoody",
   "others",
   "unknown",
 ]);
@@ -109,6 +124,7 @@ const REGION_FILE: Record<string, string> = {
 
 const SLUG_ALIASES: Record<string, string> = {
   durrandon: "baratheon",
+  bronn: "blackwater",
 };
 
 function sigilFile({
