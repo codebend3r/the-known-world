@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Edrick Snowbeard
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Edrick_Stark

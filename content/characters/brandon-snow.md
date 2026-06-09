@@ -5,6 +5,9 @@ sex: m
 born: null
 died: null
 primary-house: stark
+parents:
+  - stark-father-of-torrhen
+  - mistress-of-stark-father-of-torrhen
 titles:
   - Bastard of Winterfell
 sources:

@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Ice Eyes
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brandon_Stark_(Ice_Eyes)

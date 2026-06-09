@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Benjen the Sweet
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Benjen_Stark_(Sweet)

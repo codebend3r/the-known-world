@@ -13,6 +13,7 @@ titles:
   - King of Winter
 aliases:
   - The Laughing Wolf
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rickard_Stark_(king)

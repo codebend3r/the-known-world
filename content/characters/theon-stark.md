@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - The Hungry Wolf
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Theon_Stark

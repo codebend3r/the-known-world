@@ -10,6 +10,7 @@ died:
 primary-house: stark
 parents:
   - brandon-the-boastful
+  - wife-of-brandon-the-boastful
 titles:
   - Lord of Winterfell
   - Warden of the North

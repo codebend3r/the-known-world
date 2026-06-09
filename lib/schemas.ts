@@ -160,6 +160,7 @@ export const CharacterSchema = z.object({
     .enum(["unnamed", "unwritten", "uncertain"])
     .nullable()
     .default(null),
+  "exclude-from-tree": z.boolean().default(false),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });

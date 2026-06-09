@@ -5,6 +5,9 @@ sex: m
 born: null
 died: null
 primary-house: stark
+parents:
+  - elder-son-of-alaric-stark
+  - wife-of-elder-son-of-alaric
 titles:
   - Lord of Winterfell
   - Warden of the North

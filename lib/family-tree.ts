@@ -57,7 +57,7 @@ export function buildFamilyTree(
   );
   const housePeople = people
     .map((p) => p.frontmatter)
-    .filter((p) => p["primary-house"] === houseSlug);
+    .filter((p) => p["primary-house"] === houseSlug && !p["exclude-from-tree"]);
   const houseSlugs = new Set(housePeople.map((p) => p.slug));
 
   const roots = housePeople

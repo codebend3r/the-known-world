@@ -29,6 +29,7 @@ aliases:
   - The Silent Sister
   - Mother Merciless
   - The Hangwoman
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Catelyn_Stark

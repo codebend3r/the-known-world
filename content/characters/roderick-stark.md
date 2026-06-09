@@ -5,6 +5,11 @@ sex: m
 born: null
 died: null
 primary-house: stark
+parents:
+  - brandon-the-boisterous
+  - wife-of-brandon-the-boisterous
+spouses:
+  - wife-of-roderick-stark
 titles:
   - Lord of Winterfell
   - Warden of the North

@@ -7,6 +7,7 @@ died: null
 primary-house: stark
 parents:
   - brandon-the-builder
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brandon_Stark_(son_of_Bran_the_Builder)

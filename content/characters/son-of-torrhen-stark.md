@@ -1,15 +1,13 @@
 ---
-slug: daughter-of-torrhen-stark
-name: Daughter of Torrhen Stark
-sex: f
+slug: son-of-torrhen-stark
+name: Son
+sex: m
 born: null
 died: null
 primary-house: stark
 parents:
   - torrhen-stark
   - wife-of-torrhen-stark
-spouses:
-  - ronnel-arryn-king
 placeholder: true
 placeholder-reason: unnamed
 sources:

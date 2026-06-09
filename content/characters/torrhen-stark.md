@@ -8,7 +8,14 @@ died:
   era: AC
   precision: decade
 primary-house: stark
+parents:
+  - stark-father-of-torrhen
+  - wife-of-stark-father-of-torrhen
+spouses:
+  - wife-of-torrhen-stark
 children:
+  - brandon-the-boisterous
+  - son-of-torrhen-stark
   - daughter-of-torrhen-stark
 titles:
   - King in the North

@@ -15,14 +15,15 @@ parents:
   - rickard-stark
   - lyarra-stark
 spouses:
+  - wylla
   - catelyn-stark
 children:
+  - jon-snow
   - robb-stark
   - sansa-stark
   - arya-stark
   - bran-stark
   - rickon-stark
-  - jon-snow
 titles:
   - Lord of Winterfell
   - Warden of the North

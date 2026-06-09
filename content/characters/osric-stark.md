@@ -7,6 +7,7 @@ died: null
 primary-house: stark
 titles:
   - Lord Commander of the Night's Watch
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Osric_Stark
