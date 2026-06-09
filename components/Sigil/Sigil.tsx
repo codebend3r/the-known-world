@@ -31,6 +31,7 @@ export const SIGIL_SLUGS = new Set([
   "redwyne",
   "florent",
   "rowan",
+  "roxton",
   "oakheart",
   "mallister",
   "piper",
