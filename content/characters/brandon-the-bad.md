@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Brandon the Bad
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brandon_Stark

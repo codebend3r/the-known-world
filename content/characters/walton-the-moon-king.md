@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Walton the Moon King
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Walton_Stark

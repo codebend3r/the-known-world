@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Edderion the Bridegroom
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Edderion_Stark

@@ -7,6 +7,7 @@ died: null
 primary-house: stark
 parents:
   - rickon-stark-son-of-benjen
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Sara_Snow

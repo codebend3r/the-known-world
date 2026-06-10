@@ -9,6 +9,7 @@ titles:
   - King of Winter
 aliases:
   - Edwyn the Spring King
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Edwyn_Stark

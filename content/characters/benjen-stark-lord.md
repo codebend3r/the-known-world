@@ -5,6 +5,9 @@ sex: m
 born: null
 died: null
 primary-house: stark
+parents:
+  - younger-son-of-alaric-stark
+  - wife-of-younger-son-of-alaric
 spouses:
   - lysa-locke
 children:

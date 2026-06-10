@@ -15,6 +15,7 @@ children:
   - brandon-stark-son-of-cregan
 titles:
   - Lady of Winterfell
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Lynara_Stark

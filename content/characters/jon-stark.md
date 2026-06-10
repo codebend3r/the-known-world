@@ -9,6 +9,7 @@ children:
   - rickard-stark-the-laughing-wolf
 titles:
   - King of Winter
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jon_Stark

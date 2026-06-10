@@ -8,6 +8,11 @@ died:
   era: AC
   precision: year
 primary-house: stark
+parents:
+  - brandon-the-boisterous
+  - wife-of-brandon-the-boisterous
+spouses:
+  - wife-of-brandon-the-boastful
 children:
   - walton-stark-son-of-brandon
   - alaric-stark

@@ -27,6 +27,7 @@ function character(
     mentions: partial.mentions ?? [],
     placeholder: partial.placeholder ?? false,
     "placeholder-reason": partial["placeholder-reason"] ?? null,
+    "exclude-from-tree": partial["exclude-from-tree"] ?? false,
     sources: partial.sources ?? [],
     draft: partial.draft ?? false,
   };

@@ -7,6 +7,7 @@ died: null
 primary-house: stark
 also-of-houses:
   - karstark
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Karlon_Stark

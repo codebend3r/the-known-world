@@ -5,6 +5,15 @@ sex: m
 born: null
 died: null
 primary-house: stark
+parents:
+  - torrhen-stark
+  - wife-of-torrhen-stark
+spouses:
+  - wife-of-brandon-the-boisterous
+children:
+  - roderick-stark
+  - brandon-the-boastful
+  - son-of-brandon-the-boisterous
 titles:
   - Lord of Winterfell
   - Warden of the North

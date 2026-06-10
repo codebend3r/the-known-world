@@ -10,10 +10,13 @@ died:
 primary-house: stark
 parents:
   - brandon-the-boastful
+  - wife-of-brandon-the-boastful
 spouses:
   - lady-mormont-wife-of-alaric
 children:
+  - elder-son-of-alaric-stark
   - alarra-stark
+  - younger-son-of-alaric-stark
 titles:
   - Lord of Winterfell
   - Warden of the North

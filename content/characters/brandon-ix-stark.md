@@ -7,6 +7,7 @@ died: null
 primary-house: stark
 titles:
   - King of Winter
+exclude-from-tree: true
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brandon_IX_Stark

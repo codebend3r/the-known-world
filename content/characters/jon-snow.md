@@ -10,6 +10,7 @@ died: null
 primary-house: stark
 parents:
   - eddard-stark
+  - wylla
 titles:
   - Brother of the Night's Watch
   - Steward to the Lord Commander

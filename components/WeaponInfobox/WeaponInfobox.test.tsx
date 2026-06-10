@@ -50,6 +50,7 @@ const aegon: Character = {
   mentions: [],
   placeholder: false,
   "placeholder-reason": null,
+  "exclude-from-tree": false,
   sources: [],
   draft: false,
 };
