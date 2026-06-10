@@ -145,6 +145,7 @@ type Props = {
   name: string;
   region?: string | null;
   size?: string;
+  sizes?: string;
   decorative?: boolean;
   className?: string;
   priority?: boolean;
@@ -155,6 +156,7 @@ export function Sigil({
   name,
   region,
   size,
+  sizes,
   decorative = false,
   className,
   priority = false,
@@ -173,7 +175,7 @@ export function Sigil({
         src={`/sigils/${sigilFile({ slug, region })}.png`}
         alt={decorative ? "" : `Sigil of House ${name}`}
         fill
-        sizes={size ?? "6rem"}
+        sizes={sizes ?? size ?? "6rem"}
         priority={priority}
       />
     </span>
