@@ -12,8 +12,7 @@ founded:
   precision: legendary
 status: extant
 sworn-from:
-  - name: House Hardyng
-    slug: hardyng
+  - hardyng
 cadet-houses: []
 region: vale
 heads:
