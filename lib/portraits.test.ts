@@ -42,21 +42,48 @@ describe("findPortrait", () => {
     expect(result).toBe("/characters/foo.jpeg");
   });
 
-  it("returns the male fallback when no extension matches for a male character", async () => {
+  it("falls back to a numbered male placeholder when no portrait exists", async () => {
     existing([]);
     const result = await findPortrait("nobody", "m");
-    expect(result).toBe("/characters/unknown-male.png");
+    expect(result).toMatch(/^\/characters\/unknown-male-0[1-5]\.jpg$/);
   });
 
-  it("returns the female fallback when no extension matches for a female character", async () => {
+  it("falls back to a numbered female placeholder when no portrait exists", async () => {
     existing([]);
     const result = await findPortrait("nobody", "f");
-    expect(result).toBe("/characters/unknown-female.png");
+    expect(result).toMatch(/^\/characters\/unknown-female-0[1-5]\.jpg$/);
   });
 
-  it("returns the male fallback when sex is unknown", async () => {
+  it("treats unknown sex as male for the placeholder", async () => {
     existing([]);
     const result = await findPortrait("nobody", null);
-    expect(result).toBe("/characters/unknown-male.png");
+    expect(result).toMatch(/^\/characters\/unknown-male-0[1-5]\.jpg$/);
+  });
+
+  it("assigns the same placeholder variant for a given slug every time", async () => {
+    existing([]);
+    const first = await findPortrait("aelinor-penrose", "f");
+    const second = await findPortrait("aelinor-penrose", "f");
+    expect(second).toBe(first);
+  });
+
+  it("varies the placeholder variant across different slugs", async () => {
+    existing([]);
+    const slugs = ["alpha", "bravo", "charlie", "delta", "echo", "foxtrot"];
+    const variants = new Set(
+      await Promise.all(slugs.map((slug) => findPortrait(slug, "m"))),
+    );
+    expect(variants.size).toBeGreaterThan(1);
+  });
+
+  it("only ever assigns variants 01 through 05", async () => {
+    existing([]);
+    const slugs = Array.from({ length: 50 }, (_, index) => `slug-${index}`);
+    const results = await Promise.all(
+      slugs.map((slug) => findPortrait(slug, "f")),
+    );
+    results.forEach((result) =>
+      expect(result).toMatch(/^\/characters\/unknown-female-0[1-5]\.jpg$/),
+    );
   });
 });
