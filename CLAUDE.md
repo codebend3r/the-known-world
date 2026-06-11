@@ -4,7 +4,7 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 
 ## Workflow
 
-- Work directly on `main`. Don't create branches unless explicitly asked.
+- Always create a branch for each feature or bug fix.
 - Auto-commit each logical change without asking. Subject must start with `TKW:` (see the `tkw-commit-format` skill).
 
 ## Tooling
@@ -12,17 +12,22 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 - All scripts run through Bun: `bun install`, `bun dev`, `bun run test`, `bun run build`, `bun run lint`. Never invoke npm or yarn.
 - Pin every `package.json` dependency to an exact version, with no `^` or `~`.
 
-## Architecture
+## Typescript
 
-- The site is a fully static export (`output: 'export'`). No server actions, no route handlers, no dynamic rendering: every route must pre-render at build time.
-- Each component lives in its own folder under `components/`, with its `*.tsx`, `*.module.scss`, and `*.test.tsx` co-located (e.g. `components/SiteHeader/SiteHeader.tsx`, `components/SiteHeader/SiteHeader.module.scss`, `components/SiteHeader/SiteHeader.test.tsx`). Each folder also contains an `index.ts` that re-exports the component (`export * from "@/components/SiteHeader/SiteHeader";`) so consumers can keep importing from `@/components/SiteHeader`. Page-owned styles follow the same co-location rule (`app/houses/[slug]/page.module.scss` next to its `page.tsx`).
-- Styles are SCSS modules (`*.module.scss`) compiled by Next.js's built-in Sass support (the `sass` devDependency). The only global stylesheet is `styles/globals.scss` (resets, CSS custom properties, `html`/`body`/`h1-h3` rules, and the `.subtitle` typographic primitive). No Tailwind, no CSS-in-JS: preserve the parchment aesthetic.
-- Class names inside modules are `camelCase` — no BEM. Drop the redundant `block__element--modifier` because the file scope already isolates them. Compose multiple classes with `lib/cx.ts`; do not add `clsx`.
-- Cross-module styling is done by passing a `className` prop to the child component (e.g. `<Sigil className={styles.sigilFill} />`), never by reaching into another module's class names from a selector.
-- The four `Filtered*List` components share `components/listSearch.module.scss` at the `components/` root for the search + pagination apparatus they all render. Shared SCSS modules that don't belong to any single component live at the `components/` root rather than inside one component's folder. When adding genuinely shared styles, prefer a single shared module imported by every consumer over duplicating rules; reserve `globals.scss` for design tokens and true typographic primitives.
-- Never use `margin` for layout spacing. Prefer `display: grid` with `gap` and `padding`. Only reach for `margin` when there is genuinely no other option.
-- Never use `grid-column: 1 / -1` (or other `1 / -1` line shortcuts) to span a child across columns. Declare `grid-template-areas` on the parent alongside `grid-template-columns` and use a named `grid-area` on the child, so the grid's shape is readable from the parent rule.
-- All in-repo imports use the `@/` alias (`@/components/Sigil`, `@/lib/schemas`, `@/components/SiteHeader/SiteHeader.module.scss`) — never relative paths like `./Foo` or `../package.json`. Component consumers import from the folder (`@/components/Sigil`) and let the folder's `index.ts` resolve to the implementation file; only intra-folder asset imports (a component's own SCSS module) name the file explicitly. Applies to source, tests, and SCSS-module imports alike. Third-party imports (`next/link`, `react`, etc.) stay bare.
+- Use type guards wherever possible.
+- Never use `any` types; prefer type narrowing or type guards
+- Never under any circumstance cast types and never double cast: `as any as string`
+- If type can't be inferred and type narrowing is not an option, use `unknown` types
+
+## CSS
+
+- Use SCSS modules (`*.module.scss`) for component styles
+- Only use global stylesheets (`styles/globals.scss`) for design tokens and true typographic primitives
+- Use a container driven approach, meaning the container will define the width and height and the children will be positioned within it, this means if/when the children are moved to different containers they may be laid out differently depending on what the container specificies
+- Prefer using CSS display grid for layout with the gap property for spacing between grid items; avoid using margins for spacing
+- Second preferred display value is flex
+- Avoid using plain divs; meaing divs with no class or id defined
+- Always use token values from `styles/globals.scss` when defining font sizes, colors, and other design tokens like padding, margin, gap, and border radius
 
 ## Code style
 
@@ -42,6 +47,6 @@ Design specs and implementation plans live in `docs/superpowers/specs/` and `doc
 
 ## Commits
 
-- Create a commit after every discrete change; do not batch.
+- Create a commit after every logical change, batch if they are related.
 - Subject must start with `TKW:` followed by a short title (e.g., `TKW: a short title`).
 - Favor bullet points in the body. Keep it concise and easy to read.
