@@ -1,0 +1,47 @@
+.flourish {
+  display: grid;
+  align-items: center;
+  color: var(--gold-leaf);
+  line-height: 0;
+  opacity: 0.85;
+  pointer-events: none;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.mirrored svg {
+  transform: scaleX(-1);
+}
+
+.rule {
+  display: grid;
+  justify-items: center;
+  color: var(--gold-leaf);
+  line-height: 0;
+  opacity: 0.9;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}

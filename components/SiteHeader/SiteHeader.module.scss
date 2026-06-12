@@ -1,17 +1,33 @@
 @use "breakpoints" as bp;
 
 .header {
-  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
-  background: linear-gradient(
-    180deg,
-    rgba(248, 236, 208, 0.96) 0%,
-    rgba(232, 211, 160, 0.92) 100%
-  );
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
   position: sticky;
   top: 0;
   z-index: 50;
+  isolation: isolate;
+  border-bottom: 1px solid rgba(107, 68, 35, 0.28);
+  background: linear-gradient(
+    180deg,
+    rgba(248, 236, 208, 0.97) 0%,
+    rgba(236, 217, 170, 0.94) 60%,
+    rgba(228, 205, 156, 0.93) 100%
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 1px 0 rgba(248, 236, 208, 0.6) inset;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/patterns/floral-pattern.avif");
+    background-repeat: repeat;
+    background-size: 150px auto;
+    opacity: 0.1;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    z-index: 0;
+  }
 
   &::after {
     content: "";
@@ -23,86 +39,90 @@
     background: linear-gradient(
       90deg,
       transparent 0%,
-      var(--gold-leaf) 18%,
-      var(--gold-leaf) 82%,
+      var(--gold-leaf) 20%,
+      var(--gold-leaf) 80%,
       transparent 100%
     );
-    opacity: 0.65;
+    opacity: 0.7;
   }
 }
 
 .inner {
+  position: relative;
+  z-index: 1;
   display: grid;
-  max-width: 1200px;
-  margin: 0;
-  padding: 0;
-  height: 70px;
-  grid-template-columns: 70px 1fr;
-  align-items: center;
+  place-items: center;
+  min-height: 76px;
+  padding: 0 clamp(3.25rem, 8vw, 6rem);
+
+  @media (max-width: bp.$md) {
+    min-height: 64px;
+  }
+
+  @media (max-width: bp.$xs) {
+    min-height: 56px;
+    padding: 0 1rem 0 3.5rem;
+  }
 }
 
 .titleLink {
   display: grid;
-  justify-self: left;
-  grid-template-columns: 1fr;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.85rem, 2.4vw, 1.85rem);
   text-decoration: none;
   color: inherit;
-  display: grid;
-  margin: 0 0 0 70px;
-  width: calc(100vw - 70px);
-  justify-items: start;
+  transition: color 160ms ease;
 
-  &:hover .title,
-  &:focus-visible .title {
-    color: var(--gold-leaf);
+  &:hover,
+  &:focus-visible {
+    .title {
+      color: var(--ink-faded);
+    }
+
+    .flourish {
+      opacity: 1;
+    }
   }
 
-  @media (max-width: bp.$xs) {
-    gap: 0.4rem;
+  &:focus-visible {
+    outline: 2px solid var(--gold-leaf);
+    outline-offset: 6px;
+    border-radius: 2px;
   }
 }
 
-.logo {
-  height: 4rem;
-  width: auto;
-  display: block;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 50%;
-  transform: translate(-50%, -50%);
+.flourish {
+  width: clamp(54px, 9vw, 104px);
+  transition: opacity 200ms ease;
 
-  @media (max-width: bp.$md) {
-    height: 3rem;
-  }
-
-  @media (max-width: bp.$xs) {
-    height: 2.5rem;
+  @media (max-width: bp.$sm) {
+    display: none;
   }
 }
 
 .title {
-  display: grid;
   margin: 0;
   padding: 0;
-  width: 100%;
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: 2rem;
-  letter-spacing: 2px;
+  font-size: clamp(1.45rem, 4.4vw, 2.1rem);
+  letter-spacing: 0.14em;
   color: var(--ink);
   text-align: center;
   line-height: 1;
   white-space: nowrap;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  text-shadow:
+    0 1px 0 rgba(255, 250, 235, 0.55),
+    0 1px 3px rgba(61, 40, 23, 0.18);
 
   @media (max-width: bp.$md) {
-    font-size: 1.6rem;
-    letter-spacing: 4px;
+    letter-spacing: 0.16em;
   }
 
   @media (max-width: bp.$xs) {
-    font-size: 1.35rem;
-    letter-spacing: 3px;
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
   }
 }
