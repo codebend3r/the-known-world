@@ -259,7 +259,7 @@ export function FilteredHouseList({
                       slug={item.slug}
                       name={item.name}
                       region={item.region}
-                      size={view === "list" ? "2rem" : "6rem"}
+                      size={view === "list" ? "4rem" : "6rem"}
                       decorative
                       priority={index < PRIORITY_COUNT}
                     />

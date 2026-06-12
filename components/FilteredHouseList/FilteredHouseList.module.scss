@@ -116,7 +116,7 @@
 
   .card {
     display: grid;
-    grid-template-columns: 2.5rem 1fr auto;
+    grid-template-columns: 4.5rem 1fr auto;
     align-items: center;
     gap: 1rem;
     min-height: 0;
@@ -126,8 +126,9 @@
   }
 
   .name {
-    font-size: 0.5rem;
+    font-size: 1.5rem;
     letter-spacing: 1px;
+    min-height: 0;
   }
 }
 
