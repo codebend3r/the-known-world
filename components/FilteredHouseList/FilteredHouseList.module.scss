@@ -12,6 +12,14 @@
   gap: 1rem;
   justify-self: stretch;
 
+  @media (max-width: bp.$xxl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: bp.$xl) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   @media (max-width: bp.$lg) {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -38,22 +46,23 @@
   min-height: 10.5rem;
   padding: 0.5rem;
   background: var(--vellum);
-  border: 2px solid rgba(107, 68, 35, 0.25);
+  border: 2px solid white;
   border-radius: 2px;
   color: var(--ink);
   text-decoration: none;
   text-align: center;
+  border-radius: 8px;
   transition:
     border-color 150ms ease,
     transform 150ms ease,
     box-shadow 150ms ease;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
+    border-color: white;
     transform: scale(1.01);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
     color: var(--ink);
   }
 
@@ -70,31 +79,58 @@
 // Regional border tints — colours live in `globals.scss` as
 // `--region-color-*` tokens (shared with `FilteredCharacterList`).
 .cardNorth {
-  border-color: var(--region-color-north);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-north);
+  }
 }
 .cardVale {
-  border-color: var(--region-color-vale);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-vale);
+  }
 }
 .cardRiverlands {
-  border-color: var(--region-color-riverlands);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-riverlands);
+  }
 }
 .cardWesterlands {
-  border-color: var(--region-color-westerlands);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-westerlands);
+  }
 }
 .cardReach {
-  border-color: var(--region-color-reach);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-reach);
+  }
 }
 .cardStormlands {
-  border-color: var(--region-color-stormlands);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-stormlands);
+  }
 }
 .cardDorne {
-  border-color: var(--region-color-dorne);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-dorne);
+  }
 }
 .cardIronIslands {
-  border-color: var(--region-color-iron-islands);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-iron-islands);
+  }
 }
 .cardCrownlands {
-  border-color: var(--region-color-crownlands);
+  &:hover,
+  &:focus-visible {
+    border-color: var(--region-color-crownlands);
+  }
 }
 
 .name {

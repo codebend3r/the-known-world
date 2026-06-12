@@ -10,7 +10,7 @@ import {
   renderMarkdown,
 } from "@/lib/content";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
-import { FiligreeFlourish, FiligreeRule } from "@/components/Filigree";
+import { FiligreeRule } from "@/components/Filigree";
 import { Sources } from "@/components/Sources";
 import { FamilyTreeViews } from "@/components/FamilyTreeViews";
 import { enrichTreeWithPortraits } from "@/lib/family-tree-portraits";
@@ -99,9 +99,7 @@ export default async function HousePage({
       <div className={styles.detail}>
         <div className={styles.heading}>
           <div className={styles.nameRow}>
-            <FiligreeFlourish className={styles.nameFlourish} />
             <h1>{house.frontmatter.name}</h1>
-            <FiligreeFlourish mirrored className={styles.nameFlourish} />
           </div>
           {house.frontmatter.words && (
             <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
