@@ -14,11 +14,11 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
-    "system-check": "run-s prettier:check typecheck lint test",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
     "prettier:quick": "pretty-quick --staged",
-    "prepare": "husky"
+    "prepare": "husky",
+    "system-check": "run-s prettier:check typecheck lint test"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
