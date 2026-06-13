@@ -8,11 +8,11 @@ sigil:
   description: A green hand on a white field
 founded:
   year: -10000
-  era: dawn-age
+  era: age-of-heroes
   precision: legendary
 extinct:
-  year: 2
-  era: AC
+  year: -1
+  era: BC
   precision: year
 status: extinct
 sworn-from: []
@@ -20,12 +20,13 @@ cadet-houses: []
 region: reach
 heads:
   - name: "King Garth the Gardener"
-    note: founder; first son of Garth Greenhand
+    note: founder and first King of the Reach, eldest son of Garth Greenhand
+  - name: "King Garth VII Gardener"
+    note: the Goldenhand; greatest of the line, whose Golden Reign brought three-quarters of a century of peace
   - name: "King Mern IX Gardener"
-    note: last of the line; burned upon the Field of Fire with his sons
+    note: last of the line; burned upon the Field of Fire with all his kin
 titles:
   - name: King of the Reach
-  - name: High King of the First Men
   - name: Lord of Highgarden
 sources:
   - type: awoiaf
@@ -34,6 +35,8 @@ sources:
 draft: false
 ---
 
-House Gardener of Highgarden was the royal house of the Reach from the Dawn Age until the coming of Aegon the Dragon, the longest-reigning line of kings in all of Westeros save for the Starks of Winterfell. The Gardeners traced their descent from Garth the Gardener, eldest son of Garth Greenhand, the High King of the First Men whom the singers name the father of half the noble houses of the south. Garth was said to have walked the green and made it bloom wherever he set his foot; his son raised a hall atop the high hill above the Mander, planted an oak whose roots in time grew into the Oakenseat, and was crowned with vines and flowers as the first King of the Reach. From that hill rose Highgarden, and from Garth's blood every house from the Crownlands to the Arbor would claim a thread.
+House Gardener of Highgarden was the royal house of the Reach from the Age of Heroes until the coming of Aegon the Dragon, one of the longest-reigning lines of kings in all of Westeros. The Gardeners traced their descent from Garth Greenhand, the High King of the First Men whom the singers name the father of half the noble houses of the south; his eldest son, Garth the Gardener, was the first King of the Reach. Garth made his home upon the high hill above the Mander, where an oak his father had planted grew in time into the living throne men called the Oakenseat, and there rose Highgarden. The Gardener kings wore crowns of vines and flowers when they sat at peace and crowns of bronze thorns — and later iron — when they rode to war, and for their arms they bore a green hand upon a white field, a device so storied it gave its name to the chivalric Order of the Green Hand.
 
-For thousands of years the green hand flew above the Mander, through the wars of the First Men, the Andal Invasion (which the Gardeners weathered by marrying their daughters to Andal knights and adopting their faith), and the bickering with Storm Kings, Hoares, and the Westerlands. In the year 2 AC, King Mern IX Gardener answered Aegon Targaryen's coming with a great host raised together with King Loren I Lannister: near sixty thousand swords. They met the Conqueror upon a plain in the western Reach with no river to ward them and no woods to shelter them, and there Aegon, Visenya, and Rhaenys came down upon them with all three dragons. Four thousand men burned in what the singers would name the Field of Fire. Mern died with all his sons, his brother, his nephews, and the cousins of his cousins; the line of the green hand was unmade in a single afternoon. Aegon raised the Tyrells, who had been stewards of Highgarden under the Gardeners, to the lordship of the Reach in their stead, and the green hand was furled forever.
+For thousands of years the green hand flew above the Mander, and the line bred warrior kings and wise ones both — Garth III the Great, who carried the realm's borders north; Garth V, Hammer of the Dornish; Meryn III, who brought the Arbor and the Redwynes into the kingdom; and Garland II the Bridegroom, who won Oldtown and the Hightowers by a marriage. The greatest of them all was Garth VII, called the Goldenhand, whose long reign gave his people three-quarters of a century of peace and plenty that the maesters still name the Golden Reign. When the Andals came at last to the Reach, the Three Sage Kings — Garth IX, Merle I the Meek, and Gwayne V — met them not with sword but with accord, granting the invaders lands, wives, and lordships and taking their faith and their knights in turn; thus the Gardeners endured the coming of the Andals where so many First Men kings were thrown down, and Ser Alester Tyrell, founder of the stewards who would one day supplant them, was made sworn shield to a Gardener king.
+
+The centuries that followed were less peaceful, and the Gardener kings warred without end against the Kings of the Rock, the Storm Kings, the kings of Dorne, and the reavers of the Iron Islands — more than one died sword in hand against the ironborn, and Gyles II was taken and cut to pieces by Joron Blacktyde to bait his fishhooks. The end came when Aegon Targaryen and his sisters crossed the narrow sea. King Mern IX joined his strength to that of Loren I Lannister, and together the two kings led near sixty thousand swords against the Conqueror upon an open plain with no river to ward them and no wood to shelter them. There Aegon loosed Balerion, Meraxes, and Vhagar, and four thousand men burned in what the singers named the Field of Fire. Mern died with his sons, his brothers, his nephews, and the cousins of his cousins; one nephew lived three days more before his burns carried him off, and so ended the line of the green hand. Mern's High Steward, Harlan Tyrell, yielded Highgarden to the dragon and was raised up Lord Paramount of the Mander in his master's place — but half the houses of the Reach claim Garth's blood still, and the green hand is quartered yet in many a Reach lord's arms.
