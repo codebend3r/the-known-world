@@ -1,10 +1,10 @@
 @use "breakpoints" as bp;
 
 .page {
-  max-width: 1280px;
+  max-width: 1600px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem 0 10rem 0;
+  padding: 2rem 1rem 10rem 1rem;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -12,12 +12,18 @@
   align-content: start;
   justify-items: center;
 
-  @media (max-width: bp.$xs) {
-    padding: 2rem 1rem 4rem 1rem;
+  @media (max-width: bp.$xxl) {
+    max-width: 1600px;
+    padding: 2rem 2rem 10rem 2rem;
   }
 
   @media (max-width: bp.$xl) {
+    max-width: 1280px;
     padding: 2rem 1rem 10rem 1rem;
+  }
+
+  @media (max-width: bp.$xs) {
+    padding: 2rem 1rem 4rem 1rem;
   }
 }
 

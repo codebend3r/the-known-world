@@ -33,13 +33,58 @@
 .heading {
   grid-area: heading;
   display: grid;
-  gap: 0;
+  gap: 0.6rem;
   place-items: center;
   place-content: center;
+  padding: 0.5rem 1rem 0;
 
   h1 {
     font-family: var(--font-character-name);
+    font-size: 2.7rem;
+    letter-spacing: 0.04em;
+    line-height: 1.05;
+    text-shadow:
+      0 1px 0 rgba(255, 250, 235, 0.5),
+      0 2px 5px rgba(61, 40, 23, 0.12);
+
+    @media (max-width: bp.$sm) {
+      font-size: 2.1rem;
+    }
   }
+
+  :global(.subtitle) {
+    border-bottom: none;
+    padding-bottom: 0;
+    font-size: 1.2rem;
+    letter-spacing: 0.02em;
+    color: var(--ink-faded);
+  }
+}
+
+.nameRow {
+  display: inline-grid;
+  grid-auto-flow: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2.5vw, 1.6rem);
+  max-width: 100%;
+
+  @media (max-width: bp.$sm) {
+    display: grid;
+  }
+}
+
+.nameFlourish {
+  width: clamp(48px, 7vw, 92px);
+
+  @media (max-width: bp.$sm) {
+    display: none;
+  }
+}
+
+.divider {
+  width: min(300px, 70%);
+  margin-top: 0.35rem;
 }
 
 .main {
