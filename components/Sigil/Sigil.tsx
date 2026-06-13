@@ -107,6 +107,10 @@ export const SIGIL_SLUGS = new Set([
   "cassel",
   "costayne",
   "manwoody",
+  "hunter",
+  "nights-watch",
+  "rosby",
+  "westerling",
   "others",
   "unknown",
 ]);
