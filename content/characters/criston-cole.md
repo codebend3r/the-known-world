@@ -7,7 +7,7 @@ died:
   year: 130
   era: AC
   precision: year
-primary-house: null
+primary-house: cole
 titles:
   - Knight of the Kingsguard
   - Lord Commander of the Kingsguard

@@ -107,6 +107,20 @@ export const SIGIL_SLUGS = new Set([
   "cassel",
   "costayne",
   "manwoody",
+  "hunter",
+  "nights-watch",
+  "rosby",
+  "westerling",
+  "baelish",
+  "blacktyde",
+  "cole",
+  "farwynd",
+  "goodbrother",
+  "harlaw",
+  "orkwood",
+  "shett",
+  "sunderland",
+  "waynewood",
   "others",
   "unknown",
 ]);
@@ -126,6 +140,7 @@ const REGION_FILE: Record<string, string> = {
 const SLUG_ALIASES: Record<string, string> = {
   durrandon: "baratheon",
   bronn: "blackwater",
+  unknown: "unknown-westeros",
 };
 
 function sigilFile({
@@ -137,7 +152,7 @@ function sigilFile({
 }): string {
   if (SIGIL_SLUGS.has(slug)) return SLUG_ALIASES[slug] ?? slug;
   if (region && REGION_FILE[region]) return REGION_FILE[region];
-  return "unknown";
+  return "unknown-westeros";
 }
 
 type Props = {
