@@ -10,6 +10,8 @@ died: null
 primary-house: durrandon
 also-of-houses:
   - baratheon
+parents:
+  - argilac-durrandon
 spouses:
   - orys-baratheon
 titles:
