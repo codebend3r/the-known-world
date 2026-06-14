@@ -8,6 +8,8 @@ born:
   precision: year
 died: null
 primary-house: mormont
+parents:
+  - jeor-mormont
 titles:
   - Ser
 sources:
