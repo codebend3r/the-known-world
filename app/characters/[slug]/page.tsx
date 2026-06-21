@@ -185,13 +185,29 @@ export default async function CharacterPage({
         />
       </div>
       <div className={styles.heading}>
-        <Sigil
-          slug={fm["primary-house"] ?? (SIGIL_SLUGS.has(slug) ? slug : null)}
-          name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
-          region={regionForHouse(fm["primary-house"], housesBySlug)}
-          size="6rem"
-          decorative
-        />
+        {primaryHouse && fm["primary-house"] ? (
+          <Link
+            href={`/houses/${fm["primary-house"]}/`}
+            className={styles.sigilLink}
+            aria-label={`House ${shortHouseName(primaryHouse.name)}`}
+          >
+            <Sigil
+              slug={fm["primary-house"]}
+              name={shortHouseName(primaryHouse.name)}
+              region={regionForHouse(fm["primary-house"], housesBySlug)}
+              size="6rem"
+              decorative
+            />
+          </Link>
+        ) : (
+          <Sigil
+            slug={SIGIL_SLUGS.has(slug) ? slug : null}
+            name={fm.name}
+            region={regionForHouse(fm["primary-house"], housesBySlug)}
+            size="6rem"
+            decorative
+          />
+        )}
         <h1>
           {fm.name}
           {fm.aliases.length > 0 && (

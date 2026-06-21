@@ -29,6 +29,16 @@
   }
 }
 
+.sigilLink {
+  display: inline-flex;
+  border-radius: 2px;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.85;
+  }
+}
+
 .alias {
   font-family: var(--font-body);
   font-variant: normal;
