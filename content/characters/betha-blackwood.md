@@ -3,13 +3,10 @@ slug: betha-blackwood
 name: Betha Blackwood
 sex: f
 born:
-  year: 203
+  year: 201
   era: AC
   precision: year
-died:
-  year: 259
-  era: AC
-  precision: year
+died: null
 primary-house: blackwood
 also-of-houses:
   - targaryen
@@ -32,4 +29,4 @@ sources:
 draft: false
 ---
 
-Daughter of Lord Matthos Blackwood of Raventree, called Black Betha for her hair and her temper. Wed in 220 AC to her cousin Aegon (then but a fourth son with no expectation of a throne), and stood by him through the unlikely chain of deaths that put him on the Iron Throne. She bore him five children and died at his side in the fire at Summerhall.
+Daughter of the Lord of Raventree Hall, called Black Betha for her dark eyes and hair and her spirited, willful temper. Born in 201 AC, she wed Prince Aegon Targaryen in 220 AC at the age of nineteen, a love match that drew no opposition, for at the time Aegon stood far down the line of succession. She stood by him through the unlikely chain of deaths that carried him to the Iron Throne, and bore him five children: Duncan, Jaehaerys, Shaera, Daeron, and Rhaelle. She helped arrange advantageous betrothals for the eldest four, though the children defied those plans and wed for love as their parents had. Betha is last attested in 239 AC; whether she perished with Aegon in the fire at Summerhall in 259 AC is unrecorded.
