@@ -2,8 +2,15 @@
 
 .combobox {
   position: relative;
-  display: grid;
   width: 100%;
+}
+
+// The shared `.input` style carries `grid-area: search` and an intrinsic
+// text-field width for the index grid; neither belongs here, so pin the field
+// to the full width of the (block) combobox wrapper.
+.combobox > input {
+  width: 100%;
+  grid-area: auto;
 }
 
 .listbox {
