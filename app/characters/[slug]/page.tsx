@@ -15,6 +15,7 @@ import { findPortrait } from "@/lib/portraits";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil, SIGIL_SLUGS } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
 import type { Character } from "@/lib/schemas";
@@ -126,6 +127,11 @@ export default async function CharacterPage({
   );
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
 
+  const characterSuggestions = allCharacters
+    .map((c) => c.frontmatter)
+    .filter((f) => !f.draft && !f.placeholder)
+    .map((f) => ({ slug: f.slug, name: f.name, alias: f.aliases[0] ?? null }));
+
   const primaryHouse = fm["primary-house"]
     ? housesBySlug.get(fm["primary-house"])
     : undefined;
@@ -214,6 +220,10 @@ export default async function CharacterPage({
             <span className={styles.alias}> ({fm.aliases[0]})</span>
           )}
         </h1>
+      </div>
+
+      <div className={styles.search}>
+        <CharacterSearchInput autocomplete items={characterSuggestions} />
       </div>
 
       <dl className={styles.meta}>

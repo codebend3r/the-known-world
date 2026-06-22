@@ -1,0 +1,53 @@
+@use "breakpoints" as bp;
+
+.combobox {
+  position: relative;
+  display: grid;
+  width: 100%;
+}
+
+.listbox {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  margin: 0;
+  padding: 0.25rem;
+  list-style: none;
+  display: grid;
+  gap: 0.15rem;
+  max-height: 18rem;
+  overflow-y: auto;
+  background: rgba(248, 236, 208, 0.97);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  box-shadow: 0 8px 24px rgba(31, 18, 8, 0.22);
+}
+
+.option {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border-radius: 2px;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-character-name);
+  font-size: 1.4rem;
+}
+
+.optionActive {
+  background: rgba(212, 162, 89, 0.22);
+}
+
+.optionName {
+  white-space: nowrap;
+}
+
+.optionAlias {
+  font-family: var(--font-body);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-faded);
+}
