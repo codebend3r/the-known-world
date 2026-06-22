@@ -12,6 +12,7 @@ children:
   - aemon-blackfyre-son-of-daemon-i
   - daemon-ii-blackfyre
   - haegon-blackfyre
+  - aenys-blackfyre
   - calla-blackfyre
 sources:
   - type: awoiaf
