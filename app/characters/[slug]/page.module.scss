@@ -29,6 +29,16 @@
   }
 }
 
+.sigilLink {
+  display: inline-flex;
+  border-radius: 2px;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 0.85;
+  }
+}
+
 .alias {
   font-family: var(--font-body);
   font-variant: normal;
@@ -42,6 +52,10 @@
   @media (max-width: bp.$md) {
     text-align: center;
   }
+}
+
+.search {
+  width: 100%;
 }
 
 .portrait {

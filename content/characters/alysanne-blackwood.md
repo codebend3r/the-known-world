@@ -2,7 +2,10 @@
 slug: alysanne-blackwood
 name: Alysanne Blackwood
 sex: f
-born: null
+born:
+  year: 113
+  era: AC
+  precision: year
 died: null
 primary-house: blackwood
 also-of-houses:
@@ -25,6 +28,6 @@ sources:
 draft: false
 ---
 
-Daughter of House Blackwood of Raventree Hall, sister of Lord Benjicot Blackwood, and the most quietly powerful figure of the early regency of Aegon III. Black Aly had ridden with the Winter Wolves down from Winterfell during the Dance of the Dragons, fought through the Battle by the Lakeshore and Tumbleton at her brother's side, and was at King's Landing when Cregan Stark held the city as Hand of the King for a single day. On the second day of the Hour of the Wolf, when Cregan had ridden the murderers of Aegon II to the block, she offered her own hand in marriage in exchange for Lord Corlys Velaryon's life; the bargain was struck on the steps of the Iron Throne, and she rode north as Lady of Winterfell that same week.
+Born in 113 AC, a daughter of the Lord of Raventree Hall and aunt to the boy lord Benjicot Blackwood, Black Aly was a tall, thin, fearless woman with a mane of black curls and a bawdy tongue, famed as a hunter, horse-breaker, and archer. She was sixteen when House Blackwood declared for the blacks in the Dance of the Dragons in 129 AC. At the Battle of the Burning Mill her brother, Lord Samwell Blackwood, was cut down in single combat by Ser Amos Bracken; the Blackwoods held that the weirwood arrow which took Amos through the eye-slit a moment later was loosed by Aly, avenging her brother. She commanded three hundred riverland archers at the Battle of the Kingsroad in 131 AC, and was among the few captains on either side to fight the war from its first battle to its last.
 
-She was Cregan's second wife and bore him four daughters: Sarra, Alys, Raya, and Myriah. After her marriage she remained at Winterfell, where for thirty years she was the chief of Cregan's council and the keenest of his judges of men; the maesters of the Citadel who saw her in old age wrote that the Old Man of the North leaned more on Black Aly than on any sword in his hall. She outlived him by no great span, and the daughters she gave him would, with the Pact of Ice and Fire, draw the Starks toward the Targaryens for the rest of the century.
+When Cregan Stark came south after the war and held King's Landing through the Hour of the Wolf, Aly went to him to plead for the life of Lord Corlys Velaryon, whom Aegon III had pardoned. She asked it as a personal boon in exchange for whatever he might choose; Cregan asked for her hand, and she gladly agreed. They wed in the godswood of Winterfell in 132 AC, and she bore him four daughters: Sarra, Alys, Raya, and Myriah. She died at some unrecorded point during Cregan's long rule, and because Cregan's heir Rickon left only daughters who married sons of his later wife Lynara, the main line of the Starks does not descend from Black Aly.

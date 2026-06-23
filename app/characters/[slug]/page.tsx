@@ -15,6 +15,7 @@ import { findPortrait } from "@/lib/portraits";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil, SIGIL_SLUGS } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
 import type { Character } from "@/lib/schemas";
@@ -126,6 +127,11 @@ export default async function CharacterPage({
   );
   const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
 
+  const characterSuggestions = allCharacters
+    .map((c) => c.frontmatter)
+    .filter((f) => !f.draft && !f.placeholder)
+    .map((f) => ({ slug: f.slug, name: f.name, alias: f.aliases[0] ?? null }));
+
   const primaryHouse = fm["primary-house"]
     ? housesBySlug.get(fm["primary-house"])
     : undefined;
@@ -185,19 +191,39 @@ export default async function CharacterPage({
         />
       </div>
       <div className={styles.heading}>
-        <Sigil
-          slug={fm["primary-house"] ?? (SIGIL_SLUGS.has(slug) ? slug : null)}
-          name={primaryHouse ? shortHouseName(primaryHouse.name) : fm.name}
-          region={regionForHouse(fm["primary-house"], housesBySlug)}
-          size="6rem"
-          decorative
-        />
+        {primaryHouse && fm["primary-house"] ? (
+          <Link
+            href={`/houses/${fm["primary-house"]}/`}
+            className={styles.sigilLink}
+            aria-label={`House ${shortHouseName(primaryHouse.name)}`}
+          >
+            <Sigil
+              slug={fm["primary-house"]}
+              name={shortHouseName(primaryHouse.name)}
+              region={regionForHouse(fm["primary-house"], housesBySlug)}
+              size="6rem"
+              decorative
+            />
+          </Link>
+        ) : (
+          <Sigil
+            slug={SIGIL_SLUGS.has(slug) ? slug : null}
+            name={fm.name}
+            region={regionForHouse(fm["primary-house"], housesBySlug)}
+            size="6rem"
+            decorative
+          />
+        )}
         <h1>
           {fm.name}
           {fm.aliases.length > 0 && (
             <span className={styles.alias}> ({fm.aliases[0]})</span>
           )}
         </h1>
+      </div>
+
+      <div className={styles.search}>
+        <CharacterSearchInput autocomplete items={characterSuggestions} />
       </div>
 
       <dl className={styles.meta}>

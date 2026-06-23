@@ -12,6 +12,7 @@ children:
   - aemon-blackfyre-son-of-daemon-i
   - daemon-ii-blackfyre
   - haegon-blackfyre
+  - aenys-blackfyre
   - calla-blackfyre
 sources:
   - type: awoiaf
@@ -20,4 +21,4 @@ sources:
 draft: false
 ---
 
-A Tyroshi noblewoman, given to Daemon Blackfyre to wife by his father King Aegon IV before he was legitimised. She bore him seven sons and a daughter, and after Daemon and her two eldest fell on the Redgrass Field she fled across the Narrow Sea with Bittersteel and the surviving children, the seed of the Blackfyre pretenders in exile.
+A Tyroshi noblewoman whose betrothal to Daemon Blackfyre was arranged by his father, King Aegon IV, together with the Archon of Tyrosh. After Aegon's death his heir, King Daeron II, paid the dowry the late king had promised and saw the match made; Rohanne wed the thirteen-year-old Daemon in 184 AC and bore him the twins Aegon and Aemon that same year. In all she gave him seven sons and several daughters. When the First Blackfyre Rebellion ended on the Redgrass Field with the deaths of Daemon and his two eldest sons, Rohanne fled across the narrow sea to Tyrosh with her remaining children and Daemon's half-brother Aegor Rivers, called Bittersteel, carrying the seed of the Blackfyre pretenders into exile. She was still living in 212 AC, when her son Daemon II was taken at Whitewalls after the failed Second Blackfyre Rebellion.

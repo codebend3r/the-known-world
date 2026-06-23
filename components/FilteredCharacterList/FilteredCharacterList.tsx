@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Sigil } from "@/components/Sigil";
+import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import {
   ViewToggle,
@@ -220,16 +221,7 @@ export function FilteredCharacterList({
   return (
     <>
       <div className={listSearch.rowWithSort}>
-        <input
-          type="search"
-          className={listSearch.input}
-          placeholder="Search characters…"
-          value={value}
-          onChange={(e) => setUserValue(e.target.value)}
-          aria-label="Search characters"
-          autoComplete="off"
-          spellCheck={false}
-        />
+        <CharacterSearchInput value={value} onChange={setUserValue} />
         <SortToggle value={dir} onChange={handleDirChange} />
         <ViewToggle
           options={VIEW_OPTIONS}
