@@ -79,6 +79,36 @@
   }
 }
 
+// Regional border tints — colours live in `globals.scss` as
+// `--region-color-*` tokens (shared with `FilteredHouseList`).
+.cardNorth {
+  border-color: var(--region-color-north);
+}
+.cardVale {
+  border-color: var(--region-color-vale);
+}
+.cardRiverlands {
+  border-color: var(--region-color-riverlands);
+}
+.cardWesterlands {
+  border-color: var(--region-color-westerlands);
+}
+.cardReach {
+  border-color: var(--region-color-reach);
+}
+.cardStormlands {
+  border-color: var(--region-color-stormlands);
+}
+.cardDorne {
+  border-color: var(--region-color-dorne);
+}
+.cardIronIslands {
+  border-color: var(--region-color-iron-islands);
+}
+.cardCrownlands {
+  border-color: var(--region-color-crownlands);
+}
+
 .meta {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
