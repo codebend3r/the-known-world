@@ -79,33 +79,33 @@
   }
 }
 
-// Regional border tints — colours live in `globals.scss` as
-// `--region-color-*` tokens (shared with `FilteredHouseList`).
-.cardNorth {
+// Regional border tints for `.portrait` — colours live in `globals.scss`
+// as `--region-color-*` tokens (shared with `FilteredHouseList`).
+.portraitNorth {
   border-color: var(--region-color-north);
 }
-.cardVale {
+.portraitVale {
   border-color: var(--region-color-vale);
 }
-.cardRiverlands {
+.portraitRiverlands {
   border-color: var(--region-color-riverlands);
 }
-.cardWesterlands {
+.portraitWesterlands {
   border-color: var(--region-color-westerlands);
 }
-.cardReach {
+.portraitReach {
   border-color: var(--region-color-reach);
 }
-.cardStormlands {
+.portraitStormlands {
   border-color: var(--region-color-stormlands);
 }
-.cardDorne {
+.portraitDorne {
   border-color: var(--region-color-dorne);
 }
-.cardIronIslands {
+.portraitIronIslands {
   border-color: var(--region-color-iron-islands);
 }
-.cardCrownlands {
+.portraitCrownlands {
   border-color: var(--region-color-crownlands);
 }
 

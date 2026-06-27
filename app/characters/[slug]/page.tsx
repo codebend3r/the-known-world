@@ -21,16 +21,16 @@ import { Sources } from "@/components/Sources";
 import type { Character } from "@/lib/schemas";
 import styles from "@/app/characters/[slug]/page.module.scss";
 
-const REGION_CARD_CLASS: Record<string, string | undefined> = {
-  north: styles.cardNorth,
-  vale: styles.cardVale,
-  riverlands: styles.cardRiverlands,
-  westerlands: styles.cardWesterlands,
-  reach: styles.cardReach,
-  stormlands: styles.cardStormlands,
-  dorne: styles.cardDorne,
-  "iron-islands": styles.cardIronIslands,
-  crownlands: styles.cardCrownlands,
+const REGION_PORTRAIT_CLASS: Record<string, string | undefined> = {
+  north: styles.portraitNorth,
+  vale: styles.portraitVale,
+  riverlands: styles.portraitRiverlands,
+  westerlands: styles.portraitWesterlands,
+  reach: styles.portraitReach,
+  stormlands: styles.portraitStormlands,
+  dorne: styles.portraitDorne,
+  "iron-islands": styles.portraitIronIslands,
+  crownlands: styles.portraitCrownlands,
 };
 
 export async function generateStaticParams() {
@@ -196,7 +196,7 @@ export default async function CharacterPage({
       <div
         className={cx(
           styles.portrait,
-          region ? REGION_CARD_CLASS[region] : undefined,
+          region ? REGION_PORTRAIT_CLASS[region] : undefined,
         )}
       >
         <Image
