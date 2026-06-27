@@ -63,6 +63,10 @@
   justify-content: center;
   width: 100%;
   max-width: 1100px;
+  border-radius: 30px;
+  corner-shape: scoop;
+  overflow: hidden;
+  border: 1px solid var(--ink-faded);
 
   @media (max-width: bp.$md) {
     width: 100vw;
@@ -72,10 +76,37 @@
   img {
     width: 100%;
     height: auto;
-    border: 1px solid rgba(107, 68, 35, 0.35);
-    border-radius: 2px;
-    box-shadow: 0 6px 24px rgba(40, 25, 10, 0.22);
   }
+}
+
+// Regional border tints for `.portrait` — colours live in `globals.scss`
+// as `--region-color-*` tokens (shared with `FilteredHouseList`).
+.portraitNorth {
+  border-color: var(--region-color-north);
+}
+.portraitVale {
+  border-color: var(--region-color-vale);
+}
+.portraitRiverlands {
+  border-color: var(--region-color-riverlands);
+}
+.portraitWesterlands {
+  border-color: var(--region-color-westerlands);
+}
+.portraitReach {
+  border-color: var(--region-color-reach);
+}
+.portraitStormlands {
+  border-color: var(--region-color-stormlands);
+}
+.portraitDorne {
+  border-color: var(--region-color-dorne);
+}
+.portraitIronIslands {
+  border-color: var(--region-color-iron-islands);
+}
+.portraitCrownlands {
+  border-color: var(--region-color-crownlands);
 }
 
 .meta {

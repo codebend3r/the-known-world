@@ -13,13 +13,25 @@ import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ageAtDeath } from "@/lib/age";
 import { findPortrait } from "@/lib/portraits";
 import { cx } from "@/lib/cx";
-import { regionForHouse } from "@/lib/regions";
+import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil, SIGIL_SLUGS } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
 import type { Character } from "@/lib/schemas";
 import styles from "@/app/characters/[slug]/page.module.scss";
+
+const REGION_PORTRAIT_CLASS: Record<string, string | undefined> = {
+  north: styles.portraitNorth,
+  vale: styles.portraitVale,
+  riverlands: styles.portraitRiverlands,
+  westerlands: styles.portraitWesterlands,
+  reach: styles.portraitReach,
+  stormlands: styles.portraitStormlands,
+  dorne: styles.portraitDorne,
+  "iron-islands": styles.portraitIronIslands,
+  crownlands: styles.portraitCrownlands,
+};
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();
@@ -135,6 +147,7 @@ export default async function CharacterPage({
   const primaryHouse = fm["primary-house"]
     ? housesBySlug.get(fm["primary-house"])
     : undefined;
+  const region = regionForHouse(fm["primary-house"], housesBySlug);
   const alsoHouses = fm["also-of-houses"]
     .map((s) => ({ slug: s, house: housesBySlug.get(s) }))
     .filter(
@@ -180,7 +193,12 @@ export default async function CharacterPage({
 
   return (
     <ParchmentLayout>
-      <div className={styles.portrait}>
+      <div
+        className={cx(
+          styles.portrait,
+          region ? REGION_PORTRAIT_CLASS[region] : undefined,
+        )}
+      >
         <Image
           src={portrait}
           alt={`Portrait of ${fm.name}`}
@@ -200,7 +218,7 @@ export default async function CharacterPage({
             <Sigil
               slug={fm["primary-house"]}
               name={shortHouseName(primaryHouse.name)}
-              region={regionForHouse(fm["primary-house"], housesBySlug)}
+              region={region}
               size="6rem"
               decorative
             />
@@ -209,7 +227,7 @@ export default async function CharacterPage({
           <Sigil
             slug={SIGIL_SLUGS.has(slug) ? slug : null}
             name={fm.name}
-            region={regionForHouse(fm["primary-house"], housesBySlug)}
+            region={region}
             size="6rem"
             decorative
           />
@@ -257,6 +275,12 @@ export default async function CharacterPage({
             )}
           </dd>
         </div>
+        {region && (
+          <div className={styles.metaRow}>
+            <dt>Region</dt>
+            <dd>{regionLabel(region)}</dd>
+          </div>
+        )}
         {alsoHouses.length > 0 && (
           <div className={styles.metaRow}>
             <dt>Also of</dt>
