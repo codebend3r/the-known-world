@@ -1,9 +1,15 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import {
   FilteredCharacterList,
   type CharacterItem,
 } from "@/components/FilteredCharacterList";
+import {
+  renderWithNuqs,
+  flushNuqs,
+  lastQueryString,
+  lastSearchParams,
+} from "@/lib/testNuqs";
 
 const items: CharacterItem[] = [
   {
@@ -46,23 +52,23 @@ function manyItems(n: number): CharacterItem[] {
 beforeEach(() => {
   vi.useFakeTimers();
   window.localStorage.clear();
-  window.history.replaceState(null, "", "/characters/");
 });
 
 afterEach(() => {
   vi.useRealTimers();
   window.localStorage.clear();
-  window.history.replaceState(null, "", "/characters/");
 });
 
 describe("FilteredCharacterList", () => {
   it("renders every character by default", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     expect(container.querySelectorAll(".item").length).toBe(3);
   });
 
   it("renders each card as a link to /characters/[slug]/", () => {
-    render(<FilteredCharacterList items={items} />);
+    renderWithNuqs(<FilteredCharacterList items={items} />);
     const hrefs = screen
       .getAllByRole("link")
       .map((l) => l.getAttribute("href"));
@@ -72,14 +78,16 @@ describe("FilteredCharacterList", () => {
   });
 
   it("exposes a labelled search input", () => {
-    render(<FilteredCharacterList items={items} />);
+    renderWithNuqs(<FilteredCharacterList items={items} />);
     expect(
       screen.getByRole("searchbox", { name: /search characters/i }),
     ).toBeDefined();
   });
 
   it("applies a region-tinted modifier class per card", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     expect(container.querySelector(".cardNorth")).not.toBeNull();
     expect(container.querySelector(".cardWesterlands")).not.toBeNull();
   });
@@ -95,7 +103,9 @@ describe("FilteredCharacterList", () => {
         portrait: "/characters/unknown-male.png",
       },
     ];
-    const { container } = render(<FilteredCharacterList items={noRegion} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={noRegion} />,
+    );
     expect(container.querySelector(".card")).not.toBeNull();
     expect(container.querySelector("[data-region]")).toBeNull();
   });
@@ -119,7 +129,9 @@ describe("FilteredCharacterList", () => {
         portrait: "/characters/aegon-iv-targaryen.png",
       },
     ];
-    const { container } = render(<FilteredCharacterList items={aliased} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={aliased} />,
+    );
     const aliases = Array.from(container.querySelectorAll(".alias")).map(
       (el) => el.textContent,
     );
@@ -127,7 +139,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("renders an empty alias span when no alias is set", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     const aliases = Array.from(container.querySelectorAll(".alias")).map(
       (el) => el.textContent,
     );
@@ -146,7 +160,9 @@ describe("FilteredCharacterList", () => {
         portrait: "/characters/aegon-i-targaryen.png",
       },
     ];
-    const { container } = render(<FilteredCharacterList items={aliased} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={aliased} />,
+    );
     const card = container.querySelector(".card");
     const childClasses = Array.from(card?.children ?? []).map(
       (el) => el.className,
@@ -157,7 +173,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("does not filter until the 300ms debounce elapses", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "arya" } });
     act(() => {
@@ -167,7 +185,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("filters the list once the debounce elapses", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "stark" } });
     act(() => {
@@ -181,7 +201,7 @@ describe("FilteredCharacterList", () => {
   });
 
   it("renders the empty state when nothing matches", () => {
-    render(<FilteredCharacterList items={items} />);
+    renderWithNuqs(<FilteredCharacterList items={items} />);
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "zzz" } });
     act(() => {
@@ -191,14 +211,16 @@ describe("FilteredCharacterList", () => {
   });
 
   it("hides pagination when the filtered list is at or below the smallest page size", () => {
-    render(<FilteredCharacterList items={items} pageSize={32} />);
+    renderWithNuqs(<FilteredCharacterList items={items} pageSize={32} />);
     expect(
       screen.queryByRole("navigation", { name: /pagination/i }),
     ).toBeNull();
   });
 
   it("keeps the pagination nav visible above the smallest page size even when one page suffices", () => {
-    render(<FilteredCharacterList items={manyItems(25)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(25)} pageSize={32} />,
+    );
     const navs = screen.getAllByRole("navigation", { name: /pagination/i });
     expect(navs.length).toBe(2);
     expect(navs[0].textContent).toMatch(/Page 1 of 1/);
@@ -216,7 +238,7 @@ describe("FilteredCharacterList", () => {
   });
 
   it("shows the first page of items and a pagination nav when there is overflow", () => {
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
     );
     expect(container.querySelectorAll(".item").length).toBe(32);
@@ -230,7 +252,7 @@ describe("FilteredCharacterList", () => {
   });
 
   it("renders a pagination nav above and below the list", () => {
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
     );
     const children = Array.from(container.children);
@@ -248,7 +270,7 @@ describe("FilteredCharacterList", () => {
   });
 
   it("advances to the next page when Next is clicked from the top nav", () => {
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
     );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
@@ -259,7 +281,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("disables Next on the last page", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const nextButtons = screen.getAllByRole("button", {
       name: /next page/i,
     }) as HTMLButtonElement[];
@@ -270,7 +294,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("renders the page-size selector with all four options and 32 selected by default", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /characters per page/i,
     }) as HTMLSelectElement[];
@@ -282,7 +308,7 @@ describe("FilteredCharacterList", () => {
   });
 
   it("switches to page size 16 and recomputes the page count", () => {
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
     );
     const [topSelect] = screen.getAllByRole("combobox", {
@@ -294,7 +320,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("resets to page 1 when the page size changes", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
@@ -306,7 +334,9 @@ describe("FilteredCharacterList", () => {
   });
 
   it("keeps the top and bottom selectors in sync", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const selects = screen.getAllByRole("combobox", {
       name: /characters per page/i,
     }) as HTMLSelectElement[];
@@ -319,8 +349,10 @@ describe("FilteredCharacterList", () => {
   });
 
   it("hydrates the search input from the ?search= query param on mount", () => {
-    window.history.replaceState(null, "", "/characters/?search=arya");
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?search=arya" },
+    );
     const input = screen.getByRole("searchbox") as HTMLInputElement;
     expect(input.value).toBe("arya");
     const cards = container.querySelectorAll(".item");
@@ -328,42 +360,53 @@ describe("FilteredCharacterList", () => {
     expect(cards[0].textContent).toContain("Arya Stark");
   });
 
-  it("writes the debounced search to the ?search= query param", () => {
-    render(<FilteredCharacterList items={items} />);
+  it("writes the debounced search to the ?search= query param", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "stark" },
     });
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    expect(window.location.search).toBe("?search=stark");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?search=stark");
   });
 
-  it("removes the ?search= query param when the search is cleared", () => {
-    window.history.replaceState(null, "", "/characters/?search=arya");
-    render(<FilteredCharacterList items={items} />);
+  it("removes the ?search= query param when the search is cleared", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?search=arya" },
+    );
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    expect(window.location.search).toBe("");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 
-  it("preserves other query params and the hash when syncing search", () => {
-    window.history.replaceState(null, "", "/characters/?sort=name#top");
-    render(<FilteredCharacterList items={items} />);
+  it("preserves other query params when syncing search", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?sort=name" },
+    );
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "arya" },
     });
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    expect(window.location.search).toBe("?sort=name&search=arya");
-    expect(window.location.hash).toBe("#top");
+    await flushNuqs();
+    expect(lastSearchParams(onUrlUpdate).get("sort")).toBe("name");
+    expect(lastSearchParams(onUrlUpdate).get("search")).toBe("arya");
   });
 
   it("renders the search input, sort toggle, and view toggle inside the same row", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     const row = container.querySelector(".rowWithSort");
     expect(row).not.toBeNull();
     expect(row?.querySelector("input")).not.toBeNull();
@@ -387,7 +430,7 @@ describe("FilteredCharacterList", () => {
         portrait: "/characters/arya-stark.png",
       },
     ];
-    render(<FilteredCharacterList items={lots} pageSize={32} />);
+    renderWithNuqs(<FilteredCharacterList items={lots} pageSize={32} />);
     const [nextBtn] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(nextBtn);
     expect(screen.getAllByText(/Page 2/).length).toBe(2);
@@ -406,7 +449,7 @@ describe("FilteredCharacterList", () => {
 
 describe("FilteredCharacterList sort direction", () => {
   it("renders the sort toggle pressed to ascending by default", () => {
-    render(<FilteredCharacterList items={items} />);
+    renderWithNuqs(<FilteredCharacterList items={items} />);
     expect(
       screen
         .getByRole("button", { name: /sort a to z/i })
@@ -420,7 +463,9 @@ describe("FilteredCharacterList sort direction", () => {
   });
 
   it("orders items A→Z when direction is ascending", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     const names = Array.from(container.querySelectorAll(".name")).map(
       (el) => el.textContent,
     );
@@ -428,8 +473,10 @@ describe("FilteredCharacterList sort direction", () => {
   });
 
   it("hydrates sort direction from ?dir=desc on mount", () => {
-    window.history.replaceState(null, "", "/characters/?dir=desc");
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?dir=desc" },
+    );
     const names = Array.from(container.querySelectorAll(".name")).map(
       (el) => el.textContent,
     );
@@ -441,34 +488,45 @@ describe("FilteredCharacterList sort direction", () => {
     ).toBe("true");
   });
 
-  it("writes ?dir=desc when the descending toggle is clicked", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+  it("writes ?dir=desc when the descending toggle is clicked", async () => {
+    const { container, onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
-    expect(window.location.search).toBe("?dir=desc");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?dir=desc");
     const names = Array.from(container.querySelectorAll(".name")).map(
       (el) => el.textContent,
     );
     expect(names).toEqual(["Tywin Lannister", "Eddard Stark", "Arya Stark"]);
   });
 
-  it("removes ?dir= when the direction is toggled back to ascending", () => {
-    window.history.replaceState(null, "", "/characters/?dir=desc");
-    render(<FilteredCharacterList items={items} />);
+  it("removes ?dir= when the direction is toggled back to ascending", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?dir=desc" },
+    );
     fireEvent.click(screen.getByRole("button", { name: /sort a to z/i }));
-    expect(window.location.search).toBe("");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 
-  it("preserves other query params and the hash when syncing direction", () => {
-    window.history.replaceState(null, "", "/characters/?search=stark#top");
-    render(<FilteredCharacterList items={items} />);
+  it("preserves other query params when syncing direction", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?search=stark" },
+    );
     fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
-    expect(window.location.search).toBe("?search=stark&dir=desc");
-    expect(window.location.hash).toBe("#top");
+    await flushNuqs();
+    expect(lastSearchParams(onUrlUpdate).get("search")).toBe("stark");
+    expect(lastSearchParams(onUrlUpdate).get("dir")).toBe("desc");
   });
 
   it("ignores an unknown ?dir= value and falls back to ascending", () => {
-    window.history.replaceState(null, "", "/characters/?dir=sideways");
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+      { searchParams: "?dir=sideways" },
+    );
     const names = Array.from(container.querySelectorAll(".name")).map(
       (el) => el.textContent,
     );
@@ -478,9 +536,9 @@ describe("FilteredCharacterList sort direction", () => {
 
 describe("FilteredCharacterList page size persistence", () => {
   it("hydrates the page size from ?size=64 on mount", () => {
-    window.history.replaceState(null, "", "/characters/?size=64");
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?size=64" },
     );
     expect(container.querySelectorAll(".item").length).toBe(64);
     const selects = screen.getAllByRole("combobox", {
@@ -489,46 +547,57 @@ describe("FilteredCharacterList page size persistence", () => {
     expect(selects[0].value).toBe("64");
   });
 
-  it("writes ?size= when the page size selector changes", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("writes ?size= when the page size selector changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /characters per page/i,
     }) as HTMLSelectElement[];
     fireEvent.change(topSelect, { target: { value: "64" } });
-    expect(window.location.search).toBe("?size=64");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?size=64");
   });
 
-  it("removes ?size= when the page size returns to the default", () => {
-    window.history.replaceState(null, "", "/characters/?size=64");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("removes ?size= when the page size returns to the default", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?size=64" },
+    );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /characters per page/i,
     }) as HTMLSelectElement[];
     fireEvent.change(topSelect, { target: { value: "32" } });
-    expect(window.location.search).toBe("");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 
   it("ignores an unknown ?size= value and falls back to the default", () => {
-    window.history.replaceState(null, "", "/characters/?size=99");
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?size=99" },
     );
     expect(container.querySelectorAll(".item").length).toBe(32);
   });
 
-  it("preserves other query params and the hash when syncing size", () => {
-    window.history.replaceState(null, "", "/characters/?search=char#top");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("preserves other query params when syncing size", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?search=char" },
+    );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /characters per page/i,
     }) as HTMLSelectElement[];
     fireEvent.change(topSelect, { target: { value: "16" } });
-    expect(window.location.search).toBe("?search=char&size=16");
-    expect(window.location.hash).toBe("#top");
+    await flushNuqs();
+    expect(lastSearchParams(onUrlUpdate).get("search")).toBe("char");
+    expect(lastSearchParams(onUrlUpdate).get("size")).toBe("16");
   });
 
   it("resets to page 1 when the sort direction changes", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
@@ -539,9 +608,9 @@ describe("FilteredCharacterList page size persistence", () => {
 
 describe("FilteredCharacterList page persistence", () => {
   it("hydrates the current page from ?page=3 on mount", () => {
-    window.history.replaceState(null, "", "/characters/?page=3");
-    const { container } = render(
+    const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?page=3" },
     );
     expect(container.querySelectorAll(".item").length).toBe(11);
     expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
@@ -549,75 +618,103 @@ describe("FilteredCharacterList page persistence", () => {
     expect(firstCardName).toBe("Char 064");
   });
 
-  it("writes ?page=2 when Next is clicked from page 1", () => {
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("writes ?page=2 when Next is clicked from page 1", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+    );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
-    expect(window.location.search).toBe("?page=2");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?page=2");
   });
 
-  it("removes ?page= when Prev returns to page 1", () => {
-    window.history.replaceState(null, "", "/characters/?page=2");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("removes ?page= when Prev returns to page 1", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?page=2" },
+    );
     const [topPrev] = screen.getAllByRole("button", { name: /previous page/i });
     fireEvent.click(topPrev);
-    expect(window.location.search).toBe("");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 
-  it("resets ?page= when the search filter changes", () => {
-    window.history.replaceState(null, "", "/characters/?page=2");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("resets ?page= when the search filter changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?page=2" },
+    );
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "char" },
     });
     act(() => {
       vi.advanceTimersByTime(300);
     });
-    expect(window.location.search).toBe("?search=char");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?search=char");
   });
 
-  it("resets ?page= when the sort direction changes", () => {
-    window.history.replaceState(null, "", "/characters/?page=2");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("resets ?page= when the sort direction changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?page=2" },
+    );
     fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
-    expect(window.location.search).toBe("?dir=desc");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?dir=desc");
   });
 
-  it("resets ?page= when the page size changes", () => {
-    window.history.replaceState(null, "", "/characters/?page=2");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("resets ?page= when the page size changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?page=2" },
+    );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /characters per page/i,
     }) as HTMLSelectElement[];
     fireEvent.change(topSelect, { target: { value: "64" } });
-    expect(window.location.search).toBe("?size=64");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?size=64");
   });
 
   it("ignores an invalid ?page= value and falls back to page 1", () => {
-    window.history.replaceState(null, "", "/characters/?page=abc");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      {
+        searchParams: "?page=abc",
+      },
+    );
     expect(screen.getAllByText(/Page 1 of 3/).length).toBe(2);
   });
 
   it("ignores a ?page= value below 1 and falls back to page 1", () => {
-    window.history.replaceState(null, "", "/characters/?page=0");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      {
+        searchParams: "?page=0",
+      },
+    );
     expect(screen.getAllByText(/Page 1 of 3/).length).toBe(2);
   });
 
-  it("preserves other query params and the hash when paginating", () => {
-    window.history.replaceState(null, "", "/characters/?dir=desc#top");
-    render(<FilteredCharacterList items={manyItems(75)} pageSize={32} />);
+  it("preserves other query params when paginating", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredCharacterList items={manyItems(75)} pageSize={32} />,
+      { searchParams: "?dir=desc" },
+    );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
-    expect(window.location.search).toBe("?dir=desc&page=2");
-    expect(window.location.hash).toBe("#top");
+    await flushNuqs();
+    expect(lastSearchParams(onUrlUpdate).get("dir")).toBe("desc");
+    expect(lastSearchParams(onUrlUpdate).get("page")).toBe("2");
   });
 });
 
 describe("FilteredCharacterList view toggle", () => {
   it("starts in grid view by default", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     expect(container.querySelector("ul.list")).not.toBeNull();
     expect(container.querySelector("ul.listView")).toBeNull();
     expect(
@@ -628,7 +725,9 @@ describe("FilteredCharacterList view toggle", () => {
   });
 
   it("switches to list view when the list button is clicked", () => {
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     act(() => {
       fireEvent.click(screen.getByRole("button", { name: /list view/i }));
     });
@@ -638,7 +737,9 @@ describe("FilteredCharacterList view toggle", () => {
 
   it("hydrates the stored choice from localStorage after mount", () => {
     window.localStorage.setItem("gota:characters-view", "list");
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     act(() => {
       vi.advanceTimersByTime(0);
     });
@@ -647,7 +748,9 @@ describe("FilteredCharacterList view toggle", () => {
 
   it("ignores invalid stored values and stays in grid view", () => {
     window.localStorage.setItem("gota:characters-view", "kanban");
-    const { container } = render(<FilteredCharacterList items={items} />);
+    const { container } = renderWithNuqs(
+      <FilteredCharacterList items={items} />,
+    );
     act(() => {
       vi.advanceTimersByTime(0);
     });

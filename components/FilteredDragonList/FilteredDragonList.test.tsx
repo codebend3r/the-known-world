@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import {
   FilteredDragonList,
   type DragonItem,
 } from "@/components/FilteredDragonList";
+import { renderWithNuqs, flushNuqs, lastQueryString } from "@/lib/testNuqs";
 
 const items: DragonItem[] = [
   {
@@ -38,19 +39,19 @@ afterEach(() => {
 
 describe("FilteredDragonList", () => {
   it("renders every dragon by default", () => {
-    render(<FilteredDragonList items={items} />);
+    renderWithNuqs(<FilteredDragonList items={items} />);
     expect(screen.getAllByRole("link")).toHaveLength(3);
   });
 
   it("exposes a labelled search input", () => {
-    render(<FilteredDragonList items={items} />);
+    renderWithNuqs(<FilteredDragonList items={items} />);
     expect(
       screen.getByRole("searchbox", { name: /search dragons/i }),
     ).toBeDefined();
   });
 
   it("filters after the 300ms debounce", () => {
-    render(<FilteredDragonList items={items} />);
+    renderWithNuqs(<FilteredDragonList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "cannibal" },
     });
@@ -63,12 +64,12 @@ describe("FilteredDragonList", () => {
   });
 
   it("applies the wild card class to dragons with no house", () => {
-    const { container } = render(<FilteredDragonList items={items} />);
+    const { container } = renderWithNuqs(<FilteredDragonList items={items} />);
     expect(container.querySelector(".cardWild")).not.toBeNull();
   });
 
   it("renders the empty state when nothing matches", () => {
-    render(<FilteredDragonList items={items} />);
+    renderWithNuqs(<FilteredDragonList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "zzz" },
     });
@@ -77,5 +78,43 @@ describe("FilteredDragonList", () => {
     });
     expect(screen.queryAllByRole("link")).toHaveLength(0);
     expect(screen.getByText(/no dragons match/i)).toBeDefined();
+  });
+
+  it("hydrates the search input and filter from the ?search= query param", () => {
+    renderWithNuqs(<FilteredDragonList items={items} />, {
+      searchParams: "?search=cannibal",
+    });
+    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    expect(input.value).toBe("cannibal");
+    const links = screen.getAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0].textContent).toContain("Cannibal");
+  });
+
+  it("writes the debounced search to the ?search= query param", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredDragonList items={items} />,
+    );
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "vhagar" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?search=vhagar");
+  });
+
+  it("removes the ?search= query param when the search is cleared", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredDragonList items={items} />,
+      { searchParams: "?search=vhagar" },
+    );
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 });

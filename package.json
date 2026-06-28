@@ -23,6 +23,7 @@
   "dependencies": {
     "gray-matter": "4.0.3",
     "next": "16.2.6",
+    "nuqs": "2.8.9",
     "react": "19.2.6",
     "react-dom": "19.2.6",
     "react-svg-pan-zoom": "3.13.1",

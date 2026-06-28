@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { TreeNode } from "@/lib/family-tree";
 import type { LaidOutChart } from "@/lib/family-tree-layout";
 import { FamilyTree } from "@/components/FamilyTree";
@@ -11,11 +12,14 @@ type Props = {
 };
 
 export function FamilyTreeViews({ roots, chart, headingId }: Props) {
+  const list = <FamilyTree roots={roots} />;
   return (
-    <FamilyTreeViewSwitcher
-      headingId={headingId}
-      list={<FamilyTree roots={roots} />}
-      chart={<FamilyTreeChart chart={chart} />}
-    />
+    <Suspense fallback={list}>
+      <FamilyTreeViewSwitcher
+        headingId={headingId}
+        list={list}
+        chart={<FamilyTreeChart chart={chart} />}
+      />
+    </Suspense>
   );
 }

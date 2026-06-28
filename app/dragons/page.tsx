@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { loadAllDragons, loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredDragonList,
   type DragonItem,
@@ -40,7 +42,9 @@ export default async function DragonsPage() {
       <p className="subtitle">
         Of the dragons that were and the dragons that are.
       </p>
-      <FilteredDragonList items={items} />
+      <Suspense fallback={<ListSearchSkeleton placeholder="Search dragons…" />}>
+        <FilteredDragonList items={items} />
+      </Suspense>
     </ParchmentLayout>
   );
 }
