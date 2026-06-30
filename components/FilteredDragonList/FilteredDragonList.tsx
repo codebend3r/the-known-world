@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useQueryState } from "nuqs";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import { searchParser } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredDragonList/FilteredDragonList.module.scss";
 
@@ -33,13 +35,25 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
 };
 
 export function FilteredDragonList({ items }: Props) {
-  const [value, setValue] = useState("");
-  const [debounced, setDebounced] = useState("");
+  const [urlSearch, setUrlSearch] = useQueryState("search", searchParser);
+  const [userValue, setUserValue] = useState<string | undefined>(undefined);
+  const [userDebounced, setUserDebounced] = useState<string | undefined>(
+    undefined,
+  );
+
+  const value = userValue ?? urlSearch;
+  const debounced = userDebounced ?? urlSearch;
 
   useEffect(() => {
-    const t = setTimeout(() => setDebounced(value), 300);
+    if (userValue === undefined) return;
+    const t = setTimeout(() => setUserDebounced(userValue), 300);
     return () => clearTimeout(t);
-  }, [value]);
+  }, [userValue]);
+
+  useEffect(() => {
+    if (userDebounced === undefined) return;
+    setUrlSearch(userDebounced);
+  }, [userDebounced, setUrlSearch]);
 
   const filtered = filterByName(items, debounced);
 
@@ -51,7 +65,7 @@ export function FilteredDragonList({ items }: Props) {
           className={listSearch.input}
           placeholder="Search dragons…"
           value={value}
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => setUserValue(e.target.value)}
           aria-label="Search dragons"
           autoComplete="off"
           spellCheck={false}

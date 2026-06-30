@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useQueryStates } from "nuqs";
 import { Sigil } from "@/components/Sigil";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
@@ -15,21 +16,13 @@ import {
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import {
-  DIR_PARAM,
-  DEFAULT_DIR,
-  DEFAULT_PAGE,
+  DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
-  PAGE_PARAM,
   PAGE_SIZE_OPTIONS,
-  SEARCH_PARAM,
-  SIZE_PARAM,
-  getServerSnapshot,
-  parseUrlSearch,
-  readUrlSearch,
-  subscribeToUrlChange,
-  writeUrlParam,
-  writeUrlParams,
-} from "@/lib/listUrlState";
+  isPageSize,
+  listSearchParsers,
+  type PageSize,
+} from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredCharacterList/FilteredCharacterList.module.scss";
 
@@ -51,7 +44,6 @@ const VIEW_OPTIONS = [
 ];
 
 const VIEW_STORAGE_KEY = "gota:characters-view";
-const DEFAULT_PAGE_SIZE = 32;
 
 function isViewMode(value: unknown): value is ViewMode {
   return value === "grid" || value === "list";
@@ -75,15 +67,13 @@ export function FilteredCharacterList({
   items,
   pageSize = DEFAULT_PAGE_SIZE,
 }: Props) {
-  const urlSnapshot = useSyncExternalStore(
-    subscribeToUrlChange,
-    readUrlSearch,
-    getServerSnapshot,
-  );
-  const urlState = useMemo(
-    () => parseUrlSearch(urlSnapshot, pageSize),
-    [urlSnapshot, pageSize],
-  );
+  const sizeDefault: PageSize = isPageSize(pageSize)
+    ? pageSize
+    : DEFAULT_PAGE_SIZE;
+  const parsers = useMemo(() => listSearchParsers(sizeDefault), [sizeDefault]);
+  const [{ search, dir, size, page: rawPage }, setParams] =
+    useQueryStates(parsers);
+  const page = Math.max(1, rawPage);
 
   const [userValue, setUserValue] = useState<string | undefined>(undefined);
   const [userDebounced, setUserDebounced] = useState<string | undefined>(
@@ -108,11 +98,8 @@ export function FilteredCharacterList({
     }
   };
 
-  const value = userValue ?? urlState.search;
-  const debounced = userDebounced ?? urlState.search;
-  const dir = urlState.dir;
-  const size = urlState.size;
-  const page = urlState.page;
+  const value = userValue ?? search;
+  const debounced = userDebounced ?? search;
 
   useEffect(() => {
     if (userValue === undefined) return;
@@ -122,11 +109,8 @@ export function FilteredCharacterList({
 
   useEffect(() => {
     if (userDebounced === undefined) return;
-    writeUrlParams([
-      { name: SEARCH_PARAM, value: userDebounced, defaultValue: "" },
-      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
-    ]);
-  }, [userDebounced]);
+    setParams({ search: userDebounced, page: 1 });
+  }, [userDebounced, setParams]);
 
   const sorted = useMemo(() => {
     const arr = [...items].sort((a, b) => a.name.localeCompare(b.name));
@@ -140,25 +124,16 @@ export function FilteredCharacterList({
   const pageItems = filtered.slice(pageStart, pageStart + size);
 
   const writePage = (next: number) => {
-    writeUrlParam({
-      name: PAGE_PARAM,
-      value: String(next),
-      defaultValue: String(DEFAULT_PAGE),
-    });
+    setParams({ page: next });
   };
 
   const handleSizeChange = (next: number) => {
-    writeUrlParams([
-      { name: SIZE_PARAM, value: String(next), defaultValue: String(pageSize) },
-      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
-    ]);
+    if (!isPageSize(next)) return;
+    setParams({ size: next, page: 1 });
   };
 
   const handleDirChange = (next: SortDirection) => {
-    writeUrlParams([
-      { name: DIR_PARAM, value: next, defaultValue: DEFAULT_DIR },
-      { name: PAGE_PARAM, value: "1", defaultValue: String(DEFAULT_PAGE) },
-    ]);
+    setParams({ dir: next, page: 1 });
   };
 
   const renderPagination = (position: "top" | "bottom") => (

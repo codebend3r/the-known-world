@@ -1,9 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, screen } from "@testing-library/react";
 import {
   FilteredWeaponList,
   type WeaponItem,
 } from "@/components/FilteredWeaponList";
+import { renderWithNuqs, flushNuqs, lastQueryString } from "@/lib/testNuqs";
 
 const items: WeaponItem[] = [
   {
@@ -39,20 +40,20 @@ afterEach(() => {
 
 describe("FilteredWeaponList", () => {
   it("renders every weapon by default", () => {
-    render(<FilteredWeaponList items={items} />);
+    renderWithNuqs(<FilteredWeaponList items={items} />);
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(3);
   });
 
   it("exposes a labelled search input", () => {
-    render(<FilteredWeaponList items={items} />);
+    renderWithNuqs(<FilteredWeaponList items={items} />);
     expect(
       screen.getByRole("searchbox", { name: /search weapons/i }),
     ).toBeDefined();
   });
 
   it("filters after the 300ms debounce", () => {
-    render(<FilteredWeaponList items={items} />);
+    renderWithNuqs(<FilteredWeaponList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "ice" },
     });
@@ -65,7 +66,7 @@ describe("FilteredWeaponList", () => {
   });
 
   it("renders the empty state when nothing matches", () => {
-    render(<FilteredWeaponList items={items} />);
+    renderWithNuqs(<FilteredWeaponList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "zzz" },
     });
@@ -77,9 +78,47 @@ describe("FilteredWeaponList", () => {
   });
 
   it("applies the region-tinted class to each card", () => {
-    const { container } = render(<FilteredWeaponList items={items} />);
+    const { container } = renderWithNuqs(<FilteredWeaponList items={items} />);
     expect(container.querySelector(".cardNorth")).not.toBeNull();
     expect(container.querySelector(".cardReach")).not.toBeNull();
     expect(container.querySelector(".cardCrownlands")).not.toBeNull();
+  });
+
+  it("hydrates the search input and filter from the ?search= query param", () => {
+    renderWithNuqs(<FilteredWeaponList items={items} />, {
+      searchParams: "?search=ice",
+    });
+    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    expect(input.value).toBe("ice");
+    const links = screen.getAllByRole("link");
+    expect(links).toHaveLength(1);
+    expect(links[0].textContent).toContain("Ice");
+  });
+
+  it("writes the debounced search to the ?search= query param", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredWeaponList items={items} />,
+    );
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "ice" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?search=ice");
+  });
+
+  it("removes the ?search= query param when the search is cleared", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredWeaponList items={items} />,
+      { searchParams: "?search=ice" },
+    );
+    fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 });

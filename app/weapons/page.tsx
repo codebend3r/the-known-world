@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { loadAllWeapons, loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredWeaponList,
   type WeaponItem,
@@ -41,7 +43,9 @@ export default async function WeaponsPage() {
       <p className="subtitle">
         Named blades, ancestral arms, and lost relics of the realm.
       </p>
-      <FilteredWeaponList items={items} />
+      <Suspense fallback={<ListSearchSkeleton placeholder="Search weapons…" />}>
+        <FilteredWeaponList items={items} />
+      </Suspense>
     </ParchmentLayout>
   );
 }

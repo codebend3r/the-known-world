@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredHouseList,
   type HouseItem,
@@ -39,7 +41,13 @@ export default async function HousesPage() {
       <p className="subtitle">
         The rolls of the great houses of the Seven Kingdoms.
       </p>
-      <FilteredHouseList items={items} />
+      <Suspense
+        fallback={
+          <ListSearchSkeleton placeholder="Search houses…" withControls />
+        }
+      >
+        <FilteredHouseList items={items} />
+      </Suspense>
     </ParchmentLayout>
   );
 }

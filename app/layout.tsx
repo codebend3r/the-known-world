@@ -5,6 +5,7 @@ import {
   Cormorant_Unicase,
   EB_Garamond,
 } from "next/font/google";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../styles/globals.scss";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteMenu } from "@/components/SiteMenu";
@@ -58,7 +59,7 @@ export default function RootLayout({
       <body>
         <SiteHeader />
         <SiteMenu />
-        {children}
+        <NuqsAdapter>{children}</NuqsAdapter>
         <SiteFooter />
       </body>
     </html>

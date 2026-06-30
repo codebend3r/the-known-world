@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { loadAllCharacters, loadAllHouses } from "@/lib/content";
 import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredCharacterList,
   type CharacterItem,
@@ -41,7 +43,13 @@ export default async function CharactersPage() {
   return (
     <ParchmentLayout>
       <h1>Characters</h1>
-      <FilteredCharacterList items={items} />
+      <Suspense
+        fallback={
+          <ListSearchSkeleton placeholder="Search characters…" withControls />
+        }
+      >
+        <FilteredCharacterList items={items} />
+      </Suspense>
     </ParchmentLayout>
   );
 }

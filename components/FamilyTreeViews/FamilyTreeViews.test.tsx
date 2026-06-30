@@ -1,13 +1,10 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import { FamilyTreeViewSwitcher } from "@/components/FamilyTreeViews/FamilyTreeViewSwitcher";
+import { renderWithNuqs, flushNuqs, lastQueryString } from "@/lib/testNuqs";
 
 function hiddenAttr(el: HTMLElement | null): string | null {
   return el ? el.getAttribute("hidden") : null;
-}
-
-function setUrl(search: string) {
-  window.history.replaceState(null, "", `/houses/stark/${search}`);
 }
 
 function mockMatchMedia(matches: boolean) {
@@ -26,23 +23,16 @@ function mockMatchMedia(matches: boolean) {
   );
 }
 
-describe("FamilyTreeViewSwitcher", () => {
-  beforeEach(() => {
-    setUrl("");
-  });
+const list = <div data-testid="list">list</div>;
+const chart = <div data-testid="chart">chart</div>;
 
+describe("FamilyTreeViewSwitcher", () => {
   afterEach(() => {
-    setUrl("");
     vi.unstubAllGlobals();
   });
 
   it("shows the list view child by default", () => {
-    render(
-      <FamilyTreeViewSwitcher
-        list={<div data-testid="list">list</div>}
-        chart={<div data-testid="chart">chart</div>}
-      />,
-    );
+    renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />);
     expect(hiddenAttr(screen.getByTestId("list").parentElement)).toBeNull();
     expect(
       hiddenAttr(screen.getByTestId("chart").parentElement),
@@ -50,63 +40,37 @@ describe("FamilyTreeViewSwitcher", () => {
   });
 
   it("shows the chart view when ?tree=chart", () => {
-    setUrl("?tree=chart");
-    render(
-      <FamilyTreeViewSwitcher
-        list={<div data-testid="list">list</div>}
-        chart={<div data-testid="chart">chart</div>}
-      />,
-    );
+    renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />, {
+      searchParams: "?tree=chart",
+    });
     expect(hiddenAttr(screen.getByTestId("chart").parentElement)).toBeNull();
     expect(hiddenAttr(screen.getByTestId("list").parentElement)).not.toBeNull();
   });
 
   it("falls back to the list view when ?tree is invalid", () => {
-    setUrl("?tree=bogus");
-    render(
-      <FamilyTreeViewSwitcher
-        list={<div data-testid="list">list</div>}
-        chart={<div data-testid="chart">chart</div>}
-      />,
-    );
+    renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />, {
+      searchParams: "?tree=bogus",
+    });
     expect(hiddenAttr(screen.getByTestId("list").parentElement)).toBeNull();
   });
 
-  it("clicking the chart toggle button writes ?tree=chart to the URL", () => {
-    render(
-      <FamilyTreeViewSwitcher
-        list={<div data-testid="list">list</div>}
-        chart={<div data-testid="chart">chart</div>}
-      />,
+  it("clicking the chart toggle button writes ?tree=chart to the URL", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FamilyTreeViewSwitcher list={list} chart={chart} />,
     );
     fireEvent.click(screen.getByRole("button", { name: /chart view/i }));
-    expect(window.location.search).toBe("?tree=chart");
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?tree=chart");
   });
 
-  it("clicking the list toggle button strips ?tree from the URL", () => {
-    setUrl("?tree=chart");
-    render(
-      <FamilyTreeViewSwitcher
-        list={<div data-testid="list">list</div>}
-        chart={<div data-testid="chart">chart</div>}
-      />,
+  it("clicking the list toggle button strips ?tree from the URL", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FamilyTreeViewSwitcher list={list} chart={chart} />,
+      { searchParams: "?tree=chart" },
     );
     fireEvent.click(screen.getByRole("button", { name: /list view/i }));
-    expect(window.location.search).toBe("");
-  });
-
-  it("re-renders when the URL changes externally", () => {
-    render(
-      <FamilyTreeViewSwitcher
-        list={<div data-testid="list">list</div>}
-        chart={<div data-testid="chart">chart</div>}
-      />,
-    );
-    act(() => {
-      setUrl("?tree=chart");
-      window.dispatchEvent(new Event("tkw:urlchange"));
-    });
-    expect(hiddenAttr(screen.getByTestId("chart").parentElement)).toBeNull();
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 
   describe("on mobile", () => {
@@ -115,12 +79,7 @@ describe("FamilyTreeViewSwitcher", () => {
     });
 
     it("renders the chart without the toggle and without the list", () => {
-      render(
-        <FamilyTreeViewSwitcher
-          list={<div data-testid="list">list</div>}
-          chart={<div data-testid="chart">chart</div>}
-        />,
-      );
+      renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />);
       expect(screen.getByTestId("chart")).toBeDefined();
       expect(screen.queryByTestId("list")).toBeNull();
       expect(screen.queryByRole("button", { name: /chart view/i })).toBeNull();
@@ -128,13 +87,9 @@ describe("FamilyTreeViewSwitcher", () => {
     });
 
     it("renders the chart even when ?tree=list is in the URL", () => {
-      setUrl("?tree=list");
-      render(
-        <FamilyTreeViewSwitcher
-          list={<div data-testid="list">list</div>}
-          chart={<div data-testid="chart">chart</div>}
-        />,
-      );
+      renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />, {
+        searchParams: "?tree=list",
+      });
       expect(screen.getByTestId("chart")).toBeDefined();
       expect(screen.queryByTestId("list")).toBeNull();
     });
