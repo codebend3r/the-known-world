@@ -12,7 +12,7 @@ export const SORT_DIRECTIONS = [
 ] as const satisfies readonly SortDirection[];
 export const DEFAULT_DIR: SortDirection = "asc";
 
-export const PAGE_SIZES = [16, 32, 64, 128] as const;
+export const PAGE_SIZES = [24, 48, 72, 120] as const;
 export type PageSize = (typeof PAGE_SIZES)[number];
 
 export const PAGE_SIZE_OPTIONS: ReadonlyArray<{
@@ -20,8 +20,8 @@ export const PAGE_SIZE_OPTIONS: ReadonlyArray<{
   label: string;
 }> = PAGE_SIZES.map((value) => ({ value, label: String(value) }));
 
-export const MIN_PAGE_SIZE: PageSize = 16;
-export const DEFAULT_PAGE_SIZE: PageSize = 32;
+export const MIN_PAGE_SIZE: PageSize = 24;
+export const DEFAULT_PAGE_SIZE: PageSize = 24;
 
 export function isPageSize(value: number): value is PageSize {
   return PAGE_SIZES.some((size) => size === value);

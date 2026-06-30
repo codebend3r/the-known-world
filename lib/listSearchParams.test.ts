@@ -24,16 +24,16 @@ describe("isPageSize", () => {
 describe("PAGE_SIZE_OPTIONS", () => {
   it("pairs each page size with its string label", () => {
     expect(PAGE_SIZE_OPTIONS).toEqual([
-      { value: 16, label: "16" },
-      { value: 32, label: "32" },
-      { value: 64, label: "64" },
-      { value: 128, label: "128" },
+      { value: 24, label: "24" },
+      { value: 48, label: "48" },
+      { value: 72, label: "72" },
+      { value: 120, label: "120" },
     ]);
   });
 
-  it("exposes 32 as the default and 16 as the minimum page size", () => {
-    expect(DEFAULT_PAGE_SIZE).toBe(32);
-    expect(MIN_PAGE_SIZE).toBe(16);
+  it("exposes 24 as both the default and the minimum page size", () => {
+    expect(DEFAULT_PAGE_SIZE).toBe(24);
+    expect(MIN_PAGE_SIZE).toBe(24);
   });
 });
 
@@ -45,14 +45,14 @@ describe("searchParser", () => {
 
 describe("listSearchParsers", () => {
   it("builds the search/dir/size/page parser map with the given size default", () => {
-    const parsers = listSearchParsers(64);
+    const parsers = listSearchParsers(48);
     expect(Object.keys(parsers).sort()).toEqual([
       "dir",
       "page",
       "search",
       "size",
     ]);
-    expect(parsers.size.defaultValue).toBe(64);
+    expect(parsers.size.defaultValue).toBe(48);
     expect(parsers.dir.defaultValue).toBe("asc");
     expect(parsers.page.defaultValue).toBe(1);
   });

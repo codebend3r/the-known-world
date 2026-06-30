@@ -255,7 +255,7 @@ describe("FilteredHouseList sort direction", () => {
 
 describe("FilteredHouseList pagination", () => {
   it("hides pagination when the filtered list is at or below the smallest page size", () => {
-    renderWithNuqs(<FilteredHouseList items={items} pageSize={32} />);
+    renderWithNuqs(<FilteredHouseList items={items} pageSize={24} />);
     expect(
       screen.queryByRole("navigation", { name: /pagination/i }),
     ).toBeNull();
@@ -263,9 +263,9 @@ describe("FilteredHouseList pagination", () => {
 
   it("renders a pagination nav above and below the list when there is overflow", () => {
     const { container } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
     );
-    expect(container.querySelectorAll(".item").length).toBe(32);
+    expect(container.querySelectorAll(".item").length).toBe(24);
     const navs = screen.getAllByRole("navigation", { name: /pagination/i });
     expect(navs.length).toBe(2);
     expect(navs[0].textContent).toMatch(/Page 1 of 3/);
@@ -273,17 +273,17 @@ describe("FilteredHouseList pagination", () => {
 
   it("advances to the next page when Next is clicked from the top nav", () => {
     const { container } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
     );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
     const firstCardName = container.querySelector(".name")?.textContent;
-    expect(firstCardName).toBe("House 032");
+    expect(firstCardName).toBe("House 024");
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
   });
 
   it("disables Next on the last page", () => {
-    renderWithNuqs(<FilteredHouseList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
     const nextButtons = screen.getAllByRole("button", {
       name: /next page/i,
     }) as HTMLButtonElement[];
@@ -303,7 +303,7 @@ describe("FilteredHouseList pagination", () => {
         regionLabel: "The North",
       },
     ];
-    renderWithNuqs(<FilteredHouseList items={lots} pageSize={32} />);
+    renderWithNuqs(<FilteredHouseList items={lots} pageSize={24} />);
     const [nextBtn] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(nextBtn);
     expect(screen.getAllByText(/Page 2/).length).toBe(2);
@@ -319,7 +319,7 @@ describe("FilteredHouseList pagination", () => {
   });
 
   it("resets to page 1 when the sort direction changes", () => {
-    renderWithNuqs(<FilteredHouseList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
@@ -329,98 +329,98 @@ describe("FilteredHouseList pagination", () => {
 });
 
 describe("FilteredHouseList page size persistence", () => {
-  it("renders the page-size selector with all four options and 32 selected by default", () => {
-    renderWithNuqs(<FilteredHouseList items={manyItems(75)} pageSize={32} />);
+  it("renders the page-size selector with all four options and 24 selected by default", () => {
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
     const optionLabels = Array.from(topSelect.options).map(
       (o) => o.textContent,
     );
-    expect(optionLabels).toEqual(["16", "32", "64", "128"]);
-    expect(topSelect.value).toBe("32");
+    expect(optionLabels).toEqual(["24", "48", "72", "120"]);
+    expect(topSelect.value).toBe("24");
   });
 
-  it("hydrates the page size from ?size=64 on mount", () => {
+  it("hydrates the page size from ?size=48 on mount", () => {
     const { container } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
-      { searchParams: "?size=64" },
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
+      { searchParams: "?size=48" },
     );
-    expect(container.querySelectorAll(".item").length).toBe(64);
+    expect(container.querySelectorAll(".item").length).toBe(48);
     const selects = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    expect(selects[0].value).toBe("64");
+    expect(selects[0].value).toBe("48");
   });
 
   it("writes ?size= when the page size selector changes", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
     );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    fireEvent.change(topSelect, { target: { value: "16" } });
+    fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
-    expect(lastQueryString(onUrlUpdate)).toBe("?size=16");
+    expect(lastQueryString(onUrlUpdate)).toBe("?size=48");
   });
 
   it("removes ?size= when the page size returns to the default", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
-      { searchParams: "?size=64" },
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
+      { searchParams: "?size=48" },
     );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    fireEvent.change(topSelect, { target: { value: "32" } });
+    fireEvent.change(topSelect, { target: { value: "24" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
   });
 
   it("keeps the top and bottom selectors in sync", () => {
-    renderWithNuqs(<FilteredHouseList items={manyItems(75)} pageSize={32} />);
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
     const selects = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    fireEvent.change(selects[1], { target: { value: "128" } });
+    fireEvent.change(selects[1], { target: { value: "120" } });
     const after = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    expect(after[0].value).toBe("128");
-    expect(after[1].value).toBe("128");
+    expect(after[0].value).toBe("120");
+    expect(after[1].value).toBe("120");
   });
 
   it("preserves other query params when syncing size", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?search=house" },
     );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    fireEvent.change(topSelect, { target: { value: "16" } });
+    fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastSearchParams(onUrlUpdate).get("search")).toBe("house");
-    expect(lastSearchParams(onUrlUpdate).get("size")).toBe("16");
+    expect(lastSearchParams(onUrlUpdate).get("size")).toBe("48");
   });
 });
 
 describe("FilteredHouseList page persistence", () => {
   it("hydrates the current page from ?page=3 on mount", () => {
     const { container } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=3" },
     );
-    expect(container.querySelectorAll(".item").length).toBe(11);
+    expect(container.querySelectorAll(".item").length).toBe(22);
     expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
     const firstCardName = container.querySelector(".name")?.textContent;
-    expect(firstCardName).toBe("House 064");
+    expect(firstCardName).toBe("House 048");
   });
 
   it("writes ?page=2 when Next is clicked from page 1", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
     );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
@@ -430,7 +430,7 @@ describe("FilteredHouseList page persistence", () => {
 
   it("removes ?page= when Prev returns to page 1", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=2" },
     );
     const [topPrev] = screen.getAllByRole("button", { name: /previous page/i });
@@ -441,7 +441,7 @@ describe("FilteredHouseList page persistence", () => {
 
   it("resets ?page= when the search filter changes", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=2" },
     );
     fireEvent.change(screen.getByRole("searchbox"), {
@@ -456,7 +456,7 @@ describe("FilteredHouseList page persistence", () => {
 
   it("resets ?page= when the sort direction changes", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=2" },
     );
     fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
@@ -466,26 +466,26 @@ describe("FilteredHouseList page persistence", () => {
 
   it("resets ?page= when the page size changes", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=2" },
     );
     const [topSelect] = screen.getAllByRole("combobox", {
       name: /houses per page/i,
     }) as HTMLSelectElement[];
-    fireEvent.change(topSelect, { target: { value: "64" } });
+    fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
-    expect(lastQueryString(onUrlUpdate)).toBe("?size=64");
+    expect(lastQueryString(onUrlUpdate)).toBe("?size=48");
   });
 
   it("ignores an invalid ?page= value and falls back to page 1", () => {
-    renderWithNuqs(<FilteredHouseList items={manyItems(75)} pageSize={32} />, {
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />, {
       searchParams: "?page=abc",
     });
     expect(screen.getAllByText(/Page 1 of 3/).length).toBe(2);
   });
 
   it("ignores a ?page= value below 1 and falls back to page 1", () => {
-    renderWithNuqs(<FilteredHouseList items={manyItems(75)} pageSize={32} />, {
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />, {
       searchParams: "?page=0",
     });
     expect(screen.getAllByText(/Page 1 of 3/).length).toBe(2);
@@ -493,7 +493,7 @@ describe("FilteredHouseList page persistence", () => {
 
   it("preserves other query params when paginating", async () => {
     const { onUrlUpdate } = renderWithNuqs(
-      <FilteredHouseList items={manyItems(75)} pageSize={32} />,
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?dir=desc" },
     );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
