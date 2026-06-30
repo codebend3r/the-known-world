@@ -103,10 +103,41 @@ describe("loadWeapon round-trip", () => {
 });
 
 describe("loadAllWeapons round-trip", () => {
-  it("returns all four seeded weapons", async () => {
+  it("returns every seeded weapon", async () => {
     const all = await loadAllWeapons();
     const slugs = all.map((w) => w.frontmatter.slug).sort();
-    expect(slugs).toEqual(["blackfyre", "dark-sister", "heartsbane", "ice"]);
+    expect(slugs).toEqual([
+      "blackfyre",
+      "brightroar",
+      "caggos-arakh",
+      "catspaw-dagger",
+      "dark-sister",
+      "dawn",
+      "dragonbinder",
+      "eurons-daggers",
+      "flaming-sword",
+      "gregor-cleganes-greatsword",
+      "hearteater",
+      "heartsbane",
+      "horn-of-winter",
+      "ice",
+      "lady-forlorn",
+      "lamentation",
+      "lightbringer",
+      "lions-tooth",
+      "longclaw",
+      "needle",
+      "nightfall",
+      "oathkeeper",
+      "orphan-maker",
+      "red-rain",
+      "roberts-warhammer",
+      "sandoqs-blade",
+      "the-just-maid",
+      "truth",
+      "vigilance",
+      "widows-wail",
+    ]);
   });
 });
 
