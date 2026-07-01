@@ -4,6 +4,7 @@ import { loadAllWeapons, loadAllHouses } from "@/lib/content";
 import { findWeaponImage } from "@/lib/weapon-image";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredWeaponList,
@@ -51,10 +52,10 @@ export default async function WeaponsPage() {
 
   return (
     <ParchmentLayout>
-      <h1>Weapons</h1>
-      <p className="subtitle">
-        Named blades, ancestral arms, and lost relics of the realm.
-      </p>
+      <PageHeading
+        title="Weapons"
+        subtitle="Named blades, ancestral arms, and lost relics of the realm."
+      />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search weapons…" />}>
         <FilteredWeaponList items={items} />
       </Suspense>

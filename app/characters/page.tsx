@@ -4,6 +4,7 @@ import { loadAllCharacters, loadAllHouses } from "@/lib/content";
 import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredCharacterList,
@@ -42,7 +43,7 @@ export default async function CharactersPage() {
 
   return (
     <ParchmentLayout>
-      <h1>Characters</h1>
+      <PageHeading title="Characters" />
       <Suspense
         fallback={
           <ListSearchSkeleton placeholder="Search characters…" withControls />

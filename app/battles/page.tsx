@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { loadAllBattles } from "@/lib/content";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
 import { formatBattleWhen, absoluteYear } from "@/lib/battle-date";
 import { findBattleImage } from "@/lib/battle-image";
 import styles from "@/app/battles/page.module.scss";
@@ -55,11 +56,10 @@ export default async function BattlesPage() {
 
   return (
     <ParchmentLayout>
-      <h1>Battles</h1>
-      <p className="subtitle">
-        The wars, battles, and sieges of the Known World, from the Dawn Age to
-        the wars of the Five Kings.
-      </p>
+      <PageHeading
+        title="Battles"
+        subtitle="The wars, battles, and sieges of the Known World, from the Dawn Age to the wars of the Five Kings."
+      />
       <div className={styles.groups}>
         {groups.map((group) => (
           <section key={group.war} className={styles.group}>
