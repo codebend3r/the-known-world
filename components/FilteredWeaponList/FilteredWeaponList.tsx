@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
-import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import { searchParser } from "@/lib/listSearchParams";
@@ -85,13 +84,6 @@ export function FilteredWeaponList({ items }: Props) {
             return (
               <li key={item.slug} className={styles.item}>
                 <Link href={`/weapons/${item.slug}/`} className={cardClass}>
-                  <Sigil
-                    slug={item.houseSlug}
-                    name={item.name}
-                    region={item.region}
-                    size="6rem"
-                    decorative
-                  />
                   <span className={styles.name}>{item.name}</span>
                 </Link>
               </li>

@@ -8,8 +8,8 @@
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
   justify-self: stretch;
 }
 
@@ -18,40 +18,28 @@
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   align-items: center;
-  justify-content: center;
-  gap: 0.85rem;
-  min-height: 10.5rem;
-  padding: 1rem;
+  padding: 0.9rem 1.25rem;
   background: var(--vellum);
   border: 2px solid rgba(107, 68, 35, 0.25);
   border-radius: 2px;
   color: var(--ink);
   text-decoration: none;
-  text-align: center;
   transition:
     border-color 150ms ease,
-    transform 150ms ease,
     box-shadow 150ms ease;
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 
   &:hover,
   &:focus-visible {
     border-color: var(--gold-leaf);
-    transform: scale(1.01);
     box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
     color: var(--ink);
   }
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
-
-    &:hover,
-    &:focus-visible {
-      transform: none;
-    }
   }
 }
 
