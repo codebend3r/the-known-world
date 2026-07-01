@@ -5,7 +5,7 @@
   "reactTsScss.peekProperties": true,
   "reactTsScss.cssAutoComplete": true,
   "reactTsScss.cssDefinitions": true,
-  "reactTsScss.diagnostics": true,
+  "reactTsScss.diagnostics": false,
   "reactTsScss.cssSyntaxColor": true,
   "reactTsScss.tsCleanUpDefs": true,
   "reactTsScss.cleanUpDefs": [

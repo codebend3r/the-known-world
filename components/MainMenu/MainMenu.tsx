@@ -110,6 +110,37 @@ const DRAGON = (
   </svg>
 );
 
+const BATTLES = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <path
+      d="M7 25 L25 7"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M7 7 L25 25"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M9 23 L11 25 M23 9 L25 7"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      opacity="0.6"
+    />
+    <path
+      d="M9 9 L7 7 M23 23 L25 25"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeLinecap="round"
+      opacity="0.6"
+    />
+  </svg>
+);
+
 export function MainMenu() {
   return (
     <nav className={styles.menu} aria-label="Atlas sections">
@@ -119,6 +150,7 @@ export function MainMenu() {
         glyph={COMPASS}
         href="/maps/"
         status="coming-soon"
+        visible={false}
       />
       <MainMenuTile
         title="Timeline"
@@ -126,6 +158,7 @@ export function MainMenu() {
         glyph={HOURGLASS}
         href="/timeline/"
         status="coming-soon"
+        visible={false}
       />
       <MainMenuTile
         title="Houses"
@@ -146,10 +179,17 @@ export function MainMenu() {
         href="/weapons/"
       />
       <MainMenuTile
+        title="Battles"
+        subtitle="Walk the fields of war."
+        glyph={BATTLES}
+        href="/battles/"
+      />
+      <MainMenuTile
         title="Dragons"
         subtitle="Wake the dragon."
         glyph={DRAGON}
         href="/dragons/"
+        visible={false}
       />
     </nav>
   );

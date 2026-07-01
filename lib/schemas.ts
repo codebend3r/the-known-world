@@ -191,6 +191,40 @@ export const EventSchema = z.object({
   draft: z.boolean().default(false),
 });
 
+const BattleTypeSchema = z.enum([
+  "battle",
+  "siege",
+  "war",
+  "campaign",
+  "raid",
+  "naval",
+  "massacre",
+  "rebellion",
+  "mutiny",
+  "skirmish",
+  "other",
+]);
+
+export const BattleSchema = z.object({
+  slug: z.string().min(1),
+  name: z.string().min(1),
+  type: BattleTypeSchema,
+  war: z.string().optional(),
+  start: DateSchema,
+  end: DateSchema,
+  location: z.string().optional(),
+  region: z.enum(REGION_SLUGS).optional(),
+  participants: z.array(ParticipantSchema).default([]),
+  commanders: z.array(z.string()).default([]),
+  victor: z.string().optional(),
+  outcome: z.string().optional(),
+  casualties: z.array(z.string()).default([]),
+  aliases: z.array(z.string()).default([]),
+  mentions: z.array(z.string()).default([]),
+  sources: z.array(SourceSchema).default([]),
+  draft: z.boolean().default(false),
+});
+
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
 export type HouseInfoEntry = z.infer<typeof HouseInfoEntrySchema>;
@@ -199,3 +233,4 @@ export type Event = z.infer<typeof EventSchema>;
 export type Source = z.infer<typeof SourceSchema>;
 export type Weapon = z.infer<typeof WeaponSchema>;
 export type Dragon = z.infer<typeof DragonSchema>;
+export type Battle = z.infer<typeof BattleSchema>;

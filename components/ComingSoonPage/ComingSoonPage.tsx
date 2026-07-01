@@ -8,9 +8,7 @@ export function ComingSoonPage({ title }: { title: string }) {
         <Link href="/">Atlas of the Known World</Link>
       </p>
       <h1>{title}</h1>
-      <p className="subtitle">
-        This section of the atlas has not yet been transcribed.
-      </p>
+      <p className="subtitle">This section is coming soon.</p>
       <p>
         <Link href="/">
           <span aria-hidden="true">← </span>Return to the menu

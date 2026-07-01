@@ -1,0 +1,83 @@
+@use "breakpoints" as bp;
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (max-width: bp.$md) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  grid-template-areas:
+    "heading heading"
+    "main    infobox";
+  gap: 2rem;
+  align-items: start;
+
+  @media (max-width: bp.$md) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "heading"
+      "infobox"
+      "main";
+    column-gap: 0;
+  }
+}
+
+.heading {
+  grid-area: heading;
+  display: grid;
+  gap: 0;
+  place-items: center;
+  place-content: center;
+
+  h1 {
+    font-family: var(--font-character-name);
+  }
+}
+
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-content: start;
+}
+
+.infobox {
+  grid-area: infobox;
+}
+
+.figure {
+  margin: 0;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
+.back {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  text-align: center;
+
+  a {
+    color: var(--ink-faded);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--gold-leaf);
+    }
+  }
+}

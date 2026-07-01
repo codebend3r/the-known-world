@@ -23,8 +23,8 @@ describe("ComingSoonPage", () => {
     expect(back.getAttribute("href")).toBe("/");
   });
 
-  it('renders the "not yet been transcribed" placeholder sentence', () => {
+  it('renders the "coming soon" placeholder sentence', () => {
     render(<ComingSoonPage title="Map" />);
-    expect(screen.getByText(/not yet been transcribed/i)).toBeDefined();
+    expect(screen.getByText(/coming soon/i)).toBeDefined();
   });
 });

@@ -10,12 +10,14 @@ import {
   EventSchema,
   WeaponSchema,
   DragonSchema,
+  BattleSchema,
   type Castle,
   type House,
   type Character,
   type Event,
   type Weapon,
   type Dragon,
+  type Battle,
 } from "@/lib/schemas";
 import { remarkProseLinks, type ProseLinkIndex } from "@/lib/prose-links";
 
@@ -24,7 +26,14 @@ const CONTENT_ROOT = path.join(process.cwd(), "content");
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 async function loadFile<T>(
-  type: "castles" | "houses" | "characters" | "events" | "weapons" | "dragons",
+  type:
+    | "castles"
+    | "houses"
+    | "characters"
+    | "events"
+    | "weapons"
+    | "dragons"
+    | "battles",
   slug: string,
   schema: { parse: (input: unknown) => T },
 ): Promise<Loaded<T>> {
@@ -36,7 +45,14 @@ async function loadFile<T>(
 }
 
 async function loadAll<T>(
-  type: "castles" | "houses" | "characters" | "events" | "weapons" | "dragons",
+  type:
+    | "castles"
+    | "houses"
+    | "characters"
+    | "events"
+    | "weapons"
+    | "dragons"
+    | "battles",
   schema: { parse: (input: unknown) => T },
 ): Promise<Array<Loaded<T>>> {
   const dir = path.join(CONTENT_ROOT, type);
@@ -74,6 +90,10 @@ export const loadDragon = (slug: string) =>
 
 export const loadAllWeapons = () => loadAll<Weapon>("weapons", WeaponSchema);
 export const loadAllDragons = () => loadAll<Dragon>("dragons", DragonSchema);
+
+export const loadBattle = (slug: string) =>
+  loadFile<Battle>("battles", slug, BattleSchema);
+export const loadAllBattles = () => loadAll<Battle>("battles", BattleSchema);
 
 export async function renderMarkdown(
   source: string,
