@@ -1,15 +1,15 @@
 @use "breakpoints" as bp;
 
-// `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
-// and `.subtitle` size to their content. `justify-self: stretch` opts
-// this grid back out so it fills the full parchment column.
+// `ParchmentLayout`'s `.page` uses `justify-items: center`, so `justify-self:
+// stretch` opts this grid back out to fill the full parchment column. Mirrors
+// the row style on the `/battles` index.
 .list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
   justify-self: stretch;
 }
 
@@ -17,66 +17,34 @@
   margin: 0;
 }
 
-.card {
+.link {
   display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
   align-items: center;
-  padding: 0.9rem 1.25rem;
-  background: var(--vellum);
-  border: 2px solid rgba(107, 68, 35, 0.25);
-  border-radius: 2px;
-  color: var(--ink);
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
   text-decoration: none;
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  color: var(--ink);
+  transition: background-color 0.15s ease;
 
-  &:hover,
-  &:focus-visible {
-    border-color: var(--gold-leaf);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-    color: var(--ink);
+  &:hover {
+    background-color: rgba(212, 162, 89, 0.16);
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
-  }
-}
-
-// Regional border tints — colours live in `globals.scss` as
-// `--region-color-*` tokens (shared with `FilteredCharacterList`).
-.cardNorth {
-  border-color: var(--region-color-north);
-}
-.cardVale {
-  border-color: var(--region-color-vale);
-}
-.cardRiverlands {
-  border-color: var(--region-color-riverlands);
-}
-.cardWesterlands {
-  border-color: var(--region-color-westerlands);
-}
-.cardReach {
-  border-color: var(--region-color-reach);
-}
-.cardStormlands {
-  border-color: var(--region-color-stormlands);
-}
-.cardDorne {
-  border-color: var(--region-color-dorne);
-}
-.cardIronIslands {
-  border-color: var(--region-color-iron-islands);
-}
-.cardCrownlands {
-  border-color: var(--region-color-crownlands);
 }
 
 .name {
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.2rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+}
+
+// Keep the sigil small so it never grows the row taller than the name's
+// line box.
+.sigil {
+  display: inline-flex;
+  align-items: center;
+  flex: none;
 }

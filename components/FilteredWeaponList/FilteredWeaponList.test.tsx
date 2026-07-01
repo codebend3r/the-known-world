@@ -77,11 +77,24 @@ describe("FilteredWeaponList", () => {
     expect(screen.getByText(/no weapons match/i)).toBeDefined();
   });
 
-  it("applies the region-tinted class to each card", () => {
+  it("renders a house sigil on each weapon that belongs to a house", () => {
     const { container } = renderWithNuqs(<FilteredWeaponList items={items} />);
-    expect(container.querySelector(".cardNorth")).not.toBeNull();
-    expect(container.querySelector(".cardReach")).not.toBeNull();
-    expect(container.querySelector(".cardCrownlands")).not.toBeNull();
+    const sigils = container.querySelectorAll(".sigil img");
+    expect(sigils).toHaveLength(3);
+  });
+
+  it("omits the sigil for a weapon with no house", () => {
+    const houseless: WeaponItem = {
+      slug: "dawn",
+      name: "Dawn",
+      houseSlug: null,
+      region: null,
+      regionLabel: null,
+    };
+    const { container } = renderWithNuqs(
+      <FilteredWeaponList items={[houseless]} />,
+    );
+    expect(container.querySelector(".sigil")).toBeNull();
   });
 
   it("hydrates the search input and filter from the ?search= query param", () => {
