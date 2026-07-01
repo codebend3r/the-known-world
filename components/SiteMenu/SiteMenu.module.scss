@@ -229,6 +229,14 @@
     display: block;
   }
 
+  // Section glyphs render as inline SVG rather than a raster image; scale them
+  // to the icon box so they sit centred alongside the PNG icons.
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
   .link:hover &,
   .link:focus-visible & {
     border-color: var(--gold-leaf);
