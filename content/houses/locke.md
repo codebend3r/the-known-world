@@ -14,8 +14,23 @@ status: extant
 sworn-from: []
 cadet-houses: []
 region: north
+seats:
+  - name: Oldcastle
+  - name: Wolf's Den
+    note: formerly
 heads:
   - name: "Lord Ondrew Locke"
+notable-members:
+  - name: "Ser Donnel Locke"
+    note: slain at the Red Wedding
+  - name: "Ser Mallador Locke"
+    note: a ranger of the Night's Watch, lost beyond the Wall
+  - name: "Lady Sybelle Locke"
+    note: wed to Robett Glover of Deepwood Motte
+  - name: "Lady Lysa Locke"
+    note: wed Lord Benjen Stark
+  - name: "Lady Marna Locke"
+    note: wed Lord Edwyle Stark
 titles:
   - name: Lord of Oldcastle
 sources:
@@ -25,6 +40,8 @@ sources:
 draft: false
 ---
 
-House Locke of Oldcastle is an ancient northern house whose roots reach back to the age before the Andals, when the First Men held dominion over the whole of the continent. The Lockes ruled as petty kings in the lands south of the White Knife after the Long Night, but like so many of the old northern lines they were brought to heel by the Kings of Winter. When they bent the knee to House Stark, they kept their seat at Oldcastle and their two crossed keys, and their loyalty to Winterfell has endured across the centuries. Two daughters of the house made especially close what that bond — Lysa Locke, who wed Lord Benjen Stark and bore him Rickon, father of the great lord Cregan, and Marna Locke, wed to Lord Edwyle Stark and mother to Rickard.
+House Locke of Oldcastle is an ancient northern house of First Men descent, whose lords once ruled as kings in their own right in the long years after the Long Night. Like so many of the old northern lines they were in time reduced to vassals by the Kings of Winter of House Stark, and they have kept faith with Winterfell ever since. For a span they held the Wolf's Den upon the White Knife: after House Greystark was extinguished the Flints garrisoned that grim old castle for a century, and the Lockes for the better part of two centuries more. Their arms are two bronze keys crossed upon a white pale on a field of purple, and no words of theirs are set down in the histories. Twice the blood of the house has mingled with the Starks', for Lady Lysa Locke wed Lord Benjen Stark and bore him Rickon and Bennard, and Lady Marna Locke wed Lord Edwyle Stark and was mother to Lord Rickard.
 
-By the time of _A Game of Thrones_, the lordship of Oldcastle had passed to the elderly Ondrew Locke, a gaunt and toothless man who nonetheless answered Robb Stark's call to arms. The men of Oldcastle marched south to the Twins and beyond, and Ser Donnel Locke died at the Red Wedding among so many other northern lords. Ser Mallador Locke served as a ranging commander in the Night's Watch and was lost with the great ranging to the Fist of the First Men. Though House Locke nominally passed under Bolton authority after the Red Wedding, Lord Wyman Manderly counted on the Lockes of Oldcastle to follow White Harbor's lead rather than the Dreadfort's when the reckoning came.
+At the opening of _A Game of Thrones_ the house is held by Lord Ondrew Locke, an old man who begs off the harvest feast at Winterfell, too frail to dare the journey. His kin fare hard in the wars that follow. Ser Donnel Locke is taken by the Lannisters, presumably at the battle on the Green Fork, and held at Harrenhal until Roose Bolton frees him; riding afterward to Lord Edmure Tully's wedding at the Twins, the Lockes are caught on the wrong side of the Trident and suffer heavy losses when Ser Gregor Clegane falls upon them at the fords, and in the slaughter of the Red Wedding Catelyn Stark sees Donnel cut down by crossbow bolts. Ser Mallador Locke marches with Jeor Mormont's great ranging, charged with the baggage train and the packhorses, and is not among those who straggle back to Castle Black after the disaster at the Fist of the First Men and the mutiny at Craster's Keep. A daughter of the house, Lady Sybelle Locke, wed to Robett Glover, is held captive with her children at Deepwood Motte by Asha Greyjoy.
+
+By the close of _A Dance with Dragons_ the overlordship of the north has passed from the fallen Starks to House Bolton, and Oldcastle answers, in seeming at least, to the Dreadfort. Yet the loyalty of the Lockes is a grudging thing: an unnamed Locke speaks against Ramsay at Lord Wyman Manderly's Merman's Court in White Harbor, and though Lord Ondrew's crossed keys are seen among the banners at Barrow Hall and follow Roose Bolton to Winterfell for Ramsay's wedding, Lord Wyman reckons that the Lockes of Oldcastle will take their lead from White Harbor and not from the Dreadfort.
