@@ -113,31 +113,22 @@ const DRAGON = (
 const BATTLES = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <path
-      d="M7 25 L25 7"
+      d="M9 10 Q9 5 16 5 Q23 5 23 10 L23 23 Q23 28 16 28 Q9 28 9 23 Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M11 13 H21"
       stroke="currentColor"
       strokeWidth="1.5"
       strokeLinecap="round"
     />
-    <path
-      d="M7 7 L25 25"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
-    <path
-      d="M9 23 L11 25 M23 9 L25 7"
-      stroke="currentColor"
-      strokeWidth="1"
-      strokeLinecap="round"
-      opacity="0.6"
-    />
-    <path
-      d="M9 9 L7 7 M23 23 L25 25"
-      stroke="currentColor"
-      strokeWidth="1"
-      strokeLinecap="round"
-      opacity="0.6"
-    />
+    <path d="M16 5 V27" stroke="currentColor" strokeWidth="1" opacity="0.4" />
+    <circle cx="13" cy="19" r="0.9" fill="currentColor" opacity="0.6" />
+    <circle cx="16" cy="21" r="0.9" fill="currentColor" opacity="0.6" />
+    <circle cx="19" cy="19" r="0.9" fill="currentColor" opacity="0.6" />
   </svg>
 );
 
