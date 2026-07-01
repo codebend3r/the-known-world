@@ -16,12 +16,18 @@ describe("battles content corpus", () => {
     expect(mismatched.map((b) => b.slug)).toEqual([]);
   });
 
-  it("groups every battle under a war and marks scaffolds as drafts", async () => {
+  it("groups every battle under a war and publishes every populated entry", async () => {
     const all = await loadAllBattles();
     const missingWar = all.filter((b) => !b.frontmatter.war);
-    const notDraft = all.filter((b) => !b.frontmatter.draft);
+    const stillDraft = all.filter((b) => b.frontmatter.draft);
     expect(missingWar.map((b) => b.slug)).toEqual([]);
-    expect(notDraft.map((b) => b.slug)).toEqual([]);
+    expect(stillDraft.map((b) => b.slug)).toEqual([]);
+  });
+
+  it("gives every battle a populated prose body", async () => {
+    const all = await loadAllBattles();
+    const thin = all.filter((b) => b.body.trim().length < 200);
+    expect(thin.map((b) => b.slug)).toEqual([]);
   });
 
   it("never ends a battle before it starts when both dates are exact", async () => {
