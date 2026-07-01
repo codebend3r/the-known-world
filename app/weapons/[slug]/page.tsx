@@ -123,6 +123,18 @@ export default async function WeaponPage({
           <h1>{fm.name}</h1>
           {subtitle && <p className="subtitle">{subtitle}</p>}
         </div>
+        {image && (
+          <figure className={styles.figure}>
+            <Image
+              src={image}
+              alt={fm.name}
+              width={1280}
+              height={720}
+              sizes="(max-width: 767.98px) 100vw, 1240px"
+              priority
+            />
+          </figure>
+        )}
         <WeaponInfobox
           weapon={fm}
           housesBySlug={housesBySlug}
@@ -130,18 +142,6 @@ export default async function WeaponPage({
           className={styles.infobox}
         />
         <div className={styles.main}>
-          {image && (
-            <figure className={styles.figure}>
-              <Image
-                src={image}
-                alt={fm.name}
-                width={1280}
-                height={720}
-                sizes="(max-width: 768px) 100vw, 720px"
-                priority
-              />
-            </figure>
-          )}
           {html && (
             <article
               className={styles.body}

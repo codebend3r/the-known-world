@@ -16,6 +16,7 @@
   grid-template-columns: minmax(0, 1fr) 400px;
   grid-template-areas:
     "heading heading"
+    "image   image"
     "main    infobox";
   gap: 2rem;
   align-items: start;
@@ -24,6 +25,7 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "heading"
+      "image"
       "infobox"
       "main";
     column-gap: 0;
@@ -51,6 +53,7 @@
 }
 
 .figure {
+  grid-area: image;
   display: grid;
   width: 100%;
   overflow: hidden;
@@ -61,6 +64,14 @@
   img {
     width: 100%;
     height: auto;
+  }
+
+  @media (max-width: bp.$md) {
+    width: 100vw;
+    margin: 0 calc(-50vw + 50%);
+    border-right: none;
+    border-left: none;
+    border-radius: 0;
   }
 }
 
