@@ -2,20 +2,27 @@
 slug: erenford
 name: House Erenford
 seat: ""
-liege: tully
+liege: frey
 words: ""
 sigil:
-  description: ""
+  description: A golden heron with black beak and legs, holding a silver fish in its beak, on pink
 founded:
-  year: 0
+  year: -5000
   era: age-of-heroes
   precision: era
 status: extant
 sworn-from: []
 cadet-houses: []
 region: riverlands
-sources: []
+notable-members:
+  - name: Lady Joyeuse Erenford
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Erenford
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Erenford is a house of the Riverlands. This entry is a stub and will be expanded at a later date.
+House Erenford is a noble house of the riverlands, sworn as vassals to House Frey of the Twins. Their arms show a golden heron, its beak and legs black, holding a silver fish in its beak, upon a field of pink.
+
+Joyeuse Erenford becomes the eighth wife of the ancient Lord Walder Frey, marrying him on his ninetieth birthday. Ser Jaime Lannister later recognizes the Erenford blazon among the Frey host at the siege of Riverrun, and by then Joyeuse carries Lord Walder's child.
