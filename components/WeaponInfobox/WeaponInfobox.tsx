@@ -43,6 +43,12 @@ const STATUS_LABEL: Record<Weapon["status"], string> = {
   destroyed: "Destroyed",
 };
 
+const CURRENT_HOUSE_FALLBACK: Record<Weapon["status"], string> = {
+  extant: "—",
+  lost: "Lost",
+  destroyed: "Destroyed",
+};
+
 function formatDate(d: NonNullable<Weapon["forged"]>): string {
   const { year, era, precision } = d;
   if (era === "AC" || era === "BC") return `${Math.abs(year)} ${era}`;
@@ -142,7 +148,7 @@ export function WeaponInfobox({
         ) : (
           <div className={styles.row}>
             <dt>Current house</dt>
-            <dd>{weapon.status === "destroyed" ? "Destroyed" : "Lost"}</dd>
+            <dd>{CURRENT_HOUSE_FALLBACK[weapon.status]}</dd>
           </div>
         )}
         <InfoRow

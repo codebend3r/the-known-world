@@ -3,11 +3,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useId, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
-const ITEMS = [
+type MenuItem = {
+  href: string;
+  label: string;
+  icon: string;
+  glyph?: ReactNode;
+  visible: boolean;
+};
+
+const ITEMS: MenuItem[] = [
   {
     href: "/maps/",
     label: "Maps",
@@ -42,6 +51,7 @@ const ITEMS = [
     href: "/battles/",
     label: "Battles",
     icon: "/menu-icons/battles.png",
+    glyph: sectionGlyphs.battles,
     visible: true,
   },
   {
@@ -50,7 +60,7 @@ const ITEMS = [
     icon: "/menu-icons/dragons.png",
     visible: false,
   },
-] as const;
+];
 
 function isActive(pathname: string | null, href: string): boolean {
   if (!pathname) return false;
@@ -162,13 +172,15 @@ export function SiteMenu() {
                     tabIndex={isOpen ? 0 : -1}
                   >
                     <span className={styles.linkIcon} aria-hidden="true">
-                      <Image
-                        src={item.icon}
-                        alt=""
-                        width={48}
-                        height={48}
-                        sizes="48px"
-                      />
+                      {item.glyph ?? (
+                        <Image
+                          src={item.icon}
+                          alt=""
+                          width={48}
+                          height={48}
+                          sizes="48px"
+                        />
+                      )}
                     </span>
                     <span className={styles.linkLabel}>{item.label}</span>
                   </Link>

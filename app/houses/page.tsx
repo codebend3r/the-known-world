@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredHouseList,
@@ -37,10 +39,11 @@ export default async function HousesPage() {
 
   return (
     <ParchmentLayout>
-      <h1>Houses</h1>
-      <p className="subtitle">
-        The rolls of the great houses of the Seven Kingdoms.
-      </p>
+      <PageHeading
+        title="Houses"
+        icon={sectionGlyphs.houses}
+        subtitle="The rolls of the great houses of the Seven Kingdoms."
+      />
       <Suspense
         fallback={
           <ListSearchSkeleton placeholder="Search houses…" withControls />

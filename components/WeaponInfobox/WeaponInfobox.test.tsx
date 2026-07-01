@@ -140,6 +140,24 @@ describe("WeaponInfobox", () => {
     expect(screen.getAllByText("Destroyed")).toHaveLength(2);
   });
 
+  it('shows a dash, not "Lost", for an extant weapon with no current house', () => {
+    const houseless: Weapon = {
+      ...blackfyre,
+      status: "extant",
+      "current-house": null,
+    };
+    render(
+      <WeaponInfobox
+        weapon={houseless}
+        housesBySlug={housesBySlug}
+        charactersBySlug={charactersBySlug}
+      />,
+    );
+    expect(screen.getByText("Current house")).toBeDefined();
+    expect(screen.getByText("—")).toBeDefined();
+    expect(screen.queryByText("Lost")).toBeNull();
+  });
+
   it("links the current house to its detail page when set", () => {
     const inherited: Weapon = {
       ...blackfyre,

@@ -4,6 +4,8 @@ import { loadAllCharacters, loadAllHouses } from "@/lib/content";
 import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredCharacterList,
@@ -42,7 +44,11 @@ export default async function CharactersPage() {
 
   return (
     <ParchmentLayout>
-      <h1>Characters</h1>
+      <PageHeading
+        title="Characters"
+        icon={sectionGlyphs.characters}
+        subtitle="The lords, ladies, knights, and smallfolk who shaped the Known World."
+      />
       <Suspense
         fallback={
           <ListSearchSkeleton placeholder="Search characters…" withControls />

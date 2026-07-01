@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { loadAllDragons, loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredDragonList,
@@ -38,10 +40,11 @@ export default async function DragonsPage() {
 
   return (
     <ParchmentLayout>
-      <h1>Dragons</h1>
-      <p className="subtitle">
-        Of the dragons that were and the dragons that are.
-      </p>
+      <PageHeading
+        title="Dragons"
+        icon={sectionGlyphs.dragons}
+        subtitle="Of the dragons that were and the dragons that are."
+      />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search dragons…" />}>
         <FilteredDragonList items={items} />
       </Suspense>

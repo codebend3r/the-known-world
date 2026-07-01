@@ -1,10 +1,13 @@
 import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PageHeading } from "@/components/PageHeading";
 
 export default function NotFound() {
   return (
     <ParchmentLayout>
-      <h1>Not found</h1>
-      <p className="subtitle">No such place in the chronicles.</p>
+      <PageHeading
+        title="Not found"
+        subtitle="No such place in the chronicles."
+      />
     </ParchmentLayout>
   );
 }

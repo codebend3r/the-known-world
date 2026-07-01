@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useQueryState } from "nuqs";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
-import { cx } from "@/lib/cx";
 import { searchParser } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredWeaponList/FilteredWeaponList.module.scss";
@@ -16,22 +15,11 @@ export type WeaponItem = {
   houseSlug: string | null;
   region: string | null;
   regionLabel: string | null;
+  hasImage: boolean;
 };
 
 type Props = {
   items: WeaponItem[];
-};
-
-const REGION_CARD_CLASS: Record<string, string | undefined> = {
-  north: styles.cardNorth,
-  vale: styles.cardVale,
-  riverlands: styles.cardRiverlands,
-  westerlands: styles.cardWesterlands,
-  reach: styles.cardReach,
-  stormlands: styles.cardStormlands,
-  dorne: styles.cardDorne,
-  "iron-islands": styles.cardIronIslands,
-  crownlands: styles.cardCrownlands,
 };
 
 export function FilteredWeaponList({ items }: Props) {
@@ -77,26 +65,33 @@ export function FilteredWeaponList({ items }: Props) {
         </p>
       ) : (
         <ul className={styles.list}>
-          {filtered.map((item) => {
-            const regionClass = item.region
-              ? REGION_CARD_CLASS[item.region]
-              : undefined;
-            const cardClass = cx(styles.card, regionClass);
-            return (
-              <li key={item.slug} className={styles.item}>
-                <Link href={`/weapons/${item.slug}/`} className={cardClass}>
-                  <Sigil
-                    slug={item.houseSlug}
-                    name={item.name}
-                    region={item.region}
-                    size="6rem"
-                    decorative
-                  />
-                  <span className={styles.name}>{item.name}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {filtered.map((item) => (
+            <li key={item.slug} className={styles.item}>
+              <Link href={`/weapons/${item.slug}/`} className={styles.link}>
+                <span className={styles.name}>
+                  {item.name}
+                  {item.hasImage && (
+                    <span
+                      className={styles.indicator}
+                      title="Illustrated"
+                      aria-label="Illustrated"
+                    />
+                  )}
+                </span>
+                {!!item.houseSlug && (
+                  <span className={styles.sigil} aria-hidden="true">
+                    <Sigil
+                      slug={item.houseSlug}
+                      name={item.name}
+                      region={item.region}
+                      size="1.5rem"
+                      decorative
+                    />
+                  </span>
+                )}
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </>
