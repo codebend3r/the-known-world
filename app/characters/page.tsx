@@ -43,7 +43,10 @@ export default async function CharactersPage() {
 
   return (
     <ParchmentLayout>
-      <PageHeading title="Characters" />
+      <PageHeading
+        title="Characters"
+        subtitle="The lords, ladies, knights, and smallfolk who shaped the Known World."
+      />
       <Suspense
         fallback={
           <ListSearchSkeleton placeholder="Search characters…" withControls />
