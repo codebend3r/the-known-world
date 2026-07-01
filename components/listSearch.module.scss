@@ -192,10 +192,13 @@
   }
 }
 
+// The plain row wraps a lone search input (dragons, weapons, and the default
+// skeleton), so it is a single full-width column. The view-toggle variant is
+// `.rowWithSort`.
 .row {
   display: grid;
-  grid-template-columns: 1fr 100px;
-  grid-template-areas: "search view";
+  grid-template-columns: 1fr;
+  grid-template-areas: "search";
   align-items: stretch;
   width: 100%;
   gap: 1rem;
