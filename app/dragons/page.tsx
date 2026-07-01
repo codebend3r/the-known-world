@@ -4,6 +4,7 @@ import { loadAllDragons, loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredDragonList,
@@ -41,6 +42,7 @@ export default async function DragonsPage() {
     <ParchmentLayout>
       <PageHeading
         title="Dragons"
+        icon={sectionGlyphs.dragons}
         subtitle="Of the dragons that were and the dragons that are."
       />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search dragons…" />}>

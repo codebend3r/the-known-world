@@ -5,6 +5,7 @@ import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredCharacterList,
@@ -45,6 +46,7 @@ export default async function CharactersPage() {
     <ParchmentLayout>
       <PageHeading
         title="Characters"
+        icon={sectionGlyphs.characters}
         subtitle="The lords, ladies, knights, and smallfolk who shaped the Known World."
       />
       <Suspense

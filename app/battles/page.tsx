@@ -3,6 +3,7 @@ import Link from "next/link";
 import { loadAllBattles } from "@/lib/content";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { formatBattleWhen, absoluteYear } from "@/lib/battle-date";
 import { findBattleImage } from "@/lib/battle-image";
 import styles from "@/app/battles/page.module.scss";
@@ -58,6 +59,7 @@ export default async function BattlesPage() {
     <ParchmentLayout>
       <PageHeading
         title="Battles"
+        icon={sectionGlyphs.battles}
         subtitle="The wars, battles, and sieges of the Known World, from the Dawn Age to the wars of the Five Kings."
       />
       <div className={styles.groups}>
