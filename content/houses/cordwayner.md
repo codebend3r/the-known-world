@@ -1,21 +1,26 @@
 ---
 slug: cordwayner
 name: House Cordwayner
-seat: ""
+seat: hammerhal
 liege: tyrell
 words: ""
 sigil:
-  description: ""
+  description: Black boots on a field lozengy green and gold
 founded:
-  year: 0
-  era: age-of-heroes
+  year: 1
+  era: targaryen-conquest
   precision: era
 status: extant
 sworn-from: []
 cadet-houses: []
 region: reach
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Cordwayner
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Cordwayner is a house of the Reach. This entry is a stub and will be expanded at a later date.
+House Cordwayner of Hammerhal is a noble house of the Reach, sworn to House Tyrell of Highgarden. They blazon their arms with a pair of black boots upon a field lozengy of green and gold. Their words are not recorded.
+
+No Cordwayner has appeared among the notable figures of the realm during the events of _A Song of Ice and Fire_.
