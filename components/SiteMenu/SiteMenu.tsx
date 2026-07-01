@@ -8,16 +8,48 @@ import { cx } from "@/lib/cx";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
 const ITEMS = [
-  { href: "/maps/", label: "Maps", icon: "/menu-icons/map.png" },
-  { href: "/timeline/", label: "Timeline", icon: "/menu-icons/timeline.png" },
-  { href: "/houses/", label: "Houses", icon: "/menu-icons/houses.png" },
+  {
+    href: "/maps/",
+    label: "Maps",
+    icon: "/menu-icons/map.png",
+    visible: false,
+  },
+  {
+    href: "/timeline/",
+    label: "Timeline",
+    icon: "/menu-icons/timeline.png",
+    visible: false,
+  },
+  {
+    href: "/houses/",
+    label: "Houses",
+    icon: "/menu-icons/houses.png",
+    visible: true,
+  },
   {
     href: "/characters/",
     label: "Characters",
     icon: "/menu-icons/characters.png",
+    visible: true,
   },
-  { href: "/weapons/", label: "Weapons", icon: "/menu-icons/weapons.png" },
-  { href: "/dragons/", label: "Dragons", icon: "/menu-icons/dragons.png" },
+  {
+    href: "/weapons/",
+    label: "Weapons",
+    icon: "/menu-icons/weapons.png",
+    visible: true,
+  },
+  {
+    href: "/battles/",
+    label: "Battles",
+    icon: "/menu-icons/battles.png",
+    visible: true,
+  },
+  {
+    href: "/dragons/",
+    label: "Dragons",
+    icon: "/menu-icons/dragons.png",
+    visible: false,
+  },
 ] as const;
 
 function isActive(pathname: string | null, href: string): boolean {
@@ -118,7 +150,7 @@ export function SiteMenu() {
         </div>
         <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.navList}>
-            {ITEMS.map((item) => {
+            {ITEMS.filter((item) => item.visible).map((item) => {
               const active = isActive(pathname, item.href);
               return (
                 <li key={item.href} className={styles.navItem}>

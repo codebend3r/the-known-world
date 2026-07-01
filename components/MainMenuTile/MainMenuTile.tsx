@@ -8,6 +8,7 @@ export type MainMenuTileProps = {
   glyph: ReactNode;
   href: string;
   status?: "coming-soon";
+  visible?: boolean;
 };
 
 export function MainMenuTile({
@@ -16,7 +17,10 @@ export function MainMenuTile({
   glyph,
   href,
   status,
+  visible = true,
 }: MainMenuTileProps) {
+  if (!visible) return null;
+
   return (
     <Link href={href} className={styles.tile}>
       <span className={styles.glyph} aria-hidden="true">

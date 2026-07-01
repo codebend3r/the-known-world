@@ -19,7 +19,7 @@ describe("SiteMenu", () => {
     expect(links).toHaveLength(0);
   });
 
-  it("reveals the primary nav with Maps, Timeline, Houses, Characters, Weapons, Dragons when opened", () => {
+  it("reveals only the visible primary nav items (Houses, Characters, Weapons, Battles) when opened", () => {
     render(<SiteMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
@@ -27,25 +27,31 @@ describe("SiteMenu", () => {
     expect(nav).toBeDefined();
 
     const links = screen.getAllByRole("link");
-    const navLinks = links.filter((l) =>
-      [
-        "/maps/",
-        "/timeline/",
-        "/houses/",
-        "/characters/",
-        "/weapons/",
-        "/dragons/",
-      ].includes(l.getAttribute("href") ?? ""),
-    );
-    expect(navLinks).toHaveLength(6);
-    expect(navLinks.map((l) => l.textContent?.trim())).toEqual([
-      "Maps",
-      "Timeline",
+    const hrefs = links.map((l) => l.getAttribute("href") ?? "");
+    expect(hrefs).toEqual([
+      "/houses/",
+      "/characters/",
+      "/weapons/",
+      "/battles/",
+    ]);
+    expect(links.map((l) => l.textContent?.trim())).toEqual([
       "Houses",
       "Characters",
       "Weapons",
-      "Dragons",
+      "Battles",
     ]);
+  });
+
+  it("does not render hidden items (Maps, Timeline, Dragons)", () => {
+    render(<SiteMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+
+    const hrefs = screen
+      .getAllByRole("link")
+      .map((l) => l.getAttribute("href") ?? "");
+    expect(hrefs).not.toContain("/maps/");
+    expect(hrefs).not.toContain("/timeline/");
+    expect(hrefs).not.toContain("/dragons/");
   });
 
   it('marks the current section with aria-current="page"', () => {
@@ -54,8 +60,8 @@ describe("SiteMenu", () => {
     const housesLink = screen.getByRole("link", { name: /houses/i });
     expect(housesLink.getAttribute("aria-current")).toBe("page");
 
-    const mapsLink = screen.getByRole("link", { name: /maps/i });
-    expect(mapsLink.getAttribute("aria-current")).toBeNull();
+    const weaponsLink = screen.getByRole("link", { name: /weapons/i });
+    expect(weaponsLink.getAttribute("aria-current")).toBeNull();
   });
 
   it('flips the trigger to aria-expanded="true" while open', () => {
@@ -80,12 +86,12 @@ describe("SiteMenu", () => {
     const trigger = screen.getByRole("button", { name: /open menu/i });
     fireEvent.click(trigger);
 
-    const mapsLink = screen.getByRole("link", { name: /maps/i });
+    const weaponsLink = screen.getByRole("link", { name: /weapons/i });
     // jsdom doesn't implement document navigation; cancel the anchor's
     // default action so it doesn't print "Not implemented: navigation to
     // another Document". React's onClick={close} still runs.
-    mapsLink.addEventListener("click", (e) => e.preventDefault());
-    fireEvent.click(mapsLink);
+    weaponsLink.addEventListener("click", (e) => e.preventDefault());
+    fireEvent.click(weaponsLink);
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
   });
 
