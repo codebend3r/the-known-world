@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   loadWeapon,
   loadAllWeapons,
@@ -8,6 +9,7 @@ import {
   loadAllCharacters,
   renderMarkdown,
 } from "@/lib/content";
+import { findWeaponImage } from "@/lib/weapon-image";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
@@ -60,13 +62,14 @@ export default async function WeaponPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [weapon, allHouses, allCharacters, allWeapons, allDragons] =
+  const [weapon, allHouses, allCharacters, allWeapons, allDragons, image] =
     await Promise.all([
       loadWeapon(slug).catch(() => null),
       loadAllHouses(),
       loadAllCharacters(),
       loadAllWeapons(),
       loadAllDragons(),
+      findWeaponImage(slug),
     ]);
   if (!weapon) notFound();
 
@@ -127,6 +130,18 @@ export default async function WeaponPage({
           className={styles.infobox}
         />
         <div className={styles.main}>
+          {image && (
+            <figure className={styles.figure}>
+              <Image
+                src={image}
+                alt={fm.name}
+                width={1280}
+                height={720}
+                sizes="(max-width: 768px) 100vw, 720px"
+                priority
+              />
+            </figure>
+          )}
           {html && (
             <article
               className={styles.body}

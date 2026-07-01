@@ -50,6 +50,20 @@
   align-content: start;
 }
 
+.figure {
+  display: grid;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 4px;
+  box-shadow: 0 2px 12px rgba(40, 25, 10, 0.12);
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
 .infobox {
   grid-area: infobox;
 }
