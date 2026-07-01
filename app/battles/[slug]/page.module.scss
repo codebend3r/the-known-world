@@ -54,6 +54,17 @@
   grid-area: infobox;
 }
 
+.figure {
+  margin: 0;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0.25rem;
+}
+
 .back {
   padding-top: 2rem;
   padding-bottom: 3rem;

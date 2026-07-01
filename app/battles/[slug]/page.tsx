@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   loadBattle,
   loadAllBattles,
@@ -11,6 +12,7 @@ import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
 import { BattleInfobox } from "@/components/BattleInfobox";
 import { formatBattleWhen } from "@/lib/battle-date";
+import { findBattleImage } from "@/lib/battle-image";
 import styles from "@/app/battles/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
@@ -39,10 +41,11 @@ export default async function BattlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [battle, allHouses, allCharacters] = await Promise.all([
+  const [battle, allHouses, allCharacters, image] = await Promise.all([
     loadBattle(slug).catch(() => null),
     loadAllHouses(),
     loadAllCharacters(),
+    findBattleImage(slug),
   ]);
   if (!battle) notFound();
 
@@ -71,6 +74,19 @@ export default async function BattlePage({
           className={styles.infobox}
         />
         <div className={styles.main}>
+          {image && (
+            <figure className={styles.figure}>
+              <Image
+                src={image}
+                alt={fm.name}
+                width={1280}
+                height={720}
+                sizes="(max-width: 768px) 90vw, 720px"
+                priority
+                className={styles.image}
+              />
+            </figure>
+          )}
           {html && (
             <article
               className={styles.body}
