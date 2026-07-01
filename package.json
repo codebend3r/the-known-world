@@ -18,7 +18,8 @@
     "prettier:check": "prettier --check .",
     "prettier:quick": "pretty-quick --staged",
     "prepare": "husky",
-    "system-check": "run-s prettier:check typecheck lint test"
+    "clean": "rm -rf .next",
+    "system-check": "run-s clean prettier:check typecheck lint test build"
   },
   "dependencies": {
     "gray-matter": "4.0.3",
