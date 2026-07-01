@@ -1,0 +1,80 @@
+@use "breakpoints" as bp;
+
+.groups {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+
+  @media (max-width: bp.$md) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.group {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.warName {
+  font-family: var(--font-character-name);
+  font-size: 1.5rem;
+  color: var(--ink);
+  border-bottom: 1px solid var(--gold-leaf);
+  padding-bottom: 0.35rem;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item {
+  margin: 0;
+}
+
+.link {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: rgba(212, 162, 89, 0.16);
+  }
+}
+
+.name {
+  font-family: var(--font-ui);
+  font-size: 1.05rem;
+}
+
+.when {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--ink-faded);
+  white-space: nowrap;
+}
+
+.legend {
+  margin-top: 2rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  font-style: italic;
+
+  @media (max-width: bp.$md) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
