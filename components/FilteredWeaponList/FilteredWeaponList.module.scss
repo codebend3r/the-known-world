@@ -41,6 +41,14 @@
   font-size: 1.05rem;
 }
 
+.indicator {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--gold-leaf);
+}
+
 // Keep the sigil small so it never grows the row taller than the name's
 // line box.
 .sigil {

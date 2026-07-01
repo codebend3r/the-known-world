@@ -15,6 +15,7 @@ export type WeaponItem = {
   houseSlug: string | null;
   region: string | null;
   regionLabel: string | null;
+  hasImage: boolean;
 };
 
 type Props = {
@@ -67,7 +68,16 @@ export function FilteredWeaponList({ items }: Props) {
           {filtered.map((item) => (
             <li key={item.slug} className={styles.item}>
               <Link href={`/weapons/${item.slug}/`} className={styles.link}>
-                <span className={styles.name}>{item.name}</span>
+                <span className={styles.name}>
+                  {item.name}
+                  {item.hasImage && (
+                    <span
+                      className={styles.indicator}
+                      title="Illustrated"
+                      aria-label="Illustrated"
+                    />
+                  )}
+                </span>
                 {!!item.houseSlug && (
                   <span className={styles.sigil} aria-hidden="true">
                     <Sigil
