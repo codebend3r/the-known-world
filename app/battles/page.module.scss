@@ -55,8 +55,19 @@
 }
 
 .name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   font-family: var(--font-ui);
   font-size: 1.05rem;
+}
+
+.indicator {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background-color: var(--gold-leaf);
 }
 
 .when {
