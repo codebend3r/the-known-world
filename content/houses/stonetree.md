@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: A bare stone tree, grey on black
 founded:
-  year: 0
+  year: -3000
   era: age-of-heroes
   precision: era
 status: extant
