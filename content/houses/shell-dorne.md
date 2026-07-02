@@ -1,21 +1,26 @@
 ---
 slug: shell-dorne
-name: House Shell
+name: House Shell of Dorne
 seat: ""
-liege: martell
+liege: null
 words: ""
 sigil:
   description: ""
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
-status: extant
+  year: -2500
+  era: dawn-age
+  precision: legendary
+status: extinct
 sworn-from: []
 cadet-houses: []
 region: dorne
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Shell_(Dorne)
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Shell is a house of Dorne. This entry is a stub and will be expanded at a later date.
+House Shell was one of a dozen First Men houses of the Greenblood whose lords took turns choosing a High King of Dorne from among their own number, in the long age before the Rhoynar came up the river or the Martells rose to rule the desert kingdom entire.
+
+The Shells were conquered along with their fellow electors when the Andals crossed the narrow sea and swept into Dorne. No record of their arms survives, and the house is not mentioned anywhere in the chronicles of the War of the Five Kings, leaving them presumed extinct.
