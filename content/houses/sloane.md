@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: A sun on yellow parted per pale from stars strewn on indigo
 founded:
-  year: 0
+  year: -2000
   era: age-of-heroes
   precision: era
 status: extant
