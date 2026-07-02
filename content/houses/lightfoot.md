@@ -2,20 +2,25 @@
 slug: lightfoot
 name: House Lightfoot
 seat: ""
-liege: stark
+liege: bolton
 words: ""
 sigil:
-  description: ""
+  description: White footprints in bend sinister on a dark brown field
 founded:
-  year: 0
+  year: -8000
   era: age-of-heroes
-  precision: era
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: north
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Lightfoot
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Lightfoot is a house of the North. This entry is a stub and will be expanded at a later date.
+House Lightfoot is a minor noble house of the north, its name unremembered in any of the great chronicles beyond its arms and its allegiance. No Lightfoot has been named among the players of the game of thrones in living memory.
+
+The house followed Winterfell's banner in the reign of Robb Stark, and by the close of the War of the Five Kings answers instead to House Bolton, the new masters of the north.
