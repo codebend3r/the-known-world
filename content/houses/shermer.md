@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: Copper nails on a blue field, within a copper border rayonne
 founded:
-  year: 0
+  year: -2000
   era: age-of-heroes
   precision: era
 status: extant
