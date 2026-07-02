@@ -2,20 +2,23 @@
 slug: moss
 name: House Moss
 seat: ""
-liege: stark
+liege: bolton
 words: ""
 sigil:
-  description: ""
+  description: A tenné bend on vairy grey and green
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: -2000
+  era: andal-invasion
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: north
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Moss
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Moss is a house of the North. This entry is a stub and will be expanded at a later date.
+House Moss is a house of the north, sworn to House Stark and, after Roose Bolton's ascent, to House Bolton in his stead. No maester's record names their seat, their words, or any Moss of note; only their vairy arms of grey and green, crossed by a tenné bend, survive in the heraldic rolls.
