@@ -5,17 +5,23 @@ seat: ""
 liege: lannister
 words: ""
 sigil:
-  description: ""
+  description: A copper dagger across a black chevron on a white field
 founded:
-  year: 0
+  year: -8000
   era: age-of-heroes
-  precision: era
+  precision: legendary
 status: extant
 sworn-from: []
-cadet-houses: []
+cadet-houses:
+  - foote-nightsong
 region: westerlands
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Foote
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Foote is a house of the Westerlands. This entry is a stub and will be expanded at a later date.
+House Foote is an ancient line of the westerlands, tracing its blood back to the golden age of the First Men, and sworn in the years since to House Lannister of Casterly Rock. Their chevron-and-dagger banners are counted among Lord Tywin Lannister's host as it departs Harrenhal during the War of the Five Kings.
+
+After the Battle of the Blackwater, Ser Philip Foote is granted the stormlands seat of Nightsong for his service, founding the cadet line of House Foote of Nightsong far from his family's westerlands roots.
