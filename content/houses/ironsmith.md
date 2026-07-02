@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: A black sword upright between four black horseshoes on gold, within a grey-green border
 founded:
-  year: 0
+  year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
