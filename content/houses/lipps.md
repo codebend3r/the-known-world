@@ -5,17 +5,24 @@ seat: ""
 liege: arryn
 words: ""
 sigil:
-  description: ""
+  description: Two large pink lips on a dark blue field
 founded:
-  year: 0
-  era: age-of-heroes
+  year: -2000
+  era: andal-invasion
   precision: era
 status: extant
 sworn-from: []
 cadet-houses: []
 region: vale
-sources: []
+notable-members:
+  - name: Ser Ossifer Lipps
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Lipps
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Lipps is a house of the Vale. This entry is a stub and will be expanded at a later date.
+House Lipps is a minor noble house of the Vale of Arryn, sworn to the Eyrie, remembered chiefly for the curious blazon of a pair of lips upon a field of blue. No word of their founding or their words survives in the chronicles.
+
+In the years after the War of the Five Kings, Ser Ossifer Lipps rides in the tourney arranged by Lord Protector Petyr Baelish for Lord Robert Arryn, one of the knights vying for a place among the newly founded Brotherhood of Winged Knights.
