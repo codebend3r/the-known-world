@@ -5,17 +5,27 @@ seat: ""
 liege: baratheon
 words: ""
 sigil:
-  description: ""
+  description: Six fountains, arranged three-two-one, on grey
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: -6000
+  era: andal-invasion
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: crownlands
-sources: []
+notable-members:
+  - name: Lord Rollingford
+    note: one of King Maegor I's last supporters, later fled to Pentos
+  - name: Ser Herman Rollingford
+    note: slain dueling a bravo in Braavos, 133 AC
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Rollingford
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Rollingford is a house of the Crownlands. This entry is a stub and will be expanded at a later date.
+House Rollingford is a noble house of the crownlands, sworn to House Baratheon of King's Landing (the Iron Throne, in earlier ages). The Citadel's heraldic rolls credit them with six fountains, arranged three-two-one, upon a grey field, though their words are not recorded.
+
+Lord Rollingford stood among the lesser lords who rallied to Prince Jaehaerys Targaryen's cause against King Maegor I, and after Maegor's mysterious death upon the Iron Throne fled with Lord Buckwell to Pentos rather than face the new king's justice; he was later among those who sailed to Dragonstone to treat with King Jaehaerys I. A later Rollingford, Ser Herman, died dueling a bravo in Braavos in 133 AC while on Manfryd Mooton's mission.
