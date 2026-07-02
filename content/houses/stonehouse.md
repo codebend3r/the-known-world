@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: A black brazier on a grey masonry field
 founded:
-  year: 0
+  year: -3000
   era: age-of-heroes
   precision: era
 status: extant
