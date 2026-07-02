@@ -2,20 +2,23 @@
 slug: overton
 name: House Overton
 seat: ""
-liege: stark
+liege: bolton
 words: ""
 sigil:
-  description: ""
+  description: A checked silver and gold fess on black
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: -2000
+  era: andal-invasion
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: north
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Overton
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Overton is a house of the North. This entry is a stub and will be expanded at a later date.
+House Overton is a house of the north, sworn to House Stark and, after Roose Bolton's rise to the wardenship, to House Bolton. No chronicle names their seat, their words, or any Overton of note; only their checked silver and gold fess survives in the heraldic record.
