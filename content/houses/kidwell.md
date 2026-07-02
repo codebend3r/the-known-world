@@ -1,21 +1,24 @@
 ---
 slug: kidwell
-name: House Kidwell
-seat: ""
+name: House Kidwell of Ivy Hall
+seat: ivy-hall
 liege: tyrell
 words: ""
 sigil:
-  description: ""
+  description: Pale green ivy bendy on black masonry
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: -6000
+  era: andal-invasion
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: reach
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Kidwell
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Kidwell is a house of the Reach. This entry is a stub and will be expanded at a later date.
+House Kidwell of Ivy Hall is a minor house of the reach, sworn to Highgarden, its arms recording the ivy that climbs the black stone of its seat. No maester's chronicle names a Kidwell among the great events of the realm, and no member of the house has yet appeared in the unfolding wars of the Seven Kingdoms.
