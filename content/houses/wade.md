@@ -2,20 +2,25 @@
 slug: wade
 name: House Wade
 seat: ""
-liege: martell
+liege: null
 words: ""
 sigil:
   description: ""
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
-status: extant
+  year: -6000
+  era: dawn-age
+  precision: legendary
+status: extinct
 sworn-from: []
 cadet-houses: []
 region: dorne
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Wade
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Wade is a house of Dorne. This entry is a stub and will be expanded at a later date.
+The Wades were among the dozen First Men houses of the Greenblood who took turns choosing a High King of Dorne from amongst their own number, in the long age before the Rhoynar came up the river and the Andals crossed the narrow sea. No record of their arms survives.
+
+Like their fellow electors, the Wades were conquered during the Andal invasion of Dorne, and House Wade did not live to see the Martells unite the realm beneath a single ruling line.
