@@ -5,17 +5,22 @@ seat: ""
 liege: tyrell
 words: ""
 sigil:
-  description: ""
+  description: A red pomegranate within a red double tressure, on white
 founded:
-  year: 0
-  era: age-of-heroes
+  year: -2000
+  era: andal-invasion
   precision: era
 status: extant
 sworn-from: []
 cadet-houses: []
 region: reach
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Pommingham
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Pommingham is a house of the Reach. This entry is a stub and will be expanded at a later date.
+House Pommingham is a minor house of the Reach, sworn to Highgarden, its arms a red pomegranate bordered by a red tressure on white. No words are recorded for the house.
+
+No Pommingham has ever stepped into the wider chronicles of the Seven Kingdoms; the name survives only in the Citadel's rolls of Reach heraldry.
