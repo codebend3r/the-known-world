@@ -2,20 +2,27 @@
 slug: woodhull
 name: House Woodhull
 seat: ""
-liege: arryn
+liege: elesham
 words: ""
 sigil:
   description: ""
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: 133
+  era: AC
+  precision: decade
 status: extant
 sworn-from: []
 cadet-houses: []
 region: vale
-sources: []
+notable-members:
+  - name: Henrietta Woodhull
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Woodhull
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Woodhull is a house of the Vale. This entry is a stub and will be expanded at a later date.
+House Woodhull is a landed knightly house holding lands upon the island of the Paps in the Vale of Arryn, sworn to House Elesham rather than to the Eyrie directly. Their arms have never been recorded.
+
+Ser Woodhull, a knight of that house during the regency of King Aegon III Targaryen, presented his daughter Henrietta Woodhull at the Maiden's Day Ball as a potential bride for the young king, the last lady offered that day.
