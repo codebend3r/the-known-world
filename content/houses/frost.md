@@ -7,15 +7,20 @@ words: ""
 sigil:
   description: ""
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
-status: extant
+  year: -9000
+  era: dawn-age
+  precision: legendary
+status: extinct
 sworn-from: []
 cadet-houses: []
 region: north
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Frost
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Frost is a house of the North. This entry is a stub and will be expanded at a later date.
+House Frost was a noble house of the First Men who held lands in what is now the north before the Starks brought the region under a single crown. No record survives of their arms, their words, or the seat they once kept.
+
+Like so many petty lines of that early age, the Frosts were vanquished by the Kings of Winter of House Stark, and nothing of them remains today save their name among the old chronicles of the North's unification.
