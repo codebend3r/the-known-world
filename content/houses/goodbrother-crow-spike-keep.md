@@ -1,21 +1,25 @@
 ---
 slug: goodbrother-crow-spike-keep
 name: House Goodbrother of Crow Spike Keep
-seat: ""
+seat: crow-spike-keep
 liege: greyjoy
 words: ""
 sigil:
   description: ""
 founded:
-  year: 0
+  year: -8000
   era: age-of-heroes
-  precision: era
+  precision: legendary
 status: extant
-sworn-from: []
+sworn-from:
+  - goodbrother
 cadet-houses: []
 region: iron-islands
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Goodbrother
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Goodbrother of Crow Spike Keep is a house of the Iron Islands. This entry is a stub and will be expanded at a later date.
+House Goodbrother of Crow Spike Keep is a cadet branch of the ancient Goodbrother line of the Hammerhorn, holding Crow Spike Keep on Great Wyk alongside its kin at Corpse Lake and Downdelving. It is counted, like the rest of that far-flung name, among House Greyjoy's bannermen, though no lord of this branch has yet been named in any surviving chronicle, and its arms and words remain unrecorded.
