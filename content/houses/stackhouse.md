@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: ""
 founded:
-  year: 0
+  year: -8000
   era: age-of-heroes
   precision: era
 status: extant
