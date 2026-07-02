@@ -14,6 +14,7 @@ import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { Sources } from "@/components/Sources";
 import { WeaponInfobox } from "@/components/WeaponInfobox";
+import { bySlug } from "@/lib/collections";
 import styles from "@/app/weapons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
@@ -73,10 +74,8 @@ export default async function WeaponPage({
     ]);
   if (!weapon) notFound();
 
-  const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
-  const charactersBySlug = new Map(
-    allCharacters.map((c) => [c.slug, c.frontmatter]),
-  );
+  const housesBySlug = bySlug(allHouses);
+  const charactersBySlug = bySlug(allCharacters);
 
   const fm = weapon.frontmatter;
   const proseLinks = buildProseLinkIndex({

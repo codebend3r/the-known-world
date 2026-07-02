@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { TreeNode } from "@/lib/family-tree";
 import { cx } from "@/lib/cx";
+import { wasKing } from "@/lib/family-tree-label";
 import styles from "@/components/FamilyTree/FamilyTree.module.scss";
 
 function formatLifespan(node: TreeNode): string | null {
@@ -61,10 +62,6 @@ function GenderGlyph({ sex }: { sex: "m" | "f" | null }) {
       {sex === "m" ? "♂" : "♀"}
     </span>
   );
-}
-
-function wasKing(titles: string[]): boolean {
-  return titles.some((t) => t.startsWith("King "));
 }
 
 function KingMark({ titles }: { titles: string[] }) {

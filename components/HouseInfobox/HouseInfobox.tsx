@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import { InfoRow } from "@/components/Infobox";
 import { Sigil } from "@/components/Sigil";
 import { cx } from "@/lib/cx";
+import { humanizeSlug, shortHouseName } from "@/lib/text";
+import { formatEraDate } from "@/lib/era-date";
 import { regionForHouse } from "@/lib/regions";
 import type {
   House,
@@ -23,22 +25,6 @@ type Props = {
   dragonsForHouse: Dragon[];
   className?: string;
 };
-
-function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, "");
-}
-
-function formatDate(d: House["founded"]): string {
-  const { year, era, precision } = d;
-  if (era === "AC" || era === "BC") {
-    return `${Math.abs(year)} ${era}`;
-  }
-  const eraLabel = era
-    .split("-")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
-  return precision === "legendary" ? `${eraLabel} (legendary)` : eraLabel;
-}
 
 export function HouseInfobox({
   house,
@@ -164,13 +150,13 @@ export function HouseInfobox({
 
         <div className={infoboxStyles.row}>
           <dt>Founded</dt>
-          <dd>{formatDate(house.founded)}</dd>
+          <dd>{formatEraDate(house.founded)}</dd>
         </div>
 
         {house.extinct && (
           <div className={infoboxStyles.row}>
             <dt>Extinct</dt>
-            <dd>{formatDate(house.extinct)}</dd>
+            <dd>{formatEraDate(house.extinct)}</dd>
           </div>
         )}
       </dl>

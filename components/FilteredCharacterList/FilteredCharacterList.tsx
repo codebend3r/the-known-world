@@ -11,10 +11,12 @@ import {
   ViewToggle,
   GridIcon,
   ListIcon,
+  isViewMode,
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import { compareByName } from "@/lib/collections";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -44,10 +46,6 @@ const VIEW_OPTIONS = [
 ];
 
 const VIEW_STORAGE_KEY = "gota:characters-view";
-
-function isViewMode(value: unknown): value is ViewMode {
-  return value === "grid" || value === "list";
-}
 
 export type CharacterItem = {
   slug: string;
@@ -113,7 +111,7 @@ export function FilteredCharacterList({
   }, [userDebounced, setParams]);
 
   const sorted = useMemo(() => {
-    const arr = [...items].sort((a, b) => a.name.localeCompare(b.name));
+    const arr = [...items].sort(compareByName);
     return dir === "desc" ? arr.reverse() : arr;
   }, [items, dir]);
 

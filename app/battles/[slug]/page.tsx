@@ -13,6 +13,7 @@ import { Sources } from "@/components/Sources";
 import { BattleInfobox } from "@/components/BattleInfobox";
 import { formatBattleWhen } from "@/lib/battle-date";
 import { findBattleImage } from "@/lib/battle-image";
+import { bySlug } from "@/lib/collections";
 import styles from "@/app/battles/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
@@ -49,10 +50,8 @@ export default async function BattlePage({
   ]);
   if (!battle) notFound();
 
-  const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
-  const charactersBySlug = new Map(
-    allCharacters.map((c) => [c.slug, c.frontmatter]),
-  );
+  const housesBySlug = bySlug(allHouses);
+  const charactersBySlug = bySlug(allCharacters);
 
   const fm = battle.frontmatter;
   const html = battle.body.trim() ? await renderMarkdown(battle.body) : "";

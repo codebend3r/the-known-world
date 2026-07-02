@@ -225,6 +225,7 @@ export const BattleSchema = z.object({
   draft: z.boolean().default(false),
 });
 
+export type CalendarDate = z.infer<typeof DateSchema>;
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
 export type HouseInfoEntry = z.infer<typeof HouseInfoEntrySchema>;

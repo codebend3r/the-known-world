@@ -9,10 +9,12 @@ import {
   ViewToggle,
   GridIcon,
   ListIcon,
+  isViewMode,
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import { compareByName } from "@/lib/collections";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -42,10 +44,6 @@ const VIEW_STORAGE_KEY = "gota:houses-view";
 // `--bleed-width` track). Eagerly loading these covers the LCP candidate
 // without negating lazy-loading for the rest of the list.
 const PRIORITY_COUNT = 8;
-
-function isViewMode(value: unknown): value is ViewMode {
-  return value === "grid" || value === "list";
-}
 
 const REGION_CARD_CLASS: Record<string, string | undefined> = {
   north: styles.cardNorth,
@@ -114,7 +112,7 @@ export function FilteredHouseList({
   }, [userDebounced, setParams]);
 
   const sorted = useMemo(() => {
-    const arr = [...items].sort((a, b) => a.name.localeCompare(b.name));
+    const arr = [...items].sort(compareByName);
     return dir === "desc" ? arr.reverse() : arr;
   }, [items, dir]);
 

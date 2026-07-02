@@ -2,13 +2,6 @@ import Link from "next/link";
 import type { HouseInfoEntry } from "@/lib/schemas";
 import styles from "@/components/Infobox/Infobox.module.scss";
 
-export function humanizeSlug(slug: string): string {
-  return slug
-    .split("-")
-    .map((w) => (w.length === 0 ? w : w[0].toUpperCase() + w.slice(1)))
-    .join(" ");
-}
-
 type EntryProps = {
   entry: HouseInfoEntry;
   hrefPrefix?: string;
