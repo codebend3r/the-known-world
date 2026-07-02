@@ -7,15 +7,21 @@ words: ""
 sigil:
   description: ""
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: -700
+  era: BC
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: dorne
-sources: []
+notable-members:
+  - name: Lady Alyse Ladybright
+  - name: Jayne Ladybright
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Ladybright
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Ladybright is a house of Dorne. This entry is a stub and will be expanded at a later date.
+House Ladybright is a minor house of Dorne, sworn to Sunspear, its own words and colors lost to time. Lady Alyse Ladybright serves Prince Doran Martell as lord treasurer in Sunspear during the years after the War of the Five Kings, and Jayne Ladybright rides in the company of Arianne Martell, keeping the house close to the ruling line even without lands or arms of note.
