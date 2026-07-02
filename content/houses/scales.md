@@ -7,15 +7,27 @@ words: ""
 sigil:
   description: ""
 founded:
-  year: 0
-  era: age-of-heroes
-  precision: era
+  year: -6000
+  era: andal-invasion
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: crownlands
-sources: []
+regions:
+  - name: Dragonstone
+heads:
+  - name: Ser Benethon Scales
+notable-members:
+  - name: Ser Elyas Scales
+    note: master-at-arms at Dragonstone during Jaehaerys I's regency
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Scales
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Scales is a house of the Crownlands. This entry is a stub and will be expanded at a later date.
+House Scales is a house of Dragonstone in the crownlands, sworn to House Baratheon. No record of their arms or words survives.
+
+Ser Elyas Scales served as master-at-arms at Dragonstone during the regency of the young King Jaehaerys I Targaryen, sparring with the boy king himself during his training. Generations later, Ser Benethon Scales serves among Stannis Baratheon's queen's men, remaining at Queen Selyse's side when Stannis marches on Deepwood Motte and accompanying her from Eastwatch to the Nightfort and on to Castle Black.
