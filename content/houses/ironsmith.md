@@ -2,20 +2,25 @@
 slug: ironsmith
 name: House Ironsmith
 seat: ""
-liege: stark
+liege: bolton
 words: ""
 sigil:
-  description: ""
+  description: A black sword upright between four black horseshoes on gold, within a grey-green border
 founded:
   year: 0
   era: age-of-heroes
-  precision: era
+  precision: legendary
 status: extant
 sworn-from: []
 cadet-houses: []
 region: north
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Ironsmith
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Ironsmith is a house of the North. This entry is a stub and will be expanded at a later date.
+House Ironsmith is a noble house of the north. No motto of theirs is recorded, and no deed of note survives in the great chronicles beyond the sword and horseshoes they bear upon their shield.
+
+The house was sworn to House Stark of Winterfell at the start of the War of the Five Kings, and later to House Bolton; no Ironsmith has been recorded among the living in that span of years.
