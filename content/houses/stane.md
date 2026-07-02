@@ -7,7 +7,7 @@ words: ""
 sigil:
   description: A bare driftwood tree, brown on a pale green field
 founded:
-  year: 0
+  year: -4000
   era: age-of-heroes
   precision: era
 status: extant
