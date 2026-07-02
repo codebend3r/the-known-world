@@ -5,17 +5,22 @@ seat: ""
 liege: tyrell
 words: ""
 sigil:
-  description: ""
+  description: A golden flagon on burgundy, within a border of gold and white checks
 founded:
-  year: 0
-  era: age-of-heroes
+  year: -2000
+  era: andal-invasion
   precision: era
 status: extant
 sworn-from: []
 cadet-houses: []
 region: reach
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/House_Redding
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
-House Redding is a house of the Reach. This entry is a stub and will be expanded at a later date.
+House Redding is a minor house of the Reach, sworn to Highgarden, its arms a golden flagon on burgundy bordered in gold-and-white checks. No words survive for the house.
+
+No Redding has appeared in the chronicles of the present age; the name is preserved only in the Citadel's rolls of Reach heraldry.
