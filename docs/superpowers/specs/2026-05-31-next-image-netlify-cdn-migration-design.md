@@ -68,9 +68,7 @@ const nextConfig: NextConfig = {
   },
   trailingSlash: true,
   reactStrictMode: true,
-  sassOptions: {
-    /* unchanged */
-  },
+  sassOptions: {/* unchanged */},
 };
 ```
 
