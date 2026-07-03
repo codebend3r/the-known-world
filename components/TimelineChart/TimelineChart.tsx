@@ -11,6 +11,7 @@ import styles from "@/components/TimelineChart/TimelineChart.module.scss";
 
 type TimelineChartProps = {
   model: TimelineModel;
+  bodyId?: string;
 };
 
 const COLUMN_CLASS: Record<Landmass, string> = {
@@ -42,7 +43,7 @@ function ChartNode({ node }: { node: TimelineNode }) {
   );
 }
 
-export function TimelineChart({ model }: TimelineChartProps) {
+export function TimelineChart({ model, bodyId }: TimelineChartProps) {
   return (
     <div className={styles.scroller}>
       <div className={styles.chart}>
@@ -54,7 +55,11 @@ export function TimelineChart({ model }: TimelineChartProps) {
             </h2>
           ))}
         </header>
-        <div className={styles.body} style={{ height: model.height }}>
+        <div
+          id={bodyId}
+          className={styles.body}
+          style={{ height: model.height }}
+        >
           {model.eras.map((era) => (
             <div
               key={era.label}

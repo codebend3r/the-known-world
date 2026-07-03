@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { TimelineChart } from "@/components/TimelineChart";
+import { TimelineMinimap } from "@/components/TimelineMinimap";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { loadAllBattles } from "@/lib/content";
 import { buildTimeline } from "@/lib/timeline";
@@ -30,7 +31,10 @@ export default async function TimelinePage() {
         icon={sectionGlyphs.timeline}
         subtitle="Trace the centuries: every battle of the Known World, laid out in time and place."
       />
-      <TimelineChart model={model} />
+      <div className={styles.chartBleed}>
+        <TimelineChart model={model} bodyId="timeline-chart" />
+      </div>
+      <TimelineMinimap ticks={model.ticks} targetId="timeline-chart" />
       {hasApproximate && (
         <p className={styles.legend}>* approximate or legendary date</p>
       )}

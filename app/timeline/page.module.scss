@@ -1,5 +1,10 @@
 @use "breakpoints" as bp;
 
+.chartBleed {
+  width: 100vw;
+  justify-self: center;
+}
+
 .legend {
   margin-top: 2rem;
   font-family: var(--font-ui);

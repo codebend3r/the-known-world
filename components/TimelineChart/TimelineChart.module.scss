@@ -5,9 +5,10 @@
 }
 
 .chart {
-  --axis-width: 7rem;
+  --axis-width: 10rem;
 
   display: grid;
+  width: 100%;
   min-width: 44rem;
   font-family: var(--font-body);
 }
@@ -106,15 +107,15 @@
 .tickLabel {
   grid-area: label;
   width: var(--axis-width);
-  padding-right: 1rem;
+  padding-right: 1.25rem;
   text-align: right;
   transform: translateY(-50%);
   background: var(--parchment-light);
   font-family: var(--font-heading);
   font-variant: small-caps;
-  letter-spacing: 1px;
-  font-size: 0.75rem;
-  color: var(--ink-faded);
+  letter-spacing: 2px;
+  font-size: 1.15rem;
+  color: var(--ink);
 }
 
 .era {
