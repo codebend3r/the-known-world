@@ -6,6 +6,7 @@
 
 .chart {
   --axis-width: 10rem;
+  --era-width: 2rem;
 
   display: grid;
   width: 100%;
@@ -95,7 +96,7 @@
 
 .tick {
   position: absolute;
-  left: 0;
+  left: var(--era-width);
   right: 0;
   z-index: 1;
   display: grid;
@@ -106,7 +107,7 @@
 
 .tickLabel {
   grid-area: label;
-  width: var(--axis-width);
+  width: calc(var(--axis-width) - var(--era-width));
   padding-right: 1.25rem;
   text-align: right;
   transform: translateY(-50%);
@@ -125,7 +126,7 @@
   z-index: 0;
   display: grid;
   grid-template-areas: "label space";
-  grid-template-columns: var(--axis-width) 1fr;
+  grid-template-columns: var(--era-width) 1fr;
   align-items: center;
   justify-items: center;
   background: rgba(212, 162, 89, 0.07);
@@ -213,11 +214,18 @@
 
 @media (max-width: bp.$md) {
   .chart {
-    --axis-width: 5rem;
+    --axis-width: 7.5rem;
+    --era-width: 2rem;
   }
 
   .columnHeading {
     font-size: 1rem;
     letter-spacing: 1px;
+  }
+
+  .tickLabel {
+    padding-right: 0.75rem;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
   }
 }
