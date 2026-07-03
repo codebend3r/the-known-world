@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useId, useState } from "react";
 import { cx } from "@/lib/cx";
 import type { TimelineEvent } from "@/lib/timeline";
+import { TimelineClusterContext } from "@/components/TimelineCluster/TimelineClusterProvider";
 import styles from "@/components/TimelineCluster/TimelineCluster.module.scss";
 
 type TimelineClusterProps = {
@@ -13,28 +14,35 @@ type TimelineClusterProps = {
 };
 
 export function TimelineCluster({ label, when, events }: TimelineClusterProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const context = useContext(TimelineClusterContext);
+  const [localOpenId, setLocalOpenId] = useState<string | null>(null);
+  const id = useId();
+
+  const openId = !!context ? context.openId : localOpenId;
+  const setOpenId = !!context ? context.setOpenId : setLocalOpenId;
+  const isOpen = openId === id;
+  const close = () => {
+    if (isOpen) setOpenId(null);
+  };
 
   return (
     <div
       className={cx(styles.cluster, isOpen && styles.clusterOpen)}
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
       onBlur={(e) => {
         const next = e.relatedTarget;
         if (!(next instanceof Node) || !e.currentTarget.contains(next)) {
-          setIsOpen(false);
+          close();
         }
       }}
       onKeyDown={(e) => {
-        if (e.key === "Escape") setIsOpen(false);
+        if (e.key === "Escape") close();
       }}
     >
       <button
         type="button"
         className={styles.pill}
         aria-expanded={isOpen}
-        onClick={() => setIsOpen((open) => !open)}
+        onClick={() => setOpenId(isOpen ? null : id)}
       >
         <span className={styles.count}>{label}</span>
         <span className={styles.when}>{when}</span>

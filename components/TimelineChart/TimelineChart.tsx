@@ -6,7 +6,10 @@ import {
   type TimelineModel,
   type TimelineNode,
 } from "@/lib/timeline";
-import { TimelineCluster } from "@/components/TimelineCluster";
+import {
+  TimelineCluster,
+  TimelineClusterProvider,
+} from "@/components/TimelineCluster";
 import styles from "@/components/TimelineChart/TimelineChart.module.scss";
 
 type TimelineChartProps = {
@@ -78,27 +81,29 @@ export function TimelineChart({ model, bodyId }: TimelineChartProps) {
               <span className={styles.tickLabel}>{tick.label}</span>
             </div>
           ))}
-          <div className={styles.columns}>
-            <span className={styles.axisRail} aria-hidden="true" />
-            {LANDMASSES.map((landmass) => (
-              <section
-                key={landmass}
-                className={COLUMN_CLASS[landmass]}
-                aria-label={LANDMASS_LABELS[landmass]}
-              >
-                {model.columns[landmass].map((node) => (
-                  <ChartNode
-                    key={
-                      node.kind === "single"
-                        ? node.event.slug
-                        : `cluster-${node.y}`
-                    }
-                    node={node}
-                  />
-                ))}
-              </section>
-            ))}
-          </div>
+          <TimelineClusterProvider>
+            <div className={styles.columns}>
+              <span className={styles.axisRail} aria-hidden="true" />
+              {LANDMASSES.map((landmass) => (
+                <section
+                  key={landmass}
+                  className={COLUMN_CLASS[landmass]}
+                  aria-label={LANDMASS_LABELS[landmass]}
+                >
+                  {model.columns[landmass].map((node) => (
+                    <ChartNode
+                      key={
+                        node.kind === "single"
+                          ? node.event.slug
+                          : `cluster-${node.y}`
+                      }
+                      node={node}
+                    />
+                  ))}
+                </section>
+              ))}
+            </div>
+          </TimelineClusterProvider>
         </div>
       </div>
     </div>
