@@ -1,8 +1,8 @@
 @use "breakpoints" as bp;
 
 .chartBleed {
-  width: 100vw;
-  justify-self: center;
+  justify-self: stretch;
+  margin-inline: calc(50% - 50vw);
 }
 
 .legend {

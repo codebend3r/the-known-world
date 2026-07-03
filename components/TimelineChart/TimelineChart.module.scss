@@ -150,6 +150,12 @@
   right: 0.9rem;
   z-index: 2;
   transform: translateY(-50%);
+
+  &:hover,
+  &:focus-within,
+  &:has([aria-expanded="true"]) {
+    z-index: 6;
+  }
 }
 
 .event {
