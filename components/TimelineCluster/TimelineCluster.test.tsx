@@ -127,6 +127,23 @@ describe("TimelineCluster", () => {
     expect(pill.getAttribute("aria-expanded")).toBe("false");
   });
 
+  it("closes when clicking outside the open cluster", () => {
+    const pill = renderCluster();
+    fireEvent.click(pill);
+    expect(pill.getAttribute("aria-expanded")).toBe("true");
+    fireEvent.pointerDown(document.body);
+    expect(pill.getAttribute("aria-expanded")).toBe("false");
+    expect(screen.queryAllByRole("link")).toHaveLength(0);
+  });
+
+  it("stays open when clicking inside the expanded list", () => {
+    const pill = renderCluster();
+    fireEvent.click(pill);
+    const firstLink = screen.getAllByRole("link")[0];
+    fireEvent.pointerDown(firstLink);
+    expect(pill.getAttribute("aria-expanded")).toBe("true");
+  });
+
   it("only one cluster stays open at a time inside a provider", () => {
     const { first, second } = renderClusterPair();
     fireEvent.click(first);

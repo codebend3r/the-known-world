@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useContext, useId, useState } from "react";
+import { useContext, useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import type { TimelineEvent } from "@/lib/timeline";
 import { TimelineClusterContext } from "@/components/TimelineCluster/TimelineClusterProvider";
@@ -17,6 +17,7 @@ export function TimelineCluster({ label, when, events }: TimelineClusterProps) {
   const context = useContext(TimelineClusterContext);
   const [localOpenId, setLocalOpenId] = useState<string | null>(null);
   const id = useId();
+  const rootRef = useRef<HTMLDivElement | null>(null);
 
   const openId = !!context ? context.openId : localOpenId;
   const setOpenId = !!context ? context.setOpenId : setLocalOpenId;
@@ -25,8 +26,20 @@ export function TimelineCluster({ label, when, events }: TimelineClusterProps) {
     if (isOpen) setOpenId(null);
   };
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handlePointerDown = (event: PointerEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (!(rootRef.current?.contains(target) ?? false)) setOpenId(null);
+    };
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen, setOpenId]);
+
   return (
     <div
+      ref={rootRef}
       className={cx(styles.cluster, isOpen && styles.clusterOpen)}
       onBlur={(e) => {
         const next = e.relatedTarget;
