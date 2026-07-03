@@ -1,0 +1,61 @@
+@use "breakpoints" as bp;
+
+.detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "heading"
+    "main";
+  gap: 2rem;
+  align-items: start;
+}
+
+.heading {
+  grid-area: heading;
+  display: grid;
+  gap: 0;
+  place-items: center;
+  place-content: center;
+
+  h1 {
+    font-family: var(--font-character-name);
+  }
+}
+
+.main {
+  grid-area: main;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  align-content: start;
+  justify-self: center;
+  width: min(100%, 46rem);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+
+  @media (max-width: bp.$md) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.back {
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  text-align: center;
+
+  a {
+    color: var(--ink-faded);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--gold-leaf);
+    }
+  }
+}
