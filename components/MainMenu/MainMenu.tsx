@@ -19,7 +19,6 @@ export function MainMenu() {
         glyph={sectionGlyphs.timeline}
         href="/timeline/"
         status="coming-soon"
-        visible={false}
       />
       <MainMenuTile
         title="Houses"

@@ -3,37 +3,39 @@ import { render, screen } from "@testing-library/react";
 import { MainMenu } from "@/components/MainMenu";
 
 describe("MainMenu", () => {
-  it("renders only visible tiles in order: Houses, Characters, Weapons, Battles", () => {
+  it("renders only visible tiles in order: Timeline, Houses, Characters, Weapons, Battles", () => {
     render(<MainMenu />);
     const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(4);
+    expect(links).toHaveLength(5);
 
-    expect(links[0].textContent).toContain("Houses");
-    expect(links[0].getAttribute("href")).toBe("/houses/");
+    expect(links[0].textContent).toContain("Timeline");
+    expect(links[0].getAttribute("href")).toBe("/timeline/");
 
-    expect(links[1].textContent).toContain("Characters");
-    expect(links[1].getAttribute("href")).toBe("/characters/");
+    expect(links[1].textContent).toContain("Houses");
+    expect(links[1].getAttribute("href")).toBe("/houses/");
 
-    expect(links[2].textContent).toContain("Weapons");
-    expect(links[2].getAttribute("href")).toBe("/weapons/");
+    expect(links[2].textContent).toContain("Characters");
+    expect(links[2].getAttribute("href")).toBe("/characters/");
 
-    expect(links[3].textContent).toContain("Battles");
-    expect(links[3].getAttribute("href")).toBe("/battles/");
+    expect(links[3].textContent).toContain("Weapons");
+    expect(links[3].getAttribute("href")).toBe("/weapons/");
+
+    expect(links[4].textContent).toContain("Battles");
+    expect(links[4].getAttribute("href")).toBe("/battles/");
   });
 
-  it("does not render hidden tiles (Maps, Timeline, Dragons)", () => {
+  it("does not render hidden tiles (Maps, Dragons)", () => {
     render(<MainMenu />);
     const hrefs = screen
       .getAllByRole("link")
       .map((l) => l.getAttribute("href"));
     expect(hrefs).not.toContain("/maps/");
-    expect(hrefs).not.toContain("/timeline/");
     expect(hrefs).not.toContain("/dragons/");
   });
 
-  it("shows no coming-soon pills now that Maps and Timeline are hidden", () => {
+  it("shows a coming-soon pill only on the Timeline tile", () => {
     render(<MainMenu />);
-    expect(screen.queryAllByText(/coming soon/i)).toHaveLength(0);
+    expect(screen.queryAllByText(/coming soon/i)).toHaveLength(1);
   });
 
   it('wraps tiles in a nav landmark labelled "Atlas sections"', () => {
