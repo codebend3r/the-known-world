@@ -170,6 +170,8 @@ const ParticipantSchema = z.object({
   houses: z.array(z.string()).default([]),
 });
 
+const LandmassSchema = z.enum(["westeros", "essos", "summer-isles"]);
+
 export const EventSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
@@ -180,10 +182,16 @@ export const EventSchema = z.object({
     "wedding",
     "death",
     "betrayal",
+    "founding",
+    "migration",
+    "legend",
+    "disaster",
+    "omen",
     "other",
   ]),
   date: DateSchema,
   location: z.union([z.string(), CoordsSchema]),
+  landmass: LandmassSchema,
   participants: z.array(ParticipantSchema).default([]),
   outcome: z.string().optional(),
   casualties: z.array(z.string()).default([]),
@@ -226,6 +234,7 @@ export const BattleSchema = z.object({
 });
 
 export type CalendarDate = z.infer<typeof DateSchema>;
+export type Landmass = z.infer<typeof LandmassSchema>;
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
 export type HouseInfoEntry = z.infer<typeof HouseInfoEntrySchema>;

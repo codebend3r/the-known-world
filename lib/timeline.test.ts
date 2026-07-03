@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import type { Battle } from "@/lib/schemas";
+import type { Battle, Event } from "@/lib/schemas";
 import {
   CLUSTER_GAP_PX,
   LANDMASSES,
@@ -32,6 +32,33 @@ const makeBattle = ({
   casualties: [],
   aliases: [],
   mentions: [],
+  sources: [],
+  draft: false,
+});
+
+const makeEvent = ({
+  slug,
+  year,
+  era = "AC",
+  landmass = "westeros",
+  type = "other",
+  precision = "exact",
+}: {
+  slug: string;
+  year: number;
+  era?: Event["date"]["era"];
+  landmass?: Event["landmass"];
+  type?: Event["type"];
+  precision?: Event["date"]["precision"];
+}): Event => ({
+  slug,
+  name: slug,
+  type,
+  date: { year, era, precision },
+  location: slug,
+  landmass,
+  participants: [],
+  casualties: [],
   sources: [],
   draft: false,
 });
@@ -215,5 +242,76 @@ describe("buildTimeline", () => {
     expect(model.height).toBe(0);
     expect(model.ticks).toEqual([]);
     expect(model.columns.westeros).toEqual([]);
+  });
+
+  it("places events in their landmass columns with event hrefs", () => {
+    const model = buildTimeline({
+      battles: [],
+      events: [
+        makeEvent({ slug: "the-purple-wedding", year: 300, type: "wedding" }),
+        makeEvent({
+          slug: "doom-of-valyria",
+          year: 114,
+          era: "BC",
+          landmass: "essos",
+          type: "disaster",
+        }),
+        makeEvent({
+          slug: "drowning-of-the-summer-isles",
+          year: 10000,
+          era: "BC",
+          landmass: "summer-isles",
+          type: "disaster",
+          precision: "legendary",
+        }),
+      ],
+    });
+    const westeros = model.columns.westeros[0];
+    expect(westeros.kind).toBe("single");
+    if (westeros.kind === "single") {
+      expect(westeros.event.href).toBe("/events/the-purple-wedding/");
+      expect(westeros.event.when).toBe("300 AC");
+    }
+    expect(model.columns.essos).toHaveLength(1);
+    expect(model.columns["summer-isles"]).toHaveLength(1);
+  });
+
+  it("computes the year range from battles and events together", () => {
+    const model = buildTimeline({
+      battles: [makeBattle({ slug: "recent", year: 300, region: "north" })],
+      events: [
+        makeEvent({
+          slug: "ancient",
+          year: 2000,
+          era: "BC",
+          precision: "era",
+        }),
+      ],
+    });
+    const labels = model.ticks.map((t) => t.label);
+    expect(labels).toContain("2000 BC");
+    expect(labels).toContain("300 AC");
+  });
+
+  it("clusters battles and events together within a column", () => {
+    const model = buildTimeline({
+      battles: [
+        makeBattle({ slug: "a-battle", year: 299, region: "north" }),
+        makeBattle({ slug: "b-battle", year: 299, region: "north" }),
+      ],
+      events: [makeEvent({ slug: "an-event", year: 300 })],
+    });
+    const nodes = model.columns.westeros;
+    expect(nodes).toHaveLength(1);
+    const cluster = nodes[0];
+    expect(cluster.kind).toBe("cluster");
+    if (cluster.kind === "cluster") {
+      expect(cluster.label).toBe("3 events");
+      expect(cluster.events.map((e) => e.slug)).toEqual([
+        "a-battle",
+        "b-battle",
+        "an-event",
+      ]);
+    }
   });
 });

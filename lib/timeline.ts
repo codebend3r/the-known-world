@@ -1,7 +1,7 @@
-import type { Battle } from "@/lib/schemas";
+import type { Battle, Event, Landmass } from "@/lib/schemas";
 import { absoluteYear, formatBattleWhen } from "@/lib/battle-date";
 
-export type Landmass = "westeros" | "essos" | "summer-isles";
+export type { Landmass } from "@/lib/schemas";
 
 export const LANDMASSES = [
   "westeros",
@@ -133,14 +133,19 @@ const EMPTY_COLUMNS: Record<Landmass, TimelineNode[]> = {
 
 export function buildTimeline({
   battles,
+  events = [],
 }: {
   battles: Battle[];
+  events?: Event[];
 }): TimelineModel {
-  if (!battles.length) {
+  if (!battles.length && !events.length) {
     return { height: 0, ticks: [], eras: [], columns: { ...EMPTY_COLUMNS } };
   }
 
-  const years = battles.map((battle) => absoluteYear(battle.start));
+  const years = [
+    ...battles.map((battle) => absoluteYear(battle.start)),
+    ...events.map((event) => absoluteYear(event.date)),
+  ];
   const minYear = Math.floor(Math.min(...years) / 1000) * 1000;
   const maxYear = Math.ceil(Math.max(...years) / 50) * 50;
 
@@ -176,21 +181,33 @@ export function buildTimeline({
     };
   });
 
-  const toEvent = (battle: Battle): TimelineEvent => ({
-    slug: battle.slug,
-    name: battle.name,
-    href: `/battles/${battle.slug}/`,
-    year: absoluteYear(battle.start),
-    when: formatBattleWhen(battle.start, battle.end),
-  });
+  const placed: Array<{ landmass: Landmass; event: TimelineEvent }> = [
+    ...battles.map((battle) => ({
+      landmass: landmassForBattle({ battle }),
+      event: {
+        slug: battle.slug,
+        name: battle.name,
+        href: `/battles/${battle.slug}/`,
+        year: absoluteYear(battle.start),
+        when: formatBattleWhen(battle.start, battle.end),
+      },
+    })),
+    ...events.map((event) => ({
+      landmass: event.landmass,
+      event: {
+        slug: event.slug,
+        name: event.name,
+        href: `/events/${event.slug}/`,
+        year: absoluteYear(event.date),
+        when: formatBattleWhen(event.date, event.date),
+      },
+    })),
+  ];
 
-  const byLandmass = battles.reduce<Record<Landmass, TimelineEvent[]>>(
-    (acc, battle) => ({
+  const byLandmass = placed.reduce<Record<Landmass, TimelineEvent[]>>(
+    (acc, { landmass, event }) => ({
       ...acc,
-      [landmassForBattle({ battle })]: [
-        ...acc[landmassForBattle({ battle })],
-        toEvent(battle),
-      ],
+      [landmass]: [...acc[landmass], event],
     }),
     { westeros: [], essos: [], "summer-isles": [] },
   );
