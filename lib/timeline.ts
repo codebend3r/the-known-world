@@ -20,7 +20,8 @@ export const CLUSTER_GAP_PX = 28;
 export const MAX_CLUSTER_SPAN_YEARS = 10;
 
 const TOP_PAD_PX = 48;
-const BOTTOM_PAD_PX = 72;
+/** Must fit a bottom cluster's expanded list — `.list` max-height 18rem in `TimelineCluster.module.scss`. */
+const BOTTOM_PAD_PX = 400;
 
 /** Battles whose frontmatter carries no Westerosi `region`, placed by hand. */
 const ESSOS_SLUGS = new Set([
