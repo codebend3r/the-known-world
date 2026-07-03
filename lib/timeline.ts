@@ -17,6 +17,7 @@ export const LANDMASS_LABELS: Record<Landmass, string> = {
 
 export const PX_PER_YEAR = 2;
 export const CLUSTER_GAP_PX = 28;
+export const MAX_CLUSTER_SPAN_YEARS = 10;
 
 const TOP_PAD_PX = 48;
 const BOTTOM_PAD_PX = 72;
@@ -99,10 +100,11 @@ function clusterColumn({
   const groups = sorted.reduce<TimelineEvent[][]>((acc, event) => {
     const group = acc.at(-1);
     const previous = group?.at(-1);
-    if (!group || !previous) return [...acc, [event]];
-    if (yFor(event.year) - yFor(previous.year) > CLUSTER_GAP_PX) {
-      return [...acc, [event]];
-    }
+    const first = group?.at(0);
+    if (!group || !previous || !first) return [...acc, [event]];
+    const tooFar = yFor(event.year) - yFor(previous.year) > CLUSTER_GAP_PX;
+    const tooWide = event.year - first.year > MAX_CLUSTER_SPAN_YEARS;
+    if (tooFar || tooWide) return [...acc, [event]];
     return [...acc.slice(0, -1), [...group, event]];
   }, []);
 

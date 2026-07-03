@@ -18,7 +18,6 @@ export function MainMenu() {
         subtitle="Trace the centuries."
         glyph={sectionGlyphs.timeline}
         href="/timeline/"
-        status="coming-soon"
       />
       <MainMenuTile
         title="Houses"

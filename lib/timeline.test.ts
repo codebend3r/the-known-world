@@ -106,6 +106,26 @@ describe("buildTimeline", () => {
     }
   });
 
+  it("breaks a chain once a cluster spans more than the year cap", () => {
+    const model = buildTimeline({
+      battles: [
+        makeBattle({ slug: "a", year: 282, region: "north" }),
+        makeBattle({ slug: "b", year: 289, region: "north" }),
+        makeBattle({ slug: "c", year: 298, region: "north" }),
+        makeBattle({ slug: "d", year: 299, region: "north" }),
+        makeBattle({ slug: "e", year: 300, region: "north" }),
+      ],
+    });
+    const nodes = model.columns.westeros;
+    expect(nodes.map((n) => n.kind)).toEqual(["cluster", "cluster"]);
+    const [first, second] = nodes;
+    if (first.kind === "cluster" && second.kind === "cluster") {
+      expect(first.events.map((e) => e.slug)).toEqual(["a", "b"]);
+      expect(second.events.map((e) => e.slug)).toEqual(["c", "d", "e"]);
+      expect(second.when).toBe("298–300 AC");
+    }
+  });
+
   it("keeps events farther apart than the gap window separate", () => {
     const gapYears = CLUSTER_GAP_PX / PX_PER_YEAR + 1;
     const model = buildTimeline({

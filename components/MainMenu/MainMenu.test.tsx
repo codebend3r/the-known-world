@@ -33,9 +33,9 @@ describe("MainMenu", () => {
     expect(hrefs).not.toContain("/dragons/");
   });
 
-  it("shows a coming-soon pill only on the Timeline tile", () => {
+  it("shows no coming-soon pills now that Timeline is live", () => {
     render(<MainMenu />);
-    expect(screen.queryAllByText(/coming soon/i)).toHaveLength(1);
+    expect(screen.queryAllByText(/coming soon/i)).toHaveLength(0);
   });
 
   it('wraps tiles in a nav landmark labelled "Atlas sections"', () => {
