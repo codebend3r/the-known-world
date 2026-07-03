@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { loadAllWeapons, loadAllHouses } from "@/lib/content";
 import { findWeaponImage } from "@/lib/weapon-image";
 import { regionForHouse, regionLabel } from "@/lib/regions";
+import { bySlug, compareByName } from "@/lib/collections";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
@@ -22,7 +23,7 @@ export default async function WeaponsPage() {
     loadAllWeapons(),
     loadAllHouses(),
   ]);
-  const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
+  const housesBySlug = bySlug(houses);
   const visible = weapons.filter((w) => !w.frontmatter.draft);
 
   const imaged = await Promise.all(
@@ -49,7 +50,7 @@ export default async function WeaponsPage() {
         hasImage: withImage.has(w.frontmatter.slug),
       };
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort(compareByName);
 
   return (
     <ParchmentLayout>

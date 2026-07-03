@@ -1,6 +1,11 @@
 import { describe, it, expect, vi } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { ViewToggle, GridIcon, ListIcon } from "@/components/ViewToggle";
+import {
+  ViewToggle,
+  GridIcon,
+  ListIcon,
+  isViewMode,
+} from "@/components/ViewToggle";
 
 const TWO_OPTIONS = [
   { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },
@@ -73,5 +78,20 @@ describe("ViewToggle (polymorphic)", () => {
     render(<ViewToggle options={THREE} value="b" onChange={onChange} />);
     fireEvent.click(screen.getByRole("button", { name: /option c/i }));
     expect(onChange).toHaveBeenCalledWith("c");
+  });
+});
+
+describe("isViewMode", () => {
+  it("accepts the two known view modes", () => {
+    expect(isViewMode("grid")).toBe(true);
+    expect(isViewMode("list")).toBe(true);
+  });
+
+  it("rejects any other value, including null and non-strings", () => {
+    expect(isViewMode("gallery")).toBe(false);
+    expect(isViewMode("")).toBe(false);
+    expect(isViewMode(null)).toBe(false);
+    expect(isViewMode(undefined)).toBe(false);
+    expect(isViewMode(1)).toBe(false);
   });
 });

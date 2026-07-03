@@ -5,6 +5,10 @@ import styles from "@/components/ViewToggle/ViewToggle.module.scss";
 
 export type ViewMode = "grid" | "list";
 
+export function isViewMode(value: unknown): value is ViewMode {
+  return value === "grid" || value === "list";
+}
+
 type Option<T extends string> = {
   value: T;
   label: string;

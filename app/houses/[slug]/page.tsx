@@ -19,6 +19,7 @@ import { findPortrait } from "@/lib/portraits";
 import { HouseInfobox } from "@/components/HouseInfobox";
 import { buildFamilyTree } from "@/lib/family-tree";
 import { buildProseLinkIndex } from "@/lib/prose-links";
+import { bySlug } from "@/lib/collections";
 import styles from "@/app/houses/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
@@ -59,12 +60,10 @@ export default async function HousePage({
     ]);
   if (!house) notFound();
 
-  const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
-  const castlesBySlug = new Map(castles.map((c) => [c.slug, c.frontmatter]));
-  const charactersBySlug = new Map(
-    characters.map((c) => [c.slug, c.frontmatter]),
-  );
-  const weaponsBySlug = new Map(allWeapons.map((w) => [w.slug, w.frontmatter]));
+  const housesBySlug = bySlug(allHouses);
+  const castlesBySlug = bySlug(castles);
+  const charactersBySlug = bySlug(characters);
+  const weaponsBySlug = bySlug(allWeapons);
   const dragonsForHouse = allDragons
     .map((d) => d.frontmatter)
     .filter((d) => d.house === slug && !d.draft);

@@ -1,7 +1,9 @@
 import { Sigil } from "@/components/Sigil";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
-import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import { houseLabel, humanizeSlug, shortHouseName } from "@/lib/text";
+import { formatEraDate } from "@/lib/era-date";
+import { InfoRow } from "@/components/Infobox";
 import type { Weapon, House, Character, HouseInfoEntry } from "@/lib/schemas";
 import infoboxStyles from "@/components/HouseInfobox/HouseInfobox.module.scss";
 import styles from "@/components/Infobox/Infobox.module.scss";
@@ -12,10 +14,6 @@ type Props = {
   charactersBySlug: Map<string, Character>;
   className?: string;
 };
-
-function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, "");
-}
 
 const TYPE_LABEL: Record<Weapon["type"], string> = {
   sword: "Sword",
@@ -49,20 +47,6 @@ const CURRENT_HOUSE_FALLBACK: Record<Weapon["status"], string> = {
   destroyed: "Destroyed",
 };
 
-function formatDate(d: NonNullable<Weapon["forged"]>): string {
-  const { year, era, precision } = d;
-  if (era === "AC" || era === "BC") return `${Math.abs(year)} ${era}`;
-  const label = era
-    .split("-")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
-  return precision === "legendary" ? `${label} (legendary)` : label;
-}
-
-function houseLabel(slug: string, housesBySlug: Map<string, House>): string {
-  return housesBySlug.get(slug)?.name ?? `House ${humanizeSlug(slug)}`;
-}
-
 export function WeaponInfobox({
   weapon,
   housesBySlug,
@@ -74,11 +58,11 @@ export function WeaponInfobox({
   const originHouse = origin ? housesBySlug.get(origin) : undefined;
 
   const originEntries: HouseInfoEntry[] = origin
-    ? [{ slug: origin, name: houseLabel(origin, housesBySlug) }]
+    ? [{ slug: origin, name: houseLabel({ slug: origin, housesBySlug }) }]
     : [];
 
   const currentEntries: HouseInfoEntry[] = current
-    ? [{ slug: current, name: houseLabel(current, housesBySlug) }]
+    ? [{ slug: current, name: houseLabel({ slug: current, housesBySlug }) }]
     : [];
 
   const wielders: HouseInfoEntry[] = weapon.wielders.map((slug) => ({
@@ -119,13 +103,13 @@ export function WeaponInfobox({
         {weapon.forged && (
           <div className={styles.row}>
             <dt>Forged</dt>
-            <dd>{formatDate(weapon.forged)}</dd>
+            <dd>{formatEraDate(weapon.forged)}</dd>
           </div>
         )}
         {weapon.destroyed && (
           <div className={styles.row}>
             <dt>Destroyed</dt>
-            <dd>{formatDate(weapon.destroyed)}</dd>
+            <dd>{formatEraDate(weapon.destroyed)}</dd>
           </div>
         )}
         <div className={styles.row}>

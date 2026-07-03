@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { loadAllCharacters, loadAllHouses } from "@/lib/content";
 import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
+import { bySlug, compareByName } from "@/lib/collections";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
@@ -22,7 +23,7 @@ export default async function CharactersPage() {
     loadAllCharacters(),
     loadAllHouses(),
   ]);
-  const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
+  const housesBySlug = bySlug(houses);
 
   const visible = characters.filter(
     (c) => !c.frontmatter.draft && !c.frontmatter.placeholder,
@@ -40,7 +41,7 @@ export default async function CharactersPage() {
       region: regionForHouse(c.frontmatter["primary-house"], housesBySlug),
       portrait: portraits[i],
     }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort(compareByName);
 
   return (
     <ParchmentLayout>

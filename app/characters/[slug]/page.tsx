@@ -13,6 +13,9 @@ import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ageAtDeath } from "@/lib/age";
 import { findPortrait } from "@/lib/portraits";
 import { cx } from "@/lib/cx";
+import { shortHouseName } from "@/lib/text";
+import { formatEraDate } from "@/lib/era-date";
+import { bySlug } from "@/lib/collections";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
@@ -51,23 +54,6 @@ export async function generateMetadata({
   return {
     title: `${character.frontmatter.name} · Atlas of the Known World`,
   };
-}
-
-function formatDate(d: Character["born"]): string {
-  if (!d) return "—";
-  const { year, era, precision } = d;
-  if (era === "AC" || era === "BC") {
-    return `${Math.abs(year)} ${era}`;
-  }
-  const eraLabel = era
-    .split("-")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
-  return precision === "legendary" ? `${eraLabel} (legendary)` : eraLabel;
-}
-
-function shortHouseName(fullName: string): string {
-  return fullName.replace(/^House\s+/i, "");
 }
 
 type RelationRef = {
@@ -134,10 +120,8 @@ export default async function CharacterPage({
       findPortrait(slug, fm.sex),
     ]);
 
-  const charactersBySlug = new Map(
-    allCharacters.map((c) => [c.slug, c.frontmatter]),
-  );
-  const housesBySlug = new Map(allHouses.map((h) => [h.slug, h.frontmatter]));
+  const charactersBySlug = bySlug(allCharacters);
+  const housesBySlug = bySlug(allHouses);
 
   const characterSuggestions = allCharacters
     .map((c) => c.frontmatter)
@@ -247,13 +231,13 @@ export default async function CharacterPage({
       <dl className={styles.meta}>
         <div className={styles.metaRow}>
           <dt>Born</dt>
-          <dd>{formatDate(fm.born)}</dd>
+          <dd>{formatEraDate(fm.born)}</dd>
         </div>
         {fm.died && (
           <div className={styles.metaRow}>
             <dt>Died</dt>
             <dd>
-              {formatDate(fm.died)}
+              {formatEraDate(fm.died)}
               {(() => {
                 const age = ageAtDeath(fm.born, fm.died);
                 return age !== null ? ` (aged ${age})` : null;

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { loadAllDragons, loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
+import { bySlug, compareByName } from "@/lib/collections";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
@@ -21,7 +22,7 @@ export default async function DragonsPage() {
     loadAllDragons(),
     loadAllHouses(),
   ]);
-  const housesBySlug = new Map(houses.map((h) => [h.slug, h.frontmatter]));
+  const housesBySlug = bySlug(houses);
   const visible = dragons.filter((d) => !d.frontmatter.draft);
 
   const items: DragonItem[] = visible
@@ -36,7 +37,7 @@ export default async function DragonsPage() {
         regionLabel: region ? regionLabel(region) : null,
       };
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort(compareByName);
 
   return (
     <ParchmentLayout>

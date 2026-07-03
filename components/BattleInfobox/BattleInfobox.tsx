@@ -1,5 +1,6 @@
 import { cx } from "@/lib/cx";
-import { InfoRow, humanizeSlug } from "@/components/Infobox";
+import { InfoRow } from "@/components/Infobox";
+import { houseLabel, humanizeSlug, titleCase } from "@/lib/text";
 import { formatBattleWhen } from "@/lib/battle-date";
 import type { Battle, House, Character, HouseInfoEntry } from "@/lib/schemas";
 import infoboxStyles from "@/components/HouseInfobox/HouseInfobox.module.scss";
@@ -25,17 +26,6 @@ const TYPE_LABEL: Record<Battle["type"], string> = {
   skirmish: "Skirmish",
   other: "Other",
 };
-
-function titleCase(label: string): string {
-  return label
-    .split(" ")
-    .map((w) => (w.length ? w[0].toUpperCase() + w.slice(1) : w))
-    .join(" ");
-}
-
-function houseLabel(slug: string, housesBySlug: Map<string, House>): string {
-  return housesBySlug.get(slug)?.name ?? `House ${humanizeSlug(slug)}`;
-}
 
 export function BattleInfobox({
   battle,
@@ -92,7 +82,7 @@ export function BattleInfobox({
             label={titleCase(p.side)}
             entries={p.houses.map((slug) => ({
               slug,
-              name: houseLabel(slug, housesBySlug),
+              name: houseLabel({ slug, housesBySlug }),
             }))}
             hrefPrefix="/houses"
             exists={(s) => housesBySlug.has(s)}
