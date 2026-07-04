@@ -226,6 +226,7 @@ describe("EventSchema", () => {
       type: "betrayal",
       date: { year: 299, era: "AC", precision: "year" },
       location: "the-twins",
+      landmass: "westeros",
       participants: [
         { side: "stark", houses: ["stark", "tully"] },
         { side: "frey", houses: ["frey", "bolton"] },
@@ -245,6 +246,7 @@ describe("EventSchema", () => {
       type: "battle",
       date: { year: 298, era: "AC", precision: "year" },
       location: { x: 300, y: 400 },
+      landmass: "westeros",
       participants: [],
       outcome: "stark-victory",
       casualties: [],

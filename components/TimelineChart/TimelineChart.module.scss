@@ -1,0 +1,231 @@
+@use "breakpoints" as bp;
+
+.scroller {
+  overflow-x: auto;
+}
+
+.chart {
+  --axis-width: 10rem;
+  --era-width: 2rem;
+
+  display: grid;
+  width: 100%;
+  min-width: 44rem;
+  font-family: var(--font-body);
+}
+
+.header,
+.columns {
+  display: grid;
+  grid-template-areas: "axis westeros essos summer";
+  grid-template-columns: var(--axis-width) 1fr 1fr 1fr;
+}
+
+.header {
+  padding-block: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgba(107, 68, 35, 0.25);
+}
+
+.axisSpacer {
+  grid-area: axis;
+}
+
+.columnHeading {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  font-size: 1.15rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--ink);
+
+  &:nth-of-type(1) {
+    grid-area: westeros;
+  }
+
+  &:nth-of-type(2) {
+    grid-area: essos;
+  }
+
+  &:nth-of-type(3) {
+    grid-area: summer;
+  }
+}
+
+.body {
+  position: relative;
+}
+
+.columns {
+  position: absolute;
+  inset: 0;
+}
+
+.axisRail {
+  grid-area: axis;
+  border-right: 1px solid rgba(107, 68, 35, 0.25);
+}
+
+%column {
+  position: relative;
+  border-right: 1px dashed rgba(107, 68, 35, 0.12);
+
+  &:last-of-type {
+    border-right: none;
+  }
+}
+
+.columnWesteros {
+  @extend %column;
+
+  grid-area: westeros;
+}
+
+.columnEssos {
+  @extend %column;
+
+  grid-area: essos;
+}
+
+.columnSummerIsles {
+  @extend %column;
+
+  grid-area: summer;
+}
+
+.tick {
+  position: absolute;
+  left: var(--era-width);
+  right: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-areas: "label";
+  justify-items: start;
+  border-top: 1px dashed rgba(107, 68, 35, 0.18);
+}
+
+.tickLabel {
+  grid-area: label;
+  width: calc(var(--axis-width) - var(--era-width));
+  padding-right: 1.25rem;
+  text-align: right;
+  transform: translateY(-50%);
+  background: var(--parchment-light);
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 2px;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+.era {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-areas: "label space";
+  grid-template-columns: var(--era-width) 1fr;
+  align-items: center;
+  justify-items: center;
+  background: rgba(212, 162, 89, 0.07);
+  border-top: 1px solid rgba(212, 162, 89, 0.22);
+  border-bottom: 1px solid rgba(212, 162, 89, 0.22);
+}
+
+.eraLabel {
+  grid-area: label;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 4px;
+  font-size: 1rem;
+  color: var(--ink-faded);
+}
+
+.node {
+  position: absolute;
+  left: 0.9rem;
+  right: 0.9rem;
+  z-index: 2;
+  transform: translateY(-50%);
+
+  &:hover,
+  &:focus-within,
+  &:has([aria-expanded="true"]) {
+    z-index: 6;
+  }
+}
+
+.event {
+  display: grid;
+  grid-template-areas:
+    "marker name"
+    "marker when";
+  grid-template-columns: auto 1fr;
+  column-gap: 0.5rem;
+  row-gap: 0.1rem;
+  padding: 0.3rem 0.55rem;
+  background: var(--vellum);
+  border: 1px solid rgba(107, 68, 35, 0.25);
+  border-radius: 2px;
+  color: var(--ink);
+  text-decoration: none;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--gold-leaf);
+    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.marker {
+  grid-area: marker;
+  align-self: center;
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--gold-leaf);
+  border: 1px solid rgba(107, 68, 35, 0.4);
+  border-radius: 50%;
+}
+
+.eventName {
+  grid-area: name;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+
+.eventWhen {
+  grid-area: when;
+  font-style: italic;
+  font-size: 0.8rem;
+  color: var(--ink-faded);
+}
+
+@media (max-width: bp.$md) {
+  .chart {
+    --axis-width: 7.5rem;
+    --era-width: 2rem;
+  }
+
+  .columnHeading {
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .tickLabel {
+    padding-right: 0.75rem;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+  }
+}

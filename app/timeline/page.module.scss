@@ -1,0 +1,18 @@
+@use "breakpoints" as bp;
+
+.chartBleed {
+  justify-self: stretch;
+  margin-inline: calc(50% - 50vw);
+}
+
+.legend {
+  margin-top: 2rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  font-style: italic;
+
+  @media (max-width: bp.$md) {
+    padding-left: 1.5rem;
+  }
+}
