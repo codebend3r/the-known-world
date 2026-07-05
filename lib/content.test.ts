@@ -30,6 +30,14 @@ describe("loadAllCastles", () => {
   });
 });
 
+describe("loadAll caching", () => {
+  it("returns the same cached result for repeated calls", async () => {
+    const first = await loadAllCastles();
+    const second = await loadAllCastles();
+    expect(second).toBe(first);
+  });
+});
+
 describe("renderMarkdown", () => {
   it("converts Markdown body to HTML", async () => {
     const html = await renderMarkdown("# Hello\n\nA **bold** word.");

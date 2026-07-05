@@ -23,17 +23,24 @@ import { remarkProseLinks, type ProseLinkIndex } from "@/lib/prose-links";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
 
+// Bounds concurrent open file descriptors during static generation; an
+// unbounded Promise.all across ~1500 files per render overflows the OS
+// file table (ENFILE) when many pages prerender at once.
+const READ_CHUNK_SIZE = 64;
+
+type ContentType =
+  | "castles"
+  | "houses"
+  | "characters"
+  | "events"
+  | "weapons"
+  | "dragons"
+  | "battles";
+
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 async function loadFile<T>(
-  type:
-    | "castles"
-    | "houses"
-    | "characters"
-    | "events"
-    | "weapons"
-    | "dragons"
-    | "battles",
+  type: ContentType,
   slug: string,
   schema: { parse: (input: unknown) => T },
 ): Promise<Loaded<T>> {
@@ -45,14 +52,7 @@ async function loadFile<T>(
 }
 
 async function loadAll<T>(
-  type:
-    | "castles"
-    | "houses"
-    | "characters"
-    | "events"
-    | "weapons"
-    | "dragons"
-    | "battles",
+  type: ContentType,
   schema: { parse: (input: unknown) => T },
 ): Promise<Array<Loaded<T>>> {
   const dir = path.join(CONTENT_ROOT, type);
@@ -63,9 +63,32 @@ async function loadAll<T>(
     return [];
   }
   const mdFiles = files.filter((f) => f.endsWith(".md"));
-  return Promise.all(
-    mdFiles.map((f) => loadFile<T>(type, f.replace(/\.md$/, ""), schema)),
-  );
+  const chunks = mdFiles.reduce<string[][]>((acc, file, index) => {
+    if (index % READ_CHUNK_SIZE === 0) return [...acc, [file]];
+    return [...acc.slice(0, -1), [...(acc.at(-1) ?? []), file]];
+  }, []);
+  return chunks.reduce<Promise<Array<Loaded<T>>>>(async (accPromise, chunk) => {
+    const acc = await accPromise;
+    const loaded = await Promise.all(
+      chunk.map((f) => loadFile<T>(type, f.replace(/\.md$/, ""), schema)),
+    );
+    return [...acc, ...loaded];
+  }, Promise.resolve([]));
+}
+
+// Memoizes the in-flight promise so every page prerendered by a worker
+// shares one read of each content directory instead of re-opening every
+// file per page. Bypassed in dev so content edits show up on refresh.
+function createLoadAll<T>(
+  type: ContentType,
+  schema: { parse: (input: unknown) => T },
+): () => Promise<Array<Loaded<T>>> {
+  let cache: Promise<Array<Loaded<T>>> | null = null;
+  return () => {
+    if (process.env.NODE_ENV === "development") return loadAll(type, schema);
+    cache ??= loadAll(type, schema);
+    return cache;
+  };
 }
 
 export const loadCastle = (slug: string) =>
@@ -77,23 +100,25 @@ export const loadCharacter = (slug: string) =>
 export const loadEvent = (slug: string) =>
   loadFile<Event>("events", slug, EventSchema);
 
-export const loadAllCastles = () => loadAll<Castle>("castles", CastleSchema);
-export const loadAllHouses = () => loadAll<House>("houses", HouseSchema);
-export const loadAllCharacters = () =>
-  loadAll<Character>("characters", CharacterSchema);
-export const loadAllEvents = () => loadAll<Event>("events", EventSchema);
+export const loadAllCastles = createLoadAll<Castle>("castles", CastleSchema);
+export const loadAllHouses = createLoadAll<House>("houses", HouseSchema);
+export const loadAllCharacters = createLoadAll<Character>(
+  "characters",
+  CharacterSchema,
+);
+export const loadAllEvents = createLoadAll<Event>("events", EventSchema);
 
 export const loadWeapon = (slug: string) =>
   loadFile<Weapon>("weapons", slug, WeaponSchema);
 export const loadDragon = (slug: string) =>
   loadFile<Dragon>("dragons", slug, DragonSchema);
 
-export const loadAllWeapons = () => loadAll<Weapon>("weapons", WeaponSchema);
-export const loadAllDragons = () => loadAll<Dragon>("dragons", DragonSchema);
+export const loadAllWeapons = createLoadAll<Weapon>("weapons", WeaponSchema);
+export const loadAllDragons = createLoadAll<Dragon>("dragons", DragonSchema);
 
 export const loadBattle = (slug: string) =>
   loadFile<Battle>("battles", slug, BattleSchema);
-export const loadAllBattles = () => loadAll<Battle>("battles", BattleSchema);
+export const loadAllBattles = createLoadAll<Battle>("battles", BattleSchema);
 
 export async function renderMarkdown(
   source: string,
