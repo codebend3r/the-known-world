@@ -11,6 +11,7 @@ founded:
   era: BC
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: riverlands

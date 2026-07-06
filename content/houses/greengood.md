@@ -11,6 +11,7 @@ founded:
   era: dawn-age
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

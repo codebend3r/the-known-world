@@ -11,6 +11,7 @@ founded:
   era: long-night
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 seats:

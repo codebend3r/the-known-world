@@ -11,6 +11,7 @@ founded:
   era: age-of-heroes
   precision: legendary
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 sources:

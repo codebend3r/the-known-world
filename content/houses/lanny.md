@@ -11,6 +11,7 @@ founded:
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

@@ -11,6 +11,7 @@ founded:
   era: dawn-age
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: dorne

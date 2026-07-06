@@ -15,6 +15,7 @@ extinct:
   era: andal-invasion
   precision: decade
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: iron-islands

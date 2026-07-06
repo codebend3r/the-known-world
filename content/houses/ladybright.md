@@ -11,6 +11,7 @@ founded:
   era: BC
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: dorne

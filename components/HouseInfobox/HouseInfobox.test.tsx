@@ -4,6 +4,7 @@ import { HouseInfobox } from "@/components/HouseInfobox";
 import type { House, Castle, Character, Weapon, Dragon } from "@/lib/schemas";
 
 const targaryen: House = {
+  rank: "royal",
   slug: "targaryen",
   name: "House Targaryen",
   seat: "dragonstone",

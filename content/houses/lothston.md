@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

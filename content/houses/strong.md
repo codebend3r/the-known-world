@@ -11,6 +11,7 @@ founded:
   era: age-of-heroes
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

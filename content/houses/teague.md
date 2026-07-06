@@ -11,6 +11,7 @@ founded:
   era: BC
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

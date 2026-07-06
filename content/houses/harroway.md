@@ -11,6 +11,7 @@ founded:
   era: andal-invasion
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

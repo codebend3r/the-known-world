@@ -15,6 +15,7 @@ extinct:
   era: AC
   precision: decade
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

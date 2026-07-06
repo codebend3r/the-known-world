@@ -19,6 +19,7 @@ const blackfyre: Weapon = {
 };
 
 const targaryen: House = {
+  rank: "royal",
   slug: "targaryen",
   name: "House Targaryen",
   seat: "dragonstone",

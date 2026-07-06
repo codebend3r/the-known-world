@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: year
 status: extant
+rank: royal
 sworn-from: []
 cadet-houses:
   - baratheon-of-kings-landing

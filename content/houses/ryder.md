@@ -11,6 +11,7 @@ founded:
   era: long-night
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: north

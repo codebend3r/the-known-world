@@ -11,6 +11,7 @@ founded:
   era: dawn-age
   precision: legendary
 status: extinct
+rank: extinct
 extinct:
   year: -100
   era: andal-invasion

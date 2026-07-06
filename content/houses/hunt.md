@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

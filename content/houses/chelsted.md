@@ -11,6 +11,7 @@ founded:
   era: targaryen-conquest
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

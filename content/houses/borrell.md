@@ -11,6 +11,7 @@ founded:
   era: BC
   precision: decade
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

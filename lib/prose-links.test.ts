@@ -44,6 +44,7 @@ function house(
     liege: partial.liege ?? null,
     words: partial.words ?? "",
     sigil: partial.sigil ?? { description: "" },
+    rank: partial.rank ?? "lordly",
     founded: partial.founded ?? { year: 0, era: "AC", precision: "era" },
     extinct: partial.extinct,
     status: partial.status ?? "extant",

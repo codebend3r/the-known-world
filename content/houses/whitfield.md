@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: decade
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 notable-members:

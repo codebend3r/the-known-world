@@ -117,13 +117,32 @@ const HouseInfoEntrySchema = z.object({
   note: z.string().optional(),
 });
 
+export const HouseRankSchema = z.enum([
+  "royal",
+  "lordly",
+  "knightly",
+  "other",
+  "exiled",
+  "extinct",
+]);
+
+export const SigilProvenanceSchema = z.enum([
+  "canon",
+  "semi-canon",
+  "invented",
+]);
+
 export const HouseSchema = z.object({
   slug: z.string().min(1),
   name: z.string().min(1),
   seat: z.string(),
   liege: z.string().nullable(),
   words: z.string(),
-  sigil: z.object({ description: z.string() }),
+  sigil: z.object({
+    description: z.string(),
+    provenance: SigilProvenanceSchema.optional(),
+  }),
+  rank: HouseRankSchema,
   founded: DateSchema,
   extinct: DateSchema.optional(),
   status: z.enum(["extant", "extinct", "exiled", "hidden"]),

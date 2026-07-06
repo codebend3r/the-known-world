@@ -11,6 +11,7 @@ founded:
   era: age-of-heroes
   precision: era
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 region: reach

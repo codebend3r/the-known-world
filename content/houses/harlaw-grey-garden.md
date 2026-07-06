@@ -11,6 +11,7 @@ founded:
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: knightly
 sworn-from:
   - harlaw
 cadet-houses: []

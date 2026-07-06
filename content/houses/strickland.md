@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: year
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 heads:

@@ -11,6 +11,7 @@ founded:
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

@@ -11,6 +11,7 @@ founded:
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

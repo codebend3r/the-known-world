@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: exact
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

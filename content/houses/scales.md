@@ -11,6 +11,7 @@ founded:
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: crownlands

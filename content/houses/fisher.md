@@ -15,6 +15,7 @@ extinct:
   era: age-of-heroes
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

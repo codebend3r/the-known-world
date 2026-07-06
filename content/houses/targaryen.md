@@ -11,6 +11,7 @@ founded:
   era: BC
   precision: year
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses:
   - blackfyre

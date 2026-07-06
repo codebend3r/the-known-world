@@ -11,6 +11,7 @@ founded:
   era: AC
   precision: decade
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: vale

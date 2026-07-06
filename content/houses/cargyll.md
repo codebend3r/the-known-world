@@ -15,6 +15,7 @@ extinct:
   era: AC
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: crownlands

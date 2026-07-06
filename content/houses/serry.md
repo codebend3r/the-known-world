@@ -11,6 +11,7 @@ founded:
   era: andal-invasion
   precision: legendary
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 region: reach
