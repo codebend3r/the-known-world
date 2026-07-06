@@ -99,6 +99,38 @@ describe("FilteredHouseList", () => {
     expect(container.querySelector(".cardWesterlands")).not.toBeNull();
   });
 
+  it("shows the total house count across all pages", () => {
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
+    expect(screen.getByText("70 houses")).toBeDefined();
+  });
+
+  it("uses the singular noun for a single house", () => {
+    renderWithNuqs(<FilteredHouseList items={items.slice(0, 1)} />);
+    expect(screen.getByText("1 house")).toBeDefined();
+  });
+
+  it("updates the count to matching-of-total when a search filters the list", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "stark" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(screen.getByText("1 of 3 houses")).toBeDefined();
+  });
+
+  it("reflects a zero count when nothing matches the search", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "zzz" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(screen.getByText("0 of 3 houses")).toBeDefined();
+  });
+
   it("renders the search input, sort toggle, and view toggle inside the same row", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
     const row = container.querySelector(".rowWithSort");

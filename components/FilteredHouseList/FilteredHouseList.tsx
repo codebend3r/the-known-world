@@ -117,6 +117,13 @@ export function FilteredHouseList({
   }, [items, dir]);
 
   const filtered = filterByName(sorted, debounced);
+  const total = items.length;
+  const matching = filtered.length;
+  const hasQuery = debounced.trim().length > 0;
+  const noun = total === 1 ? "house" : "houses";
+  const countLabel = hasQuery
+    ? `${matching} of ${total} ${noun}`
+    : `${total} ${noun}`;
   const totalPages = Math.max(1, Math.ceil(filtered.length / size));
   const currentPage = Math.min(page, totalPages);
   const pageStart = (currentPage - 1) * size;
@@ -212,6 +219,9 @@ export function FilteredHouseList({
           onChange={handleViewChange}
         />
       </div>
+      <p className={listSearch.count} aria-live="polite">
+        {countLabel}
+      </p>
       {filtered.length === 0 ? (
         <p className={listSearch.empty}>
           No houses match &ldquo;{debounced}&rdquo;.
