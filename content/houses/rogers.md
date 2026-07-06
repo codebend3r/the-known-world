@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Nine unicorns encircling a maze, silver on black
+  provenance: semi-canon
 founded:
   year: -6000
   era: andal-invasion

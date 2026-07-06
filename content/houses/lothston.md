@@ -6,6 +6,7 @@ liege: tully
 words: ""
 sigil:
   description: A black bat on a field divided bendwise, silver and gold
+  provenance: canon
 founded:
   year: 151
   era: AC

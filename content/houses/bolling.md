@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A golden stag beneath an orange bend sinister, on a black canton, over a field vairy orange and blue
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

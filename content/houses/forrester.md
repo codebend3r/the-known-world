@@ -6,6 +6,7 @@ liege: glover
 words: ""
 sigil:
   description: ""
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes

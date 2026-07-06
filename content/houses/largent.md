@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 130
   era: AC

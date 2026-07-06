@@ -6,6 +6,7 @@ liege: baratheon
 words: "For All Seasons"
 sigil:
   description: A green engrailed pall inverted on white, dividing three trees, green, red and bare
+  provenance: canon
 founded:
   year: -4000
   era: andal-invasion

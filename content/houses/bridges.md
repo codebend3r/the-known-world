@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A black three-arched stone bridge on a golden chief, above three blue pallets on a white field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

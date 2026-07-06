@@ -6,6 +6,7 @@ liege: baratheon
 words: "No Song So Sweet"
 sigil:
   description: A field of black nightingales on a silver field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

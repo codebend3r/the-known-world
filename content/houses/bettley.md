@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: Three blue beetles on a gold field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

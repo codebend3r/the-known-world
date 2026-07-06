@@ -6,6 +6,7 @@ liege: tully
 words: ""
 sigil:
   description: A tripartite pale of blue, red, and green on a white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

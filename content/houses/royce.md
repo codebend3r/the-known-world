@@ -6,6 +6,7 @@ liege: arryn
 words: "We Remember"
 sigil:
   description: Black iron studs arrayed in a circle on a bronze field
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age

@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: Wriggling green serpents strewn on a black field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

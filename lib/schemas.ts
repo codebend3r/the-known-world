@@ -140,7 +140,7 @@ export const HouseSchema = z.object({
   words: z.string(),
   sigil: z.object({
     description: z.string(),
-    provenance: SigilProvenanceSchema.optional(),
+    provenance: SigilProvenanceSchema,
   }),
   rank: HouseRankSchema,
   founded: DateSchema,

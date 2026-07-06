@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Pale green ivy bendy on black masonry
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: Six silver bells on a purple field, three-two-one
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

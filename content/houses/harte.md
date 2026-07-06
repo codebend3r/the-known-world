@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three red hart's heads caboshed on a white bend on vair
+  provenance: canon
 founded:
   year: 1
   era: AC

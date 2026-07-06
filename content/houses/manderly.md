@@ -6,6 +6,7 @@ liege: stark
 words: "Unknown"
 sigil:
   description: A white merman with a green tail and beard, carrying a black trident, on a blue-green field
+  provenance: canon
 founded:
   year: 700
   era: AC

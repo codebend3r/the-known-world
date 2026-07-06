@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: Three woolsacks, white on purple, within a white border
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes

@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: An oaken door banded with iron, in a grey stone doorway, on black masonry
+  provenance: semi-canon
 founded:
   year: -6000
   era: andal-invasion

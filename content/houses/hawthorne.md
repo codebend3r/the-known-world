@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A ring of black thorns and a ring of pink flowers, interlocked, on green
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

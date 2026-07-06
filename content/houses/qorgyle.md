@@ -6,6 +6,7 @@ liege: martell
 words: ""
 sigil:
   description: Three black scorpions on a red field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

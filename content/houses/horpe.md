@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three death's head moths countercharged on a field per chevron engrailed grey and bone
+  provenance: invented
 founded:
   year: 1
   era: AC

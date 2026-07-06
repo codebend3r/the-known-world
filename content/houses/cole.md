@@ -6,6 +6,7 @@ liege: dondarrion
 words: ""
 sigil:
   description: A pyramid of black stones on a red field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

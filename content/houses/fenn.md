@@ -6,6 +6,7 @@ liege: reed
 words: ""
 sigil:
   description: Three black water lilies on a pale violet field
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes

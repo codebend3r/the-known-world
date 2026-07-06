@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three stalks of yellow wheat on a brown field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

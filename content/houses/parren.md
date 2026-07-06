@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A black lion's head on gold, per saltire with burgundy and white stripes
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

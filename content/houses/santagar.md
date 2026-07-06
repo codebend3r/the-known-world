@@ -6,6 +6,7 @@ liege: martell
 words: ""
 sigil:
   description: A spotted leopard with a golden axe, over a per bend sinister blue and white field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: A grey stone head with fiery eyes, on a light green field
+  provenance: canon
 founded:
   year: 250
   era: AC

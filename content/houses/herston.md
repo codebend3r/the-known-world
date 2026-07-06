@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A yellow rooster's head with red comb, within a white escutcheon, on red
+  provenance: canon
 founded:
   year: 1
   era: AC

@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A golden flagon on burgundy, within a border of gold and white checks
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

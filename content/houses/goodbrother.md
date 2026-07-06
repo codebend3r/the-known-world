@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: A black war horn banded with bronze, on yellow
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes

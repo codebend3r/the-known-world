@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A bloody spear, gold on black, within a border checkered gold and black
+  provenance: canon
 founded:
   year: 298
   era: AC

@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three brass buckles on a blue field
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion

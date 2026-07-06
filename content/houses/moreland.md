@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: Per pale barry russet and green
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three gold bendlets enhanced on a white field
+  provenance: canon
 founded:
   year: 1
   era: targaryen-conquest

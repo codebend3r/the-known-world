@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: A nine-headed serpent, black on silver
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

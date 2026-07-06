@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A red pomegranate within a red double tressure, on white
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

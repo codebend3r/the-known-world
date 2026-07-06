@@ -10,7 +10,10 @@ const targaryen: House = {
   seat: "dragonstone",
   liege: null,
   words: "Fire and Blood",
-  sigil: { description: "A red three-headed dragon on black" },
+  sigil: {
+    description: "A red three-headed dragon on black",
+    provenance: "canon",
+  },
   founded: { year: -114, era: "BC", precision: "year" },
   status: "exiled",
   "sworn-from": [],

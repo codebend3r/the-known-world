@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: Dark green pines strewn closely together on a yellow field
+  provenance: semi-canon
 founded:
   year: -10000
   era: age-of-heroes

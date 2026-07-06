@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: Three gold lions clutching red hearts and a broken silver sword, per bend sinister on white and purple
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

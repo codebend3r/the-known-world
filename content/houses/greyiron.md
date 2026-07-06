@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A sea king's head, white with seaweed beard and hair of dark green, beneath a black crown, on a grey field
+  provenance: canon
 founded:
   year: -4700
   era: age-of-heroes

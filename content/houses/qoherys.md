@@ -6,6 +6,7 @@ liege: targaryen
 words: ""
 sigil:
   description: A flaming saltire, red and yellow, between four white skulls, on a black field
+  provenance: semi-canon
 founded:
   year: 2
   era: AC

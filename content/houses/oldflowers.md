@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Ten white hands on green, 4-3-2-1, beneath a red bend sinister
+  provenance: semi-canon
 founded:
   year: -100
   era: BC

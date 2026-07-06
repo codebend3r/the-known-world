@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A red bend sinister between two black porcupines on a green field
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion

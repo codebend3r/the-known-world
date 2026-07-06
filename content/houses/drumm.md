@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: A white bone hand on a red field
+  provenance: canon
 founded:
   year: -500
   era: BC

@@ -6,6 +6,7 @@ liege: baratheon
 words: "None so Wise"
 sigil:
   description: A two-peaked fool's cap of red and white with silver bells on a gold canton, over a field gyronny of twelve red and white
+  provenance: canon
 founded:
   year: 1
   era: targaryen-conquest

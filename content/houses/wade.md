@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -6000
   era: dawn-age

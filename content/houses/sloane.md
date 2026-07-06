@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A sun on yellow parted per pale from stars strewn on indigo
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

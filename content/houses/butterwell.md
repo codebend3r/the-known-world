@@ -6,6 +6,7 @@ liege: tully
 words: ""
 sigil:
   description: Wavy bars of green, white, and yellow
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

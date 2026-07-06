@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A black manticore on white, beneath a crimson chief with three gold coins
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

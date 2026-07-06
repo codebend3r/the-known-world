@@ -6,6 +6,7 @@ liege: frey
 words: ""
 sigil:
   description: A black pitchfork on a golden bend sinister, on a russet field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

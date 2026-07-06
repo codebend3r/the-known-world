@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: Five black starfish on a gold pale, on pean
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A green apple on gold
+  provenance: canon
 founded:
   year: 209
   era: AC

@@ -6,6 +6,7 @@ liege: baratheon
 words: "Proud to Be Faithful"
 sigil:
   description: A white lamb holding a golden goblet on a green field
+  provenance: canon
 founded:
   year: 1
   era: AC

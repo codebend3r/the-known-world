@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Per fess, three golden harps on black, over gold and silver bendy sinister
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

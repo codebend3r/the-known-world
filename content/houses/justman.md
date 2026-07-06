@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: Golden scales on white, a double tressure blue
+  provenance: canon
 founded:
   year: -5700
   era: andal-invasion

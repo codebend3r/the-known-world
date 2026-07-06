@@ -6,6 +6,7 @@ liege: baelish
 words: ""
 sigil:
   description: An orange and white gyronny field, a black talon
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

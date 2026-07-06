@@ -6,6 +6,7 @@ liege: baelish
 words: ""
 sigil:
   description: Three oaken barrels on a white field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

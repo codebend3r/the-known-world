@@ -6,6 +6,7 @@ liege: baelish
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -300
   era: BC

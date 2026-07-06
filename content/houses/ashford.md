@@ -6,6 +6,7 @@ liege: tyrell
 words: "Our Sun Shines Bright"
 sigil:
   description: A white sun-and-chevron on an orange field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

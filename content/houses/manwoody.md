@@ -6,6 +6,7 @@ liege: martell
 words: ""
 sigil:
   description: A crowned white skull on a black field
+  provenance: canon
 founded:
   year: -700
   era: andal-invasion

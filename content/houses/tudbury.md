@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A brown tortoise within a yellow lozenge on green
+  provenance: semi-canon
 founded:
   year: -5000
   era: age-of-heroes

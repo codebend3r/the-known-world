@@ -6,6 +6,7 @@ liege: tully
 words: ""
 sigil:
   description: A black plowman on a brown field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

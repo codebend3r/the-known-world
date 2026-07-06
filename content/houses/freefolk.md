@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A weirwood with red leaves and weeping red eyes, a golden crown hung from one branch by a cord, on a field sable
+  provenance: invented
 founded:
   year: -8000
   era: age-of-heroes

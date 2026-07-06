@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: A snow-covered pine tree on a pale green pile, on white
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

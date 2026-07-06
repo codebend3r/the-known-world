@@ -6,6 +6,7 @@ liege: tyrell
 words: "First in Battle"
 sigil:
   description: A striding red huntsman on a green field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

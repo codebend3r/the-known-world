@@ -6,6 +6,7 @@ liege: baratheon
 words: "Unknown"
 sigil:
   description: Two combatant griffins, red and white, on a white and red field divided per pale
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

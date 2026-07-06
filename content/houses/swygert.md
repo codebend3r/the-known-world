@@ -6,6 +6,7 @@ liege: baratheon
 words: "Truth Conquers"
 sigil:
   description: A white scroll with gold knobs on purple, within a white tressure
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

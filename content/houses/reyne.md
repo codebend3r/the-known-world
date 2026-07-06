@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A red lion rampant regardant with a forked tail, armed and langued gold, on silver
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

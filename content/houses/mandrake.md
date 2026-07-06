@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: age-of-heroes

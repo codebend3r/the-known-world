@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A grey cat's face on black and a brown jug on white, divided per bend sinister
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

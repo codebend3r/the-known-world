@@ -6,6 +6,7 @@ liege: hightower
 words: ""
 sigil:
   description: Six yellow flowers on a blue field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

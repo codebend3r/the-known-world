@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A golden wreath on a blue field, within a golden border
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

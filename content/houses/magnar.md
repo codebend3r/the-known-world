@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: A green lobster holding a black harpoon on a white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

@@ -6,6 +6,7 @@ liege: martell
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -700
   era: BC

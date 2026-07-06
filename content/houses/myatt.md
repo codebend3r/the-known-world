@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A spotted treecat, yellow and black, on mud brown
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Six fountains, arranged three-two-one, on grey
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion

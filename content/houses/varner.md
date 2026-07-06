@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A white weasel on an ermine field
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion

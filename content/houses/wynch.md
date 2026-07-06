@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: A bloody moon on purple
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes

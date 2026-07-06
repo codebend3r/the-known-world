@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Seven golden seven-pointed stars in a ring on a white field
+  provenance: canon
 founded:
   year: 1
   era: AC

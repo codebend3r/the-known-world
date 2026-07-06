@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A blue-green maelstrom on gold
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion

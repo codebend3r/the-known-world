@@ -6,6 +6,7 @@ liege: frey
 words: ""
 sigil:
   description: A golden heron with black beak and legs, holding a silver fish in its beak, on pink
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

@@ -6,6 +6,7 @@ liege: stark
 words: ""
 sigil:
   description: A white double tressure on a pale grey field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

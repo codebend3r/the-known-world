@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three black lances upright on a pink field, between black flaunches
+  provenance: canon
 founded:
   year: 1
   era: targaryen-conquest

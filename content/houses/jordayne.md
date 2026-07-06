@@ -6,6 +6,7 @@ liege: martell
 words: "Let It Be Written"
 sigil:
   description: A golden quill on a checkered field of dark and light green
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

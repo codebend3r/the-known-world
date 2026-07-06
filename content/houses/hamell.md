@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: An erminois maunch on a pink field, within an erminois border
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

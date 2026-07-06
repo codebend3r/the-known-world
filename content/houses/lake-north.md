@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: Seven green pommes on brown
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes

@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A white ram's head with golden horns, on red
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

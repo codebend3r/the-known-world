@@ -25,7 +25,7 @@ const targaryen: House = {
   seat: "dragonstone",
   liege: null,
   words: "Fire and Blood",
-  sigil: { description: "" },
+  sigil: { description: "", provenance: "invented" },
   founded: { year: -114, era: "BC", precision: "year" },
   status: "exiled",
   "sworn-from": [],

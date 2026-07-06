@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A golden longbow on white, between two crimson flaunches
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

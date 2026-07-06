@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A silver flail on red within a black border rayonne
+  provenance: canon
 founded:
   year: 50
   era: AC

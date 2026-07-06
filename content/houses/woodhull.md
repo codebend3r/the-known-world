@@ -6,6 +6,7 @@ liege: elesham
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 133
   era: AC

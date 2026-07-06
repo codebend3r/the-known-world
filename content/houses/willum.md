@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Three silver longswords crossed on black, beneath a dragonbone skeleton on a white chief
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion

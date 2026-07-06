@@ -6,6 +6,7 @@ liege: null
 words: "Unbowed, Unbent, Unbroken"
 sigil:
   description: A red sun pierced by a golden spear
+  provenance: canon
 founded:
   year: -700
   era: andal-invasion

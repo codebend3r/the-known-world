@@ -6,6 +6,7 @@ liege: stark
 words: "Unknown"
 sigil:
   description: A black lizard-lion on a silver-grey field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

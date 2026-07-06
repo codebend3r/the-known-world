@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: Crossed black spears on checkered silver and gold
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes

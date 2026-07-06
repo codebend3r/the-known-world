@@ -6,6 +6,7 @@ liege: hightower
 words: "Beware Our Sting"
 sigil:
   description: Three yellow beehives on a black pale over a paly black and yellow field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

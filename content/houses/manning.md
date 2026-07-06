@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A red sea lion between two black pallets on a white field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

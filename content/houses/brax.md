@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A purple unicorn on a silver field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

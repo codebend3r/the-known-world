@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A yellow haystack on an orange field
+  provenance: semi-canon
 founded:
   year: -5000
   era: age-of-heroes

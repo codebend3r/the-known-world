@@ -61,7 +61,10 @@ describe("HouseSchema", () => {
       seat: "winterfell",
       liege: null,
       words: "Winter is Coming",
-      sigil: { description: "A grey direwolf on a white field" },
+      sigil: {
+        description: "A grey direwolf on a white field",
+        provenance: "canon",
+      },
       rank: "lordly",
       founded: { year: -8000, era: "age-of-heroes", precision: "legendary" },
       status: "extant",
@@ -80,7 +83,10 @@ describe("HouseSchema", () => {
       seat: "dragonstone",
       liege: null,
       words: "Fire and Blood",
-      sigil: { description: "A red three-headed dragon on black" },
+      sigil: {
+        description: "A red three-headed dragon on black",
+        provenance: "canon",
+      },
       rank: "exiled",
       founded: { year: -114, era: "BC", precision: "year" },
       extinct: { year: 283, era: "AC", precision: "year" },

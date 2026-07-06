@@ -6,6 +6,7 @@ liege: baelish
 words: ""
 sigil:
   description: Three red martlets on a white bend, on a blue field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

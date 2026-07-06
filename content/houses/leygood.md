@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Three black thunderbolts on an orange field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

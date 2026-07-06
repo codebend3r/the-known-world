@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A crown of white stars on burgundy above black, per fess undy
+  provenance: semi-canon
 founded:
   year: 1
   era: targaryen-conquest

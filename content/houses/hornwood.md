@@ -6,6 +6,7 @@ liege: stark
 words: "Righteous in Wrath"
 sigil:
   description: A brown bull moose on a dark orange field
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

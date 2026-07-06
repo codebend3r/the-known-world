@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three red chevronels on an ermine field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

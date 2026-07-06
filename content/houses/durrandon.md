@@ -6,6 +6,7 @@ liege: null
 words: "Ours is the Fury"
 sigil:
   description: A crowned black stag on a golden field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

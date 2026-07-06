@@ -6,6 +6,7 @@ liege: null
 words: "As High as Honor"
 sigil:
   description: A white falcon and crescent moon on a sky-blue field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

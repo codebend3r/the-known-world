@@ -6,6 +6,7 @@ liege: baratheon
 words: "So End Our Foes"
 sigil:
   description: A black hanged man on a blue field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A saltire of interlocked golden rings on a sky-blue field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

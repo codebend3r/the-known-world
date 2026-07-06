@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Five yellow mascles on a green field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

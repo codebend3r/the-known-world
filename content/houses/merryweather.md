@@ -6,6 +6,7 @@ liege: tyrell
 words: "Behold Our Bounty"
 sigil:
   description: A golden horn of plenty overflowing with apples, carrots, plums, onions, leeks, turnips, and fruits of many colors on a white field bordered in gold
+  provenance: canon
 founded:
   year: -700
   era: andal-invasion

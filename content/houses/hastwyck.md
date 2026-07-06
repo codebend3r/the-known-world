@@ -6,6 +6,7 @@ liege: tyrell
 words: "None so Dutiful"
 sigil:
   description: Barry olive and ivory
+  provenance: canon
 founded:
   year: 1
   era: AC

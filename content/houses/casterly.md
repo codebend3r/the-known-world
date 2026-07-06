@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: Unrecorded in full, though at least one lion was part of it
+  provenance: canon
 founded:
   year: -12000
   era: dawn-age

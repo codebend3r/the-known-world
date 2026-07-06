@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: Two ferrets, silver and black, on a field per saltire checkered red and gold
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

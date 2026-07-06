@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three wooden buckets, brown on blue, within a border of grey and white checks
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes

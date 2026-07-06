@@ -6,6 +6,7 @@ liege: stark
 words: ""
 sigil:
   description: Ten white wolves' heads on a grey field, within a black border
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes

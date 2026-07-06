@@ -6,6 +6,7 @@ liege: tully
 words: ""
 sigil:
   description: Five black towers on a white field, within a double tressure red and black
+  provenance: canon
 founded:
   year: 45
   era: AC

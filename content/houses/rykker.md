@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Two black warhammers crossed on a white saltire, on blue
+  provenance: canon
 founded:
   year: 277
   era: AC

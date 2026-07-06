@@ -6,6 +6,7 @@ liege: dustin
 words: ""
 sigil:
   description: Inverted chevrons, russet and gold
+  provenance: canon
 founded:
   year: -100
   era: andal-invasion

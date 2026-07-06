@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: An oaken escutcheon studded with iron, on a field bendy of undulating blue and white
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

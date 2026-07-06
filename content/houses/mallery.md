@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Six white mullets on a violet field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

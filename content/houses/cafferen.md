@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Two white fawns counter-salient on a green field
+  provenance: canon
 founded:
   year: 1
   era: targaryen-conquest

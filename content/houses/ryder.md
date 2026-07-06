@@ -6,6 +6,7 @@ liege: stark
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: long-night

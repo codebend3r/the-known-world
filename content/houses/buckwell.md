@@ -6,6 +6,7 @@ liege: baratheon
 words: "Pride and Purpose"
 sigil:
   description: A rack of golden antlers on a field of vair
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: Brown crossed oars on white, between a pair of blue flaunches
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

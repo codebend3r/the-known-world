@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: A red sun rising from a grey-green sea against a yellow sky
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

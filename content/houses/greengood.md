@@ -6,6 +6,7 @@ liege: reed
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -9000
   era: dawn-age

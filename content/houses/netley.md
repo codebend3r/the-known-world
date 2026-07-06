@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 250
   era: AC

@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Three white plates on an inverted red chevron, over a white field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes

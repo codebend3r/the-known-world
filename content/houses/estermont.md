@@ -6,6 +6,7 @@ liege: baratheon
 words: "Unknown"
 sigil:
   description: A green sea-turtle on a pale green field
+  provenance: canon
 founded:
   year: -3000
   era: andal-invasion

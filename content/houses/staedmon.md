@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A dagger piercing a heart, black and red on a white field weeping blood, within a wavy red border
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

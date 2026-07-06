@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: A white inverted pile on indigo, arched above by four-pointed stars
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

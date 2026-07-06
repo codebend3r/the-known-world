@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Three feathers, red, white, and gold, on a black field
+  provenance: canon
 founded:
   year: 1
   era: targaryen-conquest

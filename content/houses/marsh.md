@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: Ten green frogs, four-three-two-one, on a yellow field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

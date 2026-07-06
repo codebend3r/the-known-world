@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Two knights combatant with swords, counter-charged, on a purple-and-white parted field
+  provenance: semi-canon
 founded:
   year: 1
   era: targaryen-conquest

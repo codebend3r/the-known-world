@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A leaping blue swordfish on fretty silver, on a white field
+  provenance: canon
 founded:
   year: -4000
   era: andal-invasion

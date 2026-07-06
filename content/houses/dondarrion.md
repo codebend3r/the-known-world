@@ -6,6 +6,7 @@ liege: baratheon
 words: "Unknown"
 sigil:
   description: A forked black lightning bolt on a purple field, scattered with four-pointed stars
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

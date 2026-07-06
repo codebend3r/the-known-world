@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Blue fretty on a white field, three silver fish on a blue chief
+  provenance: invented
 founded:
   year: 2
   era: targaryen-conquest

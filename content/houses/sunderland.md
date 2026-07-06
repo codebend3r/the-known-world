@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: Three women's heads, white with black hair, on a field undy of blue and green
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

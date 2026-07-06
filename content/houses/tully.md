@@ -6,6 +6,7 @@ liege: null
 words: "Family, Duty, Honor"
 sigil:
   description: A leaping silver trout on a field of rippling blue and red
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A two-headed pelican counterchanged, per pale black and pink
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

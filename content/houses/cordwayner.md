@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: Black boots on a field lozengy green and gold
+  provenance: invented
 founded:
   year: 1
   era: targaryen-conquest

@@ -6,6 +6,7 @@ liege: martell
 words: ""
 sigil:
   description: Three black leopards standing on a yellow pile on orange
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

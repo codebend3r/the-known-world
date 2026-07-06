@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A red pall on a field of oak
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion

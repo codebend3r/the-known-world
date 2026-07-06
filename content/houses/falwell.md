@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A fool in red and gold motley juggling five suns on a black field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

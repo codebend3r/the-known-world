@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: Twining green waterspouts on a white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

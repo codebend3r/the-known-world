@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: White footprints in bend sinister on a dark brown field
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes

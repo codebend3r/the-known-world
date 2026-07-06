@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A black cross with nine yellow trefoils on an ermine field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

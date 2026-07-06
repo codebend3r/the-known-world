@@ -6,6 +6,7 @@ liege: lannister
 words: "Unflinching"
 sigil:
   description: Ten mullets, four-three-two-one, purple on gold
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

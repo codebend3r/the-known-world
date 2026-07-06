@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A green embattled fess on a white field
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion

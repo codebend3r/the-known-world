@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A brown fret on white
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

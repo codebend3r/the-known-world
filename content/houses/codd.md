@@ -6,6 +6,7 @@ liege: greyjoy
 words: "Though All Men Do Despise Us"
 sigil:
   description: A silver codfish, field unrecorded
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

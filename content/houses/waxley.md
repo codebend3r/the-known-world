@@ -6,6 +6,7 @@ liege: arryn
 words: "Light in Darkness"
 sigil:
   description: Six candles, white with red flames in silver holders, on a grey field bordered in black
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: tarly
 words: ""
 sigil:
   description: A brown deer, bound and slung on a pole, on white
+  provenance: invented
 founded:
   year: 1
   era: AC

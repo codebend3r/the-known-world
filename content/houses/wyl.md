@@ -6,6 +6,7 @@ liege: martell
 words: ""
 sigil:
   description: A black adder biting a human heel on a yellow field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes

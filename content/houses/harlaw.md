@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: A silver scythe on a black field
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes

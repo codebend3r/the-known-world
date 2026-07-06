@@ -6,6 +6,7 @@ liege: greyjoy
 words: ""
 sigil:
   description: An oak saltire on a blue field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes

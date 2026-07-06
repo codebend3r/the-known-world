@@ -6,6 +6,7 @@ liege: lannister
 words: "Burning Bright"
 sigil:
   description: A burning tree, orange on smoke
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

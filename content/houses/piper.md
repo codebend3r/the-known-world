@@ -6,6 +6,7 @@ liege: tully
 words: "Unknown"
 sigil:
   description: A pink dancing maiden in a swirl of silk, on a blue field between two iron flagons
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes

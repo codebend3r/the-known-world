@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: Three blue moons, waxing, full, and waning, on a white bend, on a blue field
+  provenance: canon
 founded:
   year: -9000
   era: dawn-age

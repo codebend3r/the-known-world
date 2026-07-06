@@ -6,6 +6,7 @@ liege: cerwyn
 words: ""
 sigil:
   description: An eagle's head between crossed tridents, red on white
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes

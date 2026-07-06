@@ -6,6 +6,7 @@ liege: reed
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -5000
   era: age-of-heroes

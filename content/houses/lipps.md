@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: Two large pink lips on a dark blue field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

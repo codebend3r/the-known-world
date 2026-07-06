@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: A white winged chalice on a pink field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

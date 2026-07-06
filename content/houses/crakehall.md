@@ -6,6 +6,7 @@ liege: lannister
 words: "None so Fierce"
 sigil:
   description: A brindled black and white boar on a brown field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes

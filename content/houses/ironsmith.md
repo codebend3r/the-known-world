@@ -6,6 +6,7 @@ liege: bolton
 words: ""
 sigil:
   description: A black sword upright between four black horseshoes on gold, within a grey-green border
+  provenance: invented
 founded:
   year: -6000
   era: age-of-heroes

@@ -6,6 +6,7 @@ liege: arryn
 words: ""
 sigil:
   description: A black broken wheel on a green field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A grey iron greathelm on white
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

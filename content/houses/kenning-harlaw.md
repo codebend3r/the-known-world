@@ -6,6 +6,7 @@ liege: harlaw
 words: ""
 sigil:
   description: The storm god's cloudy hand, pale grey, lightning flashing from the fingertips, on black
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes

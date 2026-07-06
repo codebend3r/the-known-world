@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A flight of flaming arrows rising bendwise on blue
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

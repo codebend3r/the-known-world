@@ -6,6 +6,7 @@ liege: harlaw
 words: ""
 sigil:
   description: Ten nooses, 4-3-2-1, black on white within a border of blood
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

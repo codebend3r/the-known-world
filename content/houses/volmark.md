@@ -6,6 +6,7 @@ liege: harlaw
 words: ""
 sigil:
   description: A black leviathan on a grey sea
+  provenance: canon
 founded:
   year: -200
   era: BC

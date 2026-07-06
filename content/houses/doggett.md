@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: A white unicorn and a black raven, per bend green and white
+  provenance: canon
 founded:
   year: 10
   era: AC

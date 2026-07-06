@@ -6,6 +6,7 @@ liege: frey
 words: ""
 sigil:
   description: Three sprigs of mistletoe, green and red, on a gold field within a green border
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes

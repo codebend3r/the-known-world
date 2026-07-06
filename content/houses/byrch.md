@@ -6,6 +6,7 @@ liege: baratheon
 words: ""
 sigil:
   description: A silver axe on green, quartered with black-and-white gyronny
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion

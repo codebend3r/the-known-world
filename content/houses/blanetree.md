@@ -6,6 +6,7 @@ liege: tully
 words: ""
 sigil:
   description: Green and brown maple leaves strewn on a yellow field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion

@@ -6,6 +6,7 @@ liege: lannister
 words: ""
 sigil:
   description: An orange bend engrailed, on black
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion

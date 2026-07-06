@@ -6,6 +6,7 @@ liege: tyrell
 words: ""
 sigil:
   description: A quartered field of an apple tree on yellow and a grey gatehouse on white
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion

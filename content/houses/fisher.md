@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A crowned catfish, spotted grey, on a blue field
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age
