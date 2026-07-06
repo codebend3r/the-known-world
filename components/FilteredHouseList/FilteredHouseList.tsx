@@ -1,20 +1,24 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useQueryStates } from "nuqs";
+import { Accordion } from "@/components/Accordion";
 import { Sigil } from "@/components/Sigil";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import {
   ViewToggle,
   GridIcon,
   ListIcon,
+  AllHousesIcon,
+  RegionGroupIcon,
   isViewMode,
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
+import { REGION_SLUGS, regionLabel } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -38,7 +42,14 @@ type Props = {
   pageSize?: number;
 };
 
+type Grouping = "flat" | "region";
+
+function isGrouping(value: unknown): value is Grouping {
+  return value === "flat" || value === "region";
+}
+
 const VIEW_STORAGE_KEY = "gota:houses-view";
+const GROUPING_STORAGE_KEY = "gota:houses-grouping";
 
 // Rough first-row count on a wide desktop grid (cards are min 12rem on a
 // `--bleed-width` track). Eagerly loading these covers the LCP candidate
@@ -62,6 +73,15 @@ const VIEW_OPTIONS = [
   { value: "list" as const, label: "List view", icon: <ListIcon /> },
 ];
 
+const GROUP_OPTIONS = [
+  { value: "flat" as const, label: "All houses", icon: <AllHousesIcon /> },
+  {
+    value: "region" as const,
+    label: "Group by region",
+    icon: <RegionGroupIcon />,
+  },
+];
+
 export function FilteredHouseList({
   items,
   pageSize = DEFAULT_PAGE_SIZE,
@@ -79,15 +99,20 @@ export function FilteredHouseList({
     undefined,
   );
   const [view, setView] = useState<ViewMode>("grid");
+  const [grouping, setGrouping] = useState<Grouping>("flat");
+  const [openRegions, setOpenRegions] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const stored = window.localStorage.getItem(VIEW_STORAGE_KEY);
+    const storedView = window.localStorage.getItem(VIEW_STORAGE_KEY);
+    const storedGrouping = window.localStorage.getItem(GROUPING_STORAGE_KEY);
     // Hydrating client-only state from `localStorage` is exactly the case
     // an after-mount effect exists for: the server can't read it, and a
     // lazy `useState` initializer would diverge from the server snapshot.
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    if (isViewMode(stored)) setView(stored);
+    /* eslint-disable react-hooks/set-state-in-effect */
+    if (isViewMode(storedView)) setView(storedView);
+    if (isGrouping(storedGrouping)) setGrouping(storedGrouping);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const handleViewChange = (next: ViewMode) => {
@@ -95,6 +120,25 @@ export function FilteredHouseList({
     if (typeof window !== "undefined") {
       window.localStorage.setItem(VIEW_STORAGE_KEY, next);
     }
+  };
+
+  const handleGroupingChange = (next: Grouping) => {
+    setGrouping(next);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(GROUPING_STORAGE_KEY, next);
+    }
+  };
+
+  const toggleRegion = (slug: string) => {
+    setOpenRegions((prev) => {
+      const next = new Set(prev);
+      if (next.has(slug)) {
+        next.delete(slug);
+      } else {
+        next.add(slug);
+      }
+      return next;
+    });
   };
 
   const value = userValue ?? search;
@@ -121,13 +165,28 @@ export function FilteredHouseList({
   const matching = filtered.length;
   const hasQuery = debounced.trim().length > 0;
   const noun = total === 1 ? "house" : "houses";
-  const countLabel = hasQuery
-    ? `${matching} of ${total} ${noun}`
-    : `${total} ${noun}`;
+  const inRegionMode = grouping === "region";
+  const countLabel =
+    !inRegionMode && hasQuery
+      ? `${matching} of ${total} ${noun}`
+      : `${total} ${noun}`;
+
   const totalPages = Math.max(1, Math.ceil(filtered.length / size));
   const currentPage = Math.min(page, totalPages);
   const pageStart = (currentPage - 1) * size;
   const pageItems = filtered.slice(pageStart, pageStart + size);
+
+  const regionGroups = useMemo(() => {
+    const known = REGION_SLUGS.map((slug) => ({
+      slug,
+      label: regionLabel(slug) ?? slug,
+      items: sorted.filter((item) => item.region === slug),
+    })).filter((group) => group.items.length > 0);
+    const other = sorted.filter((item) => item.region === null);
+    return other.length > 0
+      ? [...known, { slug: "other", label: "Other Houses", items: other }]
+      : known;
+  }, [sorted]);
 
   const writePage = (next: number) => {
     setParams({ page: next });
@@ -140,6 +199,39 @@ export function FilteredHouseList({
 
   const handleDirChange = (next: SortDirection) => {
     setParams({ dir: next, page: 1 });
+  };
+
+  const listClass = cx(styles.list, view === "list" && styles.listView);
+
+  const renderCard = ({
+    item,
+    priority,
+  }: {
+    item: HouseItem;
+    priority: boolean;
+  }) => {
+    const regionClass = item.region
+      ? REGION_CARD_CLASS[item.region]
+      : undefined;
+    const cardClass = cx(styles.card, regionClass);
+    return (
+      <li key={item.slug} className={styles.item}>
+        <Link href={`/houses/${item.slug}/`} className={cardClass}>
+          <Sigil
+            slug={item.slug}
+            name={item.name}
+            region={item.region}
+            size={view === "list" ? "4rem" : "6rem"}
+            decorative
+            priority={priority}
+          />
+          <span className={styles.name}>{item.name}</span>
+          {view === "list" && item.regionLabel && (
+            <span className={styles.region}>{item.regionLabel}</span>
+          )}
+        </Link>
+      </li>
+    );
   };
 
   const renderPagination = (position: "top" | "bottom") => (
@@ -197,32 +289,53 @@ export function FilteredHouseList({
 
   const showPagination = filtered.length > MIN_PAGE_SIZE;
 
-  const listClass = cx(styles.list, view === "list" && styles.listView);
-
   return (
     <>
-      <div className={listSearch.rowWithSort}>
-        <input
-          type="search"
-          className={listSearch.input}
-          placeholder="Search houses…"
-          value={value}
-          onChange={(e) => setUserValue(e.target.value)}
-          aria-label="Search houses"
-          autoComplete="off"
-          spellCheck={false}
-        />
-        <SortToggle value={dir} onChange={handleDirChange} />
-        <ViewToggle
-          options={VIEW_OPTIONS}
-          value={view}
-          onChange={handleViewChange}
-        />
+      <div className={styles.controls}>
+        {!inRegionMode && (
+          <input
+            type="search"
+            className={cx(listSearch.input, styles.searchInput)}
+            placeholder="Search houses…"
+            value={value}
+            onChange={(e) => setUserValue(e.target.value)}
+            aria-label="Search houses"
+            autoComplete="off"
+            spellCheck={false}
+          />
+        )}
+        <div className={styles.toggles}>
+          <SortToggle value={dir} onChange={handleDirChange} />
+          <ViewToggle
+            options={VIEW_OPTIONS}
+            value={view}
+            onChange={handleViewChange}
+          />
+          <ViewToggle
+            options={GROUP_OPTIONS}
+            value={grouping}
+            onChange={handleGroupingChange}
+            ariaLabel="Grouping"
+          />
+        </div>
       </div>
       <p className={listSearch.count} aria-live="polite">
         {countLabel}
       </p>
-      {filtered.length === 0 ? (
+      {inRegionMode ? (
+        <div className={styles.regions}>
+          {regionGroups.map((group) => (
+            <RegionAccordion
+              key={group.slug}
+              group={group}
+              open={openRegions.has(group.slug)}
+              onToggle={() => toggleRegion(group.slug)}
+              listClass={listClass}
+              renderCard={renderCard}
+            />
+          ))}
+        </div>
+      ) : filtered.length === 0 ? (
         <p className={listSearch.empty}>
           No houses match &ldquo;{debounced}&rdquo;.
         </p>
@@ -230,34 +343,67 @@ export function FilteredHouseList({
         <>
           {showPagination && renderPagination("top")}
           <ul className={listClass}>
-            {pageItems.map((item, index) => {
-              const regionClass = item.region
-                ? REGION_CARD_CLASS[item.region]
-                : undefined;
-              const cardClass = cx(styles.card, regionClass);
-              return (
-                <li key={item.slug} className={styles.item}>
-                  <Link href={`/houses/${item.slug}/`} className={cardClass}>
-                    <Sigil
-                      slug={item.slug}
-                      name={item.name}
-                      region={item.region}
-                      size={view === "list" ? "4rem" : "6rem"}
-                      decorative
-                      priority={index < PRIORITY_COUNT}
-                    />
-                    <span className={styles.name}>{item.name}</span>
-                    {view === "list" && item.regionLabel && (
-                      <span className={styles.region}>{item.regionLabel}</span>
-                    )}
-                  </Link>
-                </li>
-              );
-            })}
+            {pageItems.map((item, index) =>
+              renderCard({ item, priority: index < PRIORITY_COUNT }),
+            )}
           </ul>
           {showPagination && renderPagination("bottom")}
         </>
       )}
     </>
+  );
+}
+
+type RegionGroup = {
+  slug: string;
+  label: string;
+  items: HouseItem[];
+};
+
+function RegionAccordion({
+  group,
+  open,
+  onToggle,
+  listClass,
+  renderCard,
+}: {
+  group: RegionGroup;
+  open: boolean;
+  onToggle: () => void;
+  listClass: string;
+  renderCard: (args: { item: HouseItem; priority: boolean }) => ReactNode;
+}) {
+  const [query, setQuery] = useState("");
+  const filtered = filterByName(group.items, query);
+
+  return (
+    <Accordion
+      id={`region-${group.slug}`}
+      title={group.label}
+      count={group.items.length}
+      open={open}
+      onToggle={onToggle}
+      headingLevel={2}
+    >
+      <input
+        type="search"
+        className={cx(listSearch.input, styles.regionSearch)}
+        placeholder={`Search ${group.label}…`}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        aria-label={`Search ${group.label}`}
+        autoComplete="off"
+        spellCheck={false}
+      />
+      {filtered.length === 0 ? (
+        <p className={listSearch.empty}>
+          No houses match &ldquo;{query}&rdquo;.
+        </p>
+      ) : (
+        <ul className={listClass}>
+          {filtered.map((item) => renderCard({ item, priority: false }))}
+        </ul>
+      )}
+    </Accordion>
   );
 }

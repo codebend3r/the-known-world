@@ -133,7 +133,7 @@ describe("FilteredHouseList", () => {
 
   it("renders the search input, sort toggle, and view toggle inside the same row", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
-    const row = container.querySelector(".rowWithSort");
+    const row = container.querySelector(".controls");
     expect(row).not.toBeNull();
     expect(row?.querySelector("input")).not.toBeNull();
     expect(
@@ -142,6 +142,87 @@ describe("FilteredHouseList", () => {
     expect(
       row?.querySelector('[role="group"][aria-label="View"]'),
     ).not.toBeNull();
+  });
+});
+
+describe("FilteredHouseList region grouping", () => {
+  const northAndVale: HouseItem[] = [
+    { slug: "stark", name: "Stark", region: "north", regionLabel: "The North" },
+    {
+      slug: "bolton",
+      name: "Bolton",
+      region: "north",
+      regionLabel: "The North",
+    },
+    { slug: "arryn", name: "Arryn", region: "vale", regionLabel: "The Vale" },
+  ];
+
+  it("exposes a grouping toggle", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    expect(screen.getByRole("group", { name: /grouping/i })).toBeDefined();
+  });
+
+  it("replaces the flat list with a collapsed accordion per region", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    // The global search input is gone; accordions supply their own.
+    expect(screen.queryByRole("searchbox")).toBeNull();
+    const north = screen.getByRole("button", { name: /the north/i });
+    expect(north.getAttribute("aria-expanded")).toBe("false");
+    expect(
+      screen.getByRole("button", { name: /the westerlands/i }),
+    ).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: /the riverlands/i }),
+    ).toBeDefined();
+    // Collapsed accordions render no house cards.
+    expect(screen.queryAllByRole("link").length).toBe(0);
+  });
+
+  it("only lists regions that have houses", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    expect(screen.getByRole("button", { name: /the north/i })).toBeDefined();
+    expect(screen.getByRole("button", { name: /the vale/i })).toBeDefined();
+    expect(
+      screen.queryByRole("button", { name: /the riverlands/i }),
+    ).toBeNull();
+  });
+
+  it("shows the house count in each region header", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    expect(
+      screen.getByRole("button", { name: /the north/i }).textContent,
+    ).toContain("2");
+  });
+
+  it("expands a region to reveal its houses", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.click(screen.getByRole("button", { name: /the north/i }));
+    const links = screen.getAllByRole("link");
+    expect(links.map((l) => l.textContent)).toEqual(
+      expect.arrayContaining([expect.stringContaining("Stark")]),
+    );
+    expect(links.length).toBe(2);
+  });
+
+  it("scopes each region's search input to that region's houses", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.click(screen.getByRole("button", { name: /the north/i }));
+    const search = screen.getByRole("searchbox", { name: /search the north/i });
+    fireEvent.change(search, { target: { value: "bolton" } });
+    const links = screen.getAllByRole("link");
+    expect(links.length).toBe(1);
+    expect(links[0].textContent).toContain("Bolton");
+  });
+
+  it("keeps the grouping choice in localStorage", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    expect(window.localStorage.getItem("gota:houses-grouping")).toBe("region");
   });
 });
 

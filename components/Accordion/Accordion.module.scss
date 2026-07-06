@@ -1,0 +1,70 @@
+.accordion {
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  background: rgba(248, 236, 208, 0.35);
+  overflow: hidden;
+}
+
+.heading {
+  margin: 0;
+  font: inherit;
+}
+
+.trigger {
+  appearance: none;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(248, 236, 208, 0.55);
+  border: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-character-name);
+  font-size: 1.3rem;
+  text-align: left;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+
+  &:hover,
+  &:focus-visible {
+    background: rgba(248, 236, 208, 0.9);
+    color: var(--gold-leaf);
+    outline: none;
+  }
+}
+
+.chevron {
+  color: var(--ink-faded);
+  transition: transform 150ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.chevronOpen {
+  transform: rotate(90deg);
+}
+
+.title {
+  min-width: 0;
+}
+
+.count {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--ink-faded);
+  font-variant: small-caps;
+  letter-spacing: 1px;
+}
+
+.panel {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem 1.1rem 1.25rem;
+  border-top: 1px solid rgba(107, 68, 35, 0.2);
+}
