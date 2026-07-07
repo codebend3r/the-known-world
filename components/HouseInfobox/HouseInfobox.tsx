@@ -2,7 +2,7 @@ import Link from "next/link";
 import { InfoRow } from "@/components/Infobox";
 import { Sigil } from "@/components/Sigil";
 import { cx } from "@/lib/cx";
-import { humanizeSlug, shortHouseName } from "@/lib/text";
+import { humanizeSlug, shortHouseName, titleCase } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
 import { regionForHouse } from "@/lib/regions";
 import type {
@@ -88,6 +88,16 @@ export function HouseInfobox({
             <dd>{house.sigil.description}</dd>
           </div>
         )}
+
+        <div className={infoboxStyles.row}>
+          <dt>Provenance</dt>
+          <dd>{titleCase(house.sigil.provenance)}</dd>
+        </div>
+
+        <div className={infoboxStyles.row}>
+          <dt>Rank</dt>
+          <dd>{titleCase(house.rank)}</dd>
+        </div>
 
         <InfoRow
           label="Seats"

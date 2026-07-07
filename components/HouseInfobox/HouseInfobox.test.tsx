@@ -264,6 +264,41 @@ describe("HouseInfobox", () => {
     expect(screen.queryByText(/legendary/i)).toBeNull();
   });
 
+  it("renders a Rank row with the capitalized rank", () => {
+    const lordlyHouse: House = { ...targaryen, rank: "lordly" };
+    render(
+      <HouseInfobox
+        house={lordlyHouse}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Rank")).toBeDefined();
+    expect(screen.getByText("Lordly")).toBeDefined();
+  });
+
+  it("renders a Provenance row with the capitalized sigil provenance", () => {
+    const inventedSigil: House = {
+      ...targaryen,
+      sigil: { ...targaryen.sigil, provenance: "semi-canon" },
+    };
+    render(
+      <HouseInfobox
+        house={inventedSigil}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Provenance")).toBeDefined();
+    expect(screen.getByText("Semi-canon")).toBeDefined();
+  });
+
   it("renders an Extinct row when the house has an extinct date", () => {
     const extinctHouse: House = {
       ...targaryen,
