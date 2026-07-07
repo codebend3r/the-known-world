@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: A black brazier on a grey masonry field
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

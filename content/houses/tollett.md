@@ -6,11 +6,13 @@ liege: royce
 words: "When All Is Darkest"
 sigil:
   description: Pily grey and black
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

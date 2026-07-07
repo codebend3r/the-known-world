@@ -6,11 +6,13 @@ liege: bolton
 words: ""
 sigil:
   description: A tenné bend on vairy grey and green
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

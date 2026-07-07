@@ -6,11 +6,13 @@ liege: martell
 words: "Unknown"
 sigil:
   description: A white sword and falling star, crossed, on a pale lilac field
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

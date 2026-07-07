@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A green saltire between four red double-headed eagles on white
+  provenance: semi-canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

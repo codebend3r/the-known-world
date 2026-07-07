@@ -6,11 +6,13 @@ liege: bolton
 words: ""
 sigil:
   description: Five black roundels on grey over a field of green and white lozengy, per fess
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

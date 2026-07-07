@@ -6,11 +6,13 @@ liege: stark
 words: "Our Blades Are Sharp"
 sigil:
   description: A pink flayed man, hung head-down, on a dark red field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

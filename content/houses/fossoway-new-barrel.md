@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A green apple on gold
+  provenance: canon
 founded:
   year: 209
   era: AC
   precision: year
 status: extant
+rank: other
 sworn-from:
   - fossoway-cider-hall
 cadet-houses: []

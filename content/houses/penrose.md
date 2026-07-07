@@ -6,11 +6,13 @@ liege: baratheon
 words: "Set Down Our Deeds"
 sigil:
   description: Two quills crossed, white on russet
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

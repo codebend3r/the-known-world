@@ -6,11 +6,13 @@ liege: bolton
 words: ""
 sigil:
   description: Piles of flame-red and black
+  provenance: invented
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

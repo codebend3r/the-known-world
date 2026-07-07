@@ -6,11 +6,13 @@ liege: stark
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from:
   - stark
 cadet-houses: []

@@ -6,11 +6,13 @@ liege: stark
 words: "Unknown"
 sigil:
   description: A bronze horse-head on a yellow field, each Ryswell bearing his own colour
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

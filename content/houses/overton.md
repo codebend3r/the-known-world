@@ -6,11 +6,13 @@ liege: bolton
 words: ""
 sigil:
   description: A checked silver and gold fess on black
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

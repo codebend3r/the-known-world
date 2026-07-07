@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Chequy black and grey, on a white fess two black wings
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

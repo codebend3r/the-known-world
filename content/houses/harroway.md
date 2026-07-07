@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: Per bend sinister orange and black rayonne, a castle counterchanged
+  provenance: canon
 founded:
   year: -100
   era: andal-invasion
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

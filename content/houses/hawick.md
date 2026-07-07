@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: White sea birds strewn on a blue field
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: riverlands

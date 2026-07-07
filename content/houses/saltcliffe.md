@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: A nine-headed serpent, black on silver
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

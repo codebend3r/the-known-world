@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -700
   era: BC
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: crownlands

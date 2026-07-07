@@ -6,11 +6,13 @@ liege: null
 words: "Growing Strong"
 sigil:
   description: A golden rose on a green field
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: year
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 300
   era: AC
   precision: year
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

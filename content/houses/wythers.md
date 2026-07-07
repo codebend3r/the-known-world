@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A grey squirrel on white, within a red border
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

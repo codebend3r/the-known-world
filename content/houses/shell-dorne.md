@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -2500
   era: dawn-age
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: dorne

@@ -6,11 +6,13 @@ liege: null
 words: "Ours is the Fury"
 sigil:
   description: A crowned black stag on a golden field
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: year
 status: extant
+rank: royal
 sworn-from: []
 cadet-houses:
   - baratheon-of-kings-landing

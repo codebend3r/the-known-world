@@ -6,11 +6,13 @@ liege: arryn
 words: "We Remember"
 sigil:
   description: Black iron studs arrayed in a circle on a bronze field
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

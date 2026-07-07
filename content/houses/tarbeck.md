@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A seven-pointed star, part silver part blue, on a silver and blue field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: westerlands

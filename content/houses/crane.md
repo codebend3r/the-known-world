@@ -6,11 +6,13 @@ liege: tyrell
 words: "Seek the Dawn"
 sigil:
   description: A chevron of golden cranes on a pale blue field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

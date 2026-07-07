@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Three pepperpots on a saffron bend, over green-and-silver stripes
+  provenance: canon
 founded:
   year: 255
   era: AC
   precision: decade
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: Barry green and gold, a black battering ram headed gold on a white chief
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

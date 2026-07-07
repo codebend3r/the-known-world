@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: Dark green pines strewn closely together on a yellow field
+  provenance: semi-canon
 founded:
   year: -10000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

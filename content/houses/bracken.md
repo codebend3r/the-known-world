@@ -6,11 +6,13 @@ liege: tully
 words: "Unknown"
 sigil:
   description: A red stallion on a gold field, with a brown shield border
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

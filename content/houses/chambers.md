@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 1
   era: targaryen-conquest
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

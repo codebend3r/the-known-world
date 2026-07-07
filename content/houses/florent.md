@@ -6,11 +6,13 @@ liege: tyrell
 words: "Unknown"
 sigil:
   description: A red fox within a ring of blue flowers, on an ermine field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

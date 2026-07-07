@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A white bend cotised on a purple field
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: stormlands

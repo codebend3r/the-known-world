@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A black hooded man within a fiery tressure on a grey field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

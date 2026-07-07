@@ -6,11 +6,13 @@ liege: martell
 words: "Unknown"
 sigil:
   description: A black portcullis on a yellow field, chevrons of green
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -6000
   era: age-of-heroes
@@ -15,6 +16,7 @@ extinct:
   era: BC
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: dorne

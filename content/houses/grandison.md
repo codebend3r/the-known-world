@@ -6,11 +6,13 @@ liege: baratheon
 words: "Rouse Me Not"
 sigil:
   description: A black sleeping lion on a yellow field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

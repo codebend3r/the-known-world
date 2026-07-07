@@ -6,11 +6,13 @@ liege: webber
 words: ""
 sigil:
   description: A bend sinister chequy black and white on a pale grey field
+  provenance: invented
 founded:
   year: -1000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

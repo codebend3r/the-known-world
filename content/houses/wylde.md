@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A blue-green maelstrom on gold
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

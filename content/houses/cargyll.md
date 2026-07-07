@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A golden goose on a bendy sinister field of black and red
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
@@ -15,6 +16,7 @@ extinct:
   era: AC
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: crownlands

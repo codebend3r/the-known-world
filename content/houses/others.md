@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: long-night
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 seats:

@@ -6,11 +6,13 @@ liege: arryn
 words: "As Strong as Stone"
 sigil:
   description: A red castle on a white field within a red embattled border
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

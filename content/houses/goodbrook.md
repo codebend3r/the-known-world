@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: A blue wavy bend on a gold field
+  provenance: canon
 founded:
   year: -1000
   era: BC
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

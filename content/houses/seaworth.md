@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A black ship, its sail charged with an onion, on pale grey
+  provenance: canon
 founded:
   year: 284
   era: AC
   precision: exact
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: stormlands

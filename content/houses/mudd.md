@@ -6,6 +6,7 @@ liege: null
 words: "Crown of the Rivers"
 sigil:
   description: A golden crown studded with emeralds on a red-brown field
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes
@@ -15,6 +16,7 @@ extinct:
   era: andal-invasion
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

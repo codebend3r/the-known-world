@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: Three black castles on an orange field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

@@ -6,11 +6,13 @@ liege: lannister
 words: "My Sun Shines Over You"
 sigil:
   description: Six silver seashells, three and three, on a sandy field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

@@ -6,11 +6,13 @@ liege: stark
 words: ""
 sigil:
   description: Two bronze keys crossed on a white pale on purple
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: A rusted anchor on a turquoise field, beneath a yellow chief with three blue roundels
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: vale

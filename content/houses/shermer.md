@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: Copper nails on a blue field, within a copper border rayonne
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

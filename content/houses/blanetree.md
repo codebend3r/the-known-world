@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: Green and brown maple leaves strewn on a yellow field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: riverlands

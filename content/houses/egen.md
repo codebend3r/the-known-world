@@ -6,11 +6,13 @@ liege: arryn
 words: "By Day or Night"
 sigil:
   description: A yellow sun, white crescent moon, and silver star on a blue chief above white
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: vale

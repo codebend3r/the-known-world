@@ -6,11 +6,13 @@ liege: targaryen
 words: ""
 sigil:
   description: Fusily black and gold, seven white escutcheons upon a red tierce
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: crownlands

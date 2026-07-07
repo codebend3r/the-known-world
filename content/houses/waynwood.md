@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: A black broken wheel on a green field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from:
   - hardyng
 cadet-houses: []

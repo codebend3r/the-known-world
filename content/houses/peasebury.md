@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A pea pod burst open, green on white, bordered by three rows of green peas
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

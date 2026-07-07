@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A spiked mace crossed by a silver dagger, per bend green and white
+  provenance: canon
 founded:
   year: 1
   era: targaryen-conquest
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

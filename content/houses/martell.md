@@ -6,11 +6,13 @@ liege: null
 words: "Unbowed, Unbent, Unbroken"
 sigil:
   description: A red sun pierced by a golden spear
+  provenance: canon
 founded:
   year: -700
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

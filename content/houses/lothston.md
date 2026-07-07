@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: A black bat on a field divided bendwise, silver and gold
+  provenance: canon
 founded:
   year: 151
   era: AC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

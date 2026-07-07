@@ -6,11 +6,13 @@ liege: arryn
 words: "Unknown"
 sigil:
   description: A burning golden tower on a white field, on a red saltire
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

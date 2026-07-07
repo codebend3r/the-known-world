@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: A red sledgehammer
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: vale

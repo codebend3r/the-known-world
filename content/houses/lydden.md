@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A white badger on a per pale green and brown field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

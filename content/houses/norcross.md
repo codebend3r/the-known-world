@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: An embattled black cross on white
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

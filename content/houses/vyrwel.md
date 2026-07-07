@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A silver wyvern within a red double tressure on sable
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

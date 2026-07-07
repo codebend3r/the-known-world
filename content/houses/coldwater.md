@@ -6,11 +6,13 @@ liege: royce
 words: ""
 sigil:
   description: A blue pall bordered white on a red field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

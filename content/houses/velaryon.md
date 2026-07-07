@@ -6,11 +6,13 @@ liege: baratheon
 words: "The Old, the True, the Brave"
 sigil:
   description: A silver seahorse on a sea-green field
+  provenance: canon
 founded:
   year: -500
   era: BC
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

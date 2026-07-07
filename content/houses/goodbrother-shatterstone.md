@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

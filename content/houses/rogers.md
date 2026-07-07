@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Nine unicorns encircling a maze, silver on black
+  provenance: semi-canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: stormlands

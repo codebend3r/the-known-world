@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: Nine black bats, four, three, two, on a yellow field
+  provenance: canon
 founded:
   year: 211
   era: AC
   precision: decade
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

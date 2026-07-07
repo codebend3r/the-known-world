@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A white double tressure on a green field
+  provenance: canon
 founded:
   year: -9000
   era: dawn-age
   precision: legendary
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: westerlands

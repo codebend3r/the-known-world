@@ -6,11 +6,13 @@ liege: baelish
 words: "Touch Me Not"
 sigil:
   description: Three white hedgehogs on a yellow field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: riverlands

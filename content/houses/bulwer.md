@@ -6,11 +6,13 @@ liege: hightower
 words: "Death Before Disgrace"
 sigil:
   description: A bull's skull, bone over blood
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

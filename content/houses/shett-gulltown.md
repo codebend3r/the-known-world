@@ -6,11 +6,13 @@ liege: grafton
 words: ""
 sigil:
   description: Nine white seagulls on a field of brown
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: vale

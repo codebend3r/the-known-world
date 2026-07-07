@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: Three bronze spearheads on white, within an embattled bronze border
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: vale

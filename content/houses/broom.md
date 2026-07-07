@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A silver helm crested with a sprig of broom, on a field checked black and green
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

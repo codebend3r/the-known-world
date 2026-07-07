@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: Nine stars, one of seven points and eight of six points, upon a gold saltire on black
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: vale

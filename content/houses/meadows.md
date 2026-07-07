@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A border of flowers of many colors and varieties on a green field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

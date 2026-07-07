@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: A two-headed brown horse, on wavy green and green
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

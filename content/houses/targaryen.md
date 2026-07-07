@@ -6,11 +6,13 @@ liege: null
 words: "Fire and Blood"
 sigil:
   description: A red three-headed dragon breathing fire, on a black field
+  provenance: canon
 founded:
   year: -114
   era: BC
   precision: year
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses:
   - blackfyre

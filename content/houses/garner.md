@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Three grey owls on white plates on a green field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

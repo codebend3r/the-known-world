@@ -6,11 +6,13 @@ liege: baratheon
 words: "Unknown"
 sigil:
   description: Two combatant swans, white and black, on a field divided per pale black and white
+  provenance: canon
 founded:
   year: -3000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

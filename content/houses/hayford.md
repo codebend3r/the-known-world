@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Green fretty over gold, a green pale wavy
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

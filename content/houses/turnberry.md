@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Nine strawberries on a white saltire, on green and red vairy in point
+  provenance: semi-canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

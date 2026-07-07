@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: A tripartite pale of blue, red, and green on a white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

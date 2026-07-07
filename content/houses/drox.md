@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Three black crossbows on a gold field, within a black border
+  provenance: canon
 founded:
   year: -5000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

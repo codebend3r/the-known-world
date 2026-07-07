@@ -6,11 +6,13 @@ liege: martell
 words: ""
 sigil:
   description: A field of yellow over crimson, divided by a rayonny line of rising flame
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

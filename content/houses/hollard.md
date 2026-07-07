@@ -6,6 +6,7 @@ liege: darklyn
 words: ""
 sigil:
   description: Three golden crowns on a blue chief, upon a field barry red and pink
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
@@ -15,6 +16,7 @@ extinct:
   era: AC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: crownlands

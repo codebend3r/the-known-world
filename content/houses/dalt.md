@@ -6,11 +6,13 @@ liege: martell
 words: ""
 sigil:
   description: Yellow lemons strewn on a purple field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: dorne

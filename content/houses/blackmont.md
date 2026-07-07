@@ -6,11 +6,13 @@ liege: martell
 words: ""
 sigil:
   description: A black vulture clutching a pink infant in its claws on a yellow field
+  provenance: canon
 founded:
   year: -700
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

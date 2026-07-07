@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A black knight astride a rearing black horse, bearing a golden lance and a white shield charged with the same in miniature, on white
+  provenance: semi-canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

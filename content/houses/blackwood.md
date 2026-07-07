@@ -6,11 +6,13 @@ liege: tully
 words: "Unknown"
 sigil:
   description: A flock of black ravens around a dead white weirwood, on a scarlet field
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

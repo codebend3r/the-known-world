@@ -6,11 +6,13 @@ liege: stark
 words: ""
 sigil:
   description: A blue plate on a white field, within a grey tressure
+  provenance: semi-canon
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

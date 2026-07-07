@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A bronze disk surrounded with red flames on a white field
+  provenance: invented
 founded:
   year: 300
   era: AC
   precision: exact
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

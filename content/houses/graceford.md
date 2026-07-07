@@ -6,11 +6,13 @@ liege: tyrell
 words: "Work Her Will"
 sigil:
   description: The Mother's face upon a white pale wavy dividing a brown field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

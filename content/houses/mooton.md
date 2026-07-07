@@ -6,11 +6,13 @@ liege: tully
 words: "Wisdom and Strength"
 sigil:
   description: A red salmon on a white field within a golden tressure
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

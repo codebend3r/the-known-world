@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Seven silver coins on a red bend sinister, between two silver helmets on blue
+  provenance: invented
 founded:
   year: 1
   era: targaryen-conquest
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

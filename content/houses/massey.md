@@ -6,11 +6,13 @@ liege: targaryen
 words: ""
 sigil:
   description: A triple spiral of red, green, and blue on a white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: crownlands

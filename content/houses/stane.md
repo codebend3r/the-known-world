@@ -6,11 +6,13 @@ liege: bolton
 words: ""
 sigil:
   description: A bare driftwood tree, brown on a pale green field
+  provenance: canon
 founded:
   year: -4000
   era: age-of-heroes
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

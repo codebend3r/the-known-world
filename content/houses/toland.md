@@ -6,11 +6,13 @@ liege: martell
 words: ""
 sigil:
   description: A green dragon biting its own tail on a golden field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

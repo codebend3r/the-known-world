@@ -6,11 +6,13 @@ liege: tyrell
 words: "Tread Lightly Here"
 sigil:
   description: Silver caltrops scattered on a black field
+  provenance: canon
 founded:
   year: -500
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A copper dagger across a black chevron on a white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses:
   - foote-nightsong

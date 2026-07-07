@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: A cresting wave, sea green on black
+  provenance: semi-canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: vale

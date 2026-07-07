@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A green hand on a white field
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes
@@ -15,6 +16,7 @@ extinct:
   era: BC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: reach

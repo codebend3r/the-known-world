@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A black fess on a silver field
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

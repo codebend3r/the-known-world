@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Three black dogs on a golden field
+  provenance: canon
 founded:
   year: 212
   era: AC
   precision: decade
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: westerlands

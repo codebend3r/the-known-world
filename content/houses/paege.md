@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: Twining red-and-white serpents on black
+  provenance: semi-canon
 founded:
   year: -200
   era: BC
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: riverlands

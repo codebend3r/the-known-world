@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Chequy purple and white, with gold coins in all the checks
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

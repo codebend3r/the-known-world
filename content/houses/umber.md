@@ -6,11 +6,13 @@ liege: stark
 words: "Unknown"
 sigil:
   description: A roaring giant breaking free of his chains, on a red field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

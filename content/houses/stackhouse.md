@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

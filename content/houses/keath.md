@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: A white fish on grey and a golden fishhook on white, quartered nine ways
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: riverlands

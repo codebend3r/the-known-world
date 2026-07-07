@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: A silver scythe on a black field
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

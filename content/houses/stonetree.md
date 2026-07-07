@@ -6,11 +6,13 @@ liege: harlaw
 words: ""
 sigil:
   description: A bare stone tree, grey on black
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

@@ -6,11 +6,13 @@ liege: vance
 words: "From These Beginnings"
 sigil:
   description: Six brown acorns on a yellow field
+  provenance: canon
 founded:
   year: -700
   era: BC
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

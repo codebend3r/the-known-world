@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: An inverted pall between three lion's heads, yellow on black
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

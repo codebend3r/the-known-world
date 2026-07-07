@@ -6,11 +6,13 @@ liege: tyrell
 words: "We Light the Way"
 sigil:
   description: A stepped white tower crowned with fire, on a smoke-grey field
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

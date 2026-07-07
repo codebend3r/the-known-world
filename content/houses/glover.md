@@ -6,11 +6,13 @@ liege: stark
 words: ""
 sigil:
   description: A silver mailed fist on a scarlet field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

@@ -6,11 +6,13 @@ liege: baratheon
 words: "Sound The Charge"
 sigil:
   description: Two golden trumpets crossed on blue, a gold chief charged with three black stags
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: stormlands

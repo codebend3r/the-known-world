@@ -6,11 +6,13 @@ liege: stark
 words: "Honed and Ready"
 sigil:
   description: A black battle-axe on a silver field
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

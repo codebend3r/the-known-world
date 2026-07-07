@@ -6,11 +6,13 @@ liege: tully
 words: "Above the Rest"
 sigil:
   description: A silver eagle volant on an indigo field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

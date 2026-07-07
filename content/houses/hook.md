@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

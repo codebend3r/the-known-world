@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

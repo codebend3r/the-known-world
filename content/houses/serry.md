@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A white rose upon a red escutcheon within a red embattled border, on white
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 region: reach

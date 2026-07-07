@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A yellow rooster's head with red comb, within a white escutcheon, on red
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: stormlands

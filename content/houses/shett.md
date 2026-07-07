@@ -6,11 +6,13 @@ liege: royce
 words: ""
 sigil:
   description: Three golden wings bendwise on a checkered white and black field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: vale

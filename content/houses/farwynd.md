@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: A black longship against a setting sun of dark red and orange, above a black sea
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

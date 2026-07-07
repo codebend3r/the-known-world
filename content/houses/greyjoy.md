@@ -6,11 +6,13 @@ liege: null
 words: "We Do Not Sow"
 sigil:
   description: A golden kraken on a black field
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

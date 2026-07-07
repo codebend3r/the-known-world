@@ -6,11 +6,13 @@ liege: lannister
 words: "True to the Mark"
 sigil:
   description: A green arrow on a white bend, on green
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: westerlands

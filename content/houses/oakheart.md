@@ -6,11 +6,13 @@ liege: tyrell
 words: "Our Roots Go Deep"
 sigil:
   description: Three green oak leaves on a golden field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

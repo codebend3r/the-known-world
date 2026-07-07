@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: A bloody moon on purple
+  provenance: canon
 founded:
   year: -3000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

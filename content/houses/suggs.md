@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: A flying pig
+  provenance: invented
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 sources:

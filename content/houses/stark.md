@@ -6,11 +6,13 @@ liege: null
 words: "Winter is Coming"
 sigil:
   description: A grey direwolf running on a snow-white field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses:
   - karstark

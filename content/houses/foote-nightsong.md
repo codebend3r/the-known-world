@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A copper dagger across a black chevron on a white field
+  provenance: canon
 founded:
   year: 299
   era: AC
   precision: year
 status: extant
+rank: lordly
 sworn-from:
   - foote
 cadet-houses: []

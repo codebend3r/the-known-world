@@ -6,11 +6,13 @@ liege: stark
 words: "Ever Vigilant"
 sigil:
   description: A blue field strewn with white whitecaps, on a yellow chief with a crested line two blue eyes
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

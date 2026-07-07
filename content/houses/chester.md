@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A green hand on a gold escutcheon on a green field, within a red rayonné border
+  provenance: canon
 founded:
   year: 0
   era: age-of-heroes
   precision: era
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 region: reach

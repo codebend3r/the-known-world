@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A counter-charged double-headed eagle with gold beak and talons on a green-and-white gyronny field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

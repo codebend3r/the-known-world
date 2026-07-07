@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: A field of unrelieved black; the Watch bears no device, for its brothers forsake all houses and all heraldry when they take the black
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 seats:

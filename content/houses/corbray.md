@@ -6,11 +6,13 @@ liege: arryn
 words: "To Steel Your Heart"
 sigil:
   description: Three black ravens in flight, each clutching a red heart, on a white field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

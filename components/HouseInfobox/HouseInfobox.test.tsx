@@ -4,12 +4,16 @@ import { HouseInfobox } from "@/components/HouseInfobox";
 import type { House, Castle, Character, Weapon, Dragon } from "@/lib/schemas";
 
 const targaryen: House = {
+  rank: "royal",
   slug: "targaryen",
   name: "House Targaryen",
   seat: "dragonstone",
   liege: null,
   words: "Fire and Blood",
-  sigil: { description: "A red three-headed dragon on black" },
+  sigil: {
+    description: "A red three-headed dragon on black",
+    provenance: "canon",
+  },
   founded: { year: -114, era: "BC", precision: "year" },
   status: "exiled",
   "sworn-from": [],
@@ -258,6 +262,41 @@ describe("HouseInfobox", () => {
     );
     expect(screen.getByText("Andal Invasion")).toBeDefined();
     expect(screen.queryByText(/legendary/i)).toBeNull();
+  });
+
+  it("renders a Rank row with the capitalized rank", () => {
+    const lordlyHouse: House = { ...targaryen, rank: "lordly" };
+    render(
+      <HouseInfobox
+        house={lordlyHouse}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Rank")).toBeDefined();
+    expect(screen.getByText("Lordly")).toBeDefined();
+  });
+
+  it("renders a Provenance row with the capitalized sigil provenance", () => {
+    const inventedSigil: House = {
+      ...targaryen,
+      sigil: { ...targaryen.sigil, provenance: "semi-canon" },
+    };
+    render(
+      <HouseInfobox
+        house={inventedSigil}
+        castlesBySlug={castlesBySlug}
+        charactersBySlug={charactersBySlug}
+        housesBySlug={housesBySlug}
+        weaponsBySlug={new Map()}
+        dragonsForHouse={[]}
+      />,
+    );
+    expect(screen.getByText("Provenance")).toBeDefined();
+    expect(screen.getByText("Semi-canon")).toBeDefined();
   });
 
   it("renders an Extinct row when the house has an extinct date", () => {

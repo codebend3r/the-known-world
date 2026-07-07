@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: Four wheels counterchanged on a quartered field of blue and white
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

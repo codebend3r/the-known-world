@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: A black plowman on a brown field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

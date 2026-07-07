@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Quartered, a yellow sun on rose and a white crescent moon on azure
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

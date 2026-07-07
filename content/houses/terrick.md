@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: Four hawks' heads countercharged, per saltire purple and gold
+  provenance: canon
 founded:
   year: -2000
   era: BC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: riverlands

@@ -6,11 +6,13 @@ liege: lannister
 words: "Come Try Me"
 sigil:
   description: Three purple roundels on gold
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

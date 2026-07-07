@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Three brown pinecones on a per-pale field of white and green, divided by a fir-tree line
+  provenance: semi-canon
 founded:
   year: -8500
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

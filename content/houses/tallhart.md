@@ -6,11 +6,13 @@ liege: stark
 words: "Proud and Free"
 sigil:
   description: Three green sentinel trees on a brown field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

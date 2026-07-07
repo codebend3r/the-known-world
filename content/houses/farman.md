@@ -6,11 +6,13 @@ liege: lannister
 words: "The Wind Our Steed"
 sigil:
   description: Three silver ships on a blue field, within a border of crimson and gold
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

@@ -14,7 +14,8 @@ function house(
 ): House {
   return HouseSchema.parse({
     words: "",
-    sigil: { description: "" },
+    sigil: { description: "", provenance: "invented" },
+    rank: "lordly",
     founded,
     status: "extant",
     "sworn-from": [],

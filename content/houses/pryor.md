@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: A black moon partially eclipsing a gold sun, on dusty pink
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

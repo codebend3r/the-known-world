@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: Six green thistles, 3-2-1, on yellow
+  provenance: semi-canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

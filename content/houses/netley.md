@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 250
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: iron-islands

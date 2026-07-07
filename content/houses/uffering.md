@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: Oak and iron paly, beneath a white chief with seven green hands
+  provenance: semi-canon
 founded:
   year: -4000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

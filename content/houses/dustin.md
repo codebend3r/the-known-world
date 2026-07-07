@@ -6,11 +6,13 @@ liege: stark
 words: "Unknown"
 sigil:
   description: Two crossed longaxes beneath a black-and-gold crown, on a yellow field
+  provenance: canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

@@ -6,11 +6,13 @@ liege: tyrell
 words: "A Taste of Glory"
 sigil:
   description: A red apple on gold
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses:
   - fossoway-new-barrel

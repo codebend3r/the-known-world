@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: stormlands

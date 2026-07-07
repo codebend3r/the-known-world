@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: Five silver arrows, fanned, on brown
+  provenance: invented
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Four sunbursts counterchanged on quartered orange and black
+  provenance: canon
 founded:
   year: -300
   era: BC
   precision: era
 status: extant
+rank: lordly
 sworn-from:
   - kenning-harlaw
 cadet-houses: []

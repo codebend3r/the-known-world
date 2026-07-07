@@ -6,11 +6,13 @@ liege: bolton
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: north

@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A black saltire on quartered yellow, green, and white lozenges
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

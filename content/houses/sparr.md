@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: An oak saltire on a blue field
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

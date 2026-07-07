@@ -6,11 +6,13 @@ liege: lannister
 words: "Awake! Awake!"
 sigil:
   description: A blue bantam rooster on yellow
+  provenance: canon
 founded:
   year: 100
   era: AC
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: westerlands

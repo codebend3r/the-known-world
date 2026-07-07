@@ -6,6 +6,7 @@ liege: baratheon
 words: "Fly High, Fly Far"
 sigil:
   description: A winged heart black on gold, within a bordure embattled black
+  provenance: semi-canon
 founded:
   year: -1500
   era: andal-invasion
@@ -15,6 +16,7 @@ extinct:
   era: AC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: stormlands

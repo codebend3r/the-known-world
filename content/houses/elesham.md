@@ -6,11 +6,13 @@ liege: arryn
 words: ""
 sigil:
   description: A black mullet between two grey piles inverted on a pink field
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: vale

@@ -6,11 +6,13 @@ liege: arryn
 words: "Right Conquers Might"
 sigil:
   description: Five splintered lances striped blue and white with blue pennons, on yellow, beneath a white chief bearing a red castle, a green viper, a black broken wheel, a purple unicorn, and a golden lion
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: vale

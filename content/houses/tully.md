@@ -6,11 +6,13 @@ liege: null
 words: "Family, Duty, Honor"
 sigil:
   description: A leaping silver trout on a field of rippling blue and red
+  provenance: canon
 founded:
   year: -1000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

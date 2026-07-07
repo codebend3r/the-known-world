@@ -6,11 +6,13 @@ liege: lannister
 words: "Tireless"
 sigil:
   description: A red ox on ermine
+  provenance: semi-canon
 founded:
   year: -6000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

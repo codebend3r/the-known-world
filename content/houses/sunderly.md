@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: A drowned man, pink and pale, floating upright in a blue-green sea, his hair streaming upwards, as fish nibble at his limbs
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: iron-islands

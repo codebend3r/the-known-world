@@ -6,11 +6,13 @@ liege: stark
 words: "Here We Stand"
 sigil:
   description: A black bear on a wooded green field
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north

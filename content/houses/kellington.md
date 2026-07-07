@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A black book bound in bronze, locked, upon a pale blue field
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: stormlands

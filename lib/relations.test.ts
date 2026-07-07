@@ -15,11 +15,11 @@ function castle(data: Parameters<typeof CastleSchema.parse>[0]) {
   };
 }
 
-function house(data: Parameters<typeof HouseSchema.parse>[0]) {
+function house(data: Record<string, unknown> & { slug: string }) {
   return {
-    frontmatter: HouseSchema.parse(data),
+    frontmatter: HouseSchema.parse({ rank: "lordly", ...data }),
     body: "",
-    slug: (data as { slug: string }).slug,
+    slug: data.slug,
   };
 }
 
@@ -64,7 +64,7 @@ describe("buildRelationGraph", () => {
         seat: "winterfell",
         liege: null,
         words: "",
-        sigil: { description: "" },
+        sigil: { description: "", provenance: "invented" },
         founded: starkFounded,
         status: "extant",
         "sworn-from": ["karstark"],
@@ -197,7 +197,7 @@ describe("findOrphanSlugs", () => {
         seat: "winterfell",
         liege: null,
         words: "",
-        sigil: { description: "" },
+        sigil: { description: "", provenance: "invented" },
         founded: starkFounded,
         status: "extant",
         "sworn-from": [],
@@ -302,7 +302,7 @@ describe("findOrphanSlugs", () => {
         seat: "winterfell",
         liege: null,
         words: "",
-        sigil: { description: "" },
+        sigil: { description: "", provenance: "invented" },
         founded: starkFounded,
         status: "extant",
         "sworn-from": [],

@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: A weeping willow, green on white
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: riverlands

@@ -6,11 +6,13 @@ liege: martell
 words: "Let Me Soar"
 sigil:
   description: A hooded blue hawk on a silver field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

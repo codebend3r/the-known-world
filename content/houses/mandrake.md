@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 sources:

@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 196
   era: AC
   precision: year
 status: exiled
+rank: exiled
 sworn-from: []
 cadet-houses: []
 heads:

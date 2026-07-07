@@ -6,11 +6,13 @@ liege: rowan
 words: ""
 sigil:
   description: A red-spotted white spider on a silver web, on a black field
+  provenance: canon
 founded:
   year: 45
   era: AC
   precision: decade
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

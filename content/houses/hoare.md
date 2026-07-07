@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: Two silver chains crossed saltirewise between a gold longship, a black raven, a green pine, and red grapes, on a field quartered black, blue, white, and gold
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
@@ -15,6 +16,7 @@ extinct:
   era: BC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: iron-islands

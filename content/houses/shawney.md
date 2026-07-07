@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: Per fess, blue, red, and green above, a white catfish on black below
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

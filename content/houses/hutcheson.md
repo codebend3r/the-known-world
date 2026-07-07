@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: Two red bendlets on gold, a red hand below pointing to a red sun above
+  provenance: invented
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: reach

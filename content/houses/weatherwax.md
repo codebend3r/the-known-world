@@ -6,11 +6,13 @@ liege: null
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 133
   era: AC
   precision: decade
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 notable-members:

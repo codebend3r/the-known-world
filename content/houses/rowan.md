@@ -6,11 +6,13 @@ liege: tyrell
 words: ""
 sigil:
   description: A great golden tree on a silver field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

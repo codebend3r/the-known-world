@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A brown bear's paw within a brown double tressure, on a white field
+  provenance: invented
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: crownlands

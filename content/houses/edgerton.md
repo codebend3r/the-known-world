@@ -6,11 +6,13 @@ liege: baratheon
 words: ""
 sigil:
   description: A flaming wheel on indigo, quartered with black and white half-fusily
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: crownlands

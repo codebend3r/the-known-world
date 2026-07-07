@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: Quarterly, a red boar's head on white and, beneath a gold bend sinister, a silver lion rampant regardant with a forked tail on red
+  provenance: canon
 founded:
   year: -5000
   era: age-of-heroes
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: westerlands

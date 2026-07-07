@@ -6,11 +6,13 @@ liege: hightower
 words: ""
 sigil:
   description: Quartered, a silver chalice on black and a black rose on gold
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

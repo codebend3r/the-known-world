@@ -6,11 +6,13 @@ liege: greyjoy
 words: ""
 sigil:
   description: An iron escutcheon with silver studs on a grey-green field strewn with longships
+  provenance: canon
 founded:
   year: -2000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: reach

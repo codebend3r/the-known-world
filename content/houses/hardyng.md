@@ -6,11 +6,13 @@ liege: waynwood
 words: ""
 sigil:
   description: A field of red and white diamonds
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: vale

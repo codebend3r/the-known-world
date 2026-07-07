@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A three-headed dragon sable breathing flames, on a field gules (the Targaryen arms with the colours reversed)
+  provenance: canon
 founded:
   year: 184
   era: AC
@@ -15,6 +16,7 @@ extinct:
   era: AC
   precision: year
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: crownlands

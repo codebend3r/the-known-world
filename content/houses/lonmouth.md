@@ -6,11 +6,13 @@ liege: baratheon
 words: "The Choice Is Yours"
 sigil:
   description: Quartered of six, alternating red lips strewn on yellow and yellow skulls strewn on black
+  provenance: semi-canon
 founded:
   year: -1000
   era: andal-invasion
   precision: era
 status: extant
+rank: other
 sworn-from: []
 cadet-houses: []
 region: stormlands

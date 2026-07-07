@@ -6,6 +6,7 @@ liege: null
 words: ""
 sigil:
   description: A crowned catfish, spotted grey, on a blue field
+  provenance: canon
 founded:
   year: -10000
   era: dawn-age
@@ -15,6 +16,7 @@ extinct:
   era: age-of-heroes
   precision: era
 status: extinct
+rank: extinct
 sworn-from: []
 cadet-houses: []
 region: riverlands

@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: An oak spoon within a white cartouche on orange and black lozengy
+  provenance: canon
 founded:
   year: 1
   era: AC
   precision: era
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: westerlands

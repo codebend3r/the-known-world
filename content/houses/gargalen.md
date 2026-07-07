@@ -6,11 +6,13 @@ liege: martell
 words: ""
 sigil:
   description: A red cockatrice with a black snake in its beak on a golden field
+  provenance: canon
 founded:
   year: -700
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: dorne

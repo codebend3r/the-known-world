@@ -6,11 +6,13 @@ liege: lannister
 words: "I Have No Rival"
 sigil:
   description: A peacock in his pride on a cream field
+  provenance: canon
 founded:
   year: -2000
   era: andal-invasion
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

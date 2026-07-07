@@ -6,11 +6,13 @@ liege: baelish
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: -300
   era: BC
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

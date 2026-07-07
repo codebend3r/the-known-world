@@ -6,11 +6,13 @@ liege: tully
 words: ""
 sigil:
   description: Quartered, a green dragon on a white field and a white tower on a black field
+  provenance: canon
 founded:
   year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: riverlands

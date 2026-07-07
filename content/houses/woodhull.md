@@ -6,11 +6,13 @@ liege: elesham
 words: ""
 sigil:
   description: ""
+  provenance: invented
 founded:
   year: 133
   era: AC
   precision: decade
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: vale

@@ -19,12 +19,13 @@ const blackfyre: Weapon = {
 };
 
 const targaryen: House = {
+  rank: "royal",
   slug: "targaryen",
   name: "House Targaryen",
   seat: "dragonstone",
   liege: null,
   words: "Fire and Blood",
-  sigil: { description: "" },
+  sigil: { description: "", provenance: "invented" },
   founded: { year: -114, era: "BC", precision: "year" },
   status: "exiled",
   "sworn-from": [],

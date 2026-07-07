@@ -6,11 +6,13 @@ liege: null
 words: "Hear Me Roar!"
 sigil:
   description: A golden lion rampant on a crimson field
+  provenance: canon
 founded:
   year: -10000
   era: age-of-heroes
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses:
   - lannister-of-lannisport

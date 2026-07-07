@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: An orange bend engrailed, on black
+  provenance: canon
 founded:
   year: -6000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: knightly
 sworn-from: []
 cadet-houses: []
 region: westerlands

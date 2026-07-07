@@ -6,11 +6,13 @@ liege: lannister
 words: ""
 sigil:
   description: A golden inverted pile on sky blue, a sun in the upper left
+  provenance: semi-canon
 founded:
   year: -2000
   era: andal-invasion
   precision: legendary
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: westerlands

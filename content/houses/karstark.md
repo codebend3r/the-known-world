@@ -6,11 +6,13 @@ liege: stark
 words: "The Sun of Winter"
 sigil:
   description: A white sunburst on a black field
+  provenance: canon
 founded:
   year: -1000
   era: age-of-heroes
   precision: era
 status: extant
+rank: lordly
 sworn-from: []
 cadet-houses: []
 region: north
