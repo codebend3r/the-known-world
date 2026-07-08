@@ -617,6 +617,116 @@ describe("FilteredHouseList page persistence", () => {
   });
 });
 
+describe("FilteredHouseList status filter", () => {
+  const mixed: HouseItem[] = [
+    { slug: "stark", name: "Stark", region: "north", regionLabel: "The North" },
+    {
+      slug: "reyne",
+      name: "Reyne",
+      region: "westerlands",
+      regionLabel: "The Westerlands",
+      extinct: true,
+    },
+    {
+      slug: "gardener",
+      name: "Gardener",
+      region: "reach",
+      regionLabel: "The Reach",
+      extinct: true,
+    },
+  ];
+
+  it("exposes a house-status filter group", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    expect(screen.getByRole("group", { name: /house status/i })).toBeDefined();
+  });
+
+  it("shows every house regardless of status by default", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    expect(screen.getAllByRole("link").length).toBe(3);
+  });
+
+  it("shows only extinct houses when Extinct is selected", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    const cards = screen.getAllByRole("link");
+    expect(cards.map((c) => c.textContent)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Reyne"),
+        expect.stringContaining("Gardener"),
+      ]),
+    );
+    expect(cards.length).toBe(2);
+  });
+
+  it("shows only standing houses when Standing is selected", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /standing houses/i }));
+    const cards = screen.getAllByRole("link");
+    expect(cards.length).toBe(1);
+    expect(cards[0].textContent).toContain("Stark");
+  });
+
+  it("reflects the status filter in the total count", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    expect(screen.getByText("3 houses")).toBeDefined();
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    expect(screen.getByText("2 houses")).toBeDefined();
+  });
+
+  it("hydrates the filter from ?status=extinct on mount", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />, {
+      searchParams: "?status=extinct",
+    });
+    expect(screen.getAllByRole("link").length).toBe(2);
+    expect(
+      screen
+        .getByRole("button", { name: /extinct houses/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
+  });
+
+  it("writes ?status=extinct when Extinct is selected", async () => {
+    const { onUrlUpdate } = renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?status=extinct");
+  });
+
+  it("removes ?status= when the filter returns to Any status", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={mixed} />,
+      {
+        searchParams: "?status=extinct",
+      },
+    );
+    fireEvent.click(screen.getByRole("button", { name: /any status/i }));
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
+  });
+
+  it("resets ?page= when the status filter changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
+      { searchParams: "?page=2" },
+    );
+    fireEvent.click(screen.getByRole("button", { name: /standing houses/i }));
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?status=standing");
+  });
+
+  it("applies the status filter inside region grouping", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    expect(
+      screen.getByRole("button", { name: /the westerlands/i }),
+    ).toBeDefined();
+    expect(screen.getByRole("button", { name: /the reach/i })).toBeDefined();
+    expect(screen.queryByRole("button", { name: /the north/i })).toBeNull();
+  });
+});
+
 describe("FilteredHouseList view toggle", () => {
   it("starts in grid view by default", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);

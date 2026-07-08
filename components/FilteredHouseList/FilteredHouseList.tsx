@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { useQueryStates } from "nuqs";
+import { useQueryState, useQueryStates, parseAsStringLiteral } from "nuqs";
 import { Accordion } from "@/components/Accordion";
 import { Sigil } from "@/components/Sigil";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
@@ -35,6 +35,7 @@ export type HouseItem = {
   name: string;
   region: string | null;
   regionLabel: string | null;
+  extinct?: boolean;
 };
 
 type Props = {
@@ -82,6 +83,20 @@ const GROUP_OPTIONS = [
   },
 ];
 
+type StatusFilter = "all" | "standing" | "extinct";
+
+const STATUS_FILTERS = ["all", "standing", "extinct"] as const;
+
+const STATUS_OPTIONS = [
+  { value: "all" as const, label: "Any status", icon: <AllStatusIcon /> },
+  {
+    value: "standing" as const,
+    label: "Standing houses",
+    icon: <StandingIcon />,
+  },
+  { value: "extinct" as const, label: "Extinct houses", icon: <ExtinctIcon /> },
+];
+
 export function FilteredHouseList({
   items,
   pageSize = DEFAULT_PAGE_SIZE,
@@ -93,6 +108,10 @@ export function FilteredHouseList({
   const [{ search, dir, size, page: rawPage }, setParams] =
     useQueryStates(parsers);
   const page = Math.max(1, rawPage);
+  const [status, setStatus] = useQueryState(
+    "status",
+    parseAsStringLiteral(STATUS_FILTERS).withDefault("all"),
+  );
 
   const [userValue, setUserValue] = useState<string | undefined>(undefined);
   const [userDebounced, setUserDebounced] = useState<string | undefined>(
@@ -160,8 +179,18 @@ export function FilteredHouseList({
     return dir === "desc" ? arr.reverse() : arr;
   }, [items, dir]);
 
-  const filtered = filterByName(sorted, debounced);
-  const total = items.length;
+  const statusFiltered = useMemo(
+    () =>
+      status === "all"
+        ? sorted
+        : sorted.filter((item) =>
+            status === "extinct" ? !!item.extinct : !item.extinct,
+          ),
+    [sorted, status],
+  );
+
+  const filtered = filterByName(statusFiltered, debounced);
+  const total = statusFiltered.length;
   const matching = filtered.length;
   const hasQuery = debounced.trim().length > 0;
   const noun = total === 1 ? "house" : "houses";
@@ -180,13 +209,13 @@ export function FilteredHouseList({
     const known = REGION_SLUGS.map((slug) => ({
       slug,
       label: regionLabel(slug) ?? slug,
-      items: sorted.filter((item) => item.region === slug),
+      items: statusFiltered.filter((item) => item.region === slug),
     })).filter((group) => group.items.length > 0);
-    const other = sorted.filter((item) => item.region === null);
+    const other = statusFiltered.filter((item) => item.region === null);
     return other.length > 0
       ? [...known, { slug: "other", label: "Other Houses", items: other }]
       : known;
-  }, [sorted]);
+  }, [statusFiltered]);
 
   const writePage = (next: number) => {
     setParams({ page: next });
@@ -199,6 +228,11 @@ export function FilteredHouseList({
 
   const handleDirChange = (next: SortDirection) => {
     setParams({ dir: next, page: 1 });
+  };
+
+  const handleStatusChange = (next: StatusFilter) => {
+    setStatus(next === "all" ? null : next);
+    setParams({ page: 1 });
   };
 
   const listClass = cx(styles.list, view === "list" && styles.listView);
@@ -305,6 +339,12 @@ export function FilteredHouseList({
           />
         )}
         <div className={styles.toggles}>
+          <ViewToggle
+            options={STATUS_OPTIONS}
+            value={status}
+            onChange={handleStatusChange}
+            ariaLabel="House status"
+          />
           <SortToggle value={dir} onChange={handleDirChange} />
           <ViewToggle
             options={VIEW_OPTIONS}
@@ -405,5 +445,77 @@ function RegionAccordion({
         </ul>
       )}
     </Accordion>
+  );
+}
+
+function AllStatusIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M8 1.5 L13.5 3.5 V8 C13.5 11.3 8 14.5 8 14.5 C8 14.5 2.5 11.3 2.5 8 V3.5 Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function StandingIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M4 2 V14"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <path d="M5 2.5 L13 4.5 L5 6.5 Z" fill="currentColor" />
+    </svg>
+  );
+}
+
+function ExtinctIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M4 2 V14"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinecap="round"
+      />
+      <path
+        d="M5 2.5 L13 4.5 L5 6.5 Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M2 2 L14 14"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
