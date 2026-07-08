@@ -99,9 +99,41 @@ describe("FilteredHouseList", () => {
     expect(container.querySelector(".cardWesterlands")).not.toBeNull();
   });
 
+  it("shows the total house count across all pages", () => {
+    renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
+    expect(screen.getByText("70 houses")).toBeDefined();
+  });
+
+  it("uses the singular noun for a single house", () => {
+    renderWithNuqs(<FilteredHouseList items={items.slice(0, 1)} />);
+    expect(screen.getByText("1 house")).toBeDefined();
+  });
+
+  it("updates the count to matching-of-total when a search filters the list", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "stark" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(screen.getByText("1 of 3 houses")).toBeDefined();
+  });
+
+  it("reflects a zero count when nothing matches the search", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.change(screen.getByRole("searchbox"), {
+      target: { value: "zzz" },
+    });
+    act(() => {
+      vi.advanceTimersByTime(300);
+    });
+    expect(screen.getByText("0 of 3 houses")).toBeDefined();
+  });
+
   it("renders the search input, sort toggle, and view toggle inside the same row", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
-    const row = container.querySelector(".rowWithSort");
+    const row = container.querySelector(".controls");
     expect(row).not.toBeNull();
     expect(row?.querySelector("input")).not.toBeNull();
     expect(
@@ -110,6 +142,87 @@ describe("FilteredHouseList", () => {
     expect(
       row?.querySelector('[role="group"][aria-label="View"]'),
     ).not.toBeNull();
+  });
+});
+
+describe("FilteredHouseList region grouping", () => {
+  const northAndVale: HouseItem[] = [
+    { slug: "stark", name: "Stark", region: "north", regionLabel: "The North" },
+    {
+      slug: "bolton",
+      name: "Bolton",
+      region: "north",
+      regionLabel: "The North",
+    },
+    { slug: "arryn", name: "Arryn", region: "vale", regionLabel: "The Vale" },
+  ];
+
+  it("exposes a grouping toggle", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    expect(screen.getByRole("group", { name: /grouping/i })).toBeDefined();
+  });
+
+  it("replaces the flat list with a collapsed accordion per region", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    // The global search input is gone; accordions supply their own.
+    expect(screen.queryByRole("searchbox")).toBeNull();
+    const north = screen.getByRole("button", { name: /the north/i });
+    expect(north.getAttribute("aria-expanded")).toBe("false");
+    expect(
+      screen.getByRole("button", { name: /the westerlands/i }),
+    ).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: /the riverlands/i }),
+    ).toBeDefined();
+    // Collapsed accordions render no house cards.
+    expect(screen.queryAllByRole("link").length).toBe(0);
+  });
+
+  it("only lists regions that have houses", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    expect(screen.getByRole("button", { name: /the north/i })).toBeDefined();
+    expect(screen.getByRole("button", { name: /the vale/i })).toBeDefined();
+    expect(
+      screen.queryByRole("button", { name: /the riverlands/i }),
+    ).toBeNull();
+  });
+
+  it("shows the house count in each region header", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    expect(
+      screen.getByRole("button", { name: /the north/i }).textContent,
+    ).toContain("2");
+  });
+
+  it("expands a region to reveal its houses", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.click(screen.getByRole("button", { name: /the north/i }));
+    const links = screen.getAllByRole("link");
+    expect(links.map((l) => l.textContent)).toEqual(
+      expect.arrayContaining([expect.stringContaining("Stark")]),
+    );
+    expect(links.length).toBe(2);
+  });
+
+  it("scopes each region's search input to that region's houses", () => {
+    renderWithNuqs(<FilteredHouseList items={northAndVale} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.click(screen.getByRole("button", { name: /the north/i }));
+    const search = screen.getByRole("searchbox", { name: /search the north/i });
+    fireEvent.change(search, { target: { value: "bolton" } });
+    const links = screen.getAllByRole("link");
+    expect(links.length).toBe(1);
+    expect(links[0].textContent).toContain("Bolton");
+  });
+
+  it("keeps the grouping choice in localStorage", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    expect(window.localStorage.getItem("gota:houses-grouping")).toBe("region");
   });
 });
 
@@ -501,6 +614,116 @@ describe("FilteredHouseList page persistence", () => {
     await flushNuqs();
     expect(lastSearchParams(onUrlUpdate).get("dir")).toBe("desc");
     expect(lastSearchParams(onUrlUpdate).get("page")).toBe("2");
+  });
+});
+
+describe("FilteredHouseList status filter", () => {
+  const mixed: HouseItem[] = [
+    { slug: "stark", name: "Stark", region: "north", regionLabel: "The North" },
+    {
+      slug: "reyne",
+      name: "Reyne",
+      region: "westerlands",
+      regionLabel: "The Westerlands",
+      extinct: true,
+    },
+    {
+      slug: "gardener",
+      name: "Gardener",
+      region: "reach",
+      regionLabel: "The Reach",
+      extinct: true,
+    },
+  ];
+
+  it("exposes a house-status filter group", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    expect(screen.getByRole("group", { name: /house status/i })).toBeDefined();
+  });
+
+  it("shows every house regardless of status by default", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    expect(screen.getAllByRole("link").length).toBe(3);
+  });
+
+  it("shows only extinct houses when Extinct is selected", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    const cards = screen.getAllByRole("link");
+    expect(cards.map((c) => c.textContent)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Reyne"),
+        expect.stringContaining("Gardener"),
+      ]),
+    );
+    expect(cards.length).toBe(2);
+  });
+
+  it("shows only standing houses when Standing is selected", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /standing houses/i }));
+    const cards = screen.getAllByRole("link");
+    expect(cards.length).toBe(1);
+    expect(cards[0].textContent).toContain("Stark");
+  });
+
+  it("reflects the status filter in the total count", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    expect(screen.getByText("3 houses")).toBeDefined();
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    expect(screen.getByText("2 houses")).toBeDefined();
+  });
+
+  it("hydrates the filter from ?status=extinct on mount", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />, {
+      searchParams: "?status=extinct",
+    });
+    expect(screen.getAllByRole("link").length).toBe(2);
+    expect(
+      screen
+        .getByRole("button", { name: /extinct houses/i })
+        .getAttribute("aria-pressed"),
+    ).toBe("true");
+  });
+
+  it("writes ?status=extinct when Extinct is selected", async () => {
+    const { onUrlUpdate } = renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?status=extinct");
+  });
+
+  it("removes ?status= when the filter returns to Any status", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={mixed} />,
+      {
+        searchParams: "?status=extinct",
+      },
+    );
+    fireEvent.click(screen.getByRole("button", { name: /any status/i }));
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
+  });
+
+  it("resets ?page= when the status filter changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
+      { searchParams: "?page=2" },
+    );
+    fireEvent.click(screen.getByRole("button", { name: /standing houses/i }));
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?status=standing");
+  });
+
+  it("applies the status filter inside region grouping", () => {
+    renderWithNuqs(<FilteredHouseList items={mixed} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    expect(
+      screen.getByRole("button", { name: /the westerlands/i }),
+    ).toBeDefined();
+    expect(screen.getByRole("button", { name: /the reach/i })).toBeDefined();
+    expect(screen.queryByRole("button", { name: /the north/i })).toBeNull();
   });
 });
 

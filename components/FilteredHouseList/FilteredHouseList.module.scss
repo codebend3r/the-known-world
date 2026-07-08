@@ -1,5 +1,40 @@
 @use "breakpoints" as bp;
 
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.searchInput {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.toggles {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.regions {
+  display: grid;
+  gap: 0.75rem;
+  justify-self: stretch;
+}
+
+.regionSearch {
+  font-size: 1.1rem;
+  padding: 0.6rem 0.75rem;
+
+  @media (max-width: bp.$md) {
+    font-size: 1.2rem;
+  }
+}
+
 // `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
 // and `.subtitle` size to their content. `justify-self: stretch` opts
 // this grid back out so it fills the full parchment column.
