@@ -51,6 +51,20 @@ export interface LaidOutChart {
   bounds: { width: number; height: number };
 }
 
+export function childPath({ from, to, busY }: LayoutChildEdge): string {
+  return `M ${from.x} ${from.y} V ${busY} H ${to.x} V ${to.y}`;
+}
+
+export function isLinkable({
+  placeholder,
+  characterSlug,
+}: {
+  placeholder: boolean;
+  characterSlug: string | null;
+}): boolean {
+  return !placeholder && characterSlug !== null;
+}
+
 function personSlotWidth(name: string, titles: ReadonlyArray<string>): number {
   return Math.max(DOT_R * 2, estimateLabelWidth(name, titles));
 }

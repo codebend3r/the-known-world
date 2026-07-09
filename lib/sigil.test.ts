@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { sigilFile } from "@/components/Sigil/Sigil";
+import { sigilFile, SIGIL_SLUGS } from "@/lib/sigil";
 
 describe("sigilFile", () => {
   it("returns the slug when it is in SIGIL_SLUGS", () => {
@@ -38,5 +38,12 @@ describe("sigilFile", () => {
     expect(sigilFile({ slug: "not-a-house", region: "beyond-the-wall" })).toBe(
       "unknown-westeros",
     );
+  });
+
+  it("registers the newly added standalone house sigils", () => {
+    ["ambrose", "brune-dyre-den", "massey", "charlton"].forEach((slug) => {
+      expect(SIGIL_SLUGS.has(slug)).toBe(true);
+      expect(sigilFile({ slug, region: "crownlands" })).toBe(slug);
+    });
   });
 });

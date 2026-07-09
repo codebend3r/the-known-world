@@ -13,12 +13,16 @@ import {
   LABEL_FONT_SIZE,
   estimateLabelWidth,
   formatLabelText,
+  formatTitle,
 } from "@/lib/family-tree-label";
 import {
   LAYOUT_CONSTANTS,
+  childPath,
+  isLinkable,
   type LaidOutChart,
   type LayoutPerson,
 } from "@/lib/family-tree-layout";
+import { clamp } from "@/lib/math";
 import { useIsMobile } from "@/lib/useIsMobile";
 import {
   zoomAtPoint,
@@ -64,10 +68,6 @@ function formatLabel(person: LayoutPerson): string {
   return formatLabelText(person.name, person.titles);
 }
 
-function formatTitle(person: LayoutPerson): string {
-  return person.alias ? `${person.name} (${person.alias})` : person.name;
-}
-
 function dotClassName(p: LayoutPerson): string {
   return cx(
     styles.dot,
@@ -77,7 +77,7 @@ function dotClassName(p: LayoutPerson): string {
 }
 
 function clampScale(scale: number): number {
-  return Math.min(MAX_SCALE, Math.max(MIN_SCALE, scale));
+  return clamp({ value: scale, min: MIN_SCALE, max: MAX_SCALE });
 }
 
 type ScreenToViewBox = {
@@ -134,15 +134,6 @@ function getReducedMotionSnapshot(): boolean {
 
 function getReducedMotionServerSnapshot(): boolean {
   return true;
-}
-
-function isLinkable(p: LayoutPerson): boolean {
-  return !p.placeholder && p.characterSlug !== null;
-}
-
-function childPath(edge: LaidOutChart["childEdges"][number]): string {
-  const { from, to, busY } = edge;
-  return `M ${from.x} ${from.y} V ${busY} H ${to.x} V ${to.y}`;
 }
 
 type DragState = {
@@ -271,9 +262,16 @@ export function FamilyTreeChart({ chart }: Props) {
               data-label-bg
             />
           );
-          const title = <title>{formatTitle(p)}</title>;
+          const title = (
+            <title>{formatTitle({ name: p.name, alias: p.alias })}</title>
+          );
           const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
-          if (isLinkable(p)) {
+          if (
+            isLinkable({
+              placeholder: p.placeholder,
+              characterSlug: p.characterSlug,
+            })
+          ) {
             return (
               <a key={key} href={`/characters/${p.characterSlug}/`}>
                 {title}

@@ -5,6 +5,7 @@ import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
   isPageSize,
+  isGrouping,
   searchParser,
   listSearchParsers,
 } from "@/lib/listSearchParams";
@@ -55,5 +56,20 @@ describe("listSearchParsers", () => {
     expect(parsers.size.defaultValue).toBe(48);
     expect(parsers.dir.defaultValue).toBe("asc");
     expect(parsers.page.defaultValue).toBe(1);
+  });
+});
+
+describe("isGrouping", () => {
+  it("accepts the two supported groupings", () => {
+    expect(isGrouping("flat")).toBe(true);
+    expect(isGrouping("region")).toBe(true);
+  });
+
+  it("rejects any other value", () => {
+    expect(isGrouping("nested")).toBe(false);
+    expect(isGrouping("")).toBe(false);
+    expect(isGrouping(null)).toBe(false);
+    expect(isGrouping(undefined)).toBe(false);
+    expect(isGrouping(1)).toBe(false);
   });
 });

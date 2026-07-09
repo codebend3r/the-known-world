@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
+import { isActive } from "@/lib/nav";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
@@ -61,12 +62,6 @@ const ITEMS: MenuItem[] = [
     visible: false,
   },
 ];
-
-function isActive(pathname: string | null, href: string): boolean {
-  if (!pathname) return false;
-  const normalised = pathname.endsWith("/") ? pathname : `${pathname}/`;
-  return normalised === href || normalised.startsWith(href);
-}
 
 export function SiteMenu() {
   const pathname = usePathname();
@@ -161,7 +156,7 @@ export function SiteMenu() {
         <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.navList}>
             {ITEMS.filter((item) => item.visible).map((item) => {
-              const active = isActive(pathname, item.href);
+              const active = isActive({ pathname, href: item.href });
               return (
                 <li key={item.href} className={styles.navItem}>
                   <Link

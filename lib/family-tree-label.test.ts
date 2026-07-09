@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import {
   estimateLabelWidth,
   formatLabelText,
+  formatLifespan,
+  formatTitle,
   wasKing,
 } from "@/lib/family-tree-label";
 
@@ -51,5 +53,37 @@ describe("estimateLabelWidth", () => {
     expect(
       estimateLabelWidth("Aegon IV Targaryen", ["King of the Andals"]),
     ).toBe(text.length * 5.5 + 12);
+  });
+});
+
+describe("formatTitle", () => {
+  it("appends the alias in parentheses when present", () => {
+    expect(formatTitle({ name: "Petyr Baelish", alias: "Littlefinger" })).toBe(
+      "Petyr Baelish (Littlefinger)",
+    );
+  });
+
+  it("returns just the name when there is no alias", () => {
+    expect(formatTitle({ name: "Eddard Stark", alias: null })).toBe(
+      "Eddard Stark",
+    );
+  });
+});
+
+describe("formatLifespan", () => {
+  it("joins born and died years with an en dash", () => {
+    expect(formatLifespan({ born: 262, died: 299 })).toBe("262–299");
+  });
+
+  it("leaves an open range when the death year is unknown", () => {
+    expect(formatLifespan({ born: 262, died: null })).toBe("262–");
+  });
+
+  it("uses a question mark for an unknown birth year", () => {
+    expect(formatLifespan({ born: null, died: 299 })).toBe("?–299");
+  });
+
+  it("returns null when both years are unknown", () => {
+    expect(formatLifespan({ born: null, died: null })).toBeNull();
   });
 });

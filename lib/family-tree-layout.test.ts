@@ -1,5 +1,10 @@
 import { describe, it, expect } from "vitest";
-import { layoutFamilyTree, LAYOUT_CONSTANTS } from "@/lib/family-tree-layout";
+import {
+  childPath,
+  isLinkable,
+  layoutFamilyTree,
+  LAYOUT_CONSTANTS,
+} from "@/lib/family-tree-layout";
 import type {
   EnrichedTreeNode,
   EnrichedTreeSpouse,
@@ -204,5 +209,37 @@ describe("layoutFamilyTree", () => {
     expect(result.spouseEdges[1].midX).toBe((aemma.x + alicent.x) / 2);
     expect(result.spouseEdges[0].midY).toBe(viserys.y);
     expect(result.spouseEdges[1].midY).toBe(viserys.y);
+  });
+});
+
+describe("childPath", () => {
+  it("draws a parent-to-child path down to the bus, across, then down", () => {
+    expect(
+      childPath({ from: { x: 10, y: 20 }, to: { x: 40, y: 80 }, busY: 50 }),
+    ).toBe("M 10 20 V 50 H 40 V 80");
+  });
+
+  it("handles a straight vertical drop when x is unchanged", () => {
+    expect(
+      childPath({ from: { x: 30, y: 0 }, to: { x: 30, y: 60 }, busY: 30 }),
+    ).toBe("M 30 0 V 30 H 30 V 60");
+  });
+});
+
+describe("isLinkable", () => {
+  it("is linkable for a real person with a character slug", () => {
+    expect(isLinkable({ placeholder: false, characterSlug: "jon-snow" })).toBe(
+      true,
+    );
+  });
+
+  it("is not linkable for a placeholder", () => {
+    expect(isLinkable({ placeholder: true, characterSlug: "jon-snow" })).toBe(
+      false,
+    );
+  });
+
+  it("is not linkable without a character slug", () => {
+    expect(isLinkable({ placeholder: false, characterSlug: null })).toBe(false);
   });
 });

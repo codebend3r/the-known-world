@@ -27,6 +27,12 @@ export function isPageSize(value: number): value is PageSize {
   return PAGE_SIZES.some((size) => size === value);
 }
 
+export type Grouping = "flat" | "region";
+
+export function isGrouping(value: unknown): value is Grouping {
+  return value === "flat" || value === "region";
+}
+
 export const searchParser = parseAsString.withDefault("");
 
 export function listSearchParsers(pageSizeDefault: PageSize) {

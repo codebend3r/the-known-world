@@ -29,3 +29,26 @@ export function estimateLabelWidth(
   const text = formatLabelText(name, titles);
   return text.length * LABEL_CHAR_WIDTH + LABEL_HORIZONTAL_PADDING * 2;
 }
+
+export function formatTitle({
+  name,
+  alias,
+}: {
+  name: string;
+  alias: string | null;
+}): string {
+  return alias ? `${name} (${alias})` : name;
+}
+
+export function formatLifespan({
+  born,
+  died,
+}: {
+  born: number | null;
+  died: number | null;
+}): string | null {
+  if (born === null && died === null) return null;
+  const b = born === null ? "?" : String(born);
+  const d = died === null ? "" : String(died);
+  return d ? `${b}–${d}` : `${b}–`;
+}
