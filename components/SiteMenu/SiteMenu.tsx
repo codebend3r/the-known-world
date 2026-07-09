@@ -21,7 +21,7 @@ const ITEMS: MenuItem[] = [
     href: "/maps/",
     label: "Maps",
     icon: "/menu-icons/map.png",
-    visible: false,
+    visible: true,
   },
   {
     href: "/timeline/",
