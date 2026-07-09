@@ -160,7 +160,7 @@ const SLUG_ALIASES: Record<string, string> = {
   unknown: "unknown-westeros",
 };
 
-function sigilFile({
+export function sigilFile({
   slug,
   region,
 }: {
