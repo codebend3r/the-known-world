@@ -1,16 +1,27 @@
 import type { Metadata } from "next";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
-import { ComingSoonPage } from "@/components/ComingSoonPage";
+import { PageHeading } from "@/components/PageHeading";
+import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { WorldMap } from "@/components/WorldMap";
 
 export const metadata: Metadata = {
   title: "Maps · Atlas of the Known World",
-  description: "The Maps section of the atlas — coming soon.",
+  description: "An interactive map of the Known World.",
 };
 
 export default function MapsPage() {
   return (
     <ParchmentLayout>
-      <ComingSoonPage title="Maps" />
+      <PageHeading
+        title="Maps"
+        icon={sectionGlyphs.maps}
+        subtitle="The Known World, from the Sunset Sea to the Shadow Lands."
+      />
+      <WorldMap
+        src="/map/map_natural_8K.jpg"
+        naturalWidth={7680}
+        naturalHeight={7680}
+      />
     </ParchmentLayout>
   );
 }

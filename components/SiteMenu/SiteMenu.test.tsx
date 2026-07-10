@@ -19,7 +19,7 @@ describe("SiteMenu", () => {
     expect(links).toHaveLength(0);
   });
 
-  it("reveals only the visible primary nav items (Timeline, Houses, Characters, Weapons, Battles) when opened", () => {
+  it("reveals only the visible primary nav items (Maps, Timeline, Houses, Characters, Weapons, Battles) when opened", () => {
     render(<SiteMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
@@ -29,6 +29,7 @@ describe("SiteMenu", () => {
     const links = screen.getAllByRole("link");
     const hrefs = links.map((l) => l.getAttribute("href") ?? "");
     expect(hrefs).toEqual([
+      "/maps/",
       "/timeline/",
       "/houses/",
       "/characters/",
@@ -36,6 +37,7 @@ describe("SiteMenu", () => {
       "/battles/",
     ]);
     expect(links.map((l) => l.textContent?.trim())).toEqual([
+      "Maps",
       "Timeline",
       "Houses",
       "Characters",
@@ -44,14 +46,13 @@ describe("SiteMenu", () => {
     ]);
   });
 
-  it("does not render hidden items (Maps, Dragons)", () => {
+  it("does not render hidden items (Dragons)", () => {
     render(<SiteMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
     const hrefs = screen
       .getAllByRole("link")
       .map((l) => l.getAttribute("href") ?? "");
-    expect(hrefs).not.toContain("/maps/");
     expect(hrefs).not.toContain("/dragons/");
   });
 

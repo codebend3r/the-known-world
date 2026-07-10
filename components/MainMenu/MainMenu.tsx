@@ -11,7 +11,6 @@ export function MainMenu() {
         glyph={sectionGlyphs.maps}
         href="/maps/"
         status="coming-soon"
-        visible={false}
       />
       <MainMenuTile
         title="Timeline"
