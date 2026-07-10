@@ -1,15 +1,8 @@
 import Link from "next/link";
 import type { TreeNode } from "@/lib/family-tree";
 import { cx } from "@/lib/cx";
-import { wasKing } from "@/lib/family-tree-label";
+import { formatLifespan, wasKing } from "@/lib/family-tree-label";
 import styles from "@/components/FamilyTree/FamilyTree.module.scss";
-
-function formatLifespan(node: TreeNode): string | null {
-  if (node.born === null && node.died === null) return null;
-  const b = node.born === null ? "?" : String(node.born);
-  const d = node.died === null ? "" : String(node.died);
-  return d ? `${b}–${d}` : `${b}–`;
-}
 
 type NameProps = {
   slug: string | null;
@@ -78,7 +71,7 @@ function sexClass(sex: "m" | "f" | null): string | false {
 }
 
 function PersonLabel({ node }: { node: TreeNode }) {
-  const lifespan = formatLifespan(node);
+  const lifespan = formatLifespan({ born: node.born, died: node.died });
   const className = cx(
     styles.name,
     sexClass(node.sex),

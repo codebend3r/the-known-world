@@ -19,9 +19,10 @@ import { bySlug } from "@/lib/collections";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
-import { Sigil, SIGIL_SLUGS } from "@/components/Sigil";
+import { Sigil } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
-import type { Character } from "@/lib/schemas";
+import { SIGIL_SLUGS } from "@/lib/sigil";
+import { resolveRelations, type RelationRef } from "@/lib/character-relations";
 import styles from "@/app/characters/[slug]/page.module.scss";
 
 const REGION_PORTRAIT_CLASS: Record<string, string | undefined> = {
@@ -54,29 +55,6 @@ export async function generateMetadata({
   return {
     title: `${character.frontmatter.name} · Atlas of the Known World`,
   };
-}
-
-type RelationRef = {
-  slug: string;
-  name: string;
-  linkable: boolean;
-};
-
-function resolveRelations(
-  slugs: readonly string[],
-  charactersBySlug: Map<string, Character>,
-): RelationRef[] {
-  return slugs.map((slug) => {
-    const character = charactersBySlug.get(slug);
-    if (!character) {
-      return { slug, name: slug, linkable: false };
-    }
-    return {
-      slug,
-      name: character.name,
-      linkable: !character.placeholder,
-    };
-  });
 }
 
 function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
@@ -139,9 +117,9 @@ export default async function CharacterPage({
         x.house !== undefined,
     );
 
-  const parents = resolveRelations(fm.parents, charactersBySlug);
-  const spouses = resolveRelations(fm.spouses, charactersBySlug);
-  const children = resolveRelations(fm.children, charactersBySlug);
+  const parents = resolveRelations({ slugs: fm.parents, charactersBySlug });
+  const spouses = resolveRelations({ slugs: fm.spouses, charactersBySlug });
+  const children = resolveRelations({ slugs: fm.children, charactersBySlug });
   const hasFamily = parents.length + spouses.length + children.length > 0;
 
   const bornBy = allWeapons

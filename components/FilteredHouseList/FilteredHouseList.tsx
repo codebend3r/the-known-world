@@ -24,8 +24,10 @@ import {
   MIN_PAGE_SIZE,
   PAGE_SIZE_OPTIONS,
   isPageSize,
+  isGrouping,
   listSearchParsers,
   type PageSize,
+  type Grouping,
 } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList/FilteredHouseList.module.scss";
@@ -42,12 +44,6 @@ type Props = {
   items: HouseItem[];
   pageSize?: number;
 };
-
-type Grouping = "flat" | "region";
-
-function isGrouping(value: unknown): value is Grouping {
-  return value === "flat" || value === "region";
-}
 
 const VIEW_STORAGE_KEY = "gota:houses-view";
 const GROUPING_STORAGE_KEY = "gota:houses-grouping";
