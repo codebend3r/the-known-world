@@ -32,9 +32,14 @@ the standard `ParchmentLayout` shell, which already caps content width at
 ## Approach
 
 Reuse `react-svg-pan-zoom` (already a dependency, used by the legacy
-`MapStage`). The raster map is wrapped in an SVG `<image>` whose logical size
-equals the natural raster size (7680×7680), so a matrix scale of `1` equals
-native pixels.
+`MapStage`). The SVG child is sized to the measured viewer, and the raster
+map is drawn as an `<image>` centered at fitted size inside it — so the
+library's default view (identity matrix) already shows the whole map:
+scale `1` = fit, `1 / fitScale` = native pixels. No initial value needs to
+be seeded, which matters because the published `@types/react-svg-pan-zoom`
+typings disagree with the 3.x runtime (`Value.version` is `2` in the types
+but `3` at runtime), making a hand-built `Value` both cast-reliant and
+silently invalid.
 
 Alternatives considered:
 
@@ -46,29 +51,33 @@ Alternatives considered:
 
 ## Behavior
 
-- **Viewer**: controlled `ReactSVGPanZoom` with `tool={TOOL_AUTO}` (drag pans,
-  double-click zooms), `detectWheel` + `detectPinchGesture` on by default,
-  `preventPanOutside` so the map can't be flung off-screen. Toolbar and
-  miniature are disabled; our own controls replace them.
-- **Value state**: `useState<Value | null>(null)`. The viewer accepts `null`
-  and falls back to its internal default; every interaction emits a complete
-  `Value` through `onChangeValue`. No type casts (unlike the legacy
-  `{} as Value`).
-- **Programmatic ops** go through a ref to the viewer instance:
-  `zoomOnViewerCenter`, `pan`, `setPointOnViewerCenter`.
-- **Initial fit**: once the container is measured, an effect centers the map at
-  fit scale via `setPointOnViewerCenter(3840, 3840, min(w/7680, h/7680))`.
-  Later container resizes keep the user's current view.
-- **Zoom bounds**: `scaleFactorMin: 0.02` (whole map fits even on a small
-  phone), `scaleFactorMax: 1` (100% = native 8K pixels). Button/keyboard zoom
-  step is ×1.5.
+- **Viewer**: `UncontrolledReactSVGPanZoom` with `tool={TOOL_AUTO}` (drag
+  pans, double-click zooms), `detectWheel` + `detectPinchGesture` on by
+  default, `preventPanOutside` so drags can't fling the map off-screen.
+  Toolbar and miniature are disabled; our own controls replace them. The
+  uncontrolled variant initializes its own state with `{}`, so no `Value`
+  is constructed by hand and no dev-mode migration warning fires.
+- **Programmatic ops** go through a ref to the wrapper instance: `pan`,
+  `zoomOnViewerCenter`, `fitToViewer`. The wrapper's declared
+  `getValue()`/`setValue()` do not exist at runtime; the live value is read
+  from the wrapper's public `Viewer` field (the inner viewer instance),
+  typed via a local module augmentation
+  (`components/WorldMap/react-svg-pan-zoom.d.ts`).
+- **Initial fit**: geometric — the fitted, centered placement is baked into
+  the `<image>` coordinates, so first paint is already correct with no
+  effect, no flash, and no seeded value. Container resizes re-derive the
+  drawn geometry.
+- **Zoom bounds**: `scaleFactorMin: 1` (can't zoom out past the fitted
+  view), `scaleFactorMax: 1 / fitScale` (100% = native 8K pixels).
+  Button/keyboard zoom step is ×1.5.
 - **Pan step** (buttons/keys): 20% of the viewer dimension per press,
   converted to SVG units by dividing by the current scale, so a press always
   moves the view the same on-screen distance at any zoom. Arrows move the
   viewpoint (content shifts the opposite way), matching map-app convention.
 - **Keyboard**: the stage is focusable (`tabIndex=0`,
   `role="application"`, `aria-label`). `+`/`=` zoom in, `-` zoom out, arrow
-  keys pan, `0` resets to the fitted view. Handled keys call
+  keys pan, `0` resets to the fitted view (`fitToViewer()`, which equals the
+  initial view under the fitted geometry). Handled keys call
   `preventDefault()` so arrows don't scroll the page.
 - **Loading**: a CSS-only “Unfurling the map…” line sits behind the
   transparent viewer and is covered once the JPEG paints. No JS state.
@@ -110,14 +119,15 @@ Alternatives considered:
 
 ## Testing
 
-Component tests mock `ReactSVGPanZoom` as a class stub whose instance methods
-delegate to `vi.hoisted` spies, mirroring the `MapStage.test.tsx`
+Component tests mock `UncontrolledReactSVGPanZoom` as a class stub whose
+instance methods delegate to `vi.hoisted` spies (with a `Viewer.getValue`
+stub matching the runtime shape), mirroring the `MapStage.test.tsx`
 ResizeObserver pattern:
 
 - viewer receives the measured width/height once the observer fires;
-- the SVG `<image>` uses `src` and the natural dimensions;
-- initial fit calls `setPointOnViewerCenter(3840, 3840, fitScale)`;
+- the `<image>` draws centered at fitted size inside a viewer-sized SVG;
 - zoom in/out buttons and `+`/`-` keys call `zoomOnViewerCenter(1.5 | 1/1.5)`;
-- pan buttons and arrow keys call `pan()` with the expected signed SVG deltas;
-- reset button and `0` re-issue the centered fit;
+- pan buttons and arrow keys call `pan()` with the expected signed SVG
+  deltas, divided by the current scale;
+- reset button and `0` call `fitToViewer()`;
 - every control exposes an `aria-label`.

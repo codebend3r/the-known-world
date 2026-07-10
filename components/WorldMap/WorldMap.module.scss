@@ -1,0 +1,118 @@
+@use "breakpoints" as bp;
+
+.map {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  justify-items: center;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 70vh, 900px);
+
+  // The map is square; a square stage on small screens avoids tall empty
+  // letterbox bands above and below the fitted image.
+  @media (max-width: bp.$md) {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  background: rgba(248, 236, 208, 0.55);
+  overflow: hidden;
+  display: grid;
+  grid-template-areas: "canvas";
+
+  &:focus-visible {
+    outline: 2px solid var(--gold-leaf);
+    outline-offset: 2px;
+  }
+
+  &::before {
+    content: "Unfurling the map…";
+    grid-area: canvas;
+    place-self: center;
+    font-style: italic;
+    color: var(--ink-faded);
+  }
+}
+
+.canvas {
+  grid-area: canvas;
+  touch-action: none;
+}
+
+.dpad {
+  position: absolute;
+  inset-block-end: 0.75rem;
+  inset-inline-start: 0.75rem;
+  display: grid;
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+  gap: 0.25rem;
+}
+
+.panUp {
+  grid-area: up;
+}
+
+.panDown {
+  grid-area: down;
+}
+
+.panLeft {
+  grid-area: left;
+}
+
+.panRight {
+  grid-area: right;
+}
+
+.zoomControls {
+  position: absolute;
+  inset-block-end: 0.75rem;
+  inset-inline-end: 0.75rem;
+  display: grid;
+  grid-template-columns: auto;
+  gap: 0.25rem;
+}
+
+.control {
+  appearance: none;
+  display: grid;
+  place-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  background: rgba(248, 236, 208, 0.85);
+  color: var(--ink-faded);
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    color 120ms ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--gold-leaf);
+    background: rgba(248, 236, 208, 0.95);
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.hint {
+  font-size: 1rem;
+  font-style: italic;
+  text-align: center;
+  color: var(--ink-faded);
+}
