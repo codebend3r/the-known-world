@@ -10,7 +10,6 @@ export function MainMenu() {
         subtitle="Survey the realm."
         glyph={sectionGlyphs.maps}
         href="/maps/"
-        status="coming-soon"
       />
       <MainMenuTile
         title="Timeline"

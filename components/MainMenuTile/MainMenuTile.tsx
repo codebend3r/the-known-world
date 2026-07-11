@@ -7,7 +7,6 @@ export type MainMenuTileProps = {
   subtitle: string;
   glyph: ReactNode;
   href: string;
-  status?: "coming-soon";
   visible?: boolean;
 };
 
@@ -16,7 +15,6 @@ export function MainMenuTile({
   subtitle,
   glyph,
   href,
-  status,
   visible = true,
 }: MainMenuTileProps) {
   if (!visible) return null;
@@ -28,11 +26,6 @@ export function MainMenuTile({
       </span>
       <span className={styles.title}>{title}</span>
       <span className={styles.subtitle}>{subtitle}</span>
-      {status === "coming-soon" && (
-        <span className={styles.pill} aria-hidden="true">
-          ⊙ Coming soon
-        </span>
-      )}
     </Link>
   );
 }

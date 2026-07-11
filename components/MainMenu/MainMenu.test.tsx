@@ -35,13 +35,6 @@ describe("MainMenu", () => {
     expect(hrefs).not.toContain("/dragons/");
   });
 
-  it("shows a coming-soon pill only on the Maps tile", () => {
-    render(<MainMenu />);
-    const pills = screen.getAllByText(/coming soon/i);
-    expect(pills).toHaveLength(1);
-    expect(pills[0].closest("a")?.getAttribute("href")).toBe("/maps/");
-  });
-
   it('wraps tiles in a nav landmark labelled "Atlas sections"', () => {
     render(<MainMenu />);
     expect(
