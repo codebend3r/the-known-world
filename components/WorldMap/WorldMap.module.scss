@@ -38,11 +38,47 @@
     font-style: italic;
     color: var(--ink-faded);
   }
+
+  &:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    border-radius: 0;
+  }
 }
 
 .canvas {
   grid-area: canvas;
   touch-action: none;
+}
+
+.marker {
+  cursor: pointer;
+
+  circle {
+    fill: rgba(212, 162, 89, 0);
+    stroke: rgba(212, 162, 89, 0);
+    stroke-width: 3;
+    transition:
+      fill 120ms ease,
+      stroke 120ms ease;
+  }
+
+  &:hover circle,
+  &:focus-visible circle {
+    fill: rgba(212, 162, 89, 0.18);
+    stroke: var(--gold-leaf);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    circle {
+      transition: none;
+    }
+  }
 }
 
 .debug {
@@ -69,6 +105,12 @@
     margin: 0;
     text-align: right;
   }
+}
+
+.fullscreenControl {
+  position: absolute;
+  inset-block-start: 0.75rem;
+  inset-inline-end: 0.75rem;
 }
 
 .dpad {

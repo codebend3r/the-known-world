@@ -20,9 +20,9 @@ export default function MapsPage() {
       />
       <Suspense fallback={<WorldMapSkeleton />}>
         <WorldMap
-          src="/map/map_natural_8K.jpg"
-          naturalWidth={7680}
-          naturalHeight={7680}
+          src="/map/the-known-world-enhanced.jpg"
+          naturalWidth={10000}
+          naturalHeight={8300}
         />
       </Suspense>
     </ParchmentLayout>
