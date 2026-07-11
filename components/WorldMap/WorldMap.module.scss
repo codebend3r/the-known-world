@@ -45,6 +45,32 @@
   touch-action: none;
 }
 
+.debug {
+  position: absolute;
+  inset-block-start: 0.75rem;
+  inset-inline-start: 0.75rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.15rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  background: rgba(248, 236, 208, 0.85);
+  color: var(--ink-faded);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+
+  dt {
+    font-weight: 600;
+  }
+
+  dd {
+    margin: 0;
+    text-align: right;
+  }
+}
+
 .dpad {
   position: absolute;
   inset-block-end: 0.75rem;

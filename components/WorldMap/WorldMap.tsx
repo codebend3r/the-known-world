@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
+import { parseAsBoolean, useQueryState } from "nuqs";
 import { TOOL_AUTO, UncontrolledReactSVGPanZoom } from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
@@ -29,6 +30,12 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<UncontrolledReactSVGPanZoom | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+  const [editMode] = useQueryState(
+    "editMode",
+    parseAsBoolean.withDefault(false),
+  );
+  // Matches the library's fit/identity default: scale 1, no translation.
+  const [debugValue, setDebugValue] = useState({ zoom: 1, x: 0, y: 0 });
 
   useEffect(() => {
     if (!stageRef.current) return;
@@ -52,6 +59,27 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
     : 0;
   const drawnWidth = naturalWidth * fitScale;
   const drawnHeight = naturalHeight * fitScale;
+
+  // `UncontrolledReactSVGPanZoom` swallows a consumer `onChangeValue` prop
+  // (it destructures it away in favor of its own internal handler), so the
+  // live value can only be read by polling `Viewer.getValue()`.
+  useEffect(() => {
+    if (!editMode) return;
+    let frame: number;
+    const tick = () => {
+      const value = viewerRef.current?.Viewer?.getValue();
+      if (value) {
+        setDebugValue((prev) =>
+          prev.zoom === value.a && prev.x === value.e && prev.y === value.f
+            ? prev
+            : { zoom: value.a, x: value.e, y: value.f },
+        );
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [editMode]);
 
   const zoomIn = () => viewerRef.current?.zoomOnViewerCenter(ZOOM_STEP);
   const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
@@ -128,6 +156,16 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
               />
             </svg>
           </UncontrolledReactSVGPanZoom>
+        )}
+        {editMode && (
+          <dl className={styles.debug} aria-hidden="true">
+            <dt>Zoom</dt>
+            <dd>{debugValue.zoom.toFixed(2)}×</dd>
+            <dt>X</dt>
+            <dd>{Math.round(debugValue.x)}</dd>
+            <dt>Y</dt>
+            <dd>{Math.round(debugValue.y)}</dd>
+          </dl>
         )}
         <div className={styles.dpad} role="group" aria-label="Pan controls">
           <button

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { renderWithNuqs } from "@/lib/testNuqs";
 
 const spies = vi.hoisted(() => ({
   pan: vi.fn(),
@@ -8,19 +9,26 @@ const spies = vi.hoisted(() => ({
   fitToViewer: vi.fn(),
 }));
 
+type MockProps = { children: ReactNode; width: number; height: number };
+
+// Live value read by the debug-overlay poll; tests mutate this to simulate
+// the user zooming/panning.
+let mockViewerValue = { a: 0.5, e: 0, f: 0 };
+
 // The runtime `UncontrolledReactSVGPanZoom` exposes no `getValue()` of its
 // own (the published typedef wrongly declares one) — the live value hangs
-// off its public `Viewer` field, the inner viewer instance.
+// off its public `Viewer` field, the inner viewer instance. It also
+// swallows a consumer `onChangeValue` prop rather than forwarding it, so
+// `WorldMap` polls `getValue()` instead of relying on that callback.
 vi.mock("react-svg-pan-zoom", async () => {
   const { Component } = await import("react");
-  type MockProps = { children: ReactNode; width: number; height: number };
   class UncontrolledReactSVGPanZoom extends Component<MockProps> {
     pan = spies.pan;
     zoomOnViewerCenter = spies.zoomOnViewerCenter;
     fitToViewer = spies.fitToViewer;
     Viewer = {
       getValue: () => ({
-        a: 0.5,
+        ...mockViewerValue,
         viewerWidth: this.props.width,
         viewerHeight: this.props.height,
       }),
@@ -61,9 +69,33 @@ class FakeResizeObserver {
   unobserve() {}
 }
 
+type RafCallback = (time: number) => void;
+let rafCallbacks: RafCallback[] = [];
+
+// Captures scheduled frames instead of running them, so tests advance the
+// debug-overlay poll deterministically via `flushRaf()`.
+function stubRaf() {
+  vi.stubGlobal("requestAnimationFrame", (cb: RafCallback) => {
+    rafCallbacks.push(cb);
+    return rafCallbacks.length;
+  });
+  vi.stubGlobal("cancelAnimationFrame", () => {});
+}
+
+function flushRaf() {
+  const callbacks = rafCallbacks;
+  rafCallbacks = [];
+  act(() => {
+    callbacks.forEach((cb) => cb(0));
+  });
+}
+
 beforeEach(() => {
   observers = [];
+  rafCallbacks = [];
+  mockViewerValue = { a: 0.5, e: 0, f: 0 };
   vi.stubGlobal("ResizeObserver", FakeResizeObserver);
+  stubRaf();
 });
 
 afterEach(() => {
@@ -81,13 +113,14 @@ function stubSize(el: HTMLElement, w: number, h: number) {
 const PAN_STEP_X = (800 * 0.2) / 0.5;
 const PAN_STEP_Y = (600 * 0.2) / 0.5;
 
-function renderMap() {
-  const utils = render(
+function renderMap(searchParams?: string) {
+  const utils = renderWithNuqs(
     <WorldMap
       src="/map/test-map.jpg"
       naturalWidth={7680}
       naturalHeight={7680}
     />,
+    { searchParams },
   );
   const stage = utils.getByRole("application");
   stubSize(stage, 800, 600);
@@ -199,7 +232,7 @@ describe("WorldMap", () => {
   });
 
   it("disconnects the observer on unmount", () => {
-    const { unmount } = render(
+    const { unmount } = renderWithNuqs(
       <WorldMap
         src="/map/test-map.jpg"
         naturalWidth={7680}
@@ -209,5 +242,32 @@ describe("WorldMap", () => {
     expect(observers).toHaveLength(1);
     unmount();
     expect(observers).toHaveLength(0);
+  });
+
+  it("hides the debug overlay by default", async () => {
+    const { findByTestId, queryByText } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(queryByText("Zoom")).toBeNull();
+  });
+
+  it("shows zoom/x/y debug info when `editMode=true`", async () => {
+    const { findByTestId, getByText } = renderMap("editMode=true");
+    await findByTestId("pan-zoom");
+    expect(getByText("Zoom")).not.toBeNull();
+    expect(getByText("1.00×")).not.toBeNull();
+    expect(getByText("X")).not.toBeNull();
+    expect(getByText("Y")).not.toBeNull();
+
+    mockViewerValue = { a: 2.5, e: -120, f: 40 };
+    flushRaf();
+    expect(getByText("2.50×")).not.toBeNull();
+    expect(getByText("-120")).not.toBeNull();
+    expect(getByText("40")).not.toBeNull();
+  });
+
+  it("does not poll for debug values when `editMode` is off", async () => {
+    const { findByTestId } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(rafCallbacks).toHaveLength(0);
   });
 });
