@@ -4,7 +4,6 @@ name: Truth
 type: longsword
 material: valyrian-steel
 status: lost
-origin-house: rogare
 current-house: null
 wielders:
   - moredo-rogare

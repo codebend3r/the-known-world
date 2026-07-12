@@ -21,7 +21,7 @@ heads:
 titles:
   - name: Lord of Old Wyk
 ancestral-weapons:
-  - Red Rain
+  - red-rain
 notable-members:
   - name: Denys Drumm
   - name: Donnel Drumm

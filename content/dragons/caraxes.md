@@ -11,7 +11,7 @@ died:
 status: dead
 house: targaryen
 riders:
-  - aemon-targaryen-prince-of-dragonstone
+  - aemon-son-of-jaehaerys-i
   - daemon-targaryen
 aliases:
   - The Blood Wyrm

@@ -22,7 +22,7 @@ heads:
 titles:
   - name: Knight of Grey Garden
 ancestral-weapons:
-  - Nightfall
+  - nightfall
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Harlaw

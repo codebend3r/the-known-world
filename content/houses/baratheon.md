@@ -14,9 +14,7 @@ founded:
 status: extant
 rank: royal
 sworn-from: []
-cadet-houses:
-  - baratheon-of-kings-landing
-  - baratheon-of-dragonstone
+cadet-houses: []
 region: stormlands
 seats:
   - name: Storm's End

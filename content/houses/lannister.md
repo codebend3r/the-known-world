@@ -14,8 +14,7 @@ founded:
 status: extant
 rank: lordly
 sworn-from: []
-cadet-houses:
-  - lannister-of-lannisport
+cadet-houses: []
 heads:
   - name: "Lord Tywin Lannister"
     slug: tywin-lannister
