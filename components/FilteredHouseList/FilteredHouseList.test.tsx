@@ -727,6 +727,136 @@ describe("FilteredHouseList status filter", () => {
   });
 });
 
+describe("FilteredHouseList rank filter", () => {
+  const ranked: HouseItem[] = [
+    {
+      slug: "stark",
+      name: "Stark",
+      region: "north",
+      regionLabel: "The North",
+      rank: "lordly",
+    },
+    {
+      slug: "clegane",
+      name: "Clegane",
+      region: "westerlands",
+      regionLabel: "The Westerlands",
+      rank: "knightly",
+    },
+    {
+      slug: "reyne",
+      name: "Reyne",
+      region: "westerlands",
+      regionLabel: "The Westerlands",
+      rank: "lordly",
+      extinct: true,
+    },
+  ];
+
+  it("exposes a house-rank filter", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />);
+    expect(screen.getByRole("combobox", { name: /house rank/i })).toBeDefined();
+  });
+
+  it("shows every house regardless of rank by default", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />);
+    expect(screen.getAllByRole("link").length).toBe(3);
+  });
+
+  it("shows only houses of the selected rank", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />);
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "lordly" },
+    });
+    const cards = screen.getAllByRole("link");
+    expect(cards.map((c) => c.textContent)).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining("Stark"),
+        expect.stringContaining("Reyne"),
+      ]),
+    );
+    expect(cards.length).toBe(2);
+  });
+
+  it("combines the rank filter with the status filter", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />);
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "lordly" },
+    });
+    fireEvent.click(screen.getByRole("button", { name: /extinct houses/i }));
+    const cards = screen.getAllByRole("link");
+    expect(cards.length).toBe(1);
+    expect(cards[0].textContent).toContain("Reyne");
+  });
+
+  it("reflects the rank filter in the total count", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />);
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "knightly" },
+    });
+    expect(screen.getByText("1 house")).toBeDefined();
+  });
+
+  it("hydrates the rank filter from ?rank=lordly on mount", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />, {
+      searchParams: "?rank=lordly",
+    });
+    expect(screen.getAllByRole("link").length).toBe(2);
+    const select = screen.getByRole("combobox", {
+      name: /house rank/i,
+    }) as HTMLSelectElement;
+    expect(select.value).toBe("lordly");
+  });
+
+  it("writes ?rank=lordly when a rank is selected", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={ranked} />,
+    );
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "lordly" },
+    });
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("?rank=lordly");
+  });
+
+  it("removes ?rank= when the filter returns to Any rank", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={ranked} />,
+      { searchParams: "?rank=lordly" },
+    );
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "all" },
+    });
+    await flushNuqs();
+    expect(lastQueryString(onUrlUpdate)).toBe("");
+  });
+
+  it("resets ?page= when the rank filter changes", async () => {
+    const { onUrlUpdate } = renderWithNuqs(
+      <FilteredHouseList items={manyItems(70)} pageSize={24} />,
+      { searchParams: "?page=2" },
+    );
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "lordly" },
+    });
+    await flushNuqs();
+    expect(lastSearchParams(onUrlUpdate).get("rank")).toBe("lordly");
+    expect(lastSearchParams(onUrlUpdate).get("page")).toBeNull();
+  });
+
+  it("applies the rank filter inside region grouping", () => {
+    renderWithNuqs(<FilteredHouseList items={ranked} />);
+    fireEvent.click(screen.getByRole("button", { name: /group by region/i }));
+    fireEvent.change(screen.getByRole("combobox", { name: /house rank/i }), {
+      target: { value: "knightly" },
+    });
+    expect(
+      screen.getByRole("button", { name: /the westerlands/i }),
+    ).toBeDefined();
+    expect(screen.queryByRole("button", { name: /the north/i })).toBeNull();
+  });
+});
+
 describe("FilteredHouseList view toggle", () => {
   it("starts in grid view by default", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);

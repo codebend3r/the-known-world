@@ -16,6 +16,7 @@ import {
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
+import type { HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
 import { REGION_SLUGS, regionLabel } from "@/lib/regions";
@@ -38,6 +39,7 @@ export type HouseItem = {
   region: string | null;
   regionLabel: string | null;
   extinct?: boolean;
+  rank?: HouseRank;
 };
 
 type Props = {
@@ -93,6 +95,33 @@ const STATUS_OPTIONS = [
   { value: "extinct" as const, label: "Extinct houses", icon: <ExtinctIcon /> },
 ];
 
+type RankFilter =
+  "all" | "royal" | "lordly" | "knightly" | "other" | "exiled" | "extinct";
+
+const RANK_FILTERS = [
+  "all",
+  "royal",
+  "lordly",
+  "knightly",
+  "other",
+  "exiled",
+  "extinct",
+] as const;
+
+const RANK_OPTIONS: { value: RankFilter; label: string }[] = [
+  { value: "all", label: "Any rank" },
+  { value: "royal", label: "Royal" },
+  { value: "lordly", label: "Lordly" },
+  { value: "knightly", label: "Knightly" },
+  { value: "other", label: "Other" },
+  { value: "exiled", label: "Exiled" },
+  { value: "extinct", label: "Extinct" },
+];
+
+function isRankFilter(value: string): value is RankFilter {
+  return (RANK_FILTERS as readonly string[]).includes(value);
+}
+
 export function FilteredHouseList({
   items,
   pageSize = DEFAULT_PAGE_SIZE,
@@ -107,6 +136,10 @@ export function FilteredHouseList({
   const [status, setStatus] = useQueryState(
     "status",
     parseAsStringLiteral(STATUS_FILTERS).withDefault("all"),
+  );
+  const [rank, setRank] = useQueryState(
+    "rank",
+    parseAsStringLiteral(RANK_FILTERS).withDefault("all"),
   );
 
   const [userValue, setUserValue] = useState<string | undefined>(undefined);
@@ -175,18 +208,20 @@ export function FilteredHouseList({
     return dir === "desc" ? arr.reverse() : arr;
   }, [items, dir]);
 
-  const statusFiltered = useMemo(
-    () =>
+  const facetFiltered = useMemo(() => {
+    const byStatus =
       status === "all"
         ? sorted
         : sorted.filter((item) =>
             status === "extinct" ? !!item.extinct : !item.extinct,
-          ),
-    [sorted, status],
-  );
+          );
+    return rank === "all"
+      ? byStatus
+      : byStatus.filter((item) => item.rank === rank);
+  }, [sorted, status, rank]);
 
-  const filtered = filterByName(statusFiltered, debounced);
-  const total = statusFiltered.length;
+  const filtered = filterByName(facetFiltered, debounced);
+  const total = facetFiltered.length;
   const matching = filtered.length;
   const hasQuery = debounced.trim().length > 0;
   const noun = total === 1 ? "house" : "houses";
@@ -205,13 +240,13 @@ export function FilteredHouseList({
     const known = REGION_SLUGS.map((slug) => ({
       slug,
       label: regionLabel(slug) ?? slug,
-      items: statusFiltered.filter((item) => item.region === slug),
+      items: facetFiltered.filter((item) => item.region === slug),
     })).filter((group) => group.items.length > 0);
-    const other = statusFiltered.filter((item) => item.region === null);
+    const other = facetFiltered.filter((item) => item.region === null);
     return other.length > 0
       ? [...known, { slug: "other", label: "Other Houses", items: other }]
       : known;
-  }, [statusFiltered]);
+  }, [facetFiltered]);
 
   const writePage = (next: number) => {
     setParams({ page: next });
@@ -228,6 +263,12 @@ export function FilteredHouseList({
 
   const handleStatusChange = (next: StatusFilter) => {
     setStatus(next === "all" ? null : next);
+    setParams({ page: 1 });
+  };
+
+  const handleRankChange = (next: string) => {
+    if (!isRankFilter(next)) return;
+    setRank(next === "all" ? null : next);
     setParams({ page: 1 });
   };
 
@@ -335,6 +376,21 @@ export function FilteredHouseList({
           />
         )}
         <div className={styles.toggles}>
+          <label className={styles.rankFilter}>
+            <span className={styles.rankLabel}>Rank</span>
+            <select
+              className={listSearch.pageSizeSelect}
+              value={rank}
+              onChange={(e) => handleRankChange(e.target.value)}
+              aria-label="House rank"
+            >
+              {RANK_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </label>
           <ViewToggle
             options={STATUS_OPTIONS}
             value={status}
