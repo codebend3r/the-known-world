@@ -22,7 +22,6 @@
     "system-check": "run-s clean prettier:check typecheck lint test build"
   },
   "dependencies": {
-    "gray-matter": "4.0.3",
     "next": "16.2.10",
     "nuqs": "2.9.0",
     "react": "19.2.7",
@@ -30,6 +29,7 @@
     "react-svg-pan-zoom": "3.13.1",
     "remark": "15.0.1",
     "remark-html": "16.0.1",
+    "yaml": "2.9.0",
     "zod": "4.4.3"
   },
   "devDependencies": {
@@ -55,5 +55,8 @@
   },
   "trustedDependencies": [
     "unrs-resolver"
-  ]
+  ],
+  "overrides": {
+    "postcss": "8.5.17"
+  }
 }

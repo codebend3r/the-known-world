@@ -1,8 +1,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import matter from "gray-matter";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
+import { parse as parseYaml } from "yaml";
 import {
   CastleSchema,
   HouseSchema,
@@ -39,9 +39,18 @@ async function loadFile<T>(
 ): Promise<Loaded<T>> {
   const filePath = path.join(CONTENT_ROOT, type, `${slug}.md`);
   const raw = await fs.readFile(filePath, "utf-8");
-  const parsed = matter(raw);
+  const parsed = parseFrontmatter(raw);
   const frontmatter = schema.parse(parsed.data);
   return { frontmatter, body: parsed.content, slug };
+}
+
+function parseFrontmatter(raw: string): { data: unknown; content: string } {
+  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)/);
+  if (!match) throw new Error("Markdown file is missing YAML frontmatter");
+  return {
+    data: parseYaml(match[1]),
+    content: raw.slice(match[0].length),
+  };
 }
 
 async function loadAll<T>(
