@@ -19,7 +19,7 @@ region: reach
 regions:
   - name: The Reach
 ancestral-weapons:
-  - Orphan-Maker
+  - orphan-maker
 notable-members:
   - name: "Ser Lorence Roxton"
   - name: "Ser Jon Roxton"

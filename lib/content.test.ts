@@ -22,6 +22,18 @@ describe("loadCastle", () => {
   });
 });
 
+describe("frontmatter parsing", () => {
+  it("parses every content collection through YAML", async () => {
+    const collections = await Promise.all([
+      loadAllCastles(),
+      loadAllWeapons(),
+      loadAllDragons(),
+    ]);
+
+    expect(collections.every((entries) => entries.length > 0)).toBe(true);
+  });
+});
+
 describe("loadAllCastles", () => {
   it("returns Winterfell", async () => {
     const all = await loadAllCastles();

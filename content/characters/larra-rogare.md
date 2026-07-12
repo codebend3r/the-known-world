@@ -7,7 +7,7 @@ born:
   era: AC
   precision: year
 died: null
-primary-house: rogare
+primary-house: null
 also-of-houses:
   - targaryen
 spouses:

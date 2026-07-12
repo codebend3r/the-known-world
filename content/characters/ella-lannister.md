@@ -4,9 +4,8 @@ name: Ella Lannister
 sex: f
 born: null
 died: null
-primary-house: lannister-of-lannisport
-also-of-houses:
-  - lannister
+primary-house: lannister
+also-of-houses: []
 spouses:
   - damon-lannister-son-of-jason
 children:

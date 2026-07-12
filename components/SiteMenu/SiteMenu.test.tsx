@@ -105,4 +105,37 @@ describe("SiteMenu", () => {
     fireEvent.click(screen.getByRole("button", { name: /close menu/i }));
     expect(trigger.getAttribute("aria-expanded")).toBe("false");
   });
+
+  it("exposes the open drawer as a modal dialog", () => {
+    render(<SiteMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+
+    const dialog = screen.getByRole("dialog", { name: /site menu/i });
+    expect(dialog.getAttribute("aria-modal")).toBe("true");
+  });
+
+  it("contains forward keyboard focus within the open drawer", () => {
+    render(<SiteMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+
+    const close = screen.getByRole("button", { name: /close menu/i });
+    const links = screen.getAllByRole("link");
+    const lastLink = links[links.length - 1];
+    lastLink.focus();
+    fireEvent.keyDown(document, { key: "Tab" });
+
+    expect(document.activeElement).toBe(close);
+  });
+
+  it("contains reverse keyboard focus within the open drawer", () => {
+    render(<SiteMenu />);
+    fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
+
+    const close = screen.getByRole("button", { name: /close menu/i });
+    const links = screen.getAllByRole("link");
+    close.focus();
+    fireEvent.keyDown(document, { key: "Tab", shiftKey: true });
+
+    expect(document.activeElement).toBe(links[links.length - 1]);
+  });
 });

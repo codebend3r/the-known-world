@@ -10,7 +10,7 @@ died: null
 primary-house: arryn
 parents:
   - jon-arryn
-  - lysa-tully
+  - lysa-arryn
 spouses: []
 children: []
 titles:

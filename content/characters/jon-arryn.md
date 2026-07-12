@@ -14,7 +14,7 @@ primary-house: arryn
 parents:
   - jasper-arryn
 spouses:
-  - lysa-tully
+  - lysa-arryn
 children:
   - robert-arryn
 titles:
