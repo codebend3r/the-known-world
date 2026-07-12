@@ -1,29 +1,44 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, render } from "@testing-library/react";
+import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { renderWithNuqs } from "@/lib/testNuqs";
 
 const spies = vi.hoisted(() => ({
   pan: vi.fn(),
   zoomOnViewerCenter: vi.fn(),
   fitToViewer: vi.fn(),
+  setValue: vi.fn(),
 }));
 
-// The runtime `UncontrolledReactSVGPanZoom` exposes no `getValue()` of its
-// own (the published typedef wrongly declares one) — the live value hangs
-// off its public `Viewer` field, the inner viewer instance.
+type MockProps = { children: ReactNode; width: number; height: number };
+type MockValue = { a: number; e: number; f: number };
+
+// Live value read by the debug-overlay poll; tests mutate this to simulate
+// the user zooming/panning. `WorldMap` overwrites it on mount via
+// `Viewer.setValue()` to seed its initial view.
+let mockViewerValue: MockValue = { a: 0.5, e: 0, f: 0 };
+
+// The runtime `UncontrolledReactSVGPanZoom` exposes no `getValue()`/`setValue()`
+// of its own (the published typedef wrongly declares them) — the live value
+// hangs off its public `Viewer` field, the inner viewer instance. It also
+// swallows a consumer `onChangeValue` prop rather than forwarding it, so
+// `WorldMap` polls `getValue()` instead of relying on that callback.
 vi.mock("react-svg-pan-zoom", async () => {
   const { Component } = await import("react");
-  type MockProps = { children: ReactNode; width: number; height: number };
   class UncontrolledReactSVGPanZoom extends Component<MockProps> {
     pan = spies.pan;
     zoomOnViewerCenter = spies.zoomOnViewerCenter;
     fitToViewer = spies.fitToViewer;
     Viewer = {
       getValue: () => ({
-        a: 0.5,
+        ...mockViewerValue,
         viewerWidth: this.props.width,
         viewerHeight: this.props.height,
       }),
+      setValue: (value: MockValue) => {
+        spies.setValue(value);
+        mockViewerValue = { a: value.a, e: value.e, f: value.f };
+      },
     };
     render() {
       return (
@@ -61,9 +76,57 @@ class FakeResizeObserver {
   unobserve() {}
 }
 
+type RafCallback = (time: number) => void;
+let rafCallbacks: RafCallback[] = [];
+
+// Captures scheduled frames instead of running them, so tests advance the
+// debug-overlay poll deterministically via `flushRaf()`.
+function stubRaf() {
+  vi.stubGlobal("requestAnimationFrame", (cb: RafCallback) => {
+    rafCallbacks.push(cb);
+    return rafCallbacks.length;
+  });
+  vi.stubGlobal("cancelAnimationFrame", () => {});
+}
+
+function flushRaf() {
+  const callbacks = rafCallbacks;
+  rafCallbacks = [];
+  act(() => {
+    callbacks.forEach((cb) => cb(0));
+  });
+}
+
+// jsdom implements none of the Fullscreen API; `requestFullscreen()` /
+// `exitFullscreen()` are faked to track the current element and dispatch
+// `fullscreenchange`, matching real browser behavior closely enough to
+// drive `WorldMap`'s toggle state.
+let fullscreenElement: Element | null = null;
+Object.defineProperty(document, "fullscreenElement", {
+  configurable: true,
+  get: () => fullscreenElement,
+});
+function markFullscreenElement(el: Element | null) {
+  fullscreenElement = el;
+}
+HTMLElement.prototype.requestFullscreen = vi.fn(function (this: HTMLElement) {
+  markFullscreenElement(this);
+  document.dispatchEvent(new Event("fullscreenchange"));
+  return Promise.resolve();
+});
+document.exitFullscreen = vi.fn(() => {
+  fullscreenElement = null;
+  document.dispatchEvent(new Event("fullscreenchange"));
+  return Promise.resolve();
+});
+
 beforeEach(() => {
   observers = [];
+  rafCallbacks = [];
+  mockViewerValue = { a: 0.5, e: 0, f: 0 };
+  fullscreenElement = null;
   vi.stubGlobal("ResizeObserver", FakeResizeObserver);
+  stubRaf();
 });
 
 afterEach(() => {
@@ -77,17 +140,41 @@ function stubSize(el: HTMLElement, w: number, h: number) {
 }
 
 // Viewer 800x600, map 7680x7680 → the map draws at 600x600, centered at
-// x=100. Mocked live scale `a: 0.5` → pan step = 20% of the viewer / 0.5.
-const PAN_STEP_X = (800 * 0.2) / 0.5;
-const PAN_STEP_Y = (600 * 0.2) / 0.5;
+// x=100. `WorldMap` seeds the view to zoom 5 on mount, so pan step = 20%
+// of the viewer / 5.
+const SEEDED_VIEW = { zoom: 5, x: -1495, y: -1940 };
+const PAN_STEP_X = (800 * 0.2) / SEEDED_VIEW.zoom;
+const PAN_STEP_Y = (600 * 0.2) / SEEDED_VIEW.zoom;
+const NATURAL_SIZE = 7680;
+const KINGS_LANDING = { x: 1955, y: 4619, radius: 25 };
 
-function renderMap() {
-  const utils = render(
+function fitScaleFor(size: { w: number; h: number }) {
+  return Math.min(size.w / NATURAL_SIZE, size.h / NATURAL_SIZE);
+}
+
+// Inverts a pan/zoom transform back to the natural-map point currently
+// centered on screen, given the viewer size and fit scale it applies to.
+function centeredNaturalPoint(
+  value: { a: number; e: number; f: number },
+  size: { w: number; h: number },
+  fitScale: number,
+) {
+  const drawnSize = NATURAL_SIZE * fitScale;
+  const offsetX = (size.w - drawnSize) / 2;
+  const offsetY = (size.h - drawnSize) / 2;
+  const svgX = (size.w / 2 - value.e) / value.a;
+  const svgY = (size.h / 2 - value.f) / value.a;
+  return { x: (svgX - offsetX) / fitScale, y: (svgY - offsetY) / fitScale };
+}
+
+function renderMap(searchParams?: string) {
+  const utils = renderWithNuqs(
     <WorldMap
       src="/map/test-map.jpg"
       naturalWidth={7680}
       naturalHeight={7680}
     />,
+    { searchParams },
   );
   const stage = utils.getByRole("application");
   stubSize(stage, 800, 600);
@@ -199,7 +286,7 @@ describe("WorldMap", () => {
   });
 
   it("disconnects the observer on unmount", () => {
-    const { unmount } = render(
+    const { unmount } = renderWithNuqs(
       <WorldMap
         src="/map/test-map.jpg"
         naturalWidth={7680}
@@ -209,5 +296,133 @@ describe("WorldMap", () => {
     expect(observers).toHaveLength(1);
     unmount();
     expect(observers).toHaveLength(0);
+  });
+
+  it("hides the debug overlay by default", async () => {
+    const { findByTestId, queryByText } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(queryByText("Zoom")).toBeNull();
+  });
+
+  it("shows zoom/x/y debug info when `editMode=true`", async () => {
+    const { findByTestId, getByText } = renderMap("editMode=true");
+    await findByTestId("pan-zoom");
+    expect(getByText("Zoom")).not.toBeNull();
+    expect(getByText("5.00×")).not.toBeNull();
+    expect(getByText("X")).not.toBeNull();
+    expect(getByText("-1495")).not.toBeNull();
+    expect(getByText("Y")).not.toBeNull();
+    expect(getByText("-1940")).not.toBeNull();
+
+    mockViewerValue = { a: 2.5, e: -120, f: 40 };
+    flushRaf();
+    expect(getByText("2.50×")).not.toBeNull();
+    expect(getByText("-120")).not.toBeNull();
+    expect(getByText("40")).not.toBeNull();
+  });
+
+  it("does not poll for debug values when `editMode` is off", async () => {
+    const { findByTestId } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(rafCallbacks).toHaveLength(0);
+  });
+
+  it("seeds the initial pan/zoom view on mount", async () => {
+    const { findByTestId } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+    expect(spies.setValue).toHaveBeenCalledWith(
+      expect.objectContaining({
+        a: SEEDED_VIEW.zoom,
+        d: SEEDED_VIEW.zoom,
+        e: SEEDED_VIEW.x,
+        f: SEEDED_VIEW.y,
+      }),
+    );
+  });
+
+  it("keeps the same map point centered, at the same effective zoom, across a resize", async () => {
+    const { findByTestId, stage } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+
+    const size1 = { w: 800, h: 600 };
+    const fitScale1 = fitScaleFor(size1);
+    const seeded = spies.setValue.mock.calls[0][0];
+    const naturalBefore = centeredNaturalPoint(seeded, size1, fitScale1);
+    const effectiveZoomBefore = seeded.a * fitScale1;
+
+    const size2 = { w: 900, h: 700 };
+    stubSize(stage, size2.w, size2.h);
+    act(() => {
+      observers[0].cb();
+    });
+
+    expect(spies.setValue).toHaveBeenCalledTimes(2);
+    const resized = spies.setValue.mock.calls[1][0];
+    const fitScale2 = fitScaleFor(size2);
+    const naturalAfter = centeredNaturalPoint(resized, size2, fitScale2);
+    const effectiveZoomAfter = resized.a * fitScale2;
+
+    expect(naturalAfter.x).toBeCloseTo(naturalBefore.x, 6);
+    expect(naturalAfter.y).toBeCloseTo(naturalBefore.y, 6);
+    expect(effectiveZoomAfter).toBeCloseTo(effectiveZoomBefore, 6);
+  });
+
+  it("does not adjust the transform when a resize reports the same size", async () => {
+    const { findByTestId, stage } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+
+    stubSize(stage, 800, 600);
+    act(() => {
+      observers[0].cb();
+    });
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+  });
+
+  it("marks King's Landing with a link to its page, positioned by natural coordinates", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+
+    const link = getByRole("link", { name: "King's Landing" });
+    expect(link.getAttribute("href")).toBe("/castles/kings-landing/");
+
+    const circle = link.querySelector("circle");
+    const size = { w: 800, h: 600 };
+    const fitScale = fitScaleFor(size);
+    const offsetX = (size.w - NATURAL_SIZE * fitScale) / 2;
+    const offsetY = (size.h - NATURAL_SIZE * fitScale) / 2;
+    expect(Number(circle?.getAttribute("cx"))).toBeCloseTo(
+      offsetX + KINGS_LANDING.x * fitScale,
+      6,
+    );
+    expect(Number(circle?.getAttribute("cy"))).toBeCloseTo(
+      offsetY + KINGS_LANDING.y * fitScale,
+      6,
+    );
+    expect(Number(circle?.getAttribute("r"))).toBeCloseTo(
+      KINGS_LANDING.radius * fitScale,
+      6,
+    );
+  });
+
+  it("requests fullscreen on the stage and flips to Exit fullscreen", async () => {
+    const { findByTestId, getByRole, stage } = renderMap();
+    await findByTestId("pan-zoom");
+
+    fireEvent.click(getByRole("button", { name: "Enter fullscreen" }));
+    expect(stage.requestFullscreen).toHaveBeenCalledTimes(1);
+    expect(getByRole("button", { name: "Exit fullscreen" })).not.toBeNull();
+  });
+
+  it("exits fullscreen from the same button once entered", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+
+    fireEvent.click(getByRole("button", { name: "Enter fullscreen" }));
+    fireEvent.click(getByRole("button", { name: "Exit fullscreen" }));
+    expect(document.exitFullscreen).toHaveBeenCalledTimes(1);
+    expect(getByRole("button", { name: "Enter fullscreen" })).not.toBeNull();
   });
 });

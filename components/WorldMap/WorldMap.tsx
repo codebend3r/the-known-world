@@ -2,12 +2,24 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
-import { TOOL_AUTO, UncontrolledReactSVGPanZoom } from "react-svg-pan-zoom";
+import Link from "next/link";
+import { parseAsBoolean, useQueryState } from "nuqs";
+import {
+  TOOL_AUTO,
+  UncontrolledReactSVGPanZoom,
+  type Value,
+} from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
 
 const ZOOM_STEP = 1.5;
 const PAN_STEP_RATIO = 0.2;
+const INITIAL_VIEW = { zoom: 5, x: -1495, y: -1940 };
+// Natural-pixel position of the King's Landing capital icon printed on the
+// map, and the radius of the (invisible) click target around it — kept
+// tight since neighboring towns (Hayford, Rosby) sit only ~65-100 natural
+// pixels away.
+const KINGS_LANDING = { x: 1955, y: 4619, radius: 25 };
 
 type PanDirection = "up" | "down" | "left" | "right";
 
@@ -28,7 +40,18 @@ type Props = {
 export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<UncontrolledReactSVGPanZoom | null>(null);
+  const hasSeededViewRef = useRef(false);
+  const geometryRef = useRef<{
+    size: { w: number; h: number };
+    fitScale: number;
+  } | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
+  const [editMode] = useQueryState(
+    "editMode",
+    parseAsBoolean.withDefault(false),
+  );
+  const [debugValue, setDebugValue] = useState(INITIAL_VIEW);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     if (!stageRef.current) return;
@@ -41,21 +64,129 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
-    return () => ro.disconnect();
+
+    // `ResizeObserver` doesn't reliably re-fire across a fullscreen
+    // transition, so re-measure directly once it completes — `fullscreenchange`
+    // fires after the element has settled at its final size.
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === el);
+      update();
+    };
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () => {
+      ro.disconnect();
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
   }, []);
 
   // The SVG viewbox matches the viewer and the map image is drawn centered
   // at fitted size within it, so the library's default view (identity
-  // matrix) already shows the whole map: scale 1 = fit, no seeding needed.
+  // matrix) shows the whole map: scale 1 = fit.
   const fitScale = !!size
     ? Math.min(size.w / naturalWidth, size.h / naturalHeight)
     : 0;
   const drawnWidth = naturalWidth * fitScale;
   const drawnHeight = naturalHeight * fitScale;
 
+  // Opens on a specific region instead of the fit-to-viewer default on first
+  // paint. On every later resize (e.g. entering/exiting fullscreen), the
+  // underlying <image> re-centers itself for the new viewer size, but the
+  // pan/zoom transform doesn't — so without compensating it here, the
+  // visible region would jump. Instead we recompute the transform so the
+  // same map point stays centered at the same effective zoom level.
+  // `Viewer.setValue()` is the inner viewer's real setter; the outer
+  // `UncontrolledReactSVGPanZoom` internally wires its own `onChangeValue`
+  // to it, so this still lands in the wrapper's state.
+  useEffect(() => {
+    if (!size) return;
+    const inner = viewerRef.current?.Viewer;
+    if (!inner) return;
+
+    if (!hasSeededViewRef.current) {
+      hasSeededViewRef.current = true;
+      inner.setValue({
+        ...inner.getValue(),
+        viewerWidth: size.w,
+        viewerHeight: size.h,
+        a: INITIAL_VIEW.zoom,
+        d: INITIAL_VIEW.zoom,
+        e: INITIAL_VIEW.x,
+        f: INITIAL_VIEW.y,
+      });
+      geometryRef.current = { size, fitScale };
+      return;
+    }
+
+    const prev = geometryRef.current;
+    if (!prev || (prev.size.w === size.w && prev.size.h === size.h)) {
+      geometryRef.current = { size, fitScale };
+      return;
+    }
+
+    // `inner.getValue()` can still report the pre-resize `viewerWidth`/
+    // `viewerHeight` here — the library syncs those itself off the same
+    // width/height prop change, via a separate cascading update that isn't
+    // guaranteed to have landed before this effect runs. `size` is already
+    // authoritative, so it's used directly below instead of trusting the
+    // spread for those two fields.
+    const current = inner.getValue();
+    const prevOffsetX = (prev.size.w - naturalWidth * prev.fitScale) / 2;
+    const prevOffsetY = (prev.size.h - naturalHeight * prev.fitScale) / 2;
+    const centeredSVGX = (prev.size.w / 2 - current.e) / current.a;
+    const centeredSVGY = (prev.size.h / 2 - current.f) / current.a;
+    const centeredNaturalX = (centeredSVGX - prevOffsetX) / prev.fitScale;
+    const centeredNaturalY = (centeredSVGY - prevOffsetY) / prev.fitScale;
+
+    const nextZoom = current.a * (prev.fitScale / fitScale);
+    const nextSVGX = (size.w - drawnWidth) / 2 + centeredNaturalX * fitScale;
+    const nextSVGY = (size.h - drawnHeight) / 2 + centeredNaturalY * fitScale;
+
+    const value: Value = {
+      ...current,
+      viewerWidth: size.w,
+      viewerHeight: size.h,
+      a: nextZoom,
+      d: nextZoom,
+      e: size.w / 2 - nextZoom * nextSVGX,
+      f: size.h / 2 - nextZoom * nextSVGY,
+    };
+    inner.setValue(value);
+    geometryRef.current = { size, fitScale };
+  }, [size, naturalWidth, naturalHeight, fitScale, drawnWidth, drawnHeight]);
+
+  // `UncontrolledReactSVGPanZoom` swallows a consumer `onChangeValue` prop
+  // (it destructures it away in favor of its own internal handler), so the
+  // live value can only be read by polling `Viewer.getValue()`.
+  useEffect(() => {
+    if (!editMode) return;
+    let frame: number;
+    const tick = () => {
+      const value = viewerRef.current?.Viewer?.getValue();
+      if (value) {
+        setDebugValue((prev) =>
+          prev.zoom === value.a && prev.x === value.e && prev.y === value.f
+            ? prev
+            : { zoom: value.a, x: value.e, y: value.f },
+        );
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [editMode]);
+
   const zoomIn = () => viewerRef.current?.zoomOnViewerCenter(ZOOM_STEP);
   const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
   const fitView = () => viewerRef.current?.fitToViewer();
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      stageRef.current?.requestFullscreen();
+    }
+  };
 
   const panView = (direction: PanDirection) => {
     const viewer = viewerRef.current;
@@ -126,9 +257,46 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
                 width={drawnWidth}
                 height={drawnHeight}
               />
+              <Link
+                href="/castles/kings-landing/"
+                aria-label="King's Landing"
+                title="King's Landing"
+                className={styles.marker}
+              >
+                <circle
+                  cx={(size.w - drawnWidth) / 2 + KINGS_LANDING.x * fitScale}
+                  cy={(size.h - drawnHeight) / 2 + KINGS_LANDING.y * fitScale}
+                  r={KINGS_LANDING.radius * fitScale}
+                />
+              </Link>
             </svg>
           </UncontrolledReactSVGPanZoom>
         )}
+        {editMode && (
+          <dl className={styles.debug} aria-hidden="true">
+            <dt>Zoom</dt>
+            <dd>{debugValue.zoom.toFixed(2)}×</dd>
+            <dt>X</dt>
+            <dd>{Math.round(debugValue.x)}</dd>
+            <dt>Y</dt>
+            <dd>{Math.round(debugValue.y)}</dd>
+          </dl>
+        )}
+        <div
+          className={styles.fullscreenControl}
+          role="group"
+          aria-label="Fullscreen controls"
+        >
+          <button
+            type="button"
+            className={styles.control}
+            aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+            title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+            onClick={toggleFullscreen}
+          >
+            {isFullscreen ? <CompressIcon /> : <ExpandIcon />}
+          </button>
+        </div>
         <div className={styles.dpad} role="group" aria-label="Pan controls">
           <button
             type="button"
@@ -197,7 +365,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
             title="Reset view (0)"
             onClick={fitView}
           >
-            <FitIcon />
+            <ResetIcon />
           </button>
         </div>
       </div>
@@ -271,7 +439,35 @@ function MinusIcon() {
   );
 }
 
-function FitIcon() {
+function ResetIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
+      <circle
+        cx="8"
+        cy="8"
+        r="2"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        fill="none"
+      />
+      <path
+        d="M8 1.5 V4.5 M8 11.5 V14.5 M1.5 8 H4.5 M11.5 8 H14.5"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        fill="none"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function ExpandIcon() {
   return (
     <svg
       viewBox="0 0 16 16"
@@ -281,7 +477,28 @@ function FitIcon() {
       focusable="false"
     >
       <path
-        d="M6 3 H3 V6 M10 3 H13 V6 M13 10 V13 H10 M6 13 H3 V10"
+        d="M2 6 V2 H6 M14 6 V2 H10 M2 10 V14 H6 M14 10 V14 H10"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        fill="none"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CompressIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="16"
+      height="16"
+      aria-hidden
+      focusable="false"
+    >
+      <path
+        d="M6 2 V6 H2 M10 2 V6 H14 M6 14 V10 H2 M10 14 V10 H14"
         stroke="currentColor"
         strokeWidth="1.6"
         fill="none"

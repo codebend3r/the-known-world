@@ -4,8 +4,8 @@ Operating rules for this repo. The README covers stack, layout, and routes; this
 
 ## Workflow
 
-- Always create a branch for each feature or bug fix.
-- Auto-commit each logical change without asking. Subject must start with `TKW:` (see the `tkw-commit-format` skill).
+- Never commit directly to `main`; always create a branch for each feature or bug fix. Do not create a new branch unless I say so.
+- Do not commit anything without explicit instruction from me first. When I do, subject must start with `TKW:` (see the `tkw-commit-format` skill).
 
 ## Tooling
 
