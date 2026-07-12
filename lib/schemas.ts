@@ -256,6 +256,7 @@ export type CalendarDate = z.infer<typeof DateSchema>;
 export type Landmass = z.infer<typeof LandmassSchema>;
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;
+export type HouseRank = z.infer<typeof HouseRankSchema>;
 export type HouseInfoEntry = z.infer<typeof HouseInfoEntrySchema>;
 export type Character = z.infer<typeof CharacterSchema>;
 export type Event = z.infer<typeof EventSchema>;

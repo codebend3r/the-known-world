@@ -32,6 +32,7 @@ export default async function HousesPage() {
         region,
         regionLabel: regionLabel(region),
         extinct: h.frontmatter.status === "extinct",
+        rank: h.frontmatter.rank,
       };
     })
     .sort(compareByName);

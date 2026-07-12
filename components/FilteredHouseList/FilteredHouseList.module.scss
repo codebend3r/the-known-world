@@ -20,6 +20,21 @@
   margin-left: auto;
 }
 
+.rankFilter {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  letter-spacing: 0.5px;
+}
+
+.rankLabel {
+  font-variant: small-caps;
+  letter-spacing: 1.5px;
+}
+
 .regions {
   display: grid;
   gap: 0.75rem;
