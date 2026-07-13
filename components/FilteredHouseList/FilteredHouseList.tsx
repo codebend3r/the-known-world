@@ -350,7 +350,7 @@ export function FilteredHouseList({
           <label className={styles.rankFilter}>
             <span className={styles.rankLabel}>Rank</span>
             <select
-              className={listSearch.pageSizeSelect}
+              className={cx(listSearch.pageSizeSelect, styles.rankSelect)}
               value={rank}
               onChange={(e) => handleRankChange(e.target.value)}
               aria-label="House rank"
