@@ -81,20 +81,6 @@ const GROUP_OPTIONS = [
   },
 ];
 
-type StatusFilter = "all" | "standing" | "extinct";
-
-const STATUS_FILTERS = ["all", "standing", "extinct"] as const;
-
-const STATUS_OPTIONS = [
-  { value: "all" as const, label: "Any status", icon: <AllStatusIcon /> },
-  {
-    value: "standing" as const,
-    label: "Standing houses",
-    icon: <StandingIcon />,
-  },
-  { value: "extinct" as const, label: "Extinct houses", icon: <ExtinctIcon /> },
-];
-
 type RankFilter =
   "all" | "royal" | "lordly" | "knightly" | "other" | "exiled" | "extinct";
 
@@ -133,10 +119,6 @@ export function FilteredHouseList({
   const [{ search, dir, size, page: rawPage }, setParams] =
     useQueryStates(parsers);
   const page = Math.max(1, rawPage);
-  const [status, setStatus] = useQueryState(
-    "status",
-    parseAsStringLiteral(STATUS_FILTERS).withDefault("all"),
-  );
   const [rank, setRank] = useQueryState(
     "rank",
     parseAsStringLiteral(RANK_FILTERS).withDefault("all"),
@@ -209,16 +191,10 @@ export function FilteredHouseList({
   }, [items, dir]);
 
   const facetFiltered = useMemo(() => {
-    const byStatus =
-      status === "all"
-        ? sorted
-        : sorted.filter((item) =>
-            status === "extinct" ? !!item.extinct : !item.extinct,
-          );
     return rank === "all"
-      ? byStatus
-      : byStatus.filter((item) => item.rank === rank);
-  }, [sorted, status, rank]);
+      ? sorted
+      : sorted.filter((item) => item.rank === rank);
+  }, [sorted, rank]);
 
   const filtered = filterByName(facetFiltered, debounced);
   const total = facetFiltered.length;
@@ -259,11 +235,6 @@ export function FilteredHouseList({
 
   const handleDirChange = (next: SortDirection) => {
     setParams({ dir: next, page: 1 });
-  };
-
-  const handleStatusChange = (next: StatusFilter) => {
-    setStatus(next === "all" ? null : next);
-    setParams({ page: 1 });
   };
 
   const handleRankChange = (next: string) => {
@@ -391,12 +362,6 @@ export function FilteredHouseList({
               ))}
             </select>
           </label>
-          <ViewToggle
-            options={STATUS_OPTIONS}
-            value={status}
-            onChange={handleStatusChange}
-            ariaLabel="House status"
-          />
           <SortToggle value={dir} onChange={handleDirChange} />
           <ViewToggle
             options={VIEW_OPTIONS}
@@ -497,77 +462,5 @@ function RegionAccordion({
         </ul>
       )}
     </Accordion>
-  );
-}
-
-function AllStatusIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M8 1.5 L13.5 3.5 V8 C13.5 11.3 8 14.5 8 14.5 C8 14.5 2.5 11.3 2.5 8 V3.5 Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function StandingIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M4 2 V14"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-      <path d="M5 2.5 L13 4.5 L5 6.5 Z" fill="currentColor" />
-    </svg>
-  );
-}
-
-function ExtinctIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M4 2 V14"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M5 2.5 L13 4.5 L5 6.5 Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.2"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2 2 L14 14"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-      />
-    </svg>
   );
 }
