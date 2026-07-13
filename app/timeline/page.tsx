@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { ParchmentLayout } from "@/components/ParchmentLayout";
 import { PageHeading } from "@/components/PageHeading";
-import { TimelineChart } from "@/components/TimelineChart";
-import { TimelineMinimap } from "@/components/TimelineMinimap";
+import { TimelineExplorer } from "@/components/TimelineExplorer";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { loadAllBattles, loadAllEvents } from "@/lib/content";
-import { buildTimeline } from "@/lib/timeline";
+import { prepareTimeline } from "@/lib/timeline";
 import styles from "@/app/timeline/page.module.scss";
 
 export const metadata: Metadata = {
@@ -21,7 +20,7 @@ export default async function TimelinePage() {
   ]);
   const published = battles.filter((b) => !b.frontmatter.draft);
   const publishedEvents = events.filter((e) => !e.frontmatter.draft);
-  const model = buildTimeline({
+  const source = prepareTimeline({
     battles: published.map((b) => b.frontmatter),
     events: publishedEvents.map((e) => e.frontmatter),
   });
@@ -37,9 +36,8 @@ export default async function TimelinePage() {
         subtitle="Trace the centuries: the battles and great events of the Known World, laid out in time and place."
       />
       <div className={styles.chartBleed}>
-        <TimelineChart model={model} bodyId="timeline-chart" />
+        <TimelineExplorer source={source} />
       </div>
-      <TimelineMinimap ticks={model.ticks} targetId="timeline-chart" />
       {hasApproximate && (
         <p className={styles.legend}>* approximate or legendary date</p>
       )}

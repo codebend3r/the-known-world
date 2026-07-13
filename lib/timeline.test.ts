@@ -2,10 +2,16 @@ import { describe, it, expect } from "vitest";
 import type { Battle, Event } from "@/lib/schemas";
 import {
   CLUSTER_GAP_PX,
+  DEFAULT_ZOOM_INDEX,
   LANDMASSES,
   PX_PER_YEAR,
+  ZOOM_LEVELS,
   buildTimeline,
   landmassForBattle,
+  layoutTimeline,
+  prepareTimeline,
+  yForYear,
+  yearForY,
 } from "@/lib/timeline";
 
 const makeBattle = ({
@@ -313,5 +319,100 @@ describe("buildTimeline", () => {
         "an-event",
       ]);
     }
+  });
+});
+
+describe("timeline zoom", () => {
+  it("splits a cluster into individual nodes as pxPerYear grows", () => {
+    const source = prepareTimeline({
+      battles: [
+        makeBattle({ slug: "a", year: 300, region: "north" }),
+        makeBattle({ slug: "b", year: 306, region: "north" }),
+      ],
+    });
+    // 6 years apart: 12px at the base scale (clustered), 96px at 8x (split).
+    expect(
+      layoutTimeline({ source, pxPerYear: PX_PER_YEAR }).columns.westeros.map(
+        (n) => n.kind,
+      ),
+    ).toEqual(["cluster"]);
+    expect(
+      layoutTimeline({
+        source,
+        pxPerYear: PX_PER_YEAR * 8,
+      }).columns.westeros.map((n) => n.kind),
+    ).toEqual(["single", "single"]);
+  });
+
+  it("separates adjacent years at the top zoom level", () => {
+    const source = prepareTimeline({
+      battles: [
+        makeBattle({ slug: "a", year: 298, region: "north" }),
+        makeBattle({ slug: "b", year: 299, region: "north" }),
+        makeBattle({ slug: "c", year: 300, region: "north" }),
+      ],
+    });
+    const topPx = PX_PER_YEAR * ZOOM_LEVELS[ZOOM_LEVELS.length - 1];
+    expect(
+      layoutTimeline({ source, pxPerYear: topPx }).columns.westeros.map(
+        (n) => n.kind,
+      ),
+    ).toEqual(["single", "single", "single"]);
+  });
+
+  it("still groups same-year events at the top zoom level", () => {
+    const source = prepareTimeline({
+      battles: [
+        makeBattle({ slug: "a", year: 300, region: "north" }),
+        makeBattle({ slug: "b", year: 300, region: "north" }),
+      ],
+    });
+    const topPx = PX_PER_YEAR * ZOOM_LEVELS[ZOOM_LEVELS.length - 1];
+    const nodes = layoutTimeline({ source, pxPerYear: topPx }).columns.westeros;
+    expect(nodes).toHaveLength(1);
+    expect(nodes[0].kind).toBe("cluster");
+  });
+
+  it("scales node positions with pxPerYear", () => {
+    const source = prepareTimeline({
+      battles: [
+        makeBattle({ slug: "a", year: 100, region: "north" }),
+        makeBattle({ slug: "b", year: 300, region: "north" }),
+      ],
+    });
+    const base = layoutTimeline({ source, pxPerYear: PX_PER_YEAR });
+    const doubled = layoutTimeline({ source, pxPerYear: PX_PER_YEAR * 2 });
+    const gap = (m: typeof base): number =>
+      m.columns.westeros[1].y - m.columns.westeros[0].y;
+    expect(gap(doubled)).toBe(gap(base) * 2);
+  });
+
+  it("composes into buildTimeline at the default scale", () => {
+    const input = {
+      battles: [
+        makeBattle({ slug: "a", year: 299, region: "north" }),
+        makeBattle({ slug: "b", year: 299, region: "north" }),
+      ],
+      events: [makeEvent({ slug: "c", year: 300 })],
+    };
+    expect(layoutTimeline({ source: prepareTimeline(input) })).toEqual(
+      buildTimeline(input),
+    );
+  });
+
+  it("lays an event-free source out as an empty model", () => {
+    const model = layoutTimeline({ source: prepareTimeline({ battles: [] }) });
+    expect(model.height).toBe(0);
+    expect(model.columns.westeros).toEqual([]);
+  });
+
+  it("round-trips a year through yForYear and yearForY", () => {
+    const frame = { minYear: -1000, pxPerYear: PX_PER_YEAR * 4 };
+    const y = yForYear({ year: 250, ...frame });
+    expect(yearForY({ y, ...frame })).toBeCloseTo(250);
+  });
+
+  it("keeps the default zoom level at 1x", () => {
+    expect(ZOOM_LEVELS[DEFAULT_ZOOM_INDEX]).toBe(1);
   });
 });

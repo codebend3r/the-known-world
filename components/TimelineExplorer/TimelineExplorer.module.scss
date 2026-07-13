@@ -1,0 +1,76 @@
+@use "breakpoints" as bp;
+
+.explorer {
+  display: grid;
+}
+
+.chartWrap {
+  display: grid;
+}
+
+// Floating pill in the lower-right, clear of the sticky site header and the
+// vertically-centred minimap. Fixed so it stays reachable down the long chart.
+.zoom {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 1.25rem;
+  z-index: 8;
+  display: grid;
+  justify-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem;
+  background: rgba(248, 236, 208, 0.94);
+  border: 1px solid rgba(107, 68, 35, 0.3);
+  border-radius: 2px;
+  box-shadow: 0 2px 12px rgba(61, 40, 23, 0.15);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+.zoomButton {
+  appearance: none;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  background: rgba(248, 236, 208, 0.6);
+  border: 1px solid rgba(107, 68, 35, 0.35);
+  border-radius: 2px;
+  color: var(--ink);
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    color 120ms ease,
+    background 120ms ease;
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled) {
+    border-color: var(--gold-leaf);
+    color: var(--gold-leaf);
+    background: rgba(248, 236, 208, 0.9);
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.zoomLevel {
+  min-width: 2.25rem;
+  font-family: var(--font-heading);
+  font-variant: small-caps;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+  color: var(--ink-faded);
+  text-align: center;
+}

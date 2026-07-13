@@ -28,6 +28,15 @@
   font-size: 0.85rem;
   color: var(--ink-faded);
   letter-spacing: 0.5px;
+
+  // Match the 50px height of the sibling `SortToggle` / `ViewToggle`
+  // buttons and enlarge the option text. Scoped here so the shared
+  // `listSearch.pageSizeSelect` (used by pagination) stays compact.
+  .rankSelect {
+    height: 50px;
+    font-size: 1.1rem;
+    padding: 0 1.9rem 0 0.85rem;
+  }
 }
 
 .rankLabel {
