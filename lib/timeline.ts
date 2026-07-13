@@ -19,6 +19,19 @@ export const PX_PER_YEAR = 2;
 export const CLUSTER_GAP_PX = 28;
 export const MAX_CLUSTER_SPAN_YEARS = 10;
 
+/**
+ * Zoom multipliers applied to `PX_PER_YEAR`. A larger multiplier spreads
+ * events farther apart, so clusters that only formed because entries sat
+ * within `CLUSTER_GAP_PX` of one another break back into individual nodes.
+ *
+ * The top level puts each year more than `CLUSTER_GAP_PX` apart
+ * (`16 * PX_PER_YEAR = 32px` per year > `28px`), so at full zoom a cluster can
+ * only hold events sharing a single year: enough to read one year at a time.
+ */
+export const ZOOM_LEVELS = [0.5, 1, 2, 4, 8, 16] as const;
+/** Index into `ZOOM_LEVELS` for the default 1x view (`PX_PER_YEAR`). */
+export const DEFAULT_ZOOM_INDEX = 1;
+
 const TOP_PAD_PX = 48;
 /** Must fit a bottom cluster's expanded list — `.list` max-height 18rem in `TimelineCluster.module.scss`. */
 const BOTTOM_PAD_PX = 400;
@@ -68,6 +81,17 @@ export type TimelineModel = {
   ticks: TimelineTick[];
   eras: TimelineEra[];
   columns: Record<Landmass, TimelineNode[]>;
+};
+
+/**
+ * Zoom-independent, serializable placement: events already sorted into their
+ * landmass columns plus the overall year range. Computed once on the server,
+ * then laid out at any `pxPerYear` on the client.
+ */
+export type TimelineSource = {
+  minYear: number;
+  maxYear: number;
+  columns: Record<Landmass, TimelineEvent[]>;
 };
 
 export function landmassForBattle({ battle }: { battle: Battle }): Landmass {
@@ -131,15 +155,50 @@ const EMPTY_COLUMNS: Record<Landmass, TimelineNode[]> = {
   "summer-isles": [],
 };
 
-export function buildTimeline({
+/** Pixel offset of a year within the chart body at a given vertical scale. */
+export function yForYear({
+  year,
+  minYear,
+  pxPerYear,
+}: {
+  year: number;
+  minYear: number;
+  pxPerYear: number;
+}): number {
+  return (year - minYear) * pxPerYear + TOP_PAD_PX;
+}
+
+/** Inverse of `yForYear`: the year at a pixel offset within the chart body. */
+export function yearForY({
+  y,
+  minYear,
+  pxPerYear,
+}: {
+  y: number;
+  minYear: number;
+  pxPerYear: number;
+}): number {
+  return (y - TOP_PAD_PX) / pxPerYear + minYear;
+}
+
+/**
+ * Sort battles and events into their landmass columns and compute the overall
+ * year range. The result is zoom-independent and serializable, so it can be
+ * built once on the server and laid out at any `pxPerYear` on the client.
+ */
+export function prepareTimeline({
   battles,
   events = [],
 }: {
   battles: Battle[];
   events?: Event[];
-}): TimelineModel {
+}): TimelineSource {
   if (!battles.length && !events.length) {
-    return { height: 0, ticks: [], eras: [], columns: { ...EMPTY_COLUMNS } };
+    return {
+      minYear: 0,
+      maxYear: 0,
+      columns: { westeros: [], essos: [], "summer-isles": [] },
+    };
   }
 
   const years = [
@@ -149,8 +208,61 @@ export function buildTimeline({
   const minYear = Math.floor(Math.min(...years) / 1000) * 1000;
   const maxYear = Math.ceil(Math.max(...years) / 50) * 50;
 
-  const yFor = (year: number): number =>
-    (year - minYear) * PX_PER_YEAR + TOP_PAD_PX;
+  const placed: Array<{ landmass: Landmass; event: TimelineEvent }> = [
+    ...battles.map((battle) => ({
+      landmass: landmassForBattle({ battle }),
+      event: {
+        slug: battle.slug,
+        name: battle.name,
+        href: `/battles/${battle.slug}/`,
+        year: absoluteYear(battle.start),
+        when: formatBattleWhen(battle.start, battle.end),
+      },
+    })),
+    ...events.map((event) => ({
+      landmass: event.landmass,
+      event: {
+        slug: event.slug,
+        name: event.name,
+        href: `/events/${event.slug}/`,
+        year: absoluteYear(event.date),
+        when: formatBattleWhen(event.date, event.date),
+      },
+    })),
+  ];
+
+  const columns = placed.reduce<Record<Landmass, TimelineEvent[]>>(
+    (acc, { landmass, event }) => ({
+      ...acc,
+      [landmass]: [...acc[landmass], event],
+    }),
+    { westeros: [], essos: [], "summer-isles": [] },
+  );
+
+  return { minYear, maxYear, columns };
+}
+
+/**
+ * Lay a prepared timeline out at a given vertical scale. Clustering keys off
+ * the pixel gap between entries, so a larger `pxPerYear` (zoom-in) pulls
+ * grouped events apart into individual nodes.
+ */
+export function layoutTimeline({
+  source,
+  pxPerYear = PX_PER_YEAR,
+}: {
+  source: TimelineSource;
+  pxPerYear?: number;
+}): TimelineModel {
+  const { minYear, maxYear } = source;
+  const isEmpty = LANDMASSES.every(
+    (landmass) => source.columns[landmass].length === 0,
+  );
+  if (isEmpty) {
+    return { height: 0, ticks: [], eras: [], columns: { ...EMPTY_COLUMNS } };
+  }
+
+  const yFor = (year: number): number => yForYear({ year, minYear, pxPerYear });
   const height = yFor(maxYear) + BOTTOM_PAD_PX;
 
   const bcMillennia = Array.from(
@@ -177,46 +289,33 @@ export function buildTimeline({
     return {
       label: band.label,
       top: yFor(from),
-      height: (to - from) * PX_PER_YEAR,
+      height: (to - from) * pxPerYear,
     };
   });
 
-  const placed: Array<{ landmass: Landmass; event: TimelineEvent }> = [
-    ...battles.map((battle) => ({
-      landmass: landmassForBattle({ battle }),
-      event: {
-        slug: battle.slug,
-        name: battle.name,
-        href: `/battles/${battle.slug}/`,
-        year: absoluteYear(battle.start),
-        when: formatBattleWhen(battle.start, battle.end),
-      },
-    })),
-    ...events.map((event) => ({
-      landmass: event.landmass,
-      event: {
-        slug: event.slug,
-        name: event.name,
-        href: `/events/${event.slug}/`,
-        year: absoluteYear(event.date),
-        when: formatBattleWhen(event.date, event.date),
-      },
-    })),
-  ];
-
-  const byLandmass = placed.reduce<Record<Landmass, TimelineEvent[]>>(
-    (acc, { landmass, event }) => ({
-      ...acc,
-      [landmass]: [...acc[landmass], event],
-    }),
-    { westeros: [], essos: [], "summer-isles": [] },
-  );
-
   const columns: Record<Landmass, TimelineNode[]> = {
-    westeros: clusterColumn({ events: byLandmass.westeros, yFor }),
-    essos: clusterColumn({ events: byLandmass.essos, yFor }),
-    "summer-isles": clusterColumn({ events: byLandmass["summer-isles"], yFor }),
+    westeros: clusterColumn({ events: source.columns.westeros, yFor }),
+    essos: clusterColumn({ events: source.columns.essos, yFor }),
+    "summer-isles": clusterColumn({
+      events: source.columns["summer-isles"],
+      yFor,
+    }),
   };
 
   return { height, ticks, eras, columns };
+}
+
+export function buildTimeline({
+  battles,
+  events = [],
+  pxPerYear = PX_PER_YEAR,
+}: {
+  battles: Battle[];
+  events?: Event[];
+  pxPerYear?: number;
+}): TimelineModel {
+  return layoutTimeline({
+    source: prepareTimeline({ battles, events }),
+    pxPerYear,
+  });
 }
