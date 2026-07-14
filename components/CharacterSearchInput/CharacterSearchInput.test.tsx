@@ -16,16 +16,23 @@ function asInput(el: HTMLElement): HTMLInputElement {
 }
 
 const items: CharacterSuggestion[] = [
-  { slug: "naerys-targaryen", name: "Naerys Targaryen", alias: null },
+  {
+    slug: "naerys-targaryen",
+    name: "Naerys Targaryen",
+    alias: null,
+    aliases: [],
+  },
   {
     slug: "aemon-targaryen",
     name: "Aemon Targaryen",
     alias: "The Dragonknight",
+    aliases: ["The Dragonknight"],
   },
   {
     slug: "aegon-iv-targaryen",
     name: "Aegon IV Targaryen",
     alias: "The Unworthy",
+    aliases: ["The Unworthy"],
   },
 ];
 
@@ -102,5 +109,14 @@ describe("CharacterSearchInput — autocomplete mode", () => {
   it("shows no listbox for an empty query", () => {
     render(<CharacterSearchInput autocomplete items={items} />);
     expect(screen.queryByRole("listbox")).toBeNull();
+  });
+
+  it("matches on alias when the query doesn't appear in the name", () => {
+    render(<CharacterSearchInput autocomplete items={items} />);
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "dragonknight" } });
+    const options = screen.getAllByRole("option");
+    expect(options).toHaveLength(1);
+    expect(options[0]?.textContent).toContain("Aemon Targaryen");
   });
 });

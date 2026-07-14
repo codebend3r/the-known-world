@@ -104,7 +104,12 @@ export default async function CharacterPage({
   const characterSuggestions = allCharacters
     .map((c) => c.frontmatter)
     .filter((f) => !f.draft && !f.placeholder)
-    .map((f) => ({ slug: f.slug, name: f.name, alias: f.aliases[0] ?? null }));
+    .map((f) => ({
+      slug: f.slug,
+      name: f.name,
+      alias: f.aliases[0] ?? null,
+      aliases: f.aliases,
+    }));
 
   const primaryHouse = fm["primary-house"]
     ? housesBySlug.get(fm["primary-house"])

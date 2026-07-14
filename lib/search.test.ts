@@ -60,4 +60,34 @@ describe("filterByName", () => {
       "Eddard Stark",
     ]);
   });
+
+  it("matches on an alias when the query isn't in the name", () => {
+    const aliasItems = [
+      { name: "Jaime Lannister", aliases: ["The Kingslayer"] },
+      { name: "Tywin Lannister", aliases: [] },
+    ];
+    const result = filterByName(aliasItems, "kingslayer");
+    expect(result.map((i) => i.name)).toEqual(["Jaime Lannister"]);
+  });
+
+  it("ranks a name match above an alias-only match for the same query", () => {
+    const aliasItems = [
+      { name: "Sandor Clegane", aliases: ["The Hound"] },
+      { name: "The Hound's Squire", aliases: [] },
+    ];
+    const result = filterByName(aliasItems, "hound");
+    expect(result.map((i) => i.name)).toEqual([
+      "The Hound's Squire",
+      "Sandor Clegane",
+    ]);
+  });
+
+  it("still filters correctly when items have no aliases field at all", () => {
+    const result = filterByName(items, "stark");
+    expect(result.map((i) => i.name)).toEqual([
+      "House Stark",
+      "Arya Stark",
+      "Eddard Stark",
+    ]);
+  });
 });

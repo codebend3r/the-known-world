@@ -51,6 +51,7 @@ export type CharacterItem = {
   slug: string;
   name: string;
   alias: string | null;
+  aliases: string[];
   primaryHouseSlug: string | null;
   region: string | null;
   portrait: string;

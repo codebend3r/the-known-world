@@ -37,6 +37,7 @@ export default async function CharactersPage() {
       slug: c.frontmatter.slug,
       name: c.frontmatter.name,
       alias: c.frontmatter.aliases[0] ?? null,
+      aliases: c.frontmatter.aliases,
       primaryHouseSlug: c.frontmatter["primary-house"],
       region: regionForHouse(c.frontmatter["primary-house"], housesBySlug),
       portrait: portraits[i],
