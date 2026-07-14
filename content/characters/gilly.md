@@ -8,6 +8,8 @@ born:
   precision: year
 died: null
 primary-house: null
+aliases:
+  - The rabbit keeper
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Gilly

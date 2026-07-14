@@ -27,6 +27,7 @@ titles:
   - Protector of the Realm
 aliases:
   - The Good
+  - The Falseborn
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_II_Targaryen

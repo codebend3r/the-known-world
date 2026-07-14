@@ -20,6 +20,10 @@ titles:
   - Prince
 aliases:
   - Brightflame
+  - Brightfire
+  - Aerion the Monstrous
+  - The Prince Who Thought He Was a Dragon
+  - The Bright Prince
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aerion_Targaryen

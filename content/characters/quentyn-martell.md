@@ -21,6 +21,10 @@ titles:
   - Ser
 aliases:
   - Frog
+  - Quent
+  - Prince Frog
+  - The Prince Who Came Too Late
+  - The dragonrider
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Quentyn_Martell

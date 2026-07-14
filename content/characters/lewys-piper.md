@@ -5,6 +5,10 @@ sex: m
 born: null
 died: null
 primary-house: piper
+aliases:
+  - Lew Piper
+  - Little Lew
+  - Little Lew Piper
 parents:
   - clement-piper
   - lady-piper-wife-of-clement

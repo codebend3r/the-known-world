@@ -20,6 +20,8 @@ children:
   - daven-lannister
   - cerenna-lannister
   - myrielle-lannister
+aliases:
+  - Uncle Dolt
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Stafford_Lannister

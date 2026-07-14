@@ -11,6 +11,8 @@ primary-house: lannister
 parents:
   - tygett-lannister
   - darlessa-marbrand
+aliases:
+  - Wet Nurse
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tyrek_Lannister

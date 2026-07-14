@@ -17,6 +17,7 @@ titles:
   - Lord Commander of the Night's Watch
 aliases:
   - The Old Bear
+  - Old Lord Crow
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jeor_Mormont

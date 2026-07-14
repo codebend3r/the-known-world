@@ -23,6 +23,8 @@ children:
 titles:
   - Queen of the Seven Kingdoms
   - Queen Dowager
+aliases:
+  - The Queen in Chains
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Alicent_Hightower

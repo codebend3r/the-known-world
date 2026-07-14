@@ -22,6 +22,11 @@ children:
 titles:
   - Prince of Dragonstone
   - Heir to the Iron Throne
+aliases:
+  - The Silver Prince
+  - The Dragon Prince
+  - The Last Dragon
+  - The Prince That Was Promised
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaegar_Targaryen

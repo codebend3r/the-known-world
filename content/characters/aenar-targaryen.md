@@ -12,6 +12,7 @@ titles:
   - Lord of Dragonstone
 aliases:
   - The Exile
+  - The Lord who Left
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aenar_Targaryen

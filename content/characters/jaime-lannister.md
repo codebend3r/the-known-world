@@ -17,6 +17,11 @@ titles:
   - Lord Commander of the Kingsguard
 aliases:
   - The Kingslayer
+  - The Lion of Lannister
+  - The Golden Man
+  - Cripple
+  - The Young Lion
+  - Goldenhand
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jaime_Lannister

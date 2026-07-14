@@ -25,6 +25,8 @@ titles:
   - Rider of Vhagar
 aliases:
   - The Brave
+  - The Spring Prince
+  - The Silver Fool
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Baelon_Targaryen

@@ -28,6 +28,9 @@ titles:
   - Prince of Dorne
 aliases:
   - The Red Viper
+  - The Snake
+  - Oberyn Viper
+  - Red Snake
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Oberyn_Martell

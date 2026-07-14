@@ -13,6 +13,8 @@ also-of-houses:
 parents:
   - emmon-frey
   - genna-lannister
+aliases:
+  - Red Walder
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Walder_Frey_(son_of_Emmon)

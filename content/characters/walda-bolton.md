@@ -12,6 +12,8 @@ also-of-houses:
   - frey
 spouses:
   - roose-bolton
+aliases:
+  - Fat Walda
 titles:
   - Lady of the Dreadfort
 sources:

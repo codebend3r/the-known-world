@@ -16,6 +16,8 @@ children:
   - obella-sand
   - dorea-sand
   - loreza-sand
+aliases:
+  - "The Serpent's Whore"
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ellaria_Sand

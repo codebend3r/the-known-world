@@ -20,6 +20,9 @@ titles:
   - Lord of the Tides
   - Heir to Driftmark
   - Rider of Arrax
+aliases:
+  - Luke
+  - "Little Luke Strong"
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Lucerys_Velaryon

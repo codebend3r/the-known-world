@@ -11,6 +11,10 @@ aliases:
   - The Red Woman
   - Lady Melisandre
   - Melisandre of Asshai
+  - Red Witch
+  - The King's Red Shadow
+  - Lady Red
+  - Melony
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Melisandre

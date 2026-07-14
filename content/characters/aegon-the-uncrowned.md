@@ -23,6 +23,7 @@ titles:
   - Prince of Dragonstone
 aliases:
   - The Uncrowned
+  - The Pretender
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_Targaryen_(son_of_Aenys_I)

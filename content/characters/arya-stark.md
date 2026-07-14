@@ -11,6 +11,28 @@ primary-house: stark
 parents:
   - eddard-stark
   - catelyn-stark
+aliases:
+  - "Arya Horseface"
+  - "Arya Underfoot"
+  - "Arry"
+  - "Lumpyhead"
+  - "Lumpyface"
+  - "Stickboy"
+  - "Rabbitkiller"
+  - "Weasel"
+  - "The ghost in Harrenhal"
+  - "Nan"
+  - "Squab"
+  - "Squirrel"
+  - "Wolf girl"
+  - "Salty"
+  - "Cat of the Canals"
+  - "Blind Beth"
+  - "The blind girl"
+  - "The night wolf"
+  - "The ugly girl"
+  - "Mercedene"
+  - "Mercy"
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Arya_Stark

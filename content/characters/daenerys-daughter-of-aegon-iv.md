@@ -19,6 +19,8 @@ spouses:
 titles:
   - Princess
   - Princess of Dorne
+aliases:
+  - The first Daenerys
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daenerys_Targaryen_(daughter_of_Aegon_IV)

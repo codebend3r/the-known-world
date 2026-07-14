@@ -5,6 +5,8 @@ sex: m
 born: null
 died: null
 primary-house: bar-emmon
+aliases:
+  - Togarion the Terrible
 children:
   - unknown-bar-emmon-ancestors
 titles:

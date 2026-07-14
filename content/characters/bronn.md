@@ -5,6 +5,8 @@ sex: m
 born: null
 died: null
 primary-house: null
+aliases:
+  - Bronn of the Blackwater
 titles:
   - Ser
   - Lord of Stokeworth

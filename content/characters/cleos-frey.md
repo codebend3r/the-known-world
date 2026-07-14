@@ -15,6 +15,8 @@ parents:
   - genna-lannister
 titles:
   - Ser
+aliases:
+  - Cousin Cleos
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Cleos_Frey

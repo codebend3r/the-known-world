@@ -18,6 +18,11 @@ aliases:
   - Sam
   - Sam the Slayer
   - Ser Piggy
+  - Lady Piggy
+  - Lord of Ham
+  - Fat Sam
+  - Sam the Scared
+  - Black Sam
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Samwell_Tarly

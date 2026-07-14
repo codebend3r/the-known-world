@@ -17,6 +17,7 @@ titles:
 aliases:
   - Clubfoot
   - Larys the Clubfoot
+  - Larys Clubfoot
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Larys_Strong

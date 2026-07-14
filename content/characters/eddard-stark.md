@@ -28,6 +28,10 @@ titles:
   - Lord of Winterfell
   - Warden of the North
   - Hand of the King
+aliases:
+  - Ned
+  - The Quiet Wolf
+  - The Ned
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Eddard_Stark

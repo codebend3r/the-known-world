@@ -29,6 +29,7 @@ titles:
 aliases:
   - The Laughing Lion
   - The Toothless Lion
+  - The Lord of Misrule
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tytos_Lannister

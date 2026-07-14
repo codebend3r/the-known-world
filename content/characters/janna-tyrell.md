@@ -15,6 +15,8 @@ parents:
   - olenna-tyrell
 spouses:
   - jon-fossoway
+aliases:
+  - Janna Fossoway
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Janna_Tyrell

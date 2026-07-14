@@ -12,6 +12,12 @@ parents:
   - jeor-mormont
 titles:
   - Ser
+aliases:
+  - The Exile Knight
+  - Jorah the Andal
+  - Iron Lord
+  - The Andal
+  - Ser Bezoar
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jorah_Mormont

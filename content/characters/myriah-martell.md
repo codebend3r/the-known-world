@@ -22,6 +22,8 @@ children:
   - maekar-i-targaryen
 titles:
   - Queen of the Seven Kingdoms
+aliases:
+  - Myriah of Dorne
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Myriah_Martell

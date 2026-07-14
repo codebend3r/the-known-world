@@ -14,6 +14,11 @@ primary-house: targaryen
 parents:
   - daemon-targaryen
   - laena-velaryon
+aliases:
+  - Rhaena of Pentos
+  - Rhae
+  - Rhaena Corbray
+  - Dragon Twin
 titles:
   - Princess
   - Lady of Hightower

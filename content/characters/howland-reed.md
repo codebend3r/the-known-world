@@ -9,6 +9,7 @@ titles:
   - Lord of Greywater Watch
 aliases:
   - The Crannogman
+  - The Little Crannogman
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Howland_Reed

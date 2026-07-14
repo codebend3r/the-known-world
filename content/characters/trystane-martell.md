@@ -15,6 +15,8 @@ spouses: []
 children: []
 titles:
   - Prince of Dorne
+aliases:
+  - Trys
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Trystane_Martell

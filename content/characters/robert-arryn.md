@@ -20,6 +20,7 @@ titles:
 aliases:
   - Sweetrobin
   - Robin
+  - True Warden of the East
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Robert_Arryn

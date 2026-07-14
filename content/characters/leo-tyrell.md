@@ -13,6 +13,7 @@ titles:
   - Warden of the South
 aliases:
   - Longthorn
+  - The Rose Lord
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Leo_Tyrell_(Longthorn)

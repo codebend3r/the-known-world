@@ -21,6 +21,7 @@ aliases:
   - Lord Rivers
   - The last greenseer
   - The three-eyed crow
+  - Lord Brynden
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brynden_Rivers

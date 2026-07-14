@@ -11,6 +11,8 @@ died:
   era: AC
   precision: year
 primary-house: targaryen
+aliases:
+  - The Anvil
 parents:
   - daeron-ii-targaryen
   - myriah-martell

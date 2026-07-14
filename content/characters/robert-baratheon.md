@@ -31,6 +31,10 @@ titles:
 aliases:
   - The Usurper
   - The Demon of the Trident
+  - The Whoremonger King
+  - Rob
+  - The Storm Lord
+  - The Fat King
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Robert_Baratheon

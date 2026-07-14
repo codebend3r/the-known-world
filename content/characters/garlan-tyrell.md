@@ -18,6 +18,9 @@ titles:
   - Lord of Brightwater Keep
 aliases:
   - The Gallant
+  - Lord Renly
+  - Renly's Ghost
+  - Lord Renly's Shade
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Garlan_Tyrell

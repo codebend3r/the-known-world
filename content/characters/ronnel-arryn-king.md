@@ -15,6 +15,8 @@ titles:
   - Lord of the Eyrie
   - Defender of the Vale
   - Warden of the East
+aliases:
+  - The King Who Flew
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ronnel_Arryn

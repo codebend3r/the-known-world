@@ -18,6 +18,9 @@ spouses:
 titles:
   - Captain of the Black Wind
   - Princess of the Iron Islands
+aliases:
+  - Esgred
+  - The Kraken's Daughter
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Asha_Greyjoy

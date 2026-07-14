@@ -13,6 +13,8 @@ died:
 primary-house: lannister
 parents:
   - tymond-lannister
+aliases:
+  - The Hooded Hand
 titles:
   - Master of ships
   - Master of coin

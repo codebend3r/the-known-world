@@ -12,6 +12,8 @@ parents:
   - aegon-iv-targaryen
 titles:
   - Lady
+aliases:
+  - Star of the Sea
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Shiera_Seastar

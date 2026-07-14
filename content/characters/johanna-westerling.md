@@ -19,6 +19,8 @@ children:
 titles:
   - Lady of Casterly Rock
   - Regent of the Westerlands
+aliases:
+  - Johanna Lannister
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Johanna_Lannister

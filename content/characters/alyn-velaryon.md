@@ -27,6 +27,10 @@ titles:
 aliases:
   - Oakenfist
   - Alyn of Hull
+  - Alyn Oakenfist
+  - Alyn the Oakenfist
+  - Lord Oakenfist
+  - Hero of the Stepstones
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Alyn_Velaryon

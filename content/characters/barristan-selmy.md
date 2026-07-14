@@ -15,6 +15,9 @@ titles:
 aliases:
   - Barristan the Bold
   - Arstan Whitebeard
+  - Barristan the Old
+  - Ser Grandfather
+  - Old Ser
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Barristan_Selmy

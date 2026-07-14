@@ -22,6 +22,7 @@ titles:
   - Hand of the King
 aliases:
   - Orys One-Hand
+  - The King's Stump
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Orys_Baratheon

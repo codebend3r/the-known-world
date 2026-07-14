@@ -27,6 +27,10 @@ titles:
 aliases:
   - The Mad King
   - Aerys II
+  - Mad King Aerys
+  - King Scab
+  - Aerys the Mad
+  - Mad Aerys
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aerys_II_Targaryen

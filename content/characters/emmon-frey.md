@@ -5,6 +5,8 @@ sex: m
 born: null
 died: null
 primary-house: frey
+aliases:
+  - Emm
 spouses:
   - genna-lannister
 children:

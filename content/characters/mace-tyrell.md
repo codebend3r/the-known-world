@@ -24,6 +24,12 @@ titles:
   - Lord Paramount of the Mander
   - Defender of the Marches
   - High Marshal of the Reach
+aliases:
+  - Lord Oaf
+  - The Fat Flower
+  - The Fat Flower of Highgarden
+  - Lord Puff Fish
+  - The rose lord
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Mace_Tyrell

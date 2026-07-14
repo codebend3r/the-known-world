@@ -20,6 +20,7 @@ titles:
   - Prince
 aliases:
   - Young Griff
+  - The Prince That Was Promised
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_Targaryen_(son_of_Rhaegar)

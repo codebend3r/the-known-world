@@ -15,6 +15,9 @@ titles:
   - Ser
 aliases:
   - The Knight of Flowers
+  - Knight o' Pansies
+  - Ser Daisy
+  - Renly's little rose
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Loras_Tyrell

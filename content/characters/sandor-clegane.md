@@ -10,6 +10,8 @@ died: null
 primary-house: clegane
 aliases:
   - The Hound
+  - Dog
+  - Joffrey's dog
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Sandor_Clegane

@@ -18,6 +18,9 @@ aliases:
   - Reek
   - Theon Turncloak
   - The Prince of Stink
+  - Prince of Fools
+  - The Squid Prince
+  - Theon Kinslayer
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Theon_Greyjoy

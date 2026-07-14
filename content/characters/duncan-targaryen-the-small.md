@@ -20,6 +20,7 @@ titles:
   - Prince of Dragonflies
 aliases:
   - The Small
+  - Prince of Dragonflies
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Duncan_Targaryen

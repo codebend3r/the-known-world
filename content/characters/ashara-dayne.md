@@ -12,6 +12,7 @@ titles:
   - Lady
 aliases:
   - Lady Ashara
+  - The maid with laughing purple eyes
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ashara_Dayne

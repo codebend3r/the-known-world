@@ -22,6 +22,9 @@ titles:
   - Princess
   - Lady of Driftmark
   - Rider of Moondancer
+aliases:
+  - Baela Velaryon
+  - Dragon Twin
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Baela_Targaryen

@@ -16,6 +16,15 @@ parents:
 titles:
   - Crown Prince
   - Heir to the Iron Throne
+aliases:
+  - Joff
+  - Joffy
+  - Joffrey the Illborn
+  - Robert the Second
+  - Aerys the Third
+  - The Young Usurper
+  - Joffrey-called-Baratheon
+  - The boy king
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Joffrey_Baratheon

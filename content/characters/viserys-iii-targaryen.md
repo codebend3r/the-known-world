@@ -19,6 +19,8 @@ titles:
 aliases:
   - The Beggar King
   - The Last Dragon
+  - Khal Rhae Mhar (Sorefoot King)
+  - Khal Rhaggat (Cart King)
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Viserys_III_Targaryen

@@ -20,6 +20,8 @@ titles:
   - Lord of Casterly Rock
   - Shield of Lannisport
   - Warden of the West
+aliases:
+  - The Golden
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Gerold_Lannister_(son_of_Tybolt)

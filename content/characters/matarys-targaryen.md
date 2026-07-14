@@ -18,6 +18,7 @@ titles:
   - Prince
 aliases:
   - The Ever-Drunken Prince
+  - The Even Younger Prince
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Matarys_Targaryen

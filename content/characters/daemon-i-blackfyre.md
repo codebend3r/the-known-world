@@ -29,6 +29,9 @@ titles:
 aliases:
   - The Black Dragon
   - The Pretender
+  - Daemon Waters
+  - The King Who Bore the Sword
+  - Daemon the Pretender
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daemon_I_Blackfyre

@@ -27,6 +27,8 @@ titles:
 aliases:
   - The Conqueror
   - The Dragon
+  - The Dragonlord
+  - Of Dragonstone
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_I_Targaryen

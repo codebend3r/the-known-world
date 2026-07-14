@@ -12,6 +12,8 @@ titles:
   - Ser
 aliases:
   - Bold Jon Roxton
+  - Bold John Roxton
+  - Jon Roxton the Bold
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jon_Roxton

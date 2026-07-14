@@ -10,6 +10,9 @@ died: null
 primary-house: baratheon
 parents:
   - robert-baratheon
+aliases:
+  - "The Bull"
+  - "Mutton Chop"
 titles:
   - Apprentice armourer
 sources:

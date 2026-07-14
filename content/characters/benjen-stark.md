@@ -13,6 +13,10 @@ parents:
   - lyarra-stark
 titles:
   - First Ranger of the Night's Watch
+aliases:
+  - Ben Stark
+  - Uncle Benjen
+  - The young pup
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Benjen_Stark

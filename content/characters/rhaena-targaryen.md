@@ -16,6 +16,9 @@ titles:
   - "Princess"
 aliases:
   - "Rhaena Corbray"
+  - "Rhaena of Pentos"
+  - "Rhae"
+  - "Dragon Twin"
 placeholder: true
 placeholder-reason: unwritten
 sources:

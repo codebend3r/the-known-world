@@ -27,6 +27,7 @@ titles:
   - Hand of the King
 aliases:
   - The Sea Snake
+  - The Snake
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Corlys_Velaryon
