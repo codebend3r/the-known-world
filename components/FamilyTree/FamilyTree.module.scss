@@ -23,13 +23,14 @@
   display: grid;
   gap: 0.2rem;
 
+  // Descent lines are pipework: cold steel rails between generations.
   &::before {
     content: "";
     position: absolute;
     left: 0.4rem;
     top: 0;
     bottom: 0;
-    border-left: 1px solid rgba(107, 68, 35, 0.35);
+    border-left: 1px solid var(--edge-strong);
   }
 
   &::after {
@@ -38,7 +39,7 @@
     left: 0.4rem;
     top: 0.85rem;
     width: 1rem;
-    border-top: 1px solid rgba(107, 68, 35, 0.35);
+    border-top: 1px solid var(--edge-strong);
   }
 
   &:last-child::before {
@@ -56,29 +57,35 @@
 }
 
 .row {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  justify-content: start;
   align-items: baseline;
-  flex-wrap: wrap;
   gap: 0.4rem 0.6rem;
   padding: 0.25rem 0.6rem;
   width: fit-content;
   max-width: 100%;
-  background: rgba(248, 236, 208, 0.6);
-  border: 1px solid rgba(107, 68, 35, 0.15);
-  border-radius: 2px;
+  background: rgba(16, 23, 32, 0.55);
+  border: 1px solid var(--edge);
+  border-radius: 3px;
 
   @media (max-width: bp.$sm) {
+    grid-auto-flow: row;
+    justify-items: start;
     padding: 0.4rem 0.6rem;
   }
 }
 
 .rowPlaceholder {
   background: transparent;
-  border: 1px dotted rgba(107, 68, 35, 0.55);
+  border: 1px dotted var(--edge-strong);
 }
 
 .person {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
   align-items: baseline;
   gap: 0.45rem;
 }
@@ -86,7 +93,7 @@
 .name {
   font-family: var(--font-body);
   font-size: 1rem;
-  color: var(--ink);
+  color: var(--gaslight);
   font-weight: 500;
 }
 
@@ -97,9 +104,9 @@ a.name {
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
+    color: var(--hextech);
     text-decoration: underline;
-    text-decoration-color: rgba(212, 162, 89, 0.45);
+    text-decoration-color: rgba(54, 214, 198, 0.45);
     outline: none;
   }
 
@@ -109,29 +116,30 @@ a.name {
 }
 
 .nameM {
-  color: var(--ink-slate);
+  color: var(--tint-male);
 }
 
 .nameF {
-  color: var(--ink-rose);
+  color: var(--tint-female);
 }
 
 .nameExternal {
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   font-style: italic;
 }
 
 .namePlaceholder {
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   font-style: italic;
   opacity: 0.8;
 }
 
 .lifespan {
   font-family: var(--font-ui);
-  font-size: 0.72rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  color: var(--gaslight-faint);
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
 }
 
 .alias {
@@ -139,17 +147,19 @@ a.name {
   font-style: italic;
   font-weight: 400;
   font-size: 0.78rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
 }
 
 .spouse {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
   align-items: baseline;
   gap: 0.3rem;
 }
 
 .cross {
-  color: var(--gold-leaf);
+  color: var(--brass);
   font-size: 0.95rem;
 }
 
@@ -159,22 +169,22 @@ a.name {
 }
 
 .genderM {
-  color: var(--gold-leaf);
+  color: var(--tint-male);
 }
 
 .genderF {
-  color: var(--rose-madder);
+  color: var(--tint-female);
 }
 
 .king {
   font-size: 0.85rem;
-  color: var(--gold-leaf);
+  color: var(--brass-bright);
   padding-right: 0.15rem;
 }
 
 .empty {
   font-style: italic;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   text-align: center;
   padding: 2rem 1rem;
 }

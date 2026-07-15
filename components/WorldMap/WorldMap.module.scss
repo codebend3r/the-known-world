@@ -8,6 +8,8 @@
   justify-items: center;
 }
 
+// The chart table: the parchment map is an exhibit under glass, held in a
+// brass instrument bezel; the chrome around it stays cold metal.
 .stage {
   position: relative;
   width: 100%;
@@ -19,24 +21,28 @@
     height: auto;
     aspect-ratio: 1 / 1;
   }
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
-  background: rgba(248, 236, 208, 0.55);
+  border: 1px solid var(--edge-brass);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  background: var(--well);
+  box-shadow:
+    inset 0 0 40px rgba(4, 8, 13, 0.5),
+    var(--shadow-soft);
   overflow: hidden;
   display: grid;
   grid-template-areas: "canvas";
 
   &:focus-visible {
-    outline: 2px solid var(--gold-leaf);
+    outline: 2px solid var(--hextech);
     outline-offset: 2px;
   }
 
   &::before {
-    content: "Unfurling the map…";
+    content: "Focusing the lens…";
     grid-area: canvas;
     place-self: center;
     font-style: italic;
-    color: var(--ink-faded);
+    color: var(--gaslight-dim);
   }
 
   &:fullscreen {
@@ -56,8 +62,8 @@
   cursor: pointer;
 
   circle {
-    fill: rgba(212, 162, 89, 0);
-    stroke: rgba(212, 162, 89, 0);
+    fill: rgba(54, 214, 198, 0);
+    stroke: rgba(54, 214, 198, 0);
     stroke-width: 3;
     transition:
       fill 120ms ease,
@@ -66,8 +72,8 @@
 
   &:hover circle,
   &:focus-visible circle {
-    fill: rgba(212, 162, 89, 0.18);
-    stroke: var(--gold-leaf);
+    fill: rgba(54, 214, 198, 0.15);
+    stroke: var(--hextech);
   }
 
   &:focus-visible {
@@ -89,10 +95,11 @@
   grid-template-columns: auto auto;
   gap: 0.15rem 0.5rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
-  background: rgba(248, 236, 208, 0.85);
-  color: var(--ink-faded);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  background: rgba(20, 29, 40, 0.9);
+  color: var(--gaslight-dim);
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
   pointer-events: none;
@@ -157,19 +164,22 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
-  background: rgba(248, 236, 208, 0.85);
-  color: var(--ink-faded);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  background: rgba(20, 29, 40, 0.88);
+  color: var(--gaslight-dim);
   cursor: pointer;
   transition:
     background 120ms ease,
-    color 120ms ease;
+    color 120ms ease,
+    border-color 120ms ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
-    background: rgba(248, 236, 208, 0.95);
+    color: var(--hextech);
+    border-color: rgba(54, 214, 198, 0.5);
+    background: rgba(20, 29, 40, 0.96);
     outline: none;
   }
 
@@ -179,8 +189,8 @@
 }
 
 .hint {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-style: italic;
   text-align: center;
-  color: var(--ink-faded);
+  color: var(--gaslight-faint);
 }

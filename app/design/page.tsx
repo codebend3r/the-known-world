@@ -9,7 +9,7 @@ import styles from "@/app/design/page.module.scss";
 export const metadata: Metadata = {
   title: "Design System · Atlas of the Known World",
   description:
-    "The visual grammar of the Known World: type, colour, spacing, and the full roll of form controls.",
+    "The visual grammar of the Known World: colour, type, spacing, and every control on the bench.",
 };
 
 type Swatch = { token: string; hex: string; name: string };
@@ -18,32 +18,37 @@ type Swatch = { token: string; hex: string; name: string };
 // tokens declared in `styles/globals.scss`. This page is the living catalogue
 // of those tokens; keep it in step when a token is added or renamed there.
 const CORE_PALETTE: Swatch[] = [
-  { token: "--parchment-light", hex: "#f4e4c1", name: "Parchment Light" },
-  { token: "--parchment-dark", hex: "#e8d3a0", name: "Parchment Dark" },
-  { token: "--vellum", hex: "#f8ecd0", name: "Vellum" },
-  { token: "--ink", hex: "#3d2817", name: "Ink" },
-  { token: "--ink-faded", hex: "#6b4423", name: "Ink Faded" },
-  { token: "--ink-slate", hex: "#2e3a55", name: "Ink Slate" },
-  { token: "--ink-rose", hex: "#6a3142", name: "Ink Rose" },
-  { token: "--wax-seal", hex: "#8b1a1a", name: "Wax Seal" },
-  { token: "--gold-leaf", hex: "#d4a259", name: "Gold Leaf" },
-  { token: "--rose-madder", hex: "#a85a6b", name: "Rose Madder" },
+  { token: "--coal", hex: "#0a0e15", name: "Coal" },
+  { token: "--iron", hex: "#111923", name: "Iron" },
+  { token: "--gunmetal", hex: "#1a2530", name: "Gunmetal" },
+  { token: "--gunmetal-raised", hex: "#223040", name: "Raised Gunmetal" },
+  { token: "--steel", hex: "#2e3d4e", name: "Steel" },
+  { token: "--brass", hex: "#c79a3f", name: "Brass" },
+  { token: "--brass-bright", hex: "#ecca7d", name: "Bright Brass" },
+  { token: "--brass-dark", hex: "#8a6828", name: "Dark Brass" },
+  { token: "--hextech", hex: "#36d6c6", name: "Hextech" },
+  { token: "--hextech-dim", hex: "#17756d", name: "Deep Hextech" },
+  { token: "--shimmer", hex: "#b660e8", name: "Shimmer" },
+  { token: "--gaslight", hex: "#eee6d3", name: "Gaslight" },
+  { token: "--gaslight-dim", hex: "#b0a893", name: "Dim Gaslight" },
+  { token: "--gaslight-faint", hex: "#7e8798", name: "Faint Gaslight" },
+  { token: "--ember", hex: "#e2604e", name: "Ember" },
 ];
 
 const REGION_PALETTE: Swatch[] = [
-  { token: "--region-color-north", hex: "#5d6f7f", name: "North" },
-  { token: "--region-color-vale", hex: "#4d7caa", name: "Vale" },
-  { token: "--region-color-riverlands", hex: "#3d5a7c", name: "Riverlands" },
-  { token: "--region-color-westerlands", hex: "#b13a3a", name: "Westerlands" },
-  { token: "--region-color-reach", hex: "#6f8336", name: "Reach" },
-  { token: "--region-color-stormlands", hex: "#c89a31", name: "Stormlands" },
-  { token: "--region-color-dorne", hex: "#c7693a", name: "Dorne" },
+  { token: "--region-color-north", hex: "#8ba7bb", name: "North" },
+  { token: "--region-color-vale", hex: "#6ca6d9", name: "Vale" },
+  { token: "--region-color-riverlands", hex: "#5d86b5", name: "Riverlands" },
+  { token: "--region-color-westerlands", hex: "#d15954", name: "Westerlands" },
+  { token: "--region-color-reach", hex: "#96b054", name: "Reach" },
+  { token: "--region-color-stormlands", hex: "#dcb14e", name: "Stormlands" },
+  { token: "--region-color-dorne", hex: "#d98550", name: "Dorne" },
   {
     token: "--region-color-iron-islands",
-    hex: "#2f4a44",
+    hex: "#62918a",
     name: "Iron Islands",
   },
-  { token: "--region-color-crownlands", hex: "#5a2a30", name: "Crownlands" },
+  { token: "--region-color-crownlands", hex: "#b25a66", name: "Crownlands" },
 ];
 
 type FontRole = { family: string; label: string; sample: string };
@@ -51,22 +56,22 @@ type FontRole = { family: string; label: string; sample: string };
 const FONT_ROLES: FontRole[] = [
   {
     family: "var(--font-heading)",
-    label: "Cinzel · Headings",
+    label: "Girassol · Headings",
     sample: "The Known World",
   },
   {
     family: "var(--font-character-name)",
-    label: "Cormorant Unicase · Character names",
+    label: "Poiret One · Nameplates",
     sample: "Eddard Stark",
   },
   {
     family: "var(--font-body)",
-    label: "EB Garamond · Body & UI",
+    label: "Spectral · Body",
     sample: "The night is dark and full of terrors.",
   },
   {
     family: "var(--font-sans)",
-    label: "Alegreya Sans · Data & captions",
+    label: "Barlow Condensed · Labels & data",
     sample: "298 AC · 42 houses · 9 regions",
   },
 ];
@@ -210,7 +215,7 @@ export default function DesignSystemPage() {
     <ParchmentLayout>
       <PageHeading
         title="Design System"
-        subtitle="The visual grammar of the Known World: type, colour, spacing, and the full roll of form controls."
+        subtitle="The visual grammar of the Known World: colour, type, spacing, and every control on the bench."
       />
 
       {/* ---------------------------------------------------------------- */}
@@ -265,8 +270,9 @@ export default function DesignSystemPage() {
       <section className={styles.section} aria-labelledby="ds-type">
         <h2 id="ds-type">Typography</h2>
         <p className={styles.sectionIntro}>
-          Headings are set in Cinzel; body copy in EB Garamond. The scale below
-          renders each element exactly as the global stylesheet styles it.
+          Headings are engraved in Girassol; body copy is set in Spectral. The
+          scale below renders each element exactly as the global stylesheet
+          styles it.
         </p>
 
         <div className={styles.typeList}>
@@ -304,8 +310,8 @@ export default function DesignSystemPage() {
             <p>
               Words can carry <strong>bold weight</strong> or an{" "}
               <em>italic aside</em>, and a{" "}
-              <Link href="/houses/">cross-reference links onward</Link> in ink
-              and gold.
+              <Link href="/houses/">cross-reference links onward</Link> in brass
+              and hextech.
             </p>
           </div>
           <div className={styles.specimen}>
@@ -380,9 +386,9 @@ export default function DesignSystemPage() {
       <section className={styles.section} aria-labelledby="ds-controls">
         <h2 id="ds-controls">Form controls</h2>
         <p className={styles.sectionIntro}>
-          Every native control, dressed in parchment and ink. Try them: the
-          fields hold their own state, and <em>Reset fields</em> restores the
-          defaults.
+          Every native control, machined in gunmetal and brass and charged with
+          hextech. Try them: the fields hold their own state, and{" "}
+          <em>Reset fields</em> restores the defaults.
         </p>
 
         <form className={styles.controls}>
@@ -441,7 +447,7 @@ export default function DesignSystemPage() {
                   id="df-color"
                   className={styles.colorInput}
                   type="color"
-                  defaultValue="#8b1a1a"
+                  defaultValue="#36d6c6"
                 />
               </Field>
               <Field id="df-file" label="File" hint="Upload a sigil">

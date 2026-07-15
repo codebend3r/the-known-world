@@ -1,28 +1,41 @@
 .tile {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-content: start;
   text-align: center;
-  gap: 0.6rem;
-  padding: 1.6rem 1.2rem 2.2rem;
-  background: var(--vellum);
-  border: 1px solid rgba(107, 68, 35, 0.25);
-  border-radius: 2px;
-  color: var(--ink);
+  gap: 0.7rem;
+  padding: 1.75rem 1.25rem 2.1rem;
+  background: var(--plate);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  color: var(--gaslight);
   text-decoration: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    var(--shadow-soft);
   transition:
     border-color 150ms ease,
     transform 150ms ease,
     box-shadow 150ms ease;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    transform: scale(1.01);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-    color: var(--ink);
+    border-color: var(--edge-brass);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      var(--shadow-raised),
+      var(--brass-glow);
+    color: var(--gaslight);
+
+    .glyph {
+      color: var(--hextech);
+      border-color: rgba(54, 214, 198, 0.5);
+      box-shadow: 0 0 14px rgba(54, 214, 198, 0.25);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -35,23 +48,44 @@
   }
 }
 
+// Each section glyph sits in a round instrument bezel; the dial lights
+// hextech when the tile is engaged.
 .glyph {
-  color: var(--gold-leaf);
+  display: grid;
+  place-items: center;
+  width: 3.6rem;
+  height: 3.6rem;
+  color: var(--brass);
   line-height: 0;
+  border: 1px solid var(--edge-brass);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 30%,
+    rgba(199, 154, 63, 0.14),
+    rgba(10, 14, 21, 0.5) 75%
+  );
+  transition:
+    color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 .title {
   font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--gaslight);
 }
 
 .subtitle {
   font-family: var(--font-body);
   font-style: italic;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   font-size: 1rem;
 }

@@ -47,7 +47,7 @@ describe("MapMarker", () => {
     expect(text?.getAttribute("y")).toBe("64");
   });
 
-  it("renders a large red circle for `castle`", () => {
+  it("renders a large teal circle for `castle`", () => {
     const { container } = renderMarker({
       slug: "x",
       name: "X",
@@ -55,14 +55,14 @@ describe("MapMarker", () => {
     });
     const circle = container.querySelector("circle");
     expect(circle?.getAttribute("r")).toBe("6");
-    expect(circle?.getAttribute("fill")).toBe("#8b1a1a");
+    expect(circle?.getAttribute("fill")).toBe("#0e7c74");
   });
 
-  it("renders a small parchment circle for `town`", () => {
+  it("renders a small chart-cream circle for `town`", () => {
     const { container } = renderMarker({ slug: "x", name: "X", type: "town" });
     const circle = container.querySelector("circle");
     expect(circle?.getAttribute("r")).toBe("4");
-    expect(circle?.getAttribute("fill")).toBe("#f8ecd0");
+    expect(circle?.getAttribute("fill")).toBe("#f4ead0");
   });
 
   it("renders a two-line cross for `ruin`", () => {
@@ -89,6 +89,6 @@ describe("MapMarker", () => {
     });
     const rects = container.querySelectorAll("rect");
     expect(rects).toHaveLength(1);
-    expect(rects[0]?.getAttribute("fill")).toBe("#8b1a1a");
+    expect(rects[0]?.getAttribute("fill")).toBe("#0e7c74");
   });
 });

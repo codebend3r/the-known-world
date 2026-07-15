@@ -1,33 +1,50 @@
 @use "breakpoints" as bp;
 
+// The shared `listSearch.input` pins itself to a `search` grid area, so the
+// controls grid names its tracks rather than relying on auto-placement.
 .controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(16rem, 1fr) auto;
+  grid-template-areas: "search toggles";
   align-items: center;
   gap: 1rem;
   width: 100%;
+
+  @media (max-width: bp.$md) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "search"
+      "toggles";
+    justify-items: stretch;
+  }
 }
 
 .searchInput {
-  flex: 1 1 16rem;
   min-width: 0;
 }
 
 .toggles {
-  display: flex;
+  grid-area: toggles;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   gap: 1rem;
-  margin-left: auto;
+  justify-self: end;
+
+  @media (max-width: bp.$md) {
+    justify-self: center;
+  }
 }
 
 .rankFilter {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   gap: 0.4rem;
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.5px;
+  color: var(--gaslight-faint);
+  letter-spacing: 0.06em;
 
   // Match the 50px height of the sibling `SortToggle` / `ViewToggle`
   // buttons and enlarge the option text. Scoped here so the shared
@@ -40,8 +57,8 @@
 }
 
 .rankLabel {
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .regions {
@@ -51,6 +68,9 @@
 }
 
 .regionSearch {
+  // The shared `listSearch.input` claims `grid-area: search`; inside the
+  // accordion panel's plain grid that area does not exist, so opt back out.
+  grid-area: auto;
   font-size: 1.1rem;
   padding: 0.6rem 0.75rem;
 
@@ -61,7 +81,7 @@
 
 // `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
 // and `.subtitle` size to their content. `justify-self: stretch` opts
-// this grid back out so it fills the full parchment column.
+// this grid back out so it fills the full page column.
 .list {
   list-style: none;
   padding: 0;
@@ -94,35 +114,41 @@
 
 .item {
   margin: 0;
+  display: grid;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-content: center;
   gap: 0;
   min-height: 10.5rem;
   padding: 0.5rem;
-  background: var(--vellum);
-  border: 2px solid white;
-  border-radius: 2px;
-  color: var(--ink);
+  background: var(--plate);
+  border: 2px solid var(--edge-strong);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  color: var(--gaslight);
   text-decoration: none;
   text-align: center;
-  border-radius: 8px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    var(--shadow-soft);
   transition:
     border-color 150ms ease,
     transform 150ms ease,
     box-shadow 150ms ease;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 
   &:hover,
   &:focus-visible {
-    border-color: white;
-    transform: scale(1.01);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-    color: var(--ink);
+    border-color: var(--brass-bright);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      var(--shadow-raised),
+      var(--brass-glow);
+    color: var(--gaslight);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -135,8 +161,10 @@
   }
 }
 
-// Regional border tints — colours live in `globals.scss` as
+// Regional border tints; colours live in `globals.scss` as
 // `--region-color-*` tokens (shared with `FilteredCharacterList`).
+// On the house index the tint answers the hover, so the resting grid
+// stays quiet metal and the region flares when a crest is engaged.
 .cardNorth {
   &:hover,
   &:focus-visible {
@@ -194,10 +222,10 @@
 
 .name {
   font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 0.5px;
-  font-size: 1rem;
-  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.95rem;
+  font-weight: 400;
   min-height: 60px;
   align-content: center;
 }
@@ -212,6 +240,7 @@
   .card {
     display: grid;
     grid-template-columns: 4.5rem 1fr auto;
+    justify-items: start;
     align-items: center;
     gap: 1rem;
     min-height: 0;
@@ -221,8 +250,8 @@
   }
 
   .name {
-    font-size: 1.5rem;
-    letter-spacing: 1px;
+    font-size: 1.4rem;
+    letter-spacing: 0.06em;
     min-height: 0;
   }
 }
@@ -230,8 +259,10 @@
 .region {
   font-family: var(--font-ui);
   font-size: 0.78rem;
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
-  color: var(--ink-faded);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gaslight-faint);
   text-align: right;
+  justify-self: end;
 }

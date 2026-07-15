@@ -1,23 +1,70 @@
 @use "breakpoints" as bp;
 
 :root {
-  --parchment-light: #f4e4c1;
-  --parchment-dark: #e8d3a0;
-  --vellum: #f8ecd0;
-  --ink: #3d2817;
-  --ink-faded: #6b4423;
-  --ink-slate: #2e3a55;
-  --ink-rose: #6a3142;
-  --wax-seal: #8b1a1a;
-  --gold-leaf: #d4a259;
-  --rose-madder: #a85a6b;
+  // Tell the browser this is a dark interface so native widgets (date
+  // pickers, scrollbars, form indicators) render in their dark forms.
+  color-scheme: dark;
 
-  --font-heading: var(--font-cinzel), Georgia, serif;
-  --font-character-name: var(--font-cormorant-unicase), Georgia, serif;
-  --font-body: var(--font-eb-garamond), Georgia, serif;
-  --font-ui: var(--font-eb-garamond), Georgia, serif;
+  // Structural darks, cool iron blues that read as machined metal, not void.
+  --coal: #0a0e15;
+  --iron: #111923;
+  --gunmetal: #1a2530;
+  --gunmetal-raised: #223040;
+  --steel: #2e3d4e;
+
+  // Metals. Brass is the primary accent, the resting identity of the atlas.
+  --brass: #c79a3f;
+  --brass-bright: #ecca7d;
+  --brass-dark: #8a6828;
+
+  // The hextech charge. Reserved for interaction: focus, hover, live state.
+  --hextech: #36d6c6;
+  --hextech-dim: #17756d;
+
+  // Shimmer, the rare arcane violet. Kept for the exceptional, never routine.
+  --shimmer: #b660e8;
+
+  // Gaslight text ramp, warm lamplight on cold metal.
+  --gaslight: #eee6d3;
+  --gaslight-dim: #b0a893;
+  --gaslight-faint: #7e8798;
+
+  // Signal red for errors and invalid states.
+  --ember: #e2604e;
+
+  // Genealogy tints, used by the family tree to mark lines of descent.
+  --tint-male: #9fc0dc;
+  --tint-female: #d9a1b4;
+
+  // Hairlines and composed surfaces.
+  --edge: rgba(126, 152, 180, 0.22);
+  --edge-strong: rgba(126, 152, 180, 0.38);
+  --edge-brass: rgba(199, 154, 63, 0.45);
+  --well: rgba(7, 12, 18, 0.6);
+  --plate: linear-gradient(
+    180deg,
+    var(--gunmetal-raised) 0%,
+    var(--gunmetal) 100%
+  );
+
+  // Shadows and glows.
+  --shadow-soft: 0 2px 10px rgba(4, 8, 13, 0.4);
+  --shadow-raised: 0 10px 28px rgba(4, 8, 13, 0.5);
+  --focus-glow:
+    0 0 0 2px rgba(54, 214, 198, 0.28), 0 0 14px rgba(54, 214, 198, 0.2);
+  --brass-glow: 0 2px 14px rgba(199, 154, 63, 0.18);
+
+  // Chamfered plate corners; browsers without `corner-shape` fall back to
+  // plain rounding at the same radius.
+  --bevel: 10px;
+  --bevel-sm: 5px;
+
+  --font-heading: var(--font-girassol), Georgia, serif;
+  --font-character-name: var(--font-poiret-one), "Avenir Next", sans-serif;
+  --font-body: var(--font-spectral), Georgia, serif;
+  --font-ui: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
   --font-sans:
-    var(--font-alegreya-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+    var(--font-barlow-condensed), -apple-system, BlinkMacSystemFont, sans-serif;
 
   --bp-xs: 480px;
   --bp-sm: 640px;
@@ -25,22 +72,22 @@
   --bp-lg: 1024px;
   --bp-xl: 1280px;
 
-  // Regional palette — heraldic border tints used by both the house and
-  // character list cards. Kept as design tokens so the two list modules
-  // don't each carry the same nine hex values. Add a new region here, not
-  // in the module files.
-  --region-color-north: #5d6f7f;
-  --region-color-vale: #4d7caa;
-  --region-color-riverlands: #3d5a7c;
-  --region-color-westerlands: #b13a3a;
-  --region-color-reach: #6f8336;
-  --region-color-stormlands: #c89a31;
-  --region-color-dorne: #c7693a;
-  --region-color-iron-islands: #2f4a44;
-  --region-color-crownlands: #5a2a30;
+  // Regional palette, heraldic border tints used by both the house and
+  // character list cards, retuned to stay luminous on the iron ground.
+  // Kept as design tokens so the two list modules don't each carry the
+  // same nine hex values. Add a new region here, not in the module files.
+  --region-color-north: #8ba7bb;
+  --region-color-vale: #6ca6d9;
+  --region-color-riverlands: #5d86b5;
+  --region-color-westerlands: #d15954;
+  --region-color-reach: #96b054;
+  --region-color-stormlands: #dcb14e;
+  --region-color-dorne: #d98550;
+  --region-color-iron-islands: #62918a;
+  --region-color-crownlands: #b25a66;
 }
 
-// Desktop-first breakpoints — default styles target xl. Each @media rule
+// Desktop-first breakpoints, default styles target xl. Each @media rule
 // overrides at the named breakpoint AND below. The SCSS breakpoint
 // variables in `styles/_breakpoints.scss` (`bp.$xs`, `bp.$sm`, ...) are
 // the source of truth; the `--bp-*` CSS custom properties above are
@@ -56,28 +103,42 @@ html,
 body {
   margin: 0;
   padding: 0;
+  // Layered atmosphere: a warm lamp above, a faint hextech seep below,
+  // and a surveyor's grid etched into the iron.
   background:
     radial-gradient(
-      ellipse at top left,
-      rgba(180, 140, 90, 0.15),
-      transparent 60%
+      60% 42% at 50% -2%,
+      rgba(231, 197, 120, 0.07),
+      transparent 70%
     ),
     radial-gradient(
-      ellipse at bottom right,
-      rgba(120, 80, 40, 0.18),
-      transparent 60%
+      50% 40% at 88% 104%,
+      rgba(54, 214, 198, 0.05),
+      transparent 65%
     ),
-    linear-gradient(
-      180deg,
-      var(--parchment-light) 0%,
-      var(--parchment-dark) 100%
-    );
+    repeating-linear-gradient(
+      0deg,
+      rgba(120, 148, 178, 0.035) 0,
+      rgba(120, 148, 178, 0.035) 1px,
+      transparent 1px,
+      transparent 56px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(120, 148, 178, 0.035) 0,
+      rgba(120, 148, 178, 0.035) 1px,
+      transparent 1px,
+      transparent 56px
+    ),
+    linear-gradient(180deg, var(--iron) 0%, var(--coal) 100%);
   background-attachment: fixed;
-  color: var(--ink);
+  color: var(--gaslight);
   font-family: var(--font-body);
   font-size: 16px;
+  font-weight: 300;
   line-height: 1.65;
   min-height: 100vh;
+  scrollbar-color: var(--steel) transparent;
 
   @media (max-width: bp.$md) {
     font-size: 20px;
@@ -100,8 +161,8 @@ h6 {
   padding: 0;
   display: grid;
   font-family: var(--font-heading);
-  color: var(--ink);
-  font-weight: 600;
+  color: var(--gaslight);
+  font-weight: 400;
   letter-spacing: 1px;
 }
 
@@ -111,19 +172,45 @@ p {
   font-size: 1.25rem;
 }
 
+strong {
+  font-weight: 600;
+}
+
 h1 {
-  font-size: 2.2rem;
-  font-variant: small-caps;
-  letter-spacing: 2px;
+  font-size: 2.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
   text-align: center;
+  color: var(--brass-bright);
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    background: linear-gradient(
+      180deg,
+      var(--brass-bright) 18%,
+      var(--brass) 58%,
+      var(--brass-dark) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
+
 h2 {
-  font-size: 1.4rem;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--edge);
+  padding-bottom: 0.25rem;
 }
+
 h3 {
-  font-size: 1.15rem;
-  color: var(--ink-faded);
+  font-family: var(--font-ui);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--brass);
 }
 
 @media (max-width: bp.$sm) {
@@ -136,25 +223,64 @@ h3 {
 }
 
 // Typographic primitive: italic page lede under the `h1`. Used by every
-// `ParchmentLayout` page (`app/page.tsx`, houses, castles, not-found, etc.)
-// — kept global alongside the heading rules above so consumers don't each
+// `ParchmentLayout` page (`app/page.tsx`, houses, castles, not-found, etc.),
+// kept global alongside the heading rules above so consumers don't each
 // import a typography module.
 .subtitle {
   display: grid;
   text-align: center;
   font-style: italic;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   padding: 0 0 1rem 0;
   margin: 0;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  border-bottom: 1px solid var(--edge);
 }
 
 a {
-  color: var(--ink-faded);
+  color: var(--brass-bright);
   text-decoration: underline;
-  text-decoration-color: rgba(107, 68, 35, 0.4);
+  text-decoration-color: rgba(199, 154, 63, 0.4);
+  transition:
+    color 140ms ease,
+    text-decoration-color 140ms ease;
 
   &:hover {
-    color: var(--gold-leaf);
+    color: var(--hextech);
+    text-decoration-color: rgba(54, 214, 198, 0.5);
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--hextech);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(54, 214, 198, 0.28);
+  color: var(--gaslight);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--steel);
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+
+  &:hover {
+    background-color: var(--brass-dark);
+    background-clip: padding-box;
+  }
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
 }

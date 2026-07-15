@@ -1,6 +1,6 @@
 // `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
 // and `.subtitle` size to their content. `justify-self: stretch` opts
-// this grid back out so it fills the full parchment column.
+// this grid back out so it fills the full page column.
 .list {
   list-style: none;
   padding: 0;
@@ -13,34 +13,41 @@
 
 .item {
   margin: 0;
+  display: grid;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-content: center;
   gap: 0.85rem;
   min-height: 10.5rem;
   padding: 1rem;
-  background: var(--vellum);
-  border: 2px solid rgba(107, 68, 35, 0.25);
-  border-radius: 2px;
-  color: var(--ink);
+  background: var(--plate);
+  border: 2px solid var(--edge-strong);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  color: var(--gaslight);
   text-decoration: none;
   text-align: center;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    var(--shadow-soft);
   transition:
     border-color 150ms ease,
     transform 150ms ease,
     box-shadow 150ms ease;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    transform: scale(1.01);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-    color: var(--ink);
+    border-color: var(--brass-bright);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      var(--shadow-raised),
+      var(--brass-glow);
+    color: var(--gaslight);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -53,7 +60,7 @@
   }
 }
 
-// Regional border tints — colours live in `globals.scss` as
+// Regional border tints; colours live in `globals.scss` as
 // `--region-color-*` tokens (shared with `FilteredCharacterList`).
 .cardNorth {
   border-color: var(--region-color-north);
@@ -85,26 +92,28 @@
 
 .name {
   font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.2rem;
-  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.1rem;
+  font-weight: 400;
 }
 
+// Wild dragons answer to no house: they carry the shimmer, the arcane
+// violet reserved for the unbound.
 .cardWild {
-  border-color: var(--ink-faded);
+  border-color: rgba(182, 96, 232, 0.45);
 }
 
 .wildBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-grid;
+  place-items: center;
   width: 6rem;
   height: 6rem;
   font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  color: var(--ink-faded);
-  border: 1px dashed rgba(107, 68, 35, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  color: var(--shimmer);
+  border: 1px dashed rgba(182, 96, 232, 0.5);
   border-radius: 50%;
 }

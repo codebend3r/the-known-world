@@ -9,10 +9,11 @@
   margin-top: 2rem;
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  color: var(--ink-faded);
-  font-style: italic;
+  color: var(--gaslight-faint);
+  letter-spacing: 0.04em;
 
   @media (max-width: bp.$md) {
     padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
 }

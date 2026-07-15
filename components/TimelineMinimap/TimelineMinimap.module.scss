@@ -9,10 +9,11 @@
   max-height: 82vh;
   overflow-y: auto;
   padding: 0.5rem 0.25rem;
-  background: rgba(248, 236, 208, 0.92);
-  border: 1px solid rgba(107, 68, 35, 0.3);
-  border-radius: 2px;
-  box-shadow: 0 2px 12px rgba(61, 40, 23, 0.15);
+  background: rgba(20, 29, 40, 0.92);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  box-shadow: var(--shadow-soft);
 
   @media (max-width: bp.$lg) {
     display: none;
@@ -37,16 +38,25 @@
   border: none;
   text-align: right;
   cursor: pointer;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 1px;
+  font-family: var(--font-ui);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   font-size: 0.75rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-faint);
   border-radius: 2px;
+  font-variant-numeric: tabular-nums;
+  transition:
+    color 120ms ease,
+    background 120ms ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--wax-seal);
-    background: rgba(212, 162, 89, 0.16);
+    color: var(--hextech);
+    background: rgba(54, 214, 198, 0.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }

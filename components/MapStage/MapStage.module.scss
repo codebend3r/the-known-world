@@ -3,24 +3,19 @@
   max-width: 720px;
   margin: 0 auto;
   aspect-ratio: 4 / 7;
-  border: 1px solid rgba(107, 68, 35, 0.4);
-  border-radius: 6px;
+  border: 1px solid var(--edge-brass);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
   background:
     radial-gradient(
-      ellipse at top left,
-      rgba(180, 140, 90, 0.18),
-      transparent 60%
+      ellipse at 50% 20%,
+      rgba(199, 154, 63, 0.08),
+      transparent 65%
     ),
-    radial-gradient(
-      ellipse at bottom right,
-      rgba(120, 80, 40, 0.15),
-      transparent 60%
-    ),
-    linear-gradient(
-      180deg,
-      var(--parchment-light) 0%,
-      var(--parchment-dark) 100%
-    );
+    linear-gradient(180deg, #1e2a37 0%, #141d28 100%);
+  box-shadow:
+    inset 0 0 40px rgba(4, 8, 13, 0.45),
+    var(--shadow-soft);
   position: relative;
   overflow: hidden;
 }

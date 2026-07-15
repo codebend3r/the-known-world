@@ -7,30 +7,38 @@
 }
 
 .heading {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
   align-items: center;
   justify-content: center;
   gap: 0.85rem;
-  flex-wrap: wrap;
   width: 100%;
 
   h1 {
     font-family: var(--font-character-name);
-    font-variant: normal;
-    font-weight: 600;
-    letter-spacing: 1px;
+    text-transform: none;
+    font-weight: 400;
+    letter-spacing: 0.06em;
     font-size: 2.6rem;
     line-height: 1.1;
   }
 
+  // Stack on small screens with the name above the sigil.
   @media (max-width: bp.$md) {
-    flex-direction: column-reverse;
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    justify-items: center;
     gap: 0.5rem;
+
+    > h1 {
+      order: -1;
+    }
   }
 }
 
 .sigilLink {
-  display: inline-flex;
+  display: inline-grid;
   border-radius: 2px;
 
   &:hover,
@@ -41,12 +49,12 @@
 
 .alias {
   font-family: var(--font-body);
-  font-variant: normal;
+  text-transform: none;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
   font-size: 0.6em;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   text-align: left;
 
   @media (max-width: bp.$md) {
@@ -59,14 +67,15 @@
 }
 
 .portrait {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  justify-items: center;
   width: 100%;
   max-width: 1100px;
-  border-radius: 30px;
-  corner-shape: scoop;
+  border-radius: 24px;
+  corner-shape: bevel;
   overflow: hidden;
-  border: 1px solid var(--ink-faded);
+  border: 1px solid var(--edge-strong);
+  box-shadow: var(--shadow-raised);
 
   @media (max-width: bp.$md) {
     width: 100vw;
@@ -79,7 +88,7 @@
   }
 }
 
-// Regional border tints for `.portrait` — colours live in `globals.scss`
+// Regional border tints for `.portrait`; colours live in `globals.scss`
 // as `--region-color-*` tokens (shared with `FilteredHouseList`).
 .portraitNorth {
   border-color: var(--region-color-north);
@@ -119,24 +128,25 @@
   gap: 0.6rem 1.5rem;
   width: 100%;
   padding: 1rem 1.25rem;
-  background: rgba(248, 236, 208, 0.5);
-  border: 1px solid rgba(107, 68, 35, 0.2);
-  border-radius: 2px;
+  background: rgba(16, 23, 32, 0.55);
+  border: 1px solid var(--edge);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
   font-family: var(--font-ui);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
 
   dt {
-    flex: 0 0 auto;
-    color: var(--ink-faded);
+    color: var(--brass);
     font-family: var(--font-sans);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.72rem;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
   }
 
   dd {
-    color: var(--ink);
+    color: var(--gaslight);
     margin: 0;
     padding: 0;
   }
@@ -170,14 +180,14 @@
 
 .unaffiliated {
   font-style: italic;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
 }
 
 .titles {
   list-style: none;
   padding: 0;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 0.15rem;
 }
 
@@ -187,31 +197,28 @@
 
 .relations {
   padding: 1rem 1.25rem;
-  background: rgba(248, 236, 208, 0.4);
-  border: 1px solid rgba(107, 68, 35, 0.15);
-  border-radius: 2px;
+  background: rgba(16, 23, 32, 0.45);
+  border: 1px solid var(--edge);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
   font-family: var(--font-ui);
-  font-size: 0.92rem;
-  display: flex;
-  flex-direction: column;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
 
   dt {
-    flex: 0 0 5.5rem;
-    color: var(--ink-faded);
+    color: var(--brass);
     font-family: var(--font-sans);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.72rem;
     font-weight: 500;
-
-    @media (max-width: bp.$sm) {
-      flex-basis: 100%;
-    }
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.72rem;
   }
 
   dd {
-    color: var(--ink);
+    color: var(--gaslight);
   }
 
   @media (max-width: bp.$md) {
@@ -221,14 +228,19 @@
 }
 
 .relationsRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
   gap: 0.6rem;
   align-items: baseline;
-  flex-wrap: wrap;
+
+  @media (max-width: bp.$sm) {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
 }
 
 .placeholder {
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   font-style: italic;
 }
 
@@ -243,14 +255,15 @@
 .back {
   font-family: var(--font-ui);
   font-size: 0.9rem;
+  letter-spacing: 0.06em;
   text-align: center;
 
   a {
-    color: var(--ink-faded);
+    color: var(--gaslight-faint);
     text-decoration: none;
 
     &:hover {
-      color: var(--gold-leaf);
+      color: var(--hextech);
     }
   }
 }

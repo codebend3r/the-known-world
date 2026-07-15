@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
@@ -12,53 +11,53 @@ import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 type MenuItem = {
   href: string;
   label: string;
-  icon: string;
-  glyph?: ReactNode;
+  glyph: ReactNode;
   visible: boolean;
 };
 
+// Every entry uses its section's line-art glyph so the drawer stays
+// monochrome metal; the raster menu icons belonged to the parchment era.
 const ITEMS: MenuItem[] = [
   {
     href: "/maps/",
     label: "Maps",
-    icon: "/menu-icons/map.png",
+    glyph: sectionGlyphs.maps,
     visible: true,
   },
   {
     href: "/timeline/",
     label: "Timeline",
-    icon: "/menu-icons/timeline.png",
+    glyph: sectionGlyphs.timeline,
     visible: true,
   },
   {
     href: "/houses/",
     label: "Houses",
-    icon: "/menu-icons/houses.png",
+    glyph: sectionGlyphs.houses,
     visible: true,
   },
   {
     href: "/characters/",
     label: "Characters",
-    icon: "/menu-icons/characters.png",
+    glyph: sectionGlyphs.characters,
     visible: true,
   },
   {
     href: "/weapons/",
     label: "Weapons",
-    icon: "/menu-icons/weapons.png",
+    glyph: sectionGlyphs.weapons,
     visible: true,
   },
   {
     href: "/battles/",
     label: "Battles",
-    icon: "/menu-icons/battles.png",
     glyph: sectionGlyphs.battles,
     visible: true,
   },
   {
     href: "/dragons/",
     label: "Dragons",
-    icon: "/menu-icons/dragons.png",
+    glyph: sectionGlyphs.dragons,
     visible: false,
   },
 ];
@@ -190,15 +189,7 @@ export function SiteMenu() {
                     tabIndex={isOpen ? 0 : -1}
                   >
                     <span className={styles.linkIcon} aria-hidden="true">
-                      {item.glyph ?? (
-                        <Image
-                          src={item.icon}
-                          alt=""
-                          width={48}
-                          height={48}
-                          sizes="48px"
-                        />
-                      )}
+                      {item.glyph}
                     </span>
                     <span className={styles.linkLabel}>{item.label}</span>
                   </Link>

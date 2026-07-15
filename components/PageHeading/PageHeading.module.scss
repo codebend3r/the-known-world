@@ -7,7 +7,7 @@
   width: 100%;
   text-align: center;
 
-  // The ornamental `FiligreeRule` underlines the title in place of the plain
+  // The hextech `FiligreeRule` underlines the title in place of the plain
   // border the subtitle carries by default.
   :global(.subtitle) {
     border-bottom: none;
@@ -16,17 +16,18 @@
 
   // Seat the section glyph on the title baseline, sized to the cap height.
   h1 {
-    display: inline-flex;
+    display: inline-grid;
+    grid-auto-flow: column;
     align-items: center;
     gap: 0.5rem;
   }
 }
 
 .icon {
-  display: inline-flex;
+  display: inline-grid;
   width: 1.1em;
   height: 1.1em;
-  color: currentColor;
+  color: var(--brass);
 
   svg {
     width: 100%;

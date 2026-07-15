@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import {
-  Alegreya_Sans,
-  Cinzel,
-  Cormorant_Unicase,
-  EB_Garamond,
+  Barlow_Condensed,
+  Girassol,
+  Poiret_One,
+  Spectral,
 } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../styles/globals.scss";
@@ -11,25 +11,26 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteMenu } from "@/components/SiteMenu";
 import { SiteFooter } from "@/components/SiteFooter";
 
-const cinzel = Cinzel({
+const girassol = Girassol({
   subsets: ["latin"],
-  variable: "--font-cinzel",
-  weight: ["400", "600", "700"],
+  variable: "--font-girassol",
+  weight: "400",
 });
-const cormorantUnicase = Cormorant_Unicase({
+const poiretOne = Poiret_One({
   subsets: ["latin"],
-  variable: "--font-cormorant-unicase",
-  weight: ["500", "600", "700"],
+  variable: "--font-poiret-one",
+  weight: "400",
 });
-const ebGaramond = EB_Garamond({
+const spectral = Spectral({
   subsets: ["latin"],
-  variable: "--font-eb-garamond",
+  variable: "--font-spectral",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+});
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  variable: "--font-barlow-condensed",
   weight: ["400", "500", "600"],
-});
-const alegreyaSans = Alegreya_Sans({
-  subsets: ["latin"],
-  variable: "--font-alegreya-sans",
-  weight: ["400", "500", "700"],
 });
 
 export const metadata: Metadata = {
@@ -54,7 +55,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzel.variable} ${cormorantUnicase.variable} ${ebGaramond.variable} ${alegreyaSans.variable}`}
+      className={`${girassol.variable} ${poiretOne.variable} ${spectral.variable} ${barlowCondensed.variable}`}
     >
       <body>
         <SiteHeader />

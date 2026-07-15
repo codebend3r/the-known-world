@@ -1,9 +1,9 @@
 .flourish {
   display: grid;
   align-items: center;
-  color: var(--gold-leaf);
+  color: var(--brass);
   line-height: 0;
-  opacity: 0.85;
+  opacity: 0.9;
   pointer-events: none;
 
   svg {
@@ -20,9 +20,9 @@
 .rule {
   display: grid;
   justify-items: center;
-  color: var(--gold-leaf);
+  color: var(--brass);
   line-height: 0;
-  opacity: 0.9;
+  opacity: 0.95;
   pointer-events: none;
   -webkit-mask-image: linear-gradient(
     90deg,
@@ -43,5 +43,33 @@
     display: block;
     width: 100%;
     height: auto;
+  }
+}
+
+// The crystal itself: charged hextech, softly breathing. The one moving
+// part of the whole page furniture.
+.gem {
+  fill: var(--hextech);
+  filter: drop-shadow(0 0 4px rgba(54, 214, 198, 0.65));
+  animation: gem-breathe 4.5s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+.gemFacet {
+  stroke: var(--coal);
+  stroke-width: 0.8;
+  opacity: 0.45;
+}
+
+@keyframes gem-breathe {
+  0%,
+  100% {
+    opacity: 0.78;
+  }
+  50% {
+    opacity: 1;
   }
 }

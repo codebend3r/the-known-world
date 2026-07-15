@@ -1,23 +1,28 @@
 .toggle {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  justify-content: center;
   gap: 0.75rem;
   padding: 0.75rem 1rem;
   width: fit-content;
   max-width: 100%;
   justify-self: center;
-  background: var(--vellum);
-  border: 1px solid rgba(107, 68, 35, 0.4);
-  border-radius: 4px;
+  background: var(--plate);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  box-shadow: var(--shadow-soft);
   font-family: var(--font-ui);
   font-size: 0.85rem;
+  letter-spacing: 0.04em;
 
   label {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
     align-items: center;
     gap: 0.4rem;
-    color: var(--ink);
+    color: var(--gaslight);
     cursor: pointer;
     text-transform: capitalize;
   }
@@ -26,18 +31,24 @@
     appearance: none;
     width: 14px;
     height: 14px;
-    border: 1.5px solid var(--ink-faded);
+    border: 1.5px solid var(--gaslight-faint);
     border-radius: 2px;
-    background: transparent;
+    background: var(--well);
     cursor: pointer;
     position: relative;
+
+    // A checked layer runs charged.
+    &:checked {
+      border-color: rgba(54, 214, 198, 0.7);
+    }
 
     &:checked::after {
       content: "";
       position: absolute;
       inset: 2px;
-      background: var(--wax-seal);
+      background: var(--hextech);
       border-radius: 1px;
+      box-shadow: 0 0 5px rgba(54, 214, 198, 0.6);
     }
   }
 }

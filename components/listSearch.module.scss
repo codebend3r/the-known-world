@@ -7,11 +7,12 @@
   font-family: var(--font-character-name);
   font-size: 1.8rem;
   padding: 1rem;
-  background: rgba(248, 236, 208, 0.55);
-  color: var(--ink);
-  // height: 50px;
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
+  background: var(--well);
+  color: var(--gaslight);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.35);
   outline: none;
   transition:
     border-color 150ms ease,
@@ -19,15 +20,16 @@
     box-shadow 150ms ease;
 
   &::placeholder {
-    color: var(--ink-faded);
-    font-style: italic;
+    color: var(--gaslight-faint);
   }
 
   &:focus,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    background: rgba(248, 236, 208, 0.9);
-    box-shadow: 0 0 0 2px rgba(212, 162, 89, 0.18);
+    border-color: rgba(54, 214, 198, 0.6);
+    background: rgba(7, 12, 18, 0.8);
+    box-shadow:
+      inset 0 2px 6px rgba(0, 0, 0, 0.35),
+      var(--focus-glow);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -42,7 +44,7 @@
 
 .empty {
   font-style: italic;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   text-align: center;
   padding: 2.5rem 1rem;
 }
@@ -50,23 +52,25 @@
 .count {
   margin: 0;
   font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: var(--ink-faded);
-  letter-spacing: 1.5px;
-  font-variant: small-caps;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--gaslight-faint);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
 }
 
 .pagination {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   justify-content: center;
   gap: 1rem;
   font-family: var(--font-ui);
   font-size: 0.9rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
 
   @media (max-width: bp.$sm) {
-    display: grid;
+    grid-auto-flow: row;
     grid-template-columns: auto 1fr auto;
     grid-template-areas:
       "prev status next"
@@ -98,7 +102,7 @@
   }
 }
 
-// `.paginationTop` / `.paginationBottom` are marker classes — they carry no
+// `.paginationTop` / `.paginationBottom` are marker classes. They carry no
 // styles, but their presence on the element lets tests identify the top
 // vs bottom pagination nav by `classList.contains(...)`.
 .paginationTop {
@@ -108,14 +112,17 @@
 
 .button {
   appearance: none;
-  background: rgba(248, 236, 208, 0.6);
-  color: var(--ink);
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
-  padding: 0.4rem 0.85rem;
+  background: var(--plate);
+  color: var(--gaslight-dim);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  padding: 0.45rem 0.9rem;
   font-family: var(--font-ui);
+  font-weight: 500;
   font-size: 0.85rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
   transition:
     border-color 120ms ease,
@@ -124,8 +131,8 @@
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
+    border-color: var(--edge-brass);
+    color: var(--brass-bright);
     outline: none;
   }
 
@@ -140,35 +147,37 @@
 }
 
 .status {
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .pageSize {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
   gap: 0.4rem;
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.5px;
+  color: var(--gaslight-faint);
+  letter-spacing: 0.06em;
 }
 
 .pageSizeSelect {
   appearance: none;
   -webkit-appearance: none;
-  background: rgba(248, 236, 208, 0.6);
-  color: var(--ink);
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
+  background: var(--well);
+  color: var(--gaslight);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
   padding: 0.3rem 1.6rem 0.3rem 0.55rem;
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.06em;
   cursor: pointer;
   background-image:
-    linear-gradient(45deg, transparent 50%, rgba(107, 68, 35, 0.55) 50%),
-    linear-gradient(135deg, rgba(107, 68, 35, 0.55) 50%, transparent 50%);
+    linear-gradient(45deg, transparent 50%, rgba(199, 154, 63, 0.75) 50%),
+    linear-gradient(135deg, rgba(199, 154, 63, 0.75) 50%, transparent 50%);
   background-position:
     calc(100% - 0.85rem) 55%,
     calc(100% - 0.55rem) 55%;
@@ -183,8 +192,8 @@
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
+    border-color: var(--edge-brass);
+    color: var(--brass-bright);
     outline: none;
   }
 

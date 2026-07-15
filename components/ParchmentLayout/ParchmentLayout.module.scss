@@ -27,30 +27,17 @@
   }
 }
 
+// A reading lamp over the working surface: one soft pool of warm light
+// behind the page column, fading before the fold.
 .page::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    radial-gradient(
-      circle at 18% 22%,
-      rgba(80, 50, 20, 0.06) 1px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 74% 58%,
-      rgba(80, 50, 20, 0.05) 1px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 42% 80%,
-      rgba(80, 50, 20, 0.06) 1px,
-      transparent 2px
-    );
-  background-size:
-    90px 90px,
-    110px 110px,
-    130px 130px;
+  background: radial-gradient(
+    56% 30% at 50% 0%,
+    rgba(231, 197, 120, 0.05),
+    transparent 100%
+  );
   z-index: 0;
 }

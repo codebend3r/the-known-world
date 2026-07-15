@@ -10,24 +10,25 @@
   align-items: baseline;
   gap: 0.5rem;
   padding: 0.3rem 0.75rem;
-  background: var(--vellum);
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  background: var(--plate);
+  border: 1px solid var(--edge-strong);
   border-radius: 999px;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 1px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   font-size: 0.85rem;
-  color: var(--wax-seal);
+  color: var(--brass-bright);
   cursor: pointer;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-soft);
   transition:
     border-color 150ms ease,
     box-shadow 150ms ease;
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    border-color: var(--edge-brass);
+    box-shadow: var(--shadow-soft), var(--brass-glow);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -42,10 +43,10 @@
 .when {
   font-family: var(--font-body);
   font-style: italic;
-  font-variant: normal;
+  text-transform: none;
   letter-spacing: 0;
   font-size: 0.8rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
 }
 
 .list {
@@ -61,10 +62,11 @@
   padding: 0.35rem;
   margin: 0;
   list-style: none;
-  background: var(--vellum);
-  border: 1px solid var(--gold-leaf);
-  border-radius: 2px;
-  box-shadow: 0 4px 18px rgba(61, 40, 23, 0.25);
+  background: #1c2836;
+  border: 1px solid var(--edge-brass);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  box-shadow: var(--shadow-raised);
 }
 
 .item {
@@ -78,14 +80,14 @@
   align-items: baseline;
   gap: 0.75rem;
   padding: 0.35rem 0.5rem;
-  color: var(--ink);
+  color: var(--gaslight);
   text-decoration: none;
   border-radius: 2px;
 
   &:hover,
   &:focus-visible {
-    background: rgba(212, 162, 89, 0.16);
-    color: var(--ink);
+    background: rgba(199, 154, 63, 0.1);
+    color: var(--gaslight);
   }
 }
 
@@ -100,6 +102,6 @@
   font-family: var(--font-body);
   font-style: italic;
   font-size: 0.8rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   white-space: nowrap;
 }

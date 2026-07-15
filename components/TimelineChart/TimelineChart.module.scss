@@ -23,7 +23,7 @@
 
 .header {
   padding-block: 0.5rem 0.75rem;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.25);
+  border-bottom: 1px solid var(--edge);
 }
 
 .axisSpacer {
@@ -33,12 +33,12 @@
 .columnHeading {
   margin: 0;
   font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.15rem;
-  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 1.05rem;
+  font-weight: 400;
   text-align: center;
-  color: var(--ink);
+  color: var(--gaslight);
 
   &:nth-of-type(1) {
     grid-area: westeros;
@@ -64,12 +64,12 @@
 
 .axisRail {
   grid-area: axis;
-  border-right: 1px solid rgba(107, 68, 35, 0.25);
+  border-right: 1px solid var(--edge-strong);
 }
 
 %column {
   position: relative;
-  border-right: 1px dashed rgba(107, 68, 35, 0.12);
+  border-right: 1px dashed rgba(126, 152, 180, 0.12);
 
   &:last-of-type {
     border-right: none;
@@ -102,21 +102,24 @@
   display: grid;
   grid-template-areas: "label";
   justify-items: start;
-  border-top: 1px dashed rgba(107, 68, 35, 0.18);
+  border-top: 1px dashed rgba(126, 152, 180, 0.16);
 }
 
+// Year labels along the axis: instrument figures on the dial.
 .tickLabel {
   grid-area: label;
   width: calc(var(--axis-width) - var(--era-width));
   padding-right: 1.25rem;
   text-align: right;
   transform: translateY(-50%);
-  background: var(--parchment-light);
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.15rem;
-  color: var(--ink);
+  background: var(--iron);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+  color: var(--gaslight-dim);
+  font-variant-numeric: tabular-nums;
 }
 
 .era {
@@ -129,20 +132,22 @@
   grid-template-columns: var(--era-width) 1fr;
   align-items: center;
   justify-items: center;
-  background: rgba(212, 162, 89, 0.07);
-  border-top: 1px solid rgba(212, 162, 89, 0.22);
-  border-bottom: 1px solid rgba(212, 162, 89, 0.22);
+  background: rgba(199, 154, 63, 0.05);
+  border-top: 1px solid rgba(199, 154, 63, 0.2);
+  border-bottom: 1px solid rgba(199, 154, 63, 0.2);
 }
 
 .eraLabel {
   grid-area: label;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 4px;
-  font-size: 1rem;
-  color: var(--ink-faded);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  font-size: 0.85rem;
+  color: var(--brass);
+  opacity: 0.85;
 }
 
 .node {
@@ -168,20 +173,21 @@
   column-gap: 0.5rem;
   row-gap: 0.1rem;
   padding: 0.3rem 0.55rem;
-  background: var(--vellum);
-  border: 1px solid rgba(107, 68, 35, 0.25);
-  border-radius: 2px;
-  color: var(--ink);
+  background: var(--plate);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  color: var(--gaslight);
   text-decoration: none;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  box-shadow: var(--shadow-soft);
   transition:
     border-color 150ms ease,
     box-shadow 150ms ease;
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    border-color: var(--edge-brass);
+    box-shadow: var(--shadow-soft), var(--brass-glow);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -189,14 +195,16 @@
   }
 }
 
+// Every event is a charged node on the conduit of years.
 .marker {
   grid-area: marker;
   align-self: center;
   width: 0.5rem;
   height: 0.5rem;
-  background: var(--gold-leaf);
-  border: 1px solid rgba(107, 68, 35, 0.4);
+  background: var(--hextech);
+  border: 1px solid rgba(23, 117, 109, 0.9);
   border-radius: 50%;
+  box-shadow: 0 0 6px rgba(54, 214, 198, 0.55);
 }
 
 .eventName {
@@ -209,7 +217,7 @@
   grid-area: when;
   font-style: italic;
   font-size: 0.8rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
 }
 
 @media (max-width: bp.$md) {
@@ -219,13 +227,13 @@
   }
 
   .columnHeading {
-    font-size: 1rem;
-    letter-spacing: 1px;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
   }
 
   .tickLabel {
     padding-right: 0.75rem;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
   }
 }

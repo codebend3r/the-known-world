@@ -10,15 +10,30 @@
   &:focus .label {
     opacity: 1;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
 }
 
+// Labels render on the parchment map artwork itself, so they keep the
+// chart-ink dark regardless of the interface theme around the glass.
 .label {
-  font-family: var(--font-heading);
+  font-family: var(--font-ui);
+  font-weight: 600;
   font-size: 11px;
-  fill: var(--ink);
-  font-variant: small-caps;
+  fill: #26303c;
+  text-transform: uppercase;
   letter-spacing: 1px;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.15s;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }

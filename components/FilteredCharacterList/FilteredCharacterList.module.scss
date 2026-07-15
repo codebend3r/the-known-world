@@ -2,7 +2,7 @@
 
 // `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
 // and `.subtitle` size to their content. `justify-self: stretch` opts
-// this grid back out so it fills the full parchment column.
+// this grid back out so it fills the full page column.
 .list {
   list-style: none;
   padding: 0;
@@ -14,7 +14,7 @@
 }
 
 // Make the `<li>` a single-cell grid so the inner `<a>` stretches to
-// fill the row's auto height — otherwise the tallest card in a row
+// fill the row's auto height; otherwise the tallest card in a row
 // (one with an alias) leaves its shorter neighbours visually short.
 .item {
   margin: 0;
@@ -29,21 +29,24 @@
     "name"
     "alias";
   align-content: start;
-  background: var(--vellum);
-  border: 2px solid rgba(107, 68, 35, 0.25);
-  border-radius: 2px;
-  color: var(--ink);
+  background: var(--plate);
+  border: 2px solid var(--edge-strong);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  color: var(--gaslight);
   text-decoration: none;
   text-align: center;
   overflow: hidden;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    var(--shadow-soft);
   transition:
     border-color 150ms ease,
     transform 150ms ease,
     box-shadow 150ms ease;
 }
 
-// Regional border tints — colours live in `globals.scss` as
+// Regional border tints; colours live in `globals.scss` as
 // `--region-color-*` tokens (shared with `FilteredHouseList`).
 .cardNorth {
   border-color: var(--region-color-north);
@@ -76,10 +79,13 @@
 a.card {
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    transform: scale(1.01);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
-    color: var(--ink);
+    border-color: var(--brass-bright);
+    transform: translateY(-2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.04),
+      var(--shadow-raised),
+      var(--brass-glow);
+    color: var(--gaslight);
     outline: none;
   }
 }
@@ -100,8 +106,7 @@ a.card {
 // Sigil overlays the top-right corner of the portrait in grid view.
 // Both `.portrait` and `.sigil` claim `grid-area: portrait`, layering
 // the sigil over the image; `place-self` parks it in the corner.
-// `aspect-ratio: 1` keeps the badge square even if flex would otherwise
-// shrink its main axis.
+// `aspect-ratio: 1` keeps the badge square regardless of intrinsic size.
 .sigil {
   grid-area: portrait;
   place-self: start end;
@@ -117,23 +122,23 @@ a.card {
 .name {
   grid-area: name;
   font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.05rem;
-  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1.2;
-  padding: 1rem 0;
+  padding: 1rem 0.5rem;
 }
 
 .alias {
   grid-area: alias;
   font-family: var(--font-body);
-  font-variant: normal;
+  text-transform: none;
   font-style: italic;
   font-weight: 400;
   letter-spacing: 0;
   font-size: 0.85rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   padding: 0;
   min-height: 2.5rem;
   align-content: center;
@@ -147,7 +152,10 @@ a.card {
   --bleed-max: 1280px;
 
   .card {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: start;
     align-items: center;
     gap: 0.85rem;
     min-height: 5.75rem;
@@ -156,7 +164,7 @@ a.card {
     border-width: 1px;
 
     @media (max-width: bp.$sm) {
-      display: grid;
+      grid-auto-flow: row;
       grid-template-columns: auto 1fr;
       grid-template-areas:
         "portrait name"
@@ -174,9 +182,8 @@ a.card {
   }
 
   .portrait {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
+    display: grid;
+    align-content: center;
 
     img {
       height: 5.75rem;
@@ -192,7 +199,6 @@ a.card {
   }
 
   .sigil {
-    flex: 0 0 3.25rem;
     place-self: auto;
     width: 3.25rem;
     aspect-ratio: auto;
@@ -209,7 +215,7 @@ a.card {
 
   .name {
     padding: 0;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 
     @media (max-width: bp.$sm) {
       grid-area: name;

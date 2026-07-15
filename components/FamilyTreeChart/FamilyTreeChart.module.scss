@@ -3,9 +3,10 @@
   width: 100%;
   height: clamp(500px, 75vh, 900px);
   overflow: hidden;
-  border: 1px solid rgba(107, 68, 35, 0.25);
-  border-radius: 2px;
-  background: rgba(248, 236, 208, 0.45);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  background: rgba(13, 19, 27, 0.5);
   touch-action: none;
   user-select: none;
 }
@@ -22,8 +23,8 @@
 }
 
 .dot {
-  fill: rgba(248, 236, 208, 0.85);
-  stroke: rgba(107, 68, 35, 0.6);
+  fill: var(--gunmetal-raised);
+  stroke: rgba(126, 152, 180, 0.65);
   stroke-width: 1.5;
 }
 
@@ -39,26 +40,28 @@
 .label {
   font-family: var(--font-ui);
   font-size: 9px;
-  fill: var(--ink-faded);
+  fill: var(--gaslight-dim);
   text-anchor: middle;
   pointer-events: none;
 }
 
+// Solid backing that approximates the canvas colour so labels mask the
+// edges passing beneath them.
 .labelBg {
-  fill: #f8ecd0;
+  fill: #141d27;
   pointer-events: none;
 }
 
 .cross {
   font-family: var(--font-body);
   font-size: 10px;
-  fill: var(--gold-leaf);
+  fill: var(--brass);
   text-anchor: middle;
   pointer-events: none;
 }
 
 .edge {
-  stroke: rgba(107, 68, 35, 0.5);
+  stroke: rgba(126, 152, 180, 0.4);
   stroke-width: 1;
   fill: none;
 }
@@ -69,7 +72,7 @@
   width: 100%;
   height: 100%;
   font-style: italic;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   padding: 2rem 1rem;
   text-align: center;
 }
@@ -81,15 +84,17 @@
   display: grid;
   gap: 0.25rem;
   padding: 0.4rem;
-  background: rgba(248, 236, 208, 0.92);
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
+  background: rgba(20, 29, 40, 0.92);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
   font-family: var(--font-ui);
   z-index: 1;
 }
 
 .controlRow {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   gap: 0.2rem;
   justify-content: center;
 }
@@ -97,28 +102,31 @@
 .controlButton {
   appearance: none;
   background: transparent;
-  border: 1px solid rgba(107, 68, 35, 0.25);
+  border: 1px solid var(--edge);
   border-radius: 2px;
   font-size: 0.7rem;
+  letter-spacing: 0.04em;
   padding: 0.15rem 0.4rem;
   min-width: 1.5rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-dim);
   cursor: pointer;
   transition:
     background 120ms ease,
-    color 120ms ease;
+    color 120ms ease,
+    border-color 120ms ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
-    background: rgba(212, 162, 89, 0.18);
+    color: var(--brass-bright);
+    background: rgba(199, 154, 63, 0.1);
     outline: none;
   }
 
+  // The engaged mode runs charged.
   &[aria-pressed="true"] {
-    color: var(--ink);
-    background: rgba(212, 162, 89, 0.28);
-    border-color: rgba(212, 162, 89, 0.55);
+    color: var(--hextech);
+    background: rgba(54, 214, 198, 0.12);
+    border-color: rgba(54, 214, 198, 0.45);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -138,5 +146,5 @@
   z-index: 1000;
   border: 0;
   border-radius: 0;
-  background: rgb(248, 236, 208);
+  background: var(--iron);
 }

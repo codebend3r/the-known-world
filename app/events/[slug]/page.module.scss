@@ -48,14 +48,15 @@
   padding-bottom: 3rem;
   font-family: var(--font-ui);
   font-size: 0.9rem;
+  letter-spacing: 0.06em;
   text-align: center;
 
   a {
-    color: var(--ink-faded);
+    color: var(--gaslight-faint);
     text-decoration: none;
 
     &:hover {
-      color: var(--gold-leaf);
+      color: var(--hextech);
     }
   }
 }

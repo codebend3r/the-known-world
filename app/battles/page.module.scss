@@ -22,8 +22,9 @@
 .warName {
   font-family: var(--font-character-name);
   font-size: 1.5rem;
-  color: var(--ink);
-  border-bottom: 1px solid var(--gold-leaf);
+  color: var(--gaslight);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--edge-brass);
   padding-bottom: 0.35rem;
 }
 
@@ -46,45 +47,54 @@
   gap: 1rem;
   align-items: baseline;
   padding: 0.5rem 0.75rem;
-  border-radius: 0.25rem;
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
   text-decoration: none;
-  color: var(--ink);
+  color: var(--gaslight);
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: rgba(212, 162, 89, 0.16);
+    background-color: rgba(199, 154, 63, 0.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
 .name {
-  display: inline-flex;
+  display: inline-grid;
+  grid-auto-flow: column;
   align-items: center;
+  justify-content: start;
   gap: 0.5rem;
   font-family: var(--font-ui);
   font-size: 1.05rem;
 }
 
+// A charged node marks a battle with a full account behind it.
 .indicator {
-  flex: none;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: var(--gold-leaf);
+  background-color: var(--hextech);
+  box-shadow: 0 0 6px rgba(54, 214, 198, 0.55);
 }
 
 .when {
   font-family: var(--font-ui);
   font-size: 0.9rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-faint);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 .legend {
   margin-top: 2rem;
   font-family: var(--font-ui);
   font-size: 0.85rem;
-  color: var(--ink-faded);
-  font-style: italic;
+  color: var(--gaslight-faint);
+  letter-spacing: 0.04em;
 
   @media (max-width: bp.$md) {
     padding-left: 1.5rem;

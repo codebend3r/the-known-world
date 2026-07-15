@@ -1,7 +1,7 @@
 @use "breakpoints" as bp;
 
 // `ParchmentLayout`'s `.page` uses `justify-items: center`, so `justify-self:
-// stretch` opts this grid back out to fill the full parchment column. Mirrors
+// stretch` opts this grid back out to fill the full page column. Mirrors
 // the row style on the `/battles` index.
 .list {
   display: grid;
@@ -23,36 +23,43 @@
   gap: 1rem;
   align-items: center;
   padding: 0.5rem 0.75rem;
-  border-radius: 0.25rem;
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
   text-decoration: none;
-  color: var(--ink);
+  color: var(--gaslight);
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: rgba(212, 162, 89, 0.16);
+    background-color: rgba(199, 154, 63, 0.08);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
 .name {
-  display: inline-flex;
+  display: inline-grid;
+  grid-auto-flow: column;
   align-items: center;
+  justify-content: start;
   gap: 0.5rem;
   font-family: var(--font-ui);
   font-size: 1.05rem;
 }
 
+// A charged node marks an entry with a full article behind it.
 .indicator {
-  flex: none;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: var(--gold-leaf);
+  background-color: var(--hextech);
+  box-shadow: 0 0 6px rgba(54, 214, 198, 0.55);
 }
 
 // Keep the sigil small so it never grows the row taller than the name's
 // line box.
 .sigil {
-  display: inline-flex;
+  display: inline-grid;
   align-items: center;
-  flex: none;
 }

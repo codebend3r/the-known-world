@@ -8,7 +8,7 @@
   display: grid;
 }
 
-// Floating pill in the lower-right, clear of the sticky site header and the
+// Floating pod in the lower-right, clear of the sticky site header and the
 // vertically-centred minimap. Fixed so it stays reachable down the long chart.
 .zoom {
   position: fixed;
@@ -19,12 +19,13 @@
   justify-items: center;
   gap: 0.25rem;
   padding: 0.35rem;
-  background: rgba(248, 236, 208, 0.94);
-  border: 1px solid rgba(107, 68, 35, 0.3);
-  border-radius: 2px;
-  box-shadow: 0 2px 12px rgba(61, 40, 23, 0.15);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: rgba(20, 29, 40, 0.92);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  box-shadow: var(--shadow-raised);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .zoomButton {
@@ -34,12 +35,13 @@
   width: 2.25rem;
   height: 2.25rem;
   padding: 0;
-  background: rgba(248, 236, 208, 0.6);
-  border: 1px solid rgba(107, 68, 35, 0.35);
-  border-radius: 2px;
-  color: var(--ink);
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
+  background: var(--plate);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel-sm);
+  corner-shape: bevel;
+  color: var(--gaslight-dim);
+  font-family: var(--font-ui);
+  font-size: 1.35rem;
   line-height: 1;
   cursor: pointer;
   transition:
@@ -49,9 +51,8 @@
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
-    background: rgba(248, 236, 208, 0.9);
+    border-color: var(--edge-brass);
+    color: var(--brass-bright);
     outline: none;
   }
 
@@ -67,10 +68,12 @@
 
 .zoomLevel {
   min-width: 2.25rem;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 1px;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
   font-size: 0.85rem;
-  color: var(--ink-faded);
+  color: var(--gaslight-faint);
   text-align: center;
+  font-variant-numeric: tabular-nums;
 }
