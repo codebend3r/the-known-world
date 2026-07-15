@@ -18,6 +18,8 @@ titles:
 aliases:
   - Crow's Eye
   - Euron Crow's Eye
+  - Euron Croweye
+  - The Crow's Eye
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Euron_Greyjoy

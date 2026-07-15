@@ -18,6 +18,10 @@ titles:
   - King of the Andals, the Rhoynar, and the First Men
 aliases:
   - The Dreamer
+  - Daemon the Younger
+  - Young Daemon
+  - Ser John the Fiddler
+  - The Brown Dragon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daemon_II_Blackfyre

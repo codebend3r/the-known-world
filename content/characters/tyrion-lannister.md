@@ -14,6 +14,21 @@ parents:
 aliases:
   - The Imp
   - The Halfman
+  - Boyman
+  - Giant of Lannister
+  - Lord Imp
+  - Lord Tywin's Doom
+  - Lord Tywin's Bane
+  - Yollo
+  - Hugor Hill
+  - Hugor Halfwit
+  - No-Nose
+  - Freak
+  - Redhands
+  - Ser Imp
+  - Monkey Demon
+  - The Bloody Hand
+  - The Demonic Dwarf
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tyrion_Lannister

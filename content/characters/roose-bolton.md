@@ -16,6 +16,10 @@ children:
 titles:
   - Lord of the Dreadfort
   - Warden of the North
+aliases:
+  - Lord Leech
+  - The Leech Lord
+  - Lord of Leeches
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Roose_Bolton

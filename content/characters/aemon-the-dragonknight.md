@@ -19,6 +19,7 @@ titles:
   - Lord Commander of the Kingsguard
 aliases:
   - The Dragonknight
+  - The Knight of Tears
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aemon_the_Dragonknight

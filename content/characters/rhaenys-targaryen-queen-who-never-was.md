@@ -24,6 +24,7 @@ titles:
   - Rider of Meleys
 aliases:
   - The Queen Who Never Was
+  - Lady Velaryon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaenys_Targaryen_(Queen_Who_Never_Was)

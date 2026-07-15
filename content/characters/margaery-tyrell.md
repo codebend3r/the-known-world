@@ -11,6 +11,10 @@ primary-house: tyrell
 parents:
   - mace-tyrell
   - alerie-hightower
+aliases:
+  - Little Rose
+  - The Little Queen
+  - Maid Margaery
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Margaery_Tyrell

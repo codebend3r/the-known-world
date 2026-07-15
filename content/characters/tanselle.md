@@ -7,6 +7,7 @@ died: null
 primary-house: null
 aliases:
   - Tanselle Too-Tall
+  - the puppet girl
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tanselle

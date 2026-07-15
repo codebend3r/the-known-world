@@ -12,6 +12,12 @@ aliases:
   - Speaker to Gods
   - Father of Hosts
   - Giantsbane
+  - Thunderfist
+  - Giantsbabe
+  - Giantsbutt
+  - Giantstink
+  - Horn-Blower
+  - Breaker of Ice
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tormund

@@ -15,6 +15,9 @@ parents:
   - cersei-lannister
 titles:
   - Prince
+aliases:
+  - The Boy King
+  - Tommen-called-Baratheon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tommen_Baratheon

@@ -15,6 +15,8 @@ spouses:
 children:
   - wynafryd-manderly
   - wylla-manderly
+aliases:
+  - The Fat Bugger
 titles:
   - Heir to White Harbor
   - Ser

@@ -13,6 +13,10 @@ parents:
   - catelyn-stark
 titles:
   - Heir to Winterfell
+aliases:
+  - Brandon
+  - Bran the Broken
+  - The winged wolf
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Bran_Stark

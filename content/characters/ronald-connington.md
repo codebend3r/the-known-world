@@ -5,6 +5,8 @@ sex: m
 born: null
 died: null
 primary-house: connington
+aliases:
+  - "Cousin Ronald"
 parents:
   - lord-connington-ronalds-father
 children:

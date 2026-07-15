@@ -16,6 +16,8 @@ also-of-houses:
   - tarbeck
 spouses:
   - tion-lannister-son-of-gerold
+aliases:
+  - Ellyn Tarbeck
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ellyn_Reyne

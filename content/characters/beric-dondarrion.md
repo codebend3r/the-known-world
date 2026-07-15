@@ -11,6 +11,11 @@ titles:
 aliases:
   - The Lightning Lord
   - Lord of the Lightning
+  - Lord Erik
+  - Lord Derik
+  - Wisp o' the Wood
+  - The Scarecrow Knight
+  - The Lord of Corpses
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Beric_Dondarrion

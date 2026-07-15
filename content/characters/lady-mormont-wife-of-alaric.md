@@ -7,6 +7,8 @@ died: null
 primary-house: mormont
 spouses:
   - alaric-stark
+aliases:
+  - Lady Stark
 placeholder: true
 placeholder-reason: unnamed
 sources:

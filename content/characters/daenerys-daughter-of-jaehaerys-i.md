@@ -16,6 +16,8 @@ parents:
   - alysanne-targaryen
 titles:
   - Princess
+aliases:
+  - The Darling of the Realm
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daenerys_Targaryen_(daughter_of_Jaehaerys_I)

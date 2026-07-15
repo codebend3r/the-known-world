@@ -25,6 +25,8 @@ titles:
   - Lady of Dragonstone
 aliases:
   - Queen in the West
+  - Queen in the East
+  - Black Bride
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaena_Targaryen_(daughter_of_Aenys_I)

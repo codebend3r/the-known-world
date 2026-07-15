@@ -37,6 +37,7 @@ titles:
 aliases:
   - The Conciliator
   - The Old King
+  - The Wise
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jaehaerys_I_Targaryen

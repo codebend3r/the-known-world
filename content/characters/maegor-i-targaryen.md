@@ -27,6 +27,7 @@ titles:
   - Protector of the Realm
 aliases:
   - The Cruel
+  - The Abomination on the Iron Throne
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Maegor_I_Targaryen

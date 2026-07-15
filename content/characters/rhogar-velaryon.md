@@ -7,6 +7,8 @@ died: null
 primary-house: velaryon
 parents:
   - unknown-velaryon-father-of-malentine
+aliases:
+  - The Silent Five
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhogar_Velaryon

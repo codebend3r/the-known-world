@@ -17,6 +17,8 @@ children:
   - dickon-tarly
 titles:
   - Lady of Horn Hill
+aliases:
+  - Lady Tarly
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Melessa_Florent

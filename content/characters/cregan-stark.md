@@ -36,6 +36,8 @@ titles:
 aliases:
   - The Old Man of the North
   - The Wolf of the North
+  - The Wolf of Winterfell
+  - The Hand of the Uncrowned King
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Cregan_Stark

@@ -20,6 +20,8 @@ children:
   - tyrek-lannister
 titles:
   - Ser
+aliases:
+  - Tyg
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tygett_Lannister

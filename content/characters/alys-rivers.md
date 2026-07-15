@@ -7,6 +7,8 @@ died: null
 primary-house: strong
 parents:
   - lyonel-strong
+aliases:
+  - Witch Queen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Alys_Rivers

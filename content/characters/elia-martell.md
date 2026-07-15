@@ -22,6 +22,8 @@ children:
   - aegon-son-of-rhaegar
 titles:
   - Princess of Dorne
+aliases:
+  - Elia of Dorne
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Elia_Martell

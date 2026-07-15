@@ -12,6 +12,9 @@ titles:
   - Ser
 aliases:
   - The Maid of Tarth
+  - Brienne the Beauty
+  - Brienne the Blue
+  - Wench
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Brienne_of_Tarth

@@ -15,6 +15,8 @@ children:
   - joy-hill
 titles:
   - Ser
+aliases:
+  - Uncle Gery
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Gerion_Lannister

@@ -15,6 +15,7 @@ export type CharacterSuggestion = {
   slug: string;
   name: string;
   alias: string | null;
+  aliases: string[];
 };
 
 type CommonProps = {

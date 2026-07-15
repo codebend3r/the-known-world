@@ -7,6 +7,9 @@ died: null
 primary-house: strong
 titles:
   - Knight of the Kingsguard
+aliases:
+  - The Silent Giant
+  - Qyburn's Mute Monster
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Robert_Strong

@@ -20,6 +20,8 @@ children:
 titles:
   - Princess
   - Mistress of Coin
+aliases:
+  - Dragon Princess
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Elaena_Targaryen

@@ -11,6 +11,8 @@ died:
   era: AC
   precision: year
 primary-house: targaryen
+aliases:
+  - "Uncle Maester"
 parents:
   - maekar-i-targaryen
   - dyanna-dayne

@@ -10,6 +10,8 @@ died:
 primary-house: peake
 titles:
   - Lord of Starpike
+aliases:
+  - Gormy
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Gormon_Peake

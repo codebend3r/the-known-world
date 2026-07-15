@@ -12,6 +12,8 @@ spouses:
   - duncan-targaryen-the-small
 titles:
   - Princess of Dragonflies
+aliases:
+  - Lady Jenny
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jenny_of_Oldstones

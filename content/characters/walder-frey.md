@@ -15,6 +15,8 @@ titles:
   - Lord of the Twins
 aliases:
   - Late Lord Frey
+  - Old Frey
+  - Lord Grandfather
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Walder_Frey

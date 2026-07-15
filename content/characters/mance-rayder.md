@@ -9,6 +9,10 @@ titles:
   - King-Beyond-the-Wall
 aliases:
   - The King-Beyond-the-Wall
+  - The Mance
+  - Abel
+  - The Unburnt King
+  - Lord of Bones
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Mance_Rayder

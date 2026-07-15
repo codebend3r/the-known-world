@@ -15,6 +15,7 @@ titles:
   - Sworn shield to Princess Rhaenyra Targaryen
 aliases:
   - Breakbones
+  - Brokenbones
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Harwin_Strong

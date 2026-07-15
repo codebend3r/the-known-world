@@ -14,6 +14,11 @@ primary-house: stark
 parents:
   - rickard-stark
   - lyarra-stark
+aliases:
+  - The She-Wolf
+  - The Wolf Maid
+  - Lya
+  - Wolf Girl
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Lyanna_Stark

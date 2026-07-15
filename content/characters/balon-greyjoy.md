@@ -30,6 +30,11 @@ aliases:
   - The Twice Crowned
   - Balon the Brave
   - Balon the Widowmaker
+  - The Wet King
+  - The Kraken King
+  - The Iron King
+  - Balon the Bold
+  - Balon the Blessed
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Balon_Greyjoy

@@ -14,6 +14,8 @@ parents:
 titles:
   - Princess
   - Septa
+aliases:
+  - Aerea Targaryen (allegedly)
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaella_Targaryen_(daughter_of_Aegon)

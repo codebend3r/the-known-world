@@ -29,6 +29,8 @@ titles:
 aliases:
   - The Unlikely
   - Egg
+  - The Fortunate
+  - The Prince Who Was An Egg
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_V_Targaryen

@@ -18,6 +18,14 @@ children:
 titles:
   - Lord of Dragonstone
   - Master of Ships
+aliases:
+  - The King in the Narrow Sea
+  - The King of the Painted Table
+  - The Dark Lord
+  - The King of Dragonstone
+  - The King at the Wall
+  - Azor Ahai Reborn
+  - The Prince That Was Promised
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Stannis_Baratheon

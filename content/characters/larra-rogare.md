@@ -16,6 +16,8 @@ children:
   - aegon-iv-targaryen
   - aemon-the-dragonknight
   - naerys-targaryen
+aliases:
+  - Larra of Lys
 titles:
   - Princess
 sources:

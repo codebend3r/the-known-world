@@ -31,6 +31,11 @@ titles:
 aliases:
   - The Realm's Delight
   - The Half-Year Queen
+  - The Whore of Dragonstone
+  - King Maegor with Teats
+  - Rhaenyra the Pretender
+  - The Dragon Queen
+  - The Bitch Queen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaenyra_Targaryen

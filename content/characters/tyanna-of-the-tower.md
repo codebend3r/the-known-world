@@ -13,6 +13,11 @@ spouses:
 titles:
   - Queen of the Seven Kingdoms
   - Mistress of Whisperers
+aliases:
+  - Tyanna of Pentos
+  - The King's Raven
+  - The Mistress of Whispers
+  - Mistress of the Spiders
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tyanna_of_the_Tower

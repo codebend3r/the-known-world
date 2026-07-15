@@ -24,6 +24,9 @@ children:
   - aegon-iii-targaryen
   - viserys-ii-targaryen
   - visenya-stillborn
+aliases:
+  - The Rogue Prince
+  - Lord Flea Bottom
 titles:
   - Prince of the City
   - King of the Stepstones and the Narrow Sea

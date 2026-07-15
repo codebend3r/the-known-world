@@ -20,6 +20,9 @@ aliases:
   - The Bastard of Winterfell
   - Lord Crow
   - The Black Bastard of the Wall
+  - The Snow of Winterfell
+  - The crow-come-over
+  - The Great Lord Snow
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jon_Snow

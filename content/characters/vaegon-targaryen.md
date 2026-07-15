@@ -15,6 +15,8 @@ titles:
   - Prince
   - Maester
   - Archmaester
+aliases:
+  - The Dragonless
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Vaegon_Targaryen

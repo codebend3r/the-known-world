@@ -15,6 +15,10 @@ titles:
   - Ser
 aliases:
   - The Mountain That Rides
+  - The Mountain
+  - Lord Tywin's Mad Dog
+  - The Enormity That Rides
+  - The Great Dog
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Gregor_Clegane

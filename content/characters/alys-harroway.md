@@ -12,6 +12,8 @@ also-of-houses:
   - targaryen
 spouses:
   - maegor-i-targaryen
+aliases:
+  - "Maegor's Whore"
 titles:
   - Queen of the Seven Kingdoms
 sources:

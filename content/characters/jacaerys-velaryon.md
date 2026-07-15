@@ -19,6 +19,9 @@ parents:
 titles:
   - Prince of Dragonstone
   - Rider of Vermax
+aliases:
+  - Jace
+  - 'Jacaerys "Strong"'
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jacaerys_Velaryon

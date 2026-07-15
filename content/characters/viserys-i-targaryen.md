@@ -23,6 +23,8 @@ children:
   - helaena-targaryen
   - aemond-targaryen
   - daeron-targaryen-son-of-viserys-i
+aliases:
+  - The Young King
 titles:
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms

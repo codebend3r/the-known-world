@@ -35,6 +35,8 @@ titles:
   - Rider of Silverwing
 aliases:
   - The Good Queen
+  - The Little Maid
+  - The Other Daughter
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Alysanne_Targaryen

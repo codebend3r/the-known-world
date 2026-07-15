@@ -13,6 +13,10 @@ parents:
 titles:
   - Bastard of Bolton
   - Lord of the Hornwood
+aliases:
+  - The Bastard of the Dreadfort
+  - Reek
+  - Red Helm
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ramsay_Bolton

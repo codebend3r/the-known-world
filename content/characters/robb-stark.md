@@ -23,6 +23,12 @@ titles:
 aliases:
   - The Young Wolf
   - The King Who Lost the North
+  - Robb the Lord
+  - The wolfling
+  - Wolf king
+  - The pup
+  - Robb the boy
+  - The Boy Wolf
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Robb_Stark

@@ -10,6 +10,9 @@ titles:
   - Lord Varys
 aliases:
   - The Spider
+  - The King's Spider
+  - The Eunuch
+  - Rugen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Varys

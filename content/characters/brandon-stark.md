@@ -16,6 +16,8 @@ parents:
   - lyarra-stark
 titles:
   - Heir to Winterfell
+aliases:
+  - The Wild Wolf
 mentions:
   - rickard-stark
   - catelyn-stark

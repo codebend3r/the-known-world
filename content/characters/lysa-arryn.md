@@ -21,6 +21,8 @@ children:
 titles:
   - Lady of the Eyrie
   - Lady Regent of the Vale
+aliases:
+  - Lysa Tully
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Lysa_Arryn

@@ -23,6 +23,7 @@ titles:
   - Lady Dowager of Highgarden
 aliases:
   - The Queen of Thorns
+  - Olenna Redwyne
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Olenna_Redwyne

@@ -12,6 +12,7 @@ spouses:
   - walter-brownhill
 aliases:
   - One of the Four Storms
+  - Cass
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Cassandra_Baratheon

@@ -24,6 +24,7 @@ titles:
   - Hand of the King
 aliases:
   - Breakspear
+  - The Hammer
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Baelor_Targaryen

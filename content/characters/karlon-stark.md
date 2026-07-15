@@ -7,6 +7,8 @@ died: null
 primary-house: stark
 also-of-houses:
   - karstark
+aliases:
+  - Karl
 exclude-from-tree: true
 sources:
   - type: awoiaf

@@ -17,6 +17,7 @@ titles:
   - Princess of Dorne
 aliases:
   - The Warrior Queen
+  - Nymeria of the Rhoyne
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Nymeria
