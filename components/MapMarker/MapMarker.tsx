@@ -41,8 +41,8 @@ function Glyph({
           cx={cx}
           cy={cy}
           r={6}
-          fill="#0e7c74"
-          stroke="#26303c"
+          fill="#b0813a"
+          stroke="#2b2118"
           strokeWidth={1.5}
         />
       );
@@ -53,7 +53,7 @@ function Glyph({
           cy={cy}
           r={4}
           fill="#f4ead0"
-          stroke="#26303c"
+          stroke="#2b2118"
           strokeWidth={1.5}
         />
       );
@@ -65,7 +65,7 @@ function Glyph({
             y1={cy - 5}
             x2={cx + 5}
             y2={cy + 5}
-            stroke="#26303c"
+            stroke="#2b2118"
             strokeWidth={2}
           />
           <line
@@ -73,7 +73,7 @@ function Glyph({
             y1={cy - 5}
             x2={cx - 5}
             y2={cy + 5}
-            stroke="#26303c"
+            stroke="#2b2118"
             strokeWidth={2}
           />
         </g>
@@ -81,8 +81,8 @@ function Glyph({
     case "watchtower":
       return (
         <g>
-          <rect x={cx - 3} y={cy - 7} width={6} height={14} fill="#26303c" />
-          <rect x={cx - 5} y={cy - 9} width={10} height={3} fill="#26303c" />
+          <rect x={cx - 3} y={cy - 7} width={6} height={14} fill="#2b2118" />
+          <rect x={cx - 5} y={cy - 9} width={10} height={3} fill="#2b2118" />
         </g>
       );
     case "holdfast":
@@ -92,8 +92,8 @@ function Glyph({
           y={cy - 5}
           width={10}
           height={10}
-          fill="#0e7c74"
-          stroke="#26303c"
+          fill="#b0813a"
+          stroke="#2b2118"
           strokeWidth={1.5}
         />
       );

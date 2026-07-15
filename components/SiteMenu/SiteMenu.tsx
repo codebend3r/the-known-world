@@ -16,18 +16,12 @@ type MenuItem = {
 };
 
 // Every entry uses its section's line-art glyph so the drawer stays
-// monochrome metal; the raster menu icons belonged to the parchment era.
+// monochrome metal, listed in the same plate order as the homepage ledger.
 const ITEMS: MenuItem[] = [
   {
     href: "/maps/",
     label: "Maps",
     glyph: sectionGlyphs.maps,
-    visible: true,
-  },
-  {
-    href: "/timeline/",
-    label: "Timeline",
-    glyph: sectionGlyphs.timeline,
     visible: true,
   },
   {
@@ -43,15 +37,21 @@ const ITEMS: MenuItem[] = [
     visible: true,
   },
   {
-    href: "/weapons/",
-    label: "Weapons",
-    glyph: sectionGlyphs.weapons,
+    href: "/timeline/",
+    label: "Timeline",
+    glyph: sectionGlyphs.timeline,
     visible: true,
   },
   {
     href: "/battles/",
     label: "Battles",
     glyph: sectionGlyphs.battles,
+    visible: true,
+  },
+  {
+    href: "/weapons/",
+    label: "Weapons",
+    glyph: sectionGlyphs.weapons,
     visible: true,
   },
   {

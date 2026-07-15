@@ -69,7 +69,7 @@
 
 %column {
   position: relative;
-  border-right: 1px dashed rgba(126, 152, 180, 0.12);
+  border-right: 1px dashed rgba(190, 158, 110, 0.12);
 
   &:last-of-type {
     border-right: none;
@@ -102,7 +102,7 @@
   display: grid;
   grid-template-areas: "label";
   justify-items: start;
-  border-top: 1px dashed rgba(126, 152, 180, 0.16);
+  border-top: 1px dashed rgba(190, 158, 110, 0.16);
 }
 
 // Year labels along the axis: instrument figures on the dial.
@@ -132,9 +132,9 @@
   grid-template-columns: var(--era-width) 1fr;
   align-items: center;
   justify-items: center;
-  background: rgba(199, 154, 63, 0.05);
-  border-top: 1px solid rgba(199, 154, 63, 0.2);
-  border-bottom: 1px solid rgba(199, 154, 63, 0.2);
+  background: rgba(176, 129, 58, 0.05);
+  border-top: 1px solid rgba(176, 129, 58, 0.2);
+  border-bottom: 1px solid rgba(176, 129, 58, 0.2);
 }
 
 .eraLabel {
@@ -201,10 +201,12 @@
   align-self: center;
   width: 0.5rem;
   height: 0.5rem;
-  background: var(--hextech);
-  border: 1px solid rgba(23, 117, 109, 0.9);
+  background: var(--verdigris);
+  border: 1px solid rgba(67, 95, 78, 0.9);
   border-radius: 50%;
-  box-shadow: 0 0 6px rgba(54, 214, 198, 0.55);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.28),
+    0 1px 2px rgba(8, 5, 2, 0.5);
 }
 
 .eventName {

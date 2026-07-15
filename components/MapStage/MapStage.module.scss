@@ -9,12 +9,12 @@
   background:
     radial-gradient(
       ellipse at 50% 20%,
-      rgba(199, 154, 63, 0.08),
+      rgba(176, 129, 58, 0.08),
       transparent 65%
     ),
-    linear-gradient(180deg, #1e2a37 0%, #141d28 100%);
+    linear-gradient(180deg, #2e2416 0%, #1b1510 100%);
   box-shadow:
-    inset 0 0 40px rgba(4, 8, 13, 0.45),
+    inset 0 0 40px rgba(8, 5, 2, 0.45),
     var(--shadow-soft);
   position: relative;
   overflow: hidden;

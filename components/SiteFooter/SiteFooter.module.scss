@@ -1,29 +1,31 @@
 @use "breakpoints" as bp;
 
 .footer {
-  border-top: 1px solid rgba(199, 154, 63, 0.28);
+  border-top: 1px solid rgba(176, 129, 58, 0.28);
   background: linear-gradient(
     0deg,
-    rgba(13, 19, 27, 0.95) 0%,
-    rgba(17, 25, 35, 0.35) 100%
+    rgba(18, 14, 9, 0.95) 0%,
+    rgba(29, 23, 18, 0.35) 100%
   );
   position: relative;
 
+  // A row of rivet heads along the top of the baseplate, matching the
+  // header rail.
   &::before {
     content: "";
     position: absolute;
     left: 0;
     right: 0;
-    top: -3px;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--brass) 18%,
-      var(--brass) 82%,
-      transparent 100%
+    top: 3px;
+    height: 5px;
+    background-image: radial-gradient(
+      circle at 2.5px 2.5px,
+      rgba(228, 191, 120, 0.3) 1.4px,
+      transparent 2px
     );
-    opacity: 0.6;
+    background-size: 52px 5px;
+    background-position: 26px 0;
+    pointer-events: none;
   }
 }
 
@@ -76,7 +78,7 @@
 
   &:hover,
   &:focus-visible {
-    color: var(--hextech);
+    color: var(--verdigris);
   }
 
   @media (prefers-reduced-motion: reduce) {

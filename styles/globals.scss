@@ -5,66 +5,68 @@
   // pickers, scrollbars, form indicators) render in their dark forms.
   color-scheme: dark;
 
-  // Structural darks, cool iron blues that read as machined metal, not void.
-  --coal: #0a0e15;
-  --iron: #111923;
-  --gunmetal: #1a2530;
-  --gunmetal-raised: #223040;
-  --steel: #2e3d4e;
+  // Structural darks: soot and oiled iron, warmed by lamplight rather
+  // than cooled by void. The whole atlas sits on these.
+  --coal: #14100a;
+  --iron: #1d1712;
+  --gunmetal: #271f16;
+  --gunmetal-raised: #322818;
+  --steel: #4a3b2b;
 
   // Metals. Brass is the primary accent, the resting identity of the atlas.
-  --brass: #c79a3f;
-  --brass-bright: #ecca7d;
-  --brass-dark: #8a6828;
+  --brass: #b0813a;
+  --brass-bright: #e4bf78;
+  --brass-dark: #77571f;
 
-  // The hextech charge. Reserved for interaction: focus, hover, live state.
-  --hextech: #36d6c6;
-  --hextech-dim: #17756d;
+  // Verdigris, oxidised copper. Reserved for interaction: focus, hover,
+  // live state. Matte, never luminous.
+  --verdigris: #79a48c;
+  --verdigris-dim: #435f4e;
 
-  // Shimmer, the rare arcane violet. Kept for the exceptional, never routine.
-  --shimmer: #b660e8;
+  // Raw copper, the rare warm accent. Kept for the exceptional, never routine.
+  --copper: #c1704a;
 
-  // Gaslight text ramp, warm lamplight on cold metal.
-  --gaslight: #eee6d3;
-  --gaslight-dim: #b0a893;
-  --gaslight-faint: #7e8798;
+  // Gaslight text ramp, warm lamplight on dark metal.
+  --gaslight: #f0e7d2;
+  --gaslight-dim: #bfb096;
+  --gaslight-faint: #8f8069;
 
   // Signal red for errors and invalid states.
-  --ember: #e2604e;
+  --ember: #d05a3e;
 
   // Genealogy tints, used by the family tree to mark lines of descent.
-  --tint-male: #9fc0dc;
-  --tint-female: #d9a1b4;
+  --tint-male: #9db6c8;
+  --tint-female: #d4a3b0;
 
   // Hairlines and composed surfaces.
-  --edge: rgba(126, 152, 180, 0.22);
-  --edge-strong: rgba(126, 152, 180, 0.38);
-  --edge-brass: rgba(199, 154, 63, 0.45);
-  --well: rgba(7, 12, 18, 0.6);
+  --edge: rgba(190, 158, 110, 0.2);
+  --edge-strong: rgba(190, 158, 110, 0.34);
+  --edge-brass: rgba(176, 129, 58, 0.5);
+  --well: rgba(15, 10, 5, 0.55);
   --plate: linear-gradient(
     180deg,
     var(--gunmetal-raised) 0%,
     var(--gunmetal) 100%
   );
 
-  // Shadows and glows.
-  --shadow-soft: 0 2px 10px rgba(4, 8, 13, 0.4);
-  --shadow-raised: 0 10px 28px rgba(4, 8, 13, 0.5);
-  --focus-glow:
-    0 0 0 2px rgba(54, 214, 198, 0.28), 0 0 14px rgba(54, 214, 198, 0.2);
-  --brass-glow: 0 2px 14px rgba(199, 154, 63, 0.18);
+  // Shadows and sheens. Depth comes from soot shadow and a faint warm
+  // lamplight catch on brass; nothing glows of its own accord.
+  --shadow-soft: 0 2px 10px rgba(8, 5, 2, 0.4);
+  --shadow-raised: 0 10px 28px rgba(8, 5, 2, 0.5);
+  --focus-glow: 0 0 0 2px rgba(121, 164, 140, 0.4);
+  --brass-glow: 0 2px 12px rgba(176, 129, 58, 0.16);
 
   // Chamfered plate corners; browsers without `corner-shape` fall back to
   // plain rounding at the same radius.
   --bevel: 10px;
   --bevel-sm: 5px;
 
-  --font-heading: var(--font-girassol), Georgia, serif;
-  --font-character-name: var(--font-poiret-one), "Avenir Next", sans-serif;
-  --font-body: var(--font-spectral), Georgia, serif;
-  --font-ui: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --font-heading: var(--font-bevan), "Rockwell", Georgia, serif;
+  --font-character-name: var(--font-graduate), "Copperplate", serif;
+  --font-body: var(--font-old-standard), Georgia, serif;
+  --font-ui: var(--font-oswald), "Arial Narrow", sans-serif;
   --font-sans:
-    var(--font-barlow-condensed), -apple-system, BlinkMacSystemFont, sans-serif;
+    var(--font-oswald), -apple-system, BlinkMacSystemFont, sans-serif;
 
   --bp-xs: 480px;
   --bp-sm: 640px;
@@ -73,18 +75,19 @@
   --bp-xl: 1280px;
 
   // Regional palette, heraldic border tints used by both the house and
-  // character list cards, retuned to stay luminous on the iron ground.
-  // Kept as design tokens so the two list modules don't each carry the
-  // same nine hex values. Add a new region here, not in the module files.
-  --region-color-north: #8ba7bb;
-  --region-color-vale: #6ca6d9;
-  --region-color-riverlands: #5d86b5;
-  --region-color-westerlands: #d15954;
-  --region-color-reach: #96b054;
-  --region-color-stormlands: #dcb14e;
-  --region-color-dorne: #d98550;
-  --region-color-iron-islands: #62918a;
-  --region-color-crownlands: #b25a66;
+  // character list cards, desaturated to sit like hand-tinted lithograph
+  // inks on the soot ground. Kept as design tokens so the two list modules
+  // don't each carry the same nine hex values. Add a new region here, not
+  // in the module files.
+  --region-color-north: #92a6b0;
+  --region-color-vale: #7ba3c4;
+  --region-color-riverlands: #6b89a8;
+  --region-color-westerlands: #c25c50;
+  --region-color-reach: #93a854;
+  --region-color-stormlands: #d3a94e;
+  --region-color-dorne: #cd7f4b;
+  --region-color-iron-islands: #6d9186;
+  --region-color-crownlands: #ad5c62;
 }
 
 // Desktop-first breakpoints, default styles target xl. Each @media rule
@@ -103,39 +106,25 @@ html,
 body {
   margin: 0;
   padding: 0;
-  // Layered atmosphere: a warm lamp above, a faint hextech seep below,
-  // and a surveyor's grid etched into the iron.
+  // Layered atmosphere: one warm lamp above and a grid of rivet heads
+  // punched into the soot-dark plating.
   background:
     radial-gradient(
-      60% 42% at 50% -2%,
-      rgba(231, 197, 120, 0.07),
+      58% 40% at 50% -4%,
+      rgba(228, 191, 120, 0.06),
       transparent 70%
     ),
-    radial-gradient(
-      50% 40% at 88% 104%,
-      rgba(54, 214, 198, 0.05),
-      transparent 65%
-    ),
-    repeating-linear-gradient(
-      0deg,
-      rgba(120, 148, 178, 0.035) 0,
-      rgba(120, 148, 178, 0.035) 1px,
-      transparent 1px,
-      transparent 56px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      rgba(120, 148, 178, 0.035) 0,
-      rgba(120, 148, 178, 0.035) 1px,
-      transparent 1px,
-      transparent 56px
-    ),
+    radial-gradient(circle, rgba(190, 158, 110, 0.05) 1px, transparent 1.5px),
     linear-gradient(180deg, var(--iron) 0%, var(--coal) 100%);
+  background-size:
+    auto,
+    34px 34px,
+    auto;
   background-attachment: fixed;
   color: var(--gaslight);
   font-family: var(--font-body);
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.65;
   min-height: 100vh;
   scrollbar-color: var(--steel) transparent;
@@ -163,7 +152,7 @@ h6 {
   font-family: var(--font-heading);
   color: var(--gaslight);
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: 0.01em;
 }
 
 p {
@@ -173,43 +162,28 @@ p {
 }
 
 strong {
-  font-weight: 600;
+  font-weight: 700;
 }
 
 h1 {
-  font-size: 2.3rem;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
+  font-size: 2rem;
   text-align: center;
   color: var(--brass-bright);
-
-  @supports (background-clip: text) or (-webkit-background-clip: text) {
-    background: linear-gradient(
-      180deg,
-      var(--brass-bright) 18%,
-      var(--brass) 58%,
-      var(--brass-dark) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+  line-height: 1.2;
 }
 
 h2 {
-  font-size: 1.35rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-bottom: 1px solid var(--edge);
-  padding-bottom: 0.25rem;
+  font-size: 1.2rem;
+  border-bottom: 3px double var(--edge-strong);
+  padding-bottom: 0.35rem;
 }
 
 h3 {
   font-family: var(--font-ui);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   color: var(--brass);
 }
 
@@ -239,14 +213,14 @@ h3 {
 a {
   color: var(--brass-bright);
   text-decoration: underline;
-  text-decoration-color: rgba(199, 154, 63, 0.4);
+  text-decoration-color: rgba(176, 129, 58, 0.4);
   transition:
     color 140ms ease,
     text-decoration-color 140ms ease;
 
   &:hover {
-    color: var(--hextech);
-    text-decoration-color: rgba(54, 214, 198, 0.5);
+    color: var(--verdigris);
+    text-decoration-color: rgba(121, 164, 140, 0.5);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -255,12 +229,12 @@ a {
 }
 
 :focus-visible {
-  outline: 2px solid var(--hextech);
+  outline: 2px solid var(--verdigris);
   outline-offset: 2px;
 }
 
 ::selection {
-  background: rgba(54, 214, 198, 0.28);
+  background: rgba(176, 129, 58, 0.35);
   color: var(--gaslight);
 }
 

@@ -62,7 +62,7 @@
   padding: 0.35rem;
   margin: 0;
   list-style: none;
-  background: #1c2836;
+  background: #2b2217;
   border: 1px solid var(--edge-brass);
   border-radius: var(--bevel-sm);
   corner-shape: bevel;
@@ -86,7 +86,7 @@
 
   &:hover,
   &:focus-visible {
-    background: rgba(199, 154, 63, 0.1);
+    background: rgba(176, 129, 58, 0.1);
     color: var(--gaslight);
   }
 }

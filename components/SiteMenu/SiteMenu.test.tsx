@@ -19,7 +19,7 @@ describe("SiteMenu", () => {
     expect(links).toHaveLength(0);
   });
 
-  it("reveals only the visible primary nav items (Maps, Timeline, Houses, Characters, Weapons, Battles) when opened", () => {
+  it("reveals only the visible primary nav items in plate order (Maps, Houses, Characters, Timeline, Battles, Weapons) when opened", () => {
     render(<SiteMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
@@ -30,19 +30,19 @@ describe("SiteMenu", () => {
     const hrefs = links.map((l) => l.getAttribute("href") ?? "");
     expect(hrefs).toEqual([
       "/maps/",
-      "/timeline/",
       "/houses/",
       "/characters/",
-      "/weapons/",
+      "/timeline/",
       "/battles/",
+      "/weapons/",
     ]);
     expect(links.map((l) => l.textContent?.trim())).toEqual([
       "Maps",
-      "Timeline",
       "Houses",
       "Characters",
-      "Weapons",
+      "Timeline",
       "Battles",
+      "Weapons",
     ]);
   });
 

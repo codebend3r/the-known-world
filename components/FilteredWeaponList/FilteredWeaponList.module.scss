@@ -30,7 +30,7 @@
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: rgba(199, 154, 63, 0.08);
+    background-color: rgba(176, 129, 58, 0.08);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -53,8 +53,10 @@
   width: 0.5rem;
   height: 0.5rem;
   border-radius: 50%;
-  background-color: var(--hextech);
-  box-shadow: 0 0 6px rgba(54, 214, 198, 0.55);
+  background-color: var(--verdigris);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.28),
+    0 1px 2px rgba(8, 5, 2, 0.5);
 }
 
 // Keep the sigil small so it never grows the row taller than the name's

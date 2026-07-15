@@ -98,10 +98,10 @@
   font-weight: 400;
 }
 
-// Wild dragons answer to no house: they carry the shimmer, the arcane
-// violet reserved for the unbound.
+// Wild dragons answer to no house: they carry raw copper, the warm
+// accent reserved for the unbound.
 .cardWild {
-  border-color: rgba(182, 96, 232, 0.45);
+  border-color: rgba(193, 112, 74, 0.45);
 }
 
 .wildBadge {
@@ -113,7 +113,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   font-size: 0.85rem;
-  color: var(--shimmer);
-  border: 1px dashed rgba(182, 96, 232, 0.5);
+  color: var(--copper);
+  border: 1px dashed rgba(193, 112, 74, 0.5);
   border-radius: 50%;
 }

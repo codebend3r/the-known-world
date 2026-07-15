@@ -7,7 +7,7 @@
   width: 100%;
   text-align: center;
 
-  // The hextech `FiligreeRule` underlines the title in place of the plain
+  // The gauge `FiligreeRule` underlines the title in place of the plain
   // border the subtitle carries by default.
   :global(.subtitle) {
     border-bottom: none;

@@ -46,30 +46,30 @@
   }
 }
 
-// The crystal itself: charged hextech, softly breathing. The one moving
-// part of the whole page furniture.
-.gem {
-  fill: var(--hextech);
-  filter: drop-shadow(0 0 4px rgba(54, 214, 198, 0.65));
-  animation: gem-breathe 4.5s ease-in-out infinite;
+// The gauge needle wanders its dial like a boiler under uneven draught.
+// The one moving part of the whole page furniture.
+.needle {
+  color: var(--brass-bright);
+  transform-origin: 120px 12px;
+  transform-box: view-box;
+  animation: needle-drift 9s ease-in-out infinite alternate;
 
   @media (prefers-reduced-motion: reduce) {
     animation: none;
   }
 }
 
-.gemFacet {
-  stroke: var(--coal);
-  stroke-width: 0.8;
-  opacity: 0.45;
+// The hex nut that caps the flourish's pipework.
+.nut {
+  fill: currentColor;
+  opacity: 0.9;
 }
 
-@keyframes gem-breathe {
-  0%,
-  100% {
-    opacity: 0.78;
+@keyframes needle-drift {
+  0% {
+    transform: rotate(-14deg);
   }
-  50% {
-    opacity: 1;
+  100% {
+    transform: rotate(30deg);
   }
 }

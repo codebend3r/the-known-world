@@ -6,7 +6,7 @@
   border: 1px solid var(--edge-strong);
   border-radius: var(--bevel);
   corner-shape: bevel;
-  background: rgba(13, 19, 27, 0.5);
+  background: rgba(18, 14, 9, 0.5);
   touch-action: none;
   user-select: none;
 }
@@ -24,7 +24,7 @@
 
 .dot {
   fill: var(--gunmetal-raised);
-  stroke: rgba(126, 152, 180, 0.65);
+  stroke: rgba(190, 158, 110, 0.65);
   stroke-width: 1.5;
 }
 
@@ -48,7 +48,7 @@
 // Solid backing that approximates the canvas colour so labels mask the
 // edges passing beneath them.
 .labelBg {
-  fill: #141d27;
+  fill: #1b1510;
   pointer-events: none;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .edge {
-  stroke: rgba(126, 152, 180, 0.4);
+  stroke: rgba(190, 158, 110, 0.4);
   stroke-width: 1;
   fill: none;
 }
@@ -84,7 +84,7 @@
   display: grid;
   gap: 0.25rem;
   padding: 0.4rem;
-  background: rgba(20, 29, 40, 0.92);
+  background: rgba(27, 21, 16, 0.92);
   border: 1px solid var(--edge-strong);
   border-radius: var(--bevel-sm);
   corner-shape: bevel;
@@ -118,15 +118,15 @@
   &:hover,
   &:focus-visible {
     color: var(--brass-bright);
-    background: rgba(199, 154, 63, 0.1);
+    background: rgba(176, 129, 58, 0.1);
     outline: none;
   }
 
   // The engaged mode runs charged.
   &[aria-pressed="true"] {
-    color: var(--hextech);
-    background: rgba(54, 214, 198, 0.12);
-    border-color: rgba(54, 214, 198, 0.45);
+    color: var(--verdigris);
+    background: rgba(121, 164, 140, 0.12);
+    border-color: rgba(121, 164, 140, 0.45);
   }
 
   @media (prefers-reduced-motion: reduce) {

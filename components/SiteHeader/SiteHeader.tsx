@@ -8,6 +8,7 @@ export function SiteHeader() {
         <Link href="/" className={styles.titleLink}>
           <p className={styles.title}>The Known World</p>
         </Link>
+        <p className={styles.tagline}>An atlas of Ice &amp; Fire</p>
       </div>
     </header>
   );

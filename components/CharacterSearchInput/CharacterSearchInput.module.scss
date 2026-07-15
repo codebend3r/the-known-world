@@ -26,7 +26,7 @@
   gap: 0.15rem;
   max-height: 18rem;
   overflow-y: auto;
-  background: #1c2836;
+  background: #2b2217;
   border: 1px solid var(--edge-strong);
   border-radius: var(--bevel-sm);
   corner-shape: bevel;
@@ -48,7 +48,7 @@
 
 // The keyboard-active row runs charged.
 .optionActive {
-  background: rgba(54, 214, 198, 0.14);
+  background: rgba(121, 164, 140, 0.14);
 }
 
 .optionName {

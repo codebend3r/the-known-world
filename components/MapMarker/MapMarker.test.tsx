@@ -55,7 +55,7 @@ describe("MapMarker", () => {
     });
     const circle = container.querySelector("circle");
     expect(circle?.getAttribute("r")).toBe("6");
-    expect(circle?.getAttribute("fill")).toBe("#0e7c74");
+    expect(circle?.getAttribute("fill")).toBe("#b0813a");
   });
 
   it("renders a small chart-cream circle for `town`", () => {
@@ -89,6 +89,6 @@ describe("MapMarker", () => {
     });
     const rects = container.querySelectorAll("rect");
     expect(rects).toHaveLength(1);
-    expect(rects[0]?.getAttribute("fill")).toBe("#0e7c74");
+    expect(rects[0]?.getAttribute("fill")).toBe("#b0813a");
   });
 });

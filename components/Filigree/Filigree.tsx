@@ -6,8 +6,9 @@ type FlourishProps = {
   className?: string;
 };
 
-// A short conduit: an engraved rail feeding a cogwheel, ending in a charged
-// spark. Reads left to right; `mirrored` flips it for the right-hand side.
+// A short run of pipework: an engraved rail feeding a cogwheel, closed off
+// with a hex nut. Reads left to right; `mirrored` flips it for the
+// right-hand side.
 export function FiligreeFlourish({
   mirrored = false,
   className,
@@ -32,7 +33,10 @@ export function FiligreeFlourish({
         </g>
         <circle cx="74" cy="14" r="2.2" fill="currentColor" />
         <circle cx="2" cy="14" r="1.3" fill="currentColor" />
-        <path className={styles.gem} d="M90 10.5 L93 14 L90 17.5 L87 14 Z" />
+        <path
+          className={styles.nut}
+          d="M90 10.4 L93.1 12.2 V15.8 L90 17.6 L86.9 15.8 V12.2 Z"
+        />
       </svg>
     </span>
   );
@@ -42,32 +46,41 @@ type RuleProps = {
   className?: string;
 };
 
-// The atlas signature: a hextech crystal set into an engraved rail, ringed
-// by cog collars. It underlines every page title and divides long pages.
+// The atlas signature: a pressure gauge set into an engraved rail, its
+// needle wandering the dial. It underlines every page title and divides
+// long pages.
 export function FiligreeRule({ className }: RuleProps) {
   return (
     <span className={cx(styles.rule, className)} aria-hidden="true">
-      <svg viewBox="0 0 240 18" fill="none" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="0 0 240 22" fill="none" preserveAspectRatio="xMidYMid meet">
         <g stroke="currentColor" strokeWidth="1.1" strokeLinecap="round">
-          <line x1="16" y1="9" x2="98" y2="9" />
-          <line x1="142" y1="9" x2="224" y2="9" />
-          <circle cx="104" cy="9" r="2.6" fill="none" />
-          <circle cx="136" cy="9" r="2.6" fill="none" />
-          <path d="M104 5.2 V3.4" />
-          <path d="M104 12.8 V14.6" />
-          <path d="M136 5.2 V3.4" />
-          <path d="M136 12.8 V14.6" />
+          <line x1="14" y1="12" x2="100" y2="12" />
+          <line x1="140" y1="12" x2="226" y2="12" />
+          <path d="M106 12 H110.5" />
+          <path d="M129.5 12 H134" />
+          <circle cx="120" cy="12" r="8.5" fill="none" />
+          <path d="M111.5 12 L113.5 12" />
+          <path d="M114 6 L115.4 7.4" />
+          <path d="M120 3.5 L120 5.5" />
+          <path d="M126 6 L124.6 7.4" />
+          <path d="M128.5 12 L126.5 12" />
         </g>
-        <path
-          className={styles.gem}
-          d="M114.5 9 L117.5 3.6 L122.5 3.6 L125.5 9 L122.5 14.4 L117.5 14.4 Z"
-        />
-        <path
-          className={styles.gemFacet}
-          d="M117.5 3.6 L122.5 14.4 M122.5 3.6 L117.5 14.4"
-        />
-        <circle cx="16" cy="9" r="1.3" fill="currentColor" />
-        <circle cx="224" cy="9" r="1.3" fill="currentColor" />
+        <g className={styles.needle}>
+          <line
+            x1="120"
+            y1="12"
+            x2="115.6"
+            y2="7.2"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
+        </g>
+        <circle cx="120" cy="12" r="1.8" fill="currentColor" />
+        <circle cx="104" cy="12" r="1.6" fill="currentColor" />
+        <circle cx="136" cy="12" r="1.6" fill="currentColor" />
+        <circle cx="14" cy="12" r="1.3" fill="currentColor" />
+        <circle cx="226" cy="12" r="1.3" fill="currentColor" />
       </svg>
     </span>
   );

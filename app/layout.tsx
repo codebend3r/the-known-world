@@ -1,35 +1,30 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Barlow_Condensed,
-  Girassol,
-  Poiret_One,
-  Spectral,
-} from "next/font/google";
+import { Bevan, Graduate, Old_Standard_TT, Oswald } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../styles/globals.scss";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteMenu } from "@/components/SiteMenu";
 import { SiteFooter } from "@/components/SiteFooter";
 
-const girassol = Girassol({
+const bevan = Bevan({
   subsets: ["latin"],
-  variable: "--font-girassol",
+  variable: "--font-bevan",
   weight: "400",
 });
-const poiretOne = Poiret_One({
+const graduate = Graduate({
   subsets: ["latin"],
-  variable: "--font-poiret-one",
+  variable: "--font-graduate",
   weight: "400",
 });
-const spectral = Spectral({
+const oldStandard = Old_Standard_TT({
   subsets: ["latin"],
-  variable: "--font-spectral",
-  weight: ["300", "400", "500", "600"],
+  variable: "--font-old-standard",
+  weight: ["400", "700"],
   style: ["normal", "italic"],
 });
-const barlowCondensed = Barlow_Condensed({
+const oswald = Oswald({
   subsets: ["latin"],
-  variable: "--font-barlow-condensed",
+  variable: "--font-oswald",
   weight: ["400", "500", "600"],
 });
 
@@ -55,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${girassol.variable} ${poiretOne.variable} ${spectral.variable} ${barlowCondensed.variable}`}
+      className={`${bevan.variable} ${graduate.variable} ${oldStandard.variable} ${oswald.variable}`}
     >
       <body>
         <SiteHeader />

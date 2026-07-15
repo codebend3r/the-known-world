@@ -2,7 +2,7 @@
   border: 1px solid var(--edge-strong);
   border-radius: var(--bevel);
   corner-shape: bevel;
-  background: rgba(13, 19, 27, 0.5);
+  background: rgba(18, 14, 9, 0.5);
   overflow: hidden;
 }
 
@@ -32,7 +32,7 @@
 
   &:hover,
   &:focus-visible {
-    background: linear-gradient(180deg, #283a4d 0%, var(--gunmetal) 100%);
+    background: linear-gradient(180deg, #4a3b2b 0%, var(--gunmetal) 100%);
     color: var(--brass-bright);
     outline: none;
   }
@@ -56,7 +56,7 @@
 // An open drawer is a live circuit: the chevron turns and charges.
 .chevronOpen {
   transform: rotate(90deg);
-  color: var(--hextech);
+  color: var(--verdigris);
 }
 
 .title {

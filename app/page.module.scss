@@ -1,0 +1,75 @@
+@use "breakpoints" as bp;
+
+// The homepage spread: masthead column on the left, contents ledger on the
+// right, like the title page of a bound atlas facing its index.
+.contents {
+  display: grid;
+  grid-template-areas: "masthead ledger";
+  grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: start;
+  width: 100%;
+  max-width: 1080px;
+  padding-top: 2.5rem;
+
+  > :last-child {
+    grid-area: ledger;
+  }
+
+  @media (max-width: bp.$lg) {
+    grid-template-areas:
+      "masthead"
+      "ledger";
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2.5rem;
+    max-width: 720px;
+    padding-top: 1rem;
+  }
+}
+
+.masthead {
+  grid-area: masthead;
+  display: grid;
+  justify-items: start;
+  gap: 1rem;
+  position: sticky;
+  top: 7.5rem;
+
+  @media (max-width: bp.$lg) {
+    position: static;
+    justify-items: center;
+    text-align: center;
+    gap: 0.85rem;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.32em;
+  color: var(--brass);
+}
+
+.title {
+  text-align: left;
+  font-size: 2.4rem;
+  line-height: 1.15;
+
+  @media (max-width: bp.$lg) {
+    text-align: center;
+    font-size: 2rem;
+  }
+}
+
+.rule {
+  width: min(260px, 100%);
+}
+
+.lede {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gaslight-dim);
+  max-width: 34ch;
+}

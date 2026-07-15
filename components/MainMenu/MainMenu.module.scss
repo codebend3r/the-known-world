@@ -1,48 +1,15 @@
-@use "breakpoints" as bp;
-
+// The bound case around the contents ledger. Rows draw their own seams;
+// the case supplies the plate, the chamfered corners, and the well.
 .menu {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-areas:
-    "maps       maps       timeline   timeline   houses  houses"
-    "characters characters weapons    weapons    dragons dragons";
-  gap: 1.5rem;
-
-  > :nth-child(1) {
-    grid-area: maps;
-  }
-  > :nth-child(2) {
-    grid-area: timeline;
-  }
-  > :nth-child(3) {
-    grid-area: houses;
-  }
-  > :nth-child(4) {
-    grid-area: characters;
-  }
-  > :nth-child(5) {
-    grid-area: weapons;
-  }
-  > :nth-child(6) {
-    grid-area: dragons;
-  }
-
-  @media (max-width: bp.$lg) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "maps       timeline"
-      "houses     characters"
-      "weapons    dragons";
-  }
-
-  @media (max-width: bp.$md) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "maps"
-      "timeline"
-      "houses"
-      "characters"
-      "weapons"
-      "dragons";
-  }
+  align-content: start;
+  width: 100%;
+  background: var(--well);
+  border: 1px solid var(--edge-strong);
+  border-radius: var(--bevel);
+  corner-shape: bevel;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.04),
+    var(--shadow-soft);
+  overflow: hidden;
 }

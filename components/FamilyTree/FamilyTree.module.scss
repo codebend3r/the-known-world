@@ -66,7 +66,7 @@
   padding: 0.25rem 0.6rem;
   width: fit-content;
   max-width: 100%;
-  background: rgba(16, 23, 32, 0.55);
+  background: rgba(22, 17, 12, 0.55);
   border: 1px solid var(--edge);
   border-radius: 3px;
 
@@ -104,9 +104,9 @@ a.name {
 
   &:hover,
   &:focus-visible {
-    color: var(--hextech);
+    color: var(--verdigris);
     text-decoration: underline;
-    text-decoration-color: rgba(54, 214, 198, 0.45);
+    text-decoration-color: rgba(121, 164, 140, 0.45);
     outline: none;
   }
 

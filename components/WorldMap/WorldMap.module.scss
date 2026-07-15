@@ -9,7 +9,7 @@
 }
 
 // The chart table: the parchment map is an exhibit under glass, held in a
-// brass instrument bezel; the chrome around it stays cold metal.
+// brass instrument bezel; the chrome around it stays oiled iron.
 .stage {
   position: relative;
   width: 100%;
@@ -26,14 +26,14 @@
   corner-shape: bevel;
   background: var(--well);
   box-shadow:
-    inset 0 0 40px rgba(4, 8, 13, 0.5),
+    inset 0 0 40px rgba(8, 5, 2, 0.5),
     var(--shadow-soft);
   overflow: hidden;
   display: grid;
   grid-template-areas: "canvas";
 
   &:focus-visible {
-    outline: 2px solid var(--hextech);
+    outline: 2px solid var(--verdigris);
     outline-offset: 2px;
   }
 
@@ -62,8 +62,8 @@
   cursor: pointer;
 
   circle {
-    fill: rgba(54, 214, 198, 0);
-    stroke: rgba(54, 214, 198, 0);
+    fill: rgba(121, 164, 140, 0);
+    stroke: rgba(121, 164, 140, 0);
     stroke-width: 3;
     transition:
       fill 120ms ease,
@@ -72,8 +72,8 @@
 
   &:hover circle,
   &:focus-visible circle {
-    fill: rgba(54, 214, 198, 0.15);
-    stroke: var(--hextech);
+    fill: rgba(121, 164, 140, 0.15);
+    stroke: var(--verdigris);
   }
 
   &:focus-visible {
@@ -98,7 +98,7 @@
   border: 1px solid var(--edge-strong);
   border-radius: var(--bevel-sm);
   corner-shape: bevel;
-  background: rgba(20, 29, 40, 0.9);
+  background: rgba(27, 21, 16, 0.9);
   color: var(--gaslight-dim);
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
@@ -167,7 +167,7 @@
   border: 1px solid var(--edge-strong);
   border-radius: var(--bevel-sm);
   corner-shape: bevel;
-  background: rgba(20, 29, 40, 0.88);
+  background: rgba(27, 21, 16, 0.88);
   color: var(--gaslight-dim);
   cursor: pointer;
   transition:
@@ -177,9 +177,9 @@
 
   &:hover,
   &:focus-visible {
-    color: var(--hextech);
-    border-color: rgba(54, 214, 198, 0.5);
-    background: rgba(20, 29, 40, 0.96);
+    color: var(--verdigris);
+    border-color: rgba(121, 164, 140, 0.5);
+    background: rgba(27, 21, 16, 0.96);
     outline: none;
   }
 
