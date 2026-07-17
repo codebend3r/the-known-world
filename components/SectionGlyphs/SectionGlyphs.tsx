@@ -116,6 +116,27 @@ const BATTLES = (
   </svg>
 );
 
+const KEEP = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <path
+      d="M5 27 L5 11 L7 11 L7 9 L10 9 L10 11 L13 11 L13 9 L16 9 L16 11 L19 11 L19 9 L22 9 L22 11 L25 11 L25 9 L27 9 L27 11 L27 27 Z"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M13 27 L13 19 Q16 16 19 19 L19 27"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+    />
+    <circle cx="9" cy="16" r="1" fill="currentColor" opacity="0.6" />
+    <circle cx="23" cy="16" r="1" fill="currentColor" opacity="0.6" />
+  </svg>
+);
+
 const DRAGON = (
   <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
     <path
@@ -142,6 +163,7 @@ export const sectionGlyphs = {
   characters: FIGURE,
   weapons: SWORD,
   battles: BATTLES,
+  castles: KEEP,
   dragons: DRAGON,
 } satisfies Record<string, ReactNode>;
 

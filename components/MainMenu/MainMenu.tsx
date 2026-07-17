@@ -24,6 +24,12 @@ export function MainMenu() {
         href="/houses/"
       />
       <MainMenuTile
+        title="Castles"
+        subtitle="Tour the seats and strongholds."
+        glyph={sectionGlyphs.castles}
+        href="/castles/"
+      />
+      <MainMenuTile
         title="Characters"
         subtitle="Meet the lords, knights, and kings."
         glyph={sectionGlyphs.characters}

@@ -37,6 +37,13 @@ const ITEMS: MenuItem[] = [
     visible: true,
   },
   {
+    href: "/castles/",
+    label: "Castles",
+    icon: "/menu-icons/castles.png",
+    glyph: sectionGlyphs.castles,
+    visible: true,
+  },
+  {
     href: "/characters/",
     label: "Characters",
     icon: "/menu-icons/characters.png",
