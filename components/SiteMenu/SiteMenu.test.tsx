@@ -19,7 +19,7 @@ describe("SiteMenu", () => {
     expect(links).toHaveLength(0);
   });
 
-  it("reveals only the visible primary nav items (Maps, Timeline, Houses, Characters, Weapons, Battles) when opened", () => {
+  it("reveals only the visible primary nav items (Maps, Timeline, Houses, Castles, Characters, Weapons, Battles) when opened", () => {
     render(<SiteMenu />);
     fireEvent.click(screen.getByRole("button", { name: /open menu/i }));
 
@@ -32,6 +32,7 @@ describe("SiteMenu", () => {
       "/maps/",
       "/timeline/",
       "/houses/",
+      "/castles/",
       "/characters/",
       "/weapons/",
       "/battles/",
@@ -40,6 +41,7 @@ describe("SiteMenu", () => {
       "Maps",
       "Timeline",
       "Houses",
+      "Castles",
       "Characters",
       "Weapons",
       "Battles",
