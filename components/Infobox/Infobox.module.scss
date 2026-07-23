@@ -31,7 +31,11 @@
 
   a {
     color: var(--ink);
-    text-decoration-color: rgba(107, 68, 35, 0.35);
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--ink-faded) 35%,
+      transparent
+    );
 
     &:hover {
       color: var(--gold-leaf);

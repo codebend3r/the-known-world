@@ -3,9 +3,9 @@
   width: 100%;
   height: clamp(500px, 75vh, 900px);
   overflow: hidden;
-  border: 1px solid rgba(107, 68, 35, 0.25);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
   border-radius: 2px;
-  background: rgba(248, 236, 208, 0.45);
+  background: color-mix(in srgb, var(--vellum) 45%, transparent);
   touch-action: none;
   user-select: none;
 }
@@ -22,8 +22,8 @@
 }
 
 .dot {
-  fill: rgba(248, 236, 208, 0.85);
-  stroke: rgba(107, 68, 35, 0.6);
+  fill: color-mix(in srgb, var(--vellum) 85%, transparent);
+  stroke: color-mix(in srgb, var(--ink-faded) 60%, transparent);
   stroke-width: 1.5;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .labelBg {
-  fill: #f8ecd0;
+  fill: var(--vellum);
   pointer-events: none;
 }
 
@@ -58,7 +58,7 @@
 }
 
 .edge {
-  stroke: rgba(107, 68, 35, 0.5);
+  stroke: color-mix(in srgb, var(--ink-faded) 50%, transparent);
   stroke-width: 1;
   fill: none;
 }
@@ -81,8 +81,8 @@
   display: grid;
   gap: 0.25rem;
   padding: 0.4rem;
-  background: rgba(248, 236, 208, 0.92);
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  background: color-mix(in srgb, var(--vellum) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   font-family: var(--font-ui);
   z-index: 1;
@@ -97,7 +97,7 @@
 .controlButton {
   appearance: none;
   background: transparent;
-  border: 1px solid rgba(107, 68, 35, 0.25);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
   border-radius: 2px;
   font-size: 0.7rem;
   padding: 0.15rem 0.4rem;
@@ -111,14 +111,14 @@
   &:hover,
   &:focus-visible {
     color: var(--gold-leaf);
-    background: rgba(212, 162, 89, 0.18);
+    background: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
     outline: none;
   }
 
   &[aria-pressed="true"] {
     color: var(--ink);
-    background: rgba(212, 162, 89, 0.28);
-    border-color: rgba(212, 162, 89, 0.55);
+    background: color-mix(in srgb, var(--gold-leaf) 28%, transparent);
+    border-color: color-mix(in srgb, var(--gold-leaf) 55%, transparent);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -138,5 +138,5 @@
   z-index: 1000;
   border: 0;
   border-radius: 0;
-  background: rgb(248, 236, 208);
+  background: var(--vellum);
 }

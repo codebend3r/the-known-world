@@ -57,7 +57,7 @@
   display: grid;
   width: 100%;
   overflow: hidden;
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 4px;
   box-shadow: 0 2px 12px rgba(40, 25, 10, 0.12);
   margin: 0;

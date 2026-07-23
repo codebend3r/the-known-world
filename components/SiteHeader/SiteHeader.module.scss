@@ -5,16 +5,16 @@
   top: 0;
   z-index: 50;
   isolation: isolate;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.28);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-faded) 28%, transparent);
   background: linear-gradient(
     180deg,
-    rgba(248, 236, 208, 0.97) 0%,
+    color-mix(in srgb, var(--vellum) 97%, transparent) 0%,
     rgba(236, 217, 170, 0.94) 60%,
     rgba(228, 205, 156, 0.93) 100%
   );
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  box-shadow: 0 1px 0 rgba(248, 236, 208, 0.6) inset;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--vellum) 60%, transparent) inset;
 
   &::before {
     content: "";
@@ -115,7 +115,7 @@
   white-space: nowrap;
   text-shadow:
     0 1px 0 rgba(255, 250, 235, 0.55),
-    0 1px 3px rgba(61, 40, 23, 0.18);
+    0 1px 3px color-mix(in srgb, var(--ink) 18%, transparent);
 
   @media (max-width: bp.$md) {
     letter-spacing: 0.16em;

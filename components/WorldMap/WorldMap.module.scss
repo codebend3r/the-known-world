@@ -19,9 +19,9 @@
     height: auto;
     aspect-ratio: 1 / 1;
   }
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
-  background: rgba(248, 236, 208, 0.55);
+  background: color-mix(in srgb, var(--vellum) 55%, transparent);
   overflow: hidden;
   display: grid;
   grid-template-areas: "canvas";
@@ -56,8 +56,8 @@
   cursor: pointer;
 
   circle {
-    fill: rgba(212, 162, 89, 0);
-    stroke: rgba(212, 162, 89, 0);
+    fill: color-mix(in srgb, var(--gold-leaf) 0%, transparent);
+    stroke: color-mix(in srgb, var(--gold-leaf) 0%, transparent);
     stroke-width: 3;
     transition:
       fill 120ms ease,
@@ -66,7 +66,7 @@
 
   &:hover circle,
   &:focus-visible circle {
-    fill: rgba(212, 162, 89, 0.18);
+    fill: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
     stroke: var(--gold-leaf);
   }
 
@@ -89,9 +89,9 @@
   grid-template-columns: auto auto;
   gap: 0.15rem 0.5rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
-  background: rgba(248, 236, 208, 0.85);
+  background: color-mix(in srgb, var(--vellum) 85%, transparent);
   color: var(--ink-faded);
   font-size: 0.85rem;
   font-variant-numeric: tabular-nums;
@@ -157,9 +157,9 @@
   width: 44px;
   height: 44px;
   padding: 0;
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
-  background: rgba(248, 236, 208, 0.85);
+  background: color-mix(in srgb, var(--vellum) 85%, transparent);
   color: var(--ink-faded);
   cursor: pointer;
   transition:
@@ -169,7 +169,7 @@
   &:hover,
   &:focus-visible {
     color: var(--gold-leaf);
-    background: rgba(248, 236, 208, 0.95);
+    background: color-mix(in srgb, var(--vellum) 95%, transparent);
     outline: none;
   }
 

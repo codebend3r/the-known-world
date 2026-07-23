@@ -2,10 +2,10 @@
 
 .toggle {
   display: flex;
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   overflow: hidden;
-  background: rgba(248, 236, 208, 0.55);
+  background: color-mix(in srgb, var(--vellum) 55%, transparent);
   height: 50px;
 
   @media (max-width: bp.$md) {
@@ -30,19 +30,19 @@
     color 120ms ease;
 
   & + & {
-    border-left: 1px solid rgba(107, 68, 35, 0.35);
+    border-left: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   }
 
   &:hover,
   &:focus-visible {
     color: var(--gold-leaf);
     outline: none;
-    background: rgba(248, 236, 208, 0.9);
+    background: color-mix(in srgb, var(--vellum) 90%, transparent);
   }
 
   &[aria-pressed="true"] {
     color: var(--ink);
-    background: rgba(212, 162, 89, 0.18);
+    background: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -7,10 +7,10 @@
   font-family: var(--font-character-name);
   font-size: 1.8rem;
   padding: 1rem;
-  background: rgba(248, 236, 208, 0.55);
+  background: color-mix(in srgb, var(--vellum) 55%, transparent);
   color: var(--ink);
   // height: 50px;
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   outline: none;
   transition:
@@ -26,8 +26,8 @@
   &:focus,
   &:focus-visible {
     border-color: var(--gold-leaf);
-    background: rgba(248, 236, 208, 0.9);
-    box-shadow: 0 0 0 2px rgba(212, 162, 89, 0.18);
+    background: color-mix(in srgb, var(--vellum) 90%, transparent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -108,9 +108,9 @@
 
 .button {
   appearance: none;
-  background: rgba(248, 236, 208, 0.6);
+  background: color-mix(in srgb, var(--vellum) 60%, transparent);
   color: var(--ink);
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   padding: 0.4rem 0.85rem;
   font-family: var(--font-ui);
@@ -157,9 +157,9 @@
 .pageSizeSelect {
   appearance: none;
   -webkit-appearance: none;
-  background: rgba(248, 236, 208, 0.6);
+  background: color-mix(in srgb, var(--vellum) 60%, transparent);
   color: var(--ink);
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   padding: 0.3rem 1.6rem 0.3rem 0.55rem;
   font-family: var(--font-ui);
@@ -167,8 +167,16 @@
   letter-spacing: 0.5px;
   cursor: pointer;
   background-image:
-    linear-gradient(45deg, transparent 50%, rgba(107, 68, 35, 0.55) 50%),
-    linear-gradient(135deg, rgba(107, 68, 35, 0.55) 50%, transparent 50%);
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      color-mix(in srgb, var(--ink-faded) 55%, transparent) 50%
+    ),
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--ink-faded) 55%, transparent) 50%,
+      transparent 50%
+    );
   background-position:
     calc(100% - 0.85rem) 55%,
     calc(100% - 0.55rem) 55%;

@@ -29,7 +29,7 @@
     left: 0.4rem;
     top: 0;
     bottom: 0;
-    border-left: 1px solid rgba(107, 68, 35, 0.35);
+    border-left: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   }
 
   &::after {
@@ -38,7 +38,7 @@
     left: 0.4rem;
     top: 0.85rem;
     width: 1rem;
-    border-top: 1px solid rgba(107, 68, 35, 0.35);
+    border-top: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   }
 
   &:last-child::before {
@@ -63,8 +63,8 @@
   padding: 0.25rem 0.6rem;
   width: fit-content;
   max-width: 100%;
-  background: rgba(248, 236, 208, 0.6);
-  border: 1px solid rgba(107, 68, 35, 0.15);
+  background: color-mix(in srgb, var(--vellum) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 15%, transparent);
   border-radius: 2px;
 
   @media (max-width: bp.$sm) {
@@ -74,7 +74,7 @@
 
 .rowPlaceholder {
   background: transparent;
-  border: 1px dotted rgba(107, 68, 35, 0.55);
+  border: 1px dotted color-mix(in srgb, var(--ink-faded) 55%, transparent);
 }
 
 .person {
@@ -99,7 +99,11 @@ a.name {
   &:focus-visible {
     color: var(--gold-leaf);
     text-decoration: underline;
-    text-decoration-color: rgba(212, 162, 89, 0.45);
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--gold-leaf) 45%,
+      transparent
+    );
     outline: none;
   }
 
