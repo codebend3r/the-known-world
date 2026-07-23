@@ -11,7 +11,7 @@
   height: 2.5rem;
   padding: 0;
   background: transparent;
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   color: var(--ink);
   cursor: pointer;
@@ -24,7 +24,7 @@
   &:focus-visible {
     color: var(--gold-leaf);
     border-color: var(--gold-leaf);
-    background: rgba(248, 236, 208, 0.6);
+    background: color-mix(in srgb, var(--vellum) 60%, transparent);
   }
 
   &:focus-visible {
@@ -72,7 +72,7 @@
     var(--vellum) 0%,
     var(--parchment-light) 100%
   );
-  border-right: 1px solid rgba(107, 68, 35, 0.35);
+  border-right: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   box-shadow: 8px 0 24px rgba(45, 30, 15, 0.18);
   transform: translateX(-100%);
   transition: transform 240ms ease;
@@ -117,7 +117,7 @@
   grid-template-columns: 1fr auto;
   align-items: center;
   padding: 1rem 1.1rem;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.25);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
   gap: 0.5rem;
 }
 
@@ -197,7 +197,7 @@
   &:hover,
   &:focus-visible {
     color: var(--ink);
-    background: rgba(212, 162, 89, 0.12);
+    background: color-mix(in srgb, var(--gold-leaf) 12%, transparent);
     border-left-color: var(--gold-leaf);
   }
 
@@ -254,7 +254,7 @@
 .linkActive {
   color: var(--ink);
   border-left-color: var(--gold-leaf);
-  background: rgba(212, 162, 89, 0.18);
+  background: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
 
   .linkIcon {
     border-color: var(--gold-leaf);

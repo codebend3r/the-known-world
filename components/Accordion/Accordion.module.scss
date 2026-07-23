@@ -1,7 +1,7 @@
 .accordion {
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
-  background: rgba(248, 236, 208, 0.35);
+  background: color-mix(in srgb, var(--vellum) 35%, transparent);
   overflow: hidden;
 }
 
@@ -18,7 +18,7 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.9rem 1.1rem;
-  background: rgba(248, 236, 208, 0.55);
+  background: color-mix(in srgb, var(--vellum) 55%, transparent);
   border: 0;
   cursor: pointer;
   color: var(--ink);
@@ -31,7 +31,7 @@
 
   &:hover,
   &:focus-visible {
-    background: rgba(248, 236, 208, 0.9);
+    background: color-mix(in srgb, var(--vellum) 90%, transparent);
     color: var(--gold-leaf);
     outline: none;
   }
@@ -67,5 +67,5 @@
   flex-direction: column;
   gap: 1rem;
   padding: 1rem 1.1rem 1.25rem;
-  border-top: 1px solid rgba(107, 68, 35, 0.2);
+  border-top: 1px solid color-mix(in srgb, var(--ink-faded) 20%, transparent);
 }

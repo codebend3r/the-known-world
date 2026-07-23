@@ -26,8 +26,8 @@
   gap: 0.15rem;
   max-height: 18rem;
   overflow-y: auto;
-  background: rgba(248, 236, 208, 0.97);
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  background: color-mix(in srgb, var(--vellum) 97%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 2px;
   box-shadow: 0 8px 24px rgba(31, 18, 8, 0.22);
 }
@@ -45,7 +45,7 @@
 }
 
 .optionActive {
-  background: rgba(212, 162, 89, 0.22);
+  background: color-mix(in srgb, var(--gold-leaf) 22%, transparent);
 }
 
 .optionName {

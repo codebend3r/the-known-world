@@ -3,7 +3,7 @@
   max-width: 720px;
   margin: 0 auto;
   aspect-ratio: 4 / 7;
-  border: 1px solid rgba(107, 68, 35, 0.4);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 40%, transparent);
   border-radius: 6px;
   background:
     radial-gradient(

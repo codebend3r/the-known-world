@@ -24,7 +24,7 @@
   min-height: 10.5rem;
   padding: 1rem;
   background: var(--vellum);
-  border: 2px solid rgba(107, 68, 35, 0.25);
+  border: 2px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
   border-radius: 2px;
   color: var(--ink);
   text-decoration: none;
@@ -39,7 +39,7 @@
   &:focus-visible {
     border-color: var(--gold-leaf);
     transform: scale(1.01);
-    box-shadow: 0 2px 12px rgba(212, 162, 89, 0.18);
+    box-shadow: 0 2px 12px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
     color: var(--ink);
   }
 
@@ -105,6 +105,6 @@
   font-variant: small-caps;
   letter-spacing: 2px;
   color: var(--ink-faded);
-  border: 1px dashed rgba(107, 68, 35, 0.35);
+  border: 1px dashed color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 50%;
 }

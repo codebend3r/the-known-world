@@ -1,11 +1,11 @@
 @use "breakpoints" as bp;
 
 .footer {
-  border-top: 1px solid rgba(107, 68, 35, 0.3);
+  border-top: 1px solid color-mix(in srgb, var(--ink-faded) 30%, transparent);
   background: linear-gradient(
     0deg,
-    rgba(248, 236, 208, 0.55) 0%,
-    rgba(232, 211, 160, 0.25) 100%
+    color-mix(in srgb, var(--vellum) 55%, transparent) 0%,
+    color-mix(in srgb, var(--parchment-dark) 25%, transparent) 100%
   );
   position: relative;
 

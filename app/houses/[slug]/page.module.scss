@@ -45,7 +45,7 @@
     line-height: 1.05;
     text-shadow:
       0 1px 0 rgba(255, 250, 235, 0.5),
-      0 2px 5px rgba(61, 40, 23, 0.12);
+      0 2px 5px color-mix(in srgb, var(--ink) 12%, transparent);
 
     @media (max-width: bp.$sm) {
       font-size: 2.1rem;
@@ -116,8 +116,8 @@
 
   li {
     padding: 0.4rem 0.75rem;
-    background: rgba(248, 236, 208, 0.6);
-    border: 1px solid rgba(107, 68, 35, 0.15);
+    background: color-mix(in srgb, var(--vellum) 60%, transparent);
+    border: 1px solid color-mix(in srgb, var(--ink-faded) 15%, transparent);
     border-radius: 2px;
     line-height: 1.45;
   }
@@ -137,7 +137,11 @@ a.notableName {
   &:focus-visible {
     color: var(--gold-leaf);
     text-decoration: underline;
-    text-decoration-color: rgba(212, 162, 89, 0.45);
+    text-decoration-color: color-mix(
+      in srgb,
+      var(--gold-leaf) 45%,
+      transparent
+    );
     outline: none;
   }
 

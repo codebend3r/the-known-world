@@ -6,8 +6,8 @@
   width: 100%;
   padding: 0 0 1.25rem;
   overflow: hidden;
-  background: rgba(248, 236, 208, 0.6);
-  border: 1px solid rgba(107, 68, 35, 0.35);
+  background: color-mix(in srgb, var(--vellum) 60%, transparent);
+  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
   border-radius: 4px;
   box-shadow: 0 2px 12px rgba(40, 25, 10, 0.12);
   font-family: var(--font-ui);

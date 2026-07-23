@@ -1,6 +1,6 @@
 .sources {
   padding: 1.5rem;
-  border-top: 1px solid rgba(107, 68, 35, 0.3);
+  border-top: 1px solid color-mix(in srgb, var(--ink-faded) 30%, transparent);
   font-family: var(--font-ui);
   font-size: 0.85rem;
   color: var(--ink-faded);

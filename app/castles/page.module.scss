@@ -52,7 +52,7 @@
   transition: background-color 0.15s ease;
 
   &:hover {
-    background-color: rgba(212, 162, 89, 0.16);
+    background-color: color-mix(in srgb, var(--gold-leaf) 16%, transparent);
   }
 }
 
