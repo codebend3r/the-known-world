@@ -15,3 +15,13 @@
 .toggle {
   grid-area: toggle;
 }
+
+.panel {
+  display: grid;
+
+  // A `display` set by the class would defeat the `hidden` attribute the
+  // switcher toggles, so reassert it.
+  &[hidden] {
+    display: none;
+  }
+}

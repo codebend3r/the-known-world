@@ -12,12 +12,10 @@ function character(data: CharacterInput) {
 const baseDate = { year: 0, era: "AC", precision: "year" as const };
 
 function findNode(roots: TreeNode[], slug: string): TreeNode | null {
-  for (const r of roots) {
-    if (r.slug === slug) return r;
-    const found = findNode(r.children, slug);
-    if (found) return found;
-  }
-  return null;
+  return roots.reduce<TreeNode | null>(
+    (found, r) => found ?? (r.slug === slug ? r : findNode(r.children, slug)),
+    null,
+  );
 }
 
 describe("buildFamilyTree", () => {

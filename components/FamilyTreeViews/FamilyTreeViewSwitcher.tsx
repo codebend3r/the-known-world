@@ -60,8 +60,12 @@ export function FamilyTreeViewSwitcher({ list, chart, headingId }: Props) {
           />
         </div>
       </div>
-      <div hidden={mode !== "list"}>{list}</div>
-      <div hidden={mode !== "chart"}>{chart}</div>
+      <div className={styles.panel} hidden={mode !== "list"}>
+        {list}
+      </div>
+      <div className={styles.panel} hidden={mode !== "chart"}>
+        {chart}
+      </div>
     </>
   );
 }

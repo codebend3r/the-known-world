@@ -4,7 +4,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  margin-top: 2rem;
+  padding-top: 2rem;
   width: 100%;
   max-width: 1024px;
 
@@ -80,7 +80,7 @@
 }
 
 .legend {
-  margin-top: 2rem;
+  padding-top: 2rem;
   font-family: var(--font-ui);
   font-size: 0.85rem;
   color: var(--ink-faded);
