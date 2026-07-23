@@ -6,21 +6,6 @@ publish = "out"
 NODE_VERSION = "24"
 BUN_VERSION = "1.3.14"
 
-[[plugins]]
-package = "./netlify/plugins/format-check"
-
-[[plugins]]
-package = "./netlify/plugins/typecheck"
-
-[[plugins]]
-package = "./netlify/plugins/lint"
-
-[[plugins]]
-package = "./netlify/plugins/lint-styles"
-
-[[plugins]]
-package = "./netlify/plugins/test"
-
 [[redirects]]
 from = "/*"
 to = "/404.html"
