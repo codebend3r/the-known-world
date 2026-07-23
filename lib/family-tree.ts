@@ -142,10 +142,7 @@ export function buildFamilyTree(
     };
   };
 
-  const result: TreeNode[] = [];
-  for (const root of roots) {
-    const node = buildNode(root.slug);
-    if (node) result.push(node);
-  }
-  return result;
+  return roots
+    .map((root) => buildNode(root.slug))
+    .filter((node): node is TreeNode => node !== null);
 }

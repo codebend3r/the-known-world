@@ -64,7 +64,7 @@ describe("MapStage", () => {
     const stageEl = container.querySelector(".stage") as HTMLElement;
     stubSize(stageEl, 640, 1120);
     act(() => {
-      observers[0].cb([] as unknown as ResizeObserverEntry[]);
+      observers[0].cb([]);
     });
     const pz = await findByTestId("pan-zoom");
     expect(pz.getAttribute("data-w")).toBe("640");
@@ -80,7 +80,7 @@ describe("MapStage", () => {
     const stageEl = container.querySelector(".stage") as HTMLElement;
     stubSize(stageEl, 800, 1400);
     act(() => {
-      observers[0].cb([] as unknown as ResizeObserverEntry[]);
+      observers[0].cb([]);
     });
     await findByTestId("pan-zoom");
     const img = container.querySelector("image");
@@ -97,7 +97,7 @@ describe("MapStage", () => {
     const stageEl = container.querySelector(".stage") as HTMLElement;
     stubSize(stageEl, 100, 100);
     act(() => {
-      observers[0].cb([] as unknown as ResizeObserverEntry[]);
+      observers[0].cb([]);
     });
     await findByTestId("pan-zoom");
     const svg = container.querySelector("svg");
