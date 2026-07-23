@@ -38,8 +38,9 @@ bun run test            # run the test suite once
 bun run test:watch      # run tests in watch mode
 bun run coverage        # generate test coverage
 bun run typecheck       # check TypeScript
-bun run lint            # run ESLint
-bun run prettier:check  # check formatting
+bun run lint            # run Oxlint (type-aware)
+bun run lint:styles     # run Gale on SCSS
+bun run format:check    # check formatting with Oxfmt
 bun run build           # create the static export in out/
 bun run system-check    # run every repository quality gate
 ```

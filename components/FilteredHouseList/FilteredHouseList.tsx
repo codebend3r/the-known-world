@@ -82,7 +82,13 @@ const GROUP_OPTIONS = [
 ];
 
 type RankFilter =
-  "all" | "royal" | "lordly" | "knightly" | "other" | "exiled" | "extinct";
+  | "all"
+  | "royal"
+  | "lordly"
+  | "knightly"
+  | "other"
+  | "exiled"
+  | "extinct";
 
 const RANK_FILTERS = [
   "all",

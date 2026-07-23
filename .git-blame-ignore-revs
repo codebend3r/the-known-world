@@ -1,0 +1,5 @@
+# Commits to hide from `git blame` (mechanical full-repo reformats).
+# The Prettier -> Oxfmt migration reformat was squashed into the toolchain
+# commit, so there is no standalone reformat commit to list yet; add future
+# full-repo reformat commit hashes here.
+# Local setup: git config blame.ignoreRevsFile .git-blame-ignore-revs
