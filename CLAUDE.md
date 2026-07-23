@@ -1,11 +1,14 @@
 # CLAUDE.md
 
-Operating rules for this repo. The README covers stack, layout, and routes; this file is conventions only.
+Operating rules for this repo.
 
 ## Workflow
 
-- Never commit directly to `main`; always create a branch for each feature or bug fix. Do not create a new branch unless I say so.
-- Do not commit anything without explicit instruction from me first. When I do, subject must start with `TKW:` (see the `tkw-commit-format` skill).
+- Do not commit anything until I tell you to.
+- Do not push anything until I tell you to.
+- Do not merge anything until I tell you to.
+- Do not create a PR until I tell you to.
+- Do not create a branch until I tell you to.
 
 ## Tooling
 
@@ -50,3 +53,8 @@ Design specs and implementation plans live in `docs/superpowers/specs/` and `doc
 - Create a commit after every logical change, batch if they are related.
 - Subject must start with `TKW:` followed by a short title (e.g., `TKW: a short title`).
 - Favor bullet points in the body. Keep it concise and easy to read.
+
+## Pull Requests
+
+- Should follow the same naming convention as commits and every PR title should start with `TKW: a short title`
+- The body of the PR should be minimal and favour bullet points
