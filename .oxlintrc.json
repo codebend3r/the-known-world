@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "react", "nextjs", "jsx-a11y"],
+  "categories": {
+    "correctness": "error"
+  },
+  "rules": {
+    "no-extra-boolean-cast": "off",
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/react-in-jsx-scope": "off",
+    "typescript/no-floating-promises": "off",
+    "typescript/no-misused-spread": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-to-interactive-role": "off",
+    "jsx-a11y/no-noninteractive-tabindex": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/prefer-tag-over-role": "off"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "typescript/unbound-method": "off"
+      }
+    }
+  ],
+  "ignorePatterns": ["next-env.d.ts", ".next", "out", "coverage"]
+}

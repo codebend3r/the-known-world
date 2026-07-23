@@ -1,5 +1,5 @@
 module.exports = {
   async onPreBuild({ utils }) {
-    await utils.run.command("bun run prettier:check");
+    await utils.run.command("bun run format:check");
   },
 };

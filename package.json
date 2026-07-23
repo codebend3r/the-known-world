@@ -9,17 +9,27 @@
     "dev": "next dev --port 46642",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "typecheck": "tsc --noEmit",
+    "lint": "oxlint --type-aware",
+    "lint:fix": "oxlint --type-aware --fix",
+    "lint:styles": "gale \"app/**/*.scss\" \"components/**/*.scss\" \"styles/**/*.scss\"",
+    "typecheck": "tsgo --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
-    "prettier": "prettier --write .",
-    "prettier:check": "prettier --check .",
-    "prettier:quick": "pretty-quick --staged",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "format:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "system-check": "run-s clean prettier:check typecheck lint test build"
+    "check": "run-p --aggregate-output --print-label typecheck lint lint:styles test",
+    "system-check": "run-s clean format:check check build"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs}": [
+      "oxlint --fix",
+      "oxfmt"
+    ],
+    "*.{json,jsonc,json5,md,mdx,yml,yaml,toml,css,scss,html}": "oxfmt"
   },
   "dependencies": {
     "next": "16.2.11",
@@ -33,27 +43,30 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@lyricalstring/gale": "0.1.5",
     "@testing-library/dom": "10.4.1",
     "@testing-library/react": "16.3.2",
     "@types/node": "26.1.1",
     "@types/react": "19.2.17",
     "@types/react-dom": "19.2.3",
     "@types/react-svg-pan-zoom": "3.3.9",
+    "@typescript/native-preview": "7.0.0-dev.20260707.2",
     "@vitejs/plugin-react": "6.0.4",
     "@vitest/coverage-istanbul": "4.1.10",
-    "eslint": "9.39.4",
-    "eslint-config-next": "16.2.11",
     "husky": "9.1.7",
     "jsdom": "29.1.1",
+    "lint-staged": "17.2.0",
     "npm-run-all2": "9.0.2",
-    "prettier": "3.9.6",
-    "pretty-quick": "4.2.2",
+    "oxfmt": "0.60.0",
+    "oxlint": "1.75.0",
+    "oxlint-tsgolint": "7.0.2001",
     "sass": "1.101.6",
     "typescript": "6.0.3",
     "vite": "8.1.5",
     "vitest": "4.1.10"
   },
   "trustedDependencies": [
+    "@lyricalstring/gale",
     "unrs-resolver"
   ],
   "overrides": {

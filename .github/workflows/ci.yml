@@ -11,27 +11,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: 🟢 Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
 
       - name: 🥟 Setup Bun
         uses: oven-sh/setup-bun@v2
 
+      - name: 📦 Cache Bun downloads
+        uses: actions/cache@v6
+        with:
+          path: ~/.bun/install/cache
+          key: bun-${{ runner.os }}-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-${{ runner.os }}-
+
+      - name: 🏎️ Cache Next.js build
+        uses: actions/cache@v6
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-${{ github.sha }}
+          restore-keys: next-${{ runner.os }}-${{ hashFiles('bun.lock') }}-
+
       - name: 📦 Install dependencies
         run: bun install --frozen-lockfile
 
-      - name: 💅 Prettier
-        run: bun run prettier:check
+      - name: 💅 Format
+        run: bun run format:check
 
       - name: 🔎 Typecheck
         run: bun run typecheck
 
       - name: 🧹 Lint
         run: bun run lint
+
+      - name: 🎨 Lint styles
+        run: bun run lint:styles
 
       - name: 🧪 Test
         run: bun run test
