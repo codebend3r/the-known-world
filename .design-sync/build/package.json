@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "description": "Nameless on purpose: the design-sync converter walks up from dist/ to the first package.json WITH a name to find the package root. Staying nameless lets that walk reach the repo root (game-of-thrones-atlas) so cfg paths resolve correctly.",
+  "dependencies": {
+    "esbuild": "0.25.0"
+  }
+}
