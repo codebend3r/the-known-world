@@ -30,9 +30,9 @@ export function renderWithNuqs(ui: ReactElement, options: Options = {}) {
   return { ...result, onUrlUpdate };
 }
 
-// nuqs commits URL writes on a throttled timer, so a synchronous `act` never
-// reaches it. Awaiting this waits out the throttle and drains the microtask
-// queue inside `act`, so the `onUrlUpdate` spy has fired before assertions run.
+// nuqs commits URL writes on a timer, so a synchronous `act` never reaches it.
+// Awaiting this lets the write land inside `act`, so the `onUrlUpdate` spy has
+// fired before assertions run.
 export async function flushNuqs(): Promise<void> {
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -50,6 +50,13 @@ export async function flushNuqs(): Promise<void> {
 export async function advanceTime({ ms }: { ms: number }): Promise<void> {
   await act(async () => {
     await new Promise((resolve) => setTimeout(resolve, ms));
+  });
+  // A debounce that fired above queues a nuqs URL write that React commits on
+  // the next tick — after the `act` above has already exited. A second round
+  // takes that commit inside `act`, so React doesn't report an update outside
+  // it. This adds no wait, so it cannot push `ms` past a debounce boundary.
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
   });
 }
 
