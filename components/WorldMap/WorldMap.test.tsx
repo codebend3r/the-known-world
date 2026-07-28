@@ -1,14 +1,32 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  jest,
+  mock,
+  beforeEach,
+  afterEach,
+  afterAll,
+} from "bun:test";
+import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { renderWithNuqs } from "@/lib/testNuqs";
 
-const spies = vi.hoisted(() => ({
-  pan: vi.fn(),
-  zoomOnViewerCenter: vi.fn(),
-  fitToViewer: vi.fn(),
-  setValue: vi.fn(),
-}));
+// `mock.module` is not hoisted in Bun, so plain consts suffice where Vitest
+// needed `vi.hoisted` to lift the spies above the hoisted factory.
+const spies = {
+  pan: jest.fn(),
+  zoomOnViewerCenter: jest.fn(),
+  fitToViewer: jest.fn(),
+  setValue: jest.fn(),
+};
+
+// Restoring keeps `react-svg-pan-zoom` mocked for this file only, even if the
+// suite is ever run without `--isolate`.
+afterAll(() => {
+  mock.restore();
+});
 
 type MockProps = { children: ReactNode; width: number; height: number };
 type MockValue = { a: number; e: number; f: number };
@@ -23,7 +41,7 @@ let mockViewerValue: MockValue = { a: 0.5, e: 0, f: 0 };
 // hangs off its public `Viewer` field, the inner viewer instance. It also
 // swallows a consumer `onChangeValue` prop rather than forwarding it, so
 // `WorldMap` polls `getValue()` instead of relying on that callback.
-vi.mock("react-svg-pan-zoom", async () => {
+mock.module("react-svg-pan-zoom", async () => {
   const { Component } = await import("react");
   class UncontrolledReactSVGPanZoom extends Component<MockProps> {
     pan = spies.pan;
@@ -82,11 +100,14 @@ let rafCallbacks: RafCallback[] = [];
 // Captures scheduled frames instead of running them, so tests advance the
 // debug-overlay poll deterministically via `flushRaf()`.
 function stubRaf() {
-  vi.stubGlobal("requestAnimationFrame", (cb: RafCallback) => {
-    rafCallbacks.push(cb);
-    return rafCallbacks.length;
+  stubGlobal({
+    name: "requestAnimationFrame",
+    value: (cb: RafCallback) => {
+      rafCallbacks.push(cb);
+      return rafCallbacks.length;
+    },
   });
-  vi.stubGlobal("cancelAnimationFrame", () => {});
+  stubGlobal({ name: "cancelAnimationFrame", value: () => {} });
 }
 
 function flushRaf() {
@@ -97,7 +118,7 @@ function flushRaf() {
   });
 }
 
-// jsdom implements none of the Fullscreen API; `requestFullscreen()` /
+// happy-dom implements none of the Fullscreen API; `requestFullscreen()` /
 // `exitFullscreen()` are faked to track the current element and dispatch
 // `fullscreenchange`, matching real browser behavior closely enough to
 // drive `WorldMap`'s toggle state.
@@ -109,12 +130,12 @@ Object.defineProperty(document, "fullscreenElement", {
 function markFullscreenElement(el: Element | null) {
   fullscreenElement = el;
 }
-HTMLElement.prototype.requestFullscreen = vi.fn(function (this: HTMLElement) {
+HTMLElement.prototype.requestFullscreen = jest.fn(function (this: HTMLElement) {
   markFullscreenElement(this);
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
 });
-document.exitFullscreen = vi.fn(() => {
+document.exitFullscreen = jest.fn(() => {
   fullscreenElement = null;
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
@@ -125,13 +146,13 @@ beforeEach(() => {
   rafCallbacks = [];
   mockViewerValue = { a: 0.5, e: 0, f: 0 };
   fullscreenElement = null;
-  vi.stubGlobal("ResizeObserver", FakeResizeObserver);
+  stubGlobal({ name: "ResizeObserver", value: FakeResizeObserver });
   stubRaf();
 });
 
 afterEach(() => {
-  vi.unstubAllGlobals();
-  vi.clearAllMocks();
+  unstubAllGlobals();
+  jest.clearAllMocks();
 });
 
 function stubSize(el: HTMLElement, w: number, h: number) {

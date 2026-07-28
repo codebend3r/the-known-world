@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { buildRelationGraph, findOrphanSlugs } from "@/lib/relations";
 import {
   CastleSchema,

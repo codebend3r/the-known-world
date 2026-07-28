@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { HouseSchema, type House } from "@/lib/schemas";
 

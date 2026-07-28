@@ -1,13 +1,14 @@
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "bun:test";
+import { stubEnv, unstubAllEnvs } from "@/test/stubs";
 import netlifyImageLoader from "@/lib/netlify-image-loader";
 
 afterEach(() => {
-  vi.unstubAllEnvs();
+  unstubAllEnvs();
 });
 
 describe("netlifyImageLoader", () => {
   it("appends width and quality to src in development", () => {
-    vi.stubEnv("NODE_ENV", "development");
+    stubEnv({ name: "NODE_ENV", value: "development" });
     expect(
       netlifyImageLoader({
         src: "/sigils/stark.png",
@@ -18,7 +19,7 @@ describe("netlifyImageLoader", () => {
   });
 
   it("rewrites to /.netlify/images in production", () => {
-    vi.stubEnv("NODE_ENV", "production");
+    stubEnv({ name: "NODE_ENV", value: "production" });
     expect(
       netlifyImageLoader({
         src: "/sigils/stark.png",
@@ -29,7 +30,7 @@ describe("netlifyImageLoader", () => {
   });
 
   it("defaults quality to 75 when undefined", () => {
-    vi.stubEnv("NODE_ENV", "production");
+    stubEnv({ name: "NODE_ENV", value: "production" });
     expect(
       netlifyImageLoader({
         src: "/characters/eddard-stark.jpg",
@@ -39,7 +40,7 @@ describe("netlifyImageLoader", () => {
   });
 
   it("URL-encodes special characters in src", () => {
-    vi.stubEnv("NODE_ENV", "production");
+    stubEnv({ name: "NODE_ENV", value: "production" });
     expect(
       netlifyImageLoader({
         src: "/characters/needs encoding.png",

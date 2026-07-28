@@ -1,4 +1,4 @@
-import { afterEach, describe, it, expect, vi } from "vitest";
+import { afterEach, describe, it, expect, jest } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { TimelineMinimap } from "@/components/TimelineMinimap";
 import type { TimelineTick } from "@/lib/timeline";
@@ -19,7 +19,7 @@ function renderMinimap() {
 }
 
 afterEach(() => {
-  vi.restoreAllMocks();
+  jest.restoreAllMocks();
 });
 
 describe("TimelineMinimap", () => {
@@ -37,7 +37,7 @@ describe("TimelineMinimap", () => {
   });
 
   it("smooth-scrolls to the tick position on click", () => {
-    const scrollTo = vi
+    const scrollTo = jest
       .spyOn(window, "scrollTo")
       .mockImplementation(() => undefined);
     renderMinimap();
@@ -49,7 +49,7 @@ describe("TimelineMinimap", () => {
   });
 
   it("clamps the scroll target at the top of the page", () => {
-    const scrollTo = vi
+    const scrollTo = jest
       .spyOn(window, "scrollTo")
       .mockImplementation(() => undefined);
     renderMinimap();

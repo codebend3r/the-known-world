@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { selectVisibleCastles, ALL_CASTLE_TYPES } from "@/lib/map";
 import { CastleSchema } from "@/lib/schemas";
 

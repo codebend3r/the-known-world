@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { resolveRelations } from "@/lib/character-relations";
 
 const charactersBySlug = new Map([

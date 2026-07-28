@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, jest } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { SortToggle } from "@/components/SortToggle";
 
@@ -18,14 +18,14 @@ describe("SortToggle", () => {
   });
 
   it("calls onChange when the unselected direction is clicked", () => {
-    const onChange = vi.fn();
+    const onChange = jest.fn();
     render(<SortToggle value="asc" onChange={onChange} />);
     fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
     expect(onChange).toHaveBeenCalledWith("desc");
   });
 
   it("does not call onChange when the selected direction is clicked", () => {
-    const onChange = vi.fn();
+    const onChange = jest.fn();
     render(<SortToggle value="desc" onChange={onChange} />);
     fireEvent.click(screen.getByRole("button", { name: /sort z to a/i }));
     expect(onChange).not.toHaveBeenCalled();

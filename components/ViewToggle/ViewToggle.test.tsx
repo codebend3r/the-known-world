@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, jest } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import {
   ViewToggle,
@@ -30,7 +30,7 @@ describe("ViewToggle (polymorphic)", () => {
   });
 
   it("calls onChange when an unselected option is clicked", () => {
-    const onChange = vi.fn();
+    const onChange = jest.fn();
     render(
       <ViewToggle options={TWO_OPTIONS} value="grid" onChange={onChange} />,
     );
@@ -39,7 +39,7 @@ describe("ViewToggle (polymorphic)", () => {
   });
 
   it("does not call onChange when the selected option is clicked", () => {
-    const onChange = vi.fn();
+    const onChange = jest.fn();
     render(
       <ViewToggle options={TWO_OPTIONS} value="list" onChange={onChange} />,
     );
@@ -74,7 +74,7 @@ describe("ViewToggle (polymorphic)", () => {
       { value: "b" as const, label: "Option B", icon: <span>B</span> },
       { value: "c" as const, label: "Option C", icon: <span>C</span> },
     ];
-    const onChange = vi.fn();
+    const onChange = jest.fn();
     render(<ViewToggle options={THREE} value="b" onChange={onChange} />);
     fireEvent.click(screen.getByRole("button", { name: /option c/i }));
     expect(onChange).toHaveBeenCalledWith("c");

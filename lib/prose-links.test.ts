@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { buildProseLinkIndex, type ProseLinkIndex } from "@/lib/prose-links";
 import { renderMarkdown } from "@/lib/content";
 import type { Character, House, Weapon, Dragon } from "@/lib/schemas";

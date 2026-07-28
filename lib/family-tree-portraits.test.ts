@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, jest } from "bun:test";
 import { enrichTreeWithPortraits } from "@/lib/family-tree-portraits";
 import type { TreeNode, TreeSpouse } from "@/lib/family-tree";
 
@@ -34,7 +34,7 @@ function node(overrides: Partial<TreeNode> = {}): TreeNode {
 
 describe("enrichTreeWithPortraits", () => {
   it("calls findPortrait for in-house, non-placeholder persons", async () => {
-    const find = vi.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
     const tree: TreeNode[] = [
       node({
         slug: "eddard",
@@ -50,7 +50,7 @@ describe("enrichTreeWithPortraits", () => {
   });
 
   it("returns null portrait for placeholder persons without calling findPortrait", async () => {
-    const find = vi.fn();
+    const find = jest.fn();
     const tree: TreeNode[] = [
       node({ slug: "unknown", name: "Unknown", placeholder: true }),
     ];
@@ -60,7 +60,7 @@ describe("enrichTreeWithPortraits", () => {
   });
 
   it("returns null portrait for external persons without calling findPortrait", async () => {
-    const find = vi.fn();
+    const find = jest.fn();
     const tree: TreeNode[] = [
       node({ slug: "foreign", name: "Foreign", external: true }),
     ];
@@ -70,7 +70,7 @@ describe("enrichTreeWithPortraits", () => {
   });
 
   it("calls findPortrait for any spouse with a valid slug, regardless of house", async () => {
-    const find = vi.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
     const tree: TreeNode[] = [
       node({
         slug: "p",
@@ -88,7 +88,7 @@ describe("enrichTreeWithPortraits", () => {
   });
 
   it("returns null portrait for a spouse with no slug (unnamed)", async () => {
-    const find = vi.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
     const tree: TreeNode[] = [
       node({
         slug: "p",
@@ -100,7 +100,7 @@ describe("enrichTreeWithPortraits", () => {
   });
 
   it("memoizes per-slug so duplicate slugs hit findPortrait once", async () => {
-    const find = vi.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
     const tree: TreeNode[] = [
       node({
         slug: "p",

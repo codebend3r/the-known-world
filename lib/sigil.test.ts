@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { sigilFile, SIGIL_SLUGS } from "@/lib/sigil";
 
 describe("sigilFile", () => {

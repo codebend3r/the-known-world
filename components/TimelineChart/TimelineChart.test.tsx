@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
 import { TimelineChart } from "@/components/TimelineChart";
 import { buildTimeline } from "@/lib/timeline";

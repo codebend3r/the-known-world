@@ -1,10 +1,18 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, mock, afterAll } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { SiteMenu } from "@/components/SiteMenu";
 
-vi.mock("next/navigation", () => ({
+// `mock.module` is not hoisted, so the component has to be imported after the
+// mock is installed. Restoring afterwards keeps `next/navigation` mocked for
+// this file only, even if the suite is ever run without `--isolate`.
+mock.module("next/navigation", () => ({
   usePathname: () => "/houses/",
 }));
+
+afterAll(() => {
+  mock.restore();
+});
+
+const { SiteMenu } = await import("@/components/SiteMenu");
 
 describe("SiteMenu", () => {
   it("renders the trigger collapsed by default", () => {
@@ -91,7 +99,7 @@ describe("SiteMenu", () => {
     fireEvent.click(trigger);
 
     const weaponsLink = screen.getByRole("link", { name: /weapons/i });
-    // jsdom doesn't implement document navigation; cancel the anchor's
+    // happy-dom doesn't implement document navigation; cancel the anchor's
     // default action so it doesn't print "Not implemented: navigation to
     // another Document". React's onClick={close} still runs.
     weaponsLink.addEventListener("click", (e) => e.preventDefault());

@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
 import { Sources } from "@/components/Sources";
 import type { Source } from "@/lib/schemas";

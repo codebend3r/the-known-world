@@ -1,10 +1,11 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { act, fireEvent, screen } from "@testing-library/react";
 import {
   FilteredCharacterList,
   type CharacterItem,
 } from "@/components/FilteredCharacterList";
 import {
+  advanceTime,
   renderWithNuqs,
   flushNuqs,
   lastQueryString,
@@ -54,12 +55,10 @@ function manyItems(n: number): CharacterItem[] {
 }
 
 beforeEach(() => {
-  vi.useFakeTimers();
   window.localStorage.clear();
 });
 
 afterEach(() => {
-  vi.useRealTimers();
   window.localStorage.clear();
 });
 
@@ -180,27 +179,23 @@ describe("FilteredCharacterList", () => {
     expect(img?.getAttribute("src") ?? "").toContain("aegon-i-targaryen.png");
   });
 
-  it("does not filter until the 300ms debounce elapses", () => {
+  it("does not filter until the 300ms debounce elapses", async () => {
     const { container } = renderWithNuqs(
       <FilteredCharacterList items={items} />,
     );
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "arya" } });
-    act(() => {
-      vi.advanceTimersByTime(299);
-    });
+    await advanceTime({ ms: 200 });
     expect(container.querySelectorAll(".item").length).toBe(3);
   });
 
-  it("filters the list once the debounce elapses", () => {
+  it("filters the list once the debounce elapses", async () => {
     const { container } = renderWithNuqs(
       <FilteredCharacterList items={items} />,
     );
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "stark" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     const cards = container.querySelectorAll(".item");
     expect(cards.length).toBe(2);
     const names = Array.from(cards).map((el) => el.textContent ?? "");
@@ -208,13 +203,11 @@ describe("FilteredCharacterList", () => {
     expect(names.some((n) => n.includes("Eddard Stark"))).toBe(true);
   });
 
-  it("renders the empty state when nothing matches", () => {
+  it("renders the empty state when nothing matches", async () => {
     renderWithNuqs(<FilteredCharacterList items={items} />);
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "zzz" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(screen.getByText(/no characters match/i)).toBeDefined();
   });
 
@@ -375,9 +368,7 @@ describe("FilteredCharacterList", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "stark" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?search=stark");
   });
@@ -388,9 +379,7 @@ describe("FilteredCharacterList", () => {
       { searchParams: "?search=arya" },
     );
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
   });
@@ -403,9 +392,7 @@ describe("FilteredCharacterList", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "arya" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastSearchParams(onUrlUpdate).get("sort")).toBe("name");
     expect(lastSearchParams(onUrlUpdate).get("search")).toBe("arya");
@@ -426,7 +413,7 @@ describe("FilteredCharacterList", () => {
     ).not.toBeNull();
   });
 
-  it("resets to page 1 when the search filter changes", () => {
+  it("resets to page 1 when the search filter changes", async () => {
     const lots: CharacterItem[] = [
       ...manyItems(60),
       {
@@ -446,9 +433,7 @@ describe("FilteredCharacterList", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "arya" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     // Search shrinks results to 1, so pagination disappears entirely.
     expect(
       screen.queryByRole("navigation", { name: /pagination/i }),
@@ -656,9 +641,7 @@ describe("FilteredCharacterList page persistence", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "char" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?search=char");
   });
@@ -744,25 +727,21 @@ describe("FilteredCharacterList view toggle", () => {
     expect(window.localStorage.getItem("gota:characters-view")).toBe("list");
   });
 
-  it("hydrates the stored choice from localStorage after mount", () => {
+  it("hydrates the stored choice from localStorage after mount", async () => {
     window.localStorage.setItem("gota:characters-view", "list");
     const { container } = renderWithNuqs(
       <FilteredCharacterList items={items} />,
     );
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
+    await advanceTime({ ms: 0 });
     expect(container.querySelector("ul.listView")).not.toBeNull();
   });
 
-  it("ignores invalid stored values and stays in grid view", () => {
+  it("ignores invalid stored values and stays in grid view", async () => {
     window.localStorage.setItem("gota:characters-view", "kanban");
     const { container } = renderWithNuqs(
       <FilteredCharacterList items={items} />,
     );
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
+    await advanceTime({ ms: 0 });
     expect(container.querySelector("ul.listView")).toBeNull();
   });
 });

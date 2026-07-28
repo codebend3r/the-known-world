@@ -1,14 +1,30 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
 import {
-  CharacterSearchInput,
-  type CharacterSuggestion,
-} from "@/components/CharacterSearchInput";
+  describe,
+  it,
+  expect,
+  jest,
+  mock,
+  beforeEach,
+  afterAll,
+} from "bun:test";
+import { fireEvent, render, screen } from "@testing-library/react";
+import type { CharacterSuggestion } from "@/components/CharacterSearchInput";
 
-const push = vi.fn();
-vi.mock("next/navigation", () => ({
+const push = jest.fn();
+
+// `mock.module` is not hoisted, so the component has to be imported after the
+// mock is installed. Restoring afterwards keeps `next/navigation` mocked for
+// this file only, even if the suite is ever run without `--isolate`.
+mock.module("next/navigation", () => ({
   useRouter: () => ({ push }),
 }));
+
+afterAll(() => {
+  mock.restore();
+});
+
+const { CharacterSearchInput } =
+  await import("@/components/CharacterSearchInput");
 
 function asInput(el: HTMLElement): HTMLInputElement {
   if (!(el instanceof HTMLInputElement)) throw new Error("expected an input");
@@ -42,7 +58,7 @@ beforeEach(() => {
 
 describe("CharacterSearchInput — filter mode", () => {
   it("renders a controlled field and reports changes", () => {
-    const onChange = vi.fn();
+    const onChange = jest.fn();
     render(<CharacterSearchInput value="ed" onChange={onChange} />);
     const input = asInput(
       screen.getByRole("searchbox", { name: "Search characters" }),
@@ -53,7 +69,7 @@ describe("CharacterSearchInput — filter mode", () => {
   });
 
   it("shows no suggestion listbox in filter mode", () => {
-    render(<CharacterSearchInput value="aem" onChange={vi.fn()} />);
+    render(<CharacterSearchInput value="aem" onChange={jest.fn()} />);
     expect(screen.queryByRole("listbox")).toBeNull();
   });
 });
