@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import {
   loadCastle,
   loadAllCastles,
@@ -18,7 +18,7 @@ describe("loadCastle", () => {
   });
 
   it("throws on missing castle", async () => {
-    await expect(loadCastle("does-not-exist")).rejects.toThrow();
+    expect(loadCastle("does-not-exist")).rejects.toThrow();
   });
 });
 
@@ -89,14 +89,14 @@ describe("loadAllDragons", () => {
 });
 
 describe("loadWeapon", () => {
-  it("throws when the weapon slug does not exist", async () => {
-    await expect(loadWeapon("does-not-exist")).rejects.toThrow();
+  it("throws when the weapon slug does not exist", () => {
+    expect(loadWeapon("does-not-exist")).rejects.toThrow();
   });
 });
 
 describe("loadDragon", () => {
-  it("throws when the dragon slug does not exist", async () => {
-    await expect(loadDragon("does-not-exist")).rejects.toThrow();
+  it("throws when the dragon slug does not exist", () => {
+    expect(loadDragon("does-not-exist")).rejects.toThrow();
   });
 });
 

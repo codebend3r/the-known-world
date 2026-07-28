@@ -1,0 +1,12 @@
+[test]
+preload = ["./test/preload.ts"]
+coverageReporter = ["text", "lcov"]
+coverageDir = "coverage"
+coverageSkipTestFiles = true
+coveragePathIgnorePatterns = ["**/index.ts", "**/*.d.ts", "test/**"]
+
+# Vitest also gated on branch coverage (80%); Bun has no branch threshold.
+[test.coverageThreshold]
+line = 0.9
+function = 0.85
+statement = 0.85

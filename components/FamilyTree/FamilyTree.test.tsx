@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { render, screen, within } from "@testing-library/react";
 import { FamilyTree } from "@/components/FamilyTree";
 import type { TreeNode, TreeSpouse } from "@/lib/family-tree";

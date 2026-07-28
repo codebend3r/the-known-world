@@ -1,10 +1,15 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, screen } from "@testing-library/react";
+import { describe, it, expect } from "bun:test";
+import { fireEvent, screen } from "@testing-library/react";
 import {
   FilteredDragonList,
   type DragonItem,
 } from "@/components/FilteredDragonList";
-import { renderWithNuqs, flushNuqs, lastQueryString } from "@/lib/testNuqs";
+import {
+  advanceTime,
+  renderWithNuqs,
+  flushNuqs,
+  lastQueryString,
+} from "@/lib/testNuqs";
 
 const items: DragonItem[] = [
   {
@@ -30,13 +35,6 @@ const items: DragonItem[] = [
   },
 ];
 
-beforeEach(() => {
-  vi.useFakeTimers();
-});
-afterEach(() => {
-  vi.useRealTimers();
-});
-
 describe("FilteredDragonList", () => {
   it("renders every dragon by default", () => {
     renderWithNuqs(<FilteredDragonList items={items} />);
@@ -50,14 +48,12 @@ describe("FilteredDragonList", () => {
     ).toBeDefined();
   });
 
-  it("filters after the 300ms debounce", () => {
+  it("filters after the 300ms debounce", async () => {
     renderWithNuqs(<FilteredDragonList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "cannibal" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
     expect(links[0].textContent).toContain("Cannibal");
@@ -68,14 +64,12 @@ describe("FilteredDragonList", () => {
     expect(container.querySelector(".cardWild")).not.toBeNull();
   });
 
-  it("renders the empty state when nothing matches", () => {
+  it("renders the empty state when nothing matches", async () => {
     renderWithNuqs(<FilteredDragonList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "zzz" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(screen.queryAllByRole("link")).toHaveLength(0);
     expect(screen.getByText(/no dragons match/i)).toBeDefined();
   });
@@ -98,9 +92,7 @@ describe("FilteredDragonList", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "vhagar" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?search=vhagar");
   });
@@ -111,9 +103,7 @@ describe("FilteredDragonList", () => {
       { searchParams: "?search=vhagar" },
     );
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
   });

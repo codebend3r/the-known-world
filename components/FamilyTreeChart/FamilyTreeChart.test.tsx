@@ -1,12 +1,13 @@
-import { describe, it, expect, afterEach, vi } from "vitest";
+import { describe, it, expect, afterEach, jest } from "bun:test";
+import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
 
 function mockMatchMedia(matches: boolean) {
-  vi.stubGlobal(
-    "matchMedia",
-    vi.fn().mockImplementation((query: string) => ({
+  stubGlobal({
+    name: "matchMedia",
+    value: jest.fn().mockImplementation((query: string) => ({
       matches,
       media: query,
       addEventListener: () => {},
@@ -16,7 +17,7 @@ function mockMatchMedia(matches: boolean) {
       onchange: null,
       dispatchEvent: () => false,
     })),
-  );
+  });
 }
 
 function person(overrides: Partial<LayoutPerson> = {}): LayoutPerson {
@@ -571,7 +572,7 @@ describe("FamilyTreeChart — control panel", () => {
 
 describe("FamilyTreeChart — mobile initial scale", () => {
   afterEach(() => {
-    vi.unstubAllGlobals();
+    unstubAllGlobals();
   });
 
   it("jumps to scale 4 after mount when matchMedia reports mobile", async () => {

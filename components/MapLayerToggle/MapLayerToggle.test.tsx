@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, jest } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MapLayerToggle } from "@/components/MapLayerToggle";
 import { ALL_CASTLE_TYPES } from "@/lib/map";
@@ -34,7 +34,7 @@ describe("MapLayerToggle", () => {
   });
 
   it("calls `onToggle` with the type when its checkbox changes", () => {
-    const onToggle = vi.fn();
+    const onToggle = jest.fn();
     const { container } = render(
       <MapLayerToggle enabled={new Set()} onToggle={onToggle} />,
     );

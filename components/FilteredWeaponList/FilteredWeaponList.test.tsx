@@ -1,10 +1,15 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { act, fireEvent, screen } from "@testing-library/react";
+import { describe, it, expect } from "bun:test";
+import { fireEvent, screen } from "@testing-library/react";
 import {
   FilteredWeaponList,
   type WeaponItem,
 } from "@/components/FilteredWeaponList";
-import { renderWithNuqs, flushNuqs, lastQueryString } from "@/lib/testNuqs";
+import {
+  advanceTime,
+  renderWithNuqs,
+  flushNuqs,
+  lastQueryString,
+} from "@/lib/testNuqs";
 
 const items: WeaponItem[] = [
   {
@@ -33,14 +38,6 @@ const items: WeaponItem[] = [
   },
 ];
 
-beforeEach(() => {
-  vi.useFakeTimers();
-});
-
-afterEach(() => {
-  vi.useRealTimers();
-});
-
 describe("FilteredWeaponList", () => {
   it("renders every weapon by default", () => {
     renderWithNuqs(<FilteredWeaponList items={items} />);
@@ -55,27 +52,23 @@ describe("FilteredWeaponList", () => {
     ).toBeDefined();
   });
 
-  it("filters after the 300ms debounce", () => {
+  it("filters after the 300ms debounce", async () => {
     renderWithNuqs(<FilteredWeaponList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "ice" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);
     expect(links[0].textContent).toContain("Ice");
   });
 
-  it("renders the empty state when nothing matches", () => {
+  it("renders the empty state when nothing matches", async () => {
     renderWithNuqs(<FilteredWeaponList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "zzz" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(screen.queryAllByRole("link")).toHaveLength(0);
     expect(screen.getByText(/no weapons match/i)).toBeDefined();
   });
@@ -124,9 +117,7 @@ describe("FilteredWeaponList", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "ice" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?search=ice");
   });
@@ -137,9 +128,7 @@ describe("FilteredWeaponList", () => {
       { searchParams: "?search=ice" },
     );
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
   });

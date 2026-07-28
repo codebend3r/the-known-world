@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { loadAllBattles } from "@/lib/content";
 
 const toAbsoluteYear = (date: { year: number; era: string }): number =>

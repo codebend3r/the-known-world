@@ -1,8 +1,23 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import {
+  describe,
+  it,
+  expect,
+  mock,
+  beforeEach,
+  afterEach,
+  afterAll,
+} from "bun:test";
+import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, render } from "@testing-library/react";
 import type { ReactNode } from "react";
 
-vi.mock("react-svg-pan-zoom", () => ({
+// Restoring keeps `react-svg-pan-zoom` mocked for this file only, even if the
+// suite is ever run without `--isolate`.
+afterAll(() => {
+  mock.restore();
+});
+
+mock.module("react-svg-pan-zoom", () => ({
   ReactSVGPanZoom: ({
     children,
     width,
@@ -42,11 +57,11 @@ class FakeResizeObserver {
 
 beforeEach(() => {
   observers = [];
-  vi.stubGlobal("ResizeObserver", FakeResizeObserver);
+  stubGlobal({ name: "ResizeObserver", value: FakeResizeObserver });
 });
 
 afterEach(() => {
-  vi.unstubAllGlobals();
+  unstubAllGlobals();
 });
 
 function stubSize(el: HTMLElement, w: number, h: number) {

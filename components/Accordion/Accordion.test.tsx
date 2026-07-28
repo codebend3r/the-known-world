@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, jest } from "bun:test";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { Accordion } from "@/components/Accordion";
 
@@ -30,14 +30,14 @@ describe("Accordion", () => {
   });
 
   it("calls onToggle when the trigger is clicked", () => {
-    const onToggle = vi.fn();
+    const onToggle = jest.fn();
     render(
       <Accordion id="north" title="The North" open={false} onToggle={onToggle}>
         <p>body</p>
       </Accordion>,
     );
     fireEvent.click(screen.getByRole("button", { name: /the north/i }));
-    expect(onToggle).toHaveBeenCalledOnce();
+    expect(onToggle).toHaveBeenCalledTimes(1);
   });
 
   it("renders an optional count", () => {

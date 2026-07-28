@@ -1,10 +1,11 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "bun:test";
 import { act, fireEvent, screen } from "@testing-library/react";
 import {
   FilteredHouseList,
   type HouseItem,
 } from "@/components/FilteredHouseList";
 import {
+  advanceTime,
   renderWithNuqs,
   flushNuqs,
   lastQueryString,
@@ -37,12 +38,10 @@ function manyItems(n: number): HouseItem[] {
 }
 
 beforeEach(() => {
-  vi.useFakeTimers();
   window.localStorage.clear();
 });
 
 afterEach(() => {
-  vi.useRealTimers();
   window.localStorage.clear();
 });
 
@@ -60,35 +59,29 @@ describe("FilteredHouseList", () => {
     ).toBeDefined();
   });
 
-  it("does not filter until the 300ms debounce elapses", () => {
+  it("does not filter until the 300ms debounce elapses", async () => {
     renderWithNuqs(<FilteredHouseList items={items} />);
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "stark" } });
-    act(() => {
-      vi.advanceTimersByTime(299);
-    });
+    await advanceTime({ ms: 200 });
     expect(screen.getAllByRole("link").length).toBe(3);
   });
 
-  it("filters the list once the debounce elapses", () => {
+  it("filters the list once the debounce elapses", async () => {
     renderWithNuqs(<FilteredHouseList items={items} />);
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "stark" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     const cards = screen.getAllByRole("link");
     expect(cards.length).toBe(1);
     expect(cards[0].textContent).toContain("Stark");
   });
 
-  it("renders the empty state when nothing matches", () => {
+  it("renders the empty state when nothing matches", async () => {
     renderWithNuqs(<FilteredHouseList items={items} />);
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "zzz" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(screen.queryAllByRole("link").length).toBe(0);
     expect(screen.getByText(/no houses match/i)).toBeDefined();
   });
@@ -109,25 +102,21 @@ describe("FilteredHouseList", () => {
     expect(screen.getByText("1 house")).toBeDefined();
   });
 
-  it("updates the count to matching-of-total when a search filters the list", () => {
+  it("updates the count to matching-of-total when a search filters the list", async () => {
     renderWithNuqs(<FilteredHouseList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "stark" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(screen.getByText("1 of 3 houses")).toBeDefined();
   });
 
-  it("reflects a zero count when nothing matches the search", () => {
+  it("reflects a zero count when nothing matches the search", async () => {
     renderWithNuqs(<FilteredHouseList items={items} />);
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "zzz" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(screen.getByText("0 of 3 houses")).toBeDefined();
   });
 
@@ -243,9 +232,7 @@ describe("FilteredHouseList search persistence", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "stark" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?search=stark");
   });
@@ -258,9 +245,7 @@ describe("FilteredHouseList search persistence", () => {
       },
     );
     fireEvent.change(screen.getByRole("searchbox"), { target: { value: "" } });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
   });
@@ -275,9 +260,7 @@ describe("FilteredHouseList search persistence", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "stark" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastSearchParams(onUrlUpdate).get("dir")).toBe("desc");
     expect(lastSearchParams(onUrlUpdate).get("search")).toBe("stark");
@@ -406,7 +389,7 @@ describe("FilteredHouseList pagination", () => {
     expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
   });
 
-  it("resets to page 1 when the search filter changes", () => {
+  it("resets to page 1 when the search filter changes", async () => {
     const lots: HouseItem[] = [
       ...manyItems(60),
       {
@@ -423,9 +406,7 @@ describe("FilteredHouseList pagination", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "stark" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     expect(
       screen.queryByRole("navigation", { name: /pagination/i }),
     ).toBeNull();
@@ -560,9 +541,7 @@ describe("FilteredHouseList page persistence", () => {
     fireEvent.change(screen.getByRole("searchbox"), {
       target: { value: "house" },
     });
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
+    await advanceTime({ ms: 400 });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?search=house");
   });
@@ -757,21 +736,17 @@ describe("FilteredHouseList view toggle", () => {
     expect(window.localStorage.getItem("gota:houses-view")).toBe("list");
   });
 
-  it("hydrates the stored choice from localStorage after mount", () => {
+  it("hydrates the stored choice from localStorage after mount", async () => {
     window.localStorage.setItem("gota:houses-view", "list");
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
+    await advanceTime({ ms: 0 });
     expect(container.querySelector("ul.listView")).not.toBeNull();
   });
 
-  it("ignores invalid stored values and stays in grid view", () => {
+  it("ignores invalid stored values and stays in grid view", async () => {
     window.localStorage.setItem("gota:houses-view", "kanban");
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
-    act(() => {
-      vi.advanceTimersByTime(0);
-    });
+    await advanceTime({ ms: 0 });
     expect(container.querySelector("ul.listView")).toBeNull();
   });
 

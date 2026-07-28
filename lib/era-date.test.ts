@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { formatEraDate } from "@/lib/era-date";
 import type { CalendarDate } from "@/lib/schemas";
 

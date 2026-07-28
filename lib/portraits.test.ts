@@ -1,17 +1,21 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, spyOn, beforeEach, afterAll } from "bun:test";
+import fs from "node:fs/promises";
 import { findPortrait } from "@/lib/portraits";
 
-vi.mock("node:fs/promises", () => ({
-  default: { access: vi.fn() },
-}));
+// `mock.module` would replace `node:fs/promises` wholesale; spying on the one
+// method that matters leaves the rest of the module intact.
+const access = spyOn(fs, "access");
 
-const fs = await import("node:fs/promises");
-const access = fs.default.access as ReturnType<typeof vi.fn>;
+afterAll(() => {
+  access.mockRestore();
+});
 
 function existing(paths: string[]) {
   const set = new Set(paths);
-  access.mockImplementation((p: string) => {
-    return set.has(p) ? Promise.resolve() : Promise.reject(new Error("ENOENT"));
+  access.mockImplementation((p) => {
+    return set.has(String(p))
+      ? Promise.resolve()
+      : Promise.reject(new Error("ENOENT"));
   });
 }
 

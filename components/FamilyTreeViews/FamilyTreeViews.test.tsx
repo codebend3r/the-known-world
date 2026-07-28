@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, jest } from "bun:test";
+import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { fireEvent, screen } from "@testing-library/react";
 import { FamilyTreeViewSwitcher } from "@/components/FamilyTreeViews/FamilyTreeViewSwitcher";
 import { renderWithNuqs, flushNuqs, lastQueryString } from "@/lib/testNuqs";
@@ -8,9 +9,9 @@ function hiddenAttr(el: HTMLElement | null): string | null {
 }
 
 function mockMatchMedia(matches: boolean) {
-  vi.stubGlobal(
-    "matchMedia",
-    vi.fn().mockImplementation((query: string) => ({
+  stubGlobal({
+    name: "matchMedia",
+    value: jest.fn().mockImplementation((query: string) => ({
       matches,
       media: query,
       addEventListener: () => {},
@@ -20,7 +21,7 @@ function mockMatchMedia(matches: boolean) {
       onchange: null,
       dispatchEvent: () => false,
     })),
-  );
+  });
 }
 
 const list = <div data-testid="list">list</div>;
@@ -28,7 +29,7 @@ const chart = <div data-testid="chart">chart</div>;
 
 describe("FamilyTreeViewSwitcher", () => {
   afterEach(() => {
-    vi.unstubAllGlobals();
+    unstubAllGlobals();
   });
 
   it("shows the list view child by default", () => {

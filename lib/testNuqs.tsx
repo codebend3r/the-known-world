@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { act, render, type RenderOptions } from "@testing-library/react";
-import { vi, type Mock } from "vitest";
+import { jest, type Mock } from "bun:test";
 import {
   withNuqsTestingAdapter,
   type UrlUpdateEvent,
@@ -18,7 +18,7 @@ type Options = Omit<RenderOptions, "wrapper"> & {
 // captures every URL write for assertion.
 export function renderWithNuqs(ui: ReactElement, options: Options = {}) {
   const { searchParams, ...renderOptions } = options;
-  const onUrlUpdate: UrlUpdateSpy = vi.fn();
+  const onUrlUpdate: UrlUpdateSpy = jest.fn();
   const result = render(ui, {
     ...renderOptions,
     wrapper: withNuqsTestingAdapter({
@@ -30,18 +30,33 @@ export function renderWithNuqs(ui: ReactElement, options: Options = {}) {
   return { ...result, onUrlUpdate };
 }
 
-// nuqs commits URL writes on a throttled timer, so a synchronous `act` never
-// reaches it. Awaiting this advances timers (or waits, under real timers) and
-// drains the microtask queue inside `act`, so the `onUrlUpdate` spy has fired
-// before assertions run.
+// nuqs commits URL writes on a timer, so a synchronous `act` never reaches it.
+// Awaiting this lets the write land inside `act`, so the `onUrlUpdate` spy has
+// fired before assertions run.
 export async function flushNuqs(): Promise<void> {
   await act(async () => {
-    if (vi.isFakeTimers()) {
-      vi.advanceTimersByTime(100);
-    } else {
-      await new Promise((resolve) => setTimeout(resolve, 100));
-    }
+    await new Promise((resolve) => setTimeout(resolve, 100));
     await Promise.resolve();
+  });
+}
+
+// Waits real time inside `act`, for debounces and mount effects.
+//
+// These tests used to step a faked clock, but Bun's fake timers do not drive
+// nuqs's flush queue: once a handful of tests in a file have run, the timer
+// nuqs schedules to commit a URL write stops firing under
+// `advanceTimersByTime`, so every `onUrlUpdate` assertion sees nothing. Real
+// timers keep the same assertions honest, at the cost of the wait.
+export async function advanceTime({ ms }: { ms: number }): Promise<void> {
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+  });
+  // A debounce that fired above queues a nuqs URL write that React commits on
+  // the next tick — after the `act` above has already exited. A second round
+  // takes that commit inside `act`, so React doesn't report an update outside
+  // it. This adds no wait, so it cannot push `ms` past a debounce boundary.
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 0));
   });
 }
 

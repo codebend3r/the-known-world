@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, it, expect, vi } from "vitest";
+import { afterEach, beforeEach, describe, it, expect, jest } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { TimelineExplorer } from "@/components/TimelineExplorer";
 import { prepareTimeline } from "@/lib/timeline";
@@ -38,11 +38,11 @@ const source = prepareTimeline({
 });
 
 beforeEach(() => {
-  vi.spyOn(window, "scrollTo").mockImplementation(() => undefined);
+  jest.spyOn(window, "scrollTo").mockImplementation(() => undefined);
 });
 
 afterEach(() => {
-  vi.restoreAllMocks();
+  jest.restoreAllMocks();
 });
 
 describe("TimelineExplorer", () => {

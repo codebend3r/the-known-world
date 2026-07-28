@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { buildFamilyTree, type TreeNode } from "@/lib/family-tree";
 import { CharacterSchema } from "@/lib/schemas";
 
