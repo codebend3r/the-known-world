@@ -8,3 +8,5 @@ bun run typecheck && \
 bun run lint:ts && \
 bun run lint:css && \
 bun run test
+
+echo "Committed successfully"
