@@ -9,9 +9,10 @@
     "dev": "next dev --port 46642",
     "build": "next build",
     "start": "next start",
-    "lint": "oxlint --type-aware",
-    "lint:fix": "oxlint --type-aware --fix",
-    "lint:styles": "gale \"app/**/*.scss\" \"components/**/*.scss\" \"styles/**/*.scss\"",
+    "lint:ts": "oxlint --type-aware",
+    "lint:ts:fix": "oxlint --type-aware --fix",
+    "lint:css": "gale \"app/**/*.scss\" \"components/**/*.scss\" \"styles/**/*.scss\"",
+    "lint:css:fix": "gale --fix \"app/**/*.scss\" \"components/**/*.scss\" \"styles/**/*.scss\"",
     "typecheck": "tsgo --noEmit",
     "test": "bun test --isolate",
     "test:watch": "bun test --isolate --watch",
@@ -21,7 +22,7 @@
     "format:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "check": "run-p --aggregate-output --print-label typecheck lint lint:styles test",
+    "check": "run-p --aggregate-output --print-label typecheck lint:ts lint:css test",
     "system-check": "run-s clean format:check check build"
   },
   "lint-staged": {

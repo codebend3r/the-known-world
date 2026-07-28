@@ -3,5 +3,8 @@ set -e
 
 echo "Running pre-commit hook"
 
-bun run format:staged
-bun run check
+bun run format:check && \
+bun run typecheck && \
+bun run lint:ts && \
+bun run lint:css && \
+bun run test
