@@ -2,43 +2,50 @@
 
 .body {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-
-  @media (max-width: bp.$md) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
 }
 
 .detail {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
+  grid-template-columns: minmax(0, 1fr) 372px;
   grid-template-areas:
     "heading heading"
     "main    infobox";
-  gap: 2rem;
+  gap: 32px 44px;
   align-items: start;
 
-  @media (max-width: bp.$md) {
+  @media (max-width: bp.$lg) {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "heading"
       "infobox"
       "main";
-    column-gap: 0;
+    gap: 26px;
   }
 }
 
 .heading {
   grid-area: heading;
   display: grid;
-  gap: 0;
-  place-items: center;
-  place-content: center;
+  justify-items: start;
+  gap: 14px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-family: var(--font-character-name);
+    font-size: 58px;
+    line-height: var(--lh-title);
+
+    @media (max-width: bp.$lg) {
+      font-size: 42px;
+    }
+
+    @media (max-width: bp.$sm) {
+      font-size: 32px;
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
 
@@ -46,7 +53,7 @@
   grid-area: main;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
+  gap: 22px;
   align-content: start;
 }
 
@@ -56,28 +63,33 @@
 
 .figure {
   margin: 0;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 8px;
+  background: var(--tkw-bg-deep);
 }
 
 .image {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 0.25rem;
 }
 
 .back {
-  padding-top: 2rem;
-  padding-bottom: 3rem;
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  text-align: center;
+  padding-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
 
   a {
-    color: var(--ink-faded);
+    color: var(--tkw-ink-dim);
     text-decoration: none;
 
-    &:hover {
-      color: var(--gold-leaf);
+    &:hover,
+    &:focus-visible {
+      color: var(--tkw-gold-bright);
     }
   }
 }
