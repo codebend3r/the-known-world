@@ -110,6 +110,17 @@ const RANK_OPTIONS: { value: RankFilter; label: string }[] = [
   { value: "extinct", label: "Extinct" },
 ];
 
+// Rank on a register row is categorical, so it renders as a mono datum rather
+// than the select's sentence-case option label.
+const RANK_LABEL: Record<HouseRank, string> = {
+  royal: "Royal house",
+  lordly: "Lordly house",
+  knightly: "Knightly house",
+  other: "Minor house",
+  exiled: "Exiled house",
+  extinct: "Extinct line",
+};
+
 function isRankFilter(value: string): value is RankFilter {
   return (RANK_FILTERS as readonly string[]).includes(value);
 }
@@ -262,6 +273,10 @@ export function FilteredHouseList({
       ? REGION_CARD_CLASS[item.region]
       : undefined;
     const cardClass = cx(styles.card, regionClass);
+    const statusClass = cx(
+      styles.status,
+      item.extinct ? styles.statusExtinct : styles.statusExtant,
+    );
     return (
       <li key={item.slug} className={styles.item}>
         <Link href={`/houses/${item.slug}/`} className={cardClass}>
@@ -269,14 +284,25 @@ export function FilteredHouseList({
             slug={item.slug}
             name={item.name}
             region={item.region}
-            size={view === "list" ? "4rem" : "6rem"}
+            size="52px"
             decorative
             priority={priority}
+            className={styles.shield}
           />
-          <span className={styles.name}>{item.name}</span>
-          {view === "list" && item.regionLabel && (
-            <span className={styles.region}>{item.regionLabel}</span>
-          )}
+          <span className={styles.body}>
+            <span className={styles.titleRow}>
+              <span className={styles.name}>{item.name}</span>
+              {!!item.regionLabel && (
+                <span className={styles.region}>{item.regionLabel}</span>
+              )}
+            </span>
+            {!!item.rank && (
+              <span className={styles.rank}>{RANK_LABEL[item.rank]}</span>
+            )}
+            <span className={statusClass}>
+              {item.extinct ? "Extinct" : "Extant"}
+            </span>
+          </span>
         </Link>
       </li>
     );

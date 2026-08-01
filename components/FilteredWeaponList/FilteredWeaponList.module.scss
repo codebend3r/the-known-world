@@ -1,12 +1,10 @@
 @use "breakpoints" as bp;
 
-// `ParchmentLayout`'s `.page` uses `justify-items: center`, so `justify-self:
-// stretch` opts this grid back out to fill the full parchment column. Mirrors
-// the row style on the `/battles` index.
+// One blade to a line, in the register grammar the battles index also uses.
 .list {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.25rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -15,38 +13,55 @@
 
 .item {
   margin: 0;
+  display: grid;
 }
 
 .link {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 1rem;
   align-items: center;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.25rem;
+  padding: 13px 4px;
+  border-bottom: 1px solid var(--tkw-hairline-faint);
   text-decoration: none;
-  color: var(--ink);
-  transition: background-color 0.15s ease;
+  color: var(--tkw-ink-body);
+  transition:
+    background-color 0.18s ease,
+    padding-left 0.18s ease;
 
-  &:hover {
-    background-color: color-mix(in srgb, var(--gold-leaf) 16%, transparent);
+  &:hover,
+  &:focus-visible {
+    background-color: rgba(200, 162, 74, 0.06);
+    padding-left: 12px;
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (max-width: bp.$sm) {
+    padding: 11px 4px;
   }
 }
 
 .name {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  font-family: var(--font-ui);
-  font-size: 1.05rem;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--tkw-ink);
+  min-width: 0;
 }
 
 .indicator {
   flex: none;
-  width: 0.5rem;
+  width: 0.4rem;
   height: 0.5rem;
-  border-radius: 50%;
-  background-color: var(--gold-leaf);
+  clip-path: var(--tkw-shield);
+  background-color: var(--tkw-gold);
 }
 
 // Keep the sigil small so it never grows the row taller than the name's

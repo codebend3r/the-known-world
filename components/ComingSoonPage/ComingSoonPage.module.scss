@@ -1,13 +1,19 @@
+// The breadcrumb above the plate title: mono, dim, letter-spaced.
 .caption {
-  text-align: center;
-  font-family: var(--font-ui);
-  font-size: 0.8rem;
-  letter-spacing: 1px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: var(--ink-faded);
+  color: var(--tkw-ink-dim);
 }
 
 .caption a {
   text-decoration: none;
-  color: var(--ink-faded);
+  color: var(--tkw-ink-dim);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--tkw-gold-bright);
+  }
 }

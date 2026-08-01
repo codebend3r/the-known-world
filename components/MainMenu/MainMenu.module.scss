@@ -1,48 +1,18 @@
 @use "breakpoints" as bp;
 
+// The index: four collection cards to a row on the full measure, folding to two
+// and then one. Plain auto-placement, so hiding a tile closes the gap rather
+// than leaving a hole in a named-area map.
 .menu {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-areas:
-    "maps       maps       timeline   timeline   houses  houses"
-    "characters characters weapons    weapons    dragons dragons";
-  gap: 1.5rem;
-
-  > :nth-child(1) {
-    grid-area: maps;
-  }
-  > :nth-child(2) {
-    grid-area: timeline;
-  }
-  > :nth-child(3) {
-    grid-area: houses;
-  }
-  > :nth-child(4) {
-    grid-area: characters;
-  }
-  > :nth-child(5) {
-    grid-area: weapons;
-  }
-  > :nth-child(6) {
-    grid-area: dragons;
-  }
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
 
   @media (max-width: bp.$lg) {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas:
-      "maps       timeline"
-      "houses     characters"
-      "weapons    dragons";
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (max-width: bp.$md) {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "maps"
-      "timeline"
-      "houses"
-      "characters"
-      "weapons"
-      "dragons";
+  @media (max-width: bp.$sm) {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

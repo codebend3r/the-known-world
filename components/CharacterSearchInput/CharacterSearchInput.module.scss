@@ -15,37 +15,44 @@
 
 .listbox {
   position: absolute;
-  top: calc(100% + 0.25rem);
+  top: calc(100% + 0.3rem);
   left: 0;
   right: 0;
   z-index: 20;
   margin: 0;
-  padding: 0.25rem;
+  padding: 0.3rem;
   list-style: none;
   display: grid;
   gap: 0.15rem;
   max-height: 18rem;
   overflow-y: auto;
-  background: color-mix(in srgb, var(--vellum) 97%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  box-shadow: 0 8px 24px rgba(31, 18, 8, 0.22);
+  background: var(--tkw-surface-solid);
+  border: 1px solid var(--tkw-gold);
+  border-radius: 5px;
+  box-shadow: var(--tkw-glow);
 }
 
 .option {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: baseline;
   gap: 0.5rem;
-  padding: 0.55rem 0.7rem;
-  border-radius: 2px;
+  padding: 0.5rem 0.7rem;
+  border-radius: 4px;
   cursor: pointer;
-  color: var(--ink);
-  font-family: var(--font-character-name);
-  font-size: 1.4rem;
+  color: var(--tkw-ink-body);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+
+  @media (max-width: bp.$md) {
+    font-size: 1.25rem;
+  }
 }
 
 .optionActive {
-  background: color-mix(in srgb, var(--gold-leaf) 22%, transparent);
+  background: rgba(200, 162, 74, 0.14);
+  color: var(--tkw-gold-bright);
 }
 
 .optionName {
@@ -54,7 +61,8 @@
 
 .optionAlias {
   font-family: var(--font-body);
+  font-weight: 300;
   font-style: italic;
-  font-size: 0.95rem;
-  color: var(--ink-faded);
+  font-size: 0.8rem;
+  color: var(--tkw-ink-muted);
 }

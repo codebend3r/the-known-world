@@ -1,110 +1,100 @@
-// `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
-// and `.subtitle` size to their content. `justify-self: stretch` opts
-// this grid back out so it fills the full parchment column.
+// Dragons inherit the register-row rules: a surfaced plate on a gold hairline
+// that promotes to solid gold plus glow on hover.
 .list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 12rem), 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+  gap: 16px;
   justify-self: stretch;
 }
 
 .item {
   margin: 0;
+  display: grid;
 }
 
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.85rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
   min-height: 10.5rem;
-  padding: 1rem;
-  background: var(--vellum);
-  border: 2px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
-  border-radius: 2px;
-  color: var(--ink);
+  padding: 20px 18px 22px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+  color: var(--tkw-ink);
   text-decoration: none;
   text-align: center;
-  transition:
-    border-color 150ms ease,
-    transform 150ms ease,
-    box-shadow 150ms ease;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+  transition: var(--tkw-lift);
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    transform: scale(1.01);
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
-    color: var(--ink);
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+    outline: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
-
-    &:hover,
-    &:focus-visible {
-      transform: none;
-    }
   }
 }
 
-// Regional border tints — colours live in `globals.scss` as
-// `--region-color-*` tokens (shared with `FilteredCharacterList`).
+// Heraldic colour as data: the shield's metal takes the rider house's region
+// tint. Colours live in `globals.scss` as `--region-color-*` tokens.
 .cardNorth {
-  border-color: var(--region-color-north);
+  --region-wash: var(--region-color-north);
 }
 .cardVale {
-  border-color: var(--region-color-vale);
+  --region-wash: var(--region-color-vale);
 }
 .cardRiverlands {
-  border-color: var(--region-color-riverlands);
+  --region-wash: var(--region-color-riverlands);
 }
 .cardWesterlands {
-  border-color: var(--region-color-westerlands);
+  --region-wash: var(--region-color-westerlands);
 }
 .cardReach {
-  border-color: var(--region-color-reach);
+  --region-wash: var(--region-color-reach);
 }
 .cardStormlands {
-  border-color: var(--region-color-stormlands);
+  --region-wash: var(--region-color-stormlands);
 }
 .cardDorne {
-  border-color: var(--region-color-dorne);
+  --region-wash: var(--region-color-dorne);
 }
 .cardIronIslands {
-  border-color: var(--region-color-iron-islands);
+  --region-wash: var(--region-color-iron-islands);
 }
 .cardCrownlands {
-  border-color: var(--region-color-crownlands);
+  --region-wash: var(--region-color-crownlands);
 }
 
 .name {
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.2rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
   font-weight: 600;
+  line-height: 1.15;
+  color: var(--tkw-ink);
 }
 
 .cardWild {
-  border-color: var(--ink-faded);
+  --region-wash: var(--tkw-ink-dim);
 }
 
 .wildBadge {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 6rem;
-  height: 6rem;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  color: var(--ink-faded);
-  border: 1px dashed color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  width: 5rem;
+  height: 5.8rem;
+  clip-path: var(--tkw-shield);
+  background: color-mix(in srgb, var(--tkw-ink-dim) 40%, transparent);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
 }
