@@ -77,6 +77,7 @@ export function WeaponInfobox({
       className={cx(infoboxStyles.infobox, className)}
       aria-label={`${weapon.name} infobox`}
     >
+      <p className={infoboxStyles.caption}>{weapon.name}</p>
       {originHouse && (
         <div className={infoboxStyles.sigil}>
           <Sigil

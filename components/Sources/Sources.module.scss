@@ -1,8 +1,37 @@
+// The plate's provenance line: mono, dim, sitting under a hairline in the same
+// register as the site colophon.
 .sources {
-  padding: 1.5rem;
-  border-top: 1px solid color-mix(in srgb, var(--ink-faded) 30%, transparent);
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: var(--ink-faded);
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--tkw-hairline);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
   width: 100%;
+
+  strong {
+    font-weight: 500;
+    color: var(--tkw-ink-muted);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  a {
+    color: var(--tkw-ink-dim);
+    text-decoration: none;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--tkw-gold-bright);
+    }
+  }
 }

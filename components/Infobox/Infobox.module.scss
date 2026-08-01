@@ -1,54 +1,60 @@
 @use "breakpoints" as bp;
 
+// One infobox row: a mono field label against a Spectral value. Rule 03, the
+// label is categorical so it is mono; the value is narrative so it is not.
 .row {
   display: grid;
-  grid-template-columns: 6.5rem 1fr;
-  gap: 0.5rem;
-  align-items: baseline;
+  grid-template-columns: auto 1fr;
+  gap: 10px 14px;
+  align-items: start;
 
   dt {
-    font-family: var(--font-sans);
-    font-size: 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 400;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--ink-faded);
-    font-weight: 500;
+    letter-spacing: var(--ls-label);
+    color: var(--tkw-ink-dim);
+    align-self: center;
+    white-space: nowrap;
   }
 
   dd {
-    color: var(--ink);
-    line-height: 1.35;
-    font-size: 1rem;
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tkw-ink-body);
   }
 
   ul {
     list-style: none;
     padding: 0;
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    display: grid;
     gap: 0.15rem;
   }
 
   a {
-    color: var(--ink);
-    text-decoration-color: color-mix(
-      in srgb,
-      var(--ink-faded) 35%,
-      transparent
-    );
+    color: var(--tkw-gold-bright);
+    text-decoration: none;
 
-    &:hover {
-      color: var(--gold-leaf);
+    &:hover,
+    &:focus-visible {
+      color: var(--tkw-ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
   }
 
   @media (max-width: bp.$md) {
-    grid-template-columns: 5.5rem 1fr;
+    gap: 8px 12px;
   }
 }
 
 .note {
-  color: var(--ink-faded);
+  color: var(--tkw-ink-muted);
   font-style: italic;
   font-size: 0.92em;
 }

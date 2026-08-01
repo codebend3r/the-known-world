@@ -1,30 +1,67 @@
 @use "breakpoints" as bp;
 
+// The shared infobox shell: one surfaced plate on a firm hairline, opened by a
+// gold caption bar. `BattleInfobox`, `DragonInfobox`, and `WeaponInfobox` all
+// borrow these classes, so anything house-specific stays out of here.
 .infobox {
   display: grid;
-  grid-template-columns: 1fr;
-  width: 100%;
-  padding: 0 0 1.25rem;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--vellum) 60%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 4px;
-  box-shadow: 0 2px 12px rgba(40, 25, 10, 0.12);
-  font-family: var(--font-ui);
-  font-size: 0.82rem;
-  color: var(--ink);
-  justify-items: stretch;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
   gap: 0;
+  width: 100%;
+  overflow: hidden;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  color: var(--tkw-ink-body);
 
   @media (max-width: bp.$md) {
-    width: 90%;
-    justify-self: center;
+    width: 100%;
+    justify-self: stretch;
   }
+}
+
+.caption {
+  padding: 14px 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 162, 74, 0.16),
+    rgba(200, 162, 74, 0.04)
+  );
+  border-bottom: 1px solid var(--tkw-hairline-firm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--tkw-gold-bright);
+  line-height: 1.35;
+}
+
+// The house banner: a variable-height plate clipped to the banner silhouette,
+// washed with the region's heraldic tint. It sits above the caption bar so the
+// house identifies itself before the plate names it.
+.banner {
+  display: grid;
+  justify-items: stretch;
+  padding: 0 0 26px;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--house-tint, var(--tkw-gold)) 34%, transparent),
+      color-mix(in srgb, var(--house-tint, var(--tkw-gold)) 8%, transparent) 62%,
+      transparent
+    ),
+    var(--tkw-bg-deep);
+  clip-path: var(--tkw-banner);
 }
 
 .sigil {
   container-type: inline-size;
-  padding: 0;
+  justify-items: center;
+  display: grid;
+  padding: 16px 18px 4px;
 }
 
 // Passed to `<Sigil className=...>` so the sigil fills its container.
@@ -40,8 +77,9 @@
 }
 
 .rows {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  padding: 1rem 1rem 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  margin: 0;
+  padding: 16px 18px 20px;
 }
