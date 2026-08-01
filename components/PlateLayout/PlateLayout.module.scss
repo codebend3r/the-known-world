@@ -1,0 +1,26 @@
+@use "breakpoints" as bp;
+
+// Rule 05, every page is a plate: eyebrow label, display title, rule, then
+// content, all inside one measure with a single gutter. The plate owns the
+// width and the rhythm; its children size themselves to it.
+.page {
+  width: 100%;
+  max-width: var(--tkw-measure);
+  margin: 0 auto;
+  padding: 26px var(--tkw-gutter) 60px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 26px;
+  align-content: start;
+  justify-items: stretch;
+
+  @media (max-width: bp.$lg) {
+    padding: 22px 32px 48px;
+    gap: 22px;
+  }
+
+  @media (max-width: bp.$xs) {
+    padding: 18px 20px 40px;
+    gap: 18px;
+  }
+}
