@@ -12,15 +12,19 @@
   "guidelinesGlob": [],
   "readmeHeader": ".design-sync/conventions.md",
   "overrides": {
-    "Accordion": { "cardMode": "column" },
-    "FiligreeRule": { "cardMode": "column" }
+    "Accordion": {
+      "cardMode": "column"
+    },
+    "FiligreeRule": {
+      "cardMode": "column"
+    }
   },
   "dtsPropsFor": {
     "DropCap": "children: ReactNode;",
     "Sigil": "slug: string | null;\nname: string;\nregion?: string | null;\nsize?: string;\nsizes?: string;\ndecorative?: boolean;\nclassName?: string;\npriority?: boolean;",
     "FiligreeFlourish": "mirrored?: boolean;\nclassName?: string;",
     "FiligreeRule": "className?: string;",
-    "PageHeading": "title: string;\nsubtitle?: ReactNode;\nicon?: ReactNode;\nclassName?: string;",
+    "PageHeading": "title: string;\nsubtitle?: ReactNode;\neyebrow?: string;\nicon?: ReactNode;\nclassName?: string;",
     "Accordion": "id: string;\ntitle: string;\ncount?: number;\nopen: boolean;\nonToggle: () => void;\nheadingLevel?: 2 | 3 | 4;\nchildren: ReactNode;",
     "InfoEntry": "entry: HouseInfoEntry;\nhrefPrefix?: string;\nexists?: (slug: string) => boolean;",
     "InfoRow": "label: string;\nentries: HouseInfoEntry[];\nhrefPrefix?: string;\nexists?: (slug: string) => boolean;",
@@ -33,8 +37,8 @@
     "ViewToggle": "options: { value: string; label: string; icon: ReactNode }[];\nvalue: string;\nonChange: (next: string) => void;\nariaLabel?: string;",
     "MapLayerToggle": "enabled: Set<\"castle\" | \"town\" | \"ruin\" | \"watchtower\" | \"holdfast\">;\nonToggle: (type: \"castle\" | \"town\" | \"ruin\" | \"watchtower\" | \"holdfast\") => void;",
     "CharacterSearchInput": "/** Filter mode (default) */\nvalue?: string;\nonChange?: (value: string) => void;\n/** Autocomplete mode: set autocomplete and pass items */\nautocomplete?: boolean;\nitems?: ReadonlyArray<{ slug: string; name: string; alias: string | null; aliases: string[] }>;\nplaceholder?: string;\nariaLabel?: string;",
-    "MainMenuTile": "title: string;\nsubtitle: string;\nglyph: ReactNode;\nhref: string;\nvisible?: boolean;",
-    "ParchmentLayout": "children: ReactNode;",
+    "MainMenuTile": "title: string;\nsubtitle: string;\nglyph: ReactNode;\nhref: string;\nplate?: string;\nvisible?: boolean;",
+    "PlateLayout": "children: ReactNode;",
     "ComingSoonPage": "title: string;",
     "ListSearchSkeleton": "placeholder: string;\nwithControls?: boolean;",
     "MapMarker": "slug: string;\nname: string;\ntype: \"castle\" | \"town\" | \"ruin\" | \"watchtower\" | \"holdfast\";\ncx: number;\ncy: number;"
@@ -65,7 +69,7 @@
     "MapMarker": "components/MapMarker/MapMarker.tsx",
     "MapStage": "components/MapStage/MapStage.tsx",
     "PageHeading": "components/PageHeading/PageHeading.tsx",
-    "ParchmentLayout": "components/ParchmentLayout/ParchmentLayout.tsx",
+    "PlateLayout": "components/PlateLayout/PlateLayout.tsx",
     "Sigil": "components/Sigil/Sigil.tsx",
     "SiteFooter": "components/SiteFooter/SiteFooter.tsx",
     "SiteHeader": "components/SiteHeader/SiteHeader.tsx",

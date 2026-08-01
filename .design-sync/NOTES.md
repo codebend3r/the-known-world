@@ -29,7 +29,7 @@ No `.d.ts` exists (no build emits types), so the card list can't come from shipp
 
 ## Fonts
 
-The 4 brand families (Cinzel, Cormorant Unicase, EB Garamond, Alegreya Sans) are set by `next/font/google` at runtime in the app. In the DS they're defined as `--font-*` vars + loaded via a remote `@import` from Google Fonts (first line of `ds-styles.css`). Expect a `[FONT_REMOTE]` (informational) from validate — not a failure.
+The 3 brand families (Cormorant Garamond, Spectral, JetBrains Mono) are set by `next/font/google` at runtime in the app. In the DS they're defined as `--font-*` vars + loaded via a remote `@import` from Google Fonts (first line of `ds-styles.css`). Expect a `[FONT_REMOTE]` (informational) from validate — not a failure.
 
 ## Grouping
 
