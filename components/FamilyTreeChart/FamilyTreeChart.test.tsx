@@ -318,7 +318,7 @@ describe("FamilyTreeChart — rendering", () => {
     expect(container.querySelector("a[href]")).toBeNull();
   });
 
-  it("renders a #f8ecd0 <rect data-label-bg> before the <text> so SVG paint order puts it behind", () => {
+  it("renders a <rect data-label-bg> before the <text> so SVG paint order puts it behind", () => {
     const chart: LaidOutChart = {
       ...EMPTY,
       persons: [person({ slug: "ned", name: "Eddard Stark" })],

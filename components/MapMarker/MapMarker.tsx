@@ -1,3 +1,4 @@
+import { cx } from "@/lib/cx";
 import type { Castle } from "@/lib/schemas";
 import styles from "@/components/MapMarker/MapMarker.module.scss";
 
@@ -9,7 +10,13 @@ type Props = {
   cy: number;
 };
 
-export function MapMarker({ slug, name, type, cx, cy }: Props) {
+export function MapMarker({
+  slug,
+  name,
+  type,
+  cx: centreX,
+  cy: centreY,
+}: Props) {
   return (
     <a
       href={`/castles/${slug}/`}
@@ -17,18 +24,20 @@ export function MapMarker({ slug, name, type, cx, cy }: Props) {
       tabIndex={0}
       aria-label={name}
     >
-      <Glyph type={type} cx={cx} cy={cy} />
-      <text className={styles.label} x={cx + 10} y={cy + 4}>
+      <Glyph type={type} cx={centreX} cy={centreY} />
+      <text className={styles.label} x={centreX + 10} y={centreY + 4}>
         {name}
       </text>
     </a>
   );
 }
 
+// The pin's fill identifies the kind of place; the ring is gold for every one
+// of them. Both live in the module, so no hex is written here.
 function Glyph({
   type,
-  cx,
-  cy,
+  cx: centreX,
+  cy: centreY,
 }: {
   type: Castle["type"];
   cx: number;
@@ -38,63 +47,53 @@ function Glyph({
     case "castle":
       return (
         <circle
-          cx={cx}
-          cy={cy}
+          className={cx(styles.glyph, styles.castle)}
+          cx={centreX}
+          cy={centreY}
           r={6}
-          fill="#8b1a1a"
-          stroke="#3d2817"
-          strokeWidth={1.5}
         />
       );
     case "town":
       return (
         <circle
-          cx={cx}
-          cy={cy}
+          className={cx(styles.glyph, styles.town)}
+          cx={centreX}
+          cy={centreY}
           r={4}
-          fill="#f8ecd0"
-          stroke="#3d2817"
-          strokeWidth={1.5}
         />
       );
     case "ruin":
       return (
-        <g>
+        <g className={cx(styles.glyph, styles.ruin)}>
           <line
-            x1={cx - 5}
-            y1={cy - 5}
-            x2={cx + 5}
-            y2={cy + 5}
-            stroke="#3d2817"
-            strokeWidth={2}
+            x1={centreX - 5}
+            y1={centreY - 5}
+            x2={centreX + 5}
+            y2={centreY + 5}
           />
           <line
-            x1={cx + 5}
-            y1={cy - 5}
-            x2={cx - 5}
-            y2={cy + 5}
-            stroke="#3d2817"
-            strokeWidth={2}
+            x1={centreX + 5}
+            y1={centreY - 5}
+            x2={centreX - 5}
+            y2={centreY + 5}
           />
         </g>
       );
     case "watchtower":
       return (
-        <g>
-          <rect x={cx - 3} y={cy - 7} width={6} height={14} fill="#3d2817" />
-          <rect x={cx - 5} y={cy - 9} width={10} height={3} fill="#3d2817" />
+        <g className={cx(styles.glyph, styles.watchtower)}>
+          <rect x={centreX - 3} y={centreY - 7} width={6} height={14} />
+          <rect x={centreX - 5} y={centreY - 9} width={10} height={3} />
         </g>
       );
     case "holdfast":
       return (
         <rect
-          x={cx - 5}
-          y={cy - 5}
+          className={cx(styles.glyph, styles.holdfast)}
+          x={centreX - 5}
+          y={centreY - 5}
           width={10}
           height={10}
-          fill="#8b1a1a"
-          stroke="#3d2817"
-          strokeWidth={1.5}
         />
       );
   }

@@ -1,26 +1,13 @@
+// The static plate frame: a deep well on a firm hairline, matching the
+// interactive `WorldMap` stage so both read as the same plate.
 .stage {
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
   aspect-ratio: 4 / 7;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 40%, transparent);
-  border-radius: 6px;
-  background:
-    radial-gradient(
-      ellipse at top left,
-      rgba(180, 140, 90, 0.18),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse at bottom right,
-      rgba(120, 80, 40, 0.15),
-      transparent 60%
-    ),
-    linear-gradient(
-      180deg,
-      var(--parchment-light) 0%,
-      var(--parchment-dark) 100%
-    );
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 8px;
+  background: var(--tkw-bg-deep);
   position: relative;
   overflow: hidden;
 }

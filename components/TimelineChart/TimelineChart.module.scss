@@ -23,22 +23,23 @@
 
 .header {
   padding-block: 0.5rem 0.75rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
+  border-bottom: 1px solid var(--tkw-hairline);
 }
 
 .axisSpacer {
   grid-area: axis;
 }
 
+// Rule 03: a column of the record is a category, so its heading is mono.
 .columnHeading {
   margin: 0;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.15rem;
-  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
   text-align: center;
-  color: var(--ink);
+  color: var(--tkw-gold);
 
   &:nth-of-type(1) {
     grid-area: westeros;
@@ -62,14 +63,15 @@
   inset: 0;
 }
 
+// The spine: a vertical gold rule at 35% alpha, with full-opacity nodes.
 .axisRail {
   grid-area: axis;
-  border-right: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
+  border-right: 2px solid rgba(200, 162, 74, 0.35);
 }
 
 %column {
   position: relative;
-  border-right: 1px dashed color-mix(in srgb, var(--ink-faded) 12%, transparent);
+  border-right: 1px dashed var(--tkw-hairline-faint);
 
   &:last-of-type {
     border-right: none;
@@ -102,7 +104,7 @@
   display: grid;
   grid-template-areas: "label";
   justify-items: start;
-  border-top: 1px dashed color-mix(in srgb, var(--ink-faded) 18%, transparent);
+  border-top: 1px dashed var(--tkw-hairline-faint);
 }
 
 .tickLabel {
@@ -111,12 +113,12 @@
   padding-right: 1.25rem;
   text-align: right;
   transform: translateY(-50%);
-  background: var(--parchment-light);
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  font-size: 1.15rem;
-  color: var(--ink);
+  background: var(--tkw-bg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--tkw-gold);
+  font-variant-numeric: tabular-nums;
 }
 
 .era {
@@ -129,20 +131,20 @@
   grid-template-columns: var(--era-width) 1fr;
   align-items: center;
   justify-items: center;
-  background: color-mix(in srgb, var(--gold-leaf) 7%, transparent);
-  border-top: 1px solid color-mix(in srgb, var(--gold-leaf) 22%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--gold-leaf) 22%, transparent);
+  background: rgba(200, 162, 74, 0.05);
+  border-top: 1px solid var(--tkw-hairline);
+  border-bottom: 1px solid var(--tkw-hairline);
 }
 
 .eraLabel {
   grid-area: label;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 4px;
-  font-size: 1rem;
-  color: var(--ink-faded);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
 }
 
 .node {
@@ -165,23 +167,21 @@
     "marker name"
     "marker when";
   grid-template-columns: auto 1fr;
-  column-gap: 0.5rem;
+  column-gap: 0.55rem;
   row-gap: 0.1rem;
-  padding: 0.3rem 0.55rem;
-  background: var(--vellum);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
-  border-radius: 2px;
-  color: var(--ink);
+  padding: 8px 10px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: 5px;
+  color: var(--tkw-ink);
   text-decoration: none;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+  transition: var(--tkw-lift);
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+    outline: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -194,22 +194,26 @@
   align-self: center;
   width: 0.5rem;
   height: 0.5rem;
-  background: var(--gold-leaf);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 40%, transparent);
+  background: var(--tkw-gold);
   border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--tkw-bg);
 }
 
 .eventName {
   grid-area: name;
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
   line-height: 1.25;
 }
 
 .eventWhen {
   grid-area: when;
-  font-style: italic;
-  font-size: 0.8rem;
-  color: var(--ink-faded);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--tkw-ink-dim);
+  font-variant-numeric: tabular-nums;
 }
 
 @media (max-width: bp.$md) {
@@ -218,14 +222,8 @@
     --era-width: 2rem;
   }
 
-  .columnHeading {
-    font-size: 1rem;
-    letter-spacing: 1px;
-  }
-
   .tickLabel {
     padding-right: 0.75rem;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
+    font-size: 10px;
   }
 }

@@ -4,30 +4,29 @@
   justify-items: start;
 }
 
+// A cluster count is a datum, so the pill is mono and follows the chip rules.
 .pill {
   display: inline-grid;
   grid-auto-flow: column;
-  align-items: baseline;
+  align-items: center;
   gap: 0.5rem;
-  padding: 0.3rem 0.75rem;
-  background: var(--vellum);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 999px;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 1px;
-  font-size: 0.85rem;
-  color: var(--wax-seal);
+  padding: 6px 11px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
   cursor: pointer;
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
-  transition:
-    border-color 150ms ease,
-    box-shadow 150ms ease;
+  transition: var(--tkw-lift);
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    box-shadow: 0 2px 12px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+    outline: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -36,16 +35,13 @@
 }
 
 .count {
-  font-weight: 600;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
 }
 
 .when {
-  font-family: var(--font-body);
-  font-style: italic;
-  font-variant: normal;
-  letter-spacing: 0;
-  font-size: 0.8rem;
-  color: var(--ink-faded);
+  color: var(--tkw-ink-dim);
+  font-variant-numeric: tabular-nums;
 }
 
 .list {
@@ -61,10 +57,10 @@
   padding: 0.35rem;
   margin: 0;
   list-style: none;
-  background: var(--vellum);
-  border: 1px solid var(--gold-leaf);
-  border-radius: 2px;
-  box-shadow: 0 4px 18px color-mix(in srgb, var(--ink) 25%, transparent);
+  background: var(--tkw-surface-solid);
+  border: 1px solid var(--tkw-gold);
+  border-radius: 5px;
+  box-shadow: var(--tkw-glow);
 }
 
 .item {
@@ -77,29 +73,32 @@
   grid-template-columns: 1fr auto;
   align-items: baseline;
   gap: 0.75rem;
-  padding: 0.35rem 0.5rem;
-  color: var(--ink);
+  padding: 0.4rem 0.55rem;
+  color: var(--tkw-ink-body);
   text-decoration: none;
-  border-radius: 2px;
+  border-radius: 4px;
 
   &:hover,
   &:focus-visible {
-    background: color-mix(in srgb, var(--gold-leaf) 16%, transparent);
-    color: var(--ink);
+    background: rgba(200, 162, 74, 0.12);
+    color: var(--tkw-gold-bright);
+    outline: none;
   }
 }
 
 .name {
   grid-area: name;
-  font-family: var(--font-body);
-  font-size: 0.95rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
 }
 
 .linkWhen {
   grid-area: when;
-  font-family: var(--font-body);
-  font-style: italic;
-  font-size: 0.8rem;
-  color: var(--ink-faded);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--tkw-ink-dim);
   white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }

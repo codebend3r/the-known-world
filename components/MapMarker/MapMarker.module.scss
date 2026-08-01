@@ -1,24 +1,70 @@
+// Map pins: the fill identifies the kind of place, the ring is always gold, and
+// the active pin gains the glow. Colours stay in the module so the marker never
+// hard-codes a hex.
 .marker {
   cursor: pointer;
-  transition: transform 0.15s;
-
-  &:hover {
-    transform: scale(1.4);
-  }
 
   &:hover .label,
-  &:focus .label {
+  &:focus .label,
+  &:focus-visible .label {
     opacity: 1;
+  }
+
+  &:hover .glyph,
+  &:focus-visible .glyph {
+    filter: drop-shadow(0 0 6px rgba(200, 162, 74, 0.55));
+  }
+
+  &:focus-visible {
+    outline: none;
   }
 }
 
+.glyph {
+  stroke: var(--tkw-gold);
+  stroke-width: 1.5;
+  transition: filter 0.18s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.castle {
+  fill: var(--tkw-gold);
+}
+
+.town {
+  fill: var(--tkw-ink-muted);
+}
+
+.ruin {
+  stroke: var(--tkw-extinct);
+  stroke-width: 2;
+  fill: none;
+}
+
+.watchtower {
+  fill: var(--tkw-ink-body);
+  stroke: none;
+}
+
+.holdfast {
+  fill: var(--tkw-contested);
+}
+
+// Rule 03: a place name on a plate is a label, so it is mono and letter-spaced.
 .label {
-  font-family: var(--font-heading);
-  font-size: 11px;
-  fill: var(--ink);
-  font-variant: small-caps;
-  letter-spacing: 1px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  fill: var(--tkw-ink-muted);
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.15s;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }

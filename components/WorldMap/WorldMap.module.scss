@@ -3,11 +3,13 @@
 .map {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-  justify-items: center;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  justify-items: stretch;
 }
 
+// The map plate: a deep well framed by a firm hairline, so pins and labels read
+// against the darkest ground on the site.
 .stage {
   position: relative;
   width: 100%;
@@ -19,24 +21,27 @@
     height: auto;
     aspect-ratio: 1 / 1;
   }
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--vellum) 55%, transparent);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 8px;
+  background: var(--tkw-bg-deep);
   overflow: hidden;
   display: grid;
   grid-template-areas: "canvas";
 
   &:focus-visible {
-    outline: 2px solid var(--gold-leaf);
-    outline-offset: 2px;
+    outline: none;
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
   }
 
   &::before {
     content: "Unfurling the map…";
     grid-area: canvas;
     place-self: center;
+    font-family: var(--font-body);
     font-style: italic;
-    color: var(--ink-faded);
+    font-weight: 300;
+    color: var(--tkw-ink-dim);
   }
 
   &:fullscreen {
@@ -52,12 +57,14 @@
   touch-action: none;
 }
 
+// Rule: the pin's fill is the place, the ring is gold, and the active pin
+// gains the glow.
 .marker {
   cursor: pointer;
 
   circle {
-    fill: color-mix(in srgb, var(--gold-leaf) 0%, transparent);
-    stroke: color-mix(in srgb, var(--gold-leaf) 0%, transparent);
+    fill: transparent;
+    stroke: transparent;
     stroke-width: 3;
     transition:
       fill 120ms ease,
@@ -66,8 +73,8 @@
 
   &:hover circle,
   &:focus-visible circle {
-    fill: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
-    stroke: var(--gold-leaf);
+    fill: color-mix(in srgb, var(--tkw-gold) 22%, transparent);
+    stroke: var(--tkw-gold);
   }
 
   &:focus-visible {
@@ -87,18 +94,21 @@
   inset-inline-start: 0.75rem;
   display: grid;
   grid-template-columns: auto auto;
-  gap: 0.15rem 0.5rem;
+  gap: 0.15rem 0.6rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--vellum) 85%, transparent);
-  color: var(--ink-faded);
-  font-size: 0.85rem;
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
+  background: var(--tkw-surface);
+  color: var(--tkw-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
   font-variant-numeric: tabular-nums;
   pointer-events: none;
 
   dt {
-    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--tkw-ink-dim);
   }
 
   dd {
@@ -154,22 +164,23 @@
   appearance: none;
   display: grid;
   place-content: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--vellum) 85%, transparent);
-  color: var(--ink-faded);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
+  background: var(--tkw-surface);
+  color: var(--tkw-ink-muted);
   cursor: pointer;
   transition:
-    background 120ms ease,
-    color 120ms ease;
+    var(--tkw-lift),
+    color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
-    background: color-mix(in srgb, var(--vellum) 95%, transparent);
+    color: var(--tkw-gold-bright);
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
     outline: none;
   }
 
@@ -179,8 +190,10 @@
 }
 
 .hint {
-  font-size: 1rem;
-  font-style: italic;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
   text-align: center;
-  color: var(--ink-faded);
+  color: var(--tkw-ink-dim);
 }

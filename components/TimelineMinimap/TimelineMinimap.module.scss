@@ -1,5 +1,6 @@
 @use "breakpoints" as bp;
 
+// The minimap track: a hairline rail of years alongside the spine.
 .minimap {
   position: fixed;
   right: 0.75rem;
@@ -9,10 +10,10 @@
   max-height: 82vh;
   overflow-y: auto;
   padding: 0.5rem 0.25rem;
-  background: color-mix(in srgb, var(--vellum) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 30%, transparent);
-  border-radius: 2px;
-  box-shadow: 0 2px 12px color-mix(in srgb, var(--ink) 15%, transparent);
+  background: var(--tkw-surface-solid);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: 5px;
+  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.9);
 
   @media (max-width: bp.$lg) {
     display: none;
@@ -32,21 +33,29 @@
 }
 
 .year {
-  padding: 0.15rem 0.6rem;
+  padding: 0.2rem 0.6rem;
   background: none;
   border: none;
   text-align: right;
   cursor: pointer;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
+  font-family: var(--font-mono);
+  font-size: 9px;
   letter-spacing: 1px;
-  font-size: 0.75rem;
-  color: var(--ink-faded);
-  border-radius: 2px;
+  color: var(--tkw-ink-dim);
+  border-radius: 3px;
+  font-variant-numeric: tabular-nums;
+  transition:
+    color 0.18s ease,
+    background 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--wax-seal);
-    background: color-mix(in srgb, var(--gold-leaf) 16%, transparent);
+    color: var(--tkw-bg);
+    background: var(--tkw-gold);
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
