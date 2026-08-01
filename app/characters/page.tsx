@@ -4,7 +4,7 @@ import { loadAllCharacters, loadAllHouses } from "@/lib/content";
 import { regionForHouse } from "@/lib/regions";
 import { findPortrait } from "@/lib/portraits";
 import { bySlug, compareByName } from "@/lib/collections";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
@@ -45,9 +45,10 @@ export default async function CharactersPage() {
     .sort(compareByName);
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Characters"
+        eyebrow="Collection 05"
         icon={sectionGlyphs.characters}
         subtitle="The lords, ladies, knights, and smallfolk who shaped the Known World."
       />
@@ -58,6 +59,6 @@ export default async function CharactersPage() {
       >
         <FilteredCharacterList items={items} />
       </Suspense>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

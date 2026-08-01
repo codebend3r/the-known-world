@@ -5,70 +5,35 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
-import { isActive } from "@/lib/nav";
+import { isActive, visibleNavItems } from "@/lib/nav";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
-type MenuItem = {
-  href: string;
-  label: string;
+type MenuArt = {
   icon: string;
   glyph?: ReactNode;
-  visible: boolean;
 };
 
-const ITEMS: MenuItem[] = [
-  {
-    href: "/maps/",
-    label: "Maps",
-    icon: "/menu-icons/map.png",
-    visible: true,
-  },
-  {
-    href: "/timeline/",
-    label: "Timeline",
-    icon: "/menu-icons/timeline.png",
-    visible: true,
-  },
-  {
-    href: "/houses/",
-    label: "Houses",
-    icon: "/menu-icons/houses.png",
-    visible: true,
-  },
-  {
-    href: "/castles/",
-    label: "Castles",
+// Drawer-only decoration, keyed by route. The nav list itself lives in
+// `lib/nav` so the header rail and this drawer stay in step.
+const ART: Record<string, MenuArt> = {
+  "/maps/": { icon: "/menu-icons/map.png" },
+  "/timeline/": { icon: "/menu-icons/timeline.png" },
+  "/houses/": { icon: "/menu-icons/houses.png" },
+  "/castles/": {
     icon: "/menu-icons/castles.png",
     glyph: sectionGlyphs.castles,
-    visible: true,
   },
-  {
-    href: "/characters/",
-    label: "Characters",
-    icon: "/menu-icons/characters.png",
-    visible: true,
-  },
-  {
-    href: "/weapons/",
-    label: "Weapons",
-    icon: "/menu-icons/weapons.png",
-    visible: true,
-  },
-  {
-    href: "/battles/",
-    label: "Battles",
+  "/characters/": { icon: "/menu-icons/characters.png" },
+  "/weapons/": { icon: "/menu-icons/weapons.png" },
+  "/battles/": {
     icon: "/menu-icons/battles.png",
     glyph: sectionGlyphs.battles,
-    visible: true,
   },
-  {
-    href: "/dragons/",
-    label: "Dragons",
-    icon: "/menu-icons/dragons.png",
-    visible: false,
-  },
-];
+  "/dragons/": { icon: "/menu-icons/dragons.png" },
+};
+
+const ITEMS = visibleNavItems();
 
 export function SiteMenu() {
   const pathname = usePathname();
@@ -185,8 +150,9 @@ export function SiteMenu() {
         </div>
         <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.navList}>
-            {ITEMS.filter((item) => item.visible).map((item) => {
+            {ITEMS.map((item) => {
               const active = isActive({ pathname, href: item.href });
+              const art = ART[item.href];
               return (
                 <li key={item.href} className={styles.navItem}>
                   <Link
@@ -197,9 +163,9 @@ export function SiteMenu() {
                     tabIndex={isOpen ? 0 : -1}
                   >
                     <span className={styles.linkIcon} aria-hidden="true">
-                      {item.glyph ?? (
+                      {art?.glyph ?? (
                         <Image
-                          src={item.icon}
+                          src={art?.icon ?? "/menu-icons/map.png"}
                           alt=""
                           width={48}
                           height={48}

@@ -9,7 +9,7 @@ import {
   loadAllDragons,
   renderMarkdown,
 } from "@/lib/content";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { FiligreeRule } from "@/components/Filigree";
 import { Sources } from "@/components/Sources";
 import { FamilyTreeViews } from "@/components/FamilyTreeViews";
@@ -94,7 +94,7 @@ export default async function HousePage({
   const notableMembers = house.frontmatter["notable-members"] ?? [];
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <div className={styles.detail}>
         <div className={styles.heading}>
           <div className={styles.nameRow}>
@@ -177,6 +177,6 @@ export default async function HousePage({
           <Sources sources={house.frontmatter.sources} />
         </div>
       </div>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { TimelineExplorer } from "@/components/TimelineExplorer";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
@@ -29,9 +29,10 @@ export default async function TimelinePage() {
     publishedEvents.some((e) => e.frontmatter.date.precision !== "exact");
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Timeline"
+        eyebrow="Collection 02"
         icon={sectionGlyphs.timeline}
         subtitle="Trace the centuries: the battles and great events of the Known World, laid out in time and place."
       />
@@ -41,6 +42,6 @@ export default async function TimelinePage() {
       {hasApproximate && (
         <p className={styles.legend}>* approximate or legendary date</p>
       )}
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

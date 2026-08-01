@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { loadCastle, loadAllCastles, renderMarkdown } from "@/lib/content";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 
 export async function generateStaticParams() {
@@ -36,7 +36,7 @@ export default async function CastlePage({
   const html = await renderMarkdown(castle.body);
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <h1>{castle.frontmatter.name}</h1>
       <p className="subtitle">
         {castle.frontmatter.type === "castle"
@@ -48,6 +48,6 @@ export default async function CastlePage({
       </p>
       <article dangerouslySetInnerHTML={{ __html: html }} />
       <Sources sources={castle.frontmatter.sources} />
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

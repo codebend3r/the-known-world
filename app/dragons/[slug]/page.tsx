@@ -9,7 +9,7 @@ import {
   renderMarkdown,
 } from "@/lib/content";
 import { buildProseLinkIndex } from "@/lib/prose-links";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import { DragonInfobox } from "@/components/DragonInfobox";
 import { humanizeSlug } from "@/lib/text";
@@ -87,7 +87,7 @@ export default async function DragonPage({
       : "A wild dragon";
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <div className={styles.detail}>
         <div className={styles.heading}>
           <h1>{fm.name}</h1>
@@ -112,6 +112,6 @@ export default async function DragonPage({
           <Sources sources={fm.sources} />
         </div>
       </div>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

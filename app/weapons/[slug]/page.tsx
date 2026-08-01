@@ -11,7 +11,7 @@ import {
 } from "@/lib/content";
 import { findWeaponImage } from "@/lib/weapon-image";
 import { buildProseLinkIndex } from "@/lib/prose-links";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import { WeaponInfobox } from "@/components/WeaponInfobox";
 import { bySlug } from "@/lib/collections";
@@ -116,7 +116,7 @@ export default async function WeaponPage({
     .join(", ");
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <div className={styles.detail}>
         <div className={styles.heading}>
           <h1>{fm.name}</h1>
@@ -153,6 +153,6 @@ export default async function WeaponPage({
           <Sources sources={fm.sources} />
         </div>
       </div>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

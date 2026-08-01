@@ -5,6 +5,7 @@ export function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.inner}>
+        <p className={styles.plate}>Atlas of the Known World</p>
         <p className={styles.credit}>
           <span className={styles.name}>CJ Rivas</span>
           <span className={styles.separator} aria-hidden="true">

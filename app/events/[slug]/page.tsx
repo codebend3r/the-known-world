@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { loadEvent, loadAllEvents, renderMarkdown } from "@/lib/content";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import { formatBattleWhen } from "@/lib/battle-date";
 import styles from "@/app/events/[slug]/page.module.scss";
@@ -47,7 +47,7 @@ export default async function EventPage({
     .join(" · ");
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <div className={styles.detail}>
         <div className={styles.heading}>
           <h1>{fm.name}</h1>
@@ -66,6 +66,6 @@ export default async function EventPage({
           <Sources sources={fm.sources} />
         </div>
       </div>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

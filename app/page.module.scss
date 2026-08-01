@@ -1,0 +1,157 @@
+@use "breakpoints" as bp;
+
+// The one screen that centres: the atlas hero. Every other plate is
+// left-aligned on the measure.
+.hero {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  padding: 50px 0 18px;
+  text-align: center;
+
+  @media (max-width: bp.$lg) {
+    padding: 28px 0 12px;
+    gap: 18px;
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+}
+
+// The only use of the display step. A slow silver sweep crosses it, drawn with
+// `background-clip` so it costs no layout, and stopped under reduced motion.
+.title {
+  font-size: var(--fs-display);
+  font-weight: 600;
+  line-height: var(--lh-display);
+  letter-spacing: 0.5px;
+  color: var(--tkw-ink);
+  background-image: linear-gradient(
+    100deg,
+    #cbbfa4 0%,
+    #e4dcc6 30%,
+    #fff 46%,
+    #e4dcc6 62%,
+    #cbbfa4 100%
+  );
+  background-size: 260% 100%;
+  background-position: 100% 0;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heroSheathe 6.5s linear infinite;
+
+  @media (max-width: bp.$xl) {
+    font-size: 76px;
+  }
+
+  @media (max-width: bp.$lg) {
+    font-size: 54px;
+  }
+
+  @media (max-width: bp.$sm) {
+    font-size: 40px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    background-image: none;
+    -webkit-text-fill-color: var(--tkw-ink);
+  }
+}
+
+@keyframes heroSheathe {
+  0%,
+  62% {
+    background-position: 100% 0;
+  }
+
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.rule {
+  margin: 0;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 16px;
+  color: var(--tkw-gold);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.ruleLine {
+  width: 110px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--tkw-gold));
+
+  &:last-child {
+    background: linear-gradient(90deg, var(--tkw-gold), transparent);
+  }
+
+  @media (max-width: bp.$sm) {
+    width: 64px;
+  }
+}
+
+.ruleMark {
+  font-family: var(--font-display);
+}
+
+.lede {
+  max-width: 590px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: var(--tkw-ink-muted);
+}
+
+// The section band that opens the index: a mono heading on the left, the count
+// on the right, over a hairline.
+.indexBar {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-top: 22px;
+  border-top: 1px solid var(--tkw-hairline);
+}
+
+.indexLabel {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+
+  &::before {
+    content: "▚ ";
+  }
+}
+
+.indexCount {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+  font-variant-numeric: tabular-nums;
+}

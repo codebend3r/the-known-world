@@ -6,17 +6,25 @@ import styles from "@/components/PageHeading/PageHeading.module.scss";
 type Props = {
   title: string;
   subtitle?: ReactNode;
+  eyebrow?: string;
   icon?: ReactNode;
   className?: string;
 };
 
-// The page title block shared across `ParchmentLayout` index pages: an `h1`
-// (optionally led by the section glyph), an optional italic subtitle, and the
-// ornamental `FiligreeRule` that underlines the title in place of a plain
-// border.
-export function PageHeading({ title, subtitle, icon, className }: Props) {
+// The page title block shared across `PlateLayout` index pages. Rule 05: the
+// plate opens with a mono eyebrow, then the display title, then a rule, then
+// content. The section glyph optionally leads the `h1`; the `FiligreeRule`
+// closes the block in place of a plain border.
+export function PageHeading({
+  title,
+  subtitle,
+  eyebrow,
+  icon,
+  className,
+}: Props) {
   return (
     <hgroup className={cx(styles.heading, className)}>
+      {!!eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
       <h1>
         {!!icon && (
           <span className={styles.icon} aria-hidden="true">

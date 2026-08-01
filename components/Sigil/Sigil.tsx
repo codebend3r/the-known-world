@@ -27,7 +27,13 @@ export function Sigil({
 }: Props) {
   if (slug === null) return null;
 
-  const style = size ? ({ "--sigil-size": size } as CSSProperties) : undefined;
+  // The shield plate behind the artwork takes the region's heraldic tint as its
+  // metal. An unknown region leaves `--sigil-metal` guaranteed-invalid, so the
+  // module's gold fallback applies.
+  const style: CSSProperties = {
+    ...(size ? { "--sigil-size": size } : {}),
+    ...(region ? { "--sigil-metal": `var(--region-color-${region})` } : {}),
+  };
 
   return (
     <span
