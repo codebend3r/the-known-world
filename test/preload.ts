@@ -1,6 +1,8 @@
 import { plugin } from "bun";
-import { afterEach } from "bun:test";
+import { afterEach, mock } from "bun:test";
+import { createElement } from "react";
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
+import type { ImageProps } from "next/image";
 
 // Mirror `trailingSlash: true` from next.config.ts so next/link keeps trailing
 // slashes in DOM tests. __NEXT_TRAILING_SLASH is an internal Next.js variable;
@@ -23,6 +25,32 @@ plugin({
     }));
   },
 });
+
+// next/image's dev-only `fill` checks read the parent's computed `position`
+// and the img's rendered height on every load. Both always fail here — the
+// CSS-module stub above means no stylesheet ever applies, and happy-dom does
+// no layout, so `img.height` is 0 regardless — spamming warnings into the
+// test output. A pass-through `<img>` keeps src/alt/sizes assertions honest
+// while dropping the Next-only props that aren't DOM attributes.
+mock.module("next/image", () => ({
+  default: function MockNextImage({
+    src,
+    fill: _fill,
+    priority: _priority,
+    loader: _loader,
+    quality: _quality,
+    placeholder: _placeholder,
+    blurDataURL: _blurDataURL,
+    unoptimized: _unoptimized,
+    onLoadingComplete: _onLoadingComplete,
+    ...rest
+  }: ImageProps) {
+    return createElement("img", {
+      ...rest,
+      src: typeof src === "string" ? src : undefined,
+    });
+  },
+}));
 
 // jsdom shipped no `window.matchMedia`, and components read that absence in
 // opposite directions — FamilyTreeChart treats it as "prefers reduced motion"

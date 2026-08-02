@@ -59,6 +59,7 @@ export function DragonInfobox({
       className={cx(infoboxStyles.infobox, className)}
       aria-label={`${dragon.name} infobox`}
     >
+      <p className={infoboxStyles.caption}>{dragon.name}</p>
       {house && (
         <div className={infoboxStyles.sigil}>
           <Sigil

@@ -1,33 +1,42 @@
 @use "breakpoints" as bp;
 
+// The search field: a surfaced well on a firm hairline, opened by the gold
+// glyph the module paints into its padding. Focus lifts the border to solid
+// gold, matching the hover promotion every other surface uses.
 .input {
   display: grid;
   grid-area: search;
   width: 100%;
-  font-family: var(--font-character-name);
-  font-size: 1.8rem;
-  padding: 1rem;
-  background: color-mix(in srgb, var(--vellum) 55%, transparent);
-  color: var(--ink);
-  // height: 50px;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 15px;
+  padding: 11px 16px 11px 38px;
+  background: var(--tkw-surface);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23c8a24a' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
+  background-repeat: no-repeat;
+  background-position: 14px 50%;
+  color: var(--tkw-ink);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 5px;
   outline: none;
-  transition:
-    border-color 150ms ease,
-    background 150ms ease,
-    box-shadow 150ms ease;
+  transition: var(--tkw-lift);
 
   &::placeholder {
-    color: var(--ink-faded);
-    font-style: italic;
+    color: var(--tkw-ink-dim);
+  }
+
+  &::-webkit-search-cancel-button {
+    filter: grayscale(1) opacity(0.6);
   }
 
   &:focus,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    background: color-mix(in srgb, var(--vellum) 90%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+  }
+
+  &:disabled {
+    color: var(--tkw-ink-dim);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -35,25 +44,30 @@
   }
 
   @media (max-width: bp.$md) {
-    font-size: 2rem;
-    padding: 1rem;
+    font-size: 16px;
   }
 }
 
 .empty {
+  font-family: var(--font-body);
   font-style: italic;
-  color: var(--ink-faded);
+  font-weight: 300;
+  font-size: var(--fs-quote);
+  color: var(--tkw-ink-dim);
   text-align: center;
   padding: 2.5rem 1rem;
 }
 
+// Rule 03: a count is a datum, so it is mono, uppercase, letter-spaced.
 .count {
   margin: 0;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: var(--ink-faded);
-  letter-spacing: 1.5px;
-  font-variant: small-caps;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+  font-variant-numeric: tabular-nums;
 }
 
 .pagination {
@@ -61,9 +75,11 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  color: var(--ink-faded);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
 
   @media (max-width: bp.$sm) {
     display: grid;
@@ -108,26 +124,30 @@
 .paginationBottom {
 }
 
+// The chip grammar shared by every filter control: unselected is a surfaced
+// hairline chip, selected inverts to solid gold on the page ground.
 .button {
   appearance: none;
-  background: color-mix(in srgb, var(--vellum) 60%, transparent);
-  color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  padding: 0.4rem 0.85rem;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
+  background: var(--tkw-surface);
+  color: var(--tkw-ink-muted);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
+  padding: 8px 13px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
   cursor: pointer;
   transition:
-    border-color 120ms ease,
-    background 120ms ease,
-    color 120ms ease;
+    var(--tkw-lift),
+    color 0.18s ease;
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
+    border-color: var(--tkw-gold);
+    color: var(--tkw-gold-bright);
+    box-shadow: var(--tkw-glow);
     outline: none;
   }
 
@@ -142,60 +162,56 @@
 }
 
 .status {
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
+  font-variant-numeric: tabular-nums;
 }
 
 .pageSize {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.5px;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
 }
 
 .pageSizeSelect {
   appearance: none;
   -webkit-appearance: none;
-  background: color-mix(in srgb, var(--vellum) 60%, transparent);
-  color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  padding: 0.3rem 1.6rem 0.3rem 0.55rem;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  letter-spacing: 0.5px;
+  background: var(--tkw-surface);
+  color: var(--tkw-ink-muted);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
+  padding: 7px 1.7rem 7px 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
   cursor: pointer;
   background-image:
-    linear-gradient(
-      45deg,
-      transparent 50%,
-      color-mix(in srgb, var(--ink-faded) 55%, transparent) 50%
-    ),
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--ink-faded) 55%, transparent) 50%,
-      transparent 50%
-    );
+    linear-gradient(45deg, transparent 50%, var(--tkw-gold) 50%),
+    linear-gradient(135deg, var(--tkw-gold) 50%, transparent 50%);
   background-position:
-    calc(100% - 0.85rem) 55%,
-    calc(100% - 0.55rem) 55%;
+    calc(100% - 0.95rem) 55%,
+    calc(100% - 0.65rem) 55%;
   background-size:
     0.3rem 0.3rem,
     0.3rem 0.3rem;
   background-repeat: no-repeat;
   transition:
-    border-color 120ms ease,
-    background-color 120ms ease,
-    color 120ms ease;
+    var(--tkw-lift),
+    color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
+    border-color: var(--tkw-gold);
+    color: var(--tkw-gold-bright);
     outline: none;
+  }
+
+  option {
+    background: var(--tkw-surface-solid);
+    color: var(--tkw-ink-body);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -205,10 +221,6 @@
 
 .wrap {
   display: grid;
-
-  @media (max-width: bp.$sm) {
-    padding: 0 0.5rem;
-  }
 }
 
 // The plain row wraps a lone search input (dragons, weapons, and the default
@@ -216,29 +228,26 @@
 // `.rowWithSort`.
 .row {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-areas: "search";
-  align-items: stretch;
+  align-items: center;
   width: 100%;
-  gap: 1rem;
-  height: 100%;
+  gap: 14px;
 }
 
 .rowWithSort {
   display: grid;
-  grid-template-columns: 1fr 100px 100px;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   grid-template-areas: "search sort view";
   width: 100%;
-  gap: 1rem;
-  height: 100%;
+  gap: 14px;
   align-items: center;
 
   @media (max-width: bp.$md) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
     grid-template-areas:
       "search search"
       "sort   view";
-    gap: 1rem;
-    justify-items: center;
+    justify-content: start;
   }
 }

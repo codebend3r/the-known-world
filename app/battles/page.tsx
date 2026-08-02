@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { loadAllBattles } from "@/lib/content";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { formatBattleWhen, absoluteYear } from "@/lib/battle-date";
@@ -56,9 +56,10 @@ export default async function BattlesPage() {
   );
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Battles"
+        eyebrow="Collection 07"
         icon={sectionGlyphs.battles}
         subtitle="The wars, battles, and sieges of the Known World, from the Dawn Age to the wars of the Five Kings."
       />
@@ -93,6 +94,6 @@ export default async function BattlesPage() {
       {hasApproximate && (
         <p className={styles.legend}>* approximate or legendary date</p>
       )}
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

@@ -4,7 +4,7 @@ import { loadAllWeapons, loadAllHouses } from "@/lib/content";
 import { findWeaponImage } from "@/lib/weapon-image";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { bySlug, compareByName } from "@/lib/collections";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
@@ -53,15 +53,16 @@ export default async function WeaponsPage() {
     .sort(compareByName);
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Weapons"
+        eyebrow="Collection 06"
         icon={sectionGlyphs.weapons}
         subtitle="Named blades, ancestral arms, and lost relics of the realm."
       />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search weapons…" />}>
         <FilteredWeaponList items={items} />
       </Suspense>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

@@ -4,7 +4,7 @@ import { loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { shortHouseName } from "@/lib/text";
 import { bySlug, compareByName } from "@/lib/collections";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
@@ -38,9 +38,10 @@ export default async function HousesPage() {
     .sort(compareByName);
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Houses"
+        eyebrow="Collection 03"
         icon={sectionGlyphs.houses}
         subtitle="The rolls of the great houses of the Seven Kingdoms."
       />
@@ -51,6 +52,6 @@ export default async function HousesPage() {
       >
         <FilteredHouseList items={items} />
       </Suspense>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

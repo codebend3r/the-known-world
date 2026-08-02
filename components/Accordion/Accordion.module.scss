@@ -1,8 +1,21 @@
 .accordion {
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--vellum) 35%, transparent);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+  background: var(--tkw-surface);
   overflow: hidden;
+  transition: var(--tkw-lift);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 }
 
 .heading {
@@ -10,6 +23,7 @@
   font: inherit;
 }
 
+// The header row is a section heading, so it takes the mono section voice.
 .trigger {
   appearance: none;
   width: 100%;
@@ -17,28 +31,32 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.9rem 1.1rem;
-  background: color-mix(in srgb, var(--vellum) 55%, transparent);
+  padding: 13px 16px;
+  background: transparent;
   border: 0;
   cursor: pointer;
-  color: var(--ink);
-  font-family: var(--font-character-name);
-  font-size: 1.3rem;
+  color: var(--tkw-gold);
+  font-family: var(--font-mono);
+  font-size: var(--fs-section);
+  font-weight: 500;
+  letter-spacing: var(--ls-section);
+  text-transform: uppercase;
   text-align: left;
-  transition:
-    background 120ms ease,
-    color 120ms ease;
+  transition: color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    background: color-mix(in srgb, var(--vellum) 90%, transparent);
-    color: var(--gold-leaf);
+    color: var(--tkw-gold-bright);
     outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
 .chevron {
-  color: var(--ink-faded);
+  color: var(--tkw-gold);
   transition: transform 150ms ease;
 
   @media (prefers-reduced-motion: reduce) {
@@ -55,17 +73,19 @@
 }
 
 .count {
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  color: var(--ink-faded);
-  font-variant: small-caps;
-  letter-spacing: 1px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: var(--ls-label);
+  color: var(--tkw-ink-dim);
+  font-variant-numeric: tabular-nums;
 }
 
 .panel {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 1rem;
-  padding: 1rem 1.1rem 1.25rem;
-  border-top: 1px solid color-mix(in srgb, var(--ink-faded) 20%, transparent);
+  padding: 16px;
+  border-top: 1px solid var(--tkw-hairline);
+  background: var(--tkw-bg-deep);
 }

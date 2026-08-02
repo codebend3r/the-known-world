@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { InfoRow } from "@/components/Infobox";
 import { Sigil } from "@/components/Sigil";
@@ -63,23 +64,32 @@ export function HouseInfobox({
   }));
 
   const liegeHouse = house.liege ? housesBySlug.get(house.liege) : null;
+  const region = regionForHouse(house.slug, housesBySlug);
+  // Heraldic colour as data: the banner takes the region's tint, the rest of
+  // the plate stays gold. An unknown region falls back inside the module.
+  const tint: CSSProperties = region
+    ? { "--house-tint": `var(--region-color-${region})` }
+    : {};
 
   return (
     <aside
       className={cx(styles.infobox, className)}
       aria-label={`${house.name} infobox`}
     >
-      <div className={styles.sigil}>
-        <Sigil
-          slug={house.slug}
-          name={shortHouseName(house.name)}
-          region={regionForHouse(house.slug, housesBySlug)}
-          sizes="(max-width: 768px) 90vw, 400px"
-          decorative
-          priority
-          className={styles.sigilFill}
-        />
+      <div className={styles.banner} style={tint}>
+        <div className={styles.sigil}>
+          <Sigil
+            slug={house.slug}
+            name={shortHouseName(house.name)}
+            region={region}
+            sizes="(max-width: 768px) 90vw, 400px"
+            decorative
+            priority
+            className={styles.sigilFill}
+          />
+        </div>
       </div>
+      <p className={styles.caption}>{house.name}</p>
 
       <dl className={styles.rows}>
         {house.sigil.description && (

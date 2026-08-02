@@ -8,7 +8,7 @@ import {
   loadAllCharacters,
   renderMarkdown,
 } from "@/lib/content";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import { BattleInfobox } from "@/components/BattleInfobox";
 import { formatBattleWhen } from "@/lib/battle-date";
@@ -60,7 +60,7 @@ export default async function BattlePage({
     .join(" · ");
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <div className={styles.detail}>
         <div className={styles.heading}>
           <h1>{fm.name}</h1>
@@ -98,6 +98,6 @@ export default async function BattlePage({
           <Sources sources={fm.sources} />
         </div>
       </div>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

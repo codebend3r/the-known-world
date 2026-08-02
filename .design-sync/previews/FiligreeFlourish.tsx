@@ -1,9 +1,9 @@
 import { FiligreeFlourish } from "game-of-thrones-atlas";
 
-// A decorative vine flourish drawn in gold-leaf. Sizes to its container's
+// A decorative vine flourish drawn in molten gold. Sizes to its container's
 // font-size / width; shown here at a couple of scales and mirrored.
 export const Default = () => (
-  <div style={{ fontSize: "2rem", color: "var(--gold-leaf)" }}>
+  <div style={{ fontSize: "2rem", color: "var(--tkw-gold)" }}>
     <FiligreeFlourish />
   </div>
 );

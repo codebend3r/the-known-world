@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { loadAllCastles } from "@/lib/content";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import styles from "@/app/castles/page.module.scss";
@@ -56,9 +56,10 @@ export default async function CastlesPage() {
   }));
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Castles"
+        eyebrow="Collection 04"
         icon={sectionGlyphs.castles}
         subtitle="The castles, towns, and strongholds of the Known World, and the houses that hold them."
       />
@@ -86,6 +87,6 @@ export default async function CastlesPage() {
           </section>
         ))}
       </div>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

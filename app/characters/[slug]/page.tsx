@@ -17,7 +17,7 @@ import { shortHouseName } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
 import { bySlug } from "@/lib/collections";
 import { regionForHouse, regionLabel } from "@/lib/regions";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
@@ -159,7 +159,7 @@ export default async function CharacterPage({
     : "";
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <div
         className={cx(
           styles.portrait,
@@ -186,7 +186,7 @@ export default async function CharacterPage({
               slug={fm["primary-house"]}
               name={shortHouseName(primaryHouse.name)}
               region={region}
-              size="6rem"
+              size="42px"
               decorative
             />
           </Link>
@@ -327,6 +327,6 @@ export default async function CharacterPage({
       </p>
 
       <Sources sources={fm.sources} />
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

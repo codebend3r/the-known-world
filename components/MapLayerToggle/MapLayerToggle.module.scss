@@ -1,43 +1,66 @@
+// Layer filters follow the chip rules: unselected is a surfaced hairline chip,
+// checked inverts to solid gold. The checkbox itself is the chip, so the input
+// is hidden behind the label's own painting.
 .toggle {
-  position: relative;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  padding: 0.75rem 1rem;
+  gap: 8px;
+  padding: 0;
   width: fit-content;
   max-width: 100%;
-  justify-self: center;
-  background: var(--vellum);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 40%, transparent);
-  border-radius: 4px;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
+  justify-self: start;
+  background: transparent;
+  border: 0;
 
   label {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
     align-items: center;
-    gap: 0.4rem;
-    color: var(--ink);
+    gap: 0.5rem;
+    padding: 8px 13px;
+    border-radius: 4px;
+    background: var(--tkw-surface);
+    border: 1px solid var(--tkw-hairline-firm);
+    color: var(--tkw-ink-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
     cursor: pointer;
-    text-transform: capitalize;
+    transition:
+      var(--tkw-lift),
+      background 0.18s ease,
+      color 0.18s ease;
+
+    &:hover,
+    &:focus-within {
+      border-color: var(--tkw-gold);
+      color: var(--tkw-gold-bright);
+      box-shadow: var(--tkw-glow);
+    }
+
+    &:has(input:checked) {
+      background: var(--tkw-gold);
+      border-color: var(--tkw-gold);
+      color: var(--tkw-bg);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
   input[type="checkbox"] {
     appearance: none;
-    width: 14px;
-    height: 14px;
-    border: 1.5px solid var(--ink-faded);
-    border-radius: 2px;
-    background: transparent;
+    width: 8px;
+    height: 10px;
+    margin: 0;
+    clip-path: var(--tkw-shield);
+    background: var(--tkw-ink-dim);
     cursor: pointer;
-    position: relative;
 
-    &:checked::after {
-      content: "";
-      position: absolute;
-      inset: 2px;
-      background: var(--wax-seal);
-      border-radius: 1px;
+    &:checked {
+      background: var(--tkw-bg);
     }
   }
 }

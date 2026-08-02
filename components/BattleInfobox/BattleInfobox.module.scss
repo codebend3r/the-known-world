@@ -1,0 +1,40 @@
+.belligerents {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.belligerent {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 9px;
+  min-width: 0;
+}
+
+// Rule 06 at its smallest scale: a 14px shield in the house's heraldic tint.
+.swatch {
+  width: 14px;
+  height: 17px;
+  clip-path: var(--tkw-shield);
+  background: var(--house-tint, var(--tkw-ink-dim));
+}
+
+// Rule 03: a victor is categorical, so it takes the mono status pill rather
+// than the prose voice the outcome sentence keeps.
+.victor {
+  display: inline-block;
+  width: max-content;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 3px;
+  color: var(--tkw-extant);
+  background: color-mix(in srgb, var(--tkw-extant) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extant) 45%, transparent);
+}

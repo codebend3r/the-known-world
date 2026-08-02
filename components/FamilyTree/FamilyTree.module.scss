@@ -17,6 +17,8 @@
   }
 }
 
+// Connector strokes are hairlines at rest; the highlighted lineage lifts them
+// to solid gold on hover.
 .node {
   position: relative;
   padding-left: 1.5rem;
@@ -29,7 +31,7 @@
     left: 0.4rem;
     top: 0;
     bottom: 0;
-    border-left: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
+    border-left: 1px solid var(--tkw-hairline-firm);
   }
 
   &::after {
@@ -38,7 +40,13 @@
     left: 0.4rem;
     top: 0.85rem;
     width: 1rem;
-    border-top: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
+    border-top: 1px solid var(--tkw-hairline-firm);
+  }
+
+  &:hover > .row::before,
+  &:hover::before,
+  &:hover::after {
+    border-color: var(--tkw-gold);
   }
 
   &:last-child::before {
@@ -55,26 +63,38 @@
   }
 }
 
+// The node card: a small surfaced plate on a hairline, promoted on hover.
 .row {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 0.4rem 0.6rem;
-  padding: 0.25rem 0.6rem;
+  padding: 0.4rem 0.7rem;
   width: fit-content;
   max-width: 100%;
-  background: color-mix(in srgb, var(--vellum) 60%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 15%, transparent);
-  border-radius: 2px;
+  background: var(--tkw-surface-raised);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: 5px;
+  transition: var(--tkw-lift);
+
+  &:hover,
+  &:focus-within {
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+  }
 
   @media (max-width: bp.$sm) {
-    padding: 0.4rem 0.6rem;
+    padding: 0.45rem 0.7rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
   }
 }
 
 .rowPlaceholder {
   background: transparent;
-  border: 1px dotted color-mix(in srgb, var(--ink-faded) 55%, transparent);
+  border: 1px dashed var(--tkw-hairline-firm);
 }
 
 .person {
@@ -84,10 +104,10 @@
 }
 
 .name {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  color: var(--ink);
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--tkw-ink);
+  font-weight: 600;
 }
 
 a.name {
@@ -97,13 +117,7 @@ a.name {
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
-    text-decoration: underline;
-    text-decoration-color: color-mix(
-      in srgb,
-      var(--gold-leaf) 45%,
-      transparent
-    );
+    color: var(--tkw-gold-bright);
     outline: none;
   }
 
@@ -112,38 +126,40 @@ a.name {
   }
 }
 
+// Sex is a datum but never a page theme, so it shifts the ink rather than
+// introducing a second accent.
 .nameM {
-  color: var(--ink-slate);
+  color: var(--tkw-ink);
 }
 
 .nameF {
-  color: var(--ink-rose);
+  color: var(--tkw-ink-body);
 }
 
 .nameExternal {
-  color: var(--ink-faded);
+  color: var(--tkw-ink-muted);
   font-style: italic;
 }
 
 .namePlaceholder {
-  color: var(--ink-faded);
+  color: var(--tkw-ink-dim);
   font-style: italic;
-  opacity: 0.8;
 }
 
 .lifespan {
-  font-family: var(--font-ui);
-  font-size: 0.72rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.5px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--tkw-ink-dim);
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
 }
 
 .alias {
   font-family: var(--font-body);
   font-style: italic;
-  font-weight: 400;
-  font-size: 0.78rem;
-  color: var(--ink-faded);
+  font-weight: 300;
+  font-size: 0.8rem;
+  color: var(--tkw-ink-muted);
 }
 
 .spouse {
@@ -153,7 +169,7 @@ a.name {
 }
 
 .cross {
-  color: var(--gold-leaf);
+  color: var(--tkw-gold);
   font-size: 0.95rem;
 }
 
@@ -163,22 +179,24 @@ a.name {
 }
 
 .genderM {
-  color: var(--gold-leaf);
+  color: var(--tkw-ink-dim);
 }
 
 .genderF {
-  color: var(--rose-madder);
+  color: var(--tkw-ink-dim);
 }
 
 .king {
   font-size: 0.85rem;
-  color: var(--gold-leaf);
+  color: var(--tkw-gold);
   padding-right: 0.15rem;
 }
 
 .empty {
+  font-family: var(--font-body);
   font-style: italic;
-  color: var(--ink-faded);
+  font-weight: 300;
+  color: var(--tkw-ink-dim);
   text-align: center;
   padding: 2rem 1rem;
 }

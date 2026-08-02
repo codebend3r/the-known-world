@@ -3,7 +3,7 @@ import { FiligreeRule } from "game-of-thrones-atlas";
 // An ornamental horizontal divider (a lozenge flanked by two rules) used to
 // underline page headings in place of a plain border.
 export const Default = () => (
-  <div style={{ width: "22rem", color: "var(--gold-leaf)" }}>
+  <div style={{ width: "22rem", color: "var(--tkw-gold)" }}>
     <FiligreeRule />
   </div>
 );

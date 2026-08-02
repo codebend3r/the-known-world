@@ -1,7 +1,29 @@
+// Rule 06, shields are the motif: the sigil sits on a shield-clipped plate
+// whose rim reads as the house metal. The plate is the `::before`; the artwork
+// scales inside it so the rim stays visible along the clipped diagonals, where
+// a plain border would be cut away.
 .sigil {
   --sigil-size: 6rem;
   display: inline-block;
   position: relative;
   width: var(--sigil-size);
   height: var(--sigil-size);
+}
+
+.sigil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  clip-path: var(--tkw-shield);
+  background: var(--sigil-metal, var(--tkw-gold));
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.sigil img {
+  clip-path: var(--tkw-shield);
+  transform: scale(0.96);
+  transform-origin: 50% 0;
+  object-fit: contain;
+  z-index: 1;
 }

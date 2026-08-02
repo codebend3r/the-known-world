@@ -19,12 +19,10 @@
   justify-items: center;
   gap: 0.25rem;
   padding: 0.35rem;
-  background: color-mix(in srgb, var(--vellum) 94%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 30%, transparent);
-  border-radius: 2px;
-  box-shadow: 0 2px 12px color-mix(in srgb, var(--ink) 15%, transparent);
-  backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(3px);
+  background: var(--tkw-surface-solid);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 5px;
+  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.9);
 }
 
 .zoomButton {
@@ -34,24 +32,23 @@
   width: 2.25rem;
   height: 2.25rem;
   padding: 0;
-  background: color-mix(in srgb, var(--vellum) 60%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  color: var(--ink);
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
+  color: var(--tkw-ink-muted);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
   line-height: 1;
   cursor: pointer;
   transition:
-    border-color 120ms ease,
-    color 120ms ease,
-    background 120ms ease;
+    var(--tkw-lift),
+    color 0.18s ease;
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
-    background: color-mix(in srgb, var(--vellum) 90%, transparent);
+    border-color: var(--tkw-gold);
+    color: var(--tkw-gold-bright);
+    box-shadow: var(--tkw-glow);
     outline: none;
   }
 
@@ -67,10 +64,18 @@
 
 .zoomLevel {
   min-width: 2.25rem;
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 1px;
-  font-size: 0.85rem;
-  color: var(--ink-faded);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
   text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: bp.$sm) {
+  .zoom {
+    right: 0.5rem;
+    bottom: 0.75rem;
+  }
 }

@@ -3,9 +3,9 @@
   width: 100%;
   height: clamp(500px, 75vh, 900px);
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--vellum) 45%, transparent);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: 8px;
+  background: var(--tkw-bg-deep);
   touch-action: none;
   user-select: none;
 }
@@ -21,9 +21,10 @@
   }
 }
 
+// Node discs read as small plates: surfaced fill on a gold hairline stroke.
 .dot {
-  fill: color-mix(in srgb, var(--vellum) 85%, transparent);
-  stroke: color-mix(in srgb, var(--ink-faded) 60%, transparent);
+  fill: var(--tkw-surface-solid);
+  stroke: var(--tkw-hairline-firm);
   stroke-width: 1.5;
 }
 
@@ -37,28 +38,30 @@
 }
 
 .label {
-  font-family: var(--font-ui);
-  font-size: 9px;
-  fill: var(--ink-faded);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  fill: var(--tkw-ink-body);
   text-anchor: middle;
   pointer-events: none;
 }
 
 .labelBg {
-  fill: var(--vellum);
+  fill: var(--tkw-bg-deep);
   pointer-events: none;
 }
 
 .cross {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   font-size: 10px;
-  fill: var(--gold-leaf);
+  fill: var(--tkw-gold);
   text-anchor: middle;
   pointer-events: none;
 }
 
+// Connector strokes stay hairline until the lineage is highlighted.
 .edge {
-  stroke: color-mix(in srgb, var(--ink-faded) 50%, transparent);
+  stroke: var(--tkw-hairline-firm);
   stroke-width: 1;
   fill: none;
 }
@@ -68,8 +71,10 @@
   place-items: center;
   width: 100%;
   height: 100%;
+  font-family: var(--font-body);
   font-style: italic;
-  color: var(--ink-faded);
+  font-weight: 300;
+  color: var(--tkw-ink-dim);
   padding: 2rem 1rem;
   text-align: center;
 }
@@ -81,44 +86,49 @@
   display: grid;
   gap: 0.25rem;
   padding: 0.4rem;
-  background: color-mix(in srgb, var(--vellum) 92%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  font-family: var(--font-ui);
+  background: var(--tkw-surface-solid);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 5px;
   z-index: 1;
 }
 
 .controlRow {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   gap: 0.2rem;
   justify-content: center;
 }
 
+// Chip rules: surfaced hairline at rest, solid gold when pressed.
 .controlButton {
   appearance: none;
-  background: transparent;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
-  border-radius: 2px;
-  font-size: 0.7rem;
-  padding: 0.15rem 0.4rem;
-  min-width: 1.5rem;
-  color: var(--ink-faded);
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  padding: 0.25rem 0.45rem;
+  min-width: 1.6rem;
+  color: var(--tkw-ink-muted);
   cursor: pointer;
   transition:
-    background 120ms ease,
-    color 120ms ease;
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
-    background: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
+    color: var(--tkw-gold-bright);
+    border-color: var(--tkw-gold);
     outline: none;
   }
 
   &[aria-pressed="true"] {
-    color: var(--ink);
-    background: color-mix(in srgb, var(--gold-leaf) 28%, transparent);
-    border-color: color-mix(in srgb, var(--gold-leaf) 55%, transparent);
+    color: var(--tkw-bg);
+    background: var(--tkw-gold);
+    border-color: var(--tkw-gold);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -138,5 +148,5 @@
   z-index: 1000;
   border: 0;
   border-radius: 0;
-  background: var(--vellum);
+  background: var(--tkw-bg-deep);
 }

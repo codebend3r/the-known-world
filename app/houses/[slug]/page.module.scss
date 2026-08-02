@@ -2,96 +2,83 @@
 
 .body {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
-
-  @media (max-width: bp.$md) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
 }
 
+// The detail plate: article on the measure, infobox on the rail.
 .detail {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 400px;
+  grid-template-columns: minmax(0, 1fr) 372px;
   grid-template-areas:
     "heading heading"
     "main    infobox";
-  gap: 2rem;
+  gap: 32px 44px;
   align-items: start;
 
-  @media (max-width: bp.$md) {
+  @media (max-width: bp.$lg) {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "heading"
       "infobox"
       "main";
-    column-gap: 0;
+    gap: 26px;
   }
 }
 
+// Rule 05: title, house words, then the rule. Left-aligned on the measure.
 .heading {
   grid-area: heading;
   display: grid;
-  gap: 0.6rem;
-  place-items: center;
-  place-content: center;
-  padding: 0.5rem 1rem 0;
+  justify-items: start;
+  gap: 14px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-family: var(--font-character-name);
-    font-size: 2.7rem;
-    letter-spacing: 0.04em;
-    line-height: 1.05;
-    text-shadow:
-      0 1px 0 rgba(255, 250, 235, 0.5),
-      0 2px 5px color-mix(in srgb, var(--ink) 12%, transparent);
+    font-size: 62px;
+    line-height: var(--lh-title);
+
+    @media (max-width: bp.$lg) {
+      font-size: 44px;
+    }
 
     @media (max-width: bp.$sm) {
-      font-size: 2.1rem;
+      font-size: 34px;
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 
+  // House words keep the gold italic quote voice the `.subtitle` primitive
+  // carries, unlike the muted lede on index plates.
   :global(.subtitle) {
     border-bottom: none;
     padding-bottom: 0;
-    font-size: 1.2rem;
-    letter-spacing: 0.02em;
-    color: var(--ink-faded);
+    font-size: 23px;
+
+    @media (max-width: bp.$sm) {
+      font-size: 19px;
+    }
   }
 }
 
 .nameRow {
-  display: inline-grid;
-  grid-auto-flow: column;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(0.75rem, 2.5vw, 1.6rem);
+  display: grid;
+  justify-items: start;
   max-width: 100%;
-
-  @media (max-width: bp.$sm) {
-    display: grid;
-  }
-}
-
-.nameFlourish {
-  width: clamp(48px, 7vw, 92px);
-
-  @media (max-width: bp.$sm) {
-    display: none;
-  }
 }
 
 .divider {
-  width: min(300px, 70%);
-  padding-top: 0.35rem;
+  width: 100%;
+  max-width: 420px;
 }
 
 .main {
   grid-area: main;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1rem;
+  gap: 22px;
   align-content: start;
 }
 
@@ -100,33 +87,45 @@
 }
 
 .tree {
-  padding-top: 1.5rem;
+  padding-top: 1rem;
 }
 
 .notableList {
   list-style: none;
   padding: 0;
+  margin: 0;
   display: grid;
-  gap: 0.6rem;
-
-  @media (max-width: bp.$md) {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
+  gap: 8px;
 
   li {
-    padding: 0.4rem 0.75rem;
-    background: color-mix(in srgb, var(--vellum) 60%, transparent);
-    border: 1px solid color-mix(in srgb, var(--ink-faded) 15%, transparent);
-    border-radius: 2px;
-    line-height: 1.45;
+    padding: 13px 15px;
+    background: var(--tkw-surface);
+    border: 1px solid var(--tkw-hairline);
+    border-radius: 6px;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--tkw-ink-body);
+    transition: var(--tkw-lift);
+
+    &:hover,
+    &:focus-within {
+      border-color: var(--tkw-gold);
+      box-shadow: var(--tkw-glow);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 }
 
 .notableName {
-  font-family: var(--font-body);
+  font-family: var(--font-display);
+  font-size: 19px;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--tkw-ink);
 }
 
 a.notableName {
@@ -135,13 +134,7 @@ a.notableName {
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
-    text-decoration: underline;
-    text-decoration-color: color-mix(
-      in srgb,
-      var(--gold-leaf) 45%,
-      transparent
-    );
+    color: var(--tkw-gold-bright);
     outline: none;
   }
 
@@ -152,22 +145,25 @@ a.notableName {
 
 .notableNote {
   font-family: var(--font-body);
-  color: var(--ink-faded);
+  font-style: italic;
+  color: var(--tkw-ink-muted);
 }
 
+// The plate's way back: a mono breadcrumb, not a sentence.
 .back {
-  padding-top: 2rem;
-  padding-bottom: 3rem;
-  font-family: var(--font-ui);
-  font-size: 0.9rem;
-  text-align: center;
+  padding-top: 1rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
 
   a {
-    color: var(--ink-faded);
+    color: var(--tkw-ink-dim);
     text-decoration: none;
 
-    &:hover {
-      color: var(--gold-leaf);
+    &:hover,
+    &:focus-visible {
+      color: var(--tkw-gold-bright);
     }
   }
 }

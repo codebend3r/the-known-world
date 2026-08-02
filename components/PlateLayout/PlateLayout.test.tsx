@@ -1,13 +1,13 @@
 import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 
-describe("ParchmentLayout", () => {
+describe("PlateLayout", () => {
   it("renders its children inside a `main` landmark with the page class", () => {
     render(
-      <ParchmentLayout>
+      <PlateLayout>
         <p>contents</p>
-      </ParchmentLayout>,
+      </PlateLayout>,
     );
     const main = screen.getByRole("main");
     expect(main.tagName).toBe("MAIN");

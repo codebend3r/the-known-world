@@ -1,43 +1,119 @@
 @use "breakpoints" as bp;
 
+// Iron Throne v1. Forge-black ground, one molten-gold accent, heraldic house
+// colour used strictly as data. Every module consumes these through `var(--*)`;
+// no module hard-codes a hex value.
 :root {
-  --parchment-light: #f4e4c1;
-  --parchment-dark: #e8d3a0;
-  --vellum: #f8ecd0;
-  --ink: #3d2817;
-  --ink-faded: #6b4423;
-  --ink-slate: #2e3a55;
-  --ink-rose: #6a3142;
-  --wax-seal: #8b1a1a;
-  --gold-leaf: #d4a259;
-  --rose-madder: #a85a6b;
+  // ── ground & surface ───────────────────────────────────────────────
+  --tkw-bg: #14100e;
+  --tkw-bg-deep: #0c0a08;
+  --tkw-surface: rgba(29, 24, 19, 0.86);
+  --tkw-surface-solid: #1d1813;
+  // Nested plate inside an already-surfaced panel (family-tree nodes,
+  // accordion bodies) so the two tiers stay distinguishable on the dark
+  // ground without introducing a second accent.
+  --tkw-surface-raised: rgba(45, 38, 30, 0.9);
 
-  --font-heading: var(--font-cinzel), Georgia, serif;
-  --font-character-name: var(--font-cormorant-unicase), Georgia, serif;
-  --font-body: var(--font-eb-garamond), Georgia, serif;
-  --font-ui: var(--font-eb-garamond), Georgia, serif;
-  --font-sans:
-    var(--font-alegreya-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  // ── accent metal ───────────────────────────────────────────────────
+  // Gold is the ONLY interface accent. House colour identifies; it never themes.
+  --tkw-gold: #c8a24a;
+  --tkw-gold-bright: #e6c15c;
+  --tkw-hairline: rgba(200, 162, 74, 0.2);
+  --tkw-hairline-firm: rgba(200, 162, 74, 0.28);
+  --tkw-hairline-faint: rgba(200, 162, 74, 0.14);
+  --tkw-glow:
+    0 0 0 1px rgba(200, 162, 74, 0.35),
+    0 16px 34px -18px rgba(200, 162, 74, 0.55);
+  // Rest is a hairline; hover promotes it to solid gold and adds the glow.
+  // No transforms, no scale.
+  --tkw-lift: border-color 0.18s ease, box-shadow 0.18s ease;
+
+  // ── type ramp ──────────────────────────────────────────────────────
+  --tkw-ink: #f4ecd6;
+  --tkw-ink-body: #ded6c4;
+  --tkw-ink-muted: #9c937f;
+  --tkw-ink-dim: #6b6350;
+
+  // ── status ─────────────────────────────────────────────────────────
+  --tkw-extant: #8fbf8a;
+  --tkw-deposed: #e0904f;
+  --tkw-contested: #e6c15c;
+  --tkw-attainted: #b39ce0;
+  --tkw-extinct: #d15c5c;
+
+  // ── faces ──────────────────────────────────────────────────────────
+  // Mapped from the `next/font` variables declared in `app/layout.tsx`.
+  --font-display: var(--font-cormorant-garamond), Georgia, serif;
+  --font-body: var(--font-spectral), Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  // ── type scale ─────────────────────────────────────────────────────
+  --fs-display: 98px;
+  --fs-h1: 68px;
+  --fs-h2: 24px;
+  --fs-section: 15px;
+  --fs-body: 19px;
+  --fs-quote: 21px;
+  --fs-label: 11px;
+
+  --lh-display: 0.98;
+  --lh-title: 1;
+  --lh-body: 1.75;
+
+  --ls-eyebrow: 4.5px;
+  --ls-section: 2.6px;
+  --ls-caption: 2.2px;
+  --ls-nav: 1.6px;
+  --ls-label: 1.2px;
+
+  // ── geometry ───────────────────────────────────────────────────────
+  --tkw-measure: 1240px;
+  --tkw-measure-wide: 1400px;
+  --tkw-gutter: 56px;
+  --tkw-radius: 7px;
+  // Fixed-height shields (swatches, list rows, map pins).
+  --tkw-shield: polygon(0 0, 100% 0, 100% 74%, 50% 100%, 0 74%);
+  // Variable-height banners (hero, index rail).
+  --tkw-banner: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - 16px),
+    50% 100%,
+    0 calc(100% - 16px)
+  );
+
+  // ── house identity ─────────────────────────────────────────────────
+  // Data, not decoration. Banners, shields, swatches, and map pins only.
+  --house-stark: #6d747c;
+  --house-targaryen: #3a0d0d;
+  --house-lannister: #8a1a28;
+  --house-baratheon: #2a2620;
+  --house-tully: #356197;
+  --house-tyrell: #3f7a3a;
+  --house-arryn: #4d7caa;
+  --house-martell: #c8622a;
+  --house-greyjoy: #2f4a44;
+  --house-bolton: #7a2230;
+
+  // Regional heraldic tints, re-tinted for the dark ground. Same token
+  // names as the parchment set, so `FilteredHouseList` and
+  // `FilteredCharacterList` need no change here. Add a new region here,
+  // not in the module files.
+  --region-color-north: #6d747c;
+  --region-color-vale: #4d7caa;
+  --region-color-riverlands: #356197;
+  --region-color-westerlands: #8a1a28;
+  --region-color-reach: #3f7a3a;
+  --region-color-stormlands: #c8a24a;
+  --region-color-dorne: #c8622a;
+  --region-color-iron-islands: #2f4a44;
+  --region-color-crownlands: #7a2230;
 
   --bp-xs: 480px;
   --bp-sm: 640px;
   --bp-md: 768px;
   --bp-lg: 1024px;
   --bp-xl: 1280px;
-
-  // Regional palette — heraldic border tints used by both the house and
-  // character list cards. Kept as design tokens so the two list modules
-  // don't each carry the same nine hex values. Add a new region here, not
-  // in the module files.
-  --region-color-north: #5d6f7f;
-  --region-color-vale: #4d7caa;
-  --region-color-riverlands: #3d5a7c;
-  --region-color-westerlands: #b13a3a;
-  --region-color-reach: #6f8336;
-  --region-color-stormlands: #c89a31;
-  --region-color-dorne: #c7693a;
-  --region-color-iron-islands: #2f4a44;
-  --region-color-crownlands: #5a2a30;
 }
 
 // Desktop-first breakpoints — default styles target xl. Each @media rule
@@ -56,31 +132,16 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background:
-    radial-gradient(
-      ellipse at top left,
-      rgba(180, 140, 90, 0.15),
-      transparent 60%
-    ),
-    radial-gradient(
-      ellipse at bottom right,
-      rgba(120, 80, 40, 0.18),
-      transparent 60%
-    ),
-    linear-gradient(
-      180deg,
-      var(--parchment-light) 0%,
-      var(--parchment-dark) 100%
-    );
-  background-attachment: fixed;
-  color: var(--ink);
+  background: var(--tkw-bg);
+  color: var(--tkw-ink-body);
   font-family: var(--font-body);
+  font-weight: 300;
   font-size: 16px;
-  line-height: 1.65;
+  line-height: var(--lh-body);
   min-height: 100vh;
 
   @media (max-width: bp.$md) {
-    font-size: 20px;
+    font-size: 18px;
   }
 }
 
@@ -88,6 +149,55 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
+}
+
+// Atmosphere: fixed layers at 3.5 to 5% opacity — heraldic damask tile,
+// compass rose, graticule, vignette. Static, always behind a vignette,
+// never competing with type. Painted once here rather than per page.
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  opacity: 0.045;
+  background-repeat: repeat, no-repeat;
+  background-size:
+    220px 220px,
+    640px 640px;
+  background-position:
+    0 0,
+    88% 78%;
+  background-image:
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%23e6c15c' stroke-width='1.1'><circle cx='110' cy='110' r='46'/><path d='M110 56 L124 96 L164 110 L124 124 L110 164 L96 124 L56 110 L96 96 Z'/><circle cx='110' cy='110' r='13'/><path d='M0 0 L36 36 M220 0 L184 36 M0 220 L36 184 M220 220 L184 184'/></g></svg>"),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'><g fill='none' stroke='%23c8a24a' stroke-width='1.4'><circle cx='320' cy='320' r='300'/><circle cx='320' cy='320' r='232'/><circle cx='320' cy='320' r='86'/><path d='M320 8 L352 288 L632 320 L352 352 L320 632 L288 352 L8 320 L288 288 Z'/><path d='M108 108 L300 300 M532 108 L340 300 M108 532 L300 340 M532 532 L340 340'/></g></svg>");
+}
+
+body::after {
+  background:
+    linear-gradient(rgba(200, 162, 74, 0.018) 1px, transparent 1px) 0 0 / 64px
+      64px,
+    linear-gradient(90deg, rgba(200, 162, 74, 0.018) 1px, transparent 1px) 0 0 /
+      64px 64px,
+    radial-gradient(
+      ellipse 70% 40% at 50% -10%,
+      rgba(200, 162, 74, 0.16),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 92% 78% at 50% 42%,
+      transparent 45%,
+      rgba(8, 6, 5, 0.7) 100%
+    );
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 h1,
@@ -99,31 +209,42 @@ h6 {
   margin: 0;
   padding: 0;
   display: grid;
-  font-family: var(--font-heading);
-  color: var(--ink);
+  font-family: var(--font-display);
+  color: var(--tkw-ink);
   font-weight: 600;
-  letter-spacing: 1px;
 }
 
 p {
   margin: 0;
   padding: 0;
-  font-size: 1.25rem;
+  font-size: var(--fs-body);
+  color: var(--tkw-ink-body);
 }
 
 h1 {
-  font-size: 2.2rem;
-  font-variant: small-caps;
-  letter-spacing: 2px;
-  text-align: center;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-title);
 }
+
 h2 {
-  font-size: 1.4rem;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  font-size: var(--fs-h2);
 }
+
+// Rule 03, mono means data: a section heading is a categorical label, so it
+// is uppercase mono with letter-spacing rather than the display face.
 h3 {
-  font-size: 1.15rem;
-  color: var(--ink-faded);
+  font-family: var(--font-mono);
+  font-size: var(--fs-section);
+  font-weight: 500;
+  letter-spacing: var(--ls-section);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+}
+
+@media (max-width: bp.$lg) {
+  h1 {
+    font-size: 44px;
+  }
 }
 
 @media (max-width: bp.$sm) {
@@ -136,25 +257,26 @@ h3 {
 }
 
 // Typographic primitive: italic page lede under the `h1`. Used by every
-// `ParchmentLayout` page (`app/page.tsx`, houses, castles, not-found, etc.)
-// — kept global alongside the heading rules above so consumers don't each
+// layout page (`app/page.tsx`, houses, castles, not-found, etc.) — kept
+// global alongside the heading rules above so consumers don't each
 // import a typography module.
 .subtitle {
   display: grid;
-  text-align: center;
+  font-family: var(--font-body);
   font-style: italic;
-  color: var(--ink-faded);
+  font-size: var(--fs-quote);
+  font-weight: 300;
+  color: var(--tkw-gold);
   padding: 0 0 1rem 0;
   margin: 0;
-  border-bottom: 1px solid rgba(107, 68, 35, 0.3);
+  border-bottom: 1px solid var(--tkw-hairline);
 }
 
 a {
-  color: var(--ink-faded);
-  text-decoration: underline;
-  text-decoration-color: rgba(107, 68, 35, 0.4);
+  color: var(--tkw-gold);
+  text-decoration: none;
 
   &:hover {
-    color: var(--gold-leaf);
+    color: var(--tkw-gold-bright);
   }
 }

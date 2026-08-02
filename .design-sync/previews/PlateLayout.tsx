@@ -1,10 +1,10 @@
-import { ParchmentLayout } from "game-of-thrones-atlas";
+import { PlateLayout } from "game-of-thrones-atlas";
 
-// A full-page wrapper that renders its children inside the parchment frame used
-// by every index and entry page. Given a heading and a paragraph of prose here.
+// A full-page wrapper that renders its children inside the page plate used
+// by every index and entry page: the 1240px measure and its 56px gutter. Given a heading and a paragraph of prose here.
 export const Default = () => (
   <div style={{ width: "46rem", maxWidth: "100%" }}>
-    <ParchmentLayout>
+    <PlateLayout>
       <h1>The North</h1>
       <p className="subtitle">Winter is Coming</p>
       <p>
@@ -15,6 +15,6 @@ export const Default = () => (
         the North. Its people keep the old gods, and its lords still remember
         the words carved above the crypts of their forebears.
       </p>
-    </ParchmentLayout>
+    </PlateLayout>
   </div>
 );

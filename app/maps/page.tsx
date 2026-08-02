@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { WorldMap, WorldMapSkeleton } from "@/components/WorldMap";
@@ -12,9 +12,10 @@ export const metadata: Metadata = {
 
 export default function MapsPage() {
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Maps"
+        eyebrow="Collection 01"
         icon={sectionGlyphs.maps}
         subtitle="The Known World, from the Sunset Sea to the Shadow Lands."
       />
@@ -25,6 +26,6 @@ export default function MapsPage() {
           naturalHeight={8300}
         />
       </Suspense>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

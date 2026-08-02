@@ -1,10 +1,14 @@
+import type { CSSProperties } from "react";
+import Link from "next/link";
 import { cx } from "@/lib/cx";
 import { InfoRow } from "@/components/Infobox";
 import { houseLabel, humanizeSlug, titleCase } from "@/lib/text";
 import { formatBattleWhen } from "@/lib/battle-date";
+import { regionForHouse } from "@/lib/regions";
 import type { Battle, House, Character, HouseInfoEntry } from "@/lib/schemas";
 import infoboxStyles from "@/components/HouseInfobox/HouseInfobox.module.scss";
 import styles from "@/components/Infobox/Infobox.module.scss";
+import battleStyles from "@/components/BattleInfobox/BattleInfobox.module.scss";
 
 type Props = {
   battle: Battle;
@@ -55,6 +59,7 @@ export function BattleInfobox({
       className={cx(infoboxStyles.infobox, className)}
       aria-label={`${battle.name} infobox`}
     >
+      <p className={infoboxStyles.caption}>{battle.name}</p>
       <dl className={infoboxStyles.rows}>
         <div className={styles.row}>
           <dt>Type</dt>
@@ -76,22 +81,46 @@ export function BattleInfobox({
             <dd>{titleCase(battle.location)}</dd>
           </div>
         )}
+        {/* Belligerents carry a shield swatch per side so the order of battle
+            reads heraldically before it reads as text. */}
         {battle.participants.map((p) => (
-          <InfoRow
-            key={p.side}
-            label={titleCase(p.side)}
-            entries={p.houses.map((slug) => ({
-              slug,
-              name: houseLabel({ slug, housesBySlug }),
-            }))}
-            hrefPrefix="/houses"
-            exists={(s) => housesBySlug.has(s)}
-          />
+          <div key={p.side} className={styles.row}>
+            <dt>{titleCase(p.side)}</dt>
+            <dd>
+              <ul className={battleStyles.belligerents}>
+                {p.houses.map((slug) => {
+                  const region = regionForHouse(slug, housesBySlug);
+                  const tint: CSSProperties = region
+                    ? { "--house-tint": `var(--region-color-${region})` }
+                    : {};
+                  const name = houseLabel({ slug, housesBySlug });
+                  return (
+                    <li key={slug} className={battleStyles.belligerent}>
+                      <span
+                        className={battleStyles.swatch}
+                        style={tint}
+                        aria-hidden="true"
+                      />
+                      {housesBySlug.has(slug) ? (
+                        <Link href={`/houses/${slug}/`}>{name}</Link>
+                      ) : (
+                        <span>{name}</span>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </dd>
+          </div>
         ))}
         {battle.victor && (
           <div className={styles.row}>
             <dt>Victor</dt>
-            <dd>{titleCase(battle.victor)}</dd>
+            <dd>
+              <span className={battleStyles.victor}>
+                {titleCase(battle.victor)}
+              </span>
+            </dd>
           </div>
         )}
         <InfoRow

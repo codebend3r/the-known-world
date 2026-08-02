@@ -1,236 +1,252 @@
 @use "breakpoints" as bp;
 
 .controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "search toggles";
   align-items: center;
-  gap: 1rem;
+  gap: 14px;
   width: 100%;
+
+  @media (max-width: bp.$lg) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "search"
+      "toggles";
+    justify-items: start;
+  }
 }
 
 .searchInput {
-  flex: 1 1 16rem;
+  grid-area: search;
   min-width: 0;
 }
 
 .toggles {
+  grid-area: toggles;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1rem;
-  margin-left: auto;
+  gap: 8px;
 }
 
 .rankFilter {
-  display: flex;
+  display: grid;
+  grid-auto-flow: column;
   align-items: center;
-  gap: 0.4rem;
-  font-family: var(--font-ui);
-  font-size: 0.85rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.5px;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
 
-  // Match the 50px height of the sibling `SortToggle` / `ViewToggle`
-  // buttons and enlarge the option text. Scoped here so the shared
-  // `listSearch.pageSizeSelect` (used by pagination) stays compact.
+  // Match the 38px height of the sibling `SortToggle` / `ViewToggle` chips.
+  // Scoped here so the shared `listSearch.pageSizeSelect` (used by pagination)
+  // stays compact.
   .rankSelect {
-    height: 50px;
-    font-size: 1.1rem;
-    padding: 0 1.9rem 0 0.85rem;
+    height: 38px;
   }
 }
 
 .rankLabel {
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
+  white-space: nowrap;
 }
 
 .regions {
   display: grid;
-  gap: 0.75rem;
+  gap: 10px;
   justify-self: stretch;
 }
 
 .regionSearch {
-  font-size: 1.1rem;
-  padding: 0.6rem 0.75rem;
-
-  @media (max-width: bp.$md) {
-    font-size: 1.2rem;
-  }
+  justify-self: stretch;
 }
 
-// `ParchmentLayout`'s `.page` uses `justify-items: center` so the `h1`
-// and `.subtitle` size to their content. `justify-self: stretch` opts
-// this grid back out so it fills the full parchment column.
+// Rule 05: the register is three columns of rows on the full measure.
 .list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
   justify-self: stretch;
 
-  @media (max-width: bp.$xxl) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: bp.$xl) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   @media (max-width: bp.$lg) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  @media (max-width: bp.$md) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   @media (max-width: bp.$sm) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 .item {
   margin: 0;
+  display: grid;
 }
 
+// The register row: shield on the left, the house's particulars on the right.
 .card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  min-height: 10.5rem;
-  padding: 0.5rem;
-  background: var(--vellum);
-  border: 2px solid white;
-  color: var(--ink);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  padding: 18px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+  color: var(--tkw-ink);
   text-decoration: none;
-  text-align: center;
-  border-radius: 8px;
-  transition:
-    border-color 150ms ease,
-    transform 150ms ease,
-    box-shadow 150ms ease;
-  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  transition: var(--tkw-lift);
 
   &:hover,
   &:focus-visible {
-    border-color: white;
-    transform: scale(1.01);
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
-    color: var(--ink);
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+    outline: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
-
-    &:hover,
-    &:focus-visible {
-      transform: none;
-    }
   }
 }
 
-// Regional border tints — colours live in `globals.scss` as
-// `--region-color-*` tokens (shared with `FilteredCharacterList`).
-.cardNorth {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-north);
-  }
+// Doubled selector so the fixed shield proportions beat `Sigil`'s own square
+// `--sigil-size` rule regardless of stylesheet insertion order.
+.shield.shield {
+  --sigil-size: 52px;
+
+  height: 60px;
 }
-.cardVale {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-vale);
-  }
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 5px;
+  justify-items: start;
+  min-width: 0;
 }
-.cardRiverlands {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-riverlands);
-  }
-}
-.cardWesterlands {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-westerlands);
-  }
-}
-.cardReach {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-reach);
-  }
-}
-.cardStormlands {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-stormlands);
-  }
-}
-.cardDorne {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-dorne);
-  }
-}
-.cardIronIslands {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-iron-islands);
-  }
-}
-.cardCrownlands {
-  &:hover,
-  &:focus-visible {
-    border-color: var(--region-color-crownlands);
-  }
+
+.titleRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
 }
 
 .name {
-  font-family: var(--font-heading);
-  font-variant: small-caps;
-  letter-spacing: 0.5px;
-  font-size: 1rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
   font-weight: 600;
-  min-height: 60px;
-  align-content: center;
-}
-
-// List view: same `<ul>`, one row per house. Cap the bleed so rows
-// don't run wider than they need; the grid is the showpiece.
-.listView {
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
-  --bleed-max: 1280px;
-
-  .card {
-    display: grid;
-    grid-template-columns: 4.5rem 1fr auto;
-    align-items: center;
-    gap: 1rem;
-    min-height: 0;
-    padding: 0.65rem 1rem;
-    text-align: left;
-    border-left-width: 3px;
-  }
-
-  .name {
-    font-size: 1.5rem;
-    letter-spacing: 1px;
-    min-height: 0;
-  }
+  line-height: 1.15;
+  color: var(--tkw-ink);
+  min-width: 0;
 }
 
 .region {
-  font-family: var(--font-ui);
-  font-size: 0.78rem;
-  font-variant: small-caps;
-  letter-spacing: 1.5px;
-  color: var(--ink-faded);
-  text-align: right;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+  white-space: nowrap;
+}
+
+.rank {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
+}
+
+// Status pill: mono 9px on the status hue at 16% with a 45% border.
+.status {
+  margin-top: 4px;
+  padding: 4px 9px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.statusExtant {
+  color: var(--tkw-extant);
+  background: color-mix(in srgb, var(--tkw-extant) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extant) 45%, transparent);
+}
+
+.statusExtinct {
+  color: var(--tkw-extinct);
+  background: color-mix(in srgb, var(--tkw-extinct) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
+}
+
+// Heraldic colour as data: hover raises the shield's metal to the region's own
+// tint, while the row's border stays gold. Colours live in `globals.scss` as
+// `--region-color-*` tokens (shared with `FilteredCharacterList`).
+.cardNorth:hover .shield::before {
+  background: var(--region-color-north);
+  opacity: 1;
+}
+.cardVale:hover .shield::before {
+  background: var(--region-color-vale);
+  opacity: 1;
+}
+.cardRiverlands:hover .shield::before {
+  background: var(--region-color-riverlands);
+  opacity: 1;
+}
+.cardWesterlands:hover .shield::before {
+  background: var(--region-color-westerlands);
+  opacity: 1;
+}
+.cardReach:hover .shield::before {
+  background: var(--region-color-reach);
+  opacity: 1;
+}
+.cardStormlands:hover .shield::before {
+  background: var(--region-color-stormlands);
+  opacity: 1;
+}
+.cardDorne:hover .shield::before {
+  background: var(--region-color-dorne);
+  opacity: 1;
+}
+.cardIronIslands:hover .shield::before {
+  background: var(--region-color-iron-islands);
+  opacity: 1;
+}
+.cardCrownlands:hover .shield::before {
+  background: var(--region-color-crownlands);
+  opacity: 1;
+}
+
+// List view: same `<ul>`, one register row per line across the full measure.
+.listView {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+
+  .card {
+    padding: 13px 16px;
+    align-items: center;
+  }
+
+  .shield.shield {
+    --sigil-size: 34px;
+
+    height: 40px;
+  }
+
+  .name {
+    font-size: 20px;
+  }
 }

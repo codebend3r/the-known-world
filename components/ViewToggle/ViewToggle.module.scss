@@ -1,15 +1,19 @@
 @use "breakpoints" as bp;
 
+// Same chip grammar as `SortToggle`: surfaced hairline segments, the pressed
+// one inverted to solid gold.
 .toggle {
-  display: flex;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-area: view;
+  width: max-content;
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 4px;
   overflow: hidden;
-  background: color-mix(in srgb, var(--vellum) 55%, transparent);
-  height: 50px;
+  background: var(--tkw-surface);
 
   @media (max-width: bp.$md) {
-    justify-self: left;
+    justify-self: start;
   }
 }
 
@@ -18,31 +22,29 @@
   background: transparent;
   border: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
-  width: 50px;
-  height: 50px;
-  justify-content: center;
-  color: var(--ink-faded);
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 38px;
+  color: var(--tkw-ink-muted);
   cursor: pointer;
   transition:
-    background 120ms ease,
-    color 120ms ease;
+    background 0.18s ease,
+    color 0.18s ease;
 
   & + & {
-    border-left: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
+    border-left: 1px solid var(--tkw-hairline-firm);
   }
 
   &:hover,
   &:focus-visible {
-    color: var(--gold-leaf);
+    color: var(--tkw-gold-bright);
     outline: none;
-    background: color-mix(in srgb, var(--vellum) 90%, transparent);
   }
 
   &[aria-pressed="true"] {
-    color: var(--ink);
-    background: color-mix(in srgb, var(--gold-leaf) 18%, transparent);
+    color: var(--tkw-bg);
+    background: var(--tkw-gold);
   }
 
   @media (prefers-reduced-motion: reduce) {

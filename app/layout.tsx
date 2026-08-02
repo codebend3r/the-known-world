@@ -1,41 +1,34 @@
 import type { Metadata, Viewport } from "next";
-import {
-  Alegreya_Sans,
-  Cinzel,
-  Cormorant_Unicase,
-  EB_Garamond,
-} from "next/font/google";
+import { Cormorant_Garamond, JetBrains_Mono, Spectral } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../styles/globals.scss";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteMenu } from "@/components/SiteMenu";
 import { SiteFooter } from "@/components/SiteFooter";
 
-const cinzel = Cinzel({
+// Iron Throne v1 uses three faces and three jobs: display sets every title,
+// body sets every paragraph, mono sets every label, year, and datum.
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-cinzel",
-  weight: ["400", "600", "700"],
-});
-const cormorantUnicase = Cormorant_Unicase({
-  subsets: ["latin"],
-  variable: "--font-cormorant-unicase",
+  variable: "--font-cormorant-garamond",
   weight: ["500", "600", "700"],
 });
-const ebGaramond = EB_Garamond({
+const spectral = Spectral({
   subsets: ["latin"],
-  variable: "--font-eb-garamond",
-  weight: ["400", "500", "600"],
+  variable: "--font-spectral",
+  weight: ["300", "400"],
+  style: ["normal", "italic"],
 });
-const alegreyaSans = Alegreya_Sans({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-alegreya-sans",
-  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains-mono",
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
   title: "Atlas of the Known World · A Song of Ice and Fire",
   description:
-    "An interactive atlas of George R. R. Martin's world of Ice and Fire — maps, timeline, and the rolls of the great houses.",
+    "An interactive atlas of George R. R. Martin's world of Ice and Fire: maps, timeline, and the rolls of the great houses.",
 };
 
 export const viewport: Viewport = {
@@ -54,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cinzel.variable} ${cormorantUnicase.variable} ${ebGaramond.variable} ${alegreyaSans.variable}`}
+      className={`${cormorantGaramond.variable} ${spectral.variable} ${jetbrainsMono.variable}`}
     >
       <body>
         <SiteHeader />

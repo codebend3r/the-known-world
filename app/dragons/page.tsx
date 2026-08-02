@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { loadAllDragons, loadAllHouses } from "@/lib/content";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { bySlug, compareByName } from "@/lib/collections";
-import { ParchmentLayout } from "@/components/ParchmentLayout";
+import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
@@ -40,15 +40,16 @@ export default async function DragonsPage() {
     .sort(compareByName);
 
   return (
-    <ParchmentLayout>
+    <PlateLayout>
       <PageHeading
         title="Dragons"
+        eyebrow="Collection 08"
         icon={sectionGlyphs.dragons}
         subtitle="Of the dragons that were and the dragons that are."
       />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search dragons…" />}>
         <FilteredDragonList items={items} />
       </Suspense>
-    </ParchmentLayout>
+    </PlateLayout>
   );
 }

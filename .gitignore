@@ -36,6 +36,9 @@ next-env.d.ts
 # scraper cache (local, regeneratable)
 .cache/
 
+# design handoff bundle (local reference: mockups and their runtime, not app code)
+/design_handoff_iron_throne/
+
 # design-sync (claude.ai/design): staged converter scripts, build output,
 # and machine state are regenerated per run; the durable inputs
 # (config.json, NOTES.md, conventions.md, docs/, previews/, overrides/,

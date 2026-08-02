@@ -1,575 +1,846 @@
 @use "breakpoints" as bp;
 
-// ------------------------------------------------------------------ layout
+// The in-repo catalogue of Iron Throne v1. Everything here is drawn with the
+// same tokens the app uses, so the page fails visibly if a token is retuned.
 
 .section {
-  width: 100%;
-  max-width: 1040px;
   display: grid;
-  gap: 1.25rem;
-  align-content: start;
-  justify-items: stretch;
-  padding-top: 1rem;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  padding-top: 26px;
+  border-top: 1px solid var(--tkw-hairline);
 }
 
-.sectionIntro {
+.sectionHeading {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-section);
+  font-weight: 500;
+  letter-spacing: var(--ls-section);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+
+  &::before {
+    content: "▚ ";
+  }
+}
+
+.sectionLede {
+  max-width: 72ch;
   font-family: var(--font-body);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--ink-faded);
-  max-width: 62ch;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--tkw-ink-muted);
+  padding-bottom: 10px;
+
+  em {
+    font-style: italic;
+    color: var(--tkw-ink-body);
+  }
 }
 
-.divider {
-  width: min(320px, 60%);
-  color: var(--ink-faded);
-  opacity: 0.7;
+.inlineCode {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  color: var(--tkw-gold-bright);
 }
 
-.code {
-  font-family: var(--font-sans);
-  font-size: 0.85em;
-  font-style: normal;
-  color: var(--ink);
-  background: color-mix(in srgb, var(--wax-seal) 8%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 20%, transparent);
-  border-radius: 2px;
-  padding: 0.1em 0.4em;
-}
+// ------------------------------------------------------------- 01 palette
 
-// The shared small-caps caption idiom used for every token/spec label.
-.specLabel {
-  font-family: var(--font-ui);
-  font-variant: small-caps;
-  font-size: 0.85rem;
-  letter-spacing: 1.5px;
-  color: var(--ink-faded);
-}
-
-// ------------------------------------------------------------------ colour
-
-.swatchGrid {
+.paletteGrid {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: bp.$lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: bp.$sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .swatch {
   display: grid;
-  gap: 0.5rem;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+  overflow: hidden;
 }
 
 .swatchChip {
-  height: 76px;
-  border-radius: 2px;
-  border: 1px solid color-mix(in srgb, var(--ink) 25%, transparent);
-  box-shadow:
-    inset 0 0 0 1px color-mix(in srgb, var(--vellum) 25%, transparent),
-    0 1px 3px color-mix(in srgb, var(--ink) 18%, transparent);
+  display: block;
+  height: 74px;
+  background: var(--swatch);
+  border-bottom: 1px solid var(--tkw-hairline);
 }
 
-.swatchMeta {
+.swatchBody {
   display: grid;
-  gap: 0.1rem;
+  gap: 5px;
+  padding: 13px 15px 15px;
 }
 
 .swatchName {
-  font-family: var(--font-ui);
-  font-size: 1rem;
-  color: var(--ink);
-}
-
-.swatchToken,
-.swatchHex {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  color: var(--ink-faded);
-  letter-spacing: 0.3px;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--tkw-ink);
 }
 
 .swatchHex {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
+  color: var(--tkw-gold);
 }
 
-// ------------------------------------------------------------- typography
-
-.typeList {
-  display: grid;
-  gap: 1.5rem;
+.swatchToken {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.6px;
+  color: var(--tkw-ink-dim);
 }
 
-.specimen {
+.swatchUse {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--tkw-ink-muted);
+}
+
+// ------------------------------------------------------------ 02 heraldry
+
+.heraldryGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
   display: grid;
-  grid-template-columns: minmax(96px, 150px) 1fr;
-  gap: 1.25rem;
-  align-items: baseline;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px dashed
-    color-mix(in srgb, var(--ink-faded) 22%, transparent);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+
+  @media (max-width: bp.$lg) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 
   @media (max-width: bp.$sm) {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-// The subtitle primitive carries a bottom border by default; drop it inside
-// the type specimen so it does not double the specimen divider.
-.specimen :global(.subtitle) {
-  border-bottom: none;
-  padding-bottom: 0;
-  text-align: left;
+.heraldry {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 10px;
+  padding: 16px 14px;
+  text-align: center;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
 }
 
-.fontList {
+// Rule 06: one clip-path, every scale. The plate carries the metal, the inner
+// face carries the house colour, so the rim survives the clipped diagonals.
+%shieldPlate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  clip-path: var(--tkw-shield);
+  background: var(--shield-metal);
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--shield-ink);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    clip-path: var(--tkw-shield);
+    background: linear-gradient(
+      180deg,
+      var(--shield-bg),
+      color-mix(in srgb, var(--shield-bg) 45%, #000)
+    );
+    z-index: -1;
+  }
+}
+
+.shield {
+  @extend %shieldPlate;
+
+  width: 48px;
+  height: 56px;
+  font-size: 24px;
+  isolation: isolate;
+}
+
+.heraldryName {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+// ---------------------------------------------------------------- 03 type
+
+.faceGrid {
   list-style: none;
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 1.25rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: bp.$md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-.fontRow {
+.face {
   display: grid;
-  gap: 0.3rem;
+  align-content: start;
+  gap: 8px;
+  padding: 20px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: var(--tkw-radius);
 }
 
-.fontSample {
-  font-size: 1.6rem;
-  color: var(--ink);
-  line-height: 1.3;
+.faceRole {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
 }
 
-// --------------------------------------------------------------- spacing
+.faceDisplay {
+  font-family: var(--font-display);
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--tkw-ink);
+}
 
-.spaceList {
-  list-style: none;
-  padding: 0;
+.faceBody {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--tkw-ink);
+}
+
+.faceMono {
+  font-family: var(--font-mono);
+  font-size: 25px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--tkw-ink);
+}
+
+.faceWeights {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  color: var(--tkw-gold);
+}
+
+.faceUse {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--tkw-ink-muted);
+}
+
+.scale {
+  display: grid;
   margin: 0;
+  padding: 8px 26px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: 8px;
+
+  @media (max-width: bp.$sm) {
+    padding: 8px 16px;
+  }
+}
+
+.scaleRow {
   display: grid;
-  gap: 0.85rem;
+  grid-template-columns: 150px minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--tkw-hairline-faint);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: bp.$md) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+  }
 }
 
-.spaceRow {
+.scaleToken code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  color: var(--tkw-gold);
+}
+
+.scaleSample {
+  margin: 0;
+  min-width: 0;
+}
+
+.scaleSpec {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+  white-space: nowrap;
+}
+
+.sampleDisplay {
+  font-family: var(--font-display);
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--tkw-ink);
+}
+
+.sampleH1 {
+  font-family: var(--font-display);
+  font-size: 38px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--tkw-ink);
+}
+
+.sampleH2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+.sampleSection {
+  font-family: var(--font-mono);
+  font-size: var(--fs-section);
+  font-weight: 500;
+  letter-spacing: var(--ls-section);
+  color: var(--tkw-gold);
+}
+
+.sampleBody {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  color: var(--tkw-ink-body);
+}
+
+.sampleQuote {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: var(--fs-quote);
+  color: var(--tkw-gold);
+}
+
+.sampleLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  color: var(--tkw-ink-dim);
+}
+
+// ---------------------------------------------------------- 04 components
+
+.demoGrid {
   display: grid;
-  grid-template-columns: minmax(110px, 150px) 1fr auto;
-  gap: 1rem;
-  align-items: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+
+  @media (max-width: bp.$md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
-.spaceBar {
-  height: 18px;
-  min-width: 4px;
-  border-radius: 2px;
-  background: linear-gradient(90deg, var(--wax-seal), var(--rose-madder));
-  justify-self: start;
-}
-
-.spacePx {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  color: var(--ink-faded);
-}
-
-.spaceDemos {
+// A dashed well marks a specimen stage, so a demo never reads as chrome.
+.demo {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
-  padding-top: 0.5rem;
+  align-content: start;
+  gap: 18px;
+  padding: 22px;
+  background: color-mix(in srgb, var(--tkw-bg) 60%, transparent);
+  border: 1px dashed var(--tkw-hairline-firm);
+  border-radius: 8px;
 }
 
-.spaceDemo {
+.demoLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+}
+
+.demoStage {
   display: grid;
-  gap: 0.6rem;
+  gap: 18px;
   justify-items: start;
 }
 
-.padBox {
-  display: grid;
-  padding: 1.5rem;
-  border: 1px dashed color-mix(in srgb, var(--ink-faded) 40%, transparent);
-  border-radius: 2px;
-  background: color-mix(in srgb, var(--gold-leaf) 12%, transparent);
-}
+.banner {
+  @extend %shieldPlate;
 
-.padInner {
-  display: grid;
-  min-width: 120px;
-  height: 40px;
-  border-radius: 2px;
-  background: var(--gold-leaf);
-}
-
-.gapRow {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 40px;
-  justify-content: start;
-  gap: 1rem;
-}
-
-.gapBox {
-  height: 40px;
-  border-radius: 2px;
-  background: var(--gold-leaf);
-}
-
-// ---------------------------------------------------------------- controls
-
-.controls {
-  display: grid;
-  gap: 2rem;
-}
-
-.group {
-  display: grid;
-  gap: 1.1rem;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 25%, transparent);
-  border-radius: 3px;
-  padding: 1.4rem 1.5rem 1.6rem;
-  background: color-mix(in srgb, var(--vellum) 28%, transparent);
-}
-
-.groupLegend {
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  letter-spacing: 1px;
-  color: var(--ink-faded);
-  padding: 0 0.5rem;
-}
-
-.fieldGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 1.4rem;
-  align-items: start;
-}
-
-.field {
-  display: grid;
-  gap: 0.45rem;
+  isolation: isolate;
+  width: 120px;
+  clip-path: var(--tkw-banner);
+  padding: 14px 8px 30px;
   align-content: start;
-}
+  gap: 7px;
 
-.fieldLabel {
-  font-family: var(--font-ui);
-  font-variant: small-caps;
-  font-size: 0.95rem;
-  letter-spacing: 1px;
-  color: var(--ink-faded);
-}
-
-.fieldHint {
-  font-family: var(--font-sans);
-  font-size: 0.75rem;
-  font-style: italic;
-  color: var(--ink-faded);
-}
-
-// The canonical text control: the same parchment field used by the list
-// search input, sized for regular forms.
-.control {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 100%;
-  font-family: var(--font-ui);
-  font-size: 1rem;
-  padding: 0.6rem 0.75rem;
-  background: color-mix(in srgb, var(--vellum) 55%, transparent);
-  color: var(--ink);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  outline: none;
-  transition:
-    border-color 150ms ease,
-    background 150ms ease,
-    box-shadow 150ms ease;
-
-  &::placeholder {
-    color: var(--ink-faded);
-    font-style: italic;
-  }
-
-  &:focus-visible {
-    border-color: var(--gold-leaf);
-    background: color-mix(in srgb, var(--vellum) 90%, transparent);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
-  }
-
-  &:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    background: color-mix(in srgb, var(--vellum) 30%, transparent);
-  }
-
-  &[readonly] {
-    background: color-mix(in srgb, var(--vellum) 30%, transparent);
-    color: var(--ink-faded);
-  }
-
-  &[aria-invalid="true"] {
-    border-color: var(--wax-seal);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--wax-seal) 14%, transparent);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
+  &::before {
+    clip-path: var(--tkw-banner);
   }
 }
 
-// A select needs the hand-drawn chevron the native arrow can't match.
-select.control {
-  cursor: pointer;
-  padding-right: 2rem;
-  background-image:
-    linear-gradient(
-      45deg,
-      transparent 50%,
-      color-mix(in srgb, var(--ink-faded) 55%, transparent) 50%
-    ),
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--ink-faded) 55%, transparent) 50%,
-      transparent 50%
-    );
-  background-position:
-    calc(100% - 1.1rem) 55%,
-    calc(100% - 0.8rem) 55%;
-  background-size:
-    0.32rem 0.32rem,
-    0.32rem 0.32rem;
-  background-repeat: no-repeat;
-}
-
-.textarea {
-  @extend .control;
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  line-height: 1.5;
-  min-height: 6rem;
-  resize: vertical;
-}
-
-.multi {
-  @extend .control;
-  padding: 0.4rem;
-  cursor: pointer;
-
-  option {
-    padding: 0.35rem 0.5rem;
-    border-radius: 2px;
-  }
-
-  option:checked {
-    background: color-mix(in srgb, var(--gold-leaf) 40%, transparent);
-    color: var(--ink);
-  }
-}
-
-.range {
-  width: 100%;
-  accent-color: var(--gold-leaf);
-  cursor: pointer;
-}
-
-.colorInput {
-  width: 100%;
-  height: 3rem;
-  padding: 0.2rem;
-  background: color-mix(in srgb, var(--vellum) 55%, transparent);
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  border-radius: 2px;
-  cursor: pointer;
-
-  &:focus-visible {
-    border-color: var(--gold-leaf);
-    outline: none;
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold-leaf) 18%, transparent);
-  }
-}
-
-.file {
-  width: 100%;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  color: var(--ink-faded);
-
-  &::file-selector-button {
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-    margin-right: 0.75rem;
-    padding: 0.45rem 0.9rem;
-    background: color-mix(in srgb, var(--vellum) 60%, transparent);
-    color: var(--ink);
-    border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-    border-radius: 2px;
-    cursor: pointer;
-    transition:
-      border-color 120ms ease,
-      color 120ms ease;
-  }
-
-  &::file-selector-button:hover {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
-  }
-}
-
-// ---------------------------------------------------- checkbox / radio sets
-
-.optionSet {
+.bannerMark {
   display: grid;
-  gap: 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 30%, transparent);
-  border-radius: 2px;
-  padding: 1rem 1.2rem 1.15rem;
-  background: color-mix(in srgb, var(--vellum) 40%, transparent);
-}
-
-.optionLegend {
-  font-family: var(--font-ui);
-  font-variant: small-caps;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
-  color: var(--ink-faded);
-  padding: 0 0.4rem;
-}
-
-.option {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.6rem;
-  align-items: center;
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: var(--ink);
-  cursor: pointer;
-}
-
-.check {
-  width: 1.15rem;
-  height: 1.15rem;
-  accent-color: var(--gold-leaf);
-  cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid var(--gold-leaf);
-    outline-offset: 2px;
-  }
-}
-
-// --------------------------------------------------------------- switch
-
-.switch {
-  display: inline-grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.75rem;
-  align-items: center;
-  cursor: pointer;
-  font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: var(--ink);
-}
-
-// Visually hidden but focusable and in the tab order; the track/thumb render
-// its state via the sibling combinator.
-.switchInput {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.switchTrack {
-  display: grid;
-  align-items: center;
-  width: 46px;
-  height: 26px;
-  padding: 2px;
-  border-radius: 13px;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  background: color-mix(in srgb, var(--ink-faded) 28%, transparent);
-  transition:
-    background 150ms ease,
-    box-shadow 150ms ease;
-}
-
-.switchThumb {
-  width: 18px;
-  height: 18px;
+  place-items: center;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: var(--vellum);
-  box-shadow: 0 1px 2px color-mix(in srgb, var(--ink) 40%, transparent);
-  transform: translateX(0);
-  transition: transform 150ms ease;
+  border: 1.5px solid var(--shield-metal);
+  font-size: 21px;
 }
 
-.switchInput:checked ~ .switchTrack {
-  background: var(--gold-leaf);
+.bannerName {
+  font-size: 17px;
+  color: var(--tkw-ink);
 }
 
-.switchInput:checked ~ .switchTrack .switchThumb {
-  transform: translateX(20px);
+.bannerWords {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 10px;
+  text-align: center;
+  color: var(--shield-ink);
 }
 
-.switchInput:focus-visible ~ .switchTrack {
-  border-color: var(--gold-leaf);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold-leaf) 35%, transparent);
+.card {
+  display: grid;
+  gap: 10px;
+  max-width: 270px;
+  padding: 20px 18px 22px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .switchTrack,
-  .switchThumb {
-    transition: none;
+.cardHead {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--tkw-gold);
+}
+
+.cardPlate {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--tkw-ink-dim);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+.cardBlurb {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--tkw-ink-muted);
+}
+
+.cardEnter {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  padding: 18px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+}
+
+.rowShield {
+  @extend %shieldPlate;
+
+  isolation: isolate;
+  width: 52px;
+  height: 60px;
+  font-size: 27px;
+}
+
+.rowBody {
+  display: grid;
+  gap: 5px;
+  justify-items: start;
+  min-width: 0;
+}
+
+.rowTitle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+}
+
+.rowName {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+.rowRegion {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+}
+
+.rowWords {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--tkw-gold);
+}
+
+.rowSeat {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--tkw-ink-muted);
+}
+
+.infobox {
+  display: grid;
+  width: 100%;
+  max-width: 300px;
+  overflow: hidden;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 8px;
+}
+
+.infoboxCaption {
+  padding: 12px 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(200, 162, 74, 0.16),
+    rgba(200, 162, 74, 0.04)
+  );
+  border-bottom: 1px solid var(--tkw-hairline-firm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--tkw-gold-bright);
+}
+
+.infoboxRows {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.infoboxRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px 14px;
+  align-items: center;
+
+  dt {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--tkw-ink-dim);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 15px;
+    color: var(--tkw-ink-body);
   }
 }
 
-// --------------------------------------------------------------- buttons
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 
-.btnRow {
+.chip {
+  padding: 8px 13px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  color: var(--tkw-ink-muted);
+}
+
+.chipOn {
+  background: var(--tkw-gold);
+  border-color: var(--tkw-gold);
+  color: var(--tkw-bg);
+}
+
+.pill {
+  padding: 4px 9px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.pillExtant {
+  color: var(--tkw-extant);
+  background: color-mix(in srgb, var(--tkw-extant) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extant) 45%, transparent);
+}
+
+.pillDeposed {
+  color: var(--tkw-deposed);
+  background: color-mix(in srgb, var(--tkw-deposed) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-deposed) 45%, transparent);
+}
+
+.pillContested {
+  color: var(--tkw-contested);
+  background: color-mix(in srgb, var(--tkw-contested) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-contested) 45%, transparent);
+}
+
+.pillAttainted {
+  color: var(--tkw-attainted);
+  background: color-mix(in srgb, var(--tkw-attainted) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-attainted) 45%, transparent);
+}
+
+.pillExtinct {
+  color: var(--tkw-extinct);
+  background: color-mix(in srgb, var(--tkw-extinct) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
+}
+
+.searchDemo {
   display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
-  justify-content: start;
-  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  padding: 11px 16px 11px 38px;
+  background: var(--tkw-surface);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23c8a24a' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
+  background-repeat: no-repeat;
+  background-position: 14px 50%;
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 5px;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--tkw-ink-dim);
+}
+
+.quote {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 4px 0 4px 18px;
+  border-left: 2px solid var(--tkw-gold);
+}
+
+.quoteText {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.55;
+  color: var(--tkw-ink);
+}
+
+.quoteCite {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-style: normal;
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
+
+  &::before {
+    content: "— ";
+  }
+}
+
+// --------------------------------------------------------------- 05 rules
+
+.ruleGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: bp.$lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
   @media (max-width: bp.$sm) {
-    grid-auto-flow: row;
-    grid-auto-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-.btn {
-  appearance: none;
-  font-family: var(--font-ui);
-  font-size: 0.95rem;
-  letter-spacing: 0.5px;
-  padding: 0.6rem 1.3rem;
-  border-radius: 2px;
-  border: 1px solid color-mix(in srgb, var(--ink-faded) 35%, transparent);
-  background: color-mix(in srgb, var(--vellum) 60%, transparent);
-  color: var(--ink);
-  cursor: pointer;
-  transition:
-    border-color 120ms ease,
-    background 120ms ease,
-    color 120ms ease;
+.rule {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 20px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+}
 
-  &:hover:not(:disabled),
-  &:focus-visible:not(:disabled) {
-    border-color: var(--gold-leaf);
-    color: var(--gold-leaf);
-    outline: none;
+.ruleNum {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  color: var(--tkw-gold);
+  font-variant-numeric: tabular-nums;
+}
+
+.ruleTitle {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--tkw-ink);
+}
+
+.ruleBody {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--tkw-ink-muted);
+}
+
+// -------------------------------------------------------------- 06 tokens
+
+.tokens {
+  margin: 0;
+  padding: 24px 26px;
+  overflow-x: auto;
+  background: var(--tkw-bg-deep);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.85;
+  color: var(--tkw-ink-muted);
+
+  code {
+    font: inherit;
   }
 
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+  @media (max-width: bp.$sm) {
+    padding: 16px;
+    font-size: 11px;
+  }
+}
+
+// --------------------------------------------------------------- 07 pages
+
+.pageGrid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+
+  @media (max-width: bp.$lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: bp.$sm) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.pageItem {
+  display: grid;
+}
+
+.pageCard {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 18px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+  text-decoration: none;
+  transition: var(--tkw-lift);
+
+  &:hover,
+  &:focus-visible {
+    border-color: var(--tkw-gold);
+    box-shadow: var(--tkw-glow);
+    outline: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -577,22 +848,25 @@ select.control {
   }
 }
 
-.btnPrimary {
-  @extend .btn;
-  background: var(--wax-seal);
-  border-color: var(--wax-seal);
-  color: var(--vellum);
-
-  &:hover:not(:disabled),
-  &:focus-visible:not(:disabled) {
-    color: var(--vellum);
-    border-color: var(--wax-seal);
-    filter: brightness(1.12);
-    box-shadow: 0 0 0 2px color-mix(in srgb, var(--gold-leaf) 30%, transparent);
-  }
+.pageKind {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
 }
 
-.btnGhost {
-  @extend .btn;
-  background: transparent;
+.pageTitle {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+.pageBlurb {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--tkw-ink-muted);
 }

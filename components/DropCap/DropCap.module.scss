@@ -1,8 +1,20 @@
+// The article opener: a display-face capital dropped three lines into the
+// column, in the one accent metal. Sized off the display ramp so it tracks the
+// body measure rather than a hard-coded pixel value.
+.dropCap {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--tkw-ink-body);
+}
+
 .dropCap::first-letter {
-  font-family: var(--font-heading);
-  font-size: 3.2rem;
-  line-height: 1;
-  padding: 0.15rem 0.5rem 0 0;
-  color: var(--ink-faded);
+  float: left;
+  font-family: var(--font-display);
+  font-size: calc(var(--fs-display) * 0.78);
+  line-height: 0.78;
+  padding: 6px 14px 0 0;
+  color: var(--tkw-gold);
   font-weight: 600;
 }
