@@ -12,6 +12,7 @@
   grid-template-columns: minmax(0, 1fr) 372px;
   grid-template-areas:
     "heading heading"
+    "search  search"
     "main    infobox";
   gap: 32px 44px;
   align-items: start;
@@ -20,10 +21,18 @@
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
       "heading"
+      "search"
       "infobox"
       "main";
     gap: 26px;
   }
+}
+
+// The jump-to-house field sits under the heading rule, on the full plate
+// width, so it reads as page furniture rather than part of the article.
+.search {
+  grid-area: search;
+  width: 100%;
 }
 
 // Rule 05: title, house words, then the rule. Left-aligned on the measure.

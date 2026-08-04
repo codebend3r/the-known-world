@@ -284,7 +284,7 @@ export function FilteredHouseList({
             slug={item.slug}
             name={item.name}
             region={item.region}
-            size="52px"
+            sizes="84px"
             decorative
             priority={priority}
             className={styles.shield}
