@@ -4,6 +4,16 @@ An interactive, static atlas and encyclopedia for the world of _A Song of Ice
 and Fire_. It combines maps, a historical timeline, house and character
 genealogies, and reference pages for battles, dragons, and weapons.
 
+## Screenshots
+
+|                                                                                             |                                                                                      |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| **Main atlas menu**<br>![Main atlas menu](docs/screenshots/home.png)                        | **Interactive world map**<br>![Interactive world map](docs/screenshots/maps.png)     |
+| **Timeline**<br>![Timeline of battles and events](docs/screenshots/timeline.png)            | **House index**<br>![Searchable house index](docs/screenshots/houses-index.png)      |
+| **House Stark**<br>![House Stark page](docs/screenshots/house-stark.png)                    | **House Targaryen**<br>![House Targaryen page](docs/screenshots/house-targaryen.png) |
+| **Character index**<br>![Searchable character index](docs/screenshots/characters-index.png) | **Jon Snow**<br>![Jon Snow character page](docs/screenshots/character-jon-snow.png)  |
+| **Dragons**<br>![Dragon index](docs/screenshots/dragons-index.png)                          | **Winterfell**<br>![Winterfell castle page](docs/screenshots/castle-winterfell.png)  |
+
 ## Stack
 
 - Next.js App Router with static export
