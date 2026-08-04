@@ -59,7 +59,8 @@
   white-space: nowrap;
 }
 
-.optionAlias {
+// The secondary datum on an option — a character's alias, a house's region.
+.optionDetail {
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;

@@ -57,11 +57,13 @@
   clip-path: var(--tkw-banner);
 }
 
+// Zero side padding so the sigil's `100cqw` square measures the full banner
+// width; the artwork carries its own margin, so the plate needs none.
 .sigil {
   container-type: inline-size;
   justify-items: center;
   display: grid;
-  padding: 16px 18px 4px;
+  padding: 8px 0 0;
 }
 
 // Passed to `<Sigil className=...>` so the sigil fills its container.
@@ -74,6 +76,18 @@
 // `6rem` win).
 .sigilFill.sigilFill {
   --sigil-size: 100cqw;
+}
+
+// The artwork already draws its own rimmed shield, so the gold plate behind it
+// is dropped and the shield clip-path with it, leaving the PNG's silhouette to
+// read on the banner ground. Matches the house register.
+.sigilFill.sigilFill::before {
+  content: none;
+}
+
+.sigilFill.sigilFill img {
+  clip-path: none;
+  transform: none;
 }
 
 .rows {

@@ -88,14 +88,18 @@
 }
 
 // The register row: shield on the left, the house's particulars on the right.
+// `--card-region` carries the region's heraldic tint through the border and the
+// hover glow; houses with no region keep the gold default.
 .card {
+  --card-region: var(--tkw-gold);
+
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
   gap: 16px;
   align-items: start;
   padding: 18px;
   background: var(--tkw-surface);
-  border: 1px solid var(--tkw-hairline);
+  border: 1px solid color-mix(in srgb, var(--card-region) 30%, transparent);
   border-radius: var(--tkw-radius);
   color: var(--tkw-ink);
   text-decoration: none;
@@ -103,8 +107,10 @@
 
   &:hover,
   &:focus-visible {
-    border-color: var(--tkw-gold);
-    box-shadow: var(--tkw-glow);
+    border-color: color-mix(in srgb, var(--card-region) 80%, transparent);
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--card-region) 35%, transparent),
+      0 16px 34px -18px color-mix(in srgb, var(--card-region) 55%, transparent);
     outline: none;
   }
 
@@ -113,12 +119,23 @@
   }
 }
 
-// Doubled selector so the fixed shield proportions beat `Sigil`'s own square
-// `--sigil-size` rule regardless of stylesheet insertion order.
+// Doubled selector so the register's own sigil treatment beats `Sigil`'s
+// defaults regardless of stylesheet insertion order. The artwork already draws
+// its own rimmed shield, so the plate behind it is dropped and the shield
+// clip-path with it, leaving the PNG's silhouette to read on the card ground.
 .shield.shield {
-  --sigil-size: 52px;
+  --sigil-size: 84px;
 
-  height: 60px;
+  height: 84px;
+}
+
+.shield.shield::before {
+  content: none;
+}
+
+.shield.shield img {
+  clip-path: none;
+  transform: none;
 }
 
 .body {
@@ -190,44 +207,35 @@
   border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
 }
 
-// Heraldic colour as data: hover raises the shield's metal to the region's own
-// tint, while the row's border stays gold. Colours live in `globals.scss` as
+// Heraldic colour as data: the row takes its region's own tint for the resting
+// border and the hover glow. Colours live in `globals.scss` as
 // `--region-color-*` tokens (shared with `FilteredCharacterList`).
-.cardNorth:hover .shield::before {
-  background: var(--region-color-north);
-  opacity: 1;
+.cardNorth {
+  --card-region: var(--region-color-north);
 }
-.cardVale:hover .shield::before {
-  background: var(--region-color-vale);
-  opacity: 1;
+.cardVale {
+  --card-region: var(--region-color-vale);
 }
-.cardRiverlands:hover .shield::before {
-  background: var(--region-color-riverlands);
-  opacity: 1;
+.cardRiverlands {
+  --card-region: var(--region-color-riverlands);
 }
-.cardWesterlands:hover .shield::before {
-  background: var(--region-color-westerlands);
-  opacity: 1;
+.cardWesterlands {
+  --card-region: var(--region-color-westerlands);
 }
-.cardReach:hover .shield::before {
-  background: var(--region-color-reach);
-  opacity: 1;
+.cardReach {
+  --card-region: var(--region-color-reach);
 }
-.cardStormlands:hover .shield::before {
-  background: var(--region-color-stormlands);
-  opacity: 1;
+.cardStormlands {
+  --card-region: var(--region-color-stormlands);
 }
-.cardDorne:hover .shield::before {
-  background: var(--region-color-dorne);
-  opacity: 1;
+.cardDorne {
+  --card-region: var(--region-color-dorne);
 }
-.cardIronIslands:hover .shield::before {
-  background: var(--region-color-iron-islands);
-  opacity: 1;
+.cardIronIslands {
+  --card-region: var(--region-color-iron-islands);
 }
-.cardCrownlands:hover .shield::before {
-  background: var(--region-color-crownlands);
-  opacity: 1;
+.cardCrownlands {
+  --card-region: var(--region-color-crownlands);
 }
 
 // List view: same `<ul>`, one register row per line across the full measure.
@@ -241,9 +249,9 @@
   }
 
   .shield.shield {
-    --sigil-size: 34px;
+    --sigil-size: 46px;
 
-    height: 40px;
+    height: 46px;
   }
 
   .name {
