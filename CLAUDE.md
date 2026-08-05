@@ -9,7 +9,8 @@ Operating rules for this repo.
 - Do not merge anything until I tell you to.
 - Do not create a PR until I tell you to.
 - Do not create a branch until I tell you to.
-- Branch names go under a `feature/` or `fix/` folder, one level deep only: `feature/sigil-integrity`, `fix/broken-house-links`. The name after the folder is short kebab-case, 1 to 5 words, describing what the branch is for.
+- Branch names SHOULD NEVER go under a `feature/` or `fix/` folder
+- Branch names are short kebab-case, 1 to 5 words, describing what the branch is for or doing
 
 ## Tooling
 
