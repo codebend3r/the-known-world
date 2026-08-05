@@ -11,6 +11,12 @@ Skill directories are flat — Claude Code discovers `.claude/skills/<name>/SKIL
 | [`tkw-git-branch-naming`](tkw-git-branch-naming/SKILL.md)               | Flat kebab-case branch names, 1–5 words, no `feature/`/`fix/` folders. Runs as a forked `haiku` agent — pass the branch topic as the argument.           |
 | [`tkw-git-commit-and-pr-format`](tkw-git-commit-and-pr-format/SKILL.md) | The `TKW:` prefix on commit subjects **and** PR titles, bullet bodies, backticking, zero agent attribution, keeping the PR body in sync with the branch. |
 
+## Standalone
+
+| Skill                                         | Covers                                                                                                                                                                    |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`active-rebaser`](active-rebaser/SKILL.md)   | Rebasing every local feature branch onto `main` when it moves, resolving conflicts semantically, reporting per-branch stats, and pushing one branch at a time on approval. |
+
 ## `tkw-content-*` — populating `content/`
 
 | Skill                                                   | Covers                                                                                                                                                                                                    |
