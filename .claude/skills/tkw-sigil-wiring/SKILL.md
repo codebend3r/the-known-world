@@ -98,6 +98,7 @@ Insert near alphabetically-adjacent neighbors. The existing list is not strictly
   ```
 - `bun run test` — `lib/sigil.test.ts` covers the resolution order and asserts recently added standalone sigils are registered.
 - Optional sweep: `bun test --isolate lib/sigil-integrity.test.ts` confirms the new slug is reachable and nothing else drifted.
+- Report back with `✅ \`<slug>\` registered — renders \`/sigils/<slug>.png\`` (emoji in the chat report only, never in the code or commit).
 
 Commit (only when asked) per `tkw-git-commit-and-pr-format`. No body is needed for a one-line registration:
 
@@ -139,14 +140,14 @@ console.log(sigilIntegrityErrors({
 
 ### The six failure classes
 
-| Class                                | Symptom in the app                                | Cause                                                           |
-| ------------------------------------ | ------------------------------------------------- | --------------------------------------------------------------- |
-| Unreferenced image, house exists     | House shows its regional sigil despite having art | PNG exists, slug missing from `SIGIL_SLUGS`                     |
-| Unreferenced image, character exists | Houseless character shows a fallback              | Same, for a `content/characters/` slug                          |
-| Dead asset                           | Nothing; the file is pure weight                  | PNG exists, no `SIGIL_SLUGS` entry and no content entry         |
-| Alias shadow                         | House shows another house's sigil                 | Slug registered but `SLUG_ALIASES` redirects it elsewhere       |
-| Broken reference                     | Broken image / 404 at runtime                     | Slug registered (or region mapped) with no PNG on disk          |
-| Unbacked slug                        | None yet, but the entry is a typo or leftover     | `SIGIL_SLUGS` entry matching no house and no character markdown |
+| Emoji | Class                                | Symptom in the app                                | Cause                                                           |
+| ----- | ------------------------------------ | ------------------------------------------------- | --------------------------------------------------------------- |
+| 🖼️    | Unreferenced image, house exists     | House shows its regional sigil despite having art | PNG exists, slug missing from `SIGIL_SLUGS`                     |
+| 👤    | Unreferenced image, character exists | Houseless character shows a fallback              | Same, for a `content/characters/` slug                          |
+| 💀    | Dead asset                           | Nothing; the file is pure weight                  | PNG exists, no `SIGIL_SLUGS` entry and no content entry         |
+| 🎭    | Alias shadow                         | House shows another house's sigil                 | Slug registered but `SLUG_ALIASES` redirects it elsewhere       |
+| 💥    | Broken reference                     | Broken image / 404 at runtime                     | Slug registered (or region mapped) with no PNG on disk          |
+| 🏷️    | Unbacked slug                        | None yet, but the entry is a typo or leftover     | `SIGIL_SLUGS` entry matching no house and no character markdown |
 
 ### Reading the errors
 
@@ -163,7 +164,7 @@ console.log(sigilIntegrityErrors({
 
 ### Audit scope
 
-**Do:** report every error verbatim with its class, state the count, name the fix for each.
+**Do:** report every error verbatim, each line prefixed with its class emoji from the table above, state the count, name the fix for each. A clean audit reports `✅ no sigil drift — <n> images, <n> registered slugs, all reachable`.
 
 **Do not**, unless the user asks in the same breath:
 

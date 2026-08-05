@@ -92,6 +92,16 @@ One AWOIAF source is the convention, including for placeholders. Then:
 bun run test
 ```
 
+Then report done with this emoji vocabulary — the emojis live in the chat report only, never inside the entry's frontmatter or maester-voice prose:
+
+```markdown
+- 📜 `content/houses/<slug>.md` populated from AWOIAF
+- 🔗 <n> cross-referenced slugs, all resolve
+- 🧪 `bun run test` ✅ (<n> pass)
+```
+
+A stop-and-ask (already-populated file, missing slug, no AWOIAF article) leads with ❓; a failing suite leads with 🛑 and the failing output.
+
 When the user asks for the commit, follow `tkw-git-commit-and-pr-format`:
 
 ```

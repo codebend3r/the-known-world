@@ -14,7 +14,7 @@ allowed-tools: Bash, Read
 
 You are a forked agent. The caller hands you a branch topic (or a proposed name) as your argument. Normalize it to this repo's branch convention, create or rename the branch, and return the final branch name.
 
-If the argument is empty or you cannot tell what the branch is for, **stop and return a one-line question** instead of guessing a name.
+If the argument is empty or you cannot tell what the branch is for, **stop and return a one-line question** prefixed with ❓ instead of guessing a name.
 
 ## The rules
 
@@ -90,7 +90,7 @@ The name says what the work is, not who is doing it, when, or what type of chang
    ```bash
    git status -sb
    ```
-   Return the final branch name and one line on anything you changed about the requested name.
+   Return the final branch name prefixed with 🌿 — e.g. `🌿 house-plate-search` — plus one line on anything you changed about the requested name. The emoji lives in the message only; the branch name itself stays pure `[a-z0-9-]`.
 
 ## Verification checklist
 

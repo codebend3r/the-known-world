@@ -238,6 +238,19 @@ Title kept `TKW:`; body is grouped scannable bullets; no "Generated with Claude 
 
 ---
 
+## Part 4 — Reporting back to the user
+
+After the git/GitHub work, the chat confirmation uses this emoji vocabulary — one line per action taken:
+
+```markdown
+- ✅ committed `<sha7>` — `TKW: <subject>`
+- 🚀 pushed `<branch>` to `origin`
+- 🔀 PR #<n> created — `TKW: <title>`
+- 📝 PR #<n> body synced with the branch
+```
+
+The emojis are **chat output only**. Commit messages, PR titles, and PR bodies stay emoji-free — house style there is terse text, and this section changes nothing about Parts 1–3.
+
 ## Quick reference
 
 | Aspect             | Commit                                               | Pull request                                            |
@@ -269,6 +282,7 @@ Title kept `TKW:`; body is grouped scannable bullets; no "Generated with Claude 
 | "The body can just say what the newest commits did"              | The body describes the whole branch (`origin/main...HEAD`).                 |
 | "PR opened without the prefix, I'll fix it later"                | Fix it now: `gh pr edit <n> --title "TKW: ..."`.                            |
 | "Conventional commits (`feat:` / `chore:`) is industry standard" | This repo uses `TKW:`. Industry standards don't override repo standards.    |
+| "The chat report uses 🚀, so the PR title gets one too"          | Emojis are chat-output only. Commits, PR titles, and PR bodies stay plain.  |
 
 ## Related skills
 
