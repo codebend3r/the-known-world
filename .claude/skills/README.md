@@ -1,0 +1,24 @@
+# Repo skills
+
+Agent skills scoped to **the-known-world**. They live here rather than in `~/.claude/skills/` so they version with the code they describe and reach anyone who clones the repo.
+
+Skill directories are flat — Claude Code discovers `.claude/skills/<name>/SKILL.md` only — so grouping is carried by the `tkw-<group>-` name prefix.
+
+## `tkw-git-*` — git conventions
+
+| Skill                                                                   | Covers                                                                                                                                                   |
+| ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`tkw-git-branch-naming`](tkw-git-branch-naming/SKILL.md)               | Flat kebab-case branch names, 1–5 words, no `feature/`/`fix/` folders. Runs as a forked `haiku` agent — pass the branch topic as the argument.           |
+| [`tkw-git-commit-and-pr-format`](tkw-git-commit-and-pr-format/SKILL.md) | The `TKW:` prefix on commit subjects **and** PR titles, bullet bodies, backticking, zero agent attribution, keeping the PR body in sync with the branch. |
+
+## `tkw-content-*` — populating `content/`
+
+| Skill                                                   | Covers                                                                                                                                                                                                    |
+| ------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`tkw-content-populate`](tkw-content-populate/SKILL.md) | Turning a `content/houses/` or `content/characters/` stub into a full entry from AWOIAF. Shared workflow in `SKILL.md`; field specs in `references/house-fields.md` and `references/character-fields.md`. |
+
+## `tkw-sigil-*` — sigil resolution
+
+| Skill                                           | Covers                                                                                                                                                                                          |
+| ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`tkw-sigil-wiring`](tkw-sigil-wiring/SKILL.md) | The `SIGIL_SLUGS` resolution order, registering a `public/sigils/<slug>.png` so a house stops rendering its regional fallback, and auditing the six drift classes via `lib/sigil-integrity.ts`. |
