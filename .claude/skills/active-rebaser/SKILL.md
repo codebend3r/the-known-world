@@ -68,12 +68,12 @@ After the **last** branch — never mid-loop — print the report. Every branch 
 ```markdown
 ## 🔀 Rebase report — <n> branches against `main` @ <short-sha>
 
-| Branch | Old tip | Commits | Conflicts | Diff vs `main` | Status |
-| ------ | ------- | ------- | --------- | -------------- | ------ |
-| <name> | <sha7>  | 3       | none      | 4 files, +120 −16 | ✅ rebased |
+| Branch | Old tip | Commits | Conflicts | Diff vs `main`    | Status                         |
+| ------ | ------- | ------- | --------- | ----------------- | ------------------------------ |
+| <name> | <sha7>  | 3       | none      | 4 files, +120 −16 | ✅ rebased                     |
 | <name> | <sha7>  | 1       | 2 files   | 2 files, +40 −9   | ⚠️ rebased, conflicts resolved |
-| <name> | <sha7>  | 2       | —         | —              | ⏭️ already on main |
-| <name> | <sha7>  | 5       | aborted   | —              | 🛑 needs manual resolution |
+| <name> | <sha7>  | 2       | —         | —                 | ⏭️ already on main             |
+| <name> | <sha7>  | 5       | aborted   | —                 | 🛑 needs manual resolution     |
 ```
 
 The status emojis are part of the format, not decoration — ✅ clean rebase, ⚠️ conflicts resolved, ⏭️ nothing to do, 🛑 human needed.
@@ -106,17 +106,17 @@ Branches with no upstream get pushed with `-u origin <branch>` on approval (no l
 
 ## Red flags — STOP
 
-| Thought | Reality |
-| ------- | ------- |
-| "Push each branch right after its rebase, saves a pass" | No push before the full report **and** that branch's approval. |
-| "They approved the first three, they obviously want the rest" | One approval covers exactly one branch. Ask again. |
-| "Conflicts were trivial — no need for the report" | Every run produces the report, even an all-clean one. |
-| "`-X theirs` will resolve this faster" | Banned. Read both sides, merge the intent. |
-| "The lease was rejected, `--force` will fix it" | The remote moved. Stop and report. |
-| "This conflict is ambiguous but I'll pick the likelier side" | Abort that branch, mark `needs manual resolution`. |
-| "I'll merge `main` into the branch instead, it's safer" | This skill rebases. No merge commits. |
-| "The tree is dirty but the changes look unrelated" | Clean tree first, or stop and ask. |
-| "Rebase against the branch it forked from" | Always `main`. That is the whole premise. |
+| Thought                                                       | Reality                                                        |
+| ------------------------------------------------------------- | -------------------------------------------------------------- |
+| "Push each branch right after its rebase, saves a pass"       | No push before the full report **and** that branch's approval. |
+| "They approved the first three, they obviously want the rest" | One approval covers exactly one branch. Ask again.             |
+| "Conflicts were trivial — no need for the report"             | Every run produces the report, even an all-clean one.          |
+| "`-X theirs` will resolve this faster"                        | Banned. Read both sides, merge the intent.                     |
+| "The lease was rejected, `--force` will fix it"               | The remote moved. Stop and report.                             |
+| "This conflict is ambiguous but I'll pick the likelier side"  | Abort that branch, mark `needs manual resolution`.             |
+| "I'll merge `main` into the branch instead, it's safer"       | This skill rebases. No merge commits.                          |
+| "The tree is dirty but the changes look unrelated"            | Clean tree first, or stop and ask.                             |
+| "Rebase against the branch it forked from"                    | Always `main`. That is the whole premise.                      |
 
 ## Related skills
 

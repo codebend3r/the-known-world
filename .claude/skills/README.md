@@ -13,9 +13,9 @@ Skill directories are flat — Claude Code discovers `.claude/skills/<name>/SKIL
 
 ## Standalone
 
-| Skill                                         | Covers                                                                                                                                                                    |
-| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`active-rebaser`](active-rebaser/SKILL.md)   | Rebasing every local feature branch onto `main` when it moves, resolving conflicts semantically, reporting per-branch stats, and pushing one branch at a time on approval. |
+| Skill                                       | Covers                                                                                                                                                                     |
+| ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`active-rebaser`](active-rebaser/SKILL.md) | Rebasing every local feature branch onto `main` when it moves, resolving conflicts semantically, reporting per-branch stats, and pushing one branch at a time on approval. |
 
 ## `tkw-content-*` — populating `content/`
 
