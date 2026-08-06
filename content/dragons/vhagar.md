@@ -4,7 +4,7 @@ name: Vhagar
 color: bronze and green
 size: monstrous
 hatched:
-  year: -52
+  year: 52
   era: BC
   precision: decade
 died:

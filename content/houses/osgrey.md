@@ -8,7 +8,7 @@ sigil:
   description: A green and gold chequy lion rampant on a white field
   provenance: canon
 founded:
-  year: -1000
+  year: -8000
   era: age-of-heroes
   precision: legendary
 status: extant

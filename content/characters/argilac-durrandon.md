@@ -4,7 +4,7 @@ name: Argilac Durrandon
 sex: m
 born: null
 died:
-  year: -2
+  year: 2
   era: BC
   precision: year
 primary-house: durrandon

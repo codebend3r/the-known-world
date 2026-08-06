@@ -4,7 +4,7 @@ name: "Halleck Hoare"
 sex: m
 born: null
 died:
-  year: -42
+  year: 42
   era: BC
   precision: decade
 primary-house: hoare

@@ -7,6 +7,7 @@ import type {
   loadAllHouses,
   loadAllWeapons,
 } from "@/lib/content";
+import { dateIntegrityErrors } from "@/lib/date-integrity";
 
 type Collections = {
   battles: Awaited<ReturnType<typeof loadAllBattles>>;
@@ -213,7 +214,7 @@ export function contentIntegrityErrors(collections: Collections): string[] {
     },
   );
 
-  return errors;
+  return [...errors, ...dateIntegrityErrors(collections)];
 }
 
 function buildSlugSets(collections: Collections) {

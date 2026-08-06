@@ -6,11 +6,11 @@ war: "The Faith Militant Uprising"
 start:
   year: 41
   era: AC
-  precision: exact
+  precision: year
 end:
   year: 48
   era: AC
-  precision: exact
+  precision: year
 location: "the Seven Kingdoms"
 region: crownlands
 participants:

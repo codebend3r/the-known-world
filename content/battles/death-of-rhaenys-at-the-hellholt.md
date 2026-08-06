@@ -6,11 +6,11 @@ war: "The First Dornish War"
 start:
   year: 10
   era: AC
-  precision: exact
+  precision: year
 end:
   year: 10
   era: AC
-  precision: exact
+  precision: year
 location: "the Hellholt"
 region: dorne
 participants:

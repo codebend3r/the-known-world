@@ -8,8 +8,8 @@ sigil:
   description: A golden hand on a field of gyronny red and black
   provenance: canon
 founded:
-  year: -700
-  era: andal-invasion
+  year: 700
+  era: BC
   precision: era
 status: extant
 rank: lordly

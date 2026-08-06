@@ -8,7 +8,7 @@ sigil:
   description: Four sunbursts counterchanged on quartered orange and black
   provenance: canon
 founded:
-  year: -300
+  year: 300
   era: BC
   precision: era
 status: extant

@@ -7,7 +7,7 @@ status: extant
 origin-house: dayne
 current-house: dayne
 forged:
-  year: 0
+  year: -10000
   era: age-of-heroes
   precision: legendary
 wielders:

@@ -3,11 +3,11 @@ slug: mors-martell
 name: Mors Martell
 sex: m
 born:
-  year: -720
+  year: 720
   era: BC
   precision: legendary
 died:
-  year: -700
+  year: 700
   era: BC
   precision: legendary
 primary-house: martell

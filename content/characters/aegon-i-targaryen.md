@@ -3,7 +3,7 @@ slug: aegon-i-targaryen
 name: Aegon I Targaryen
 sex: m
 born:
-  year: -27
+  year: 27
   era: BC
   precision: year
 died:

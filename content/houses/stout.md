@@ -8,8 +8,8 @@ sigil:
   description: Inverted chevrons, russet and gold
   provenance: canon
 founded:
-  year: -100
-  era: andal-invasion
+  year: -2000
+  era: age-of-heroes
   precision: era
 status: extant
 rank: lordly

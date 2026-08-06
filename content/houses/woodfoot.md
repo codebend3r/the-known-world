@@ -9,7 +9,7 @@ sigil:
   provenance: invented
 founded:
   year: -8000
-  era: dawn-age
+  era: age-of-heroes
   precision: legendary
 status: extinct
 rank: extinct

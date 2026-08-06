@@ -6,11 +6,11 @@ war: "The First Dornish War"
 start:
   year: 4
   era: AC
-  precision: exact
+  precision: year
 end:
   year: 13
   era: AC
-  precision: exact
+  precision: year
 location: "Dorne"
 region: dorne
 aliases: ["Aegon's First Dornish War"]

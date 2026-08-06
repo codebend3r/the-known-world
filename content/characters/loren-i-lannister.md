@@ -3,7 +3,7 @@ slug: loren-i-lannister
 name: Loren I Lannister
 sex: m
 born:
-  year: -30
+  year: 30
   era: BC
   precision: decade
 died: null

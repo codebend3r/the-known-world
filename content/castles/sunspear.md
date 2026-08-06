@@ -5,7 +5,7 @@ type: castle
 sub-region: eastern-coast
 liege-house: martell
 founded:
-  year: -700
+  year: 700
   era: BC
   precision: era
 sworn-houses: []

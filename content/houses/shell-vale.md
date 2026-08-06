@@ -8,13 +8,13 @@ sigil:
   description: ""
   provenance: invented
 founded:
-  year: -200
-  era: dawn-age
-  precision: legendary
+  year: -5000
+  era: age-of-heroes
+  precision: era
 status: extinct
 rank: extinct
 extinct:
-  year: -100
+  year: -2000
   era: andal-invasion
   precision: era
 sworn-from: []

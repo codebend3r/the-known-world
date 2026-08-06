@@ -8,8 +8,8 @@ sigil:
   description: Silver caltrops scattered on a black field
   provenance: canon
 founded:
-  year: -500
-  era: andal-invasion
+  year: 500
+  era: BC
   precision: era
 status: extant
 rank: lordly

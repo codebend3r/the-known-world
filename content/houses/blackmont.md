@@ -8,8 +8,8 @@ sigil:
   description: A black vulture clutching a pink infant in its claws on a yellow field
   provenance: canon
 founded:
-  year: -700
-  era: andal-invasion
+  year: 700
+  era: BC
   precision: era
 status: extant
 rank: lordly

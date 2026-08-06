@@ -8,7 +8,7 @@ sigil:
   description: ""
   provenance: invented
 founded:
-  year: -300
+  year: 300
   era: BC
   precision: era
 status: extant

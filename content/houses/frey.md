@@ -8,7 +8,7 @@ sigil:
   description: Two blue towers joined by a bridge, on a grey field
   provenance: canon
 founded:
-  year: -300
+  year: 300
   era: BC
   precision: era
 status: extant

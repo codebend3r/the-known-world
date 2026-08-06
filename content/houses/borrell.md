@@ -8,7 +8,7 @@ sigil:
   description: A white spider crab on a grey-green field
   provenance: canon
 founded:
-  year: -4700
+  year: 4700
   era: BC
   precision: decade
 status: extant

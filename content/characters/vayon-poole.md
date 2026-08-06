@@ -5,7 +5,7 @@ sex: m
 born:
   year: 275
   era: AC
-  precision: year
+  precision: decade
 died:
   year: 298
   era: AC

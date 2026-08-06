@@ -3,7 +3,7 @@ slug: orys-baratheon
 name: Orys Baratheon
 sex: m
 born:
-  year: -27
+  year: 27
   era: BC
   precision: year
 died:

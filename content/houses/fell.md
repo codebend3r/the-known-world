@@ -8,7 +8,7 @@ sigil:
   description: A white crescent moon on black above a green field, parted by a line of sprucetrees
   provenance: semi-canon
 founded:
-  year: -100
+  year: 100
   era: BC
   precision: era
 status: extant

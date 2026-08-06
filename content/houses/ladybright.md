@@ -8,7 +8,7 @@ sigil:
   description: ""
   provenance: invented
 founded:
-  year: -700
+  year: 700
   era: BC
   precision: legendary
 status: extant

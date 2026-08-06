@@ -12,7 +12,7 @@ founded:
   era: age-of-heroes
   precision: legendary
 extinct:
-  year: -700
+  year: 700
   era: BC
   precision: era
 status: extinct
