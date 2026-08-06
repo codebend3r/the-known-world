@@ -9,8 +9,11 @@ import { isActive, visibleNavItems } from "@/lib/nav";
 import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
+// A glyph supersedes an icon at render time, so an entry that supplies one
+// needs no raster art. Keeping `icon` required invites dead paths to files
+// that were never added.
 type MenuArt = {
-  icon: string;
+  icon?: string;
   glyph?: ReactNode;
 };
 
@@ -20,10 +23,7 @@ const ART: Record<string, MenuArt> = {
   "/maps/": { icon: "/menu-icons/map.png" },
   "/timeline/": { icon: "/menu-icons/timeline.png" },
   "/houses/": { icon: "/menu-icons/houses.png" },
-  "/castles/": {
-    icon: "/menu-icons/castles.png",
-    glyph: sectionGlyphs.castles,
-  },
+  "/castles/": { glyph: sectionGlyphs.castles },
   "/characters/": { icon: "/menu-icons/characters.png" },
   "/weapons/": { icon: "/menu-icons/weapons.png" },
   "/battles/": {
