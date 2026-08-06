@@ -14,6 +14,9 @@ import styles from "@/components/WorldMap/WorldMap.module.scss";
 
 const ZOOM_STEP = 1.5;
 const PAN_STEP_RATIO = 0.2;
+// Advertised on the stage so assistive tech can list the canvas shortcuts
+// rather than leaving the visible hint line as the only place they exist.
+const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
 const INITIAL_VIEW = { zoom: 5, x: -1495, y: -1940 };
 // Natural-pixel position of the King's Landing capital icon printed on the
 // map, and the radius of the (invisible) click target around it — kept
@@ -224,6 +227,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
         className={styles.stage}
         role="application"
         aria-label="Interactive map of the Known World"
+        aria-keyshortcuts={KEY_SHORTCUTS}
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >
@@ -249,13 +253,23 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
               height: 0,
             }}
           >
-            <svg width={size.w} height={size.h}>
+            {/* `role="group"`, not `role="img"`: the pins drawn on top are
+                links, and `img` would prune them out of the accessibility
+                tree. The artwork itself carries no text, so it is hidden and
+                the group's label stands for it. */}
+            <svg
+              width={size.w}
+              height={size.h}
+              role="group"
+              aria-label="Map of the Known World"
+            >
               <image
                 href={src}
                 x={(size.w - drawnWidth) / 2}
                 y={(size.h - drawnHeight) / 2}
                 width={drawnWidth}
                 height={drawnHeight}
+                aria-hidden="true"
               />
               <Link
                 href="/castles/kings-landing/"

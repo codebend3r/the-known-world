@@ -13,6 +13,18 @@
   grid-area: auto;
 }
 
+// The live region that announces the result count. Removed from the visual
+// plate entirely, but kept in the layout and the accessibility tree — `display:
+// none` and `visibility: hidden` both stop screen readers reading it.
+.status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .listbox {
   position: absolute;
   top: calc(100% + 0.3rem);

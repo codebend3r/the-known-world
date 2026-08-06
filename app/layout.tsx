@@ -31,12 +31,13 @@ export const metadata: Metadata = {
     "An interactive atlas of George R. R. Martin's world of Ice and Fire: maps, timeline, and the rolls of the great houses.",
 };
 
+// No `maximumScale` and no `userScalable: false`: both cap pinch zoom, which
+// WCAG 1.4.4 (Resize Text) requires to reach 200%. The map and the family tree
+// own their own zoom, and neither needs the page zoom held down to work.
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
   minimumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({

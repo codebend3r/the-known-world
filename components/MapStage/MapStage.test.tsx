@@ -131,3 +131,46 @@ describe("MapStage", () => {
     expect(observers).toHaveLength(0);
   });
 });
+
+// Guards the `tkw-a11y-audit` canvas contract. `ReactSVGPanZoom` is mocked as a
+// plain function above, which cannot hold a ref, so these assertions cover the
+// markup contract; the pan/zoom handles themselves are exercised on `WorldMap`.
+describe("MapStage — accessibility contract", () => {
+  it("exposes a named, focusable application surface", async () => {
+    const { container, findByTestId } = render(
+      <MapStage svgUrl="/map.svg" label="Map of Westeros">
+        <circle data-testid="child" />
+      </MapStage>,
+    );
+    const stageEl = container.querySelector(".stage") as HTMLElement;
+    stubSize(stageEl, 640, 1120);
+    act(() => {
+      observers[0].cb([]);
+    });
+    await findByTestId("pan-zoom");
+    const surface = container.querySelector("[role='application']")!;
+    expect(surface.getAttribute("aria-label")).toBe("Map of Westeros");
+    expect(surface.getAttribute("tabindex")).toBe("0");
+    expect(surface.getAttribute("aria-keyshortcuts")).toContain("ArrowUp");
+  });
+
+  it("names the drawing group and hides the raster backdrop", async () => {
+    const { container, findByTestId } = render(
+      <MapStage svgUrl="/map.svg" label="Map of Westeros">
+        <circle data-testid="child" />
+      </MapStage>,
+    );
+    const stageEl = container.querySelector(".stage") as HTMLElement;
+    stubSize(stageEl, 640, 1120);
+    act(() => {
+      observers[0].cb([]);
+    });
+    await findByTestId("pan-zoom");
+    const svg = container.querySelector("svg")!;
+    expect(svg.getAttribute("role")).toBe("group");
+    expect(svg.getAttribute("aria-label")).toBe("Map of Westeros");
+    expect(container.querySelector("image")?.getAttribute("aria-hidden")).toBe(
+      "true",
+    );
+  });
+});

@@ -12,7 +12,13 @@
   overflow: hidden;
 }
 
+// The keyboard target for pan and zoom, so it needs a ring of its own.
 .inner {
   position: absolute;
   inset: 0;
+
+  &:focus-visible {
+    outline: 2px solid var(--tkw-gold);
+    outline-offset: -2px;
+  }
 }

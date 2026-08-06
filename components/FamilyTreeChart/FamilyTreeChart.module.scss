@@ -16,6 +16,13 @@
   height: 100%;
   cursor: grab;
 
+  // The canvas is a keyboard target, so the plate has to say so. Inset so the
+  // ring sits inside the container's own hairline rather than doubling it.
+  &:focus-visible {
+    outline: 2px solid var(--tkw-gold);
+    outline-offset: -2px;
+  }
+
   &.dragging {
     cursor: grabbing;
   }
