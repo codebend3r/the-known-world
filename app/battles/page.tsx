@@ -3,7 +3,7 @@ import Link from "next/link";
 import { loadAllBattles } from "@/lib/content";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import { formatBattleWhen, absoluteYear } from "@/lib/battle-date";
 import { findBattleImage } from "@/lib/battle-image";
 import styles from "@/app/battles/page.module.scss";

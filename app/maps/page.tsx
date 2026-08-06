@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import { WorldMap, WorldMapSkeleton } from "@/components/WorldMap";
 
 export const metadata: Metadata = {

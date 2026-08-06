@@ -1,5 +1,5 @@
 import { MainMenuTile } from "@/components/MainMenuTile";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import styles from "@/components/MainMenu/MainMenu.module.scss";
 
 export function MainMenu() {

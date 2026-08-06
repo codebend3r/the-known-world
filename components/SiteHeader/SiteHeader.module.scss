@@ -61,7 +61,7 @@
   border-radius: 50%;
   color: var(--tkw-gold-bright);
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: var(--fs-section);
   line-height: 1;
 
   @media (max-width: bp.$xs) {

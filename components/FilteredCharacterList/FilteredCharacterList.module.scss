@@ -199,7 +199,7 @@ a.card {
     grid-area: name;
     align-self: end;
     padding: 12px 0 0;
-    font-size: 19px;
+    font-size: var(--fs-body);
   }
 
   .alias {

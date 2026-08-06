@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { TimelineExplorer } from "@/components/TimelineExplorer";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import { loadAllBattles, loadAllEvents } from "@/lib/content";
 import { prepareTimeline } from "@/lib/timeline";
 import styles from "@/app/timeline/page.module.scss";
