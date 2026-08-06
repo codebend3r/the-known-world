@@ -36,13 +36,6 @@ jobs:
           key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
           restore-keys: ${{ runner.os }}-bun-
 
-      - name: 🏎️ Cache Next.js build
-        uses: actions/cache@v6
-        with:
-          path: .next/cache
-          key: ${{ runner.os }}-next-${{ hashFiles('bun.lock') }}-${{ github.sha }}
-          restore-keys: ${{ runner.os }}-next-${{ hashFiles('bun.lock') }}-
-
       # One hash over the git trees of every path `next build` reads. Tree SHAs
       # already digest their contents recursively, so this is exact and costs
       # ~10ms, where `hashFiles` would re-read all 229MB of `public/`.
