@@ -447,3 +447,37 @@ describe("WorldMap", () => {
     expect(getByRole("button", { name: "Enter fullscreen" })).not.toBeNull();
   });
 });
+
+// Guards the `tkw-a11y-audit` canvas contract: the stage is the keyboard
+// target, the drawing beneath it is a named group, and the raster backdrop
+// stays out of the accessibility tree.
+describe("WorldMap — accessibility contract", () => {
+  it("names the stage and advertises its shortcuts", async () => {
+    const { findByTestId, stage } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(stage.getAttribute("aria-label")).toBe(
+      "Interactive map of the Known World",
+    );
+    expect(stage.getAttribute("tabindex")).toBe("0");
+    expect(stage.getAttribute("aria-keyshortcuts")).toContain("ArrowUp");
+  });
+
+  it('groups the drawing under a name instead of `role="img"`', async () => {
+    const { container, findByTestId } = renderMap();
+    await findByTestId("pan-zoom");
+    const svg = container.querySelector("svg[width='800']")!;
+    expect(svg.getAttribute("role")).toBe("group");
+    expect(svg.getAttribute("aria-label")).toBe("Map of the Known World");
+  });
+
+  it("hides the raster map, leaving the pins as the only named content", async () => {
+    const { container, findByTestId } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(container.querySelector("image")?.getAttribute("aria-hidden")).toBe(
+      "true",
+    );
+    expect(
+      container.querySelector('a[aria-label="King\'s Landing"]'),
+    ).not.toBeNull();
+  });
+});

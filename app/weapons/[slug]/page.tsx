@@ -126,7 +126,7 @@ export default async function WeaponPage({
           <figure className={styles.figure}>
             <Image
               src={image}
-              alt={fm.name}
+              alt={`Depiction of ${fm.name}`}
               width={1280}
               height={720}
               sizes="(max-width: 767.98px) 100vw, 1240px"

@@ -77,7 +77,7 @@ export default async function BattlePage({
             <figure className={styles.figure}>
               <Image
                 src={image}
-                alt={fm.name}
+                alt={`Depiction of ${fm.name}`}
                 width={1280}
                 height={720}
                 sizes="(max-width: 768px) 90vw, 720px"

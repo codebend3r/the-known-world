@@ -48,6 +48,20 @@ const MOBILE_INITIAL_SCALE = 4; // viewBox shrinks to fit narrow viewports, so s
 const SCALE_EPSILON = 0.001;
 const ANIM_MS = 200;
 const DRAG_THRESHOLD = 3; // px
+// One arrow press moves the view a fifth of the visible box, matching the
+// `WorldMap` d-pad so both canvases answer the keyboard the same way.
+const KEY_PAN_RATIO = 0.2;
+const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
+
+type PanDirection = "up" | "down" | "left" | "right";
+
+// Signs are viewBox deltas: panning the view up shifts the drawing down.
+const PAN_DIRECTIONS: Record<PanDirection, { x: number; y: number }> = {
+  up: { x: 0, y: 1 },
+  down: { x: 0, y: -1 },
+  left: { x: 1, y: 0 },
+  right: { x: -1, y: 0 },
+};
 
 // Width matches DOT_R * 2 * devicePixelRatio for retina (~56 css px -> request 96 source px).
 // Netlify image CDN serves resized/compressed copies of the originals in `/public/characters/*`.
@@ -236,6 +250,10 @@ export function FamilyTreeChart({ chart }: Props) {
                   height={DOT_R * 2}
                   preserveAspectRatio="xMidYMid slice"
                   clipPath={`url(#${clipPrefix}-clip-${p.slug})`}
+                  // The `<title>` beside it already names the person; an
+                  // unhidden `<image>` would announce a second, nameless
+                  // graphic on every node.
+                  aria-hidden="true"
                 />
               )}
             </>
@@ -431,6 +449,36 @@ export function FamilyTreeChart({ chart }: Props) {
     animateTo(initialCenteredTransform({ bounds, scale }));
   };
 
+  const panView = (direction: PanDirection) => {
+    const { x, y } = PAN_DIRECTIONS[direction];
+    setTransform((t) => ({
+      ...t,
+      tx: t.tx + (x * bounds.width * KEY_PAN_RATIO) / t.scale,
+      ty: t.ty + (y * bounds.height * KEY_PAN_RATIO) / t.scale,
+    }));
+  };
+
+  // The canvas is a `role="application"` surface, so it must answer the same
+  // keys the pointer answers: without this the chart is a drag-only widget and
+  // every character link inside it is only reachable by Tab through an
+  // off-screen node.
+  const onKeyDown = (e: React.KeyboardEvent<SVGSVGElement>) => {
+    const actions: Record<string, (() => void) | undefined> = {
+      "+": () => zoomBy(BUTTON_STEP),
+      "=": () => zoomBy(BUTTON_STEP),
+      "-": () => zoomBy(1 / BUTTON_STEP),
+      "0": reset,
+      ArrowUp: () => panView("up"),
+      ArrowDown: () => panView("down"),
+      ArrowLeft: () => panView("left"),
+      ArrowRight: () => panView("right"),
+    };
+    const action = actions[e.key];
+    if (!action) return;
+    e.preventDefault();
+    action();
+  };
+
   const onPointerDown = (e: React.PointerEvent<SVGSVGElement>) => {
     if (e.button !== 0 && e.pointerType === "mouse") return;
     pointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
@@ -542,8 +590,15 @@ export function FamilyTreeChart({ chart }: Props) {
         className={cx(styles.svg, isDragging && styles.dragging)}
         viewBox={`0 0 ${bounds.width} ${bounds.height}`}
         preserveAspectRatio="xMidYMid meet"
-        role="img"
+        // Not `role="img"`: that prunes the subtree, and every person in this
+        // chart is an `<a>` to their character page. `application` keeps the
+        // links exposed and hands the arrow keys to `onKeyDown` instead of
+        // letting the screen reader eat them.
+        role="application"
         aria-label="Family tree chart"
+        aria-keyshortcuts={KEY_SHORTCUTS}
+        tabIndex={0}
+        onKeyDown={onKeyDown}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}

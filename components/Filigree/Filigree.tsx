@@ -15,7 +15,12 @@ export function FiligreeFlourish({
       className={cx(styles.flourish, mirrored && styles.mirrored, className)}
       aria-hidden="true"
     >
-      <svg viewBox="0 0 96 28" fill="none" preserveAspectRatio="xMidYMid meet">
+      <svg
+        viewBox="0 0 96 28"
+        fill="none"
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet"
+      >
         <g
           stroke="currentColor"
           strokeWidth="1.25"
@@ -39,7 +44,12 @@ type RuleProps = {
 export function FiligreeRule({ className }: RuleProps) {
   return (
     <span className={cx(styles.rule, className)} aria-hidden="true">
-      <svg viewBox="0 0 240 18" fill="none" preserveAspectRatio="xMidYMid meet">
+      <svg
+        viewBox="0 0 240 18"
+        fill="none"
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet"
+      >
         <g stroke="currentColor" strokeWidth="1.1" strokeLinecap="round">
           <line x1="22" y1="9" x2="104" y2="9" />
           <line x1="136" y1="9" x2="218" y2="9" />

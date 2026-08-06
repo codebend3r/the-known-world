@@ -163,3 +163,52 @@ describe("SearchCombobox", () => {
     expect(input.value).toBe("");
   });
 });
+
+// Guards the `tkw-a11y-audit` combobox contract: every ARIA relationship the
+// APG pattern requires must resolve to an element that is actually rendered.
+describe("SearchCombobox — accessibility contract", () => {
+  it("drops `aria-controls` while the popup is closed, so no IDREF dangles", () => {
+    renderCombobox();
+    const input = screen.getByRole("combobox");
+    expect(input.getAttribute("aria-expanded")).toBe("false");
+    expect(input.getAttribute("aria-controls")).toBeNull();
+  });
+
+  it("points `aria-controls` at the live listbox once it opens", () => {
+    renderCombobox();
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "mea" } });
+    const controls = input.getAttribute("aria-controls") ?? "";
+    expect(controls).not.toBe("");
+    expect(screen.getByRole("listbox").id).toBe(controls);
+  });
+
+  it("names the listbox after the field it serves", () => {
+    renderCombobox();
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "mea" },
+    });
+    expect(
+      screen.getByRole("listbox", { name: "Search houses results" }),
+    ).not.toBeNull();
+  });
+
+  it("resolves `aria-activedescendant` to the highlighted option", () => {
+    renderCombobox();
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "s" } });
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    const active = input.getAttribute("aria-activedescendant");
+    expect(active).not.toBeNull();
+    const option = document.getElementById(active ?? "");
+    expect(option?.getAttribute("aria-selected")).toBe("true");
+  });
+
+  it("announces the result count in a live region", () => {
+    renderCombobox();
+    fireEvent.change(screen.getByRole("combobox"), {
+      target: { value: "mea" },
+    });
+    expect(screen.getByRole("status").textContent).toBe("1 result available");
+  });
+});

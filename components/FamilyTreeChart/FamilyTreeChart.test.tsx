@@ -707,3 +707,82 @@ describe("FamilyTreeChart — click vs drag", () => {
     expect(inner.getAttribute("transform") ?? "").not.toBe(before);
   });
 });
+
+// Guards the `tkw-a11y-audit` canvas contract: the chart is a `role="application"`
+// surface, keyboard operable, with its links left in the accessibility tree.
+describe("FamilyTreeChart — accessibility contract", () => {
+  function chartWith(persons: LayoutPerson[]): LaidOutChart {
+    return {
+      persons,
+      spouseEdges: [],
+      childEdges: [],
+      bounds: { width: 400, height: 300 },
+    };
+  }
+
+  it("exposes the canvas as a named, focusable application", () => {
+    const { container } = render(
+      <FamilyTreeChart chart={chartWith([person({ slug: "a" })])} />,
+    );
+    const svg = container.querySelector("svg")!;
+    expect(svg.getAttribute("role")).toBe("application");
+    expect(svg.getAttribute("aria-label")).toBe("Family tree chart");
+    expect(svg.getAttribute("tabindex")).toBe("0");
+    expect(svg.getAttribute("aria-keyshortcuts")).toContain("ArrowUp");
+  });
+
+  it('never uses `role="img"`, which would prune the character links away', () => {
+    const { container } = render(
+      <FamilyTreeChart
+        chart={chartWith([person({ slug: "a", characterSlug: "a" })])}
+      />,
+    );
+    const svg = container.querySelector("svg")!;
+    expect(svg.getAttribute("role")).not.toBe("img");
+    expect(container.querySelector("a[href='/characters/a/']")).not.toBeNull();
+  });
+
+  it("pans from the arrow keys", () => {
+    const { container } = render(
+      <FamilyTreeChart chart={chartWith([person({ slug: "a" })])} />,
+    );
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const before = inner.getAttribute("transform") ?? "";
+    fireEvent.keyDown(svg, { key: "ArrowRight" });
+    expect(inner.getAttribute("transform") ?? "").not.toBe(before);
+  });
+
+  it("zooms from `+` and `-` and restores the initial view on `0`", () => {
+    mockMatchMedia(true); // reduced motion, so `animateTo` lands synchronously
+    const { container } = render(
+      <FamilyTreeChart chart={chartWith([person({ slug: "a" })])} />,
+    );
+    const svg = container.querySelector("svg")!;
+    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const initial = inner.getAttribute("transform") ?? "";
+    fireEvent.keyDown(svg, { key: "+" });
+    expect(inner.getAttribute("transform") ?? "").not.toBe(initial);
+    fireEvent.keyDown(svg, { key: "0" });
+    expect(inner.getAttribute("transform") ?? "").toBe(initial);
+  });
+
+  it("hides the node portraits, which the sibling `<title>` already names", () => {
+    const { container } = render(
+      <FamilyTreeChart
+        chart={chartWith([
+          person({
+            slug: "a",
+            name: "Ann Stark",
+            portrait: "/characters/a.jpg",
+          }),
+        ])}
+      />,
+    );
+    const image = container.querySelector("image")!;
+    expect(image.getAttribute("aria-hidden")).toBe("true");
+    expect(container.querySelector("title")?.textContent).toContain(
+      "Ann Stark",
+    );
+  });
+});

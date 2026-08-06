@@ -100,14 +100,28 @@ export function SearchCombobox({
         onBlur={() => setOpen(false)}
         aria-label={ariaLabel}
         aria-expanded={showList}
-        aria-controls={listboxId}
+        // The listbox only exists while it is open, so pointing at it the rest
+        // of the time leaves a dangling IDREF that resolves to nothing.
+        aria-controls={showList ? listboxId : undefined}
         aria-autocomplete="list"
         aria-activedescendant={activeId}
         autoComplete="off"
         spellCheck={false}
       />
+      {/* The count is the only cue a screen-reader user gets that typing
+          changed the list; the options themselves are never focused. */}
+      <span className={styles.status} role="status" aria-live="polite">
+        {showList
+          ? `${suggestions.length} ${suggestions.length === 1 ? "result" : "results"} available`
+          : ""}
+      </span>
       {showList && (
-        <ul className={styles.listbox} id={listboxId} role="listbox">
+        <ul
+          className={styles.listbox}
+          id={listboxId}
+          role="listbox"
+          aria-label={`${ariaLabel} results`}
+        >
           {suggestions.map((s, i) => (
             <li
               key={s.slug}
