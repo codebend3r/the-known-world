@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Harrenhal"
 landmass: westeros
+coords:
+  x: 555
+  y: 765
 outcome: "The lords choose Viserys over Rhaenys's line, fixing the precedent that the Iron Throne passes by the male line, the seed of the Dance."
 sources:
   - type: awoiaf

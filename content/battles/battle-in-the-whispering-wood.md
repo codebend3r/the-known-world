@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "The Whispering Wood, a wooded vale near Riverrun"
+coords:
+  x: 430
+  y: 730
 region: riverlands
 participants:
   - side: "House Stark"

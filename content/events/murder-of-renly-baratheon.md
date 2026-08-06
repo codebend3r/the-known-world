@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Storm's End"
 landmass: westeros
+coords:
+  x: 645
+  y: 935
 outcome: "A shadow with Stannis's face kills the king of summer in his own pavilion, and his hundred thousand melt away."
 sources:
   - type: awoiaf

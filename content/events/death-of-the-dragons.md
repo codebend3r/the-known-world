@@ -8,6 +8,9 @@ date:
   precision: year
 location: "King's Landing"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "The last dragon dies stunted and sickly under Aegon III, and House Targaryen rules on by right and habit alone."
 sources:
   - type: awoiaf

@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Stoney Sept, in the riverlands"
+coords:
+  x: 470
+  y: 810
 region: riverlands
 participants:
   - side: rebels

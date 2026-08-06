@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "The Lannister siege camps around Riverrun, at the meeting of the rivers"
+coords:
+  x: 430
+  y: 730
 region: riverlands
 participants:
   - side: "House Stark"

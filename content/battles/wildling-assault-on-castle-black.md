@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Castle Black, the Wall"
+coords:
+  x: 460
+  y: 108
 participants:
   - side: "the Night's Watch"
     houses: [nights-watch]

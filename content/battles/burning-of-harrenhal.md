@@ -12,6 +12,9 @@ end:
   era: BC
   precision: exact
 location: "Harrenhal, on the shore of the Gods Eye"
+coords:
+  x: 555
+  y: 765
 region: riverlands
 participants:
   - side: House Targaryen

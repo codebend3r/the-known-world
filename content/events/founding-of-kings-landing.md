@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "King's Landing"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "Aegon is anointed by the Faith, the Iron Throne is forged from the swords of his enemies, and a city rises where he first came ashore."
 sources:
   - type: awoiaf

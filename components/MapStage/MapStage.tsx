@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { ReactSVGPanZoom, TOOL_AUTO, type Value } from "react-svg-pan-zoom";
 import type { KeyboardEvent, ReactNode } from "react";
+import { MAP_BOUNDS } from "@/lib/map";
 import styles from "@/components/MapStage/MapStage.module.scss";
 
-const VIEWBOX_WIDTH = 800;
-const VIEWBOX_HEIGHT = 1400;
+// The stage viewBox *is* atlas space: every `coords` pair in `content/` is an
+// (x, y) inside this box, drawn 1:1 with no projection.
+const { width: VIEWBOX_WIDTH, height: VIEWBOX_HEIGHT } = MAP_BOUNDS;
 
 const ZOOM_STEP = 1.5;
 const PAN_STEP_RATIO = 0.2;

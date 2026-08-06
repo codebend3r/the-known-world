@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Castle Black"
 landmass: westeros
+coords:
+  x: 460
+  y: 108
 outcome: "Sworn brothers put their knives in the Lord Commander for the Watch; he falls in the snow at Castle Black, his fate unwritten."
 sources:
   - type: awoiaf

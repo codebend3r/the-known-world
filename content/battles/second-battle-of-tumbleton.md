@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Tumbleton"
+coords:
+  x: 500
+  y: 900
 region: reach
 participants:
   - side: greens

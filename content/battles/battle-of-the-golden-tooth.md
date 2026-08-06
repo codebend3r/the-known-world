@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "The pass beneath the Golden Tooth, on the border of the westerlands and the riverlands"
+coords:
+  x: 390
+  y: 810
 region: westerlands
 participants:
   - side: "House Lannister"

@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Duskendale"
+coords:
+  x: 615
+  y: 790
 region: crownlands
 participants:
   - side: "the Iron Throne"

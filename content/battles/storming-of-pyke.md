@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Pyke, on the isle of the same name in the Iron Islands"
+coords:
+  x: 185
+  y: 665
 region: iron-islands
 participants:
   - side: "the Iron Throne"

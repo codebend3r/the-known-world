@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Summerhall"
 landmass: westeros
+coords:
+  x: 555
+  y: 1060
 outcome: "Fire consumes the summer palace, King Aegon V, and Prince Duncan; Rhaegar Targaryen is born amid the smoke and grief."
 sources:
   - type: awoiaf

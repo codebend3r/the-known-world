@@ -1,3 +1,4 @@
+import { MAP_BOUNDS, entryCoords, isWithinMapBounds } from "@/lib/map";
 import type {
   loadAllBattles,
   loadAllCastles,
@@ -190,6 +191,23 @@ export function contentIntegrityErrors(collections: Collections): string[] {
       field: "mentions",
       values: frontmatter.mentions,
       targets: allEntitySlugs,
+    });
+  });
+
+  // Atlas-space bounds. Nothing in the build fails when a marker is dragged
+  // off the map, so the marker just stops rendering somewhere nobody looks.
+  const placementSources = [
+    { name: "castles", entries: collections.castles },
+    { name: "battles", entries: collections.battles },
+    { name: "events", entries: collections.events },
+  ];
+  placementSources.forEach(({ name, entries }) => {
+    entries.forEach(({ slug, frontmatter }) => {
+      const coords = entryCoords(frontmatter);
+      if (!coords || isWithinMapBounds(coords)) return;
+      errors.push(
+        `${name}/${slug}.coords: (${coords.x}, ${coords.y}) is outside the ${MAP_BOUNDS.width}x${MAP_BOUNDS.height} map`,
+      );
     });
   });
 

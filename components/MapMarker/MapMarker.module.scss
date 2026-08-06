@@ -53,6 +53,19 @@
   fill: var(--tkw-contested);
 }
 
+// Happenings, not seats: a new shape and a new colour each, so neither can be
+// read as one of the five place glyphs above.
+.battle {
+  fill: var(--tkw-deposed);
+  stroke: var(--tkw-deposed);
+}
+
+.event {
+  fill: none;
+  stroke: var(--tkw-attainted);
+  stroke-width: 2;
+}
+
 // Rule 03: a place name on a plate is a label, so it is mono and letter-spaced.
 .label {
   font-family: var(--font-mono);

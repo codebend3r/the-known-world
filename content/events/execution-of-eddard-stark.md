@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "The Great Sept of Baelor"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "Joffrey takes Lord Stark's head on the steps of the Great Sept, and all hope of peace between wolf and lion with it."
 sources:
   - type: awoiaf

@@ -12,6 +12,9 @@ end:
   era: BC
   precision: exact
 location: "near Storm's End"
+coords:
+  x: 645
+  y: 935
 region: stormlands
 participants:
   - side: House Targaryen

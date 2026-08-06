@@ -12,7 +12,15 @@ import {
   contentIntegrityErrors,
   reciprocalAsymmetries,
 } from "@/lib/content-integrity";
-import { CharacterSchema } from "@/lib/schemas";
+import { MAP_BOUNDS } from "@/lib/map";
+import {
+  BattleSchema,
+  CastleSchema,
+  CharacterSchema,
+  EventSchema,
+} from "@/lib/schemas";
+
+const LEGEND_DATE = { year: 300, era: "AC", precision: "year" };
 
 function character(frontmatter: Record<string, unknown>) {
   const parsed = CharacterSchema.parse({
@@ -112,6 +120,62 @@ describe("reciprocal asymmetries", () => {
   });
 });
 
+function emptyCollections() {
+  return {
+    battles: [],
+    castles: [],
+    characters: [],
+    dragons: [],
+    events: [],
+    houses: [],
+    weapons: [],
+  };
+}
+
+function placedCastle(coords: { x: number; y: number }) {
+  return {
+    body: "",
+    slug: "off-map",
+    frontmatter: CastleSchema.parse({
+      slug: "off-map",
+      name: "Off Map",
+      type: "castle",
+      coords,
+    }),
+  };
+}
+
+function placedBattle(coords: { x: number; y: number }) {
+  return {
+    body: "",
+    slug: "off-map",
+    frontmatter: BattleSchema.parse({
+      slug: "off-map",
+      name: "Off Map",
+      type: "battle",
+      start: LEGEND_DATE,
+      end: LEGEND_DATE,
+      coords,
+    }),
+  };
+}
+
+function placedEvent(coords: { x: number; y: number }) {
+  return {
+    body: "",
+    slug: "off-map",
+    frontmatter: EventSchema.parse({
+      slug: "off-map",
+      name: "Off Map",
+      type: "battle",
+      date: LEGEND_DATE,
+      location: "nowhere",
+      landmass: "westeros",
+      coords,
+    }),
+  };
+}
+
 describe("content integrity", () => {
   it("has matching, unique slugs and resolvable cross-references", async () => {
     const [battles, castles, characters, dragons, events, houses, weapons] =
@@ -136,5 +200,50 @@ describe("content integrity", () => {
         weapons,
       }),
     ).toEqual([]);
+  });
+
+  it("flags a castle, battle, or event placed outside the atlas bounds", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      castles: [placedCastle({ x: -1, y: 10 })],
+      battles: [placedBattle({ x: 10, y: MAP_BOUNDS.height + 1 })],
+      events: [placedEvent({ x: 1955, y: 4619 })],
+    });
+
+    expect(errors).toEqual([
+      `castles/off-map.coords: (-1, 10) is outside the ${MAP_BOUNDS.width}x${MAP_BOUNDS.height} map`,
+      `battles/off-map.coords: (10, ${MAP_BOUNDS.height + 1}) is outside the ${MAP_BOUNDS.width}x${MAP_BOUNDS.height} map`,
+      `events/off-map.coords: (1955, 4619) is outside the ${MAP_BOUNDS.width}x${MAP_BOUNDS.height} map`,
+    ]);
+  });
+
+  it("accepts a placement on the far corner of the atlas bounds", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      castles: [placedCastle({ x: MAP_BOUNDS.width, y: MAP_BOUNDS.height })],
+      battles: [placedBattle({ x: 0, y: 0 })],
+    });
+    expect(errors).toEqual([]);
+  });
+
+  it("ignores battles and events that carry no coordinates at all", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      battles: [
+        {
+          body: "",
+          slug: "off-map",
+          frontmatter: BattleSchema.parse({
+            slug: "off-map",
+            name: "Off Map",
+            type: "battle",
+            start: LEGEND_DATE,
+            end: LEGEND_DATE,
+            location: "the Trident",
+          }),
+        },
+      ],
+    });
+    expect(errors).toEqual([]);
   });
 });

@@ -1,11 +1,11 @@
 import { cx } from "@/lib/cx";
-import type { Castle } from "@/lib/schemas";
+import { placementHref, type MapLayer } from "@/lib/map";
 import styles from "@/components/MapMarker/MapMarker.module.scss";
 
 type Props = {
   slug: string;
   name: string;
-  type: Castle["type"];
+  type: MapLayer;
   cx: number;
   cy: number;
 };
@@ -19,7 +19,7 @@ export function MapMarker({
 }: Props) {
   return (
     <a
-      href={`/castles/${slug}/`}
+      href={placementHref({ layer: type, slug })}
       className={styles.marker}
       tabIndex={0}
       aria-label={name}
@@ -33,13 +33,15 @@ export function MapMarker({
 }
 
 // The pin's fill identifies the kind of place; the ring is gold for every one
-// of them. Both live in the module, so no hex is written here.
+// of them. Both live in the module, so no hex is written here. Battle and
+// event glyphs break the shape family on purpose (a filled triangle, a hollow
+// diamond) so a happening is never mistaken for a seat.
 function Glyph({
   type,
   cx: centreX,
   cy: centreY,
 }: {
-  type: Castle["type"];
+  type: MapLayer;
   cx: number;
   cy: number;
 }) {
@@ -94,6 +96,20 @@ function Glyph({
           y={centreY - 5}
           width={10}
           height={10}
+        />
+      );
+    case "battle":
+      return (
+        <polygon
+          className={cx(styles.glyph, styles.battle)}
+          points={`${centreX},${centreY - 7} ${centreX + 6},${centreY + 5} ${centreX - 6},${centreY + 5}`}
+        />
+      );
+    case "event":
+      return (
+        <polygon
+          className={cx(styles.glyph, styles.event)}
+          points={`${centreX},${centreY - 7} ${centreX + 7},${centreY} ${centreX},${centreY + 7} ${centreX - 7},${centreY}`}
         />
       );
   }

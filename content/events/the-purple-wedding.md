@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "King's Landing"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "King Joffrey is poisoned at his own wedding feast; Tyrion Lannister is seized for the murder, and Sansa Stark vanishes."
 sources:
   - type: awoiaf

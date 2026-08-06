@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Moat Cailin"
+coords:
+  x: 420
+  y: 600
 region: north
 participants:
   - side: "the ironborn"
