@@ -16,6 +16,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/weapons/", label: "Weapons", visible: true },
   { href: "/battles/", label: "Battles", visible: true },
   { href: "/dragons/", label: "Dragons", visible: false },
+  { href: "/events/", label: "Events", visible: true },
 ];
 
 export function visibleNavItems(): NavItem[] {

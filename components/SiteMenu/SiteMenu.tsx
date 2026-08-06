@@ -31,6 +31,7 @@ const ART: Record<string, MenuArt> = {
     glyph: sectionGlyphs.battles,
   },
   "/dragons/": { icon: "/menu-icons/dragons.png" },
+  "/events/": { glyph: sectionGlyphs.events },
 };
 
 const ITEMS = visibleNavItems();

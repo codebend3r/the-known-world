@@ -20,7 +20,7 @@ export default function Home() {
       </section>
       <div className={styles.indexBar}>
         <h2 className={styles.indexLabel}>The Index</h2>
-        <p className={styles.indexCount}>07 collections</p>
+        <p className={styles.indexCount}>08 collections</p>
       </div>
       <MainMenu />
     </PlateLayout>

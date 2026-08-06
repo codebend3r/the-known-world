@@ -156,6 +156,42 @@ const DRAGON = (
   </svg>
 );
 
+// The red comet: the omen that marks a turning of the world, and the closest
+// thing the chronicle has to a mark for "a great event happened here".
+const COMET = (
+  <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+    <circle
+      cx="21"
+      cy="11"
+      r="5"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M17.5 14.5 L5 27"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M19.5 17 L11 27"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      opacity="0.55"
+    />
+    <path
+      d="M15 12.5 L5 20"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      opacity="0.55"
+    />
+    <circle cx="21" cy="11" r="1.6" fill="currentColor" opacity="0.6" />
+  </svg>
+);
+
 export const sectionGlyphs = {
   maps: COMPASS,
   timeline: HOURGLASS,
@@ -165,6 +201,7 @@ export const sectionGlyphs = {
   battles: BATTLES,
   castles: KEEP,
   dragons: DRAGON,
+  events: COMET,
 } satisfies Record<string, ReactNode>;
 
 export type SectionSlug = keyof typeof sectionGlyphs;

@@ -3,10 +3,10 @@ import { render, screen } from "@testing-library/react";
 import { MainMenu } from "@/components/MainMenu";
 
 describe("MainMenu", () => {
-  it("renders only visible tiles in order: Maps, Timeline, Houses, Castles, Characters, Weapons, Battles", () => {
+  it("renders only visible tiles in order: Maps, Timeline, Houses, Castles, Characters, Weapons, Battles, Events", () => {
     render(<MainMenu />);
     const links = screen.getAllByRole("link");
-    expect(links).toHaveLength(7);
+    expect(links).toHaveLength(8);
 
     expect(links[0].textContent).toContain("Maps");
     expect(links[0].getAttribute("href")).toBe("/maps/");
@@ -28,6 +28,9 @@ describe("MainMenu", () => {
 
     expect(links[6].textContent).toContain("Battles");
     expect(links[6].getAttribute("href")).toBe("/battles/");
+
+    expect(links[7].textContent).toContain("Events");
+    expect(links[7].getAttribute("href")).toBe("/events/");
   });
 
   it("does not render hidden tiles (Dragons)", () => {
