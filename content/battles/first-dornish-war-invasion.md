@@ -35,6 +35,10 @@ commanders:
 victor: "Dorne"
 outcome: "After nearly a decade of raids, burnings, and reprisals, the war ends in stalemate, and Dorne remains unconquered and independent."
 casualties: [rhaenys-targaryen]
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/First_Dornish_War
+    license: CC-BY-SA-3.0
 draft: false
 ---
 

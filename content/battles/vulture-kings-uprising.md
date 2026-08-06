@@ -21,6 +21,10 @@ participants:
 commanders: [orys-baratheon, wyl-of-wyl]
 victor: "Iron Throne"
 outcome: "The first Vulture King's host is broken and scattered, though Orys Baratheon is taken by the Wyl of Wyl and loses a hand to ransom."
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Vulture_King
+    license: CC-BY-SA-3.0
 draft: false
 ---
 

@@ -18,7 +18,10 @@ features:
 coords:
   x: 400
   y: 430
-sources: []
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Winterfell
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
