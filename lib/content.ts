@@ -20,8 +20,16 @@ import {
   type Battle,
 } from "@/lib/schemas";
 import { remarkProseLinks, type ProseLinkIndex } from "@/lib/prose-links";
+import { memoize, memoizeBySlug } from "@/lib/memoize";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
+
+// `output: "export"` renders every page in a worker process, and most pages call
+// several `loadAll*`, so without a cache each one re-read and re-validated the
+// whole corpus. Enabled only for production builds, where content is immutable:
+// `next dev` and tests keep reading from disk so edits show up without a
+// restart. Callers must not mutate a returned array, since a hit is shared.
+const enabled = process.env.NODE_ENV === "production";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
@@ -77,32 +85,67 @@ async function loadAll<T>(
   );
 }
 
-export const loadCastle = (slug: string) =>
-  loadFile<Castle>("castles", slug, CastleSchema);
-export const loadHouse = (slug: string) =>
-  loadFile<House>("houses", slug, HouseSchema);
-export const loadCharacter = (slug: string) =>
-  loadFile<Character>("characters", slug, CharacterSchema);
-export const loadEvent = (slug: string) =>
-  loadFile<Event>("events", slug, EventSchema);
+export const loadCastle = memoizeBySlug({
+  enabled,
+  load: (slug: string) => loadFile<Castle>("castles", slug, CastleSchema),
+});
+export const loadHouse = memoizeBySlug({
+  enabled,
+  load: (slug: string) => loadFile<House>("houses", slug, HouseSchema),
+});
+export const loadCharacter = memoizeBySlug({
+  enabled,
+  load: (slug: string) =>
+    loadFile<Character>("characters", slug, CharacterSchema),
+});
+export const loadEvent = memoizeBySlug({
+  enabled,
+  load: (slug: string) => loadFile<Event>("events", slug, EventSchema),
+});
 
-export const loadAllCastles = () => loadAll<Castle>("castles", CastleSchema);
-export const loadAllHouses = () => loadAll<House>("houses", HouseSchema);
-export const loadAllCharacters = () =>
-  loadAll<Character>("characters", CharacterSchema);
-export const loadAllEvents = () => loadAll<Event>("events", EventSchema);
+export const loadAllCastles = memoize({
+  enabled,
+  load: () => loadAll<Castle>("castles", CastleSchema),
+});
+export const loadAllHouses = memoize({
+  enabled,
+  load: () => loadAll<House>("houses", HouseSchema),
+});
+export const loadAllCharacters = memoize({
+  enabled,
+  load: () => loadAll<Character>("characters", CharacterSchema),
+});
+export const loadAllEvents = memoize({
+  enabled,
+  load: () => loadAll<Event>("events", EventSchema),
+});
 
-export const loadWeapon = (slug: string) =>
-  loadFile<Weapon>("weapons", slug, WeaponSchema);
-export const loadDragon = (slug: string) =>
-  loadFile<Dragon>("dragons", slug, DragonSchema);
+export const loadWeapon = memoizeBySlug({
+  enabled,
+  load: (slug: string) => loadFile<Weapon>("weapons", slug, WeaponSchema),
+});
+export const loadDragon = memoizeBySlug({
+  enabled,
+  load: (slug: string) => loadFile<Dragon>("dragons", slug, DragonSchema),
+});
 
-export const loadAllWeapons = () => loadAll<Weapon>("weapons", WeaponSchema);
-export const loadAllDragons = () => loadAll<Dragon>("dragons", DragonSchema);
+export const loadAllWeapons = memoize({
+  enabled,
+  load: () => loadAll<Weapon>("weapons", WeaponSchema),
+});
+export const loadAllDragons = memoize({
+  enabled,
+  load: () => loadAll<Dragon>("dragons", DragonSchema),
+});
 
-export const loadBattle = (slug: string) =>
-  loadFile<Battle>("battles", slug, BattleSchema);
-export const loadAllBattles = () => loadAll<Battle>("battles", BattleSchema);
+export const loadBattle = memoizeBySlug({
+  enabled,
+  load: (slug: string) => loadFile<Battle>("battles", slug, BattleSchema),
+});
+export const loadAllBattles = memoize({
+  enabled,
+  load: () => loadAll<Battle>("battles", BattleSchema),
+});
 
 export async function renderMarkdown(
   source: string,
