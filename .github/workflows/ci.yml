@@ -43,6 +43,45 @@ jobs:
           key: ${{ runner.os }}-next-${{ hashFiles('bun.lock') }}-${{ github.sha }}
           restore-keys: ${{ runner.os }}-next-${{ hashFiles('bun.lock') }}-
 
+      # One hash over the git trees of every path `next build` reads. Tree SHAs
+      # already digest their contents recursively, so this is exact and costs
+      # ~10ms, where `hashFiles` would re-read all 229MB of `public/`.
+      - name: 🔑 Fingerprint build inputs
+        id: build-inputs
+        run: |
+          set -euo pipefail
+          # A renamed or deleted path must fail here rather than collapse to an
+          # empty key, which every commit would then share and falsely hit.
+          trees=$(git rev-parse \
+            HEAD:app \
+            HEAD:components \
+            HEAD:content \
+            HEAD:lib \
+            HEAD:public \
+            HEAD:styles \
+            HEAD:types \
+            HEAD:globals.d.ts \
+            HEAD:next.config.ts \
+            HEAD:tsconfig.json \
+            HEAD:package.json \
+            HEAD:bunfig.toml \
+            HEAD:bun.lock \
+            HEAD:.nvmrc \
+            HEAD:.github/workflows/ci.yml)
+          key=$(printf '%s\n' "$trees" | git hash-object --stdin)
+          test -n "$key"
+          echo "key=$key" >> "$GITHUB_OUTPUT"
+
+      # A hit means this exact input set already built green, so the 6-minute
+      # static export is redundant. Only the receipt is cached, not `out/`,
+      # because CI gates the build while Netlify produces the deployed artifact.
+      - name: 🎟️ Restore build receipt
+        id: build-receipt
+        uses: actions/cache@v6
+        with:
+          path: .build-receipt
+          key: ${{ runner.os }}-build-ok-${{ steps.build-inputs.outputs.key }}
+
       - name: 📦 Install dependencies
         run: bun install --frozen-lockfile
 
@@ -62,4 +101,9 @@ jobs:
         run: bun run test
 
       - name: 🏗️ Build
-        run: bun run build
+        if: steps.build-receipt.outputs.cache-hit != 'true'
+        run: bun run build && echo "$GITHUB_SHA" > .build-receipt
+
+      - name: ⏭️ Build skipped
+        if: steps.build-receipt.outputs.cache-hit == 'true'
+        run: echo "Build inputs unchanged since $(cat .build-receipt) built green." >> "$GITHUB_STEP_SUMMARY"
