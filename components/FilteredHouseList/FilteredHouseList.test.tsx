@@ -59,11 +59,16 @@ describe("FilteredHouseList", () => {
     ).toBeDefined();
   });
 
-  it("does not filter until the 300ms debounce elapses", async () => {
+  // Advances 0ms, not part of the 300ms window. `advanceTime` waits real time,
+  // so a partial advance races the debounce: a loaded runner can overrun 200ms
+  // past 300ms, fire the debounce, and fail an assertion about the diff under
+  // test. Paired with the 400ms case below, 0ms still pins the contract: the
+  // filter is not synchronous, and it has applied once the window closes.
+  it("does not filter before the 300ms debounce elapses", async () => {
     renderWithNuqs(<FilteredHouseList items={items} />);
     const input = screen.getByRole("searchbox");
     fireEvent.change(input, { target: { value: "stark" } });
-    await advanceTime({ ms: 200 });
+    await advanceTime({ ms: 0 });
     expect(screen.getAllByRole("link").length).toBe(3);
   });
 
