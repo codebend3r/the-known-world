@@ -27,6 +27,7 @@ notable-members:
     note: the Younger
   - name: Owen Norrey
   - name: Lady Arra Norrey
+    slug: arra-norrey
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Norrey

@@ -18,6 +18,7 @@ cadet-houses: []
 region: westerlands
 heads:
   - name: "Ser Ilyn Payne"
+    slug: ilyn-payne
 titles:
   - name: King's Justice
 sources:

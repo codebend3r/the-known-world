@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: "Lady Nymella Toland"
+    slug: nymella-toland
 titles:
   - name: Lady of Ghost Hill
 sources:

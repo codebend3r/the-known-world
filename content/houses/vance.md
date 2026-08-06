@@ -18,11 +18,14 @@ cadet-houses: []
 region: riverlands
 seats:
   - name: Atranta
+    slug: atranta
     note: seat of the elder branch
   - name: Wayfarer's Rest
+    slug: wayfarers-rest
     note: seat of the younger branch
 heads:
   - name: "Lord Norbert Vance"
+    slug: norbert-vance
     note: Lord of Atranta
   - name: "Lord Karyl Vance"
     note: Lord of Wayfarer's Rest

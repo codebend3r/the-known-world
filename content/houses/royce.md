@@ -15,6 +15,8 @@ status: extant
 rank: lordly
 sworn-from: []
 cadet-houses: []
+ancestral-weapons:
+  - lamentation
 region: vale
 sources:
   - type: awoiaf

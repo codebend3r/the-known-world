@@ -23,6 +23,7 @@ ancestral-weapons:
 notable-members:
   - name: "Ser Lorence Roxton"
   - name: "Ser Jon Roxton"
+    slug: jon-roxton
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Roxton

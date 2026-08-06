@@ -21,6 +21,7 @@ seats:
     slug: brightwater-keep
     note: forfeit to Ser Garlan Tyrell after Lord Alester's attainder
   - name: Highgarden
+    slug: highgarden
     note: briefly, by grant of King Stannis after Renly's death; never held in fact
 heads:
   - name: "Lord Alester Florent"

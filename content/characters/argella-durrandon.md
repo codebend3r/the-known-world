@@ -14,6 +14,8 @@ parents:
   - argilac-durrandon
 spouses:
   - orys-baratheon
+children:
+  - davos-baratheon
 titles:
   - Lady of Storm's End
 aliases:

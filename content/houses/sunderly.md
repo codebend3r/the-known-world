@@ -18,6 +18,7 @@ cadet-houses: []
 region: iron-islands
 heads:
   - name: Lord Sunderly
+    slug: unnamed-lady-sunderly
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Sunderly

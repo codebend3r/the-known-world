@@ -12,6 +12,7 @@ also-of-houses:
   - lannister
 spouses:
   - gerold-lannister-the-golden
+  - eustace-osgrey
 children:
   - tywald-lannister
   - tion-lannister-son-of-gerold

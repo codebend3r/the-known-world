@@ -10,6 +10,9 @@ died: null
 primary-house: allyrion
 also-of-houses:
   - yronwood
+parents:
+  - lady-yronwood-wife-of-anders
+  - anders-yronwood
 spouses:
   - ryon-allyrion
 children:

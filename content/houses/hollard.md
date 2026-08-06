@@ -22,8 +22,10 @@ cadet-houses: []
 region: crownlands
 heads:
   - name: "Ser Symon Hollard"
+    slug: symon-hollard
     note: master-at-arms of the Dun Fort; slew Ser Gwayne Gaunt of the Kingsguard at the Defiance
   - name: "Ser Dontos Hollard"
+    slug: dontos-hollard
     note: called Dontos the Red, last of the line; spared as a boy at Ser Barristan Selmy's plea
 sources:
   - type: awoiaf

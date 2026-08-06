@@ -22,8 +22,10 @@ cadet-houses: []
 region: riverlands
 heads:
   - name: "Lord Quenton Qoherys"
+    slug: quenton-qoherys
     note: founder; master-at-arms of Dragonstone, raised to Lord of Harrenhal by Aegon I after the burning of House Hoare
   - name: "Lord Gargon Qoherys"
+    slug: gargon-qoherys
     note: called the Guest; last of the line, murdered by Harren the Red during the reign of King Aenys I
 titles:
   - name: Lord of Harrenhal

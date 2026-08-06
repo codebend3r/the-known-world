@@ -7,6 +7,10 @@ died: null
 primary-house: mormont
 spouses:
   - alaric-stark
+children:
+  - elder-son-of-alaric-stark
+  - alarra-stark
+  - younger-son-of-alaric-stark
 aliases:
   - Lady Stark
 placeholder: true

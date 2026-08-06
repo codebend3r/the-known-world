@@ -20,6 +20,7 @@ titles:
   - name: Lord of Talamon
 heads:
   - name: Ser Vardis Egen
+    slug: vardis-egen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Egen

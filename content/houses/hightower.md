@@ -1,7 +1,7 @@
 ---
 slug: hightower
 name: House Hightower
-seat: the-hightower
+seat: hightower
 liege: tyrell
 words: "We Light the Way"
 sigil:
@@ -18,9 +18,10 @@ cadet-houses: []
 region: reach
 seats:
   - name: The Hightower
-    slug: the-hightower
+    slug: hightower
 heads:
   - name: "Lord Leyton Hightower"
+    slug: leyton-hightower
 regions:
   - name: The Reach
 titles:

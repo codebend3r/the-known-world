@@ -15,6 +15,8 @@ parents:
   - walder-frey
 spouses:
   - jeyne-lydden
+children:
+  - walton-frey
 titles:
   - "Ser"
   - "Heir to the Twins"

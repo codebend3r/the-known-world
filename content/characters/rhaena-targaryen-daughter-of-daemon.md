@@ -19,6 +19,8 @@ aliases:
   - Rhae
   - Rhaena Corbray
   - Dragon Twin
+spouses:
+  - garmund-hightower
 titles:
   - Princess
   - Lady of Hightower

@@ -20,6 +20,7 @@ notable-members:
   - name: Ser Corwin Rogers
     note: rode at the Ashford Meadow tourney, 209 AC
   - name: Ser Harrold Rogers
+    slug: harrold-rogers
     note: wed Branda Stark, daughter of Rodrik Stark the Wandering Wolf
 sources:
   - type: awoiaf

@@ -17,12 +17,16 @@ sworn-from: []
 cadet-houses: []
 seats:
   - name: Castle Black
+    slug: castle-black
     note: the chief stronghold of the Watch, held beneath the Wall between the Nightfort and the Shadow Tower; seat of the Lord Commander
   - name: The Nightfort
+    slug: nightfort
     note: the oldest and largest of the castles on the Wall, abandoned long ago; remembered as the seat of the Night's King
   - name: Eastwatch-by-the-Sea
+    slug: eastwatch-by-the-sea
     note: the easternmost castle of the Wall, upon the shore of the Bay of Seals
   - name: The Shadow Tower
+    slug: shadow-tower
     note: the westernmost manned castle, guarding the Wall where it meets the Gorge
 regions:
   - name: The Wall

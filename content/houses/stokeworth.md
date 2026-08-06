@@ -1,7 +1,7 @@
 ---
 slug: stokeworth
 name: House Stokeworth
-seat: castle-stokeworth
+seat: stokeworth
 liege: baratheon
 words: "Proud to Be Faithful"
 sigil:
@@ -18,6 +18,7 @@ cadet-houses: []
 region: crownlands
 heads:
   - name: "Lady Tanda Stokeworth"
+    slug: tanda-stokeworth
 regions:
   - name: Crownlands
 titles:

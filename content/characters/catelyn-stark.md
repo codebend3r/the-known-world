@@ -13,6 +13,8 @@ died:
 primary-house: stark
 also-of-houses:
   - tully
+parents:
+  - hoster-tully
 spouses:
   - eddard-stark
 children:

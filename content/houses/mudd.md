@@ -22,8 +22,10 @@ cadet-houses: []
 region: riverlands
 heads:
   - name: "King Tristifer IV Mudd"
+    slug: tristifer-iv-mudd
     note: called the Hammer of Justice; victor of ninety-nine battles, slain in his hundredth against seven Andal kings
   - name: "King Tristifer V Mudd"
+    slug: tristifer-v-mudd
     note: last of the line; lost the riverlands to the Andals at his father's death
 titles:
   - name: King of the Rivers and the Hills

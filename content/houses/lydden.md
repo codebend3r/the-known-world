@@ -18,6 +18,7 @@ cadet-houses: []
 region: westerlands
 heads:
   - name: Lord Lewys Lydden
+    slug: lewys-lydden
 titles:
   - name: Lord of the Deep Den
 sources:

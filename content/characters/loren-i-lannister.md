@@ -8,6 +8,8 @@ born:
   precision: decade
 died: null
 primary-house: lannister
+children:
+  - lyman-lannister
 titles:
   - King of the Rock
   - Lord of Casterly Rock

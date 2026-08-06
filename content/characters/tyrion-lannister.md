@@ -11,6 +11,9 @@ primary-house: lannister
 parents:
   - tywin-lannister
   - joanna-lannister
+spouses:
+  - sansa-stark
+  - tysha
 aliases:
   - The Imp
   - The Halfman

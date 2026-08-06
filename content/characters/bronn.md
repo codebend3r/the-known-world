@@ -7,6 +7,8 @@ died: null
 primary-house: null
 aliases:
   - Bronn of the Blackwater
+spouses:
+  - lollys-stokeworth
 titles:
   - Ser
   - Lord of Stokeworth

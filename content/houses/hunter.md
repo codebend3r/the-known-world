@@ -18,6 +18,7 @@ cadet-houses: []
 region: vale
 heads:
   - name: "Lord Eon Hunter"
+    slug: eon-hunter
 titles:
   - name: Lord of Longbow Hall
 sources:

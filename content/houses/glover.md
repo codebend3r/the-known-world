@@ -23,6 +23,7 @@ heads:
   - name: "Lord Galbart Glover"
     note: Master of Deepwood Motte; rides south with Robb Stark
   - name: "Robett Glover"
+    slug: robett-glover
     note: Galbart's younger brother and castellan in his absence
 regions:
   - name: The North

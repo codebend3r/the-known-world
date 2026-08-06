@@ -24,6 +24,7 @@ titles:
     note: formerly, before the house's demotion to knightly rank
 notable-members:
   - name: Dorna Swyft
+    slug: dorna-swyft
     note: wed Ser Kevan Lannister; mother of Lancel, Willem, Martyn, and Janei Lannister
   - name: Ser Steffon Swyft
     note: heir to Cornfield

@@ -10,6 +10,8 @@ died: null
 primary-house: bolton
 parents:
   - roose-bolton
+spouses:
+  - jeyne-poole
 titles:
   - Bastard of Bolton
   - Lord of the Hornwood

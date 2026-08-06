@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: "Lady Delonne Allyrion"
+    slug: delonne-allyrion
 titles:
   - name: Lady of Godsgrace
 regions:

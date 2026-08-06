@@ -1,7 +1,7 @@
 ---
 slug: jordayne
 name: House Jordayne
-seat: the-tor
+seat: tor
 liege: martell
 words: "Let It Be Written"
 sigil:
@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: "Lord Trebor Jordayne"
+    slug: trebor-jordayne
 titles:
   - name: Lord of the Tor
 sources:

@@ -18,6 +18,7 @@ cadet-houses: []
 region: north
 seats:
   - name: Wolf's Den
+    slug: wolfs-den
     note: formerly held; lost before the War of the Five Kings
 sources:
   - type: awoiaf

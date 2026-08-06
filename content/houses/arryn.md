@@ -1,7 +1,7 @@
 ---
 slug: arryn
 name: House Arryn
-seat: the-eyrie
+seat: eyrie
 liege: null
 words: "As High as Honor"
 sigil:

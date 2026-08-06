@@ -21,6 +21,67 @@ type Collections = {
 
 type CollectionName = keyof Collections;
 
+/**
+ * One half of a two-way relationship that only one side declares.
+ *
+ * `source.field` names `target`, but `target.expected` does not name back. The
+ * entry is still valid, so no outbound check catches it; the cost is that the
+ * relationship renders on one page and not the other, which is how an entry
+ * ends up with nothing pointing at it.
+ */
+export type ReciprocalAsymmetry = {
+  /** `characters/hoster-tully` */
+  source: string;
+  /** The field on the source that declares the relationship. */
+  field: string;
+  /** `characters/catelyn-stark` */
+  target: string;
+  /** The field on the target that should name the source and does not. */
+  expected: string;
+};
+
+/**
+ * Character kinship is the only genuinely symmetric relation in the corpus, so
+ * it is the only one checked here.
+ *
+ * `houses.seat` and `castles.liege-house` look reciprocal and are not: five
+ * extinct houses list `harrenhal` as their seat while the castle names one
+ * current holder, which is the correct reading of both fields. Likewise
+ * `houses.ancestral-weapons` is a curated subset of the weapons whose
+ * `current-house` names that house, not its inverse. Neither belongs here.
+ */
+export function reciprocalAsymmetries({
+  characters,
+}: Pick<Collections, "characters">): ReciprocalAsymmetry[] {
+  const bySlug = new Map(
+    characters.map((entry) => [entry.frontmatter.slug, entry.frontmatter]),
+  );
+  const rules = [
+    { field: "parents", expected: "children" },
+    { field: "children", expected: "parents" },
+    { field: "spouses", expected: "spouses" },
+  ] as const;
+
+  return characters.flatMap(({ frontmatter }) =>
+    rules.flatMap(({ field, expected }) =>
+      frontmatter[field].flatMap((targetSlug) => {
+        const target = bySlug.get(targetSlug);
+        // A slug resolving to nothing is already an outbound error; reporting
+        // it twice would double the noise for one edit.
+        if (!target || target[expected].includes(frontmatter.slug)) return [];
+        return [
+          {
+            source: `characters/${frontmatter.slug}`,
+            field,
+            target: `characters/${targetSlug}`,
+            expected,
+          },
+        ];
+      }),
+    ),
+  );
+}
+
 export function contentIntegrityErrors(collections: Collections): string[] {
   const slugSets = buildSlugSets(collections);
   const allEntitySlugs = new Set(
@@ -213,6 +274,12 @@ export function contentIntegrityErrors(collections: Collections): string[] {
       });
     },
   );
+
+  reciprocalAsymmetries(collections).forEach((issue) => {
+    errors.push(
+      `${issue.source}.${issue.field}: ${issue.target} does not name it back in ${issue.expected}`,
+    );
+  });
 
   return [...errors, ...dateIntegrityErrors(collections)];
 }

@@ -13,6 +13,8 @@ also-of-houses:
 parents:
   - emmon-frey
   - genna-lannister
+spouses:
+  - jeyne-darry
 titles:
   - Ser
 aliases:

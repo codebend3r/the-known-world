@@ -14,6 +14,8 @@ primary-house: targaryen
 parents:
   - aegon-iii-targaryen
   - daenaera-velaryon
+spouses:
+  - michael-manwoody
 children:
   - jon-waters
   - jeyne-waters

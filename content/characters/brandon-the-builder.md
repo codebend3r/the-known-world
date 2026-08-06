@@ -5,6 +5,8 @@ sex: m
 born: null
 died: null
 primary-house: stark
+children:
+  - brandon-stark-son-of-the-builder
 titles:
   - King of Winter
   - Founder of House Stark

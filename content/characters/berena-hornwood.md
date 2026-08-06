@@ -7,6 +7,8 @@ died: null
 primary-house: hornwood
 also-of-houses:
   - tallhart
+parents:
+  - lady-hornwood-mother-of-halys
 spouses:
   - leobald-tallhart
 children:

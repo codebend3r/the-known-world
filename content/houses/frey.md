@@ -1,7 +1,7 @@
 ---
 slug: frey
 name: House Frey
-seat: the-twins
+seat: twins
 liege: tully
 words: "We Stand Together"
 sigil:

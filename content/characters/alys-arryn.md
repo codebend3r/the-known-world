@@ -7,11 +7,15 @@ died: null
 primary-house: arryn
 also-of-houses:
   - targaryen
+parents:
+  - jasper-arryn
 spouses:
   - rhaegel-targaryen
+  - elys-waynwood
 children:
   - aelora-targaryen
   - aerion-targaryen-brightflame-uncle
+  - jasper-waynwood
 titles:
   - Princess
 sources:
