@@ -13,10 +13,10 @@ Skill directories are flat — Claude Code discovers `.claude/skills/<name>/SKIL
 
 ## Standalone
 
-| Skill                                       | Covers                                                                                                                                                                            |
-| ------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [`active-rebaser`](active-rebaser/SKILL.md) | Rebasing every local feature branch onto `main` when it moves, resolving conflicts semantically, reporting per-branch stats, and pushing one branch at a time on approval.        |
-| [`version-bumper`](version-bumper/SKILL.md) | Deciding whether `main` has earned a release and which increment, then cutting it — `bun pm version`, the bare-version commit, the `v*` tag, the push, and local/remote tag sync. |
+| Skill                                       | Covers                                                                                                                                                                                                              |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`active-rebaser`](active-rebaser/SKILL.md) | Rebasing every local feature branch onto `main` when it moves, in place in its worktree, resolving small conflicts and aborting big ones, reporting per-branch stats, and pushing one branch at a time on approval. |
+| [`version-bumper`](version-bumper/SKILL.md) | Deciding whether `main` has earned a release and which increment, recommending it for a yes/no, then cutting it — `bun pm version`, the bare-version commit, the `v*` tag, the push, and local/remote tag sync.     |
 
 ## `tkw-content-*` — populating `content/`
 
