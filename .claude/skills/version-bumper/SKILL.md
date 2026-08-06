@@ -13,12 +13,15 @@ The release mechanism is `bun pm version <increment>`, run **on `main` only**. I
 
 **Releases happen on `main`, from `main`, or not at all.** A feature branch never gets a version bump, and unmerged work never counts toward the decision.
 
-Four phases, in order:
+Five phases, in order:
 
 1. **Sync tags** — local and remote agree before anything reads "the latest tag".
 2. **Decide** — is a bump warranted, and which one.
-3. **Preflight** — clean, current, green.
-4. **Cut and push** — bump, tag, push both, verify.
+3. **Recommend** — state the call, then stop and wait for the user's yes or no.
+4. **Preflight** — clean, current, green.
+5. **Cut and push** — bump, tag, push both, verify.
+
+Phases 1 through 3 are read-only. Nothing is written, committed, or pushed until the user answers yes.
 
 ## Phase 1 — Tag sync
 
@@ -90,9 +93,44 @@ The package is `"private": true` — semver here describes the site, not a publi
 
 **`major` is never chosen automatically.** Pre-1.0, breaking changes ride a minor. Cut a major only when the user says the words, or when they are explicitly declaring `1.0.0`.
 
-## Phase 3 — Preflight
+## Phase 3 — Recommend, then wait
 
-All four must hold. Any failure stops the run — report it, do not work around it.
+The decision in Phase 2 is a **recommendation**, never an action. Present it and stop. The user answers yes or no; that answer is the only thing that authorizes Phase 4 and Phase 5.
+
+Present exactly this, then end the turn:
+
+```markdown
+## 🔖 Recommending `v0.3.0` → `v0.3.1` (patch)
+
+| Field    | Value                       |
+| -------- | --------------------------- |
+| Latest   | `v0.3.0` (51e4071)          |
+| Commits  | 4                           |
+| Diff     | 53 files, +2034 −164        |
+| Tag sync | ✅ local and remote matched |
+
+**Why patch:** content fills and CI only, no new route or content type.
+
+- `05079f9` TKW: dates and eras skill, plus 99 date corrections (#70)
+- `dbc2162` TKW: accessibility audit skill, plus map, tree, and combobox fixes (#68)
+- `4ca7e41` TKW: component scaffold skill, plus conformance fixes (#71)
+- `aff6f9d` TKW: stop the debounce tests racing the clock (#73)
+
+Cut it? (yes / no)
+```
+
+Rules for this phase:
+
+- **One question, one word back.** The user should be able to answer with "yes" or "no" and nothing else. Do not ask them to pick the increment, confirm the branch, or approve the push separately. The recommendation already answers those.
+- **Name the increment in the question.** "Cut it?" means cutting the increment recommended above, patch/minor/major included. If they say only "no", the run ends; do not counter-propose a different increment unless they ask.
+- **A no is a complete answer.** Report `⏭️ declined` and stop. Nothing to revert, because nothing was written.
+- **The user may override the increment.** "yes, but make it minor" is a yes with a different increment. Take it and proceed, no argument.
+- **A no-bump call needs no question.** If Phase 2 said no bump, report that and stop. There is nothing to approve.
+- **Asking here is mandatory**, and it overrides the general "never ask for confirmation mid-task" preference in the global `CLAUDE.md`. A release commit and two pushed refs are exactly the kind of outward-facing, hard-to-reverse action that repo `CLAUDE.md` reserves for an explicit instruction. The user asked for this gate by name.
+
+## Phase 4 — Preflight
+
+Runs only after a yes in Phase 3. All four must hold. Any failure stops the run — report it, do not work around it. A preflight failure after a yes is still a stop: the approval covered cutting a release, not forcing one past a red check.
 
 ```bash
 git rev-parse --abbrev-ref HEAD          # must be main
@@ -109,7 +147,9 @@ test "v$(bun pm pkg get version | tr -d '"')" = "$(git describe --tags --abbrev=
 
 A mismatch means a previous cut bumped `package.json` and never tagged. Stop and report; the recovery is a tag, not a second bump.
 
-## Phase 4 — Cut and push
+## Phase 5 — Cut and push
+
+Only runs after a yes in Phase 3.
 
 ```bash
 bun pm version <patch|minor|major>
@@ -134,7 +174,7 @@ git ls-remote --tags origin "v$version"  # must exist
 | Flag                   | Use                                                                     |
 | ---------------------- | ----------------------------------------------------------------------- |
 | `--no-git-tag-version` | Never. The tag is the point.                                            |
-| `--force` / `-f`       | Never. It bypasses the dirty-tree check that Phase 3 exists to enforce. |
+| `--force` / `-f`       | Never. It bypasses the dirty-tree check that Phase 4 exists to enforce. |
 | `--allow-same-version` | Never. A no-op bump is a bug in the decision, not a flag to pass.       |
 | `--preid`              | Only if the user explicitly asks for a prerelease.                      |
 
@@ -158,22 +198,34 @@ Close every run with this, even a no-bump one:
 - 🏷️ `v0.3.1` pushed
 ```
 
-No-bump runs use `⏭️ no bump — <reason>` in place of the last two lines. Tag-drift runs that fixed something say what was pushed or deleted.
+Variants for the last two lines:
+
+| Outcome                           | Lines                                             |
+| --------------------------------- | ------------------------------------------------- |
+| Phase 2 said no bump              | `⏭️ no bump — <reason>`                           |
+| Phase 3 recommended, user said no | `⏭️ declined — nothing written, nothing pushed`   |
+| Preflight failed after a yes      | `🛑 stopped at preflight — <which check, output>` |
+
+Tag-drift runs that fixed something say what was pushed or deleted.
 
 ## Red flags — STOP
 
-| Thought                                                       | Reality                                                                               |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| "I'll bump from this feature branch, it's what's checked out" | `main` only. Check it out first.                                                      |
-| "The open PR is basically merged, count it"                   | Only what is on `origin/main` counts.                                                 |
-| "Tags look fine, skip Phase 1"                                | Phase 1 is what tells you they're fine. Run it.                                       |
-| "The local and remote `v0.2.4` differ — I'll force the tag"   | A published tag never moves. Stop and report.                                         |
-| "`bun run check` fails but it's unrelated"                    | A release ships `main` as it is. Red `main` is not releasable.                        |
-| "Big diff, this feels like a major"                           | Size is not the signal. Pre-1.0, major needs the user to say so.                      |
-| "Twelve content files and one new route — patch"              | Highest signal wins. That's a minor.                                                  |
-| "`TKW:` is required, I'll prefix the version commit"          | Release commits are bare versions. The one documented exception.                      |
-| "Bumped but the push failed — I'll sort the tag out later"    | An untagged bump is the failure state this skill exists to prevent. Finish or revert. |
-| "I'll write a changelog entry too"                            | There is no changelog. Don't invent one.                                              |
+| Thought                                                       | Reality                                                                                       |
+| ------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| "The call is obvious, I'll just cut it and report after"      | The user's yes is the authorization. There is no obvious enough to skip it.                   |
+| "They said 'run version-bumper', that's the yes"              | That starts the run. The yes answers the Phase 3 recommendation, which they haven't seen yet. |
+| "They approved last release, so this one's covered"           | Approval is per release. Ask every time.                                                      |
+| "I'll ask after `bun pm version`, it's easy to revert"        | It commits and tags. Ask before, when there is nothing to revert.                             |
+| "I'll bump from this feature branch, it's what's checked out" | `main` only. Check it out first.                                                              |
+| "The open PR is basically merged, count it"                   | Only what is on `origin/main` counts.                                                         |
+| "Tags look fine, skip Phase 1"                                | Phase 1 is what tells you they're fine. Run it.                                               |
+| "The local and remote `v0.2.4` differ — I'll force the tag"   | A published tag never moves. Stop and report.                                                 |
+| "`bun run check` fails but it's unrelated"                    | A release ships `main` as it is. Red `main` is not releasable.                                |
+| "Big diff, this feels like a major"                           | Size is not the signal. Pre-1.0, major needs the user to say so.                              |
+| "Twelve content files and one new route — patch"              | Highest signal wins. That's a minor.                                                          |
+| "`TKW:` is required, I'll prefix the version commit"          | Release commits are bare versions. The one documented exception.                              |
+| "Bumped but the push failed — I'll sort the tag out later"    | An untagged bump is the failure state this skill exists to prevent. Finish or revert.         |
+| "I'll write a changelog entry too"                            | There is no changelog. Don't invent one.                                                      |
 
 ## Related skills
 
