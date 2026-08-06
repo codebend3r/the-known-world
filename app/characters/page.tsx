@@ -6,7 +6,7 @@ import { findPortrait } from "@/lib/portraits";
 import { bySlug, compareByName } from "@/lib/collections";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredCharacterList,

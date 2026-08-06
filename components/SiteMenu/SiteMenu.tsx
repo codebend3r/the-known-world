@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
 import { isActive, visibleNavItems } from "@/lib/nav";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
 type MenuArt = {

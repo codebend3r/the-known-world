@@ -34,7 +34,7 @@
 .columnHeading {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: var(--ls-caption);
   text-transform: uppercase;
@@ -115,7 +115,7 @@
   transform: translateY(-50%);
   background: var(--tkw-bg);
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   letter-spacing: 1px;
   color: var(--tkw-gold);
   font-variant-numeric: tabular-nums;

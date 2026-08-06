@@ -3,7 +3,7 @@ import Link from "next/link";
 import { loadAllCastles } from "@/lib/content";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import styles from "@/app/castles/page.module.scss";
 
 export const metadata: Metadata = {
