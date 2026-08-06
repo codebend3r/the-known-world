@@ -16,6 +16,7 @@ Skill directories are flat — Claude Code discovers `.claude/skills/<name>/SKIL
 | Skill                                       | Covers                                                                                                                                                                                                              |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`active-rebaser`](active-rebaser/SKILL.md) | Rebasing every local feature branch onto `main` when it moves, in place in its worktree, resolving small conflicts and aborting big ones, reporting per-branch stats, and pushing one branch at a time on approval. |
+| [`style-critic`](style-critic/SKILL.md)     | Enforcing the CSS section of `CLAUDE.md` across every stylesheet: a verified check command per rule, verdict discipline (new-in-diff blocks, pre-existing debt is counted not fixed), and the ❌/✅ report format.  |
 | [`version-bumper`](version-bumper/SKILL.md) | Deciding whether `main` has earned a release and which increment, recommending it for a yes/no, then cutting it — `bun pm version`, the bare-version commit, the `v*` tag, the push, and local/remote tag sync.     |
 
 ## `tkw-content-*` — populating `content/`
