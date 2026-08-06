@@ -39,4 +39,4 @@ sources:
 draft: false
 ---
 
-Lady of Driftmark and Queen of King Aenys I, mother of six royal children. After Aenys's death and Maegor's seizure of the throne she fled the Red Keep with the crown, the queen's diadem, and the Valyrian steel blade Dark Sister, smuggling them to her son Jaehaerys on Dragonstone. She lived to see Jaehaerys crowned, and to bear three more children in a second marriage to Lord Rogar Baratheon of Storm's End.
+Lady of Driftmark and Queen of King Aenys I, mother of six royal children. After Aenys's death and Maegor's seizure of the throne she fled the Red Keep with the crown, the queen's diadem, and the Valyrian steel blade _Dark Sister_, smuggling them to her son Jaehaerys on Dragonstone. She lived to see Jaehaerys crowned, and to bear three more children in a second marriage to Lord Rogar Baratheon of Storm's End.

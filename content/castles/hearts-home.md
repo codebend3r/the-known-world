@@ -20,4 +20,4 @@ Seat of House Corbray, set beneath the mountains in the north of the Vale where 
 
 ## Lady Forlorn
 
-The pride of Heart's Home is Lady Forlorn, a blade of Valyrian steel borne by the heirs of House Corbray since the days of the Andal kings. It is said a Corbray loves nothing so well as his Lady, and the sword has drunk the blood of kings and rebels both in the long history of the house.
+The pride of Heart's Home is _Lady Forlorn_, a blade of Valyrian steel borne by the heirs of House Corbray since the days of the Andal kings. It is said a Corbray loves nothing so well as his Lady, and the sword has drunk the blood of kings and rebels both in the long history of the house.

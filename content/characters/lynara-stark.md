@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-A Stark of a distant cadet line, wed to Lord Cregan Stark of Winterfell as his third and final wife. She bore him five trueborn children — Jonnel One-Eye, Edric, Lyanna, Barthogan Blacksword, and Brandon — and through them every Stark of Winterfell from her day to the present descends. The maesters of the Citadel record little of Lynara herself; her name endures because her sons fought a long, tangled succession over the lordship of Winterfell after their father's death.
+A Stark of a distant cadet line, wed to Lord Cregan Stark of Winterfell as his third and final wife. She bore him five trueborn children (Jonnel One-Eye, Edric, Lyanna, Barthogan Blacksword, and Brandon), and through them every Stark of Winterfell from her day to the present descends. The maesters of the Citadel record little of Lynara herself; her name endures because her sons fought a long, tangled succession over the lordship of Winterfell after their father's death.

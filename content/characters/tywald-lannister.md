@@ -23,4 +23,4 @@ sources:
 draft: false
 ---
 
-Eldest son of Lord Gerold Lannister the Golden and Lady Rohanne of House Webber, and twin to Ser Tion. He was squired to Lord Roger Reyne, the Red Lion of Castamere, and carried to war during the Peake Uprising in 233 AC, where he fell at the Storming of Starpike and was knighted on his deathbed in the chapel of the keep by his master. He left no children, and the heirship of the Rock passed to his next brother Tion — and, three years later, to Tytos.
+Eldest son of Lord Gerold Lannister the Golden and Lady Rohanne of House Webber, and twin to Ser Tion. He was squired to Lord Roger Reyne, the Red Lion of Castamere, and carried to war during the Peake Uprising in 233 AC, where he fell at the Storming of Starpike and was knighted on his deathbed in the chapel of the keep by his master. He left no children, and the heirship of the Rock passed to his next brother Tion, and three years later to Tytos.

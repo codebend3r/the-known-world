@@ -16,4 +16,4 @@ sources:
 draft: false
 ---
 
-A Lord Cerwyn of Castle Cerwyn in the long second century after the Conquest, husband of Argelle Stark, granddaughter of Cregan. Through Argelle his line carried a Stark claim — however distant — into the immediate vassalage of Winterfell.
+A Lord Cerwyn of Castle Cerwyn in the long second century after the Conquest, husband of Argelle Stark, granddaughter of Cregan. Through Argelle his line carried a Stark claim, however distant, into the immediate vassalage of Winterfell.

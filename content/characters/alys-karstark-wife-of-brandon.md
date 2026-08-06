@@ -18,4 +18,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Karstark of Karhold, wed to Brandon Stark, fifth son of Cregan the Old Man of the North. By Brandon she bore three children — Rodwell, who would inherit Winterfell after his father, Beron, who would inherit it after his brother, and Arsa, whose marriage and issue the chronicles do not record. The line of every Stark of Winterfell since runs through her sons.
+A daughter of House Karstark of Karhold, wed to Brandon Stark, fifth son of Cregan the Old Man of the North. By Brandon she bore three children (Rodwell, who would inherit Winterfell after his father, Beron, who would inherit it after his brother, and Arsa, whose marriage and issue the chronicles do not record). The line of every Stark of Winterfell since runs through her sons.

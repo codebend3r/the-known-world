@@ -21,4 +21,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Brax of Hornvale, wed to Lord Damon Lannister, the Grey Lion, and Lady of Casterly Rock through his lordship. By him she bore two sons — Tybolt, who would succeed his father to the Rock, and Gerold the Golden, who would in time succeed his brother — and was thus mother to one Lord of Casterly Rock and grandmother to two more.
+A daughter of House Brax of Hornvale, wed to Lord Damon Lannister, the Grey Lion, and Lady of Casterly Rock through his lordship. By him she bore two sons (Tybolt, who would succeed his father to the Rock, and Gerold the Golden, who would in time succeed his brother) and was thus mother to one Lord of Casterly Rock and grandmother to two more.

@@ -23,6 +23,6 @@ sources:
 draft: false
 ---
 
-House Corbray of Heart's Home is an old Andal house of the Vale, raised to lordship by the first Arryn kings for their part in the conquest of the Mountains of the Moon. They bear the ancestral Valyrian-steel sword Lady Forlorn, said to weep when drawn and to sing whenever it tastes blood, and the lord of Heart's Home carries her at his hip wherever he goes.
+House Corbray of Heart's Home is an old Andal house of the Vale, raised to lordship by the first Arryn kings for their part in the conquest of the Mountains of the Moon. They bear the ancestral Valyrian-steel sword _Lady Forlorn_, said to weep when drawn and to sing whenever it tastes blood, and the lord of Heart's Home carries her at his hip wherever he goes.
 
-Lord Lyonel Corbray inherited Lady Forlorn at his father's death, but his younger brother Lyn (vain, sharp-tongued, and reckoned the most dangerous swordsman in the Vale) was thought by many a better wielder, and there is bad blood between the brothers because of it.
+Lord Lyonel Corbray inherited _Lady Forlorn_ at his father's death, but his younger brother Lyn (vain, sharp-tongued, and reckoned the most dangerous swordsman in the Vale) was thought by many a better wielder, and there is bad blood between the brothers because of it.

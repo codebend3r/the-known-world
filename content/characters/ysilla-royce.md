@@ -16,4 +16,4 @@ sources:
 draft: false
 ---
 
-A noblewoman of House Royce of Runestone, given in marriage to Ser Mychel Redfort of the Vale. The match was made by compulsion rather than affection — Lord Horton Redfort pressed his son Mychel to take Ysilla to wife despite the young knight's love for another, binding the Royces of Runestone to the Redforts in the bargain.
+A noblewoman of House Royce of Runestone, given in marriage to Ser Mychel Redfort of the Vale. The match was made by compulsion rather than affection; Lord Horton Redfort pressed his son Mychel to take Ysilla to wife despite the young knight's love for another, binding the Royces of Runestone to the Redforts in the bargain.

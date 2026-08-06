@@ -17,4 +17,4 @@ sources:
 draft: false
 ---
 
-A King of Winter from the uncertain centuries before Aegon's Conquest, named the Spring King in the singers' tales — possibly for the breaking of a long winter during his reign. His statue stands in the crypt of Winterfell beside those of Theon Stark and Torrhen, and is the only chronicle of him that survives.
+A King of Winter from the uncertain centuries before Aegon's Conquest, named the Spring King in the singers' tales, possibly for the breaking of a long winter during his reign. His statue stands in the crypt of Winterfell beside those of Theon Stark and Torrhen, and is the only chronicle of him that survives.

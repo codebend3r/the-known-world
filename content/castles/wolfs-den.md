@@ -21,7 +21,7 @@ sources:
 draft: false
 ---
 
-Ancient castle at the mouth of the White Knife, raised by a Stark king of old to guard the river against raiders from the sea. It is far older than the city of White Harbor that grew up around it, and it has passed through many hands — Greystarks, Flints, Lockes, Slates, and others — before the Manderlys came to hold it for Winterfell.
+Ancient castle at the mouth of the White Knife, raised by a Stark king of old to guard the river against raiders from the sea. It is far older than the city of White Harbor that grew up around it, and it has passed through many hands (Greystarks, Flints, Lockes, Slates, and others) before the Manderlys came to hold it for Winterfell.
 
 ## The Gaol
 

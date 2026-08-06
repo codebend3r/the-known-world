@@ -17,4 +17,4 @@ sources:
 draft: false
 ---
 
-Great-grandson of Edrick Snowbeard, and the King of Winter who took back the Wolf's Den from the Stepstone slavers who had held it through three generations. The bynames the singers gave him — Ice Eyes — were earned, it is said, in the cold judgment he visited on the slavers after the storming of the Den; he hanged them along the muddy banks of the White Knife and left their thralls free to settle the riverlands. The stronghold he reclaimed would in later centuries be given by his line to the exiled Manderlys, who built White Harbor about its walls.
+Great-grandson of Edrick Snowbeard, and the King of Winter who took back the Wolf's Den from the Stepstone slavers who had held it through three generations. The bynames the singers gave him (Ice Eyes) were earned, it is said, in the cold judgment he visited on the slavers after the storming of the Den; he hanged them along the muddy banks of the White Knife and left their thralls free to settle the riverlands. The stronghold he reclaimed would in later centuries be given by his line to the exiled Manderlys, who built White Harbor about its walls.

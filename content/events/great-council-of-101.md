@@ -8,7 +8,7 @@ date:
   precision: exact
 location: "Harrenhal"
 landmass: westeros
-outcome: "The lords choose Viserys over Rhaenys's line, fixing the precedent that the Iron Throne passes by the male line — the seed of the Dance."
+outcome: "The lords choose Viserys over Rhaenys's line, fixing the precedent that the Iron Throne passes by the male line, the seed of the Dance."
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Great_Council_of_101

@@ -15,4 +15,4 @@ sources:
 draft: false
 ---
 
-A son of Lord Thaddeus Rowan of Goldengrove by his first wife. He is named in _Fire & Blood_ among the issue of Lord Thaddeus during the regency of King Aegon III — one of the two sons of the first marriage, alongside an unnamed brother. The chronicles record no further deeds of his.
+A son of Lord Thaddeus Rowan of Goldengrove by his first wife. He is named in _Fire & Blood_ among the issue of Lord Thaddeus during the regency of King Aegon III, one of the two sons of the first marriage, alongside an unnamed brother. The chronicles record no further deeds of his.

@@ -16,4 +16,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Locke of Oldcastle, wed to Lord Edwyle Stark of Winterfell, and mother of Lord Rickard, grandmother of Eddard. She is the second Locke woman to be wed to a Stark of the line — the first was Lysa, wife of an earlier Lord Benjen, mother of Cregan's father Rickon.
+A daughter of House Locke of Oldcastle, wed to Lord Edwyle Stark of Winterfell, and mother of Lord Rickard, grandmother of Eddard. She is the second Locke woman to be wed to a Stark of the line; the first was Lysa, wife of an earlier Lord Benjen, mother of Cregan's father Rickon.
