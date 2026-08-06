@@ -1,10 +1,11 @@
 @use "breakpoints" as bp;
 
 // The chronicle chart outruns the 1240px measure, so it bleeds to the viewport
-// while the rest of the plate holds the measure.
+// while the rest of the plate holds the measure: viewport-wide, centered on
+// the plate's column, overflowing the track equally on both sides.
 .chartBleed {
-  justify-self: stretch;
-  margin-inline: calc(50% - 50vw);
+  justify-self: center;
+  width: 100vw;
 }
 
 .legend {

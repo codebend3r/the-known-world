@@ -6,7 +6,7 @@
 .page {
   width: 100%;
   max-width: var(--tkw-measure);
-  margin: 0 auto;
+  justify-self: center;
   padding: 26px var(--tkw-gutter) 60px;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
