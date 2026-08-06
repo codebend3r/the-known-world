@@ -4,9 +4,9 @@ name: Aerion Targaryen
 sex: m
 born: null
 died:
-  year: -27
+  year: 15
   era: BC
-  precision: year
+  precision: decade
 primary-house: targaryen
 spouses:
   - valaena-velaryon

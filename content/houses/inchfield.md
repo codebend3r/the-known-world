@@ -8,9 +8,9 @@ sigil:
   description: A bend sinister chequy black and white on a pale grey field
   provenance: invented
 founded:
-  year: -1000
-  era: age-of-heroes
-  precision: legendary
+  year: -2000
+  era: andal-invasion
+  precision: era
 status: extant
 rank: other
 sworn-from: []

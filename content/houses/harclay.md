@@ -9,7 +9,7 @@ sigil:
   provenance: canon
 founded:
   year: -9000
-  era: dawn-age
+  era: age-of-heroes
   precision: legendary
 status: extant
 rank: lordly

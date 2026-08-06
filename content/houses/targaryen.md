@@ -8,7 +8,7 @@ sigil:
   description: A red three-headed dragon breathing fire, on a black field
   provenance: canon
 founded:
-  year: -114
+  year: 114
   era: BC
   precision: year
 status: exiled

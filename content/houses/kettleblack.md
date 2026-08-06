@@ -8,7 +8,7 @@ sigil:
   description: A black kettle on red, within a border of pellets
   provenance: canon
 founded:
-  year: -100
+  year: 100
   era: BC
   precision: legendary
 status: extant

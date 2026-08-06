@@ -5,7 +5,7 @@ type: castle
 sub-region: green-fork
 liege-house: frey
 founded:
-  year: -300
+  year: 300
   era: BC
   precision: era
 sworn-houses: []

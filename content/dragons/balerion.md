@@ -4,7 +4,7 @@ name: Balerion
 color: black, with red eyes and a maw of black flame
 size: monstrous
 hatched:
-  year: -100
+  year: 100
   era: BC
   precision: decade
 died:

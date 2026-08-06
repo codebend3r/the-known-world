@@ -14,10 +14,19 @@ describe("ageAtDeath", () => {
   it("handles a BC birth crossing into AC", () => {
     expect(
       ageAtDeath(
-        { year: -27, era: "BC", precision: "year" },
+        { year: 27, era: "BC", precision: "year" },
         { year: 37, era: "AC", precision: "year" },
       ),
     ).toBe(64);
+  });
+
+  it("subtracts two BC dates on the signed axis", () => {
+    expect(
+      ageAtDeath(
+        { year: 40, era: "BC", precision: "year" },
+        { year: 2, era: "BC", precision: "year" },
+      ),
+    ).toBe(38);
   });
 
   it("returns null when born is null", () => {

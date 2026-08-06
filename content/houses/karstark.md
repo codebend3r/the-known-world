@@ -8,8 +8,8 @@ sigil:
   description: A white sunburst on a black field
   provenance: canon
 founded:
-  year: -1000
-  era: age-of-heroes
+  year: 1000
+  era: BC
   precision: era
 status: extant
 rank: lordly

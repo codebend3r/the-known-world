@@ -6,11 +6,11 @@ war: "The First Dornish War"
 start:
   year: 4
   era: AC
-  precision: exact
+  precision: year
 end:
   year: 5
   era: AC
-  precision: exact
+  precision: year
 location: "the Red Mountains and the Dornish Marches"
 region: dorne
 participants:

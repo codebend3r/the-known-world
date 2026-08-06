@@ -8,7 +8,7 @@ sigil:
   description: A white bone hand on a red field
   provenance: canon
 founded:
-  year: -500
+  year: 500
   era: BC
   precision: era
 status: extant

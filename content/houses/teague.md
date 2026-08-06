@@ -8,7 +8,7 @@ sigil:
   description: A golden trident upright on black between two golden flanches
   provenance: canon
 founded:
-  year: -300
+  year: 300
   era: BC
   precision: era
 status: extinct

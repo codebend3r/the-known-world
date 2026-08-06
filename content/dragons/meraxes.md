@@ -4,7 +4,7 @@ name: Meraxes
 color: silver, with golden eyes
 size: great
 hatched:
-  year: -52
+  year: 52
   era: BC
   precision: decade
 died:

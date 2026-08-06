@@ -8,7 +8,7 @@ sigil:
   description: A green hand on a gold escutcheon on a green field, within a red rayonné border
   provenance: canon
 founded:
-  year: 0
+  year: -5000
   era: age-of-heroes
   precision: era
 status: exiled

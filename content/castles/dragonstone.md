@@ -5,7 +5,7 @@ type: castle
 sub-region: dragonstone-island
 liege-house: targaryen
 founded:
-  year: -200
+  year: 200
   era: BC
   precision: era
 sworn-houses: []

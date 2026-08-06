@@ -4,7 +4,7 @@ name: Nymeria
 sex: f
 born: null
 died:
-  year: -680
+  year: 680
   era: BC
   precision: legendary
 primary-house: null

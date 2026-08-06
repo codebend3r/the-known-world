@@ -8,7 +8,7 @@ sigil:
   description: A blue wavy bend on a gold field
   provenance: canon
 founded:
-  year: -1000
+  year: 1000
   era: BC
   precision: era
 status: extant

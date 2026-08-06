@@ -6,11 +6,11 @@ war: "The Faith Militant Uprising"
 start:
   year: 43
   era: AC
-  precision: exact
+  precision: year
 end:
   year: 43
   era: AC
-  precision: exact
+  precision: year
 location: "the God's Eye"
 region: riverlands
 participants:

@@ -6,11 +6,11 @@ war: "The First Dornish War"
 start:
   year: 10
   era: AC
-  precision: exact
+  precision: year
 end:
   year: 13
   era: AC
-  precision: exact
+  precision: year
 location: "Dorne"
 region: dorne
 participants:

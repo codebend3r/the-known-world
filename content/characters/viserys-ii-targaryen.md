@@ -3,7 +3,7 @@ slug: viserys-ii-targaryen
 name: Viserys II Targaryen
 sex: m
 born:
-  year: 125
+  year: 122
   era: AC
   precision: year
 died:

@@ -7,7 +7,7 @@ status: lost
 origin-house: freefolk
 current-house: null
 forged:
-  year: 0
+  year: -8000
   era: age-of-heroes
   precision: legendary
 wielders:

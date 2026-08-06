@@ -8,8 +8,8 @@ sigil:
   description: A red sun pierced by a golden spear
   provenance: canon
 founded:
-  year: -700
-  era: andal-invasion
+  year: 700
+  era: BC
   precision: era
 status: extant
 rank: lordly

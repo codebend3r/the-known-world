@@ -7,9 +7,9 @@ born:
   era: AC
   precision: year
 died:
-  year: 282
+  year: 285
   era: AC
-  precision: year
+  precision: decade
 primary-house: lannister
 parents:
   - tytos-lannister

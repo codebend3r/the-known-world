@@ -3,7 +3,7 @@ slug: night-king
 name: Night King
 sex: m
 born:
-  year: 0
+  year: -8000
   era: long-night
   precision: era
 died:

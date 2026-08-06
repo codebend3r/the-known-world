@@ -8,7 +8,7 @@ sigil:
   description: Red crabs strewn on a white field
   provenance: canon
 founded:
-  year: -114
+  year: 114
   era: BC
   precision: era
 status: extant

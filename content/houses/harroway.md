@@ -8,8 +8,8 @@ sigil:
   description: Per bend sinister orange and black rayonne, a castle counterchanged
   provenance: canon
 founded:
-  year: -100
-  era: andal-invasion
+  year: 100
+  era: BC
   precision: era
 status: extinct
 rank: extinct

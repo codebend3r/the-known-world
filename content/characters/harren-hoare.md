@@ -4,7 +4,7 @@ name: "Harren Hoare"
 sex: m
 born: null
 died:
-  year: -1
+  year: 1
   era: BC
   precision: year
 primary-house: hoare

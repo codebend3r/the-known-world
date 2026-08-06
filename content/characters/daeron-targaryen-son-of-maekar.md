@@ -7,9 +7,9 @@ born:
   era: AC
   precision: year
 died:
-  year: 209
+  year: 227
   era: AC
-  precision: year
+  precision: decade
 primary-house: targaryen
 parents:
   - maekar-i-targaryen
