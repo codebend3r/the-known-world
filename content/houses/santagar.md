@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: Ser Symon Santagar
+    slug: symon-santagar
 titles:
   - name: Knight of Spottswood
 sources:

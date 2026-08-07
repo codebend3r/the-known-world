@@ -31,6 +31,7 @@ heads:
 notable-members:
   - name: Durran Godsgrief
   - name: Argella Durrandon
+    slug: argella-durrandon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Durrandon

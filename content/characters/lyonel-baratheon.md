@@ -5,6 +5,8 @@ sex: m
 born: null
 died: null
 primary-house: baratheon
+parents:
+  - unknown-baratheon-ancestors
 children:
   - ormund-baratheon
 titles:

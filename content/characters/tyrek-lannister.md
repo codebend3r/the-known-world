@@ -11,6 +11,8 @@ primary-house: lannister
 parents:
   - tygett-lannister
   - darlessa-marbrand
+spouses:
+  - ermesande-hayford
 aliases:
   - Wet Nurse
 sources:

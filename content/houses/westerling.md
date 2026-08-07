@@ -1,7 +1,7 @@
 ---
 slug: westerling
 name: House Westerling
-seat: the-crag
+seat: crag
 liege: lannister
 words: "My Sun Shines Over You"
 sigil:

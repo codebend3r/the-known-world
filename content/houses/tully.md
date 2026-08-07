@@ -18,6 +18,7 @@ cadet-houses: []
 region: riverlands
 heads:
   - name: "Lord Hoster Tully"
+    slug: hoster-tully
 titles:
   - name: Lord of Riverrun
   - name: Lord Paramount of the Trident

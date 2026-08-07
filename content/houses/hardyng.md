@@ -18,6 +18,7 @@ cadet-houses: []
 region: vale
 heads:
   - name: Ser Harrold Hardyng
+    slug: harrold-hardyng
 titles:
   - name: Landed Knight
 sources:

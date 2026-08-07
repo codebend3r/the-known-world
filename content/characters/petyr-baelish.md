@@ -8,6 +8,8 @@ born:
   precision: year
 died: null
 primary-house: baelish
+spouses:
+  - lysa-arryn
 titles:
   - Master of Coin
   - Lord of Harrenhal

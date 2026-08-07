@@ -35,10 +35,13 @@ regions:
   - name: Riverlands
 heads:
   - name: "King Harwyn Hardhand"
+    slug: harwyn-hoare
     note: broke Arrec Durrandon at Fairmarket and took the riverlands
   - name: "King Halleck Hoare"
+    slug: halleck-hoare
     note: ruled from Fairmarket; extended the black line to Duskendale and Rosby
   - name: "King Harren the Black"
+    slug: harren-hoare
     note: builder of Harrenhal; burned within it by Balerion at Aegon's Conquest
 titles:
   - name: King of the Iron Islands

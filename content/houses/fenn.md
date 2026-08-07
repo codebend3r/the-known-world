@@ -18,6 +18,7 @@ cadet-houses: []
 region: north
 notable-members:
   - name: Wylla Fenn
+    slug: wylla-fenn
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Fenn

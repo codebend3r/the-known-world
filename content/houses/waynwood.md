@@ -19,6 +19,7 @@ cadet-houses: []
 region: vale
 heads:
   - name: "Lady Anya Waynwood"
+    slug: anya-waynwood
 titles:
   - name: Lady of Ironoaks
 sources:

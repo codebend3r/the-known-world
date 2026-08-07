@@ -18,6 +18,10 @@ parents:
   - rhaenys-targaryen-queen-who-never-was
 spouses:
   - rhaenyra-targaryen
+children:
+  - jacaerys-velaryon
+  - lucerys-velaryon
+  - joffrey-velaryon
 titles:
   - Prince of Dragonstone
   - Rider of Seasmoke

@@ -18,6 +18,7 @@ cadet-houses: []
 region: vale
 heads:
   - name: "Lord Horton Redfort"
+    slug: horton-redfort
 titles:
   - name: Lord of Redfort
 sources:

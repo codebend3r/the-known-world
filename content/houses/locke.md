@@ -18,7 +18,9 @@ cadet-houses: []
 region: north
 seats:
   - name: Oldcastle
+    slug: oldcastle
   - name: Wolf's Den
+    slug: wolfs-den
     note: formerly
 heads:
   - name: "Lord Ondrew Locke"
@@ -30,8 +32,10 @@ notable-members:
   - name: "Lady Sybelle Locke"
     note: wed to Robett Glover of Deepwood Motte
   - name: "Lady Lysa Locke"
+    slug: lysa-locke
     note: wed Lord Benjen Stark
   - name: "Lady Marna Locke"
+    slug: marna-locke
     note: wed Lord Edwyle Stark
 titles:
   - name: Lord of Oldcastle

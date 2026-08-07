@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: Lord Quentyn Qorgyle
+    slug: quentyn-qorgyle
 titles:
   - name: Lord of Sandstone
 sources:

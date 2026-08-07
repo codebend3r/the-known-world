@@ -22,8 +22,10 @@ cadet-houses: []
 region: crownlands
 notable-members:
   - name: "Ser Arryk Cargyll"
+    slug: arryk-cargyll
     note: of the Kingsguard of Viserys I and Aegon II; sent in his twin's likeness to slay Queen Rhaenyra and cut down by his own brother on Dragonstone in 130 AC
   - name: "Ser Erryk Cargyll"
+    slug: erryk-cargyll
     note: of the Kingsguard of Viserys I, later of the Queensguard of Rhaenyra; slew his own twin at the foot of the queen's tower and fell upon his sword
   - name: "Ser Clarence Cargyll"
     note: rode beneath the golden goose at the tourney at Ashford Meadow in 209 AC, his arms remarked upon by Ser Duncan the Tall among the gathered heraldry; the last appearance of the house in any roll

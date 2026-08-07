@@ -24,6 +24,7 @@ notable-members:
   - name: "Ser Ulwyck Uller"
     note: brother to Lord Harmen and one of the Dornish lords who rode to King's Landing with Prince Oberyn Martell
   - name: "Ellaria Sand"
+    slug: ellaria-sand
     note: Lord Harmen's natural daughter, longtime paramour of Prince Oberyn Martell and mother of four of the Sand Snakes
 sources:
   - type: awoiaf

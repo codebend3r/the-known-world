@@ -18,6 +18,7 @@ cadet-houses: []
 region: crownlands
 seats:
   - name: The Whispers
+    slug: whispers
     note: former seat; already centuries in ruin by the time of the War of the Five Kings
 notable-members:
   - name: "Ser Clarence Crabb"

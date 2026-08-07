@@ -8,8 +8,13 @@ born:
   precision: year
 died: null
 primary-house: frey
+spouses:
+  - sarya-whent
 children:
   - emmon-frey
+  - danwell-frey
+  - merrett-frey
+  - stevron-frey
 titles:
   - Lord of the Crossing
   - Lord of the Twins

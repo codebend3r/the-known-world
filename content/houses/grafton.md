@@ -21,6 +21,7 @@ seats:
     slug: gulltown
 heads:
   - name: "Lord Gerold Grafton"
+    slug: gerold-grafton
 regions:
   - name: Vale of Arryn
 titles:

@@ -18,6 +18,7 @@ cadet-houses: []
 region: westerlands
 seats:
   - name: The Golden Tooth
+    slug: golden-tooth
 heads:
   - name: Lord Leo Lefford
 titles:

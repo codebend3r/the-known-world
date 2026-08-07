@@ -18,6 +18,7 @@ cadet-houses: []
 region: iron-islands
 seats:
   - name: Ten Towers
+    slug: ten-towers
     note: principal seat on the isle of Harlaw, raised by Lord Theomore Harlaw
   - name: Harlaw Hall
     note: the old keep, abandoned for its damp before Ten Towers was built

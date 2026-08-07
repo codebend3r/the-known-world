@@ -20,6 +20,7 @@ notable-members:
   - name: Ser Mandon Moore
   - name: Ser Maladon Moore
   - name: Lady Perianne Moore
+    slug: perianne-moore
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Moore

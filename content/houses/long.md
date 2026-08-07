@@ -18,6 +18,7 @@ cadet-houses: []
 region: north
 seats:
   - name: "Wolf's Den"
+    slug: wolfs-den
     note: formerly
 notable-members:
   - name: Ser Lucifer Long

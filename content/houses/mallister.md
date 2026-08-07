@@ -21,6 +21,7 @@ seats:
     slug: seagard
 heads:
   - name: "Lord Jason Mallister"
+    slug: jason-mallister
 regions:
   - name: The Riverlands
 titles:

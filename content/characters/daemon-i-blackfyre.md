@@ -24,6 +24,7 @@ children:
   - daemon-ii-blackfyre
   - haegon-blackfyre
   - calla-blackfyre
+  - aenys-blackfyre
 titles:
   - King of the Andals, the Rhoynar, and the First Men
 aliases:

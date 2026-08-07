@@ -22,8 +22,10 @@ cadet-houses: []
 region: iron-islands
 heads:
   - name: "King Urron Redhand"
+    slug: urron-greyiron
     note: founder; broke the kingsmoot at Nagga's Bones and made the crown hereditary
   - name: "King Rognar II Greyiron"
+    slug: rognar-ii-greyiron
     note: last of the line; brought down by Andal warlords allied with the Hoares, Greyjoys, Orkwoods, and Drumms
 titles:
   - name: King of the Iron Islands

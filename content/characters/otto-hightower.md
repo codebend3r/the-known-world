@@ -7,6 +7,7 @@ died: null
 primary-house: hightower
 children:
   - alicent-hightower
+  - gwayne-hightower
 titles:
   - Hand of the King
 sources:

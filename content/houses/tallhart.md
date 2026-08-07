@@ -18,6 +18,7 @@ cadet-houses: []
 region: north
 heads:
   - name: "Ser Helman Tallhart"
+    slug: helman-tallhart
 titles:
   - name: Master of Torrhen's Square
 sources:

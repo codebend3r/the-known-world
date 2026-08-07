@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: "Lord Dagos Manwoody"
+    slug: dagos-manwoody
 titles:
   - name: Lord of Kingsgrave
 sources:

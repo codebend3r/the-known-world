@@ -1,7 +1,7 @@
 ---
 slug: ryswell
 name: House Ryswell
-seat: the-rills
+seat: rills
 liege: stark
 words: "Unknown"
 sigil:

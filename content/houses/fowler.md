@@ -18,6 +18,7 @@ cadet-houses: []
 region: dorne
 heads:
   - name: "Lord Franklyn Fowler"
+    slug: franklyn-fowler
 regions:
   - name: Dorne
 titles:

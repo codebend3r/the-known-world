@@ -18,6 +18,7 @@ cadet-houses: []
 region: riverlands
 heads:
   - name: Ser Raymun Darry
+    slug: raymun-darry
 titles:
   - name: Lord of Darry
 sources:

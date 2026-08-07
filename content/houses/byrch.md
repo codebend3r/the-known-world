@@ -22,6 +22,7 @@ notable-members:
   - name: "Ser Balon Byrch"
     note: captain, later commander, of the City Watch of King's Landing
   - name: "Ser Balman Byrch"
+    slug: balman-byrch
     note: husband of Falyse Stokeworth; slain by Bronn in a duel
 sources:
   - type: awoiaf

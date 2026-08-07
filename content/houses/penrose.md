@@ -24,6 +24,7 @@ notable-members:
   - name: Lord Ronnel Penrose
     note: wed Princess Elaena Targaryen
   - name: Aelinor Penrose
+    slug: aelinor-penrose
     note: wed Prince Aerys Targaryen, later King Aerys I
   - name: Ser Cortnay Penrose
     note: castellan of Storm's End, died defending it for Stannis

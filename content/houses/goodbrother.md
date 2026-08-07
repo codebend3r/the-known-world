@@ -18,6 +18,7 @@ cadet-houses: []
 region: iron-islands
 seats:
   - name: Hammerhorn
+    slug: hammerhorn
     note: principal seat, on Great Wyk
   - name: Shatterstone
     note: cadet branch

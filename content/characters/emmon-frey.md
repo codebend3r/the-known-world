@@ -7,6 +7,8 @@ died: null
 primary-house: frey
 aliases:
   - Emm
+parents:
+  - walder-frey
 spouses:
   - genna-lannister
 children:

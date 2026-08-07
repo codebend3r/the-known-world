@@ -22,10 +22,12 @@ cadet-houses: []
 region: reach
 heads:
   - name: "King Garth the Gardener"
+    slug: garth-the-gardener
     note: founder and first King of the Reach, eldest son of Garth Greenhand
   - name: "King Garth VII Gardener"
     note: the Goldenhand; greatest of the line, whose Golden Reign brought three-quarters of a century of peace
   - name: "King Mern IX Gardener"
+    slug: mern-ix-gardener
     note: last of the line; burned upon the Field of Fire with all his kin
 titles:
   - name: King of the Reach

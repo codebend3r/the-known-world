@@ -17,6 +17,7 @@ spouses:
   - jocasta-tarbeck
 children:
   - tyler-hill
+  - tymond-lannister
 titles:
   - Lord of Casterly Rock
   - Shield of Lannisport

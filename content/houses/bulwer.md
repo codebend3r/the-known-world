@@ -18,6 +18,7 @@ cadet-houses: []
 region: reach
 heads:
   - name: "Lady Alysanne Bulwer"
+    slug: alysanne-bulwer
 titles:
   - name: Lady of Blackcrown
 sources:

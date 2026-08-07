@@ -18,6 +18,7 @@ cadet-houses: []
 region: north
 seats:
   - name: Flint's Finger
+    slug: flints-finger
 titles:
   - name: Lord of Flint's Finger
 regions:

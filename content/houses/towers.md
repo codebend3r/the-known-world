@@ -22,10 +22,13 @@ cadet-houses: []
 region: riverlands
 heads:
   - name: "Lord Walton Towers"
+    slug: walton-towers
     note: founder; won the tourney for Harrenhal but died of his wounds within a fortnight
   - name: "Lord Jordan Towers"
+    slug: jordan-towers
     note: son of Walton; supporter of King Maegor I
   - name: "Lord Maegor Towers"
+    slug: maegor-towers
     note: last of the line; with him the house died out and Harrenhal passed to the Strongs
 titles:
   - name: Lord of Harrenhal

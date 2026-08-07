@@ -18,6 +18,7 @@ cadet-houses: []
 region: stormlands
 seats:
   - name: Blackhaven
+    slug: blackhaven
     note: where the Coles served House Dondarrion as stewards
 heads:
   - name: "Ser Criston Cole"

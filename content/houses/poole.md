@@ -18,6 +18,7 @@ cadet-houses: []
 region: north
 heads:
   - name: Vayon Poole
+    slug: vayon-poole
 titles:
   - name: Steward of Winterfell
 sources:

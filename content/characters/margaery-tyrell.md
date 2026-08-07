@@ -11,6 +11,8 @@ primary-house: tyrell
 parents:
   - mace-tyrell
   - alerie-hightower
+spouses:
+  - renly-baratheon
 aliases:
   - Little Rose
   - The Little Queen

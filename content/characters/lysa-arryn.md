@@ -13,6 +13,8 @@ died:
 primary-house: tully
 also-of-houses:
   - arryn
+parents:
+  - hoster-tully
 spouses:
   - jon-arryn
   - petyr-baelish

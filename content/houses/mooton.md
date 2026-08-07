@@ -18,6 +18,7 @@ cadet-houses: []
 region: riverlands
 heads:
   - name: "Lord William Mooton"
+    slug: william-mooton
 titles:
   - name: Lord of Maidenpool
 sources:

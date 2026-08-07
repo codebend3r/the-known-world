@@ -10,7 +10,8 @@ died:
 primary-house: florent
 also-of-houses: []
 parents: []
-spouses: []
+spouses:
+  - melara-crane
 children:
   - melessa-florent
 titles:

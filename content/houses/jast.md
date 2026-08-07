@@ -18,6 +18,7 @@ cadet-houses: []
 region: westerlands
 heads:
   - name: "Lord Antario Jast"
+    slug: antario-jast
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_Jast

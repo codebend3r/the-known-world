@@ -18,6 +18,7 @@ cadet-houses: []
 region: iron-islands
 heads:
   - name: "Lord Dunstan Drumm"
+    slug: dunstan-drumm
 titles:
   - name: Lord of Old Wyk
 ancestral-weapons:

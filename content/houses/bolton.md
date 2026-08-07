@@ -1,7 +1,7 @@
 ---
 slug: bolton
 name: House Bolton
-seat: the-dreadfort
+seat: dreadfort
 liege: stark
 words: "Our Blades Are Sharp"
 sigil:
