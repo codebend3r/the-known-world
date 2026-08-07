@@ -5,8 +5,8 @@ type: castle
 sub-region: northern-mountains
 liege-house: karstark
 founded:
-  year: -1000
-  era: age-of-heroes
+  year: 1000
+  era: BC
   precision: era
 sworn-houses: []
 features: []
