@@ -1,0 +1,64 @@
+name: Sanity check
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  sanity-check:
+    name: 🩺 Sanity check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+
+      - name: 🟩 Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: 🍞 Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+
+      - name: 💾 Cache Bun install
+        uses: actions/cache@v6
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+          restore-keys: ${{ runner.os }}-bun-
+
+      - name: 📦 Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: 💅 Format
+        run: bun format:check
+
+      - name: 🔎 Typecheck
+        run: bun typecheck
+
+      - name: 🧹 Lint TS
+        run: bun lint:ts
+
+      - name: 🎨 Lint CSS
+        run: bun lint:css
+
+      - name: 🧪 Test
+        run: bun run test
+
+      - name: 🎉 All clear
+        run: echo "✅ ${GITHUB_SHA:0:7} landed on \`main\` clean — format, types, lints, and tests all green. 🐉" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 🚨 Something broke
+        if: failure()
+        run: echo "💥 ${GITHUB_SHA:0:7} broke \`main\` — check the failed step above. 🔥" >> "$GITHUB_STEP_SUMMARY"
