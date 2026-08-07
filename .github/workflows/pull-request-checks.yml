@@ -1,17 +1,21 @@
-name: CI
+name: Pull request checks
 
-on: push
+# `synchronize` is the one that matters: it fires on every push to the PR head,
+# so each new commit is checked, not just the PR opening.
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 permissions:
   contents: read
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
-  system-check:
-    name: 🚦 System check
+  pull-request-checks:
+    name: 🚦 Pull request checks
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -60,7 +64,7 @@ jobs:
             HEAD:bunfig.toml \
             HEAD:bun.lock \
             HEAD:.nvmrc \
-            HEAD:.github/workflows/ci.yml)
+            HEAD:.github/workflows/pull-request-checks.yml)
           key=$(printf '%s\n' "$trees" | git hash-object --stdin)
           test -n "$key"
           echo "key=$key" >> "$GITHUB_OUTPUT"

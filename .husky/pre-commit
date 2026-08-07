@@ -3,10 +3,13 @@ set -e
 
 echo "Running pre-commit hook"
 
-bun run format:check && \
-bun run typecheck && \
-bun run lint:ts && \
-bun run lint:css && \
+# Each check is its own statement. Chained with `&&`, `set -e` exempts every
+# command but the last, so a failing early check fell through and the hook
+# exited 0 — letting broken commits land.
+bun run format:check
+bun run typecheck
+bun run lint:ts
+bun run lint:css
 bun run test
 
-echo "Committed successfully"
+echo "Pre-commit checks passed"
