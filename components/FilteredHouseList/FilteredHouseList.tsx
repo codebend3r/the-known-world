@@ -299,8 +299,10 @@ export function FilteredHouseList({
             {!!item.rank && (
               <span className={styles.rank}>{RANK_LABEL[item.rank]}</span>
             )}
-            <span className={statusClass}>
-              {item.extinct ? "Extinct" : "Extant"}
+            <span className={styles.statusSlot}>
+              <span className={statusClass}>
+                {item.extinct ? "Extinct" : "Extant"}
+              </span>
             </span>
           </span>
         </Link>

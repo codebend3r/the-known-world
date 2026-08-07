@@ -1,6 +1,8 @@
 @use "breakpoints" as bp;
 
 .footer {
+  display: grid;
+  justify-items: center;
   border-top: 1px solid var(--tkw-hairline);
 }
 
@@ -15,7 +17,6 @@
   gap: 0.75rem 1.5rem;
   width: 100%;
   max-width: var(--tkw-measure);
-  margin: 0 auto;
   padding: 20px var(--tkw-gutter) 44px;
 
   @media (max-width: bp.$lg) {

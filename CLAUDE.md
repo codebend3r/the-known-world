@@ -69,13 +69,16 @@ Operating rules for this repo.
 
 - Use SCSS modules (`*.module.scss`) for component styles.
 - Import `*.module.scss` through the `@/` alias, never a relative path. The `react-ts-css` editor extension flags aliased imports as unresolved — that is a tooling bug to fix in tooling, not a reason to relativize the import.
-- Only use global stylesheets (`styles/globals.scss`) for design tokens and true typographic primitives.
-- Use a container driven approach: the container defines width and height, the children position themselves within it. Moving a child to a different container may lay it out differently, because the container specifies the layout.
-- Prefer CSS display grid for layout, with the gap property for spacing between grid items; avoid using margins for spacing.
-- Second preferred display value is flex.
-- Place grid children with named `grid-template-areas` and `grid-area: <name>`. Never use positional line spans like `grid-area: 1 / -1`.
-- Avoid plain divs, meaning divs with no class or id defined.
-- Always use token values from `styles/globals.scss` when defining font sizes, colors, and other design tokens like padding, margin, gap, and border radius.
+- The global stylesheets are `styles/globals.scss` (design tokens, resets, typographic primitives) and `styles/_breakpoints.scss` (breakpoint thresholds). Everything else belongs in a component module.
+- Use a container driven approach: the container defines the child's available width and height, padding and spacing between children, the children only care about their content. Moving a child to a different container may lay it out differently, because the container specifies the layout.
+- Prefer CSS display grid for layout, with the gap property for spacing between grid items; avoid margins for spacing at all cost. This includes prose: a rendered-markdown container is a grid too — element margins stay zeroed and gap sets the rhythm between blocks.
+- Use grid when the container defines the tracks; use flex for one-dimensional, content-sized runs — toolbars, inline rows, baseline alignment.
+- In fixed regional layouts, place grid children with named `grid-template-areas` and `grid-area: <name>`; never positional line spans like `grid-area: 1 / -1`. Auto-placed collections (`repeat(auto-fill, ...)`, `grid-auto-flow`) are exempt — dynamic children can't be named. For overlays, give multiple children the same named area.
+- Reach for a semantic element (`nav`, `section`, `ul`, `button`) before a `div`. A `div` is a styling hook of last resort — give it a class, and style by class, never by `id`.
+- Colors, fonts, font sizes, line heights, letter spacing, border radius, and transitions come from the tokens in `styles/globals.scss` (`--tkw-*`, `--font-*`, `--fs-*`, `--lh-*`, `--ls-*`). Never hardcode a literal where a token exists; if none fits, extend the scale in `globals.scss` instead of inlining a value. There is no spacing scale yet — gap and padding are judgment calls until one lands.
+- Responsive styles are desktop-first through `styles/_breakpoints.scss`: `@use "breakpoints" as bp;` then `@media (max-width: bp.$md)`. Never hardcode a breakpoint value.
+- Guard every animation and transition with `@media (prefers-reduced-motion: reduce)`.
+- `:global()` is an escape hatch, not a tool — avoid it, and comment the _why_ on the rare occasion it is unavoidable.
 
 ## Content + tests
 

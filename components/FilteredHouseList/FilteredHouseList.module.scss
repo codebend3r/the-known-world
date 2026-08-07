@@ -182,9 +182,15 @@
   color: var(--tkw-ink-muted);
 }
 
+// The slot owns the pill's extra breathing room above `.body`'s 5px gap, so
+// the pill itself stays margin-free.
+.statusSlot {
+  display: grid;
+  padding-top: 4px;
+}
+
 // Status pill: mono 9px on the status hue at 16% with a 45% border.
 .status {
-  margin-top: 4px;
   padding: 4px 9px;
   border-radius: 3px;
   font-family: var(--font-mono);
