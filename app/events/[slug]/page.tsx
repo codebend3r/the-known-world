@@ -61,7 +61,7 @@ export default async function EventPage({
             />
           )}
           <p className={styles.back}>
-            <Link href="/timeline/">← Timeline</Link>
+            <Link href="/events/">← All Events</Link>
           </p>
           <Sources sources={fm.sources} />
         </div>

@@ -62,6 +62,13 @@ export function MainMenu() {
         plate="08"
         visible={false}
       />
+      <MainMenuTile
+        title="Events"
+        subtitle="Mark the turnings of the world."
+        glyph={sectionGlyphs.events}
+        href="/events/"
+        plate="09"
+      />
     </nav>
   );
 }

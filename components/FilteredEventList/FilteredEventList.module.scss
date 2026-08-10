@@ -1,0 +1,100 @@
+@use "breakpoints" as bp;
+
+// Events inherit the battles register: a hairline-ruled row that washes gold
+// and steps right on hover. The name and the date share a baseline, and the
+// type plus place sit under the name as a second, quieter line.
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.item {
+  margin: 0;
+  display: grid;
+}
+
+.link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "name when"
+    "meta when";
+  column-gap: 16px;
+  row-gap: 4px;
+  align-items: baseline;
+  padding: 15px 4px;
+  border-bottom: 1px solid var(--tkw-hairline-faint);
+  text-decoration: none;
+  color: var(--tkw-ink-body);
+  transition:
+    background-color 0.18s ease,
+    padding-left 0.18s ease;
+
+  &:hover,
+  &:focus-visible {
+    background-color: rgba(200, 162, 74, 0.06);
+    padding-left: 12px;
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  @media (max-width: bp.$sm) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "name"
+      "meta"
+      "when";
+  }
+}
+
+.name {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--tkw-ink);
+  min-width: 0;
+}
+
+// Rule 03: a classification is a datum, so it is mono, uppercase, spaced.
+.meta {
+  grid-area: meta;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+  min-width: 0;
+}
+
+.when {
+  grid-area: when;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: var(--tkw-gold);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  padding-top: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+
+  @media (max-width: bp.$md) {
+    padding-top: 1rem;
+  }
+}

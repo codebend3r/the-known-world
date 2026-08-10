@@ -16,6 +16,7 @@ const SLUGS: SectionSlug[] = [
   "battles",
   "castles",
   "dragons",
+  "events",
 ];
 
 describe("sectionGlyphs", () => {
