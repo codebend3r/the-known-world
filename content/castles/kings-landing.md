@@ -33,4 +33,4 @@ Crowning Aegon's High Hill in pale red stone, the Red Keep has housed the ruling
 
 ## Flea Bottom
 
-Sprawling across the low ground between the city's hills, Flea Bottom is King's Landing's poorest and most crowded district — famed, its people cheerfully admit, for a stew of a thousand flavors and a stink that carries all the way to Duskendale.
+Sprawling across the low ground between the city's hills, Flea Bottom is King's Landing's poorest and most crowded district. It is famed, its people cheerfully admit, for a stew of a thousand flavors and a stink that carries all the way to Duskendale.

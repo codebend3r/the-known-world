@@ -24,7 +24,7 @@ sources:
 draft: false
 ---
 
-Crowning Aegon's High Hill above King's Landing, the Red Keep is the seat of the Iron Throne and the residence of the kings of the Seven Kingdoms. Aegon the Conqueror began it in pale red stone, and Maegor the Cruel finished it — then put every mason and builder to the sword, that none but he should know its secret passages.
+Crowning Aegon's High Hill above King's Landing, the Red Keep is the seat of the Iron Throne and the residence of the kings of the Seven Kingdoms. Aegon the Conqueror began it in pale red stone, and Maegor the Cruel finished it, then put every mason and builder to the sword, that none but he should know its secret passages.
 
 ## The Iron Throne
 

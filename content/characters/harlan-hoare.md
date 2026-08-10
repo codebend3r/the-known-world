@@ -17,4 +17,4 @@ sources:
 draft: false
 ---
 
-Middle son of King Qhorwyn the Cunning and, after his eldest brother died of greyscale, heir to the Seastone Chair. While his father lay dying, Harlan was killed in a sudden fall from a horse — called an accident, though some suggested his younger brother Harwyn was to blame, and others attributed the death to a Faceless Man. Six days later Qhorwyn himself died, and the throne passed not to Harlan's line but to Harwyn, who would become the first King of the Isles and the Rivers. Harlan is noted in The World of Ice & Fire.
+Middle son of King Qhorwyn the Cunning and, after his eldest brother died of greyscale, heir to the Seastone Chair. While his father lay dying, Harlan was killed in a sudden fall from a horse. It was called an accident, though some suggested his younger brother Harwyn was to blame, and others attributed the death to a Faceless Man. Six days later Qhorwyn himself died, and the throne passed not to Harlan's line but to Harwyn, who would become the first King of the Isles and the Rivers. Harlan is noted in The World of Ice & Fire.

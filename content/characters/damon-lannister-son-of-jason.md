@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-Older half-brother of Ser Stafford and Lady Joanna Lannister, and only son of Ser Jason Lannister by his first lady, Alys of House Stackspear. He was wed to his kinswoman Ella, of the Lannisters of Lannisport, who bore him a son, Ser Damion — and through Damion's wife Shiera Crakehall, the next two generations of cousins to the lords of the Rock.
+Older half-brother of Ser Stafford and Lady Joanna Lannister, and only son of Ser Jason Lannister by his first lady, Alys of House Stackspear. He was wed to his kinswoman Ella, of the Lannisters of Lannisport, who bore him a son, Ser Damion. Through Damion's wife Shiera Crakehall came the next two generations of cousins to the lords of the Rock.

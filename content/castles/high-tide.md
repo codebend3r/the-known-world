@@ -26,4 +26,4 @@ In the castle's hall stands the Driftwood Throne, the ancient high seat of the V
 
 ## The Hall of Nine
 
-The treasures Corlys brought back from Yi Ti, Asshai, and the far ends of the world were housed in the Hall of Nine, named for his nine voyages aboard the Sea Snake — silks, spices, jade, and wonders no other lord in Westeros could boast.
+The treasures Corlys brought back from Yi Ti, Asshai, and the far ends of the world were housed in the Hall of Nine, named for his nine voyages aboard the Sea Snake. They were silks, spices, jade, and wonders no other lord in Westeros could boast.

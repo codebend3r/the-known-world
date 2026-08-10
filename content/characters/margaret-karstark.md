@@ -18,4 +18,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Karstark of Karhold, wed to Bennard Stark of Winterfell in the years before he became regent of the north. She bore him three sons — Benjen, Brandon, and Elric — all of whom would share their father's fall when their cousin Cregan came of age.
+A daughter of House Karstark of Karhold, wed to Bennard Stark of Winterfell in the years before he became regent of the north. She bore him three sons (Benjen, Brandon, and Elric), all of whom would share their father's fall when their cousin Cregan came of age.

@@ -25,4 +25,4 @@ The ruined seat of House Crabb, standing on a cliff above the sea amid the pines
 
 ## The Whispering Heads
 
-Legend tells of Ser Clarence Crabb, a giant of a knight who rode an aurochs and struck the heads from wizards, lords, and kings, carrying them home to his keep. His woods-witch wife would kiss the heads back to life, and they would counsel him in murmurs — and it is their whispering, the tales say, that can still be heard among the broken stones, giving the castle its name.
+Legend tells of Ser Clarence Crabb, a giant of a knight who rode an aurochs and struck the heads from wizards, lords, and kings, carrying them home to his keep. His woods-witch wife would kiss the heads back to life, and they would counsel him in murmurs; it is their whispering, the tales say, that can still be heard among the broken stones, giving the castle its name.

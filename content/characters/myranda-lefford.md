@@ -20,4 +20,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Lefford of the Golden Tooth, wed to Ser Stafford Lannister, kinsman and good-brother to Lord Tywin. She gave Stafford three children — Ser Daven, who would in time be raised Warden of the West, and the daughters Cerenna and Myrielle — and was widowed when her husband fell at the night-rout of Oxcross in 299 AC.
+A daughter of House Lefford of the Golden Tooth, wed to Ser Stafford Lannister, kinsman and good-brother to Lord Tywin. She gave Stafford three children (Ser Daven, who would in time be raised Warden of the West, and the daughters Cerenna and Myrielle) and was widowed when her husband fell at the night-rout of Oxcross in 299 AC.

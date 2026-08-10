@@ -18,4 +18,4 @@ sources:
 draft: false
 ---
 
-Sarya Whent was a noblewoman of House Whent and the fifth wife of Lord Walder Frey of the Crossing. She died leaving no progeny, and AWOIAF—which calculates her death between 269 and 278 AC but gives no exact year—records that her relation to other members of House Whent is unknown.
+Sarya Whent was a noblewoman of House Whent and the fifth wife of Lord Walder Frey of the Crossing. She died leaving no progeny, and AWOIAF (which calculates her death between 269 and 278 AC but gives no exact year) records that her relation to other members of House Whent is unknown.

@@ -28,7 +28,7 @@ sources:
 draft: false
 ---
 
-Eldest of the three siblings who made the Conquest. A grim, warlike woman who bore the Valyrian steel sword Dark Sister at her hip and rode Vhagar in war. She wed her brother Aegon by Valyrian rite and bore him one son, Maegor, in whom she invested all the iron of her own ambition. She founded the Kingsguard in the second year of her brother's reign and outlived him by seven years.
+Eldest of the three siblings who made the Conquest. A grim, warlike woman who bore the Valyrian steel sword _Dark Sister_ at her hip and rode Vhagar in war. She wed her brother Aegon by Valyrian rite and bore him one son, Maegor, in whom she invested all the iron of her own ambition. She founded the Kingsguard in the second year of her brother's reign and outlived him by seven years.
 
 She was the eldest child of Lord Aerion Targaryen and Lady Valaena Velaryon, born on Dragonstone three years before her brother and seven before her sister. She had the silver-gold hair of her line and the hard violet eyes that came down the centuries to Daemon and Maegor and the Mad King; she was reckoned beautiful in her youth and grew the colder for it. From girlhood she took the sword and the dragon both, claiming the great green Vhagar before either of her siblings reached for a saddle, and never set either aside thereafter.
 

@@ -22,4 +22,4 @@ sources:
 draft: false
 ---
 
-A daughter of House Royce of Runestone, wed to Lord Beron Stark of Winterfell. She bore him seven children — five sons and two daughters — and was, in her late years, one of the many widow-mothers whose contending claims for their children helped earn the late second century its name of the _She-Wolves of Winterfell_.
+A daughter of House Royce of Runestone, wed to Lord Beron Stark of Winterfell. She bore him seven children (five sons and two daughters) and was, in her late years, one of the many widow-mothers whose contending claims for their children helped earn the late second century its name of the _She-Wolves of Winterfell_.
