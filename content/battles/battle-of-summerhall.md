@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Summerhall, in the stormlands"
+coords:
+  x: 555
+  y: 1060
 region: stormlands
 participants:
   - side: rebels

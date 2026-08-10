@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "the Twins"
+coords:
+  x: 440
+  y: 645
 region: riverlands
 participants:
   - side: "House Frey and House Bolton"

@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "the Bridge of Skulls, near the Shadow Tower"
+coords:
+  x: 255
+  y: 115
 participants:
   - side: "the Night's Watch"
     houses: [nights-watch]

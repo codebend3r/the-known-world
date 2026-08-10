@@ -8,6 +8,9 @@ date:
   precision: legendary
 location: "Casterly Rock"
 landmass: westeros
+coords:
+  x: 280
+  y: 880
 outcome: "The Casterlys are winkled out of the Rock without a sword drawn, and House Lannister rises in their place."
 sources:
   - type: awoiaf

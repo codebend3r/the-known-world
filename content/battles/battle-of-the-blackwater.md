@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "the Blackwater Rush, King's Landing"
+coords:
+  x: 590
+  y: 830
 region: crownlands
 participants:
   - side: "House Baratheon of Dragonstone"

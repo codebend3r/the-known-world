@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Storm's End, in the stormlands"
+coords:
+  x: 645
+  y: 935
 region: stormlands
 participants:
   - side: loyalists

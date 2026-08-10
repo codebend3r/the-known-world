@@ -211,6 +211,9 @@ export const EventSchema = z.object({
   date: DateSchema,
   location: z.union([z.string(), CoordsSchema]),
   landmass: LandmassSchema,
+  // Atlas-space placement, same space as `CastleSchema.coords`. Optional
+  // because most events name a region, a sea, or a whole continent.
+  coords: CoordsSchema.optional(),
   participants: z.array(ParticipantSchema).default([]),
   outcome: z.string().optional(),
   casualties: z.array(z.string()).default([]),
@@ -240,6 +243,9 @@ export const BattleSchema = z.object({
   start: DateSchema,
   end: DateSchema,
   location: z.string().optional(),
+  // Atlas-space placement, same space as `CastleSchema.coords`. Optional
+  // because `location` is free text and many battles range over a whole war.
+  coords: CoordsSchema.optional(),
   region: z.enum(REGION_SLUGS).optional(),
   participants: z.array(ParticipantSchema).default([]),
   commanders: z.array(z.string()).default([]),
@@ -253,6 +259,7 @@ export const BattleSchema = z.object({
 });
 
 export type CalendarDate = z.infer<typeof DateSchema>;
+export type Coords = z.infer<typeof CoordsSchema>;
 export type Landmass = z.infer<typeof LandmassSchema>;
 export type Castle = z.infer<typeof CastleSchema>;
 export type House = z.infer<typeof HouseSchema>;

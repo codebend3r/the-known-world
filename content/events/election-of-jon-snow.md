@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Castle Black"
 landmass: westeros
+coords:
+  x: 460
+  y: 108
 outcome: "Ned Stark's bastard becomes the nine hundred and ninety-eighth Lord Commander of the Night's Watch, and lets the wildlings through the Wall."
 sources:
   - type: awoiaf

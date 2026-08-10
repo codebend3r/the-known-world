@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "The Red Keep"
 landmass: westeros
+coords:
+  x: 592
+  y: 830
 outcome: "Tyrion puts a crossbow bolt through his father on the privy and flees across the narrow sea; the lion's realm begins to unravel."
 sources:
   - type: awoiaf

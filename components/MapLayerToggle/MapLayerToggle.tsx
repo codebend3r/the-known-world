@@ -1,27 +1,24 @@
 "use client";
 
-import type { Castle } from "@/lib/schemas";
-import { ALL_CASTLE_TYPES } from "@/lib/map";
+import { MAP_LAYERS, type MapLayer } from "@/lib/map";
 import styles from "@/components/MapLayerToggle/MapLayerToggle.module.scss";
 
-type CastleType = Castle["type"];
-
 type Props = {
-  enabled: Set<CastleType>;
-  onToggle: (type: CastleType) => void;
+  enabled: Set<MapLayer>;
+  onToggle: (layer: MapLayer) => void;
 };
 
 export function MapLayerToggle({ enabled, onToggle }: Props) {
   return (
     <div className={styles.toggle} role="group" aria-label="Map layers">
-      {ALL_CASTLE_TYPES.map((type) => (
-        <label key={type}>
+      {MAP_LAYERS.map((layer) => (
+        <label key={layer}>
           <input
             type="checkbox"
-            checked={enabled.has(type)}
-            onChange={() => onToggle(type)}
+            checked={enabled.has(layer)}
+            onChange={() => onToggle(layer)}
           />
-          {type}
+          {layer}
         </label>
       ))}
     </div>

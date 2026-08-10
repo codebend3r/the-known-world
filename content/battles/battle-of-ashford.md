@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Ashford, in the Reach"
+coords:
+  x: 510
+  y: 1010
 region: reach
 participants:
   - side: rebels

@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "King's Landing"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "The Hand of the King dies of a sudden fever (poison, in truth) and Robert rides north to make Eddard Stark his Hand."
 sources:
   - type: awoiaf

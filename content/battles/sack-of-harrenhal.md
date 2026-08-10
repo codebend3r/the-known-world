@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Harrenhal"
+coords:
+  x: 555
+  y: 765
 region: riverlands
 participants:
   - side: "House Bolton"

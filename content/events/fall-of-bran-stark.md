@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Winterfell"
 landmass: westeros
+coords:
+  x: 400
+  y: 430
 outcome: "A boy who saw too much is thrown from a tower and lives, crippled; the things done to silence him set the realm alight."
 sources:
   - type: awoiaf

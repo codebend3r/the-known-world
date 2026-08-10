@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "Dragonstone"
 landmass: westeros
+coords:
+  x: 660
+  y: 870
 outcome: "Warned by Daenys the Dreamer, the Targaryens quit Valyria for Dragonstone twelve years before the Doom, and alone of the dragonlords survive it."
 sources:
   - type: awoiaf

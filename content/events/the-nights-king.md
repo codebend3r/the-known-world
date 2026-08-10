@@ -8,6 +8,9 @@ date:
   precision: legendary
 location: "The Nightfort"
 landmass: westeros
+coords:
+  x: 410
+  y: 105
 outcome: "The thirteenth Lord Commander is cast down after thirteen years of dark rule, and his very name is struck from memory."
 sources:
   - type: awoiaf

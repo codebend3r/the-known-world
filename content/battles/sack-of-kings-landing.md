@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "King's Landing, in the crownlands"
+coords:
+  x: 590
+  y: 830
 region: crownlands
 participants:
   - side: rebels

@@ -8,6 +8,9 @@ date:
   precision: legendary
 location: "Winterfell"
 landmass: westeros
+coords:
+  x: 400
+  y: 430
 outcome: "Bran the Builder raises Winterfell over its hot springs, and House Stark rules the North as Kings of Winter for eight thousand years."
 sources:
   - type: awoiaf

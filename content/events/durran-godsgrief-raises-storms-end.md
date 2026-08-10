@@ -8,6 +8,9 @@ date:
   precision: legendary
 location: "Storm's End"
 landmass: westeros
+coords:
+  x: 645
+  y: 935
 outcome: "The seventh castle stands against the fury of the gods, and the Storm Kings rule from it thereafter."
 sources:
   - type: awoiaf

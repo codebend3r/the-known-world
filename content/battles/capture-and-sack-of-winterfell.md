@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Winterfell"
+coords:
+  x: 400
+  y: 430
 region: north
 participants:
   - side: "the ironborn"

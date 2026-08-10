@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "King's Landing"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "The queen mother walks naked from the Great Sept to the Red Keep before all the city, and the Faith she armed holds the whip."
 sources:
   - type: awoiaf

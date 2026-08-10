@@ -8,6 +8,9 @@ date:
   precision: exact
 location: "King's Landing"
 landmass: westeros
+coords:
+  x: 590
+  y: 830
 outcome: "The stag weds the lion to bind Casterly Rock to the new dynasty; the realm settles into an uneasy, indebted peace."
 sources:
   - type: awoiaf

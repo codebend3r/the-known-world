@@ -1,14 +1,12 @@
 import { describe, it, expect } from "bun:test";
 import { render } from "@testing-library/react";
 import { MapMarker } from "@/components/MapMarker";
-import type { Castle } from "@/lib/schemas";
-
-type CastleType = Castle["type"];
+import type { MapLayer } from "@/lib/map";
 
 function renderMarker(props: {
   slug: string;
   name: string;
-  type: CastleType;
+  type: MapLayer;
   cx?: number;
   cy?: number;
 }) {
@@ -90,5 +88,42 @@ describe("MapMarker", () => {
     const rects = container.querySelectorAll("rect");
     expect(rects).toHaveLength(1);
     expect(rects[0]?.getAttribute("class")).toContain("holdfast");
+  });
+
+  it("renders a triangle linking to the battle page for `battle`", () => {
+    const { container } = renderMarker({
+      slug: "red-wedding",
+      name: "The Red Wedding",
+      type: "battle",
+      cx: 440,
+      cy: 645,
+    });
+    const link = container.querySelector("a");
+    expect(link?.getAttribute("href")).toBe("/battles/red-wedding/");
+    const polygon = container.querySelector("polygon");
+    expect(polygon?.getAttribute("class")).toContain("battle");
+    expect(polygon?.getAttribute("points")?.split(" ")).toHaveLength(3);
+  });
+
+  it("renders a diamond linking to the event page for `event`", () => {
+    const { container } = renderMarker({
+      slug: "the-purple-wedding",
+      name: "The Purple Wedding",
+      type: "event",
+      cx: 590,
+      cy: 830,
+    });
+    const link = container.querySelector("a");
+    expect(link?.getAttribute("href")).toBe("/events/the-purple-wedding/");
+    const polygon = container.querySelector("polygon");
+    expect(polygon?.getAttribute("class")).toContain("event");
+    expect(polygon?.getAttribute("points")?.split(" ")).toHaveLength(4);
+  });
+
+  it("gives battle and event their own glyph shapes, not a castle circle", () => {
+    const battle = renderMarker({ slug: "b", name: "B", type: "battle" });
+    expect(battle.container.querySelector("circle")).toBeNull();
+    const event = renderMarker({ slug: "e", name: "E", type: "event" });
+    expect(event.container.querySelector("circle")).toBeNull();
   });
 });

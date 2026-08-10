@@ -12,6 +12,9 @@ end:
   era: AC
   precision: year
 location: "the Hellholt"
+coords:
+  x: 620
+  y: 1180
 region: dorne
 participants:
   - side: "Iron Throne"

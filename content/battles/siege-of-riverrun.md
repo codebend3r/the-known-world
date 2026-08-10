@@ -12,6 +12,9 @@ end:
   era: AC
   precision: exact
 location: "Riverrun, at the meeting of the Tumblestone and the Red Fork of the Trident"
+coords:
+  x: 430
+  y: 730
 region: riverlands
 participants:
   - side: "House Lannister"
