@@ -19,8 +19,13 @@ participants:
   - side: "Dorne"
     houses: [uller]
 commanders: [rhaenys-targaryen]
+victor: "Dorne"
 outcome: "Queen Rhaenys and Meraxes are slain over the Hellholt; the loss shatters Aegon's restraint and begins the Dragon's Wroth."
 casualties: [rhaenys-targaryen]
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Meraxes
+    license: CC-BY-SA-3.0
 draft: false
 ---
 

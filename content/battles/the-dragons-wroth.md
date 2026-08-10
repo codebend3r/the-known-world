@@ -21,6 +21,10 @@ participants:
 commanders: [aegon-i-targaryen, visenya-targaryen]
 victor: "Dorne"
 outcome: "Aegon and Visenya burn the castles of Dorne for three years in vengeance for Rhaenys, but the Dornish endure until a peace is agreed."
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Dragon%27s_Wroth
+    license: CC-BY-SA-3.0
 draft: false
 ---
 

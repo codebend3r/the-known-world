@@ -23,6 +23,10 @@ victor: "Maegor I"
 outcome: "Maegor slays his nephew Aegon and the dragon Quicksilver above the God's Eye, ending the rival claim to the Iron Throne."
 casualties: [aegon-the-uncrowned]
 aliases: ["The Battle Beneath the God's Eye"]
+sources:
+  - type: awoiaf
+    url: https://awoiaf.westeros.org/index.php/Battle_Beneath_the_Gods_Eye
+    license: CC-BY-SA-3.0
 draft: false
 ---
 
