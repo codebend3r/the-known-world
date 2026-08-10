@@ -448,7 +448,7 @@ describe("WorldMap", () => {
   });
 });
 
-// Guards the `tkw-a11y-audit` canvas contract: the stage is the keyboard
+// Guards the `a11y-audit` canvas contract: the stage is the keyboard
 // target, the drawing beneath it is a named group, and the raster backdrop
 // stays out of the accessibility tree.
 describe("WorldMap — accessibility contract", () => {

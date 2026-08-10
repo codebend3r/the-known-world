@@ -13,7 +13,7 @@ Operating rules for this repo.
 
 - Do not create a branch until I tell you to.
 - Branch names are flat. Never put a branch in a folder — no `feature/`, `fix/`, `bug/`, or any other prefix folder, and no slashes anywhere in the name.
-- Branch names are kebab-case and 1 to 5 words, describing what the branch is for: `sigil-integrity`, `broken-house-links`, `skills-cleanup`. See the `tkw-git-branch-naming` skill.
+- Branch names are kebab-case and 1 to 5 words, describing what the branch is for: `sigil-integrity`, `broken-house-links`, `skills-cleanup`. See the `git-branch-naming` skill.
 
 ## Commits and pull requests
 
@@ -22,7 +22,7 @@ Operating rules for this repo.
 - Favor bullet points in commit bodies and PR descriptions. Keep them concise and easy to scan.
 - Never mention any AI tool or agent in a commit message or PR — no `Co-Authored-By` trailer, no "Generated with" footer.
 - A husky pre-commit hook runs `format:check`, `typecheck`, both lints, and `test`; a commit fails if any of them do.
-- The full rules live in the `tkw-git-commit-and-pr-format` skill.
+- The full rules live in the `git-commit-and-pr-format` skill.
 
 ## Tooling
 

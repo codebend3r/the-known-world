@@ -164,7 +164,7 @@ describe("SearchCombobox", () => {
   });
 });
 
-// Guards the `tkw-a11y-audit` combobox contract: every ARIA relationship the
+// Guards the `a11y-audit` combobox contract: every ARIA relationship the
 // APG pattern requires must resolve to an element that is actually rendered.
 describe("SearchCombobox — accessibility contract", () => {
   it("drops `aria-controls` while the popup is closed, so no IDREF dangles", () => {

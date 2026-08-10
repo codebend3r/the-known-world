@@ -12,7 +12,7 @@
 
 ## Conventions reminder
 
-- Commit subjects start with `TKW:` (see `tkw-git-commit-and-pr-format` skill); no `Co-Authored-By` trailer, no AI attribution anywhere in commit messages.
+- Commit subjects start with `TKW:` (see `git-commit-and-pr-format` skill); no `Co-Authored-By` trailer, no AI attribution anywhere in commit messages.
 - Run `bun run test` before each commit (this invokes `vitest run` — `bun test` uses Bun's built-in runner and is incompatible with the repo's jsdom setup).
 - All in-repo imports use the `@/` alias.
 - CSS modules use `camelCase` class names; compose with `cx` from `@/lib/cx`.

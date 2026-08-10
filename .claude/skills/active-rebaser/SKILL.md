@@ -176,5 +176,5 @@ Branches with no upstream get pushed with `-u origin <branch>` on approval (no l
 
 ## Related skills
 
-- `tkw-git-commit-and-pr-format` — if a conflict resolution forces a reworded commit, its message still follows house style
-- `tkw-git-branch-naming` — naming for any branch the user asks you to create along the way
+- `git-commit-and-pr-format` — if a conflict resolution forces a reworded commit, its message still follows house style
+- `git-branch-naming` — naming for any branch the user asks you to create along the way

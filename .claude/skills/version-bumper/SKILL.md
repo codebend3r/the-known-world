@@ -230,4 +230,4 @@ Tag-drift runs that fixed something say what was pushed or deleted.
 ## Related skills
 
 - `active-rebaser` — run it after a release so in-flight branches sit on the newly tagged `main`
-- `tkw-git-commit-and-pr-format` — governs every commit **except** the release commit
+- `git-commit-and-pr-format` — governs every commit **except** the release commit

@@ -132,7 +132,7 @@ describe("MapStage", () => {
   });
 });
 
-// Guards the `tkw-a11y-audit` canvas contract. `ReactSVGPanZoom` is mocked as a
+// Guards the `a11y-audit` canvas contract. `ReactSVGPanZoom` is mocked as a
 // plain function above, which cannot hold a ref, so these assertions cover the
 // markup contract; the pan/zoom handles themselves are exercised on `WorldMap`.
 describe("MapStage — accessibility contract", () => {

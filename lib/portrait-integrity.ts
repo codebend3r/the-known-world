@@ -13,7 +13,7 @@ import {
  * read the directory instead and compare it back against `content/characters/`.
  *
  * Whole-repo asset weight and orphans outside this directory belong to the
- * `tkw-image-optimize` skill; sigils belong to `lib/sigil-integrity.ts`.
+ * `image-optimize` skill; sigils belong to `lib/sigil-integrity.ts`.
  */
 
 const PORTRAIT_DIR = path.join(process.cwd(), "public", "characters");
@@ -41,7 +41,7 @@ export const PLACEHOLDER_FILES: ReadonlySet<string> = new Set(
  *
  * `thoros-of-myr`: the red priest of the Brotherhood Without Banners. The
  * portrait landed in #20; the entry has never been written. Populate it with
- * `tkw-populate-character` and drop this entry.
+ * `populate-character` and drop this entry.
  */
 export const RESERVED_PORTRAITS: ReadonlySet<string> = new Set([
   "thoros-of-myr",

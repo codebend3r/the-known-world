@@ -21,7 +21,7 @@ const { viewport } = await import("@/app/layout");
 describe("root layout viewport", () => {
   // WCAG 1.4.4 (Resize Text) requires 200% zoom. `maximumScale` and
   // `userScalable: false` both cap it, and both were set here until the
-  // `tkw-a11y-audit` sweep.
+  // `a11y-audit` sweep.
   it("leaves pinch zoom unlocked", () => {
     expect(viewport.maximumScale).toBeUndefined();
     expect(viewport.userScalable).toBeUndefined();

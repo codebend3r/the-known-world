@@ -13,7 +13,7 @@
 **Conventions for every task:**
 
 - `@/` alias for all in-repo imports, never relative.
-- One commit per task; subject starts with `TKW:` (see `tkw-git-commit-and-pr-format` skill).
+- One commit per task; subject starts with `TKW:` (see `git-commit-and-pr-format` skill).
 - Never add `Co-Authored-By: Claude` or any agent attribution.
 - Run `bun run test` before committing each task — all tests must pass.
 - The existing test suite (280 tests as of `6eeb209`) must stay green.

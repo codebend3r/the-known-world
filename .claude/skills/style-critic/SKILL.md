@@ -187,7 +187,7 @@ Close the report by separating **new-in-diff** violations (blocking) from
 
 ## Related skills
 
-- `tkw-component-scaffold` — the four-file component structure, plus its own
+- `component-scaffold` — the four-file component structure, plus its own
   token-drift counter (`audit-components.ts`) scoped to `components/`
-- `tkw-a11y-audit` — motion guards overlap; that skill owns the wider WCAG
+- `a11y-audit` — motion guards overlap; that skill owns the wider WCAG
   sweep

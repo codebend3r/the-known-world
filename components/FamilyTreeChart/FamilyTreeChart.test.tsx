@@ -708,7 +708,7 @@ describe("FamilyTreeChart — click vs drag", () => {
   });
 });
 
-// Guards the `tkw-a11y-audit` canvas contract: the chart is a `role="application"`
+// Guards the `a11y-audit` canvas contract: the chart is a `role="application"`
 // surface, keyboard operable, with its links left in the accessibility tree.
 describe("FamilyTreeChart — accessibility contract", () => {
   function chartWith(persons: LayoutPerson[]): LaidOutChart {
