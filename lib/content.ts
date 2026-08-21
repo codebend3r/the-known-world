@@ -3,6 +3,7 @@ import path from "node:path";
 import { remark } from "remark";
 import remarkHtml from "remark-html";
 import { parse as parseYaml } from "yaml";
+import type { z } from "zod";
 import {
   CastleSchema,
   HouseSchema,
@@ -11,18 +12,46 @@ import {
   WeaponSchema,
   DragonSchema,
   BattleSchema,
-  type Castle,
-  type House,
-  type Character,
-  type Event,
-  type Weapon,
-  type Dragon,
-  type Battle,
 } from "@/lib/schemas";
 import { remarkProseLinks, type ProseLinkIndex } from "@/lib/prose-links";
 import { memoize, memoizeBySlug } from "@/lib/memoize";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
+
+/**
+ * Every content type, paired with the schema its frontmatter must satisfy.
+ *
+ * This is the one list. The `ContentType` union, the frontmatter each type
+ * parses into, and the `Collections` shape are all derived from it, so adding
+ * a type is a line here and nothing else.
+ */
+const SCHEMAS = {
+  battles: BattleSchema,
+  castles: CastleSchema,
+  characters: CharacterSchema,
+  dragons: DragonSchema,
+  events: EventSchema,
+  houses: HouseSchema,
+  weapons: WeaponSchema,
+};
+
+export type ContentType = keyof typeof SCHEMAS;
+
+type Frontmatter = { [K in ContentType]: z.infer<(typeof SCHEMAS)[K]> };
+
+/**
+ * The same map, re-annotated. Indexing `SCHEMAS` with a generic key widens
+ * `.parse` to a union of all seven return types; this mapped annotation keeps
+ * each key tied to its own, so `loadFile` returns the right frontmatter.
+ */
+const CONTENT_TYPES: {
+  [K in ContentType]: { parse: (input: unknown) => Frontmatter[K] };
+} = SCHEMAS;
+
+/** Every collection loaded at once, the shape the integrity checks take. */
+export type Collections = {
+  [K in ContentType]: Array<Loaded<Frontmatter[K]>>;
+};
 
 // `output: "export"` renders every page in a worker process, and most pages call
 // several `loadAll*`, so without a cache each one re-read and re-validated the
@@ -33,22 +62,14 @@ const enabled = process.env.NODE_ENV === "production";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
-async function loadFile<T>(
-  type:
-    | "castles"
-    | "houses"
-    | "characters"
-    | "events"
-    | "weapons"
-    | "dragons"
-    | "battles",
+async function loadFile<K extends ContentType>(
+  type: K,
   slug: string,
-  schema: { parse: (input: unknown) => T },
-): Promise<Loaded<T>> {
+): Promise<Loaded<Frontmatter[K]>> {
   const filePath = path.join(CONTENT_ROOT, type, `${slug}.md`);
   const raw = await fs.readFile(filePath, "utf-8");
   const parsed = parseFrontmatter(raw);
-  const frontmatter = schema.parse(parsed.data);
+  const frontmatter = CONTENT_TYPES[type].parse(parsed.data);
   return { frontmatter, body: parsed.content, slug };
 }
 
@@ -61,17 +82,9 @@ function parseFrontmatter(raw: string): { data: unknown; content: string } {
   };
 }
 
-async function loadAll<T>(
-  type:
-    | "castles"
-    | "houses"
-    | "characters"
-    | "events"
-    | "weapons"
-    | "dragons"
-    | "battles",
-  schema: { parse: (input: unknown) => T },
-): Promise<Array<Loaded<T>>> {
+async function loadAll<K extends ContentType>(
+  type: K,
+): Promise<Array<Loaded<Frontmatter[K]>>> {
   const dir = path.join(CONTENT_ROOT, type);
   let files: string[];
   try {
@@ -81,70 +94,69 @@ async function loadAll<T>(
   }
   const mdFiles = files.filter((f) => f.endsWith(".md"));
   return Promise.all(
-    mdFiles.map((f) => loadFile<T>(type, f.replace(/\.md$/, ""), schema)),
+    mdFiles.map((f) => loadFile(type, f.replace(/\.md$/, ""))),
   );
 }
 
 export const loadCastle = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile<Castle>("castles", slug, CastleSchema),
+  load: (slug: string) => loadFile("castles", slug),
 });
 export const loadHouse = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile<House>("houses", slug, HouseSchema),
+  load: (slug: string) => loadFile("houses", slug),
 });
 export const loadCharacter = memoizeBySlug({
   enabled,
-  load: (slug: string) =>
-    loadFile<Character>("characters", slug, CharacterSchema),
+  load: (slug: string) => loadFile("characters", slug),
 });
 export const loadEvent = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile<Event>("events", slug, EventSchema),
+  load: (slug: string) => loadFile("events", slug),
 });
 
 export const loadAllCastles = memoize({
   enabled,
-  load: () => loadAll<Castle>("castles", CastleSchema),
+  load: () => loadAll("castles"),
 });
 export const loadAllHouses = memoize({
   enabled,
-  load: () => loadAll<House>("houses", HouseSchema),
+  load: () => loadAll("houses"),
 });
 export const loadAllCharacters = memoize({
   enabled,
-  load: () => loadAll<Character>("characters", CharacterSchema),
+  load: () => loadAll("characters"),
 });
 export const loadAllEvents = memoize({
   enabled,
-  load: () => loadAll<Event>("events", EventSchema),
+  load: () => loadAll("events"),
 });
 
 export const loadWeapon = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile<Weapon>("weapons", slug, WeaponSchema),
+  load: (slug: string) => loadFile("weapons", slug),
 });
 export const loadDragon = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile<Dragon>("dragons", slug, DragonSchema),
+  load: (slug: string) => loadFile("dragons", slug),
 });
 
 export const loadAllWeapons = memoize({
   enabled,
-  load: () => loadAll<Weapon>("weapons", WeaponSchema),
+  load: () => loadAll("weapons"),
 });
 export const loadAllDragons = memoize({
   enabled,
-  load: () => loadAll<Dragon>("dragons", DragonSchema),
+  load: () => loadAll("dragons"),
 });
 
 export const loadBattle = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile<Battle>("battles", slug, BattleSchema),
+  load: (slug: string) => loadFile("battles", slug),
 });
 export const loadAllBattles = memoize({
   enabled,
-  load: () => loadAll<Battle>("battles", BattleSchema),
+  load: () => loadAll("battles"),
 });
 
 export async function renderMarkdown(

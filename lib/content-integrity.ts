@@ -1,24 +1,6 @@
 import { MAP_BOUNDS, entryCoords, isWithinMapBounds } from "@/lib/map";
-import type {
-  loadAllBattles,
-  loadAllCastles,
-  loadAllCharacters,
-  loadAllDragons,
-  loadAllEvents,
-  loadAllHouses,
-  loadAllWeapons,
-} from "@/lib/content";
+import type { Collections } from "@/lib/content";
 import { dateIntegrityErrors } from "@/lib/date-integrity";
-
-type Collections = {
-  battles: Awaited<ReturnType<typeof loadAllBattles>>;
-  castles: Awaited<ReturnType<typeof loadAllCastles>>;
-  characters: Awaited<ReturnType<typeof loadAllCharacters>>;
-  dragons: Awaited<ReturnType<typeof loadAllDragons>>;
-  events: Awaited<ReturnType<typeof loadAllEvents>>;
-  houses: Awaited<ReturnType<typeof loadAllHouses>>;
-  weapons: Awaited<ReturnType<typeof loadAllWeapons>>;
-};
 
 type CollectionName = keyof Collections;
 
