@@ -1,3 +1,5 @@
+"use client";
+
 import { SearchCombobox } from "@/components/SearchCombobox";
 
 const DEFAULT_PLACEHOLDER = "Search houses…";

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useQueryStates } from "nuqs";
 import { Sigil } from "@/components/Sigil";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
+import { ListPagination } from "@/components/ListPagination";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import {
   ViewToggle,
@@ -15,12 +16,12 @@ import {
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
+import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
-  PAGE_SIZE_OPTIONS,
   isPageSize,
   listSearchParsers,
   type PageSize,
@@ -74,10 +75,6 @@ export function FilteredCharacterList({
     useQueryStates(parsers);
   const page = Math.max(1, rawPage);
 
-  const [userValue, setUserValue] = useState<string | undefined>(undefined);
-  const [userDebounced, setUserDebounced] = useState<string | undefined>(
-    undefined,
-  );
   const [view, setView] = useState<ViewMode>("grid");
 
   useEffect(() => {
@@ -97,19 +94,10 @@ export function FilteredCharacterList({
     }
   };
 
-  const value = userValue ?? search;
-  const debounced = userDebounced ?? search;
-
-  useEffect(() => {
-    if (userValue === undefined) return;
-    const t = setTimeout(() => setUserDebounced(userValue), 300);
-    return () => clearTimeout(t);
-  }, [userValue]);
-
-  useEffect(() => {
-    if (userDebounced === undefined) return;
-    setParams({ search: userDebounced, page: 1 });
-  }, [userDebounced, setParams]);
+  const { value, debounced, onChange } = useDebouncedSearch({
+    urlValue: search,
+    commit: (next) => setParams({ search: next, page: 1 }),
+  });
 
   const sorted = useMemo(() => {
     const arr = [...items].sort(compareByName);
@@ -126,66 +114,20 @@ export function FilteredCharacterList({
     setParams({ page: next });
   };
 
-  const handleSizeChange = (next: number) => {
-    if (!isPageSize(next)) return;
-    setParams({ size: next, page: 1 });
-  };
-
   const handleDirChange = (next: SortDirection) => {
     setParams({ dir: next, page: 1 });
   };
 
   const renderPagination = (position: "top" | "bottom") => (
-    <nav
-      className={cx(
-        listSearch.pagination,
-        position === "top"
-          ? listSearch.paginationTop
-          : listSearch.paginationBottom,
-      )}
-      aria-label={`Character list pagination, ${position}`}
-    >
-      <button
-        type="button"
-        className={listSearch.button}
-        onClick={() => writePage(Math.max(1, currentPage - 1))}
-        disabled={currentPage === 1}
-        aria-label="Previous page"
-      >
-        ← Prev
-      </button>
-      <span
-        className={listSearch.status}
-        {...(position === "bottom" ? { "aria-live": "polite" as const } : {})}
-      >
-        Page {currentPage} of {totalPages}
-      </span>
-      <label className={listSearch.pageSize}>
-        Show{" "}
-        <select
-          className={listSearch.pageSizeSelect}
-          value={String(size)}
-          onChange={(e) => handleSizeChange(Number(e.target.value))}
-          aria-label="Characters per page"
-        >
-          {PAGE_SIZE_OPTIONS.map((opt) => (
-            <option key={opt.label} value={String(opt.value)}>
-              {opt.label}
-            </option>
-          ))}
-        </select>{" "}
-        per page
-      </label>
-      <button
-        type="button"
-        className={listSearch.button}
-        onClick={() => writePage(Math.min(totalPages, currentPage + 1))}
-        disabled={currentPage === totalPages}
-        aria-label="Next page"
-      >
-        Next →
-      </button>
-    </nav>
+    <ListPagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      size={size}
+      onPageChange={writePage}
+      onSizeChange={(next) => setParams({ size: next, page: 1 })}
+      position={position}
+      noun="Character"
+    />
   );
 
   const showPagination = filtered.length > MIN_PAGE_SIZE;
@@ -195,7 +137,7 @@ export function FilteredCharacterList({
   return (
     <>
       <div className={listSearch.rowWithSort}>
-        <CharacterSearchInput value={value} onChange={setUserValue} />
+        <CharacterSearchInput value={value} onChange={onChange} />
         <SortToggle value={dir} onChange={handleDirChange} />
         <ViewToggle
           options={VIEW_OPTIONS}
@@ -216,7 +158,7 @@ export function FilteredCharacterList({
                 ? REGION_CARD_CLASS[item.region]
                 : undefined;
               const cardClass = cx(styles.card, regionClass);
-              const computedAlias = !!item.alias ? `(${item?.alias})` : "";
+              const computedAlias = item.alias ? `(${item.alias})` : "";
 
               return (
                 <li key={item.slug} className={styles.item}>

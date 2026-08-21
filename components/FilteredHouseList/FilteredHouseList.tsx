@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useQueryState, useQueryStates, parseAsStringLiteral } from "nuqs";
 import { Accordion } from "@/components/Accordion";
+import { ListPagination } from "@/components/ListPagination";
+import { ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
 import { SortToggle, type SortDirection } from "@/components/SortToggle";
 import {
@@ -16,6 +18,7 @@ import {
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
+import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import type { HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
@@ -23,7 +26,6 @@ import { REGION_SLUGS, regionLabel } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
-  PAGE_SIZE_OPTIONS,
   isPageSize,
   isGrouping,
   listSearchParsers,
@@ -141,10 +143,6 @@ export function FilteredHouseList({
     parseAsStringLiteral(RANK_FILTERS).withDefault("all"),
   );
 
-  const [userValue, setUserValue] = useState<string | undefined>(undefined);
-  const [userDebounced, setUserDebounced] = useState<string | undefined>(
-    undefined,
-  );
   const [view, setView] = useState<ViewMode>("grid");
   const [grouping, setGrouping] = useState<Grouping>("flat");
   const [openRegions, setOpenRegions] = useState<Set<string>>(new Set());
@@ -188,19 +186,10 @@ export function FilteredHouseList({
     });
   };
 
-  const value = userValue ?? search;
-  const debounced = userDebounced ?? search;
-
-  useEffect(() => {
-    if (userValue === undefined) return;
-    const t = setTimeout(() => setUserDebounced(userValue), 300);
-    return () => clearTimeout(t);
-  }, [userValue]);
-
-  useEffect(() => {
-    if (userDebounced === undefined) return;
-    setParams({ search: userDebounced, page: 1 });
-  }, [userDebounced, setParams]);
+  const { value, debounced, onChange } = useDebouncedSearch({
+    urlValue: search,
+    commit: (next) => setParams({ search: next, page: 1 }),
+  });
 
   const sorted = useMemo(() => {
     const arr = [...items].sort(compareByName);
@@ -243,11 +232,6 @@ export function FilteredHouseList({
 
   const writePage = (next: number) => {
     setParams({ page: next });
-  };
-
-  const handleSizeChange = (next: number) => {
-    if (!isPageSize(next)) return;
-    setParams({ size: next, page: 1 });
   };
 
   const handleDirChange = (next: SortDirection) => {
@@ -311,56 +295,15 @@ export function FilteredHouseList({
   };
 
   const renderPagination = (position: "top" | "bottom") => (
-    <nav
-      className={cx(
-        listSearch.pagination,
-        position === "top"
-          ? listSearch.paginationTop
-          : listSearch.paginationBottom,
-      )}
-      aria-label={`House list pagination, ${position}`}
-    >
-      <button
-        type="button"
-        className={listSearch.button}
-        onClick={() => writePage(Math.max(1, currentPage - 1))}
-        disabled={currentPage === 1}
-        aria-label="Previous page"
-      >
-        ← Prev
-      </button>
-      <span
-        className={listSearch.status}
-        {...(position === "bottom" ? { "aria-live": "polite" as const } : {})}
-      >
-        Page {currentPage} of {totalPages}
-      </span>
-      <label className={listSearch.pageSize}>
-        Show{" "}
-        <select
-          className={listSearch.pageSizeSelect}
-          value={String(size)}
-          onChange={(e) => handleSizeChange(Number(e.target.value))}
-          aria-label="Houses per page"
-        >
-          {PAGE_SIZE_OPTIONS.map((opt) => (
-            <option key={opt.label} value={String(opt.value)}>
-              {opt.label}
-            </option>
-          ))}
-        </select>{" "}
-        per page
-      </label>
-      <button
-        type="button"
-        className={listSearch.button}
-        onClick={() => writePage(Math.min(totalPages, currentPage + 1))}
-        disabled={currentPage === totalPages}
-        aria-label="Next page"
-      >
-        Next →
-      </button>
-    </nav>
+    <ListPagination
+      currentPage={currentPage}
+      totalPages={totalPages}
+      size={size}
+      onPageChange={writePage}
+      onSizeChange={(next) => setParams({ size: next, page: 1 })}
+      position={position}
+      noun="House"
+    />
   );
 
   const showPagination = filtered.length > MIN_PAGE_SIZE;
@@ -369,15 +312,12 @@ export function FilteredHouseList({
     <>
       <div className={styles.controls}>
         {!inRegionMode && (
-          <input
-            type="search"
-            className={cx(listSearch.input, styles.searchInput)}
-            placeholder="Search houses…"
+          <ListSearchInput
             value={value}
-            onChange={(e) => setUserValue(e.target.value)}
-            aria-label="Search houses"
-            autoComplete="off"
-            spellCheck={false}
+            onChange={onChange}
+            placeholder="Search houses…"
+            ariaLabel="Search houses"
+            className={styles.searchInput}
           />
         )}
         <div className={styles.toggles}>
@@ -476,15 +416,12 @@ function RegionAccordion({
       onToggle={onToggle}
       headingLevel={2}
     >
-      <input
-        type="search"
-        className={cx(listSearch.input, styles.regionSearch)}
-        placeholder={`Search ${group.label}…`}
+      <ListSearchInput
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        aria-label={`Search ${group.label}`}
-        autoComplete="off"
-        spellCheck={false}
+        onChange={setQuery}
+        placeholder={`Search ${group.label}…`}
+        ariaLabel={`Search ${group.label}`}
+        className={styles.regionSearch}
       />
       {filtered.length === 0 ? (
         <p className={listSearch.empty}>

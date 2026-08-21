@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useQueryState } from "nuqs";
+import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
+import { ListSearchInput } from "@/components/ListSearchInput";
 import { filterByName } from "@/lib/search";
 import { searchParser } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
@@ -25,24 +26,10 @@ type Props = {
 
 export function FilteredEventList({ items }: Props) {
   const [urlSearch, setUrlSearch] = useQueryState("search", searchParser);
-  const [userValue, setUserValue] = useState<string | undefined>(undefined);
-  const [userDebounced, setUserDebounced] = useState<string | undefined>(
-    undefined,
-  );
-
-  const value = userValue ?? urlSearch;
-  const debounced = userDebounced ?? urlSearch;
-
-  useEffect(() => {
-    if (userValue === undefined) return;
-    const t = setTimeout(() => setUserDebounced(userValue), 300);
-    return () => clearTimeout(t);
-  }, [userValue]);
-
-  useEffect(() => {
-    if (userDebounced === undefined) return;
-    setUrlSearch(userDebounced);
-  }, [userDebounced, setUrlSearch]);
+  const { value, debounced, onChange } = useDebouncedSearch({
+    urlValue: urlSearch,
+    commit: setUrlSearch,
+  });
 
   const filtered = filterByName(items, debounced);
   const hasApproximate = filtered.some((item) => item.approximate);
@@ -50,15 +37,11 @@ export function FilteredEventList({ items }: Props) {
   return (
     <>
       <div className={listSearch.row}>
-        <input
-          type="search"
-          className={listSearch.input}
-          placeholder="Search events…"
+        <ListSearchInput
           value={value}
-          onChange={(e) => setUserValue(e.target.value)}
-          aria-label="Search events"
-          autoComplete="off"
-          spellCheck={false}
+          onChange={onChange}
+          placeholder="Search events…"
+          ariaLabel="Search events"
         />
       </div>
       {filtered.length === 0 ? (
