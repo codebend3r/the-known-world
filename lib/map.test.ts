@@ -180,6 +180,21 @@ describe("placementHref", () => {
       "/castles/kings-landing/",
     );
   });
+
+  it("routes every declared layer, with no silent castle fallback", () => {
+    const routes = Object.fromEntries(
+      MAP_LAYERS.map((layer) => [layer, placementHref({ layer, slug: "s" })]),
+    );
+    expect(routes).toEqual({
+      castle: "/castles/s/",
+      town: "/castles/s/",
+      ruin: "/castles/s/",
+      watchtower: "/castles/s/",
+      holdfast: "/castles/s/",
+      battle: "/battles/s/",
+      event: "/events/s/",
+    });
+  });
 });
 
 describe("selectPlacements", () => {
@@ -216,6 +231,27 @@ describe("selectPlacements", () => {
     ]);
     expect(placements[1].href).toBe("/battles/red-wedding/");
     expect(placements[2].coords).toEqual({ x: 590, y: 830 });
+  });
+
+  it("links by frontmatter slug, the one generateStaticParams builds routes from", () => {
+    const renamedFile = {
+      frontmatter: CastleSchema.parse({
+        slug: "winterfell",
+        name: "Winterfell",
+        type: "castle",
+        coords: { x: 400, y: 430 },
+        sources: [],
+      }),
+      body: "",
+      slug: "winterfell-draft-copy",
+    };
+    const placements = selectPlacements({
+      castles: [renamedFile],
+      battles: [],
+      events: [],
+      layers: new Set<MapLayer>(["castle"]),
+    });
+    expect(placements[0].href).toBe("/castles/winterfell/");
   });
 
   it("drops battles and events with no coordinates rather than defaulting", () => {
