@@ -1,3 +1,4 @@
+import type { ReactElement } from "react";
 import { cx } from "@/lib/cx";
 import { placementHref, type MapLayer } from "@/lib/map";
 import styles from "@/components/MapMarker/MapMarker.module.scss";
@@ -44,7 +45,7 @@ function Glyph({
   type: MapLayer;
   cx: number;
   cy: number;
-}) {
+}): ReactElement {
   switch (type) {
     case "castle":
       return (

@@ -44,9 +44,14 @@ export type MapPlacement = {
 };
 
 export function isCoords(value: unknown): value is Coords {
-  if (typeof value !== "object" || value === null) return false;
-  const record: Record<string, unknown> = { ...value };
-  return typeof record.x === "number" && typeof record.y === "number";
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "x" in value &&
+    "y" in value &&
+    typeof value.x === "number" &&
+    typeof value.y === "number"
+  );
 }
 
 /**
@@ -69,6 +74,22 @@ export function isWithinMapBounds({ x, y }: Coords): boolean {
   return x >= 0 && x <= MAP_BOUNDS.width && y >= 0 && y <= MAP_BOUNDS.height;
 }
 
+/**
+ * The route segment each layer links into. Every castle type shares the
+ * `castles` collection; `battle` and `event` have their own. Declared as a
+ * table rather than a branch chain so a new entry in `MAP_LAYERS` fails to
+ * compile here instead of silently linking to `/castles/`.
+ */
+const LAYER_ROUTE = {
+  castle: "castles",
+  town: "castles",
+  ruin: "castles",
+  watchtower: "castles",
+  holdfast: "castles",
+  battle: "battles",
+  event: "events",
+} as const satisfies Record<MapLayer, string>;
+
 export function placementHref({
   layer,
   slug,
@@ -76,9 +97,7 @@ export function placementHref({
   layer: MapLayer;
   slug: string;
 }): string {
-  if (layer === "battle") return `/battles/${slug}/`;
-  if (layer === "event") return `/events/${slug}/`;
-  return `/castles/${slug}/`;
+  return `/${LAYER_ROUTE[layer]}/${slug}/`;
 }
 
 export function selectVisibleCastles({
@@ -114,7 +133,10 @@ export function selectPlacements({
       slug: entry.frontmatter.slug,
       name: entry.frontmatter.name,
       layer: entry.frontmatter.type,
-      href: placementHref({ layer: entry.frontmatter.type, slug: entry.slug }),
+      href: placementHref({
+        layer: entry.frontmatter.type,
+        slug: entry.frontmatter.slug,
+      }),
       coords: entry.frontmatter.coords,
     }),
   );
@@ -136,7 +158,7 @@ export function selectPlacements({
           slug: entry.frontmatter.slug,
           name: entry.frontmatter.name,
           layer,
-          href: placementHref({ layer, slug: entry.slug }),
+          href: placementHref({ layer, slug: entry.frontmatter.slug }),
           coords,
         },
       ];
