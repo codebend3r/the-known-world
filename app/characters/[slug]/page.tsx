@@ -197,12 +197,12 @@ export default async function CharacterPage({
             decorative
           />
         )}
-        <h1>
-          {fm.name}
+        <hgroup className={styles.titleGroup}>
+          <h1>{fm.name}</h1>
           {fm.aliases.length > 0 && (
-            <span className={styles.alias}> ({fm.aliases[0]})</span>
+            <p className={styles.alias}>{fm.aliases[0]}</p>
           )}
-        </h1>
+        </hgroup>
       </div>
 
       <div className={styles.search}>

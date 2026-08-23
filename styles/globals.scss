@@ -55,12 +55,16 @@
   --fs-section: 15px;
   --fs-body: 19px;
   --fs-quote: 21px;
+  --fs-meta: 16px;
   --fs-label: 11px;
 
   --lh-display: 0.98;
   --lh-title: 1;
+  --lh-meta: 1.5;
   --lh-body: 1.75;
 
+  // Negative: display-size serif tightens; the positive trackings are for caps.
+  --ls-display: -0.01em;
   --ls-eyebrow: 4.5px;
   --ls-section: 2.6px;
   --ls-caption: 2.2px;
