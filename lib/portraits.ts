@@ -9,6 +9,12 @@ import type { Character } from "@/lib/schemas";
  */
 export const PORTRAIT_EXTENSIONS = ["png", "webp", "jpg", "jpeg"] as const;
 
+/**
+ * Probe order for the hover video that animates a portrait. The still always
+ * renders; a resolved video adds the play-on-hover layer.
+ */
+export const PORTRAIT_VIDEO_EXTENSIONS = ["mp4"] as const;
+
 /** Numbered placeholders per sex, `unknown-<sex>-01.jpg` through `-05.jpg`. */
 export const PLACEHOLDER_VARIANTS = 5;
 
@@ -23,21 +29,21 @@ function placeholderVariant(slug: string): number {
   return (hash % PLACEHOLDER_VARIANTS) + 1;
 }
 
+async function probe(file: string): Promise<string | null> {
+  try {
+    await fs.access(path.join(process.cwd(), "public", "characters", file));
+    return `/characters/${file}`;
+  } catch {
+    return null;
+  }
+}
+
 export async function findPortrait(
   slug: string,
   sex: Character["sex"],
 ): Promise<string> {
   const candidates = await Promise.all(
-    PORTRAIT_EXTENSIONS.map(async (ext) => {
-      try {
-        await fs.access(
-          path.join(process.cwd(), "public", "characters", `${slug}.${ext}`),
-        );
-        return `/characters/${slug}.${ext}`;
-      } catch {
-        return null;
-      }
-    }),
+    PORTRAIT_EXTENSIONS.map((ext) => probe(`${slug}.${ext}`)),
   );
 
   const dedicated = candidates.find((candidate) => !!candidate);
@@ -48,4 +54,11 @@ export async function findPortrait(
   const gender = sex === "f" ? "female" : "male";
   const variant = String(placeholderVariant(slug)).padStart(2, "0");
   return `/characters/unknown-${gender}-${variant}.${PLACEHOLDER_EXTENSION}`;
+}
+
+export async function findPortraitVideo(slug: string): Promise<string | null> {
+  const candidates = await Promise.all(
+    PORTRAIT_VIDEO_EXTENSIONS.map((ext) => probe(`${slug}.${ext}`)),
+  );
+  return candidates.find((candidate) => !!candidate) ?? null;
 }

@@ -27,6 +27,7 @@
   // Rest is a hairline; hover promotes it to solid gold and adds the glow.
   // No transforms, no scale.
   --tkw-lift: border-color 0.18s ease, box-shadow 0.18s ease;
+  --tkw-fade: opacity 0.18s ease;
 
   // ── type ramp ──────────────────────────────────────────────────────
   --tkw-ink: #f4ecd6;

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import {
   loadAllCharacters,
@@ -11,13 +10,14 @@ import {
 } from "@/lib/content";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ageAtDeath } from "@/lib/age";
-import { findPortrait } from "@/lib/portraits";
+import { findPortrait, findPortraitVideo } from "@/lib/portraits";
 import { cx } from "@/lib/cx";
 import { shortHouseName } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
 import { bySlug } from "@/lib/collections";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { PlateLayout } from "@/components/PlateLayout";
+import { CharacterPortrait } from "@/components/CharacterPortrait";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
@@ -89,13 +89,14 @@ export default async function CharacterPage({
 
   const fm = character.frontmatter;
 
-  const [allCharacters, allHouses, allWeapons, allDragons, portrait] =
+  const [allCharacters, allHouses, allWeapons, allDragons, portrait, video] =
     await Promise.all([
       loadAllCharacters(),
       loadAllHouses(),
       loadAllWeapons(),
       loadAllDragons(),
       findPortrait(slug, fm.sex),
+      findPortraitVideo(slug),
     ]);
 
   const charactersBySlug = bySlug(allCharacters);
@@ -166,13 +167,10 @@ export default async function CharacterPage({
           region ? REGION_PORTRAIT_CLASS[region] : undefined,
         )}
       >
-        <Image
-          src={portrait}
+        <CharacterPortrait
+          image={portrait}
+          video={video}
           alt={`Portrait of ${fm.name}`}
-          width={1200}
-          height={1600}
-          sizes="(max-width: 768px) 100vw, 1100px"
-          priority
         />
       </div>
       <div className={styles.heading}>

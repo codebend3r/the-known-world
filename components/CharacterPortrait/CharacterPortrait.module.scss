@@ -1,0 +1,33 @@
+// The still and the clip share one grid area; the still sits on top until
+// hover fades it out to reveal the playing clip beneath. The plate fixes the
+// 3:2 ratio because the two assets are cut at slightly different sizes — both
+// crop to the same frame instead of one sizing the box and the other spilling.
+.media {
+  display: grid;
+  grid-template-areas: "media";
+  width: 100%;
+  aspect-ratio: 3 / 2;
+}
+
+.video {
+  grid-area: media;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image {
+  grid-area: media;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--tkw-fade);
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.imagePlaying {
+  opacity: 0;
+}

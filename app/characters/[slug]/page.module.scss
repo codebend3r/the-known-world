@@ -67,6 +67,7 @@
 }
 
 // The portrait plate: framed by the region's tint rather than themed by it.
+// Media sizing lives in `CharacterPortrait.module.scss`; this is the frame.
 .portrait {
   display: grid;
   width: 100%;
@@ -74,11 +75,6 @@
   border-radius: 8px;
   border: 1px solid var(--tkw-hairline-firm);
   background: var(--tkw-bg-deep);
-
-  img {
-    width: 100%;
-    height: auto;
-  }
 }
 
 // Regional border tints for `.portrait` — colours live in `globals.scss`

@@ -106,7 +106,7 @@ describe("portrait integrity", () => {
     ]);
   });
 
-  it("flags an extension findPortrait never probes", async () => {
+  it("flags an extension no finder ever probes", async () => {
     const sources = await loadPortraitSources();
     const existing = sources.files.find((entry) =>
       sources.characterSlugs.has(entry.stem),
@@ -119,7 +119,35 @@ describe("portrait integrity", () => {
         files: [...sources.files, portrait(`${existing.stem}.gif`)],
       }),
     ).toEqual([
-      `characters/${existing.stem}.gif: extension .gif is not in PORTRAIT_EXTENSIONS, findPortrait can never return it`,
+      `characters/${existing.stem}.gif: extension .gif is in neither PORTRAIT_EXTENSIONS nor PORTRAIT_VIDEO_EXTENSIONS, no finder can ever return it`,
+    ]);
+  });
+
+  it("accepts a portrait video sitting beside a slug's still", async () => {
+    const sources = await loadPortraitSources();
+    const existing = sources.files.find(
+      (entry) =>
+        sources.characterSlugs.has(entry.stem) && entry.extension !== "mp4",
+    );
+    if (!existing) throw new Error("expected a resolved portrait");
+
+    expect(
+      portraitIntegrityErrors({
+        ...sources,
+        files: [...sources.files, portrait(`${existing.stem}.mp4`)],
+      }),
+    ).toEqual([]);
+  });
+
+  it("flags a video whose stem matches no character slug", async () => {
+    const sources = await loadPortraitSources();
+    expect(
+      portraitIntegrityErrors({
+        ...sources,
+        files: [...sources.files, portrait("qqqzzz-nobody.mp4")],
+      }),
+    ).toEqual([
+      "characters/qqqzzz-nobody.mp4: no content/characters/qqqzzz-nobody.md, and no slug is close enough to be a typo",
     ]);
   });
 

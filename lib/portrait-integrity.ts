@@ -4,13 +4,15 @@ import {
   PLACEHOLDER_EXTENSION,
   PLACEHOLDER_VARIANTS,
   PORTRAIT_EXTENSIONS,
+  PORTRAIT_VIDEO_EXTENSIONS,
 } from "@/lib/portraits";
 
 /**
- * `findPortrait` probes `public/characters/<slug>.<ext>` and never reads the
- * directory, so a misnamed file is invisible: the character falls back to a
- * hashed placeholder that looks deliberate and nothing fails. These checks
- * read the directory instead and compare it back against `content/characters/`.
+ * `findPortrait` and `findPortraitVideo` probe `public/characters/<slug>.<ext>`
+ * and never read the directory, so a misnamed file is invisible: the character
+ * falls back to a hashed placeholder that looks deliberate and nothing fails.
+ * These checks read the directory instead and compare it back against
+ * `content/characters/`.
  *
  * Whole-repo asset weight and orphans outside this directory belong to the
  * `image-optimize` skill; sigils belong to `lib/sigil-integrity.ts`.
@@ -42,9 +44,14 @@ export const PLACEHOLDER_FILES: ReadonlySet<string> = new Set(
  * `thoros-of-myr`: the red priest of the Brotherhood Without Banners. The
  * portrait landed in #20; the entry has never been written. Populate it with
  * `populate-character` and drop this entry.
+ *
+ * `khal-drogo`: portrait and hover video landed with the 2026-08 art batch;
+ * the entry has never been written. Populate it with `populate-character`
+ * and drop this entry.
  */
 export const RESERVED_PORTRAITS: ReadonlySet<string> = new Set([
   "thoros-of-myr",
+  "khal-drogo",
 ]);
 
 /**
@@ -70,6 +77,10 @@ type PortraitSources = {
 
 export function isProbedExtension(extension: string): boolean {
   return PORTRAIT_EXTENSIONS.some((candidate) => candidate === extension);
+}
+
+export function isVideoExtension(extension: string): boolean {
+  return PORTRAIT_VIDEO_EXTENSIONS.some((candidate) => candidate === extension);
 }
 
 export async function loadPortraitFiles(): Promise<PortraitFile[]> {
@@ -213,10 +224,14 @@ export function portraitIntegrityErrors({
   const covered = coveredSlugs({ files, characterSlugs });
 
   const unprobed = files
-    .filter((entry) => !isProbedExtension(entry.extension))
+    .filter(
+      (entry) =>
+        !isProbedExtension(entry.extension) &&
+        !isVideoExtension(entry.extension),
+    )
     .map(
       (entry) =>
-        `characters/${entry.file}: extension .${entry.extension} is not in PORTRAIT_EXTENSIONS, findPortrait can never return it`,
+        `characters/${entry.file}: extension .${entry.extension} is in neither PORTRAIT_EXTENSIONS nor PORTRAIT_VIDEO_EXTENSIONS, no finder can ever return it`,
     );
 
   const orphans = [...byStem.entries()]
@@ -233,7 +248,11 @@ export function portraitIntegrityErrors({
         coveredSlugs: covered,
       });
       return candidates
-        .filter((entry) => isProbedExtension(entry.extension))
+        .filter(
+          (entry) =>
+            isProbedExtension(entry.extension) ||
+            isVideoExtension(entry.extension),
+        )
         .map((entry) =>
           nearest
             ? `characters/${entry.file}: no content/characters/${stem}.md; closest slug is ${nearest}, rename or delete it`
