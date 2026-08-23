@@ -241,6 +241,7 @@ export function FilteredCharacterList({
                         region={item.region}
                         size={view === "list" ? "3.25rem" : "3rem"}
                         decorative
+                        hasPlate={false}
                       />
                     </span>
                     <span className={styles.name}>{item.name}</span>

@@ -27,3 +27,14 @@
   object-fit: contain;
   z-index: 1;
 }
+
+// Where the sigil sits on artwork rather than on a card ground, the plate reads
+// as a box around it. Dropping the plate also drops the reason to inset the
+// artwork, so it fills the full size again.
+.plateless::before {
+  content: none;
+}
+
+.plateless img {
+  transform: none;
+}
