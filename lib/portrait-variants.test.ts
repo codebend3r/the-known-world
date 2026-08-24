@@ -37,6 +37,15 @@ describe("variantLabel", () => {
     ).toBe("Kingsguard");
   });
 
+  it("treats a doubled hyphen as separator, not label", () => {
+    expect(
+      variantLabel({
+        slug: "aegon-ii-targaryen",
+        stem: "aegon-ii-targaryen--after-burned",
+      }),
+    ).toBe("After Burned");
+  });
+
   it("humanises a multi-word suffix", () => {
     expect(
       variantLabel({ slug: "arya-stark", stem: "arya-stark-no-one" }),

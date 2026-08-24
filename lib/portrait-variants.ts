@@ -78,7 +78,13 @@ function groupByStem(
   );
 }
 
-/** Everything after `<slug>-`, humanised: `kingsguard` → `Kingsguard`. */
+/**
+ * Everything after `<slug>-`, humanised: `kingsguard` → `Kingsguard`.
+ *
+ * A slug already contains hyphens, so `<slug>--<variant>` is the unambiguous
+ * way to write the join and both spellings appear on disk. Extra hyphens are
+ * separator, not label.
+ */
 export function variantLabel({
   slug,
   stem,
@@ -86,7 +92,7 @@ export function variantLabel({
   slug: string;
   stem: string;
 }): string {
-  return humanizeSlug(stem.slice(slug.length + 1));
+  return humanizeSlug(stem.slice(slug.length).replace(/^-+/, ""));
 }
 
 /**
