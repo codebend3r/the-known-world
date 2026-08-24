@@ -30,3 +30,13 @@ Skill directories are flat — Claude Code discovers `.claude/skills/<name>/SKIL
 | Skill                                   | Covers                                                                                                                                                                                          |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`sigil-wiring`](sigil-wiring/SKILL.md) | The `SIGIL_SLUGS` resolution order, registering a `public/sigils/<slug>.png` so a house stops rendering its regional fallback, and auditing the six drift classes via `lib/sigil-integrity.ts`. |
+
+## Agents
+
+Subagents live one directory over, in [`.claude/agents/`](../agents/README.md),
+because Claude Code discovers them from a different path. They are documented
+there rather than here.
+
+| Agent                                                   | Covers                                                                                                                       |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| [`spoiler-classifier`](../agents/spoiler-classifier.md) | Tagging death reveals in `content/` prose so the Spoilers switch can gate them. Window-gated, additive edits, self-verified. |

@@ -11,6 +11,7 @@ type Props = {
   size?: string;
   sizes?: string;
   decorative?: boolean;
+  hasPlate?: boolean;
   className?: string;
   priority?: boolean;
 };
@@ -22,6 +23,7 @@ export function Sigil({
   size,
   sizes,
   decorative = false,
+  hasPlate = true,
   className,
   priority = false,
 }: Props) {
@@ -37,7 +39,7 @@ export function Sigil({
 
   return (
     <span
-      className={cx(styles.sigil, className)}
+      className={cx(styles.sigil, !hasPlate && styles.plateless, className)}
       style={style}
       aria-hidden={decorative || undefined}
     >

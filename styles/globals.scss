@@ -27,6 +27,7 @@
   // Rest is a hairline; hover promotes it to solid gold and adds the glow.
   // No transforms, no scale.
   --tkw-lift: border-color 0.18s ease, box-shadow 0.18s ease;
+  --tkw-fade: opacity 0.18s ease;
 
   // ── type ramp ──────────────────────────────────────────────────────
   --tkw-ink: #f4ecd6;
@@ -54,12 +55,16 @@
   --fs-section: 15px;
   --fs-body: 19px;
   --fs-quote: 21px;
+  --fs-meta: 16px;
   --fs-label: 11px;
 
   --lh-display: 0.98;
   --lh-title: 1;
+  --lh-meta: 1.5;
   --lh-body: 1.75;
 
+  // Negative: display-size serif tightens; the positive trackings are for caps.
+  --ls-display: -0.01em;
   --ls-eyebrow: 4.5px;
   --ls-section: 2.6px;
   --ls-caption: 2.2px;

@@ -20,6 +20,7 @@
     font-size: 62px;
     font-weight: 600;
     line-height: var(--lh-title);
+    letter-spacing: var(--ls-display);
 
     @media (max-width: bp.$lg) {
       font-size: 44px;
@@ -52,14 +53,24 @@
   }
 }
 
+// The name and its alias are one title unit: display serif over an italic
+// byline, echoing the global `.subtitle` primitive but muted — the alias is
+// metadata, not a lede.
+.titleGroup {
+  display: grid;
+  gap: 6px;
+}
+
 .alias {
   font-family: var(--font-body);
   font-style: italic;
   font-weight: 300;
-  letter-spacing: 0;
-  font-size: 0.42em;
+  font-size: var(--fs-quote);
   color: var(--tkw-ink-muted);
-  text-align: left;
+
+  @media (max-width: bp.$sm) {
+    font-size: var(--fs-section);
+  }
 }
 
 .search {
@@ -67,6 +78,7 @@
 }
 
 // The portrait plate: framed by the region's tint rather than themed by it.
+// Media sizing lives in `CharacterPortrait.module.scss`; this is the frame.
 .portrait {
   display: grid;
   width: 100%;
@@ -74,11 +86,6 @@
   border-radius: 8px;
   border: 1px solid var(--tkw-hairline-firm);
   background: var(--tkw-bg-deep);
-
-  img {
-    width: 100%;
-    height: auto;
-  }
 }
 
 // Regional border tints for `.portrait` — colours live in `globals.scss`
@@ -128,9 +135,10 @@
 
   dt {
     font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 400;
-    letter-spacing: var(--ls-label);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    // --ls-label is too tight for caps this small; caption tracking lets them breathe.
+    letter-spacing: var(--ls-caption);
     text-transform: uppercase;
     color: var(--tkw-ink-dim);
   }
@@ -138,8 +146,8 @@
   dd {
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: var(--fs-meta);
+    line-height: var(--lh-meta);
     color: var(--tkw-ink-body);
     margin: 0;
     padding: 0;
@@ -194,9 +202,10 @@
 
   dt {
     font-family: var(--font-mono);
-    font-size: 9px;
-    font-weight: 400;
-    letter-spacing: var(--ls-label);
+    font-size: var(--fs-label);
+    font-weight: 500;
+    // --ls-label is too tight for caps this small; caption tracking lets them breathe.
+    letter-spacing: var(--ls-caption);
     text-transform: uppercase;
     color: var(--tkw-ink-dim);
   }
@@ -204,7 +213,8 @@
   dd {
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 15px;
+    font-size: var(--fs-meta);
+    line-height: var(--lh-meta);
     color: var(--tkw-ink-body);
   }
 }

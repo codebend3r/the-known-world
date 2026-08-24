@@ -4,13 +4,21 @@ import {
   PLACEHOLDER_EXTENSION,
   PLACEHOLDER_VARIANTS,
   PORTRAIT_EXTENSIONS,
+  PORTRAIT_VIDEO_EXTENSIONS,
 } from "@/lib/portraits";
 
 /**
- * `findPortrait` probes `public/characters/<slug>.<ext>` and never reads the
- * directory, so a misnamed file is invisible: the character falls back to a
- * hashed placeholder that looks deliberate and nothing fails. These checks
- * read the directory instead and compare it back against `content/characters/`.
+ * `findPortrait` and `findPortraitVideo` probe `public/characters/<slug>.<ext>`
+ * and never read the directory, so a misnamed file is invisible: the character
+ * falls back to a hashed placeholder that looks deliberate and nothing fails.
+ * These checks read the directory instead and compare it back against
+ * `content/characters/`.
+ *
+ * A character with more than one portrait keeps them in a folder rather than a
+ * flat file (see `lib/portrait-variants.ts`), which the same silence applies
+ * to twice over: a folder whose primary is misnamed still renders a
+ * placeholder, and a variant whose suffix is misspelled simply never appears
+ * in the switcher. Folders are read separately from flat files below.
  *
  * Whole-repo asset weight and orphans outside this directory belong to the
  * `image-optimize` skill; sigils belong to `lib/sigil-integrity.ts`.
@@ -42,9 +50,14 @@ export const PLACEHOLDER_FILES: ReadonlySet<string> = new Set(
  * `thoros-of-myr`: the red priest of the Brotherhood Without Banners. The
  * portrait landed in #20; the entry has never been written. Populate it with
  * `populate-character` and drop this entry.
+ *
+ * `khal-drogo`: portrait and hover video landed with the 2026-08 art batch;
+ * the entry has never been written. Populate it with `populate-character`
+ * and drop this entry.
  */
 export const RESERVED_PORTRAITS: ReadonlySet<string> = new Set([
   "thoros-of-myr",
+  "khal-drogo",
 ]);
 
 /**
@@ -55,7 +68,7 @@ export const RESERVED_PORTRAITS: ReadonlySet<string> = new Set([
 const NEAR_MISS_RATIO = 0.3;
 
 export type PortraitFile = {
-  /** Filename as it sits in `public/characters/`, e.g. `jon-snow.jpg`. */
+  /** Filename as it sits in its directory, e.g. `jon-snow.jpg`. */
   file: string;
   /** Basename without the extension, compared against character slugs. */
   stem: string;
@@ -63,18 +76,29 @@ export type PortraitFile = {
   extension: string;
 };
 
+/** One `public/characters/<slug>/` folder and everything inside it. */
+export type PortraitVariantDir = {
+  /** The folder name, which must be a character slug. */
+  slug: string;
+  files: readonly PortraitFile[];
+};
+
 type PortraitSources = {
   files: readonly PortraitFile[];
   characterSlugs: ReadonlySet<string>;
+  variantDirs?: readonly PortraitVariantDir[];
 };
 
 export function isProbedExtension(extension: string): boolean {
   return PORTRAIT_EXTENSIONS.some((candidate) => candidate === extension);
 }
 
-export async function loadPortraitFiles(): Promise<PortraitFile[]> {
-  const entries = await fs.readdir(PORTRAIT_DIR);
-  return entries
+export function isVideoExtension(extension: string): boolean {
+  return PORTRAIT_VIDEO_EXTENSIONS.some((candidate) => candidate === extension);
+}
+
+function describeFiles(files: readonly string[]): PortraitFile[] {
+  return files
     .filter((file) => !file.startsWith("."))
     .map((file) => ({
       file,
@@ -82,6 +106,28 @@ export async function loadPortraitFiles(): Promise<PortraitFile[]> {
       extension: path.extname(file).slice(1).toLowerCase(),
     }))
     .sort((a, b) => a.file.localeCompare(b.file));
+}
+
+/** Flat portraits only. Variant folders come back from the loader below. */
+export async function loadPortraitFiles(): Promise<PortraitFile[]> {
+  const entries = await fs.readdir(PORTRAIT_DIR, { withFileTypes: true });
+  return describeFiles(
+    entries.filter((entry) => !entry.isDirectory()).map((entry) => entry.name),
+  );
+}
+
+export async function loadPortraitVariantDirs(): Promise<PortraitVariantDir[]> {
+  const entries = await fs.readdir(PORTRAIT_DIR, { withFileTypes: true });
+  const dirs = entries
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+  return Promise.all(
+    dirs.map(async (slug) => ({
+      slug,
+      files: describeFiles(await fs.readdir(path.join(PORTRAIT_DIR, slug))),
+    })),
+  );
 }
 
 /** Group every file on disk by the slug its name claims. */
@@ -204,19 +250,114 @@ export function coveredSlugs({
   );
 }
 
+/**
+ * Errors for one `public/characters/<slug>/` folder: the folder itself must
+ * name a character, and every file in it must be either the primary or a
+ * suffixed variant of that same slug.
+ */
+export function variantDirErrors({
+  dir,
+  characterSlugs,
+}: {
+  dir: PortraitVariantDir;
+  characterSlugs: ReadonlySet<string>;
+}): string[] {
+  const { slug, files } = dir;
+  if (!characterSlugs.has(slug) && !RESERVED_PORTRAITS.has(slug)) {
+    const nearest = nearestSlug({ stem: slug, characterSlugs });
+    return [
+      nearest
+        ? `characters/${slug}/: no content/characters/${slug}.md; closest slug is ${nearest}, rename or delete the folder`
+        : `characters/${slug}/: no content/characters/${slug}.md, and no slug is close enough to be a typo`,
+    ];
+  }
+
+  const misnamed = files
+    .filter(
+      (entry) => entry.stem !== slug && !entry.stem.startsWith(`${slug}-`),
+    )
+    .map(
+      (entry) =>
+        `characters/${slug}/${entry.file}: stem is neither ${slug} nor ${slug}-<variant>, no variant can ever return it`,
+    );
+
+  const unprobed = files
+    .filter(
+      (entry) =>
+        !isProbedExtension(entry.extension) &&
+        !isVideoExtension(entry.extension),
+    )
+    .map(
+      (entry) =>
+        `characters/${slug}/${entry.file}: extension .${entry.extension} is in neither PORTRAIT_EXTENSIONS nor PORTRAIT_VIDEO_EXTENSIONS, no finder can ever return it`,
+    );
+
+  const named = files.filter(
+    (entry) => entry.stem === slug || entry.stem.startsWith(`${slug}-`),
+  );
+  const byStem = groupByStem(named);
+
+  const missingPrimary = winningFile({ candidates: byStem.get(slug) ?? [] })
+    ? []
+    : [
+        `characters/${slug}/: no ${slug}.<ext> still, so findPortrait falls back to a placeholder`,
+      ];
+
+  // A clip with no still of its own is a variant that can never be selected:
+  // the switcher is built from the images.
+  const strandedVideos = [...byStem.entries()]
+    .filter(([stem]) => stem !== slug)
+    .filter(([, candidates]) => !winningFile({ candidates }))
+    .flatMap(([stem, candidates]) =>
+      candidates
+        .filter((entry) => isVideoExtension(entry.extension))
+        .map(
+          (entry) =>
+            `characters/${slug}/${entry.file}: no ${stem}.<ext> still, so the ${stem} variant never renders`,
+        ),
+    );
+
+  const duplicates = [...byStem.entries()].flatMap(([stem, candidates]) => {
+    const probed = candidates.filter((entry) =>
+      isProbedExtension(entry.extension),
+    );
+    const winner = winningFile({ candidates: probed });
+    if (!winner || probed.length < 2) return [];
+    return probed
+      .filter((entry) => entry.file !== winner.file)
+      .map(
+        (entry) =>
+          `characters/${slug}/${entry.file}: dead weight, ${stem} resolves to ${winner.file} first`,
+      );
+  });
+
+  return [
+    ...misnamed,
+    ...unprobed,
+    ...missingPrimary,
+    ...strandedVideos,
+    ...duplicates,
+  ].sort();
+}
+
 export function portraitIntegrityErrors({
   files,
   characterSlugs,
+  variantDirs = [],
 }: PortraitSources): string[] {
   const byStem = groupByStem(files);
   const onDisk = new Set(files.map((entry) => entry.file));
   const covered = coveredSlugs({ files, characterSlugs });
 
   const unprobed = files
-    .filter((entry) => !isProbedExtension(entry.extension))
+    .filter(
+      (entry) =>
+        !isProbedExtension(entry.extension) &&
+        !isVideoExtension(entry.extension),
+    )
     .map(
       (entry) =>
-        `characters/${entry.file}: extension .${entry.extension} is not in PORTRAIT_EXTENSIONS, findPortrait can never return it`,
+        `characters/${entry.file}: extension .${entry.extension} is in neither PORTRAIT_EXTENSIONS nor PORTRAIT_VIDEO_EXTENSIONS, no finder can ever return it`,
     );
 
   const orphans = [...byStem.entries()]
@@ -233,7 +374,11 @@ export function portraitIntegrityErrors({
         coveredSlugs: covered,
       });
       return candidates
-        .filter((entry) => isProbedExtension(entry.extension))
+        .filter(
+          (entry) =>
+            isProbedExtension(entry.extension) ||
+            isVideoExtension(entry.extension),
+        )
         .map((entry) =>
           nearest
             ? `characters/${entry.file}: no content/characters/${stem}.md; closest slug is ${nearest}, rename or delete it`
@@ -273,11 +418,27 @@ export function portraitIntegrityErrors({
         `RESERVED_PORTRAITS ${stem}: content/characters/${stem}.md now exists, drop it from the list`,
     );
 
+  // `findPortrait` probes the flat file first, so a folder behind one of the
+  // same name is unreachable and its variants are invisible.
+  const shadowed = variantDirs
+    .filter((dir) => !!winningFile({ candidates: byStem.get(dir.slug) ?? [] }))
+    .map(
+      (dir) =>
+        `characters/${dir.slug}/: shadowed by the flat characters/${dir.slug} file, which findPortrait returns first`,
+    )
+    .sort();
+
+  const variants = variantDirs.flatMap((dir) =>
+    variantDirErrors({ dir, characterSlugs }),
+  );
+
   return [
     ...unprobed.sort(),
     ...orphans.sort(),
     ...duplicates.sort(),
     ...missing,
     ...staleReservations,
+    ...shadowed,
+    ...variants,
   ];
 }

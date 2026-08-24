@@ -1,0 +1,100 @@
+@use "breakpoints" as bp;
+
+// A switch, not a chip: it carries a standing preference rather than filtering
+// what is on screen, so it reads as a setting the reader left somewhere.
+.toggle {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  display: grid;
+  grid-auto-flow: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  color: var(--tkw-ink-muted);
+  transition: color 0.18s ease;
+
+  &:hover,
+  &:focus-visible {
+    color: var(--tkw-gold-bright);
+    outline: none;
+  }
+
+  &:focus-visible .track {
+    box-shadow: var(--tkw-glow);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  white-space: nowrap;
+
+  // Below the header's nav breakpoint the rail collapses to the wordmark, and
+  // the switch has no room for its word. Clipped rather than removed: it is
+  // still the accessible name.
+  @media (max-width: bp.$lg) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.track {
+  display: grid;
+  align-items: center;
+  width: 34px;
+  height: 18px;
+  padding: 2px;
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: 9px;
+  background: var(--tkw-surface);
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.knob {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--tkw-ink-dim);
+  transform: translateX(0);
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.toggle[aria-checked="true"] {
+  color: var(--tkw-gold-bright);
+
+  .track {
+    border-color: var(--tkw-gold);
+    background: color-mix(in srgb, var(--tkw-gold) 26%, transparent);
+  }
+
+  .knob {
+    background: var(--tkw-gold-bright);
+    transform: translateX(16px);
+  }
+}

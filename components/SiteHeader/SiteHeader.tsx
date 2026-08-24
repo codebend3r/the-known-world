@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cx } from "@/lib/cx";
 import { isActive, visibleNavItems } from "@/lib/nav";
+import { SpoilerToggle } from "@/components/SpoilerToggle";
 import styles from "@/components/SiteHeader/SiteHeader.module.scss";
 
 const ITEMS = visibleNavItems();
@@ -35,6 +36,7 @@ export function SiteHeader() {
             );
           })}
         </nav>
+        <SpoilerToggle className={styles.spoilers} />
       </div>
     </header>
   );

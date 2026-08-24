@@ -72,6 +72,20 @@ describe("Sigil", () => {
     expect(container.querySelector("img")?.getAttribute("alt")).toBe("");
   });
 
+  it("drops the plate class when the shield ground is turned off", () => {
+    const { container } = render(
+      <Sigil slug="stark" name="Stark" hasPlate={false} />,
+    );
+    expect(container.querySelector(".sigil")?.className).toBe(
+      "sigil plateless",
+    );
+  });
+
+  it("keeps the plate by default", () => {
+    const { container } = render(<Sigil slug="stark" name="Stark" />);
+    expect(container.querySelector(".sigil")?.className).toBe("sigil");
+  });
+
   it("merges a caller class onto the plate", () => {
     const { container } = render(
       <Sigil slug="stark" name="Stark" className="shield" />,

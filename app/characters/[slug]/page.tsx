@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import {
   loadAllCharacters,
@@ -11,13 +10,14 @@ import {
 } from "@/lib/content";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ageAtDeath } from "@/lib/age";
-import { findPortrait } from "@/lib/portraits";
+import { findPortraitVariants } from "@/lib/portrait-variants";
 import { cx } from "@/lib/cx";
 import { shortHouseName } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
 import { bySlug } from "@/lib/collections";
 import { regionForHouse, regionLabel } from "@/lib/regions";
 import { PlateLayout } from "@/components/PlateLayout";
+import { PortraitVariants } from "@/components/PortraitVariants";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil } from "@/components/Sigil";
 import { Sources } from "@/components/Sources";
@@ -89,13 +89,13 @@ export default async function CharacterPage({
 
   const fm = character.frontmatter;
 
-  const [allCharacters, allHouses, allWeapons, allDragons, portrait] =
+  const [allCharacters, allHouses, allWeapons, allDragons, portraits] =
     await Promise.all([
       loadAllCharacters(),
       loadAllHouses(),
       loadAllWeapons(),
       loadAllDragons(),
-      findPortrait(slug, fm.sex),
+      findPortraitVariants({ slug, name: fm.name, sex: fm.sex }),
     ]);
 
   const charactersBySlug = bySlug(allCharacters);
@@ -166,14 +166,7 @@ export default async function CharacterPage({
           region ? REGION_PORTRAIT_CLASS[region] : undefined,
         )}
       >
-        <Image
-          src={portrait}
-          alt={`Portrait of ${fm.name}`}
-          width={1200}
-          height={1600}
-          sizes="(max-width: 768px) 100vw, 1100px"
-          priority
-        />
+        <PortraitVariants variants={portraits} name={fm.name} />
       </div>
       <div className={styles.heading}>
         {primaryHouse && fm["primary-house"] ? (
@@ -187,6 +180,7 @@ export default async function CharacterPage({
               name={shortHouseName(primaryHouse.name)}
               region={region}
               size="42px"
+              hasPlate={false}
               decorative
             />
           </Link>
@@ -196,15 +190,16 @@ export default async function CharacterPage({
             name={fm.name}
             region={region}
             size="6rem"
+            hasPlate={false}
             decorative
           />
         )}
-        <h1>
-          {fm.name}
+        <hgroup className={styles.titleGroup}>
+          <h1>{fm.name}</h1>
           {fm.aliases.length > 0 && (
-            <span className={styles.alias}> ({fm.aliases[0]})</span>
+            <p className={styles.alias}>{fm.aliases[0]}</p>
           )}
-        </h1>
+        </hgroup>
       </div>
 
       <div className={styles.search}>
