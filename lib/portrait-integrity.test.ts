@@ -5,21 +5,25 @@ import {
   editDistance,
   groupByStem,
   loadPortraitFiles,
+  loadPortraitVariantDirs,
   nearestSlug,
   PLACEHOLDER_FILES,
   portraitIntegrityErrors,
   RESERVED_PORTRAITS,
+  variantDirErrors,
   winningFile,
   type PortraitFile,
 } from "@/lib/portrait-integrity";
 
 async function loadPortraitSources() {
-  const [files, characters] = await Promise.all([
+  const [files, variantDirs, characters] = await Promise.all([
     loadPortraitFiles(),
+    loadPortraitVariantDirs(),
     loadAllCharacters(),
   ]);
   return {
     files,
+    variantDirs,
     characterSlugs: new Set(characters.map((entry) => entry.frontmatter.slug)),
   };
 }
@@ -178,6 +182,111 @@ describe("portrait integrity", () => {
       }),
     ).toEqual([
       `RESERVED_PORTRAITS ${reserved}: content/characters/${reserved}.md now exists, drop it from the list`,
+    ]);
+  });
+});
+
+describe("variantDirErrors", () => {
+  const characterSlugs = new Set(["duncan-the-tall", "eddard-stark"]);
+
+  function dir(files: string[]) {
+    return { slug: "duncan-the-tall", files: files.map(portrait) };
+  }
+
+  it("accepts a folder holding a primary and a suffixed variant", () => {
+    expect(
+      variantDirErrors({
+        dir: dir([
+          "duncan-the-tall.jpg",
+          "duncan-the-tall.mp4",
+          "duncan-the-tall-kingsguard.jpg",
+          "duncan-the-tall-kingsguard.mp4",
+        ]),
+        characterSlugs,
+      }),
+    ).toEqual([]);
+  });
+
+  it("flags a folder that names no character", () => {
+    expect(
+      variantDirErrors({
+        dir: { slug: "edard-stark", files: [portrait("edard-stark.jpg")] },
+        characterSlugs,
+      }),
+    ).toEqual([
+      "characters/edard-stark/: no content/characters/edard-stark.md; closest slug is eddard-stark, rename or delete the folder",
+    ]);
+  });
+
+  it("flags a file whose stem belongs to another character", () => {
+    expect(
+      variantDirErrors({
+        dir: dir(["duncan-the-tall.jpg", "eddard-stark.jpg"]),
+        characterSlugs,
+      }),
+    ).toEqual([
+      "characters/duncan-the-tall/eddard-stark.jpg: stem is neither duncan-the-tall nor duncan-the-tall-<variant>, no variant can ever return it",
+    ]);
+  });
+
+  it("flags a folder with no primary still", () => {
+    expect(
+      variantDirErrors({
+        dir: dir(["duncan-the-tall-kingsguard.jpg"]),
+        characterSlugs,
+      }),
+    ).toEqual([
+      "characters/duncan-the-tall/: no duncan-the-tall.<ext> still, so findPortrait falls back to a placeholder",
+    ]);
+  });
+
+  it("flags a variant clip with no still to hang on", () => {
+    expect(
+      variantDirErrors({
+        dir: dir(["duncan-the-tall.jpg", "duncan-the-tall-kingsguard.mp4"]),
+        characterSlugs,
+      }),
+    ).toEqual([
+      "characters/duncan-the-tall/duncan-the-tall-kingsguard.mp4: no duncan-the-tall-kingsguard.<ext> still, so the duncan-the-tall-kingsguard variant never renders",
+    ]);
+  });
+
+  it("flags the losing file when one variant has two probed extensions", () => {
+    expect(
+      variantDirErrors({
+        dir: dir(["duncan-the-tall.jpg", "duncan-the-tall.png"]),
+        characterSlugs,
+      }),
+    ).toEqual([
+      "characters/duncan-the-tall/duncan-the-tall.jpg: dead weight, duncan-the-tall resolves to duncan-the-tall.png first",
+    ]);
+  });
+
+  it("flags an extension no finder ever probes", () => {
+    expect(
+      variantDirErrors({
+        dir: dir(["duncan-the-tall.jpg", "duncan-the-tall-kingsguard.gif"]),
+        characterSlugs,
+      }),
+    ).toEqual([
+      "characters/duncan-the-tall/duncan-the-tall-kingsguard.gif: extension .gif is in neither PORTRAIT_EXTENSIONS nor PORTRAIT_VIDEO_EXTENSIONS, no finder can ever return it",
+    ]);
+  });
+});
+
+describe("variant folders shadowed by a flat file", () => {
+  it("flags a folder that findPortrait can never reach", async () => {
+    const sources = await loadPortraitSources();
+    const [dir] = sources.variantDirs;
+    if (!dir) throw new Error("expected a variant folder on disk");
+
+    expect(
+      portraitIntegrityErrors({
+        ...sources,
+        files: [...sources.files, portrait(`${dir.slug}.jpg`)],
+      }),
+    ).toEqual([
+      `characters/${dir.slug}/: shadowed by the flat characters/${dir.slug} file, which findPortrait returns first`,
     ]);
   });
 });

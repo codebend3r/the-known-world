@@ -46,6 +46,23 @@ describe("findPortrait", () => {
     expect(result).toBe("/characters/foo.jpeg");
   });
 
+  it("resolves the primary inside a variant folder when no flat file exists", async () => {
+    existing([
+      `${process.cwd()}/public/characters/duncan-the-tall/duncan-the-tall.jpg`,
+    ]);
+    const result = await findPortrait("duncan-the-tall", "m");
+    expect(result).toBe("/characters/duncan-the-tall/duncan-the-tall.jpg");
+  });
+
+  it("prefers a flat file over the same extension in a variant folder", async () => {
+    existing([
+      `${process.cwd()}/public/characters/duncan-the-tall.jpg`,
+      `${process.cwd()}/public/characters/duncan-the-tall/duncan-the-tall.jpg`,
+    ]);
+    const result = await findPortrait("duncan-the-tall", "m");
+    expect(result).toBe("/characters/duncan-the-tall.jpg");
+  });
+
   it("falls back to a numbered male placeholder when no portrait exists", async () => {
     existing([]);
     const result = await findPortrait("nobody", "m");
@@ -101,6 +118,14 @@ describe("findPortraitVideo", () => {
     existing([`${process.cwd()}/public/characters/jon-snow.mp4`]);
     const result = await findPortraitVideo("jon-snow");
     expect(result).toBe("/characters/jon-snow.mp4");
+  });
+
+  it("returns the clip inside a variant folder when no flat clip exists", async () => {
+    existing([
+      `${process.cwd()}/public/characters/duncan-the-tall/duncan-the-tall.mp4`,
+    ]);
+    const result = await findPortraitVideo("duncan-the-tall");
+    expect(result).toBe("/characters/duncan-the-tall/duncan-the-tall.mp4");
   });
 
   it("returns null when no video exists", async () => {
