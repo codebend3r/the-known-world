@@ -156,7 +156,14 @@ export function winningFile({
   );
 }
 
-/** Levenshtein distance, bailing out once the pair is further apart than `limit`. */
+/**
+ * Levenshtein distance between `a` and `b`, or `limit + 1` when the two are
+ * too far apart in length to possibly land within `limit`.
+ *
+ * The length gap is the only shortcut: there is no row-wise pruning, because
+ * the corpus does not need it. The widest call compares one stray portrait
+ * stem against ~900 slugs of ~20 characters, which is microseconds.
+ */
 export function editDistance({
   a,
   b,
@@ -167,26 +174,25 @@ export function editDistance({
   limit: number;
 }): number {
   if (Math.abs(a.length - b.length) > limit) return limit + 1;
-  const firstRow = [...b].reduce<number[]>(
-    (row, _unused, index) => [...row, index + 1],
-    [0],
-  );
-  const lastRow = [...a].reduce<number[]>(
-    (previous, aChar, aIndex) =>
-      [...b].reduce<number[]>(
-        (current, bChar, bIndex) => [
-          ...current,
-          Math.min(
-            (previous[bIndex + 1] ?? 0) + 1,
-            (current[bIndex] ?? 0) + 1,
-            (previous[bIndex] ?? 0) + (aChar === bChar ? 0 : 1),
-          ),
-        ],
-        [aIndex + 1],
-      ),
-    firstRow,
-  );
-  return lastRow[b.length] ?? limit + 1;
+  const bChars = [...b];
+  const firstRow = Array.from({ length: bChars.length + 1 }, (_unused, i) => i);
+  const lastRow = [...a].reduce<number[]>((previous, aChar, aIndex) => {
+    // Each cell reads the one to its left, so a row is a sequential fill of a
+    // fresh local array rather than a `map`. Spreading a new array per cell
+    // (the previous shape) made building one row quadratic in `b.length`.
+    const current = [aIndex + 1];
+    bChars.forEach((bChar, bIndex) => {
+      current.push(
+        Math.min(
+          (previous[bIndex + 1] ?? 0) + 1,
+          (current[bIndex] ?? 0) + 1,
+          (previous[bIndex] ?? 0) + (aChar === bChar ? 0 : 1),
+        ),
+      );
+    });
+    return current;
+  }, firstRow);
+  return lastRow[bChars.length] ?? limit + 1;
 }
 
 function closestWithin({
