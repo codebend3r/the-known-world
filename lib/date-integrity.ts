@@ -102,95 +102,125 @@ function describe(date: CalendarDate): string {
   return `${date.year} ${date.era} (${date.precision})`;
 }
 
-function datedFields(collections: DateCollections): DatedField[] {
-  const pick = ({
-    collection,
-    slug,
-    sourceCount,
-    fields,
-  }: {
-    collection: DateCollectionName;
-    slug: string;
-    sourceCount: number;
-    fields: ReadonlyArray<[string, CalendarDate | null | undefined]>;
-  }): DatedField[] =>
-    fields.flatMap(([field, date]) =>
-      date ? [{ collection, slug, field, date, sourceCount }] : [],
-    );
+type Entry<T> = { slug: string; frontmatter: T };
+type ReadDate<T> = (frontmatter: T) => CalendarDate | null | undefined;
 
-  return [
-    ...collections.characters.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "characters",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [
-          ["born", frontmatter.born],
-          ["died", frontmatter.died],
-        ],
-      }),
+/**
+ * One entry's lifespan, normalised away from the field names each collection
+ * happens to use. `begin` opens the span, `end` closes it, and `status` is
+ * present only where closing implies a status value.
+ *
+ * The range, ordering and status passes all read these rows, so the coverage
+ * matrix lives in exactly one place: `lifespanRows` below.
+ */
+type LifespanRow = {
+  collection: DateCollectionName;
+  slug: string;
+  sourceCount: number;
+  begin: { field: string; date: CalendarDate } | null;
+  end: { field: string; date: CalendarDate } | null;
+  status: { expected: string; actual: string } | null;
+};
+
+function rowsFor<T extends { sources: readonly unknown[] }>({
+  collection,
+  entries,
+  begin,
+  end,
+  endStatus,
+}: {
+  collection: DateCollectionName;
+  entries: ReadonlyArray<Entry<T>>;
+  begin: readonly [field: string, read: ReadDate<T>];
+  end?: readonly [field: string, read: ReadDate<T>];
+  endStatus?: readonly [expected: string, read: (frontmatter: T) => string];
+}): LifespanRow[] {
+  return entries.map(({ slug, frontmatter }) => {
+    const beginDate = begin[1](frontmatter);
+    const endDate = end ? end[1](frontmatter) : null;
+    return {
+      collection,
+      slug,
+      sourceCount: frontmatter.sources.length,
+      begin: beginDate ? { field: begin[0], date: beginDate } : null,
+      end: end && endDate ? { field: end[0], date: endDate } : null,
+      status: endStatus
+        ? { expected: endStatus[0], actual: endStatus[1](frontmatter) }
+        : null,
+    };
+  });
+}
+
+/**
+ * Which collection dates which way, in full. A collection with no `end` has
+ * no span to order and no status to contradict; one with no `endStatus` has a
+ * terminal date that implies nothing about its status field.
+ */
+function lifespanRows(collections: DateCollections): LifespanRow[] {
+  const byCollection = {
+    characters: rowsFor({
+      collection: "characters",
+      entries: collections.characters,
+      begin: ["born", (fm) => fm.born],
+      end: ["died", (fm) => fm.died],
+    }),
+    castles: rowsFor({
+      collection: "castles",
+      entries: collections.castles,
+      begin: ["founded", (fm) => fm.founded],
+    }),
+    houses: rowsFor({
+      collection: "houses",
+      entries: collections.houses,
+      begin: ["founded", (fm) => fm.founded],
+      end: ["extinct", (fm) => fm.extinct],
+      endStatus: ["extinct", (fm) => fm.status],
+    }),
+    weapons: rowsFor({
+      collection: "weapons",
+      entries: collections.weapons,
+      begin: ["forged", (fm) => fm.forged],
+      end: ["destroyed", (fm) => fm.destroyed],
+      endStatus: ["destroyed", (fm) => fm.status],
+    }),
+    dragons: rowsFor({
+      collection: "dragons",
+      entries: collections.dragons,
+      begin: ["hatched", (fm) => fm.hatched],
+      end: ["died", (fm) => fm.died],
+      endStatus: ["dead", (fm) => fm.status],
+    }),
+    events: rowsFor({
+      collection: "events",
+      entries: collections.events,
+      begin: ["date", (fm) => fm.date],
+    }),
+    battles: rowsFor({
+      collection: "battles",
+      entries: collections.battles,
+      begin: ["start", (fm) => fm.start],
+      end: ["end", (fm) => fm.end],
+    }),
+  } satisfies Record<DateCollectionName, LifespanRow[]>;
+  return Object.values(byCollection).flat();
+}
+
+function datedFields(rows: readonly LifespanRow[]): DatedField[] {
+  return rows.flatMap(({ collection, slug, sourceCount, begin, end }) =>
+    [begin, end].flatMap((dated) =>
+      dated
+        ? [
+            {
+              collection,
+              slug,
+              field: dated.field,
+              date: dated.date,
+              sourceCount,
+            },
+          ]
+        : [],
     ),
-    ...collections.castles.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "castles",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [["founded", frontmatter.founded]],
-      }),
-    ),
-    ...collections.houses.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "houses",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [
-          ["founded", frontmatter.founded],
-          ["extinct", frontmatter.extinct],
-        ],
-      }),
-    ),
-    ...collections.weapons.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "weapons",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [
-          ["forged", frontmatter.forged],
-          ["destroyed", frontmatter.destroyed],
-        ],
-      }),
-    ),
-    ...collections.dragons.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "dragons",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [
-          ["hatched", frontmatter.hatched],
-          ["died", frontmatter.died],
-        ],
-      }),
-    ),
-    ...collections.events.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "events",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [["date", frontmatter.date]],
-      }),
-    ),
-    ...collections.battles.flatMap(({ slug, frontmatter }) =>
-      pick({
-        collection: "battles",
-        slug,
-        sourceCount: frontmatter.sources.length,
-        fields: [
-          ["start", frontmatter.start],
-          ["end", frontmatter.end],
-        ],
-      }),
-    ),
-  ];
+  );
 }
 
 /**
@@ -204,7 +234,7 @@ function datedFields(collections: DateCollections): DatedField[] {
  */
 function fieldDefects(field: DatedField): DateDefect[] {
   const { collection, slug, date, sourceCount } = field;
-  const at = { defect: "sign" as const, collection, slug, field: field.field };
+  const at = { collection, slug, field: field.field };
 
   const precisionDefects: DateDefect[] =
     date.precision === "exact" && sourceCount === 0
@@ -221,6 +251,7 @@ function fieldDefects(field: DatedField): DateDefect[] {
     return [
       {
         ...at,
+        defect: "sign",
         detail: `${describe(date)} stores a non-positive year; ${date.era} years are positive magnitudes, and absoluteYear() puts this at ${absoluteYear(date)}`,
       },
       ...precisionDefects,
@@ -243,89 +274,22 @@ function fieldDefects(field: DatedField): DateDefect[] {
   return precisionDefects;
 }
 
-function orderingDefect({
-  collection,
-  slug,
-  earlierField,
-  earlier,
-  laterField,
-  later,
-}: {
-  collection: DateCollectionName;
-  slug: string;
-  earlierField: string;
-  earlier: CalendarDate | null | undefined;
-  laterField: string;
-  later: CalendarDate | null | undefined;
-}): DateDefect[] {
-  if (!earlier || !later) return [];
-  const tolerance = slack(earlier) + slack(later);
-  const gap = absoluteYear(later) - absoluteYear(earlier);
-  if (gap >= -tolerance) return [];
-  return [
-    {
-      defect: "ordering",
-      collection,
-      slug,
-      field: laterField,
-      detail: `${laterField} ${describe(later)} falls ${-gap} years before ${earlierField} ${describe(earlier)}`,
-    },
-  ];
-}
-
-function orderingDefects(collections: DateCollections): DateDefect[] {
-  return [
-    ...collections.characters.flatMap(({ slug, frontmatter }) =>
-      orderingDefect({
-        collection: "characters",
+function orderingDefects(rows: readonly LifespanRow[]): DateDefect[] {
+  return rows.flatMap(({ collection, slug, begin, end }) => {
+    if (!begin || !end) return [];
+    const tolerance = slack(begin.date) + slack(end.date);
+    const gap = absoluteYear(end.date) - absoluteYear(begin.date);
+    if (gap >= -tolerance) return [];
+    return [
+      {
+        defect: "ordering" as const,
+        collection,
         slug,
-        earlierField: "born",
-        earlier: frontmatter.born,
-        laterField: "died",
-        later: frontmatter.died,
-      }),
-    ),
-    ...collections.houses.flatMap(({ slug, frontmatter }) =>
-      orderingDefect({
-        collection: "houses",
-        slug,
-        earlierField: "founded",
-        earlier: frontmatter.founded,
-        laterField: "extinct",
-        later: frontmatter.extinct,
-      }),
-    ),
-    ...collections.weapons.flatMap(({ slug, frontmatter }) =>
-      orderingDefect({
-        collection: "weapons",
-        slug,
-        earlierField: "forged",
-        earlier: frontmatter.forged,
-        laterField: "destroyed",
-        later: frontmatter.destroyed,
-      }),
-    ),
-    ...collections.dragons.flatMap(({ slug, frontmatter }) =>
-      orderingDefect({
-        collection: "dragons",
-        slug,
-        earlierField: "hatched",
-        earlier: frontmatter.hatched,
-        laterField: "died",
-        later: frontmatter.died,
-      }),
-    ),
-    ...collections.battles.flatMap(({ slug, frontmatter }) =>
-      orderingDefect({
-        collection: "battles",
-        slug,
-        earlierField: "start",
-        earlier: frontmatter.start,
-        laterField: "end",
-        later: frontmatter.end,
-      }),
-    ),
-  ];
+        field: end.field,
+        detail: `${end.field} ${describe(end.date)} falls ${-gap} years before ${begin.field} ${describe(begin.date)}`,
+      },
+    ];
+  });
 }
 
 /**
@@ -403,60 +367,32 @@ function lineageDefects(collections: DateCollections): DateDefect[] {
 }
 
 /** A terminal date on an entry whose status says it never ended. */
-function statusDefects(collections: DateCollections): DateDefect[] {
-  return [
-    ...collections.weapons.flatMap(({ slug, frontmatter }) =>
-      frontmatter.destroyed && frontmatter.status !== "destroyed"
-        ? [
-            {
-              defect: "status" as const,
-              collection: "weapons" as const,
-              slug,
-              field: "destroyed",
-              detail: `destroyed ${describe(frontmatter.destroyed)} but status is "${frontmatter.status}"`,
-            },
-          ]
-        : [],
-    ),
-    ...collections.dragons.flatMap(({ slug, frontmatter }) =>
-      frontmatter.died && frontmatter.status !== "dead"
-        ? [
-            {
-              defect: "status" as const,
-              collection: "dragons" as const,
-              slug,
-              field: "died",
-              detail: `died ${describe(frontmatter.died)} but status is "${frontmatter.status}"`,
-            },
-          ]
-        : [],
-    ),
-    ...collections.houses.flatMap(({ slug, frontmatter }) =>
-      frontmatter.extinct && frontmatter.status !== "extinct"
-        ? [
-            {
-              defect: "status" as const,
-              collection: "houses" as const,
-              slug,
-              field: "extinct",
-              detail: `extinct ${describe(frontmatter.extinct)} but status is "${frontmatter.status}"`,
-            },
-          ]
-        : [],
-    ),
-  ];
+function statusDefects(rows: readonly LifespanRow[]): DateDefect[] {
+  return rows.flatMap(({ collection, slug, end, status }) => {
+    if (!end || !status || status.actual === status.expected) return [];
+    return [
+      {
+        defect: "status" as const,
+        collection,
+        slug,
+        field: end.field,
+        detail: `${end.field} ${describe(end.date)} but status is "${status.actual}"`,
+      },
+    ];
+  });
 }
 
 /** Every mechanically detectable date defect in the corpus. */
 export function dateIntegrityDefects(
   collections: DateCollections,
 ): DateDefect[] {
+  const rows = lifespanRows(collections);
   return [
-    ...datedFields(collections).flatMap(fieldDefects),
-    ...orderingDefects(collections),
+    ...datedFields(rows).flatMap(fieldDefects),
+    ...orderingDefects(rows),
     ...lifespanDefects(collections),
     ...lineageDefects(collections),
-    ...statusDefects(collections),
+    ...statusDefects(rows),
   ];
 }
 

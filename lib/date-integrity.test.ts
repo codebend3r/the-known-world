@@ -10,8 +10,10 @@ import {
 } from "@/lib/date-integrity";
 import {
   BattleSchema,
+  CastleSchema,
   CharacterSchema,
   DragonSchema,
+  EventSchema,
   HouseSchema,
   WeaponSchema,
 } from "@/lib/schemas";
@@ -76,6 +78,30 @@ function dragon(frontmatter: Record<string, unknown>) {
 function battle(frontmatter: Record<string, unknown>) {
   const parsed = BattleSchema.parse({ type: "battle", ...frontmatter });
   return { frontmatter: parsed, body: "", slug: parsed.slug };
+}
+
+function castle(frontmatter: Record<string, unknown>) {
+  const parsed = CastleSchema.parse({
+    type: "castle",
+    coords: { x: 1, y: 1 },
+    ...frontmatter,
+  });
+  return { frontmatter: parsed, body: "", slug: parsed.slug };
+}
+
+function event(frontmatter: Record<string, unknown>) {
+  const parsed = EventSchema.parse({
+    type: "wedding",
+    location: "somewhere",
+    landmass: "westeros",
+    ...frontmatter,
+  });
+  return { frontmatter: parsed, body: "", slug: parsed.slug };
+}
+
+/** A plain year-precision AC date, the shape most of these fixtures want. */
+function y(year: number) {
+  return { year, era: "AC", precision: "year" };
 }
 
 function classesOf(collections: DateCollections): DateDefectClass[] {
@@ -413,6 +439,55 @@ describe("lineage", () => {
     });
     expect(classesOf(build(286))).toEqual([]);
     expect(classesOf(build(290))).toEqual(["lineage"]);
+  });
+});
+
+describe("lifespan coverage", () => {
+  // The table in `lifespanRows` is the one place that says which collection
+  // dates which way. These lock the matrix in so a silent gap is a test
+  // failure, not a defect class that quietly stops firing for a collection.
+  it("orders every collection that declares a terminal date", () => {
+    const ordered = {
+      ...emptyCollections(),
+      characters: [
+        character({ slug: "c", name: "C", born: y(300), died: y(280) }),
+      ],
+      houses: [
+        house({ slug: "h", name: "H", founded: y(300), extinct: y(280) }),
+      ],
+      weapons: [
+        weapon({ slug: "w", name: "W", forged: y(300), destroyed: y(280) }),
+      ],
+      dragons: [
+        dragon({ slug: "d", name: "D", hatched: y(300), died: y(280) }),
+      ],
+      battles: [battle({ slug: "b", name: "B", start: y(300), end: y(280) })],
+    };
+    const ordering = dateIntegrityDefects(ordered).filter(
+      (defect) => defect.defect === "ordering",
+    );
+    expect(ordering.map((defect) => defect.collection)).toEqual([
+      "characters",
+      "houses",
+      "weapons",
+      "dragons",
+      "battles",
+    ]);
+  });
+
+  it("range-checks the single-date collections too", () => {
+    const dated = {
+      ...emptyCollections(),
+      castles: [castle({ slug: "ca", name: "Ca", founded: y(5000) })],
+      events: [event({ slug: "e", name: "E", date: y(5000) })],
+    };
+    const ranges = dateIntegrityDefects(dated).filter(
+      (defect) => defect.defect === "era-range",
+    );
+    expect(ranges.map((defect) => defect.collection)).toEqual([
+      "castles",
+      "events",
+    ]);
   });
 });
 
