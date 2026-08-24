@@ -15,8 +15,8 @@
 
 .inner {
   display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-areas: "wordmark nav";
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "wordmark nav spoilers";
   align-items: center;
   gap: 26px;
   width: 100%;
@@ -24,8 +24,8 @@
   padding: 26px var(--tkw-gutter) 20px;
 
   @media (max-width: bp.$lg) {
-    grid-template-columns: 1fr;
-    grid-template-areas: "wordmark";
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas: "wordmark spoilers";
     justify-items: center;
     padding: 18px 32px 16px 4.25rem;
   }
@@ -133,6 +133,10 @@
   @media (max-width: bp.$lg) {
     display: none;
   }
+}
+
+.spoilers {
+  grid-area: spoilers;
 }
 
 .link {

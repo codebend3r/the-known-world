@@ -1,0 +1,76 @@
+@use "breakpoints" as bp;
+
+// The portrait keeps its frame; the switcher is a caption rail hung off the
+// bottom of it, so a character with one picture looks exactly as it always did.
+.plate {
+  display: grid;
+  grid-template-areas:
+    "panel"
+    "tabs";
+  grid-template-rows: auto auto;
+  width: 100%;
+}
+
+.panel {
+  grid-area: panel;
+  display: grid;
+  min-width: 0;
+}
+
+.tabs {
+  grid-area: tabs;
+  display: flex;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--tkw-hairline);
+  background: var(--tkw-surface);
+}
+
+.tab {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  padding: 10px 18px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
+  cursor: pointer;
+  transition:
+    color 0.18s ease,
+    background 0.18s ease;
+
+  & + & {
+    border-left: 1px solid var(--tkw-hairline);
+  }
+
+  &:hover,
+  &:focus-visible {
+    color: var(--tkw-gold-bright);
+    outline: none;
+  }
+
+  &:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 5px;
+  }
+
+  @media (max-width: bp.$xs) {
+    padding: 9px 12px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.tabSelected {
+  color: var(--tkw-bg);
+  background: var(--tkw-gold);
+
+  &:hover,
+  &:focus-visible {
+    color: var(--tkw-bg);
+  }
+}
