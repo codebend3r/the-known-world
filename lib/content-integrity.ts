@@ -65,245 +65,248 @@ export function reciprocalAsymmetries({
   );
 }
 
-export function contentIntegrityErrors(collections: Collections): string[] {
-  const slugSets = buildSlugSets(collections);
-  const allEntitySlugs = new Set(
-    Object.values(slugSets).flatMap((slugs) => [...slugs]),
+/** One slug named by an entry, and the field that named it. */
+type Reference = { field: string; value: string };
+
+/** Where a reference must resolve: a named collection, or any entry at all. */
+type ReferenceTarget = CollectionName | "all";
+
+type ReferenceRule<T> = {
+  to: ReferenceTarget;
+  read: (frontmatter: T) => Reference[];
+};
+
+/**
+ * Pairs a field name with the slugs it holds, dropping the absent ones so a
+ * rule can read an optional or nullable field without guarding first.
+ */
+function ref(
+  field: string,
+  values: ReadonlyArray<string | null | undefined>,
+): Reference[] {
+  return values.flatMap((value) => (value ? [{ field, value }] : []));
+}
+
+function checkRefs<T>({
+  name,
+  entries,
+  rules,
+  targets,
+}: {
+  name: CollectionName;
+  entries: ReadonlyArray<{ slug: string; frontmatter: T }>;
+  rules: ReadonlyArray<ReferenceRule<T>>;
+  targets: Record<ReferenceTarget, ReadonlySet<string>>;
+}): string[] {
+  return entries.flatMap(({ slug, frontmatter }) =>
+    rules.flatMap((rule) =>
+      rule
+        .read(frontmatter)
+        .flatMap(({ field, value }) =>
+          targets[rule.to].has(value)
+            ? []
+            : [`${name}/${slug}.${field}: missing ${value}`],
+        ),
+    ),
   );
-  const errors = Object.entries(collections).flatMap(([name, entries]) => {
-    const duplicateErrors = duplicateSlugErrors({ name, entries });
-    const filenameErrors = entries.flatMap((entry) =>
+}
+
+/**
+ * Every cross-entry reference in the corpus, as data.
+ *
+ * Each rule says which field is read and which collection it must resolve
+ * into. Keeping them in one table is what makes a gap visible: `battles`
+ * carried a `mentions` field that no check ever read, because the outbound
+ * checks were written out by hand per collection and that one was missed.
+ */
+function referenceErrors(collections: Collections): string[] {
+  const slugSets = buildSlugSets(collections);
+  const targets = {
+    ...slugSets,
+    all: new Set(Object.values(slugSets).flatMap((slugs) => [...slugs])),
+  };
+
+  const byCollection = {
+    characters: checkRefs({
+      name: "characters",
+      entries: collections.characters,
+      targets,
+      rules: [
+        {
+          to: "houses",
+          read: (fm) => ref("primary-house", [fm["primary-house"]]),
+        },
+        {
+          to: "houses",
+          read: (fm) => ref("also-of-houses", fm["also-of-houses"]),
+        },
+        { to: "characters", read: (fm) => ref("parents", fm.parents) },
+        { to: "characters", read: (fm) => ref("spouses", fm.spouses) },
+        { to: "characters", read: (fm) => ref("children", fm.children) },
+        { to: "all", read: (fm) => ref("mentions", fm.mentions) },
+      ],
+    }),
+    houses: checkRefs({
+      name: "houses",
+      entries: collections.houses,
+      targets,
+      rules: [
+        { to: "houses", read: (fm) => ref("liege", [fm.liege]) },
+        { to: "houses", read: (fm) => ref("sworn-from", fm["sworn-from"]) },
+        { to: "houses", read: (fm) => ref("cadet-houses", fm["cadet-houses"]) },
+        {
+          to: "weapons",
+          read: (fm) => ref("ancestral-weapons", fm["ancestral-weapons"] ?? []),
+        },
+        {
+          to: "characters",
+          read: (fm) =>
+            ref(
+              "heads",
+              (fm.heads ?? []).map((head) => head.slug),
+            ),
+        },
+        {
+          to: "characters",
+          read: (fm) =>
+            ref(
+              "notable-members",
+              (fm["notable-members"] ?? []).map((member) => member.slug),
+            ),
+        },
+        { to: "all", read: (fm) => ref("mentions", fm.mentions) },
+      ],
+    }),
+    castles: checkRefs({
+      name: "castles",
+      entries: collections.castles,
+      targets,
+      rules: [
+        { to: "houses", read: (fm) => ref("liege-house", [fm["liege-house"]]) },
+        { to: "houses", read: (fm) => ref("sworn-houses", fm["sworn-houses"]) },
+      ],
+    }),
+    weapons: checkRefs({
+      name: "weapons",
+      entries: collections.weapons,
+      targets,
+      rules: [
+        {
+          to: "houses",
+          read: (fm) =>
+            ref("houses", [fm["origin-house"], fm["current-house"]]),
+        },
+        { to: "characters", read: (fm) => ref("wielders", fm.wielders) },
+        { to: "all", read: (fm) => ref("mentions", fm.mentions) },
+      ],
+    }),
+    dragons: checkRefs({
+      name: "dragons",
+      entries: collections.dragons,
+      targets,
+      rules: [
+        { to: "houses", read: (fm) => ref("house", [fm.house]) },
+        { to: "characters", read: (fm) => ref("riders", fm.riders) },
+        { to: "all", read: (fm) => ref("mentions", fm.mentions) },
+      ],
+    }),
+    battles: checkRefs({
+      name: "battles",
+      entries: collections.battles,
+      targets,
+      rules: [
+        { to: "characters", read: (fm) => ref("commanders", fm.commanders) },
+        { to: "houses", read: participantHouses },
+        { to: "all", read: (fm) => ref("mentions", fm.mentions) },
+      ],
+    }),
+    events: checkRefs({
+      name: "events",
+      entries: collections.events,
+      targets,
+      rules: [{ to: "houses", read: participantHouses }],
+    }),
+  } satisfies Record<CollectionName, string[]>;
+
+  return Object.values(byCollection).flat();
+}
+
+/** Shared by battles and events, which both carry sided participants. */
+function participantHouses(frontmatter: {
+  participants: ReadonlyArray<{ houses: readonly string[] }>;
+}): Reference[] {
+  return frontmatter.participants.flatMap((participant, index) =>
+    ref(`participants[${index}].houses`, participant.houses),
+  );
+}
+
+function slugErrors(collections: Collections): string[] {
+  return Object.entries(collections).flatMap(([name, entries]) => [
+    ...duplicateSlugErrors({ name, entries }),
+    ...entries.flatMap((entry) =>
       entry.slug === entry.frontmatter.slug
         ? []
         : [
             `${name}/${entry.slug}: frontmatter slug is ${entry.frontmatter.slug}`,
           ],
-    );
-    return [...duplicateErrors, ...filenameErrors];
-  });
+    ),
+  ]);
+}
 
-  const addReference = ({
-    source,
-    field,
-    values,
-    targets,
-  }: {
-    source: string;
-    field: string;
-    values: ReadonlyArray<string | null | undefined>;
-    targets: ReadonlySet<string>;
-  }) => {
-    values.forEach((value) => {
-      if (value && !targets.has(value)) {
-        errors.push(`${source}.${field}: missing ${value}`);
-      }
-    });
-  };
-
-  collections.characters.forEach(({ slug, frontmatter }) => {
-    const source = `characters/${slug}`;
-    addReference({
-      source,
-      field: "primary-house",
-      values: [frontmatter["primary-house"]],
-      targets: slugSets.houses,
-    });
-    addReference({
-      source,
-      field: "also-of-houses",
-      values: frontmatter["also-of-houses"],
-      targets: slugSets.houses,
-    });
-    const characterReferences = {
-      parents: frontmatter.parents,
-      spouses: frontmatter.spouses,
-      children: frontmatter.children,
-    };
-    Object.entries(characterReferences).forEach(([field, values]) => {
-      addReference({
-        source,
-        field,
-        values,
-        targets: slugSets.characters,
-      });
-    });
-    addReference({
-      source,
-      field: "mentions",
-      values: frontmatter.mentions,
-      targets: allEntitySlugs,
-    });
-  });
-
-  collections.houses.forEach(({ slug, frontmatter }) => {
-    const source = `houses/${slug}`;
-    const houseReferences = {
-      liege: [frontmatter.liege],
-      "sworn-from": frontmatter["sworn-from"],
-      "cadet-houses": frontmatter["cadet-houses"],
-    };
-    Object.entries(houseReferences).forEach(([field, values]) => {
-      addReference({
-        source,
-        field,
-        values,
-        targets: slugSets.houses,
-      });
-    });
-    addReference({
-      source,
-      field: "ancestral-weapons",
-      values: frontmatter["ancestral-weapons"] ?? [],
-      targets: slugSets.weapons,
-    });
-    const memberReferences = {
-      heads: frontmatter.heads ?? [],
-      "notable-members": frontmatter["notable-members"] ?? [],
-    };
-    Object.entries(memberReferences).forEach(([field, entries]) => {
-      addReference({
-        source,
-        field,
-        values: entries.map((entry) => entry.slug),
-        targets: slugSets.characters,
-      });
-    });
-    addReference({
-      source,
-      field: "mentions",
-      values: frontmatter.mentions,
-      targets: allEntitySlugs,
-    });
-  });
-
-  // Atlas-space bounds. Nothing in the build fails when a marker is dragged
-  // off the map, so the marker just stops rendering somewhere nobody looks.
-  const placementSources = [
+/**
+ * Atlas-space bounds. Nothing in the build fails when a marker is dragged off
+ * the map, so the marker just stops rendering somewhere nobody looks.
+ */
+function placementErrors(collections: Collections): string[] {
+  const placed = [
     { name: "castles", entries: collections.castles },
     { name: "battles", entries: collections.battles },
     { name: "events", entries: collections.events },
   ];
-  placementSources.forEach(({ name, entries }) => {
-    entries.forEach(({ slug, frontmatter }) => {
+  return placed.flatMap(({ name, entries }) =>
+    entries.flatMap(({ slug, frontmatter }) => {
       const coords = entryCoords(frontmatter);
-      if (!coords || isWithinMapBounds(coords)) return;
-      errors.push(
+      if (!coords || isWithinMapBounds(coords)) return [];
+      return [
         `${name}/${slug}.coords: (${coords.x}, ${coords.y}) is outside the ${MAP_BOUNDS.width}x${MAP_BOUNDS.height} map`,
-      );
-    });
-  });
-
-  collections.castles.forEach(({ slug, frontmatter }) => {
-    const source = `castles/${slug}`;
-    addReference({
-      source,
-      field: "liege-house",
-      values: [frontmatter["liege-house"]],
-      targets: slugSets.houses,
-    });
-    addReference({
-      source,
-      field: "sworn-houses",
-      values: frontmatter["sworn-houses"],
-      targets: slugSets.houses,
-    });
-  });
-
-  collections.weapons.forEach(({ slug, frontmatter }) => {
-    const source = `weapons/${slug}`;
-    addReference({
-      source,
-      field: "houses",
-      values: [frontmatter["origin-house"], frontmatter["current-house"]],
-      targets: slugSets.houses,
-    });
-    addReference({
-      source,
-      field: "wielders",
-      values: frontmatter.wielders,
-      targets: slugSets.characters,
-    });
-    addReference({
-      source,
-      field: "mentions",
-      values: frontmatter.mentions,
-      targets: allEntitySlugs,
-    });
-  });
-
-  collections.dragons.forEach(({ slug, frontmatter }) => {
-    const source = `dragons/${slug}`;
-    addReference({
-      source,
-      field: "house",
-      values: [frontmatter.house],
-      targets: slugSets.houses,
-    });
-    addReference({
-      source,
-      field: "riders",
-      values: frontmatter.riders,
-      targets: slugSets.characters,
-    });
-    addReference({
-      source,
-      field: "mentions",
-      values: frontmatter.mentions,
-      targets: allEntitySlugs,
-    });
-  });
-
-  [...collections.battles, ...collections.events].forEach(
-    ({ slug, frontmatter }) => {
-      const source = `${"commanders" in frontmatter ? "battles" : "events"}/${slug}`;
-      if ("commanders" in frontmatter) {
-        addReference({
-          source,
-          field: "commanders",
-          values: frontmatter.commanders,
-          targets: slugSets.characters,
-        });
-      }
-      frontmatter.participants.forEach((participant, index) => {
-        addReference({
-          source,
-          field: `participants[${index}].houses`,
-          values: participant.houses,
-          targets: slugSets.houses,
-        });
-      });
-    },
+      ];
+    }),
   );
-
-  reciprocalAsymmetries(collections).forEach((issue) => {
-    errors.push(
-      `${issue.source}.${issue.field}: ${issue.target} does not name it back in ${issue.expected}`,
-    );
-  });
-
-  return [...errors, ...dateIntegrityErrors(collections)];
 }
 
-function buildSlugSets(collections: Collections) {
+function asymmetryErrors(collections: Collections): string[] {
+  return reciprocalAsymmetries(collections).map(
+    (issue) =>
+      `${issue.source}.${issue.field}: ${issue.target} does not name it back in ${issue.expected}`,
+  );
+}
+
+export function contentIntegrityErrors(collections: Collections): string[] {
+  return [
+    ...slugErrors(collections),
+    ...referenceErrors(collections),
+    ...placementErrors(collections),
+    ...asymmetryErrors(collections),
+    ...dateIntegrityErrors(collections),
+  ];
+}
+
+function buildSlugSets(
+  collections: Collections,
+): Record<CollectionName, ReadonlySet<string>> {
+  const slugsOf = (
+    entries: ReadonlyArray<{ frontmatter: { slug: string } }>,
+  ): ReadonlySet<string> =>
+    new Set(entries.map((entry) => entry.frontmatter.slug));
   return {
-    battles: new Set(
-      collections.battles.map((entry) => entry.frontmatter.slug),
-    ),
-    castles: new Set(
-      collections.castles.map((entry) => entry.frontmatter.slug),
-    ),
-    characters: new Set(
-      collections.characters.map((entry) => entry.frontmatter.slug),
-    ),
-    dragons: new Set(
-      collections.dragons.map((entry) => entry.frontmatter.slug),
-    ),
-    events: new Set(collections.events.map((entry) => entry.frontmatter.slug)),
-    houses: new Set(collections.houses.map((entry) => entry.frontmatter.slug)),
-    weapons: new Set(
-      collections.weapons.map((entry) => entry.frontmatter.slug),
-    ),
-  } satisfies Record<CollectionName, Set<string>>;
+    battles: slugsOf(collections.battles),
+    castles: slugsOf(collections.castles),
+    characters: slugsOf(collections.characters),
+    dragons: slugsOf(collections.dragons),
+    events: slugsOf(collections.events),
+    houses: slugsOf(collections.houses),
+    weapons: slugsOf(collections.weapons),
+  } satisfies Record<CollectionName, ReadonlySet<string>>;
 }
 
 function duplicateSlugErrors({

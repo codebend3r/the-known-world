@@ -176,6 +176,72 @@ function placedEvent(coords: { x: number; y: number }) {
   };
 }
 
+describe("outbound references", () => {
+  it("validates battle mentions, which no check used to read", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      battles: [
+        {
+          body: "",
+          slug: "b",
+          frontmatter: BattleSchema.parse({
+            slug: "b",
+            name: "B",
+            type: "battle",
+            start: LEGEND_DATE,
+            end: LEGEND_DATE,
+            mentions: ["no-such-entry"],
+          }),
+        },
+      ],
+    });
+    expect(errors).toEqual(["battles/b.mentions: missing no-such-entry"]);
+  });
+
+  // Battles and events used to be concatenated and pulled back apart with an
+  // `in` probe on `commanders`. Each now carries its own rules, so the
+  // collection an error names is the collection it came from.
+  it("labels a battle and an event by their own collection", () => {
+    const participants = [{ side: "A", houses: ["no-such-house"] }];
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      battles: [
+        {
+          body: "",
+          slug: "b",
+          frontmatter: BattleSchema.parse({
+            slug: "b",
+            name: "B",
+            type: "battle",
+            start: LEGEND_DATE,
+            end: LEGEND_DATE,
+            participants,
+          }),
+        },
+      ],
+      events: [
+        {
+          body: "",
+          slug: "e",
+          frontmatter: EventSchema.parse({
+            slug: "e",
+            name: "E",
+            type: "wedding",
+            date: LEGEND_DATE,
+            location: "nowhere",
+            landmass: "westeros",
+            participants,
+          }),
+        },
+      ],
+    });
+    expect(errors).toEqual([
+      "battles/b.participants[0].houses: missing no-such-house",
+      "events/e.participants[0].houses: missing no-such-house",
+    ]);
+  });
+});
+
 describe("content integrity", () => {
   it("has matching, unique slugs and resolvable cross-references", async () => {
     const [battles, castles, characters, dragons, events, houses, weapons] =
