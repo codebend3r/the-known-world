@@ -7,18 +7,28 @@ description: Use when accessibility is the subject in this repo. Triggers includ
 
 ## Overview
 
-`.oxlintrc.json` loads the `jsx-a11y` plugin and then switches **seven of its rules off**:
+`.oxlintrc.json` loads the `jsx-a11y` plugin and then switches **six of its rules off**:
 
 ```
-click-events-have-key-events          no-noninteractive-element-to-interactive-role
-control-has-associated-label          no-noninteractive-tabindex
-no-noninteractive-element-interactions  prefer-tag-over-role
-no-static-element-interactions
+click-events-have-key-events            no-noninteractive-element-to-interactive-role
+no-noninteractive-element-interactions  no-noninteractive-tabindex
+no-static-element-interactions          prefer-tag-over-role
 ```
 
-Those seven cover exactly the surfaces this site is built on: two SVG pan-and-zoom canvases, a custom combobox, and toggle groups made of icon-only buttons. CI is green on `bun lint:ts` and always will be. **The lint config is not the gate; it is the reason a gate is needed.**
+Not deferred work. Oxlint does not treat `role="application"` as interactive and has no role allowlist, so those rules flag the pan/zoom canvases and the ARIA combobox popup this site is built on. Turning them on would mean changing correct markup to satisfy the tool. `docs/tooling-rule-mapping.md` records the reason per rule.
 
-`audit-a11y.ts` in this directory is that gate. It parses JSX into an ancestor-aware tag tree and checks the eleven classes below, plus per-route heading order and the contrast of every ink/ground token pair in `styles/globals.scss`. **It is read-only. It fixes nothing.**
+CI is green on `bun lint:ts` and always will be. **The lint config is not the gate; it is the reason a gate is needed.**
+
+This directory is that gate, in four files:
+
+| file            | what it holds                                                                  |
+| --------------- | ------------------------------------------------------------------------------ |
+| `audit-a11y.ts` | the CLI: walks the roots, runs the checks, prints or emits JSON                |
+| `jsx-source.ts` | the JSX reader — masks comments and strings, builds an ancestor-aware tag tree |
+| `checks.ts`     | the rules: images, SVG, interactions, combobox, headings, viewport             |
+| `contrast.ts`   | ink/ground token pairs from `styles/globals.scss`                              |
+
+**It is read-only. It fixes nothing.**
 
 The three interactive surfaces it exists for:
 
@@ -146,7 +156,7 @@ Baseline run and what it changed: `docs/superpowers/baselines/a11y-audit.md`.
 
 | Mistake                                                          | Why it goes wrong                                                                                                                                   |
 | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Trusting `bun lint:ts` as the a11y gate                          | Seven `jsx-a11y` rules are off, and they are the seven this codebase needs.                                                                         |
+| Trusting `bun lint:ts` as the a11y gate                          | Six `jsx-a11y` rules are off, and they are the six this codebase needs.                                                                             |
 | Putting `role="img"` on an interactive SVG                       | It prunes the subtree. Every link, label, and title inside disappears.                                                                              |
 | Adding `role="application"` without `onKeyDown`                  | It stops assistive tech handling keys and puts nothing in their place. Strictly worse than no role.                                                 |
 | Turning the disabled lint rules back on to "fix" this            | They fire on the sanctioned patterns too (`role="option"` without `tabIndex`, the `aria-hidden` backdrop). Noise, not signal.                       |
