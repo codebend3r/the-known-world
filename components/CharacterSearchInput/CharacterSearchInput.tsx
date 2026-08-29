@@ -1,7 +1,7 @@
 "use client";
 
 import { SearchCombobox } from "@/components/SearchCombobox";
-import listSearch from "@/components/listSearch.module.scss";
+import { ListSearchInput } from "@/components/ListSearchInput";
 
 const DEFAULT_PLACEHOLDER = "Search characters…";
 const DEFAULT_ARIA_LABEL = "Search characters";
@@ -40,15 +40,11 @@ function isAutocomplete(props: Props): props is AutocompleteProps {
 // shared styled field, so the index keeps its exact grid/sort/view layout.
 function FilterInput({ value, onChange, placeholder, ariaLabel }: FilterProps) {
   return (
-    <input
-      type="search"
-      className={listSearch.input}
-      placeholder={placeholder ?? DEFAULT_PLACEHOLDER}
+    <ListSearchInput
       value={value}
-      onChange={(e) => onChange(e.target.value)}
-      aria-label={ariaLabel ?? DEFAULT_ARIA_LABEL}
-      autoComplete="off"
-      spellCheck={false}
+      onChange={onChange}
+      placeholder={placeholder ?? DEFAULT_PLACEHOLDER}
+      ariaLabel={ariaLabel ?? DEFAULT_ARIA_LABEL}
     />
   );
 }
