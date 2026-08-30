@@ -21,11 +21,14 @@ titles:
   - name: Admiral of the Narrow Sea
 heads:
   - name: Lord Davos Seaworth
+    slug: davos-seaworth
     note: the Onion Knight, founder of the house
 notable-members:
   - name: Devan Seaworth
+    slug: devan-seaworth
     note: heir, squire to King Stannis Baratheon
   - name: Marya Seaworth
+    slug: marya-seaworth
     note: wife of Davos, a carpenter's daughter
   - name: Dale, Allard, Matthos, and Maric Seaworth
     note: four of Davos's sons, all slain at the Battle of the Blackwater
