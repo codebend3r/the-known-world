@@ -8,7 +8,7 @@ description: Use when SCSS/CSS is the subject of review or authoring in this rep
 ## Overview
 
 Enforces the **CSS section of `CLAUDE.md`** — the twelve conventions are the
-source of truth; this skill is how they get checked. `gale` lints SCSS syntax,
+source of truth; this skill is how they get checked. `stylelint` lints SCSS syntax,
 but nothing in the toolchain enforces the conventions themselves: tokens over
 literals, gap over margins, named areas, reduced-motion guards. Convention held
 only by review drifts, so this skill makes every rule mechanically checkable

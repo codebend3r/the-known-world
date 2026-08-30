@@ -1,0 +1,11 @@
+{
+  "extends": "stylelint-config-recommended-scss",
+  "rules": {
+    "no-descending-specificity": null,
+    "property-no-unknown": [true, { "ignoreProperties": ["corner-shape"] }],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      { "ignorePseudoClasses": ["global", "local"] }
+    ]
+  }
+}

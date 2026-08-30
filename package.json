@@ -12,15 +12,15 @@
     "start": "next start",
     "lint:ts": "oxlint --type-aware",
     "lint:ts:fix": "oxlint --type-aware --fix",
-    "lint:css": "gale \"app/**/*.scss\" \"components/**/*.scss\" \"styles/**/*.scss\"",
-    "lint:css:fix": "gale --fix \"app/**/*.scss\" \"components/**/*.scss\" \"styles/**/*.scss\"",
+    "lint:css": "stylelint \"{app,components,styles}/**/*.scss\"",
+    "lint:css:fix": "stylelint --fix \"{app,components,styles}/**/*.scss\"",
     "typecheck": "tsgo --noEmit",
     "test": "bun test --parallel --dots",
     "test:watch": "bun test --parallel --dots --watch",
     "coverage": "bun test --parallel --dots --coverage",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
-    "format:staged": "lint-staged",
+    "lint:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
     "check": "run-p --aggregate-output --print-label typecheck lint:ts lint:css test",
@@ -31,7 +31,11 @@
       "oxlint --fix",
       "oxfmt"
     ],
-    "*.{json,jsonc,json5,md,mdx,yml,yaml,toml,css,scss,html}": "oxfmt"
+    "*.{css,scss}": [
+      "stylelint --fix",
+      "oxfmt"
+    ],
+    "*.{json,jsonc,json5,md,mdx,yml,yaml,toml,html}": "oxfmt"
   },
   "dependencies": {
     "next": "16.2.12",
@@ -46,7 +50,6 @@
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "20.11.1",
-    "@lyricalstring/gale": "0.1.5",
     "@testing-library/dom": "10.4.1",
     "@testing-library/react": "16.3.2",
     "@types/bun": "1.3.14",
@@ -62,10 +65,11 @@
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
     "sass": "1.102.0",
+    "stylelint": "17.14.1",
+    "stylelint-config-recommended-scss": "17.0.1",
     "typescript": "6.0.3"
   },
   "trustedDependencies": [
-    "@lyricalstring/gale",
     "unrs-resolver"
   ],
   "overrides": {

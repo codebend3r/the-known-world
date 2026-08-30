@@ -9,7 +9,7 @@ description: Use when adding, moving, renaming, or reviewing a React component i
 
 Forty component directories live under `components/`, each expected to hold the
 same four files. Nothing in the toolchain enforces that. `bun run check` runs
-`tsgo`, `oxlint --type-aware`, `gale`, and `bun test`; none of them know a
+`tsgo`, `oxlint --type-aware`, `stylelint`, and `bun test`; none of them know a
 component is missing its barrel, that a font size was typed as `15px` when
 `--fs-section` is exactly `15px`, or that a `<div>` shipped with no class. The
 convention is enforced by review, so it drifts.
