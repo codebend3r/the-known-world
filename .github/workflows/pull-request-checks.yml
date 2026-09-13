@@ -82,6 +82,9 @@ jobs:
       - name: 💅 Format
         run: bun format:check
 
+      - name: 📝 Spellcheck
+        run: bun spellcheck
+
       - name: 🔎 Typecheck
         run: bun typecheck
 

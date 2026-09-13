@@ -20,10 +20,11 @@
     "coverage": "bun test --parallel --dots --coverage",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
+    "spellcheck": "typos",
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "check": "bun run --parallel typecheck lint:ts lint:css test",
+    "check": "bun run --parallel typecheck lint:ts lint:css spellcheck test",
     "system-check": "bun run --sequential clean format:check check build"
   },
   "lint-staged": {
@@ -50,6 +51,7 @@
   },
   "devDependencies": {
     "@happy-dom/global-registrator": "20.14.5",
+    "@ocular-d/typos-bin": "1.50.1",
     "@testing-library/dom": "10.4.1",
     "@testing-library/react": "16.3.3",
     "@types/bun": "1.4.2",
@@ -70,6 +72,7 @@
     "typescript": "6.0.3"
   },
   "trustedDependencies": [
+    "@ocular-d/typos-bin",
     "unrs-resolver"
   ],
   "overrides": {

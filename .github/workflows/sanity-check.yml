@@ -44,6 +44,9 @@ jobs:
       - name: 💅 Format
         run: bun format:check
 
+      - name: 📝 Spellcheck
+        run: bun spellcheck
+
       - name: 🔎 Typecheck
         run: bun typecheck
 
@@ -57,7 +60,7 @@ jobs:
         run: bun run test
 
       - name: 🎉 All clear
-        run: echo "✅ ${GITHUB_SHA:0:7} landed on \`main\` clean — format, types, lints, and tests all green. 🐉" >> "$GITHUB_STEP_SUMMARY"
+        run: echo "✅ ${GITHUB_SHA:0:7} landed on \`main\` clean — format, spelling, types, lints, and tests all green. 🐉" >> "$GITHUB_STEP_SUMMARY"
 
       - name: 🚨 Something broke
         if: failure()

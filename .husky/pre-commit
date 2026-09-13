@@ -11,6 +11,7 @@ echo "Running pre-commit hook"
 bun run lint:staged
 
 # Whole-project gates lint-staged can't scope to a file set.
+bun run spellcheck
 bun run typecheck
 bun run test
 
