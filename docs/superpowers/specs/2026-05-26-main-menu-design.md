@@ -2,7 +2,7 @@
 
 **Date:** 2026-05-26
 **Status:** Approved for planning
-**Supersedes (partially):** the homepage portion of `2026-05-19-game-of-thrones-atlas-design.md`. That spec described a region-picker homepage; this spec promotes the front door one level higher to a section picker. The region picker concept is deferred until more than one region exists.
+**Supersedes (partially):** the homepage portion of `2026-05-19-the-known-world-design.md`. That spec described a region-picker homepage; this spec promotes the front door one level higher to a section picker. The region picker concept is deferred until more than one region exists.
 
 ## Overview
 

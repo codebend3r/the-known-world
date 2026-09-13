@@ -1,4 +1,4 @@
-# Game of Thrones Atlas: Design Spec
+# The Known World: Design Spec
 
 **Date:** 2026-05-19
 **Status:** Approved for planning
@@ -339,7 +339,7 @@ Each content page emits meta tags, an OG image (auto-generated at build from sig
 ## Project structure
 
 ```
-game-of-thrones-atlas/
+the-known-world/
 ├── content/                    # the atlas data (Markdown + map)
 │   ├── castles/                ├── houses/      ├── people/
 │   ├── events/                 └── map/north.svg

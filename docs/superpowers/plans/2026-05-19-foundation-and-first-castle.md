@@ -14,7 +14,7 @@
 
 ## Pre-flight
 
-The repo `game-of-thrones-atlas` is already cloned at `/Users/snowball/Developer/git/game-of-thrones-atlas`. It currently contains only `.gitignore` and `docs/`. All paths below are relative to that directory.
+The repo `the-known-world` is already cloned at `/Users/snowball/Developer/git/the-known-world`. It currently contains only `.gitignore` and `docs/`. All paths below are relative to that directory.
 
 Tooling expected on the machine: `node` (≥ 20), `bun` (≥ 1.3), `git`. If `bun` is missing: `brew install bun` (or `curl -fsSL https://bun.sh/install | bash`).
 
