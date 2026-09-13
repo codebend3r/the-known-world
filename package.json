@@ -1,5 +1,5 @@
 {
-  "name": "game-of-thrones-atlas",
+  "name": "the-known-world",
   "version": "0.4.2",
   "private": true,
   "packageManager": "bun@1.3.14",
@@ -23,8 +23,8 @@
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "check": "run-p --aggregate-output --print-label typecheck lint:ts lint:css test",
-    "system-check": "run-s clean format:check check build"
+    "check": "bun run --parallel typecheck lint:ts lint:css test",
+    "system-check": "bun run --sequential clean format:check check build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -58,9 +58,9 @@
     "@types/react-dom": "19.2.3",
     "@types/react-svg-pan-zoom": "3.3.9",
     "@typescript/native-preview": "7.0.0-dev.20260707.2",
+    "build-meta": "0.1.1",
     "husky": "9.1.7",
     "lint-staged": "17.2.0",
-    "npm-run-all2": "9.0.3",
     "oxfmt": "0.61.0",
     "oxlint": "1.76.0",
     "oxlint-tsgolint": "7.0.2001",
