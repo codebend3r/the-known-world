@@ -1,4 +1,4 @@
-import { MainMenuTile } from "game-of-thrones-atlas";
+import { MainMenuTile } from "the-known-world";
 
 // MainMenuTile is a single atlas-section link: a line-art glyph over a title
 // and subtitle, wrapped in a next/link (renders <a>). `glyph` is any ReactNode;

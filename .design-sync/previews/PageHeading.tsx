@@ -1,4 +1,4 @@
-import { PageHeading } from "game-of-thrones-atlas";
+import { PageHeading } from "the-known-world";
 
 // The shared page title block: an h1 (optionally led by a section glyph), an
 // optional italic subtitle, and the ornamental FiligreeRule underline.

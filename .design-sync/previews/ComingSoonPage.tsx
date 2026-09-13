@@ -1,4 +1,4 @@
-import { ComingSoonPage } from "game-of-thrones-atlas";
+import { ComingSoonPage } from "the-known-world";
 
 // A placeholder page for sections not yet written: a caption link back to the
 // atlas, the section title, a "coming soon" subtitle, and a return link. The

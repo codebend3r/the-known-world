@@ -1,4 +1,4 @@
-import { SiteHeader } from "game-of-thrones-atlas";
+import { SiteHeader } from "the-known-world";
 
 // SiteHeader takes no props: a full-width banner whose only content is the
 // "The Known World" wordmark linking home (next/link renders <a>).

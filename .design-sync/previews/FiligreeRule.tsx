@@ -1,4 +1,4 @@
-import { FiligreeRule } from "game-of-thrones-atlas";
+import { FiligreeRule } from "the-known-world";
 
 // An ornamental horizontal divider (a lozenge flanked by two rules) used to
 // underline page headings in place of a plain border.

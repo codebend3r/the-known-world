@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Accordion } from "game-of-thrones-atlas";
+import { Accordion } from "the-known-world";
 
 // Accordion is fully controlled — the consumer owns `open` and `onToggle`.
 // These cells drive it with local state so the disclosure is live.

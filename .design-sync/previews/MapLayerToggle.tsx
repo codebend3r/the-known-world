@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { MapLayerToggle } from "game-of-thrones-atlas";
+import { MapLayerToggle } from "the-known-world";
 
 // MapLayerToggle renders a checkbox per castle type (castle, town, ruin,
 // watchtower, holdfast). It is controlled via an `enabled` Set plus an

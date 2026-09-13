@@ -1,4 +1,4 @@
-import { MapMarker } from "game-of-thrones-atlas";
+import { MapMarker } from "the-known-world";
 
 // A single map pin: an SVG anchor linking to a castle page, with a type glyph
 // (castle, town, ruin, watchtower, or holdfast) and its name label. MapMarker

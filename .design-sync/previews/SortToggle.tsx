@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { SortToggle } from "game-of-thrones-atlas";
+import { SortToggle } from "the-known-world";
 
 // SortToggle is a controlled A-Z / Z-A segmented control.
 // The consumer owns `value` and reacts to `onChange`. Each cell seeds

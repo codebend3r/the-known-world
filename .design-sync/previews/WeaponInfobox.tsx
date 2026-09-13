@@ -1,4 +1,4 @@
-import { WeaponInfobox } from "game-of-thrones-atlas";
+import { WeaponInfobox } from "the-known-world";
 
 // The fact panel for an ancestral weapon. The origin-house crest only renders
 // when that house resolves in `housesBySlug`; empty Maps keep the card to its

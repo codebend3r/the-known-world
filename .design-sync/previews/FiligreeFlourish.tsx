@@ -1,4 +1,4 @@
-import { FiligreeFlourish } from "game-of-thrones-atlas";
+import { FiligreeFlourish } from "the-known-world";
 
 // A decorative vine flourish drawn in molten gold. Sizes to its container's
 // font-size / width; shown here at a couple of scales and mirrored.

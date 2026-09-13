@@ -1,4 +1,4 @@
-import { PlateLayout } from "game-of-thrones-atlas";
+import { PlateLayout } from "the-known-world";
 
 // A full-page wrapper that renders its children inside the page plate used
 // by every index and entry page: the 1240px measure and its 56px gutter. Given a heading and a paragraph of prose here.

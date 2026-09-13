@@ -1,4 +1,4 @@
-import { HouseInfobox } from "game-of-thrones-atlas";
+import { HouseInfobox } from "the-known-world";
 
 // HouseInfobox composes a Sigil with a definition-list of house facts. It
 // reads lookup Maps (castles/characters/houses/weapons by slug) and a list of

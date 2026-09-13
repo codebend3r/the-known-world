@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CharacterSearchInput } from "game-of-thrones-atlas";
+import { CharacterSearchInput } from "the-known-world";
 
 // CharacterSearchInput has two modes behind a discriminated union:
 //   - filter mode (autocomplete omitted/false): fully controlled `value` + `onChange`.

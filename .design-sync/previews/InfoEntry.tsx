@@ -1,4 +1,4 @@
-import { InfoEntry } from "game-of-thrones-atlas";
+import { InfoEntry } from "the-known-world";
 
 // One item in an infobox list: a linked name when its slug resolves (via
 // hrefPrefix + optional `exists`), otherwise plain text, with an optional

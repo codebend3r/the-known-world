@@ -5,7 +5,7 @@ import {
   ListIcon,
   AllHousesIcon,
   RegionGroupIcon,
-} from "game-of-thrones-atlas";
+} from "the-known-world";
 
 // ViewToggle is a generic controlled segmented control: an `options` array of
 // { value, label, icon } plus the current `value` and an `onChange` handler.

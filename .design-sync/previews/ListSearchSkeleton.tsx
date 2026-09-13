@@ -1,4 +1,4 @@
-import { ListSearchSkeleton } from "game-of-thrones-atlas";
+import { ListSearchSkeleton } from "the-known-world";
 
 // The disabled loading placeholder for a list-page search input, shown while
 // the entry index streams in. `withControls` widens the row to leave room for

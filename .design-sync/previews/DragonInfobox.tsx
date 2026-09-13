@@ -1,4 +1,4 @@
-import { DragonInfobox } from "game-of-thrones-atlas";
+import { DragonInfobox } from "the-known-world";
 
 // The fact panel for a dragon. The house crest only renders when the house
 // resolves in `housesBySlug`; passing empty Maps keeps the card to its fact

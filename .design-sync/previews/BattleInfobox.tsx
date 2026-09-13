@@ -1,4 +1,4 @@
-import { BattleInfobox } from "game-of-thrones-atlas";
+import { BattleInfobox } from "the-known-world";
 
 // The wiki-style fact panel for a battle. Reads a Battle object plus lookup
 // Maps (houses/characters by slug); empty Maps just mean names aren't linked.

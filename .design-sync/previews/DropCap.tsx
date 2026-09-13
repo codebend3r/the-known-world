@@ -1,4 +1,4 @@
-import { DropCap } from "game-of-thrones-atlas";
+import { DropCap } from "the-known-world";
 
 export const Default = () => (
   <div style={{ maxWidth: "34rem" }}>

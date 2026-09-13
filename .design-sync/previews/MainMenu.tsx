@@ -1,4 +1,4 @@
-import { MainMenu } from "game-of-thrones-atlas";
+import { MainMenu } from "the-known-world";
 
 // MainMenu takes no props: it renders the full atlas-section navigation grid
 // of MainMenuTile links (Maps, Timeline, Houses, Castles, Characters,

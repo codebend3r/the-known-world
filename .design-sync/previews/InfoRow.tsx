@@ -1,4 +1,4 @@
-import { InfoRow } from "game-of-thrones-atlas";
+import { InfoRow } from "the-known-world";
 
 // A labeled row inside an infobox definition list: a <dt> label and a <dd>
 // list of entries. Renders nothing when `entries` is empty. Compose in a <dl>.

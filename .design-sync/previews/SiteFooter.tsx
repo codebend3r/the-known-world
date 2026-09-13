@@ -1,4 +1,4 @@
-import { SiteFooter } from "game-of-thrones-atlas";
+import { SiteFooter } from "the-known-world";
 
 // SiteFooter takes no props: a full-width credit line (author name, a GitHub
 // link with an inline SVG mark, and the package version read from package.json).

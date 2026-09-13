@@ -1,4 +1,4 @@
-import { Sources } from "game-of-thrones-atlas";
+import { Sources } from "the-known-world";
 
 // The citation footer shown at the bottom of every atlas entry. AWOIAF
 // sources render as licensed links; other types render as plain refs.
