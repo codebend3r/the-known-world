@@ -224,7 +224,10 @@ function referenceErrors(collections: Collections): string[] {
       name: "events",
       entries: collections.events,
       targets,
-      rules: [{ to: "houses", read: participantHouses }],
+      rules: [
+        { to: "houses", read: participantHouses },
+        { to: "all", read: (fm) => ref("mentions", fm.mentions) },
+      ],
     }),
   } satisfies Record<CollectionName, string[]>;
 
