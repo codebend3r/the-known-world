@@ -13,6 +13,7 @@ died:
 primary-house: targaryen
 aliases:
   - The Anvil
+  - Maekar I
 parents:
   - daeron-ii-targaryen
   - myriah-martell

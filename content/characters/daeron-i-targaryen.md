@@ -22,6 +22,7 @@ aliases:
   - The Young Dragon
   - Boy King
   - Daeron the Dragon
+  - Daeron I
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_I_Targaryen

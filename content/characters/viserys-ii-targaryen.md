@@ -25,6 +25,8 @@ titles:
   - Lord of the Seven Kingdoms
   - Protector of the Realm
   - Hand of the King
+aliases:
+  - Viserys II
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Viserys_II_Targaryen
