@@ -27,7 +27,7 @@ genealogies, and reference pages for battles, dragons, and weapons.
 ## Requirements
 
 - Node.js 24.16 or newer
-- Bun 1.3.14 or newer
+- Bun 1.4.2 or newer
 
 ## Getting started
 
