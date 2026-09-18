@@ -18,6 +18,7 @@ riders:
 aliases: []
 mentions:
   - targaryen
+  - rhaena-targaryen-daughter-of-daemon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Morning

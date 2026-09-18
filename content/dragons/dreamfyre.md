@@ -19,6 +19,8 @@ riders:
 aliases: []
 mentions:
   - targaryen
+  - rhaena-targaryen-daughter-of-aenys
+  - helaena-targaryen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Dreamfyre

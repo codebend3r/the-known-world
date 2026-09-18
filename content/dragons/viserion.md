@@ -13,7 +13,8 @@ house: targaryen
 riders: []
 aliases:
   - white dragon
-mentions: []
+mentions:
+  - daenerys-targaryen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Viserion

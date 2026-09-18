@@ -20,6 +20,8 @@ aliases:
   - Red Queen
 mentions:
   - targaryen
+  - rhaenys-targaryen-queen-who-never-was
+  - corlys-velaryon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Meleys

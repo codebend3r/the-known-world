@@ -17,6 +17,7 @@ riders: []
 aliases: []
 mentions:
   - targaryen
+  - daenerys-targaryen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Dragon

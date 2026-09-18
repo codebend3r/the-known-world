@@ -12,7 +12,8 @@ status: extant
 house: targaryen
 riders: []
 aliases: []
-mentions: []
+mentions:
+  - daenerys-targaryen
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Rhaegal

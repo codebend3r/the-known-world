@@ -19,6 +19,7 @@ aliases:
   - Blue Queen
 mentions:
   - targaryen
+  - daeron-targaryen-son-of-viserys-i
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tessarion

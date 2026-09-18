@@ -16,7 +16,8 @@ house: velaryon
 riders:
   - lucerys-velaryon
 aliases: []
-mentions: []
+mentions:
+  - lucerys-velaryon
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Arrax
