@@ -86,12 +86,22 @@ function targetsOf<T extends { slug: string; draft: boolean }>({
   kind,
   entries,
   forms,
+  mentioned,
 }: {
   kind: ProseLinkKind;
   entries: ReadonlyArray<{ frontmatter: T }>;
   forms: (frontmatter: T) => string[];
+  mentioned: ReadonlySet<string>;
 }): ProseLinkTarget[] {
-  return entries.flatMap<ProseLinkTarget>(({ frontmatter: fm }) => {
+  // The first target to register a surface form keeps it, so an entry the
+  // page lists in `mentions` goes first: three characters are named
+  // "Rhaenys Targaryen", and only the page knows which one it means.
+  const ordered = entries.toSorted(
+    (a, b) =>
+      Number(mentioned.has(b.frontmatter.slug)) -
+      Number(mentioned.has(a.frontmatter.slug)),
+  );
+  return ordered.flatMap<ProseLinkTarget>(({ frontmatter: fm }) => {
     if (fm.draft) return [];
     const surfaceForms = uniqueOrdered(forms(fm));
     if (surfaceForms.length === 0) return [];
@@ -135,6 +145,7 @@ export function buildProseLinkIndex(args: {
   const characterTargets = targetsOf({
     kind: "character",
     entries: allCharacters,
+    mentioned,
     forms: (fm) => {
       if (fm.placeholder) return [];
       const forms = [fm.name, ...fm.aliases];
@@ -146,6 +157,7 @@ export function buildProseLinkIndex(args: {
   const houseTargets = targetsOf({
     kind: "house",
     entries: allHouses,
+    mentioned,
     forms: (fm) => {
       const forms = [fm.name];
       if (mentioned.has(fm.slug)) {
@@ -159,12 +171,14 @@ export function buildProseLinkIndex(args: {
   const weaponTargets = targetsOf({
     kind: "weapon",
     entries: allWeapons,
+    mentioned,
     forms: (fm) => [fm.name, ...fm.aliases],
   });
 
   const dragonTargets = targetsOf({
     kind: "dragon",
     entries: allDragons,
+    mentioned,
     forms: (fm) => [fm.name, ...fm.aliases],
   });
 
@@ -178,6 +192,7 @@ export function buildProseLinkIndex(args: {
   const castleTargets = targetsOf({
     kind: "castle",
     entries: allCastles,
+    mentioned,
     forms: (fm) => {
       const forms = [fm.name, stripArticle(fm.name)];
       return forms.some((f) => houseShortNames.has(f)) ? [] : forms;
@@ -187,12 +202,14 @@ export function buildProseLinkIndex(args: {
   const battleTargets = targetsOf({
     kind: "battle",
     entries: allBattles,
+    mentioned,
     forms: (fm) => [fm.name, ...fm.aliases, stripArticle(fm.name)],
   });
 
   const eventTargets = targetsOf({
     kind: "event",
     entries: allEvents,
+    mentioned,
     forms: (fm) => [fm.name, ...fm.aliases, stripArticle(fm.name)],
   });
 

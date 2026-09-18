@@ -709,3 +709,46 @@ describe("prose-links: castles, battles, and events", () => {
     ]);
   });
 });
+
+describe("prose-links: shared names", () => {
+  const ELDER = character({
+    slug: "rhaenys-targaryen",
+    name: "Rhaenys Targaryen",
+  });
+  const YOUNGER = character({
+    slug: "rhaenys-targaryen-queen-who-never-was",
+    name: "Rhaenys Targaryen",
+  });
+
+  it("gives a shared name to the first entry when neither is mentioned", async () => {
+    const index = indexFor({
+      current: { kind: "dragon", slug: "meleys" },
+      characters: [ELDER, YOUNGER],
+    });
+    const html = await renderWith(
+      "Claimed by Princess Rhaenys Targaryen.",
+      index,
+    );
+    expect(html).toContain(
+      '<a href="/characters/rhaenys-targaryen/">Rhaenys Targaryen</a>',
+    );
+  });
+
+  it("lets `mentions` pick the winner when two entries share a name", async () => {
+    const index = indexFor({
+      current: {
+        kind: "dragon",
+        slug: "meleys",
+        mentions: ["rhaenys-targaryen-queen-who-never-was"],
+      },
+      characters: [ELDER, YOUNGER],
+    });
+    const html = await renderWith(
+      "Claimed by Princess Rhaenys Targaryen.",
+      index,
+    );
+    expect(html).toContain(
+      '<a href="/characters/rhaenys-targaryen-queen-who-never-was/">Rhaenys Targaryen</a>',
+    );
+  });
+});
