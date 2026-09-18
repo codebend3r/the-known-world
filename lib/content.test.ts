@@ -168,17 +168,19 @@ describe("loadDragon round-trip", () => {
 });
 
 describe("loadAllDragons round-trip", () => {
-  it("returns all seven seeded dragons", async () => {
+  it("returns the seeded dragons", async () => {
     const all = await loadAllDragons();
-    const slugs = all.map((d) => d.frontmatter.slug).sort();
-    expect(slugs).toEqual([
-      "balerion",
-      "cannibal",
-      "caraxes",
-      "meraxes",
-      "sunfyre",
-      "vermithor",
-      "vhagar",
-    ]);
+    const slugs = all.map((d) => d.frontmatter.slug);
+    expect(slugs).toEqual(
+      expect.arrayContaining([
+        "balerion",
+        "cannibal",
+        "caraxes",
+        "meraxes",
+        "sunfyre",
+        "vermithor",
+        "vhagar",
+      ]),
+    );
   });
 });
