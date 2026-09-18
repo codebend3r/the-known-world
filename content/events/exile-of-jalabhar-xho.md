@@ -9,6 +9,7 @@ date:
 location: "Red Flower Vale"
 landmass: summer-isles
 outcome: "The defeated Prince of Red Flower Vale flees to Robert's court, forever petitioning for swords to win back his vale."
+mentions: [robert-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jalabhar_Xho

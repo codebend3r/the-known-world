@@ -25,6 +25,7 @@ commanders: [robb-stark, brynden-tully, jaime-lannister]
 victor: "House Stark"
 outcome: "Robb Stark's night ambush destroyed Jaime Lannister's cavalry and took Jaime himself captive, a devastating blow to the Lannister cause in the riverlands."
 casualties: [daryn-hornwood]
+mentions: [tywin-lannister, stark, karstark, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_in_the_Whispering_Wood

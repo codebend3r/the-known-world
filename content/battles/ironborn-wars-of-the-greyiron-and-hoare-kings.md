@@ -21,6 +21,7 @@ participants:
 commanders: [urron-greyiron, harwyn-hoare, harren-hoare]
 victor: "The Ironborn"
 outcome: "The ironborn extended their reaving across the sunset sea, and under the black-blooded Hoare kings conquered the riverlands, ruling them until Aegon's Conquest."
+mentions: [aegon-i-targaryen, greyiron]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ironborn

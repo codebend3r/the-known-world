@@ -22,6 +22,7 @@ commanders: [tristifer-iv-mudd]
 victor: "Andal invaders"
 outcome: "Tristifer IV won ninety-nine victories but lost his hundredth battle and his life; his heir could not hold the realm, and the kingdom of the rivers passed to the Andals."
 casualties: [tristifer-iv-mudd]
+mentions: [mudd]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tristifer_IV_Mudd

@@ -37,6 +37,14 @@ casualties:
     quentyn-ball,
   ]
 aliases: ["Battle of the Redgrass Field"]
+mentions:
+  [
+    aegon-iv-targaryen,
+    aemon-blackfyre-son-of-daemon-i,
+    daemon-i-blackfyre,
+    daeron-ii-targaryen,
+    blackfyre,
+  ]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/First_Blackfyre_Rebellion

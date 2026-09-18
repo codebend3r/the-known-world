@@ -12,6 +12,7 @@ coords:
   x: 590
   y: 830
 outcome: "The last dragon dies stunted and sickly under Aegon III, and House Targaryen rules on by right and habit alone."
+mentions: [aegon-iii-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Last_dragon

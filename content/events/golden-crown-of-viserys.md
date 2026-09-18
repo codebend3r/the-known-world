@@ -9,6 +9,7 @@ date:
 location: "Vaes Dothrak"
 landmass: essos
 outcome: "Drogo crowns the beggar king with molten gold in the sacred city; Daenerys watches, and knows he was no dragon."
+mentions: [daenerys-targaryen, viserys-iii-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Viserys_Targaryen

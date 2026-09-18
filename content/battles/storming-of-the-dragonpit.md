@@ -24,6 +24,7 @@ participants:
 victor: "Smallfolk of King's Landing"
 outcome: "A crazed mob broke into the Dragonpit and slew the chained dragons, gutting Targaryen power and turning the capital against Queen Rhaenyra."
 aliases: ["Storming of the Dragonpit"]
+mentions: [joffrey-velaryon, helaena-targaryen, rhaenyra-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Storming_of_the_Dragonpit

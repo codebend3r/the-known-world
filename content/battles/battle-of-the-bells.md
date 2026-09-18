@@ -26,6 +26,7 @@ victor: "rebels"
 outcome: "The Stark and Tully hosts storm Stoney Sept as its bells ring the alarm, breaking Jon Connington's search for the wounded Robert and saving the rebellion at its lowest ebb."
 casualties: [denys-arryn, myles-mooton]
 aliases: []
+mentions: [catelyn-stark, aerys-ii-targaryen, connington]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Bells

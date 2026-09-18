@@ -12,6 +12,8 @@ coords:
   x: 590
   y: 830
 outcome: "Aegon is anointed by the Faith, the Iron Throne is forged from the swords of his enemies, and a city rises where he first came ashore."
+mentions:
+  [aegon-i-targaryen, rhaenys-targaryen, visenya-targaryen, maegor-i-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/King%27s_Landing

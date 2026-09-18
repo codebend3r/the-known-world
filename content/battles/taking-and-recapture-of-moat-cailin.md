@@ -25,6 +25,7 @@ commanders: [ramsay-bolton]
 victor: "House Bolton and House Frey"
 outcome: "The ironborn seized the ruined causeway fortress to choke the neck, then were tricked into yielding it to Ramsay Bolton, reopening the only overland road into the north."
 aliases: []
+mentions: [frey, bolton]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Moat_Cailin

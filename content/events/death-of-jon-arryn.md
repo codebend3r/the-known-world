@@ -12,6 +12,7 @@ coords:
   x: 590
   y: 830
 outcome: "The Hand of the King dies of a sudden fever (poison, in truth) and Robert rides north to make Eddard Stark his Hand."
+mentions: [robert-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jon_Arryn

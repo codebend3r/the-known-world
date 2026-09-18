@@ -26,6 +26,7 @@ victor: "House Frey and House Bolton"
 outcome: "Robb Stark, his lady mother, and the flower of his host were slaughtered under guest right at a wedding feast, breaking the northern cause in a single night."
 casualties: [robb-stark, catelyn-stark]
 aliases: []
+mentions: [catelyn-stark, frey, bolton]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Red_Wedding

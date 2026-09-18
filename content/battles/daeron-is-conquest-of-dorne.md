@@ -22,6 +22,7 @@ commanders: [daeron-i-targaryen, baelor-i-targaryen, alyn-velaryon]
 victor: "Iron Throne"
 outcome: "The Young Dragon broke the Dornish in the passes and took Sunspear, bringing Dorne under the Iron Throne for the first time."
 casualties: [rickon-stark-son-of-cregan]
+mentions: [aegon-i-targaryen, fowler, targaryen, yronwood]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Conquest_of_Dorne

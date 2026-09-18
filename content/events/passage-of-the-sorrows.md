@@ -9,6 +9,7 @@ date:
 location: "Chroyane"
 landmass: essos
 outcome: "The Shy Maid slips through the drowned ruin of Chroyane; the stone men attack, and Jon Connington takes the greyscale in silence."
+mentions: [rhaegar-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Chroyane

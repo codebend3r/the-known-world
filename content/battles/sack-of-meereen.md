@@ -21,6 +21,7 @@ commanders: [daenerys-targaryen, grey-worm, jorah-mormont, barristan-selmy]
 victor: "Daenerys Targaryen and the Unsullied"
 outcome: "Daenerys took Meereen by a rising of its own slaves, hanged the ruling Great Masters, and made the city her seat."
 aliases: []
+mentions: [daenerys-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Sack_of_Meereen

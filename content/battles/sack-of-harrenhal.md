@@ -25,6 +25,7 @@ commanders: [roose-bolton]
 victor: "House Bolton"
 outcome: "Harrenhal passed into northern hands when the sellsword Brave Companions turned on their Lannister paymasters and opened the gates to Roose Bolton."
 aliases: []
+mentions: [lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Harrenhal

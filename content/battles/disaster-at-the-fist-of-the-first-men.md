@@ -21,6 +21,7 @@ commanders: [jeor-mormont]
 victor: "the Others"
 outcome: "The Great Ranging is shattered atop the Fist and its survivors flee south in disarray."
 aliases: []
+mentions: [others]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Fist_of_the_First_Men

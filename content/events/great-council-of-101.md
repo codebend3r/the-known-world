@@ -12,6 +12,13 @@ coords:
   x: 555
   y: 765
 outcome: "The lords choose Viserys over Rhaenys's line, fixing the precedent that the Iron Throne passes by the male line, the seed of the Dance."
+mentions:
+  [
+    viserys-i-targaryen,
+    jaehaerys-i-targaryen,
+    rhaenys-targaryen-queen-who-never-was,
+    baelon-targaryen,
+  ]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Great_Council_of_101

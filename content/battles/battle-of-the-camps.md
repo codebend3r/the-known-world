@@ -24,6 +24,7 @@ participants:
 commanders: [robb-stark, brynden-tully, edmure-tully]
 victor: "House Stark"
 outcome: "Robb Stark stormed the leaderless Lannister camps and lifted the siege of Riverrun, uniting the northern and river hosts and freeing House Tully."
+mentions: [jaime-lannister, tully, stark, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Camps

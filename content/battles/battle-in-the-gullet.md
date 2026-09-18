@@ -23,6 +23,7 @@ victor: "blacks"
 outcome: "A ruinously costly black victory that broke the Triarchy fleet but claimed Prince Jacaerys Velaryon and his dragon Vermax."
 casualties: [jacaerys-velaryon]
 aliases: ["Battle of the Gullet"]
+mentions: [rhaenyra-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_in_the_Gullet

@@ -22,6 +22,7 @@ commanders: [aegon-i-targaryen, loren-i-lannister, mern-ix-gardener]
 victor: "House Targaryen"
 outcome: "Aegon's three dragons burn the largest host ever raised in Westeros; King Mern dies and the Gardener line is extinguished, while King Loren yields and keeps Casterly Rock."
 casualties: [mern-ix-gardener]
+mentions: [rhaenys-targaryen, visenya-targaryen, gardener, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Field_of_Fire

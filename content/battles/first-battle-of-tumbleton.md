@@ -27,6 +27,7 @@ victor: "greens"
 outcome: "The Two Betrayers turned their dragons upon Rhaenyra's defenders, shattering the black host and delivering Tumbleton to fire and sack."
 casualties: [roderick-dustin]
 aliases: ["Fall of Tumbleton", "First Tumbleton"]
+mentions: [aegon-ii-targaryen, rhaenyra-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/First_Battle_of_Tumbleton

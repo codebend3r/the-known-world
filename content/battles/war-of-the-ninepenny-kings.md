@@ -22,6 +22,7 @@ victor: "Iron Throne"
 outcome: "The realm broke the Band of Nine on the Stepstones, and Barristan Selmy slew Maelys the Monstrous, ending the male line of the Blackfyres."
 casualties: [maelys-i-blackfyre, ormund-baratheon]
 aliases: ["Fifth Blackfyre Rebellion"]
+mentions: [jaehaerys-ii-targaryen, maelys-i-blackfyre, blackfyre]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/War_of_the_Ninepenny_Kings

@@ -32,6 +32,7 @@ casualties:
     elia-martell,
   ]
 aliases: []
+mentions: [aegon-son-of-rhaegar, rhaenys-daughter-of-rhaegar]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Sack_of_King's_Landing

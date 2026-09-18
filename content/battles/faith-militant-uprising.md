@@ -21,6 +21,15 @@ participants:
 commanders: [maegor-i-targaryen, aenys-i-targaryen, jaehaerys-i-targaryen]
 victor: "Iron Throne"
 outcome: "The militant orders of the Faith are crushed and later disbanded, and the Faith renounces the sword in exchange for a royal pardon."
+mentions:
+  [
+    aegon-the-uncrowned,
+    jaehaerys-i-targaryen,
+    maegor-i-targaryen,
+    rhaena-targaryen-daughter-of-aenys,
+    alys-harroway,
+    aenys-i-targaryen,
+  ]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Faith_Militant_uprising

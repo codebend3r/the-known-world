@@ -21,6 +21,7 @@ participants:
 commanders: [roderick-dustin, benjicot-blackwood]
 victor: "blacks"
 outcome: "Three converging black hosts annihilated a leaderless westerman army, casting so many dead into the rivers that the fish grew fat."
+mentions: [aegon-ii-targaryen, rhaenyra-targaryen, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Fishfeed

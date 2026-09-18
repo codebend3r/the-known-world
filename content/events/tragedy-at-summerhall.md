@@ -12,6 +12,7 @@ coords:
   x: 555
   y: 1060
 outcome: "Fire consumes the summer palace, King Aegon V, and Prince Duncan; Rhaegar Targaryen is born amid the smoke and grief."
+mentions: [aegon-v-targaryen, rhaella-targaryen, rhaegar-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tragedy_at_Summerhall

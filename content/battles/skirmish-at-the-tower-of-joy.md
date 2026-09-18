@@ -23,6 +23,7 @@ victor: "rebels"
 outcome: "Eddard Stark and his companions overcome three knights of the Kingsguard guarding the Tower of Joy; only Ned and Howland Reed survive the clash."
 casualties: [arthur-dayne, oswell-whent, willam-dustin]
 aliases: [Battle of the Tower of Joy]
+mentions: [lyanna-stark, barbrey-ryswell, rhaegar-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tower_of_Joy

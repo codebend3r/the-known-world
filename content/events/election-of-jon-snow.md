@@ -12,6 +12,7 @@ coords:
   x: 460
   y: 108
 outcome: "Ned Stark's bastard becomes the nine hundred and ninety-eighth Lord Commander of the Night's Watch, and lets the wildlings through the Wall."
+mentions: [stannis-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jon_Snow

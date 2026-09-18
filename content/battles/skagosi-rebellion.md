@@ -20,6 +20,7 @@ participants:
     houses: []
 victor: "House Stark"
 outcome: "The Skagosi rose against Winterfell and were brought back beneath the direwolf's rule by a King of Winter, though at great cost."
+mentions: [stark]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Skagos

@@ -19,6 +19,7 @@ participants:
   - side: House Gardener
     houses: [gardener]
 outcome: "The Marches changed hands again and again over thousands of years, with neither realm able to hold them for long, until both fell at last to Aegon the Conqueror."
+mentions: [mern-ix-gardener, argilac-durrandon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Dornish_Marches

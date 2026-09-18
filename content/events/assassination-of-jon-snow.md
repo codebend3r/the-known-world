@@ -12,6 +12,7 @@ coords:
   x: 460
   y: 108
 outcome: "Sworn brothers put their knives in the Lord Commander for the Watch; he falls in the snow at Castle Black, his fate unwritten."
+mentions: [ramsay-bolton]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jon_Snow

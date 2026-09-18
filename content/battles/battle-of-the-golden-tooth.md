@@ -24,6 +24,7 @@ participants:
 commanders: [jaime-lannister]
 victor: "House Lannister"
 outcome: "Jaime Lannister broke the river lords holding the pass and opened the road into the riverlands, allowing him to march on Riverrun."
+mentions: [piper, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Golden_Tooth

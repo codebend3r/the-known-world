@@ -25,6 +25,7 @@ commanders: [stannis-baratheon, mace-tyrell, paxter-redwyne]
 victor: "rebels"
 outcome: "Mace Tyrell besieges Storm's End for nearly a year but never breaks it; Stannis Baratheon's garrison, saved from starvation by an onion smuggler, holds until the war's end lifts the siege."
 aliases: []
+mentions: [stannis-baratheon, redwyne]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Siege_of_Storm's_End

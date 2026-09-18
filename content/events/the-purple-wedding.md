@@ -12,6 +12,7 @@ coords:
   x: 590
   y: 830
 outcome: "King Joffrey is poisoned at his own wedding feast; Tyrion Lannister is seized for the murder, and Sansa Stark vanishes."
+mentions: [tyrion-lannister, cersei-lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Joffrey_I_Baratheon

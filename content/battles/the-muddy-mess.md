@@ -22,6 +22,7 @@ commanders: [borros-baratheon, benjicot-blackwood]
 victor: "blacks"
 outcome: "The river lords broke Lord Borros Baratheon's stormland host in the rain and mud, and his death ended the last organized green resistance."
 aliases: ["Battle at the Kingsroad"]
+mentions: [aegon-ii-targaryen, frey]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Muddy_Mess

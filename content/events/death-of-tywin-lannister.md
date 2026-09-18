@@ -12,6 +12,7 @@ coords:
   x: 592
   y: 830
 outcome: "Tyrion puts a crossbow bolt through his father on the privy and flees across the narrow sea; the lion's realm begins to unravel."
+mentions: [oberyn-martell, tywin-lannister, jaime-lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Tywin_Lannister

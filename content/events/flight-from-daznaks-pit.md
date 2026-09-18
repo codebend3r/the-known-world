@@ -9,6 +9,7 @@ date:
 location: "Meereen"
 landmass: essos
 outcome: "Drogon descends upon the fighting pit and carries the queen away to the Dothraki sea, while a slaver host closes on Meereen."
+mentions: [daenerys-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daznak%27s_Pit

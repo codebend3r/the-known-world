@@ -21,6 +21,7 @@ commanders:
   [jon-stark, theon-stark, rickard-stark-the-laughing-wolf, rodrik-stark]
 victor: "House Stark"
 outcome: "Over many lifetimes the Kings of Winter broke or subdued every rival power in the North, uniting the whole of it under Winterfell."
+mentions: [stark]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Kings_of_Winter

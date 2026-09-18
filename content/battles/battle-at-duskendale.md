@@ -26,6 +26,7 @@ victor: "the Iron Throne"
 outcome: "A northern foraging host was trapped and destroyed at Duskendale, costing Robb Stark a large part of his foot before the Red Wedding."
 casualties: [helman-tallhart]
 aliases: []
+mentions: [tywin-lannister, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_at_Duskendale

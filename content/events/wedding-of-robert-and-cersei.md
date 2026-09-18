@@ -12,6 +12,7 @@ coords:
   x: 590
   y: 830
 outcome: "The stag weds the lion to bind Casterly Rock to the new dynasty; the realm settles into an uneasy, indebted peace."
+mentions: [cersei-lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Robert_I_Baratheon
