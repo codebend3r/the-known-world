@@ -28,6 +28,7 @@ titles:
 aliases:
   - The Cruel
   - The Abomination on the Iron Throne
+  - Maegor I
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Maegor_I_Targaryen

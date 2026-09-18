@@ -28,6 +28,7 @@ titles:
 aliases:
   - The Good
   - The Falseborn
+  - Daeron II
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_II_Targaryen

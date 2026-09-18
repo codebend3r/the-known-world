@@ -30,6 +30,7 @@ titles:
   - Protector of the Realm
 aliases:
   - King Abomination
+  - Aenys I
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aenys_I_Targaryen
