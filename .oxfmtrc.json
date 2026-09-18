@@ -17,5 +17,5 @@
   "embeddedLanguageFormatting": "auto",
   "singleAttributePerLine": false,
   "sortPackageJson": false,
-  "ignorePatterns": []
+  "ignorePatterns": ["graphify-out"]
 }

@@ -52,3 +52,6 @@ next-env.d.ts
 /.design-sync/build/dist/
 /.design-sync/build/.entry.mjs
 /.design-sync/build/package-lock.json
+
+# graphify knowledge graph output (local, regeneratable)
+/graphify-out/
