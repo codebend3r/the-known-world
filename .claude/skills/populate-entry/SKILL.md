@@ -21,12 +21,11 @@ The research half of the job is identical across all five: one AWOIAF article, o
 
 **The core insight: an empty field is not automatically a gap.** Several schema fields are empty on every entry in their collection because nothing renders them, so filling one in is noise, not progress:
 
-| Field                  | Filled | Why it stays empty                                                                   |
-| ---------------------- | ------ | ------------------------------------------------------------------------------------ |
-| `castles.sworn-houses` | 0/146  | Only `lib/relations.ts` reads it, and nothing in `app/` calls `buildRelationGraph`.  |
-| `battles.mentions`     | 0/72   | `buildProseLinkIndex` never runs on a battle page, so `mentions` cannot do anything. |
-| `events.participants`  | 0/53   | The event page renders subtitle, body, and sources. Nothing else.                    |
-| `events.casualties`    | 0/53   | Same.                                                                                |
+| Field                  | Filled | Why it stays empty                                                                  |
+| ---------------------- | ------ | ----------------------------------------------------------------------------------- |
+| `castles.sworn-houses` | 0/146  | Only `lib/relations.ts` reads it, and nothing in `app/` calls `buildRelationGraph`. |
+| `events.participants`  | 0/53   | The event page renders subtitle, body, and sources. Nothing else.                   |
+| `events.casualties`    | 0/53   | Same.                                                                               |
 
 `audit-entries.ts` encodes this: a field only counts against an entry when the rest of its own collection fills it. Score is deviation from the collection norm, not distance from the schema.
 
@@ -75,7 +74,11 @@ Voice notes, matching `harrenhal.md`, `dreadfort.md`, and `battle-of-the-blackwa
 - Never invent canon. If AWOIAF does not record it, leave it out.
 - No em dashes or en dashes anywhere in this repo.
 
-Prose auto-linking runs on characters, houses, weapons, and dragons only. `app/castles/[slug]`, `app/battles/[slug]`, and `app/events/[slug]` call `renderMarkdown` without a `proseLinks` index, so nothing in those three bodies becomes a link. Write names freely there; also do not expect the reader to be able to click them.
+Prose auto-linking runs on character, house, weapon, dragon, battle, and event pages. Only `app/castles/[slug]` still calls `renderMarkdown` without a `proseLinks` index, so a castle body never links out. The link targets are characters, houses, weapons, dragons, castles, battles, and events; each is matched on its `name` and `aliases`, and a name that starts with "The" also matches without the article, so "the Twins" and "the Red Wedding" link. Three rules follow from `lib/prose-links.ts`:
+
+- `mentions` widens the match. A character listed there also links on first name alone ("Lord Tywin"), and a house listed there links on its bare name ("the Lannister host"). List one character per first name: a shared first name goes to whichever target registers first, so two Aegons in one `mentions` list means one of them never links.
+- A castle that shares its name with a house (Darry, Rosby, the Hightower) never auto-links, because `mentions` carries bare slugs and cannot tell the castle from the house. Write an explicit markdown link when the castle is meant.
+- Write `aliases` without a leading article ("Doom", not "the Doom"): the alias would otherwise win the match at "the" and swallow the longer "Doom of Valyria".
 
 ## Step 3: frontmatter, per collection
 
@@ -113,8 +116,8 @@ The most complex frontmatter in the repo, and every field below renders in `Batt
 | `victor`         | no       | 63/72. The winning `side` label, spelled the same way. Omit only when the outcome was genuinely undecided.     |
 | `outcome`        | no       | 69/72. One sentence, present tense.                                                                            |
 | `casualties[]`   | no       | 33/72. Character slugs. Renders as "Fallen".                                                                   |
-| `aliases[]`      | no       | 23/72. Renders as "Also called".                                                                               |
-| `mentions[]`     | no       | Leave empty. See the overview table.                                                                           |
+| `aliases[]`      | no       | 23/72. Renders as "Also called", and every alias is a prose-link surface form.                                 |
+| `mentions[]`     | no       | Characters the body names by first name only, and houses it names by bare name. One character per first name.  |
 
 **The `region` and Essos trap.** `landmassForBattle` in `lib/timeline.ts` puts a battle in the Westeros timeline column when it has any `region`, and otherwise checks a hardcoded `ESSOS_SLUGS` set. So an Essos battle needs **both** no `region` **and** an entry in `ESSOS_SLUGS`. Adding `region: crownlands` to `battle-of-meereen` to clear an audit gap would silently move it to the wrong column. Battles beyond the Wall and realm-wide wars correctly carry no `region` either.
 
@@ -127,6 +130,8 @@ The most complex frontmatter in the repo, and every field below renders in `Batt
 | `location` | yes      | 53/53 store a **display string** ("King's Landing", "Vaes Dothrak"), never a slug.                                           |
 | `landmass` | yes      | `westeros`, `essos`, `summer-isles`. This alone picks the timeline column; events need no `ESSOS_SLUGS`.                     |
 | `outcome`  | no       | 53/53 carry it even though nothing renders it. Keep the convention.                                                          |
+| `aliases`  | no       | Prose-link surface forms for the event, written without a leading article.                                                   |
+| `mentions` | no       | Same rule as battles: first-name characters and bare-name houses the body uses. One character per first name.                |
 
 `buildRelationGraph` in `lib/relations.ts` keys `eventsByLocation` off `location` as though it were a castle slug. No entry stores a slug there, so that map is empty. Do not "fix" one entry to a slug; the page prints `location` verbatim in the subtitle.
 
@@ -170,6 +175,7 @@ Seven entries, all populated. Use this section when adding an eighth.
 | `dragons.house`                                 | `content/houses/`     |
 | `dragons.riders[]`                              | `content/characters/` |
 | `weapons.mentions[]`, `dragons.mentions[]`      | any entity slug       |
+| `battles.mentions[]`, `events.mentions[]`       | any entity slug       |
 
 Check before writing a slug: `ls content/houses/<slug>.md`. Do not create a stub in another collection just to satisfy a reference; drop the reference instead.
 
@@ -224,20 +230,21 @@ bun run build                        # static export; run it after touching cont
 
 ## Common mistakes
 
-| Mistake                                                           | Why it goes wrong                                                                                         |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| Filling every empty field the schema allows                       | `sworn-houses`, `battles.mentions`, `events.participants`, and `events.casualties` are empty corpus-wide. |
-| Adding `region` to an Essos battle to clear a gap                 | Moves it to the Westeros timeline column. `region` plus `ESSOS_SLUGS` decide the column together.         |
-| Writing a castle slug into `events.location`                      | All 53 entries store a display string, and the page prints it verbatim.                                   |
-| Putting `## ` headings in a battle, event, weapon, or dragon body | 0 of those 162 entries use headings. Only castles do.                                                     |
-| Writing a castle body of three or four sections                   | The longest castle in the repo is 1,097 non-whitespace characters. Median is 593.                         |
-| `precision: exact` on a legendary date                            | Drops the asterisk the timeline uses to mark approximate dates.                                           |
-| Referencing a character or house slug that does not exist         | `lib/content-integrity.test.ts` fails the build. There is no graceful fallback here.                      |
-| Expecting names in a castle or battle body to auto-link           | Those pages call `renderMarkdown` without a `proseLinks` index.                                           |
-| Retrying plain `WebFetch` on awoiaf.westeros.org                  | Cloudflare 403s every page. Go straight to the CDX pipeline.                                              |
-| Citing the `web.archive.org` URL in `sources`                     | The mirror is the fetch mechanism, not the citation.                                                      |
-| `bun test` instead of `bun run test`                              | The script is `bun test --isolate --dots`; the bare form mis-reports the DOM suite.                       |
-| Committing without `bun format`                                   | `oxfmt` covers `.claude/**/*.ts` and markdown, and CI fails on drift.                                     |
+| Mistake                                                           | Why it goes wrong                                                                                 |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Filling every empty field the schema allows                       | `sworn-houses`, `events.participants`, and `events.casualties` are empty corpus-wide.             |
+| Adding `region` to an Essos battle to clear a gap                 | Moves it to the Westeros timeline column. `region` plus `ESSOS_SLUGS` decide the column together. |
+| Writing a castle slug into `events.location`                      | All 53 entries store a display string, and the page prints it verbatim.                           |
+| Putting `## ` headings in a battle, event, weapon, or dragon body | 0 of those 162 entries use headings. Only castles do.                                             |
+| Writing a castle body of three or four sections                   | The longest castle in the repo is 1,097 non-whitespace characters. Median is 593.                 |
+| `precision: exact` on a legendary date                            | Drops the asterisk the timeline uses to mark approximate dates.                                   |
+| Referencing a character or house slug that does not exist         | `lib/content-integrity.test.ts` fails the build. There is no graceful fallback here.              |
+| Expecting names in a castle body to auto-link                     | The castle page calls `renderMarkdown` without a `proseLinks` index. Battles and events do link.  |
+| Listing two characters who share a first name in `mentions`       | The first to register takes the bare name; the other never links on it.                           |
+| Retrying plain `WebFetch` on awoiaf.westeros.org                  | Cloudflare 403s every page. Go straight to the CDX pipeline.                                      |
+| Citing the `web.archive.org` URL in `sources`                     | The mirror is the fetch mechanism, not the citation.                                              |
+| `bun test` instead of `bun run test`                              | The script is `bun test --isolate --dots`; the bare form mis-reports the DOM suite.               |
+| Committing without `bun format`                                   | `oxfmt` covers `.claude/**/*.ts` and markdown, and CI fails on drift.                             |
 
 ## Related skills
 
