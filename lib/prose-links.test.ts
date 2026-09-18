@@ -1,12 +1,30 @@
 import { describe, it, expect } from "bun:test";
-import { buildProseLinkIndex, type ProseLinkIndex } from "@/lib/prose-links";
+import {
+  buildProseLinkIndex,
+  type ProseLinkIndex,
+  type ProseLinkKind,
+} from "@/lib/prose-links";
 import { renderMarkdown } from "@/lib/content";
-import type { Character, House, Weapon, Dragon } from "@/lib/schemas";
+import {
+  BattleSchema,
+  CastleSchema,
+  EventSchema,
+  type Battle,
+  type Castle,
+  type Character,
+  type Dragon,
+  type Event,
+  type House,
+  type Weapon,
+} from "@/lib/schemas";
 
 type CharacterFixture = { slug: string; frontmatter: Character };
 type HouseFixture = { slug: string; frontmatter: House };
 type WeaponFixture = { slug: string; frontmatter: Weapon };
 type DragonFixture = { slug: string; frontmatter: Dragon };
+type CastleFixture = { slug: string; frontmatter: Castle };
+type BattleFixture = { slug: string; frontmatter: Battle };
+type EventFixture = { slug: string; frontmatter: Event };
 
 function character(
   partial: Partial<Character> & Pick<Character, "slug" | "name">,
@@ -83,9 +101,81 @@ const AERYS_II = character({
 const STARK = house({ slug: "stark", name: "House Stark" });
 const TARGARYEN = house({ slug: "targaryen", name: "House Targaryen" });
 
+const DATE = { year: 299, era: "AC", precision: "year" } as const;
+
+function castle(partial: {
+  slug: string;
+  name: string;
+  draft?: boolean;
+}): CastleFixture {
+  const fm = CastleSchema.parse({
+    slug: partial.slug,
+    name: partial.name,
+    type: "castle",
+    coords: { x: 100, y: 100 },
+    draft: partial.draft ?? false,
+  });
+  return { slug: fm.slug, frontmatter: fm };
+}
+
+function battle(partial: {
+  slug: string;
+  name: string;
+  aliases?: string[];
+  draft?: boolean;
+}): BattleFixture {
+  const fm = BattleSchema.parse({
+    slug: partial.slug,
+    name: partial.name,
+    type: "battle",
+    start: DATE,
+    end: DATE,
+    aliases: partial.aliases ?? [],
+    draft: partial.draft ?? false,
+  });
+  return { slug: fm.slug, frontmatter: fm };
+}
+
+function event(partial: {
+  slug: string;
+  name: string;
+  aliases?: string[];
+  draft?: boolean;
+}): EventFixture {
+  const fm = EventSchema.parse({
+    slug: partial.slug,
+    name: partial.name,
+    type: "other",
+    date: DATE,
+    location: "Westeros",
+    landmass: "westeros",
+    aliases: partial.aliases ?? [],
+    draft: partial.draft ?? false,
+  });
+  return { slug: fm.slug, frontmatter: fm };
+}
+
+const HARRENHAL = castle({ slug: "harrenhal", name: "Harrenhal" });
+const TWINS = castle({ slug: "the-twins", name: "The Twins" });
+const ASHFORD = castle({ slug: "ashford", name: "Ashford" });
+const PYKE = castle({ slug: "pyke", name: "Pyke" });
+const DARRY_CASTLE = castle({ slug: "darry", name: "Darry" });
+const DARRY_HOUSE = house({ slug: "darry", name: "House Darry" });
+const RED_WEDDING = battle({ slug: "red-wedding", name: "The Red Wedding" });
+const BATTLE_OF_ASHFORD = battle({
+  slug: "battle-of-ashford",
+  name: "The Battle of Ashford",
+});
+const STORMING_OF_PYKE = battle({ slug: "pyke", name: "The Storming of Pyke" });
+const DOOM = event({
+  slug: "doom-of-valyria",
+  name: "The Doom of Valyria",
+  aliases: ["Doom"],
+});
+
 function indexFor(args: {
   current: {
-    kind: "character" | "house" | "weapon" | "dragon";
+    kind: ProseLinkKind;
     slug: string;
     mentions?: readonly string[];
   };
@@ -93,6 +183,9 @@ function indexFor(args: {
   houses?: HouseFixture[];
   weapons?: WeaponFixture[];
   dragons?: DragonFixture[];
+  castles?: CastleFixture[];
+  battles?: BattleFixture[];
+  events?: EventFixture[];
 }): ProseLinkIndex {
   return buildProseLinkIndex({
     allCharacters: args.characters ?? [
@@ -106,6 +199,9 @@ function indexFor(args: {
     allHouses: args.houses ?? [STARK, TARGARYEN],
     allWeapons: args.weapons ?? [],
     allDragons: args.dragons ?? [],
+    allCastles: args.castles ?? [],
+    allBattles: args.battles ?? [],
+    allEvents: args.events ?? [],
     current: { ...args.current, mentions: args.current.mentions ?? [] },
   });
 }
@@ -342,6 +438,9 @@ describe("buildProseLinkIndex", () => {
       allHouses: [],
       allWeapons: [],
       allDragons: [],
+      allCastles: [],
+      allBattles: [],
+      allEvents: [],
       current: { kind: "character", slug: "self", mentions: ["rickard-stark"] },
     });
     const rickard = out.targets.find((t) => t.slug === "rickard-stark");
@@ -358,6 +457,9 @@ describe("buildProseLinkIndex", () => {
       allHouses: [STARK, TARGARYEN],
       allWeapons: [],
       allDragons: [],
+      allCastles: [],
+      allBattles: [],
+      allEvents: [],
       current: { kind: "house", slug: "self", mentions: ["stark"] },
     });
     const stark = out.targets.find((t) => t.slug === "stark");
@@ -405,6 +507,9 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
       allHouses: [],
       allWeapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
       allDragons: [],
+      allCastles: [],
+      allBattles: [],
+      allEvents: [],
       current: { kind: "house", slug: "targaryen", mentions: [] },
     });
     const target = out.targets.find((t) => t.slug === "blackfyre");
@@ -418,6 +523,9 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
       allHouses: [],
       allWeapons: [],
       allDragons: [{ slug: "vhagar", frontmatter: dragonBase }],
+      allCastles: [],
+      allBattles: [],
+      allEvents: [],
       current: { kind: "house", slug: "targaryen", mentions: [] },
     });
     const target = out.targets.find((t) => t.slug === "vhagar");
@@ -431,8 +539,173 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
       allHouses: [],
       allWeapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
       allDragons: [],
+      allCastles: [],
+      allBattles: [],
+      allEvents: [],
       current: { kind: "weapon", slug: "blackfyre", mentions: [] },
     });
-    expect(out.selfSlug).toBe("blackfyre");
+    expect(out.self).toEqual({ kind: "weapon", slug: "blackfyre" });
+  });
+});
+
+describe("prose-links: castles, battles, and events", () => {
+  it("links a castle by name", async () => {
+    const index = indexFor({
+      current: { kind: "battle", slug: "burning-of-harrenhal" },
+      castles: [HARRENHAL],
+    });
+    const html = await renderWith(
+      "Harren's host sheltered inside Harrenhal.",
+      index,
+    );
+    expect(html).toContain('<a href="/castles/harrenhal/">Harrenhal</a>');
+  });
+
+  it("links a castle written with a lowercase article", async () => {
+    const index = indexFor({
+      current: { kind: "event", slug: "the-purple-wedding" },
+      castles: [TWINS],
+    });
+    const html = await renderWith("Robb Stark rode for the Twins.", index);
+    expect(html).toContain('the <a href="/castles/the-twins/">Twins</a>');
+  });
+
+  it("never links a castle whose name is also a house's short name", async () => {
+    const index = indexFor({
+      current: { kind: "battle", slug: "sack-of-darry", mentions: ["darry"] },
+      houses: [DARRY_HOUSE],
+      castles: [DARRY_CASTLE],
+    });
+    const html = await renderWith(
+      "Lord Darry held the castle of Darry.",
+      index,
+    );
+    expect(html).toContain('<a href="/houses/darry/">Darry</a>');
+    expect(html).not.toContain('href="/castles/darry/"');
+  });
+
+  it("links a battle by its article-stripped name", async () => {
+    const index = indexFor({
+      current: { kind: "character", slug: "robb-stark" },
+      battles: [RED_WEDDING],
+    });
+    const html = await renderWith("He was slain at the Red Wedding.", index);
+    expect(html).toContain(
+      'the <a href="/battles/red-wedding/">Red Wedding</a>',
+    );
+  });
+
+  it("links an event by name", async () => {
+    const index = indexFor({
+      current: { kind: "house", slug: "targaryen" },
+      events: [DOOM],
+    });
+    const html = await renderWith(
+      "They fled before the Doom of Valyria.",
+      index,
+    );
+    expect(html).toContain(
+      'the <a href="/events/doom-of-valyria/">Doom of Valyria</a>',
+    );
+  });
+
+  it("links an event by alias", async () => {
+    const index = indexFor({
+      current: { kind: "house", slug: "targaryen" },
+      events: [DOOM],
+    });
+    const html = await renderWith(
+      "After the Doom, Dragonstone stood alone.",
+      index,
+    );
+    expect(html).toContain('the <a href="/events/doom-of-valyria/">Doom</a>');
+  });
+
+  it("prefers the battle over the castle inside the battle's own name", async () => {
+    const index = indexFor({
+      current: { kind: "character", slug: "baelor-hightower" },
+      castles: [ASHFORD],
+      battles: [BATTLE_OF_ASHFORD],
+    });
+    const html = await renderWith("He fell at the Battle of Ashford.", index);
+    expect(html).toContain(
+      '<a href="/battles/battle-of-ashford/">Battle of Ashford</a>',
+    );
+    expect(html).not.toContain('href="/castles/ashford/"');
+  });
+
+  it("suppresses a battle page's link to itself", async () => {
+    const index = indexFor({
+      current: { kind: "battle", slug: "red-wedding" },
+      battles: [RED_WEDDING],
+    });
+    const html = await renderWith("The Red Wedding was a massacre.", index);
+    expect(html).not.toContain('href="/battles/red-wedding/"');
+  });
+
+  it("keys self-suppression by kind, so a castle sharing the page's slug still links", async () => {
+    const index = indexFor({
+      current: { kind: "battle", slug: "pyke" },
+      castles: [PYKE],
+      battles: [STORMING_OF_PYKE],
+    });
+    const html = await renderWith("The walls of Pyke were breached.", index);
+    expect(html).toContain('<a href="/castles/pyke/">Pyke</a>');
+  });
+
+  it("links a castle and a battle that share a slug once each", async () => {
+    const index = indexFor({
+      current: { kind: "character", slug: "robert-baratheon" },
+      castles: [PYKE],
+      battles: [STORMING_OF_PYKE],
+    });
+    const html = await renderWith(
+      "The Storming of Pyke ended the rebellion, and Pyke was left in ruins.",
+      index,
+    );
+    expect(html).toContain('<a href="/battles/pyke/">The Storming of Pyke</a>');
+    expect(html).toContain('<a href="/castles/pyke/">Pyke</a>');
+  });
+
+  it("skips draft castles, battles, and events", async () => {
+    const index = indexFor({
+      current: { kind: "character", slug: "nobody" },
+      castles: [
+        castle({ slug: "ghost-keep", name: "Ghost Keep", draft: true }),
+      ],
+      battles: [
+        battle({ slug: "ghost-fight", name: "The Ghost Fight", draft: true }),
+      ],
+      events: [
+        event({ slug: "ghost-feast", name: "The Ghost Feast", draft: true }),
+      ],
+    });
+    const html = await renderWith(
+      "Ghost Keep, the Ghost Fight, and the Ghost Feast.",
+      index,
+    );
+    expect(html).not.toContain("href=");
+  });
+
+  it("emits article-stripped forms for castles, battles, and events", () => {
+    const out = buildProseLinkIndex({
+      allCharacters: [],
+      allHouses: [],
+      allWeapons: [],
+      allDragons: [],
+      allCastles: [TWINS],
+      allBattles: [RED_WEDDING],
+      allEvents: [DOOM],
+      current: { kind: "battle", slug: "nobody", mentions: [] },
+    });
+    expect(out.targets.map((t) => [t.kind, t.href, t.surfaceForms])).toEqual([
+      ["castle", "/castles/the-twins/", ["The Twins", "Twins"]],
+      ["battle", "/battles/red-wedding/", ["The Red Wedding", "Red Wedding"]],
+      [
+        "event",
+        "/events/doom-of-valyria/",
+        ["The Doom of Valyria", "Doom", "Doom of Valyria"],
+      ],
+    ]);
   });
 });
