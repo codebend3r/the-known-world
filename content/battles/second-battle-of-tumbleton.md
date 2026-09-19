@@ -26,6 +26,7 @@ commanders:
 outcome: "Addam Velaryon fell upon the encamped green host to redeem the dragonseeds, and in the ensuing carnage its leadership was gutted and the march on King's Landing broken."
 casualties: [addam-velaryon, ormund-hightower, jon-roxton]
 aliases: ["Second Tumbleton"]
+mentions: [daeron-targaryen-son-of-viserys-i, targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Second_Battle_of_Tumbleton

@@ -32,6 +32,15 @@ commanders:
 victor: "House Lannister and House Tyrell"
 outcome: "Stannis Baratheon's great assault on King's Landing was shattered by wildfire and a boom-chain across the river, then routed when the Lannister and Tyrell host struck his landed army from behind."
 aliases: ["The Battle of the Blackwater Rush"]
+mentions:
+  [
+    joffrey-baratheon,
+    margaery-tyrell,
+    renly-baratheon,
+    tyrell,
+    baratheon,
+    lannister,
+  ]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Blackwater

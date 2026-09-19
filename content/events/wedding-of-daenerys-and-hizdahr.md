@@ -9,6 +9,7 @@ date:
 location: "Meereen"
 landmass: essos
 outcome: "The dragon queen weds a Ghiscari noble to buy peace for Meereen; the murders stop, and the fighting pits reopen."
+mentions: [daenerys-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Hizdahr_zo_Loraq

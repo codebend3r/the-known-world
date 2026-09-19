@@ -25,6 +25,7 @@ commanders: [robert-baratheon, randyll-tarly]
 victor: "loyalists"
 outcome: "Randyll Tarly's vanguard falls upon Robert Baratheon before the main Reach host arrives and drives him from the field, the only defeat Robert suffers in the war."
 aliases: []
+mentions: [aerys-ii-targaryen, tyrell, tarly]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_Ashford

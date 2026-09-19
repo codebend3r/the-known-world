@@ -25,6 +25,7 @@ commanders: [orys-baratheon, argilac-durrandon]
 victor: "House Targaryen"
 outcome: "Orys Baratheon slays Argilac the Arrogant, ending the line of the Storm Kings and winning Storm's End, the Durrandon arms, and Argilac's daughter."
 casualties: [argilac-durrandon]
+mentions: [targaryen, baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Last_Storm

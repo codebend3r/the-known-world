@@ -25,6 +25,7 @@ commanders: [robert-baratheon, stannis-baratheon, balon-greyjoy]
 victor: "the Iron Throne"
 outcome: "Robert Baratheon's host stormed Pyke and broke the rebellion; Balon Greyjoy bent the knee and gave up his last surviving son, Theon, as a hostage and ward."
 casualties: [maron-greyjoy]
+mentions: [rodrik-greyjoy, theon-greyjoy, stannis-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Siege_of_Pyke

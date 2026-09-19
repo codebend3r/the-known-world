@@ -65,6 +65,8 @@ const makeEvent = ({
   landmass,
   participants: [],
   casualties: [],
+  aliases: [],
+  mentions: [],
   sources: [],
   draft: false,
 });

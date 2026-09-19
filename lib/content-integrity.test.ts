@@ -313,3 +313,27 @@ describe("content integrity", () => {
     expect(errors).toEqual([]);
   });
 });
+
+describe("event mentions", () => {
+  it("validates event mentions the same way as battle mentions", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      events: [
+        {
+          body: "",
+          slug: "e",
+          frontmatter: EventSchema.parse({
+            slug: "e",
+            name: "E",
+            type: "wedding",
+            date: LEGEND_DATE,
+            location: "nowhere",
+            landmass: "westeros",
+            mentions: ["no-such-entry"],
+          }),
+        },
+      ],
+    });
+    expect(errors).toEqual(["events/e.mentions: missing no-such-entry"]);
+  });
+});

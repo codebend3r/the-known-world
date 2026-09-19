@@ -21,6 +21,7 @@ participants:
 commanders: [gregor-clegane, beric-dondarrion, tywin-lannister]
 victor: "House Lannister"
 outcome: "Lannister raiders under Ser Gregor Clegane burned the southern riverlands unopposed and ambushed the party sent to bring them to justice, opening the wider war."
+mentions: [tyrion-lannister, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Raids_in_the_riverlands

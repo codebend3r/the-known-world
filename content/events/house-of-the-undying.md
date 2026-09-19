@@ -9,6 +9,7 @@ date:
 location: "Qarth"
 landmass: essos
 outcome: "The warlocks' prophecies (three fires, three mounts, three treasons) are paid for in dragonflame, and Qarth is fled."
+mentions: [daenerys-targaryen, rhaegar-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/House_of_the_Undying

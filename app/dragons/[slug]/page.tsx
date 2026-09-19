@@ -6,6 +6,9 @@ import {
   loadAllWeapons,
   loadAllHouses,
   loadAllCharacters,
+  loadAllCastles,
+  loadAllBattles,
+  loadAllEvents,
   renderMarkdown,
 } from "@/lib/content";
 import { buildProseLinkIndex } from "@/lib/prose-links";
@@ -42,14 +45,25 @@ export default async function DragonPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [dragon, allHouses, allCharacters, allWeapons, allDragons] =
-    await Promise.all([
-      loadDragon(slug).catch(() => null),
-      loadAllHouses(),
-      loadAllCharacters(),
-      loadAllWeapons(),
-      loadAllDragons(),
-    ]);
+  const [
+    dragon,
+    allHouses,
+    allCharacters,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+  ] = await Promise.all([
+    loadDragon(slug).catch(() => null),
+    loadAllHouses(),
+    loadAllCharacters(),
+    loadAllWeapons(),
+    loadAllDragons(),
+    loadAllCastles(),
+    loadAllBattles(),
+    loadAllEvents(),
+  ]);
   if (!dragon) notFound();
 
   const housesBySlug = bySlug(allHouses);
@@ -73,6 +87,9 @@ export default async function DragonPage({
       slug: d.slug,
       frontmatter: d.frontmatter,
     })),
+    allCastles,
+    allBattles,
+    allEvents,
     current: { kind: "dragon", slug, mentions: dragon.frontmatter.mentions },
   });
   const html =

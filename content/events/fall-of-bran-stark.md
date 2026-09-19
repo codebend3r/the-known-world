@@ -12,6 +12,7 @@ coords:
   x: 400
   y: 430
 outcome: "A boy who saw too much is thrown from a tower and lives, crippled; the things done to silence him set the realm alight."
+mentions: [robert-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Bran_Stark

@@ -22,6 +22,7 @@ commanders: [samwell-blackwood, amos-bracken]
 outcome: "A bloody and indecisive clash that drew the riverlands into the war; Lord Samwell Blackwood was slain by Ser Amos Bracken."
 casualties: [samwell-blackwood]
 aliases: ["Battle of the Burning Mill"]
+mentions: [aegon-ii-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Burning_Mill

@@ -21,6 +21,7 @@ participants:
 commanders: [roose-bolton, tywin-lannister, tyrion-lannister]
 victor: "House Lannister"
 outcome: "Tywin Lannister drove Roose Bolton's northern foot from the field, but the fight was a feint that masked Robb Stark's true march west against Jaime at Riverrun."
+mentions: [jaime-lannister, bolton, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Green_Fork

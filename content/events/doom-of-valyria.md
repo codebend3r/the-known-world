@@ -9,6 +9,7 @@ date:
 location: "Valyria"
 landmass: essos
 outcome: "The Fourteen Flames erupt and the Freehold perishes in a day; the Lands of the Long Summer shatter into the Smoking Sea."
+mentions: [aegon-i-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Doom_of_Valyria

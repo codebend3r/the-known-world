@@ -25,6 +25,7 @@ commanders: [jaime-lannister, edmure-tully]
 victor: "House Lannister"
 outcome: "Jaime Lannister scattered Edmure Tully's host before the walls and ringed Riverrun with three camps, penning the Tullys in their own castle until Robb Stark broke the siege."
 aliases: ["The First Siege of Riverrun"]
+mentions: [lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Siege_of_Riverrun

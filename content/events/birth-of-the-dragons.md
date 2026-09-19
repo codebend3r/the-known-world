@@ -9,6 +9,7 @@ date:
 location: "The Dothraki sea"
 landmass: essos
 outcome: "Daenerys walks into Drogo's pyre and out of the ashes unburnt, with three living dragons, the first in a century and a half."
+mentions: [jorah-mormont]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daenerys_Targaryen

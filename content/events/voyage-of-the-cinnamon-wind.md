@@ -9,6 +9,7 @@ date:
 location: "The Summer Sea"
 landmass: summer-isles
 outcome: "The swan ship of Tall Trees Town carries Samwell Tarly toward Oldtown; Maester Aemon Targaryen dies at sea, aged one hundred and two."
+mentions: [aemon-targaryen-maester]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Cinnamon_Wind

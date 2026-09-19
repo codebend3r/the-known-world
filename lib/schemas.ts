@@ -217,6 +217,8 @@ export const EventSchema = z.object({
   participants: z.array(ParticipantSchema).default([]),
   outcome: z.string().optional(),
   casualties: z.array(z.string()).default([]),
+  aliases: z.array(z.string()).default([]),
+  mentions: z.array(z.string()).default([]),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });

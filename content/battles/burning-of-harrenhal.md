@@ -25,6 +25,7 @@ commanders: [aegon-i-targaryen, harren-hoare]
 victor: "House Targaryen"
 outcome: "Aegon burns Harren the Black and all his line within their newly raised castle, ending House Hoare and freeing the riverlands, whose lords bend the knee."
 casualties: [harren-hoare]
+mentions: [aegon-i-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Harrenhal

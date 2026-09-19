@@ -5,6 +5,9 @@ import {
   loadWeapon,
   loadAllWeapons,
   loadAllDragons,
+  loadAllCastles,
+  loadAllBattles,
+  loadAllEvents,
   loadAllHouses,
   loadAllCharacters,
   renderMarkdown,
@@ -63,15 +66,27 @@ export default async function WeaponPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [weapon, allHouses, allCharacters, allWeapons, allDragons, image] =
-    await Promise.all([
-      loadWeapon(slug).catch(() => null),
-      loadAllHouses(),
-      loadAllCharacters(),
-      loadAllWeapons(),
-      loadAllDragons(),
-      findWeaponImage(slug),
-    ]);
+  const [
+    weapon,
+    allHouses,
+    allCharacters,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+    image,
+  ] = await Promise.all([
+    loadWeapon(slug).catch(() => null),
+    loadAllHouses(),
+    loadAllCharacters(),
+    loadAllWeapons(),
+    loadAllDragons(),
+    loadAllCastles(),
+    loadAllBattles(),
+    loadAllEvents(),
+    findWeaponImage(slug),
+  ]);
   if (!weapon) notFound();
 
   const housesBySlug = bySlug(allHouses);
@@ -95,6 +110,9 @@ export default async function WeaponPage({
       slug: d.slug,
       frontmatter: d.frontmatter,
     })),
+    allCastles,
+    allBattles,
+    allEvents,
     current: { kind: "weapon", slug, mentions: weapon.frontmatter.mentions },
   });
   const html =

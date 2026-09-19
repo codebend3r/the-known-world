@@ -22,6 +22,7 @@ commanders: [edmure-tully, tywin-lannister, gregor-clegane]
 victor: "House Tully"
 outcome: "Edmure Tully held every crossing of the Red Fork against Lord Tywin's host, a river victory that nonetheless spoiled Robb Stark's plan to lure the enemy west."
 aliases: ["The Battle of the Stone Mill"]
+mentions: [robb-stark, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Fords

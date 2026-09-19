@@ -23,6 +23,7 @@ victor: "blacks"
 outcome: "Ser Criston Cole's host was surrounded and slaughtered near the God's Eye, and the Kingmaker himself was cut down after refusing to yield."
 casualties: [criston-cole]
 aliases: ["Battle by the Lakeshore"]
+mentions: [aegon-ii-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Butcher's_Ball

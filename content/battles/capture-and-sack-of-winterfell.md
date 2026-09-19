@@ -26,6 +26,7 @@ participants:
 commanders: [theon-greyjoy, ramsay-bolton]
 outcome: "Theon Greyjoy seized the lightly held seat of the Starks, only for Ramsay Snow's men to storm it, butcher its people, and leave the castle a gutted ruin."
 aliases: []
+mentions: [balon-greyjoy, bran-stark, ramsay-bolton, stark, bolton]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Sack_of_Winterfell

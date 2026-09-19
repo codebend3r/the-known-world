@@ -29,6 +29,7 @@ victor: "greens"
 outcome: "A green trap that saw Princess Rhaenys and her dragon Meleys slain, though Aegon II and Sunfyre were both grievously maimed."
 casualties: [rhaenys-targaryen-queen-who-never-was]
 aliases: ["Battle of Rook's Rest"]
+mentions: [aegon-ii-targaryen, rhaenyra-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_at_Rook's_Rest

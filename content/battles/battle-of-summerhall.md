@@ -25,6 +25,7 @@ commanders: [robert-baratheon]
 victor: "rebels"
 outcome: "Robert Baratheon defeats three loyalist hosts in a single day, scattering the lords Grandison, Cafferen, and Fell before they can combine against him."
 aliases: []
+mentions: [cafferen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_Summerhall

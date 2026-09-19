@@ -21,6 +21,7 @@ participants:
 commanders: [stannis-baratheon, victarion-greyjoy]
 victor: "the Iron Throne"
 outcome: "Stannis Baratheon destroyed the Iron Fleet at sea, ending ironborn command of the western waters and dooming Balon Greyjoy's rebellion."
+mentions: [stannis-baratheon, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_Fair_Isle

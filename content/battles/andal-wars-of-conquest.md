@@ -21,6 +21,7 @@ commanders: [tristifer-iv-mudd, theon-stark]
 victor: "The Andals"
 outcome: "The Andals overwhelmed the First Men kingdoms south of the Neck and shattered the children of the forest, but the Kings of Winter turned them back at the Neck, so the North alone kept the old blood and the old gods."
 casualties: [tristifer-iv-mudd]
+mentions: [mudd]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Andal_Invasion

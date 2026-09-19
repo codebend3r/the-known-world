@@ -23,6 +23,7 @@ commanders:
 victor: "Iron Throne"
 outcome: "Both risings were crushed along the Dornish Marches, and neither Haegon nor Daemon III came near the crown their forebears had sought."
 casualties: [haegon-blackfyre, daemon-iii-blackfyre]
+mentions: [aegon-v-targaryen, blackfyre]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Blackfyre_Rebellion

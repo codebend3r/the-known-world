@@ -366,3 +366,33 @@ describe("DragonSchema", () => {
     expect(() => DragonSchema.parse(input)).toThrow();
   });
 });
+
+describe("EventSchema prose-link fields", () => {
+  it("defaults aliases and mentions to empty arrays", () => {
+    const parsed = EventSchema.parse({
+      slug: "doom-of-valyria",
+      name: "The Doom of Valyria",
+      type: "disaster",
+      date: { year: 102, era: "BC", precision: "year" },
+      location: "Valyria",
+      landmass: "essos",
+    });
+    expect(parsed.aliases).toEqual([]);
+    expect(parsed.mentions).toEqual([]);
+  });
+
+  it("keeps the aliases and mentions it is given", () => {
+    const parsed = EventSchema.parse({
+      slug: "doom-of-valyria",
+      name: "The Doom of Valyria",
+      type: "disaster",
+      date: { year: 102, era: "BC", precision: "year" },
+      location: "Valyria",
+      landmass: "essos",
+      aliases: ["Doom"],
+      mentions: ["targaryen"],
+    });
+    expect(parsed.aliases).toEqual(["Doom"]);
+    expect(parsed.mentions).toEqual(["targaryen"]);
+  });
+});

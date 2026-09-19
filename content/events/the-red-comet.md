@@ -9,6 +9,7 @@ date:
 location: "The skies of the world"
 landmass: westeros
 outcome: "A bleeding star spans the sky from Winterfell to Qarth, and every people reads in it the omen it desires."
+mentions: [joffrey-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Red_comet

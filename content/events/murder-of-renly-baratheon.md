@@ -12,6 +12,7 @@ coords:
   x: 645
   y: 935
 outcome: "A shadow with Stannis's face kills the king of summer in his own pavilion, and his hundred thousand melt away."
+mentions: [stannis-baratheon]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Renly_Baratheon

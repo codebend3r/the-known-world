@@ -21,6 +21,7 @@ participants:
 commanders: [stannis-baratheon, roose-bolton]
 outcome: "The engagement is still unresolved and has not yet occurred in the published novels."
 aliases: []
+mentions: [frey, bolton, manderly]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_Ice

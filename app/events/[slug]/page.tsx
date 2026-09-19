@@ -1,6 +1,17 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { loadEvent, loadAllEvents, renderMarkdown } from "@/lib/content";
+import {
+  loadEvent,
+  loadAllEvents,
+  loadAllHouses,
+  loadAllCharacters,
+  loadAllWeapons,
+  loadAllDragons,
+  loadAllCastles,
+  loadAllBattles,
+  renderMarkdown,
+} from "@/lib/content";
+import { buildProseLinkIndex } from "@/lib/prose-links";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import { formatBattleWhen } from "@/lib/battle-date";
@@ -32,11 +43,41 @@ export default async function EventPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event = await loadEvent(slug).catch(() => null);
+  const [
+    event,
+    allHouses,
+    allCharacters,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+  ] = await Promise.all([
+    loadEvent(slug).catch(() => null),
+    loadAllHouses(),
+    loadAllCharacters(),
+    loadAllWeapons(),
+    loadAllDragons(),
+    loadAllCastles(),
+    loadAllBattles(),
+    loadAllEvents(),
+  ]);
   if (!event) notFound();
 
   const fm = event.frontmatter;
-  const html = event.body.trim() ? await renderMarkdown(event.body) : "";
+  const proseLinks = buildProseLinkIndex({
+    allCharacters,
+    allHouses,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+    current: { kind: "event", slug, mentions: fm.mentions },
+  });
+  const html = event.body.trim()
+    ? await renderMarkdown(event.body, { proseLinks })
+    : "";
   const typeLabel = fm.type[0].toUpperCase() + fm.type.slice(1);
   const subtitle = [
     typeLabel,

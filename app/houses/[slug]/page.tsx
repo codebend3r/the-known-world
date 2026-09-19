@@ -7,6 +7,8 @@ import {
   loadAllCharacters,
   loadAllWeapons,
   loadAllDragons,
+  loadAllBattles,
+  loadAllEvents,
   renderMarkdown,
 } from "@/lib/content";
 import { PlateLayout } from "@/components/PlateLayout";
@@ -55,15 +57,25 @@ export default async function HousePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [house, allHouses, castles, characters, allWeapons, allDragons] =
-    await Promise.all([
-      loadHouse(slug).catch(() => null),
-      loadAllHouses(),
-      loadAllCastles(),
-      loadAllCharacters(),
-      loadAllWeapons(),
-      loadAllDragons(),
-    ]);
+  const [
+    house,
+    allHouses,
+    castles,
+    characters,
+    allWeapons,
+    allDragons,
+    allBattles,
+    allEvents,
+  ] = await Promise.all([
+    loadHouse(slug).catch(() => null),
+    loadAllHouses(),
+    loadAllCastles(),
+    loadAllCharacters(),
+    loadAllWeapons(),
+    loadAllDragons(),
+    loadAllBattles(),
+    loadAllEvents(),
+  ]);
   if (!house) notFound();
 
   const housesBySlug = bySlug(allHouses);
@@ -101,6 +113,9 @@ export default async function HousePage({
       slug: d.slug,
       frontmatter: d.frontmatter,
     })),
+    allCastles: castles,
+    allBattles,
+    allEvents,
     current: { kind: "house", slug, mentions: house.frontmatter.mentions },
   });
   const html = await renderMarkdown(house.body, { proseLinks });

@@ -22,6 +22,7 @@ commanders: [daemon-ii-blackfyre, brynden-rivers, gormon-peake]
 victor: "Iron Throne"
 outcome: "The plot to crown Daemon II collapsed when Bloodraven descended on Whitewalls, took the pretender captive, and beheaded the ringleaders."
 casualties: [gormon-peake]
+mentions: [aerys-i-targaryen, blackfyre]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Second_Blackfyre_Rebellion

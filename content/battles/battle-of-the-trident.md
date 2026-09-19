@@ -31,6 +31,7 @@ victor: "rebels"
 outcome: "Robert Baratheon slays Prince Rhaegar Targaryen in the waters of the Trident, and the loyalist host breaks, deciding the war in the rebels' favor."
 casualties: [rhaegar-targaryen, lewyn-martell]
 aliases: [Battle of the Ruby Ford]
+mentions: [aerys-ii-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_the_Trident

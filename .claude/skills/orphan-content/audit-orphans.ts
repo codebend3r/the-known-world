@@ -377,10 +377,9 @@ function mentionEdges({
 /**
  * Which bodies `remarkProseLinks` would turn into a link to each target.
  *
- * Only `characters`, `houses`, `weapons` and `dragons` render markdown with a
- * prose-link index; `app/battles`, `app/castles` and `app/events` call
- * `renderMarkdown` with no index, so their bodies emit no links at all and are
- * excluded as sources.
+ * Every detail page except `app/castles` renders markdown with a prose-link
+ * index, so castle bodies emit no links at all and are excluded as sources.
+ * Castles, battles and events are still link targets from every other body.
  *
  * The index is built with an empty `mentions` list on purpose. Mentions only
  * widen a target's surface forms (a bare first name, a bare house name), and
@@ -394,6 +393,9 @@ function proseEdges(collections: Collections): Edge[] {
     allHouses: collections.houses,
     allWeapons: collections.weapons,
     allDragons: collections.dragons,
+    allCastles: collections.castles,
+    allBattles: collections.battles,
+    allEvents: collections.events,
     current: { kind: "character", slug: "", mentions: [] },
   });
 
@@ -402,6 +404,9 @@ function proseEdges(collections: Collections): Edge[] {
     house: "houses",
     weapon: "weapons",
     dragon: "dragons",
+    castle: "castles",
+    battle: "battles",
+    event: "events",
   } as const satisfies Record<string, CollectionName>;
 
   // First form wins, matching `compileIndex` in `lib/prose-links.ts`. Two
@@ -452,6 +457,16 @@ function proseEdges(collections: Collections): Edge[] {
       slug: entry.slug,
       body: entry.body,
     })),
+    ...collections.battles.map((entry) => ({
+      collection: "battles" as const,
+      slug: entry.slug,
+      body: entry.body,
+    })),
+    ...collections.events.map((entry) => ({
+      collection: "events" as const,
+      slug: entry.slug,
+      body: entry.body,
+    })),
   ];
 
   return linkingBodies.flatMap(({ collection, slug, body }) => {
@@ -459,9 +474,9 @@ function proseEdges(collections: Collections): Edge[] {
     const matched = body.match(pattern) ?? [];
     const hit = matched.reduce<Set<EntryKey>>((seen, form) => {
       const to = formToKey.get(form);
-      // `compileIndex` drops any target sharing the page's own slug, across
-      // collections, because `selfSlug` is a bare slug.
-      if (to && !to.endsWith(`/${slug}`)) seen.add(to);
+      // `compileIndex` drops only the page's own entry; another collection's
+      // entry with the same slug still links, matching `targetKey`.
+      if (to && to !== from) seen.add(to);
       return seen;
     }, new Set());
     return [...hit].map((to) => ({ from, field: "prose", to }));

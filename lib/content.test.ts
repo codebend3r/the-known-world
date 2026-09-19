@@ -65,7 +65,7 @@ describe("renderMarkdown", () => {
             surfaceForms: ["Catelyn Tully"],
           },
         ],
-        selfSlug: null,
+        self: null,
       },
     });
     expect(html).toContain(

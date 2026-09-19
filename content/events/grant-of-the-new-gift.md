@@ -9,6 +9,7 @@ date:
 location: "The Wall"
 landmass: westeros
 outcome: "Good Queen Alysanne doubles the Night's Watch lands, the crowning kindness of the golden reign of Jaehaerys the Conciliator."
+mentions: [jaehaerys-i-targaryen, alysanne-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/New_Gift

@@ -25,6 +25,7 @@ commanders: [rhaenys-targaryen]
 victor: "Dorne"
 outcome: "Queen Rhaenys and Meraxes are slain over the Hellholt; the loss shatters Aegon's restraint and begins the Dragon's Wroth."
 casualties: [rhaenys-targaryen]
+mentions: [aegon-i-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Meraxes

@@ -9,6 +9,7 @@ date:
 location: "Dorne and King's Landing"
 landmass: westeros
 outcome: "Dorne joins the realm by marriage rather than conquest, and the Seven Kingdoms are whole at last."
+mentions: [daenerys-daughter-of-aegon-iv, daeron-i-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daeron_II_Targaryen

@@ -5,6 +5,9 @@ import {
   loadAllHouses,
   loadAllWeapons,
   loadAllDragons,
+  loadAllCastles,
+  loadAllBattles,
+  loadAllEvents,
   loadCharacter,
   renderMarkdown,
 } from "@/lib/content";
@@ -89,14 +92,25 @@ export default async function CharacterPage({
 
   const fm = character.frontmatter;
 
-  const [allCharacters, allHouses, allWeapons, allDragons, portraits] =
-    await Promise.all([
-      loadAllCharacters(),
-      loadAllHouses(),
-      loadAllWeapons(),
-      loadAllDragons(),
-      findPortraitVariants({ slug, name: fm.name, sex: fm.sex }),
-    ]);
+  const [
+    allCharacters,
+    allHouses,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+    portraits,
+  ] = await Promise.all([
+    loadAllCharacters(),
+    loadAllHouses(),
+    loadAllWeapons(),
+    loadAllDragons(),
+    loadAllCastles(),
+    loadAllBattles(),
+    loadAllEvents(),
+    findPortraitVariants({ slug, name: fm.name, sex: fm.sex }),
+  ]);
 
   const charactersBySlug = bySlug(allCharacters);
   const housesBySlug = bySlug(allHouses);
@@ -152,6 +166,9 @@ export default async function CharacterPage({
       slug: d.slug,
       frontmatter: d.frontmatter,
     })),
+    allCastles,
+    allBattles,
+    allEvents,
     current: { kind: "character", slug, mentions: fm.mentions },
   });
   const html = character.body.trim()

@@ -12,6 +12,7 @@ coords:
   x: 660
   y: 870
 outcome: "Warned by Daenys the Dreamer, the Targaryens quit Valyria for Dragonstone twelve years before the Doom, and alone of the dragonlords survive it."
+mentions: [aegon-i-targaryen, daenys-targaryen, aenar-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aenar_Targaryen

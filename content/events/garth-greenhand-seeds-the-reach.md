@@ -9,6 +9,7 @@ date:
 location: "The Reach"
 landmass: westeros
 outcome: "The Reach flowers, and from Garth's many children spring the great houses of the south."
+mentions: [gardener, rowan]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Garth_Greenhand

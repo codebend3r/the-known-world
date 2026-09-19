@@ -9,6 +9,7 @@ date:
 location: "Braavos and the Free Cities"
 landmass: essos
 outcome: "Viserys and the infant Daenerys are spirited across the narrow sea, beggar heirs of a fallen dynasty."
+mentions: [robert-baratheon, viserys-iii-targaryen, rhaella-targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Daenerys_Targaryen

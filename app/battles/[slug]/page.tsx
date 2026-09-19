@@ -6,8 +6,13 @@ import {
   loadAllBattles,
   loadAllHouses,
   loadAllCharacters,
+  loadAllWeapons,
+  loadAllDragons,
+  loadAllCastles,
+  loadAllEvents,
   renderMarkdown,
 } from "@/lib/content";
+import { buildProseLinkIndex } from "@/lib/prose-links";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import { BattleInfobox } from "@/components/BattleInfobox";
@@ -42,10 +47,25 @@ export default async function BattlePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const [battle, allHouses, allCharacters, image] = await Promise.all([
+  const [
+    battle,
+    allHouses,
+    allCharacters,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+    image,
+  ] = await Promise.all([
     loadBattle(slug).catch(() => null),
     loadAllHouses(),
     loadAllCharacters(),
+    loadAllWeapons(),
+    loadAllDragons(),
+    loadAllCastles(),
+    loadAllBattles(),
+    loadAllEvents(),
     findBattleImage(slug),
   ]);
   if (!battle) notFound();
@@ -54,7 +74,19 @@ export default async function BattlePage({
   const charactersBySlug = bySlug(allCharacters);
 
   const fm = battle.frontmatter;
-  const html = battle.body.trim() ? await renderMarkdown(battle.body) : "";
+  const proseLinks = buildProseLinkIndex({
+    allCharacters,
+    allHouses,
+    allWeapons,
+    allDragons,
+    allCastles,
+    allBattles,
+    allEvents,
+    current: { kind: "battle", slug, mentions: fm.mentions },
+  });
+  const html = battle.body.trim()
+    ? await renderMarkdown(battle.body, { proseLinks })
+    : "";
   const subtitle = [formatBattleWhen(fm.start, fm.end), fm.war]
     .filter(Boolean)
     .join(" · ");

@@ -22,6 +22,7 @@ commanders: [daeron-i-targaryen]
 victor: "Dorne"
 outcome: "The Dornish threw off Targaryen rule and slew King Daeron I beneath a peace banner, restoring Dorne's independence."
 casualties: [daeron-i-targaryen]
+mentions: [baelor-i-targaryen, daeron-i-targaryen, targaryen]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Conquest_of_Dorne

@@ -22,6 +22,7 @@ commanders: [robb-stark, stafford-lannister]
 victor: "House Stark"
 outcome: "Robb Stark destroyed Ser Stafford Lannister's raw host in a night attack, slew Stafford, and threw open the westerlands to northern raiders."
 casualties: [stafford-lannister]
+mentions: [tywin-lannister, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Battle_of_Oxcross

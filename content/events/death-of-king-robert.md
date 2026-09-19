@@ -9,6 +9,7 @@ date:
 location: "The Kingswood"
 landmass: westeros
 outcome: "A boar, strongwine, and a queen's design end the first Baratheon king; the peace he won at the Trident dies with him."
+mentions: [robert-baratheon, cersei-lannister, lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Robert_I_Baratheon

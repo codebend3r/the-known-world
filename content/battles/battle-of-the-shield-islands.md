@@ -22,6 +22,7 @@ commanders: [euron-greyjoy, victarion-greyjoy]
 victor: "the ironborn"
 outcome: "Euron Greyjoy seizes the four Shield Islands and looses the Iron Fleet up the Mander into the heart of the Reach."
 aliases: []
+mentions: [victarion-greyjoy, redwyne]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Shield_Islands

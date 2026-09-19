@@ -12,6 +12,7 @@ coords:
   x: 590
   y: 830
 outcome: "Joffrey takes Lord Stark's head on the steps of the Great Sept, and all hope of peace between wolf and lion with it."
+mentions: [joffrey-baratheon, cersei-lannister]
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Eddard_Stark
