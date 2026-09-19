@@ -23,6 +23,8 @@ titles:
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms
   - Protector of the Realm
+aliases:
+  - Jaehaerys II
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Jaehaerys_II_Targaryen

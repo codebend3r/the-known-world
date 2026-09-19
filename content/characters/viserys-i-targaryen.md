@@ -25,6 +25,7 @@ children:
   - daeron-targaryen-son-of-viserys-i
 aliases:
   - The Young King
+  - Viserys I
 titles:
   - King of the Andals, the Rhoynar, and the First Men
   - Lord of the Seven Kingdoms

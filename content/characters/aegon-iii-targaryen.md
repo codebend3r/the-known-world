@@ -34,6 +34,7 @@ aliases:
   - The Younger
   - The Unhappy
   - The Uncrowned King
+  - Aegon III
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Aegon_III_Targaryen

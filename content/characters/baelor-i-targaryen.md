@@ -25,6 +25,7 @@ aliases:
   - The Beloved
   - The Septon King
   - The Befuddled
+  - Baelor I
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Baelor_I_Targaryen
