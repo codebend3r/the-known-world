@@ -32,8 +32,8 @@ Operating rules for this repo.
   - Verify: `bun run test`, `bun run typecheck`, `bun run lint:ts`, `bun run lint:css`, `bun run format:check`, `bun run spellcheck`
   - Fix: `bun run lint:ts:fix`, `bun run lint:css:fix`, `bun run format`
   - Watch: `bun run test:watch`, `bun run coverage`
-  - Batch: `bun run check` (typecheck + both lints + spellcheck + test in parallel), `bun run system-check` (clean + format:check + check + build)
-- There is no `bun run lint`.
+  - Batch: `bun run system-check` (clean + typecheck + lint + spellcheck + test + build, sequential)
+- There is no `bun run check`.
 - Pin every `package.json` dependency to an exact version, with no `^` or `~`.
 - Keep `typescript` on 6.x. TypeScript 7 / `tsgo` as the compiler is not yet compatible with this Next version; `tsgo` is only used for the fast `typecheck` script.
 

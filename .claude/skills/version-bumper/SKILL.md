@@ -136,7 +136,7 @@ Runs only after a yes in Phase 3. All four must hold. Any failure stops the run 
 git rev-parse --abbrev-ref HEAD          # must be main
 git status --porcelain                   # must print nothing
 git pull --ff-only origin main           # must fast-forward
-bun run check                            # typecheck + lint:ts + lint:css + test
+bun run system-check                     # clean + typecheck + lint + spellcheck + test + build
 ```
 
 Then confirm the tree is not mid-bump — `package.json` must still be at the last released version:
@@ -220,7 +220,7 @@ Tag-drift runs that fixed something say what was pushed or deleted.
 | "The open PR is basically merged, count it"                   | Only what is on `origin/main` counts.                                                         |
 | "Tags look fine, skip Phase 1"                                | Phase 1 is what tells you they're fine. Run it.                                               |
 | "The local and remote `v0.2.4` differ — I'll force the tag"   | A published tag never moves. Stop and report.                                                 |
-| "`bun run check` fails but it's unrelated"                    | A release ships `main` as it is. Red `main` is not releasable.                                |
+| "`bun run system-check` fails but it's unrelated"             | A release ships `main` as it is. Red `main` is not releasable.                                |
 | "Big diff, this feels like a major"                           | Size is not the signal. Pre-1.0, major needs the user to say so.                              |
 | "Twelve content files and one new route — patch"              | Highest signal wins. That's a minor.                                                          |
 | "`TKW:` is required, I'll prefix the version commit"          | Release commits are bare versions. The one documented exception.                              |
