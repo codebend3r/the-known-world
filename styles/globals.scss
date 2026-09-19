@@ -186,6 +186,8 @@ body::after {
   background:
     linear-gradient(rgba(200, 162, 74, 0.018) 1px, transparent 1px) 0 0 / 64px
       64px,
+    // `/` separates background position from size here, not Sass division.
+    // stylelint-disable-next-line scss/operator-no-newline-after
     linear-gradient(90deg, rgba(200, 162, 74, 0.018) 1px, transparent 1px) 0 0 /
       64px 64px,
     radial-gradient(

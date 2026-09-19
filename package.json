@@ -10,10 +10,11 @@
     "dev": "next dev --port 46642",
     "build": "next build",
     "start": "next start",
-    "lint:ts": "oxlint --type-aware",
-    "lint:ts:fix": "oxlint --type-aware --fix",
-    "lint:css": "stylelint \"{app,components,styles}/**/*.scss\"",
-    "lint:css:fix": "stylelint --fix \"{app,components,styles}/**/*.scss\"",
+    "lint": "bun run --sequential lint:ts lint:css",
+    "lint:ts": "oxlint",
+    "lint:ts:fix": "oxlint --fix",
+    "lint:css": "gale \"{app,components,styles}/**/*.scss\"",
+    "lint:css:fix": "gale --fix \"{app,components,styles}/**/*.scss\"",
     "typecheck": "tsgo --noEmit",
     "test": "bun test --parallel --dots",
     "test:watch": "bun test --parallel --dots --watch",
@@ -24,8 +25,7 @@
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "check": "bun run --parallel typecheck lint:ts lint:css spellcheck test",
-    "system-check": "bun run --sequential clean format:check check build"
+    "system-check": "bun run --sequential clean typecheck lint spellcheck test build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
@@ -50,6 +50,7 @@
     "zod": "4.6.5"
   },
   "devDependencies": {
+    "@codebend3r/gale": "0.2.4",
     "@happy-dom/global-registrator": "20.14.5",
     "@ocular-d/typos-bin": "1.50.2",
     "@testing-library/dom": "10.4.2",
