@@ -10,11 +10,11 @@
     "dev": "next dev --port 46642",
     "build": "next build",
     "start": "next start",
-    "lint": "bun run --sequential lint:ts lint:css",
+    "lint": "bun run --sequential lint:ts lint:scss",
     "lint:ts": "oxlint",
     "lint:ts:fix": "oxlint --fix",
-    "lint:css": "gale \"{app,components,styles}/**/*.scss\"",
-    "lint:css:fix": "gale --fix \"{app,components,styles}/**/*.scss\"",
+    "lint:scss": "gale \"{app,components,styles}/**/*.scss\"",
+    "lint:scss:fix": "gale --fix \"{app,components,styles}/**/*.scss\"",
     "typecheck": "tsgo --noEmit",
     "test": "bun test --parallel --dots",
     "test:watch": "bun test --parallel --dots --watch",
@@ -33,7 +33,7 @@
       "oxfmt"
     ],
     "*.{css,scss}": [
-      "stylelint --fix",
+      "gale --fix",
       "oxfmt"
     ],
     "*.{json,jsonc,json5,md,mdx,yml,yaml,toml,html}": "oxfmt"
@@ -68,8 +68,6 @@
     "oxlint": "1.83.0",
     "oxlint-tsgolint": "7.0.2001",
     "sass": "1.104.1",
-    "stylelint": "17.15.0",
-    "stylelint-config-recommended-scss": "17.0.1",
     "typescript": "6.0.3"
   },
   "trustedDependencies": [
