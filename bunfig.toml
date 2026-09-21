@@ -1,3 +1,7 @@
+# Never write a `^` or `~` range into `package.json`; every dependency is pinned.
+[install]
+exact = true
+
 [test]
 preload = ["./test/preload.ts"]
 coverageReporter = ["text", "lcov"]

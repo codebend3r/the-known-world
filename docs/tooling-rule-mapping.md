@@ -20,15 +20,15 @@ There was no Stylelint; SCSS was previously unlinted.
 
 ## Mapping
 
-| Previous rule set                | Now                                           | Notes                                                                                                   |
-| -------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `@next/next/*` (core-web-vitals) | Oxlint `nextjs` plugin                        | Built-in port of `eslint-plugin-next` rules                                                             |
-| `react` recommended subset       | Oxlint `react` plugin                         | `react-in-jsx-scope` off — automatic JSX runtime, same as `eslint-config-next`                          |
-| `react-hooks/rules-of-hooks`     | `react/rules-of-hooks` (error)                | Explicit in `.oxlintrc.json`                                                                            |
-| `react-hooks/exhaustive-deps`    | `react/exhaustive-deps` (warn)                | Explicit in `.oxlintrc.json`; existing `eslint-disable` comments honored by Oxlint                      |
-| `jsx-a11y` subset                | Oxlint `jsx-a11y` plugin                      | Full plugin enabled — strictly more coverage than before (see exceptions)                               |
-| `typescript-eslint` recommended  | Oxlint `typescript` plugin                    | Plus net-new type-aware rules via `oxlint-tsgolint` (`--type-aware`) — coverage the old setup never had |
-| — (SCSS unlinted)                | Stylelint `stylelint-config-recommended-scss` | Net-new coverage; found and fixed 2 duplicate-property bugs and 2 empty blocks on first run             |
+| Previous rule set                | Now                                                | Notes                                                                                                   |
+| -------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `@next/next/*` (core-web-vitals) | Oxlint `nextjs` plugin                             | Built-in port of `eslint-plugin-next` rules                                                             |
+| `react` recommended subset       | Oxlint `react` plugin                              | `react-in-jsx-scope` off — automatic JSX runtime, same as `eslint-config-next`                          |
+| `react-hooks/rules-of-hooks`     | `react/rules-of-hooks` (error)                     | Explicit in `.oxlintrc.json`                                                                            |
+| `react-hooks/exhaustive-deps`    | `react/exhaustive-deps` (warn)                     | Explicit in `.oxlintrc.json`; existing `eslint-disable` comments honored by Oxlint                      |
+| `jsx-a11y` subset                | Oxlint `jsx-a11y` plugin                           | Full plugin enabled — strictly more coverage than before (see exceptions)                               |
+| `typescript-eslint` recommended  | Oxlint `typescript` plugin                         | Plus net-new type-aware rules via `oxlint-tsgolint` (`--type-aware`) — coverage the old setup never had |
+| — (SCSS unlinted)                | Gale (`stylelint-config-recommended-scss` ruleset) | Net-new coverage; found and fixed 2 duplicate-property bugs and 2 empty blocks on first run             |
 
 ## Exceptions
 
@@ -46,19 +46,24 @@ Rules disabled in `.oxlintrc.json`, and why:
 | `jsx-a11y/no-static-element-interactions`                                                | Fires on the `onBlur` focus-containment wrapper in `TimelineCluster`. The rule is aimed at click and key handlers on static elements                                                                                                                                                                          |
 | `jsx-a11y/prefer-tag-over-role`                                                          | Suggests `<fieldset>`/`<select>`/`<output>` for `role="group"`/`"listbox"`/`"status"`. Most sites are inside an SVG canvas, where those tags are not available                                                                                                                                                |
 
-Rules tuned in `.stylelintrc.json`, and why:
+Rules tuned in `gale.json`, and why:
 
 | Rule                               | Reason                                                                                           |
 | ---------------------------------- | ------------------------------------------------------------------------------------------------ |
 | `no-descending-specificity`        | Noisy specificity-ordering rule; conflicts with idiomatic `:hover` child-selector patterns       |
-| `property-no-unknown`              | Kept on, with `corner-shape` allowed (CSS Borders L4, not yet in Stylelint's property DB)        |
+| `property-no-unknown`              | Kept on, with `corner-shape` allowed (CSS Borders L4, not yet in Gale's property DB)             |
 | `selector-pseudo-class-no-unknown` | Kept on, with `:global`/`:local` allowed — CSS Modules pseudo-selectors, not real pseudo-classes |
 
-`stylelint-config-recommended-scss` is the baseline rather than the `standard`
-variant: the stylistic rules `standard` adds (`selector-class-pattern`,
+The ruleset began as `stylelint-config-recommended-scss` and is now written out
+in full in `gale.json`, so nothing named `stylelint` is installed. The
+`recommended` set is the baseline rather than the `standard` variant: the
+stylistic rules `standard` adds (`selector-class-pattern`,
 `alpha-value-notation`, `color-function-notation`) conflict with camelCase CSS
 Module class names and the repo's existing color notation. Stylistic enforcement
 stays deferred per PRD goal 6; `oxfmt` handles SCSS formatting.
+
+Gale implements the `scss/*` rules natively — no plugin package — and honors
+`stylelint-disable` comments, which is why the existing ones still work.
 
 `block-no-empty` stays on; the intentional empty marker classes in
 `components/listSearch.module.scss` carry `stylelint-disable-next-line`

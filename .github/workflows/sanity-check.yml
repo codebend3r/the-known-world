@@ -53,8 +53,11 @@ jobs:
       - name: 🧹 Lint TS
         run: bun lint:ts
 
-      - name: 🎨 Lint CSS
-        run: bun lint:css
+      - name: 🎨 Lint SCSS
+        run: bun lint:scss
+
+      - name: 🤖 Lint Actions
+        run: bun lint:actions
 
       - name: 🧪 Test
         run: bun run test
