@@ -10,23 +10,23 @@
     "dev": "next dev --port 46642",
     "build": "next build",
     "start": "next start",
-    "lint": "bun run --sequential lint:ts lint:scss lint:actions",
+    "lint": "bun run lint:ts && bun run lint:scss && bun run lint:actions",
     "lint:ts": "oxlint",
     "lint:ts:fix": "oxlint --fix",
     "lint:scss": "gale \"{app,components,styles}/**/*.scss\"",
     "lint:scss:fix": "gale --fix \"{app,components,styles}/**/*.scss\"",
     "lint:actions": "github-actionlint",
     "typecheck": "tsgo --noEmit",
-    "test": "bun test --parallel --dots",
-    "test:watch": "bun test --parallel --dots --watch",
-    "coverage": "bun test --parallel --dots --coverage",
+    "test": "bun test --dots --parallel",
+    "test:watch": "bun test --dots --watch --parallel",
+    "coverage": "bun test --dots --coverage --parallel",
     "format": "oxfmt",
     "format:check": "oxfmt --check",
     "spellcheck": "typos",
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "system-check": "bun run --sequential clean typecheck lint spellcheck test build"
+    "system-check": "bun run clean && bun run typecheck && bun run lint && bun run spellcheck && bun run test && bun run build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [
