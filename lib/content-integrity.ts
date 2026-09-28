@@ -1,4 +1,10 @@
-import { MAP_BOUNDS, entryCoords, isWithinMapBounds } from "@/lib/map";
+import {
+  MAP_BOUNDS,
+  WORLD_MAP_RASTER,
+  entryCoords,
+  isWithinMapBounds,
+  isWithinWorldMapRaster,
+} from "@/lib/map";
 import type { Collections } from "@/lib/content";
 import { dateIntegrityErrors } from "@/lib/date-integrity";
 
@@ -277,6 +283,20 @@ function placementErrors(collections: Collections): string[] {
   );
 }
 
+/**
+ * Raster bounds for the `/maps` hotspots. Same failure mode as the atlas: an
+ * off-raster pixel draws nothing and nobody notices.
+ */
+function worldMapErrors(collections: Collections): string[] {
+  return collections.castles.flatMap(({ slug, frontmatter }) => {
+    const pixel = frontmatter["world-map"];
+    if (!pixel || isWithinWorldMapRaster(pixel)) return [];
+    return [
+      `castles/${slug}.world-map: (${pixel.x}, ${pixel.y}) is outside the ${WORLD_MAP_RASTER.width}x${WORLD_MAP_RASTER.height} raster`,
+    ];
+  });
+}
+
 function asymmetryErrors(collections: Collections): string[] {
   return reciprocalAsymmetries(collections).map(
     (issue) =>
@@ -289,6 +309,7 @@ export function contentIntegrityErrors(collections: Collections): string[] {
     ...slugErrors(collections),
     ...referenceErrors(collections),
     ...placementErrors(collections),
+    ...worldMapErrors(collections),
     ...asymmetryErrors(collections),
     ...dateIntegrityErrors(collections),
   ];

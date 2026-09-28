@@ -16,6 +16,9 @@ features:
 coords:
   x: 645
   y: 935
+world-map:
+  x: 2257
+  y: 4957
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Storm%27s_End

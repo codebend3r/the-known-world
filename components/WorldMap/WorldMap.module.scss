@@ -57,8 +57,11 @@
   touch-action: none;
 }
 
-// Rule: the pin's fill is the place, the ring is gold, and the active pin
-// gains the glow.
+// The hotspot never paints: the printed seat icon on the raster is the
+// affordance, so the only mouse cue is the pointer cursor. The fill stays
+// `transparent` rather than `none` because `none` would drop the circle out
+// of hit-testing entirely. Keyboard focus still gets a ring, since a tabbed
+// hotspot has no cursor to reveal it.
 .marker {
   cursor: pointer;
 
@@ -66,24 +69,13 @@
     fill: transparent;
     stroke: transparent;
     stroke-width: 3;
-    transition:
-      fill 120ms ease,
-      stroke 120ms ease;
-  }
-
-  &:hover circle,
-  &:focus-visible circle {
-    fill: color-mix(in srgb, var(--tkw-gold) 22%, transparent);
-    stroke: var(--tkw-gold);
   }
 
   &:focus-visible {
     outline: none;
-  }
 
-  @media (prefers-reduced-motion: reduce) {
     circle {
-      transition: none;
+      stroke: var(--tkw-gold);
     }
   }
 }

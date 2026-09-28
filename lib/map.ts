@@ -13,6 +13,26 @@ export type { Coords };
  */
 export const MAP_BOUNDS = { width: 800, height: 1400 } as const;
 
+/**
+ * The raster `WorldMap` draws on `/maps`, and the natural-pixel space every
+ * `world-map` field in `content/castles/` is written in. Nothing here relates
+ * to `MAP_BOUNDS`: the raster is the whole known world, the atlas is Westeros.
+ */
+export const WORLD_MAP_RASTER = {
+  src: "/map/the-known-world-enhanced.jpg",
+  width: 10000,
+  height: 8300,
+} as const;
+
+/** A hotspot on the `/maps` raster: natural pixels plus where it links. */
+export type WorldMapMarker = {
+  slug: string;
+  name: string;
+  href: string;
+  x: number;
+  y: number;
+};
+
 export const ALL_CASTLE_TYPES: CastleType[] = [
   "castle",
   "town",
@@ -72,6 +92,15 @@ export function entryCoords(frontmatter: {
 
 export function isWithinMapBounds({ x, y }: Coords): boolean {
   return x >= 0 && x <= MAP_BOUNDS.width && y >= 0 && y <= MAP_BOUNDS.height;
+}
+
+export function isWithinWorldMapRaster({ x, y }: Coords): boolean {
+  return (
+    x >= 0 &&
+    x <= WORLD_MAP_RASTER.width &&
+    y >= 0 &&
+    y <= WORLD_MAP_RASTER.height
+  );
 }
 
 /**
@@ -170,4 +199,32 @@ export function selectPlacements({
     ...placeCollection({ entries: battles, layer: "battle" }),
     ...placeCollection({ entries: events, layer: "event" }),
   ];
+}
+
+/**
+ * Every hotspot the `/maps` raster should draw. Drafts never place, because
+ * `generateStaticParams` skips them and the pin would link into the void; a
+ * castle with no `world-map` field is simply absent.
+ */
+export function selectWorldMapMarkers({
+  castles,
+}: {
+  castles: ReadonlyArray<Loaded<Castle>>;
+}): WorldMapMarker[] {
+  return castles.flatMap(({ frontmatter }) => {
+    const pixel = frontmatter["world-map"];
+    if (frontmatter.draft || !pixel) return [];
+    return [
+      {
+        slug: frontmatter.slug,
+        name: frontmatter.name,
+        href: placementHref({
+          layer: frontmatter.type,
+          slug: frontmatter.slug,
+        }),
+        x: pixel.x,
+        y: pixel.y,
+      },
+    ];
+  });
 }

@@ -43,6 +43,10 @@ export const CastleSchema = z.object({
   "sworn-houses": z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),
   coords: CoordsSchema,
+  // Natural pixels on the `/maps` raster, a different space from `coords`:
+  // the raster is the whole known world, the atlas is Westeros alone, and no
+  // transform relates them. Only the seats worth a hotspot carry it.
+  "world-map": CoordsSchema.optional(),
   sources: z.array(SourceSchema).default([]),
   draft: z.boolean().default(false),
 });

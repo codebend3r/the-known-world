@@ -3,12 +3,15 @@ import {
   ALL_CASTLE_TYPES,
   MAP_BOUNDS,
   MAP_LAYERS,
+  WORLD_MAP_RASTER,
   entryCoords,
   isCoords,
   isWithinMapBounds,
+  isWithinWorldMapRaster,
   placementHref,
   selectPlacements,
   selectVisibleCastles,
+  selectWorldMapMarkers,
   type MapLayer,
 } from "@/lib/map";
 import { BattleSchema, CastleSchema, EventSchema } from "@/lib/schemas";
@@ -311,5 +314,79 @@ describe("selectPlacements", () => {
     placements.forEach((placement) =>
       expect(isWithinMapBounds(placement.coords)).toBe(true),
     );
+  });
+});
+
+describe("isWithinWorldMapRaster", () => {
+  it("accepts the corners of the raster", () => {
+    expect(isWithinWorldMapRaster({ x: 0, y: 0 })).toBe(true);
+    expect(
+      isWithinWorldMapRaster({
+        x: WORLD_MAP_RASTER.width,
+        y: WORLD_MAP_RASTER.height,
+      }),
+    ).toBe(true);
+  });
+
+  it("rejects negatives and anything past the far edge", () => {
+    expect(isWithinWorldMapRaster({ x: -1, y: 10 })).toBe(false);
+    expect(isWithinWorldMapRaster({ x: 10, y: -1 })).toBe(false);
+    expect(
+      isWithinWorldMapRaster({ x: WORLD_MAP_RASTER.width + 1, y: 10 }),
+    ).toBe(false);
+    expect(
+      isWithinWorldMapRaster({ x: 10, y: WORLD_MAP_RASTER.height + 1 }),
+    ).toBe(false);
+  });
+});
+
+describe("selectWorldMapMarkers", () => {
+  const castles = [
+    castle({
+      slug: "kings-landing",
+      name: "King's Landing",
+      "world-map": { x: 1955, y: 4619 },
+    }),
+    castle({ slug: "winterfell", name: "Winterfell" }),
+    castle({
+      slug: "draft-seat",
+      name: "Draft Seat",
+      draft: true,
+      "world-map": { x: 1, y: 1 },
+    }),
+    castle({
+      slug: "lordsport",
+      name: "Lordsport",
+      type: "town",
+      "world-map": { x: 1100, y: 4030 },
+    }),
+  ];
+
+  it("places only castles that carry a `world-map` pixel, linking by slug", () => {
+    expect(selectWorldMapMarkers({ castles })).toEqual([
+      {
+        slug: "kings-landing",
+        name: "King's Landing",
+        href: "/castles/kings-landing/",
+        x: 1955,
+        y: 4619,
+      },
+      {
+        slug: "lordsport",
+        name: "Lordsport",
+        href: "/castles/lordsport/",
+        x: 1100,
+        y: 4030,
+      },
+    ]);
+  });
+
+  it("drops drafts rather than linking to a page that is never built", () => {
+    const slugs = selectWorldMapMarkers({ castles }).map((m) => m.slug);
+    expect(slugs).not.toContain("draft-seat");
+  });
+
+  it("returns nothing for an empty corpus", () => {
+    expect(selectWorldMapMarkers({ castles: [] })).toEqual([]);
   });
 });

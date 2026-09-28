@@ -17,6 +17,9 @@ features:
 coords:
   x: 420
   y: 1040
+world-map:
+  x: 1265
+  y: 5081
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Highgarden

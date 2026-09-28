@@ -18,6 +18,9 @@ features:
 coords:
   x: 280
   y: 880
+world-map:
+  x: 1031
+  y: 4473
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Casterly_Rock

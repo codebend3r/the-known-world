@@ -18,6 +18,9 @@ features:
 coords:
   x: 555
   y: 765
+world-map:
+  x: 1828
+  y: 4278
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Harrenhal

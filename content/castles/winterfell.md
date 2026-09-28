@@ -18,6 +18,9 @@ features:
 coords:
   x: 400
   y: 430
+world-map:
+  x: 1630
+  y: 2892
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Winterfell

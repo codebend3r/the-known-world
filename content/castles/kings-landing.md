@@ -18,6 +18,9 @@ features:
 coords:
   x: 590
   y: 830
+world-map:
+  x: 1955
+  y: 4619
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/King%27s_Landing

@@ -17,6 +17,9 @@ features:
 coords:
   x: 185
   y: 665
+world-map:
+  x: 1050
+  y: 4043
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Pyke

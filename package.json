@@ -10,7 +10,7 @@
     "dev": "next dev --port 46642",
     "build": "next build",
     "start": "next start",
-    "lint": "bun run lint:ts && bun run lint:scss && bun run lint:actions",
+    "lint": "bun run --sequential lint:ts lint:scss lint:actions",
     "lint:ts": "oxlint",
     "lint:ts:fix": "oxlint --fix",
     "lint:scss": "gale \"{app,components,styles}/**/*.scss\"",
@@ -26,7 +26,7 @@
     "lint:staged": "lint-staged",
     "prepare": "husky",
     "clean": "rm -rf .next",
-    "system-check": "bun run clean && bun run typecheck && bun run lint && bun run spellcheck && bun run test && bun run build"
+    "system-check": "bun run --sequential clean typecheck lint:ts lint:scss lint:actions spellcheck test build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,mjs,cjs}": [

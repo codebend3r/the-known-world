@@ -17,6 +17,9 @@ features:
 coords:
   x: 800
   y: 1160
+world-map:
+  x: 2405
+  y: 5597
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Sunspear

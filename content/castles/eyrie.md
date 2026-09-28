@@ -16,6 +16,9 @@ features:
 coords:
   x: 620
   y: 690
+world-map:
+  x: 2073
+  y: 3986
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Eyrie
