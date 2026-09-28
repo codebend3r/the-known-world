@@ -19,6 +19,9 @@ features:
 coords:
   x: 660
   y: 870
+world-map:
+  x: 2350
+  y: 4400
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Dragonstone

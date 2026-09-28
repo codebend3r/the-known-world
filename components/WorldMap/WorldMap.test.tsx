@@ -167,7 +167,23 @@ const SEEDED_VIEW = { zoom: 5, x: -1495, y: -1940 };
 const PAN_STEP_X = (800 * 0.2) / SEEDED_VIEW.zoom;
 const PAN_STEP_Y = (600 * 0.2) / SEEDED_VIEW.zoom;
 const NATURAL_SIZE = 7680;
-const KINGS_LANDING = { x: 1955, y: 4619, radius: 25 };
+const MARKER_RADIUS = 25;
+const MARKERS = [
+  {
+    slug: "kings-landing",
+    name: "King's Landing",
+    href: "/castles/kings-landing/",
+    x: 1955,
+    y: 4619,
+  },
+  {
+    slug: "winterfell",
+    name: "Winterfell",
+    href: "/castles/winterfell/",
+    x: 1630,
+    y: 2892,
+  },
+];
 
 function fitScaleFor(size: { w: number; h: number }) {
   return Math.min(size.w / NATURAL_SIZE, size.h / NATURAL_SIZE);
@@ -194,6 +210,7 @@ function renderMap(searchParams?: string) {
       src="/map/test-map.jpg"
       naturalWidth={7680}
       naturalHeight={7680}
+      markers={MARKERS}
     />,
     { searchParams },
   );
@@ -312,6 +329,7 @@ describe("WorldMap", () => {
         src="/map/test-map.jpg"
         naturalWidth={7680}
         naturalHeight={7680}
+        markers={MARKERS}
       />,
     );
     expect(observers).toHaveLength(1);
@@ -402,30 +420,85 @@ describe("WorldMap", () => {
     expect(spies.setValue).toHaveBeenCalledTimes(1);
   });
 
-  it("marks King's Landing with a link to its page, positioned by natural coordinates", async () => {
-    const { findByTestId, getByRole } = renderMap();
+  it("draws one linked hotspot per marker, positioned by natural coordinates", async () => {
+    const { findByTestId, getAllByRole, getByRole } = renderMap();
     await findByTestId("pan-zoom");
 
-    const link = getByRole("link", { name: "King's Landing" });
-    expect(link.getAttribute("href")).toBe("/castles/kings-landing/");
+    expect(getAllByRole("link")).toHaveLength(MARKERS.length);
 
-    const circle = link.querySelector("circle");
     const size = { w: 800, h: 600 };
     const fitScale = fitScaleFor(size);
     const offsetX = (size.w - NATURAL_SIZE * fitScale) / 2;
     const offsetY = (size.h - NATURAL_SIZE * fitScale) / 2;
-    expect(Number(circle?.getAttribute("cx"))).toBeCloseTo(
-      offsetX + KINGS_LANDING.x * fitScale,
-      6,
+    MARKERS.forEach((marker) => {
+      const link = getByRole("link", { name: marker.name });
+      expect(link.getAttribute("href")).toBe(marker.href);
+      const circle = link.querySelector("circle");
+      expect(Number(circle?.getAttribute("cx"))).toBeCloseTo(
+        offsetX + marker.x * fitScale,
+        6,
+      );
+      expect(Number(circle?.getAttribute("cy"))).toBeCloseTo(
+        offsetY + marker.y * fitScale,
+        6,
+      );
+      expect(Number(circle?.getAttribute("r"))).toBeCloseTo(
+        MARKER_RADIUS * fitScale,
+        6,
+      );
+    });
+  });
+
+  it("recentres the view on a hotspot that receives focus while off screen", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+
+    const size = { w: 800, h: 600 };
+    const fitScale = fitScaleFor(size);
+    const [kingsLanding] = MARKERS;
+    const svgX =
+      (size.w - NATURAL_SIZE * fitScale) / 2 + kingsLanding.x * fitScale;
+    const svgY =
+      (size.h - NATURAL_SIZE * fitScale) / 2 + kingsLanding.y * fitScale;
+    expect(SEEDED_VIEW.zoom * svgX + SEEDED_VIEW.x).toBeLessThan(0);
+
+    fireEvent.focus(getByRole("link", { name: kingsLanding.name }));
+
+    expect(spies.setValue).toHaveBeenCalledTimes(2);
+    const moved = spies.setValue.mock.calls[1][0];
+    expect(moved.a).toBe(SEEDED_VIEW.zoom);
+    expect(moved.e).toBeCloseTo(size.w / 2 - SEEDED_VIEW.zoom * svgX, 6);
+    expect(moved.f).toBeCloseTo(size.h / 2 - SEEDED_VIEW.zoom * svgY, 6);
+  });
+
+  it("leaves the view alone when a focused hotspot is already on screen", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+
+    mockViewerValue = { a: 1, e: 0, f: 0 };
+    fireEvent.focus(getByRole("link", { name: MARKERS[0].name }));
+
+    expect(spies.setValue).toHaveBeenCalledTimes(1);
+  });
+
+  it("draws no hotspots when given no markers", async () => {
+    const utils = renderWithNuqs(
+      <WorldMap
+        src="/map/test-map.jpg"
+        naturalWidth={7680}
+        naturalHeight={7680}
+        markers={[]}
+      />,
     );
-    expect(Number(circle?.getAttribute("cy"))).toBeCloseTo(
-      offsetY + KINGS_LANDING.y * fitScale,
-      6,
-    );
-    expect(Number(circle?.getAttribute("r"))).toBeCloseTo(
-      KINGS_LANDING.radius * fitScale,
-      6,
-    );
+    const stage = utils.getByRole("application");
+    stubSize(stage, 800, 600);
+    act(() => {
+      observers[0].cb();
+    });
+    await utils.findByTestId("pan-zoom");
+    expect(utils.queryAllByRole("link")).toHaveLength(0);
   });
 
   it("requests fullscreen on the stage and flips to Exit fullscreen", async () => {
@@ -479,5 +552,18 @@ describe("WorldMap — accessibility contract", () => {
     expect(
       container.querySelector('a[aria-label="King\'s Landing"]'),
     ).not.toBeNull();
+  });
+
+  it("exposes every hotspot as a named link in the tab sequence", async () => {
+    const { findByTestId, getAllByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    const links = getAllByRole("link");
+    expect(links.map((link) => link.getAttribute("aria-label"))).toEqual(
+      MARKERS.map((marker) => marker.name),
+    );
+    links.forEach((link) => {
+      expect(link.getAttribute("href")).not.toBeNull();
+      expect(link.getAttribute("tabindex")).not.toBe("-1");
+    });
   });
 });

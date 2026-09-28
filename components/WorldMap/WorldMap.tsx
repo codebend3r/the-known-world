@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { KeyboardEvent } from "react";
+import type { FocusEvent, KeyboardEvent } from "react";
 import Link from "next/link";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import {
@@ -10,6 +10,7 @@ import {
   type Value,
 } from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
+import type { WorldMapMarker } from "@/lib/map";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
 
 const ZOOM_STEP = 1.5;
@@ -18,11 +19,10 @@ const PAN_STEP_RATIO = 0.2;
 // rather than leaving the visible hint line as the only place they exist.
 const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
 const INITIAL_VIEW = { zoom: 5, x: -1495, y: -1940 };
-// Natural-pixel position of the King's Landing capital icon printed on the
-// map, and the radius of the (invisible) click target around it — kept
-// tight since neighboring towns (Hayford, Rosby) sit only ~65-100 natural
-// pixels away.
-const KINGS_LANDING = { x: 1955, y: 4619, radius: 25 };
+// Radius, in natural pixels, of the (invisible) click target around each
+// printed seat icon — kept tight since neighbouring towns (Hayford and Rosby
+// by King's Landing, Lordsport by Pyke) sit only ~50-100 natural pixels away.
+const MARKER_RADIUS = 25;
 
 type PanDirection = "up" | "down" | "left" | "right";
 
@@ -38,9 +38,10 @@ type Props = {
   src: string;
   naturalWidth: number;
   naturalHeight: number;
+  markers: ReadonlyArray<WorldMapMarker>;
 };
 
-export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
+export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<UncontrolledReactSVGPanZoom | null>(null);
   const hasSeededViewRef = useRef(false);
@@ -179,6 +180,28 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
     return () => cancelAnimationFrame(frame);
   }, [editMode]);
 
+  // Tabbing to a hotspot that the current pan has scrolled out of view would
+  // leave focus on something invisible, so the view recentres on it at the
+  // current zoom. A hotspot already on screen (the usual case for a mouse
+  // click, which also focuses) is left where it is to avoid a jump.
+  const revealMarker = (marker: WorldMapMarker) => {
+    const inner = viewerRef.current?.Viewer;
+    if (!inner || !size) return;
+    const value = inner.getValue();
+    const svgX = (size.w - drawnWidth) / 2 + marker.x * fitScale;
+    const svgY = (size.h - drawnHeight) / 2 + marker.y * fitScale;
+    const screenX = value.a * svgX + value.e;
+    const screenY = value.a * svgY + value.f;
+    const isVisible =
+      screenX >= 0 && screenX <= size.w && screenY >= 0 && screenY <= size.h;
+    if (isVisible) return;
+    inner.setValue({
+      ...value,
+      e: size.w / 2 - value.a * svgX,
+      f: size.h / 2 - value.a * svgY,
+    });
+  };
+
   const zoomIn = () => viewerRef.current?.zoomOnViewerCenter(ZOOM_STEP);
   const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
   const fitView = () => viewerRef.current?.fitToViewer();
@@ -271,18 +294,26 @@ export function WorldMap({ src, naturalWidth, naturalHeight }: Props) {
                 height={drawnHeight}
                 aria-hidden="true"
               />
-              <Link
-                href="/castles/kings-landing/"
-                aria-label="King's Landing"
-                title="King's Landing"
-                className={styles.marker}
-              >
-                <circle
-                  cx={(size.w - drawnWidth) / 2 + KINGS_LANDING.x * fitScale}
-                  cy={(size.h - drawnHeight) / 2 + KINGS_LANDING.y * fitScale}
-                  r={KINGS_LANDING.radius * fitScale}
-                />
-              </Link>
+              {markers.map((marker) => (
+                <Link
+                  key={marker.slug}
+                  href={marker.href}
+                  aria-label={marker.name}
+                  title={marker.name}
+                  className={styles.marker}
+                  onFocus={(event: FocusEvent) => {
+                    if (event.currentTarget === event.target) {
+                      revealMarker(marker);
+                    }
+                  }}
+                >
+                  <circle
+                    cx={(size.w - drawnWidth) / 2 + marker.x * fitScale}
+                    cy={(size.h - drawnHeight) / 2 + marker.y * fitScale}
+                    r={MARKER_RADIUS * fitScale}
+                  />
+                </Link>
+              ))}
             </svg>
           </UncontrolledReactSVGPanZoom>
         )}

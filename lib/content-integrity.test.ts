@@ -12,7 +12,7 @@ import {
   contentIntegrityErrors,
   reciprocalAsymmetries,
 } from "@/lib/content-integrity";
-import { MAP_BOUNDS } from "@/lib/map";
+import { MAP_BOUNDS, WORLD_MAP_RASTER } from "@/lib/map";
 import {
   BattleSchema,
   CastleSchema,
@@ -132,7 +132,13 @@ function emptyCollections() {
   };
 }
 
-function placedCastle(coords: { x: number; y: number }) {
+function placedCastle({
+  coords,
+  worldMap,
+}: {
+  coords: { x: number; y: number };
+  worldMap?: { x: number; y: number };
+}) {
   return {
     body: "",
     slug: "off-map",
@@ -141,6 +147,7 @@ function placedCastle(coords: { x: number; y: number }) {
       name: "Off Map",
       type: "castle",
       coords,
+      "world-map": worldMap,
     }),
   };
 }
@@ -271,7 +278,7 @@ describe("content integrity", () => {
   it("flags a castle, battle, or event placed outside the atlas bounds", () => {
     const errors = contentIntegrityErrors({
       ...emptyCollections(),
-      castles: [placedCastle({ x: -1, y: 10 })],
+      castles: [placedCastle({ coords: { x: -1, y: 10 } })],
       battles: [placedBattle({ x: 10, y: MAP_BOUNDS.height + 1 })],
       events: [placedEvent({ x: 1955, y: 4619 })],
     });
@@ -286,8 +293,38 @@ describe("content integrity", () => {
   it("accepts a placement on the far corner of the atlas bounds", () => {
     const errors = contentIntegrityErrors({
       ...emptyCollections(),
-      castles: [placedCastle({ x: MAP_BOUNDS.width, y: MAP_BOUNDS.height })],
+      castles: [
+        placedCastle({ coords: { x: MAP_BOUNDS.width, y: MAP_BOUNDS.height } }),
+      ],
       battles: [placedBattle({ x: 0, y: 0 })],
+    });
+    expect(errors).toEqual([]);
+  });
+
+  it("flags a castle whose `world-map` pixel falls off the raster", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      castles: [
+        placedCastle({
+          coords: { x: 10, y: 10 },
+          worldMap: { x: WORLD_MAP_RASTER.width + 1, y: 5 },
+        }),
+      ],
+    });
+    expect(errors).toEqual([
+      `castles/off-map.world-map: (${WORLD_MAP_RASTER.width + 1}, 5) is outside the ${WORLD_MAP_RASTER.width}x${WORLD_MAP_RASTER.height} raster`,
+    ]);
+  });
+
+  it("accepts a `world-map` pixel on the far corner of the raster", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      castles: [
+        placedCastle({
+          coords: { x: 10, y: 10 },
+          worldMap: { x: WORLD_MAP_RASTER.width, y: WORLD_MAP_RASTER.height },
+        }),
+      ],
     });
     expect(errors).toEqual([]);
   });

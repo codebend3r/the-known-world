@@ -16,6 +16,9 @@ features:
 coords:
   x: 430
   y: 730
+world-map:
+  x: 1520
+  y: 4165
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Riverrun

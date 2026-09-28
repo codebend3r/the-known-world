@@ -12,14 +12,14 @@ Placing a marker is choosing an `(x, y)` and adding it to a layer. The trap is t
 | Space              | Size         | Who uses it                                                 | King's Landing |
 | ------------------ | ------------ | ----------------------------------------------------------- | -------------- |
 | **Atlas space**    | `800 x 1400` | Every `coords` field in `content/`, `MapStage`, `MapMarker` | `(590, 830)`   |
-| **Natural pixels** | `10000x8300` | `components/WorldMap` only, for the `/maps` raster          | `(1955, 4619)` |
+| **Natural pixels** | `10000x8300` | Every `world-map` field in `content/castles/`, `WorldMap`   | `(1955, 4619)` |
 
 They are not two scales of one picture. As a fraction of image width, atlas King's Landing sits at 73.8% and natural King's Landing at 19.6%. No affine transform relates them, because atlas space is a Westeros-only schematic (`aspect-ratio: 4 / 7`, `MapStage.module.scss`) while the raster is the whole known world including Essos and Sothoryos.
 
 Consequences that drive everything below:
 
 - **Atlas space covers Westeros only.** All 146 castles fall in `x 100..800`, `y 105..1230`. Nothing on Essos or the Summer Isles can be placed, which is why 22 of 53 events are permanently unplaceable rather than merely unwritten.
-- **`WorldMap` is not the layer surface.** It renders the raster plus one hardcoded King's Landing hotspot at natural pixels. Markers there would need natural pixels, which no content entry carries.
+- **`WorldMap` is not the layer surface.** It renders the raster plus one hotspot per castle that carries a `world-map` field, in natural pixels. `selectWorldMapMarkers()` in `lib/map.ts` picks them; `WORLD_MAP_RASTER` bounds them, gated by the same integrity test. Read a new pixel off a gridded crop of the raster, never by scaling `coords`.
 - **`MapStage` is the layer surface** and draws atlas space 1:1 into its viewBox, so `coords` go straight through with no projection.
 
 ## The coordinate rules
@@ -42,7 +42,7 @@ Preferred order. Stop at the first that applies.
 2. **Interpolate between two known castles.** Atlas space is linear, so a place a third of the way from Riverrun `(430, 730)` to the Twins `(440, 645)` is `(433, 702)`. Round to integers.
 3. **Do not place it.** Leave `coords` absent. An absent marker is correct; a guessed one is a lie a reader cannot detect.
 
-Never invent a coordinate from the raster in `public/map/`. Those are natural pixels and belong to the other space.
+Never invent a `coords` value from the raster in `public/map/`. Those are natural pixels and belong in `world-map`, the other space.
 
 ### When "reuse the castle" does not apply
 
@@ -128,7 +128,7 @@ Current coverage, from the audit:
 | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Reading coordinates off `the-known-world-enhanced.jpg`           | That yields natural pixels. Every value lands outside atlas bounds and the marker disappears.              |
 | Scaling atlas units by `10000/800` to reach the raster           | The two spaces are different projections of different areas, not one picture at two zooms.                 |
-| Adding markers to `components/WorldMap`                          | It is the raster viewer for `/maps`. Layers live on `MapStage`, whose viewBox _is_ atlas space.            |
+| Hardcoding a marker in `components/WorldMap`                     | Hotspots come from `world-map` frontmatter via `selectWorldMapMarkers()`. Layers live on `MapStage`.       |
 | Treating stacked coordinates as a bug                            | Reusing a seat's coordinates is the intended result. A stack is suspicious only when no castle anchors it. |
 | Placing an entry whose `location` names a bearing                | `west of the Golden Tooth` is not the Golden Tooth. Leave it absent.                                       |
 | Defaulting missing `coords` to `{ x: 0, y: 0 }`                  | `(0, 0)` is a valid in-bounds point in the far north-west sea, so the bad marker looks real.               |

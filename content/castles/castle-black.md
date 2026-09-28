@@ -11,6 +11,9 @@ features:
 coords:
   x: 460
   y: 108
+world-map:
+  x: 1938
+  y: 2240
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Castle_Black
