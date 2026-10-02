@@ -41,24 +41,30 @@ type RuleProps = {
   className?: string;
 };
 
+// The hairlines are CSS so they stretch to any container width; only the centre
+// mark is SVG, so the diamond keeps its size however wide the rule runs.
 export function FiligreeRule({ className }: RuleProps) {
   return (
     <span className={cx(styles.rule, className)} aria-hidden="true">
+      <span className={cx(styles.line, styles.lead)} />
       <svg
-        viewBox="0 0 240 18"
+        className={styles.mark}
+        viewBox="0 0 32 18"
         fill="none"
         focusable="false"
         preserveAspectRatio="xMidYMid meet"
       >
-        <g stroke="currentColor" strokeWidth="1.1" strokeLinecap="round">
-          <line x1="22" y1="9" x2="104" y2="9" />
-          <line x1="136" y1="9" x2="218" y2="9" />
-          <path d="M120 2.5 L127 9 L120 15.5 L113 9 Z" strokeLinejoin="round" />
-        </g>
-        <circle cx="120" cy="9" r="1.5" fill="currentColor" />
-        <circle cx="108" cy="9" r="1.2" fill="currentColor" />
-        <circle cx="132" cy="9" r="1.2" fill="currentColor" />
+        <path
+          d="M16 2.5 L23 9 L16 15.5 L9 9 Z"
+          stroke="currentColor"
+          strokeWidth="1.1"
+          strokeLinejoin="round"
+        />
+        <circle cx="16" cy="9" r="1.5" fill="currentColor" />
+        <circle cx="4" cy="9" r="1.2" fill="currentColor" />
+        <circle cx="28" cy="9" r="1.2" fill="currentColor" />
       </svg>
+      <span className={cx(styles.line, styles.tail)} />
     </span>
   );
 }

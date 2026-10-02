@@ -22,7 +22,9 @@
 
 .rule {
   display: grid;
-  justify-items: center;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  grid-template-areas: "lead mark tail";
+  align-items: center;
   color: var(--tkw-gold);
   line-height: 0;
   opacity: 0.45;
@@ -34,10 +36,27 @@
     transparent 100%
   );
   mask-image: linear-gradient(90deg, #000 0%, #000 72%, transparent 100%);
+}
 
-  svg {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
+// Sized to match the original 420px rule: the 32×18 mark at 1.75× scale, and
+// a hairline matching its 1.1-unit stroke at that scale.
+.mark {
+  grid-area: mark;
+  display: block;
+  width: 56px;
+  height: auto;
+}
+
+.line {
+  height: 2px;
+  border-radius: var(--tkw-radius);
+  background: currentColor;
+}
+
+.lead {
+  grid-area: lead;
+}
+
+.tail {
+  grid-area: tail;
 }
