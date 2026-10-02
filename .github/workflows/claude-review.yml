@@ -1,0 +1,196 @@
+name: 🤖 Weekly review
+
+# Reviews everything merged to `main` in the last 7 days and files the findings
+# as an issue. A scheduled run has no pull request to comment on, so each job
+# writes a markdown file and opens an issue from it instead.
+#
+# Requires an ANTHROPIC_API_KEY repository secret. Without it the review steps
+# skip rather than fail, so the workflow stays green until it is added.
+#
+# The window ignores `content/`, `public/`, and `bun.lock`: lore and image
+# drops make up most weeks here, the test suite already validates frontmatter,
+# and a lockfile diff would blow the context budget for no reviewable signal.
+
+on:
+  schedule:
+    - cron: "0 3 * * 5"
+      timezone: "America/Toronto"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  security:
+    name: 🔐 Security audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: 🔑 Check for API key
+        id: key
+        run: echo "present=${{ secrets.ANTHROPIC_API_KEY != '' }}" >> "$GITHUB_OUTPUT"
+
+      - name: 📆 Measure the review window
+        id: window
+        run: |
+          COUNT=$(git log --since='7 days ago' --oneline main -- . ':(exclude)content' ':(exclude)public' ':(exclude)bun.lock' | wc -l | tr -d ' ')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "🧮 $COUNT code commit(s) merged to main in the last 7 days"
+
+      # Pinned so the weekly cost doesn't move whenever the action's default does.
+      - name: 🕵️ Security audit
+        if: steps.key.outputs.present == 'true' && steps.window.outputs.count != '0'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: >-
+            Audit every change merged to `main` in the last 7 days. Scope
+            yourself to that window:
+            `git log --since='7 days ago' --patch main -- . ':(exclude)content' ':(exclude)public' ':(exclude)bun.lock'`.
+
+            This is a statically exported Next.js site (`output: "export"` in
+            `next.config.ts`) that Netlify publishes from `out/`. There is no
+            server, API route, auth, or database, so do not report their
+            absence. The real surface, in priority order:
+
+            1. HTML injection. `lib/content.ts` renders markdown through
+            `remark` and `remark-html`, and the `app/*/[slug]/page.tsx` routes
+            inject the result with `dangerouslySetInnerHTML`. Flag anything
+            that disables remark-html sanitizing (`sanitize: false`), adds
+            `rehype-raw` or a plugin that emits raw HTML nodes, or a new
+            `dangerouslySetInnerHTML` fed by anything other than that pipeline.
+
+            2. URLs built from content. An `href` or `src` taken from
+            frontmatter or prose without a scheme check (`javascript:`), or an
+            external `target="_blank"` link without `rel="noopener noreferrer"`.
+
+            3. Workflows in `.github/workflows/`. Untrusted input such as
+            `github.event.*` or `github.head_ref` interpolated straight into a
+            `run:` script, a `pull_request_target` trigger, permissions wider
+            than the job needs, or a secret exposed to a step that doesn't use
+            it.
+
+            4. Supply chain. A new or changed dependency in `package.json`
+            that is not pinned to an exact version, looks like a typosquat, or
+            ships an install script; changes to the build command or
+            environment in `netlify.toml` or to `netlify/plugins/`.
+
+            5. Secrets. A committed key or token, or a `NEXT_PUBLIC_` variable
+            that would bake a secret into the static bundle.
+
+            Skip anything `oxlint` or `actionlint` already catches.
+            There is no pull request in this run, so do NOT try to post review
+            comments and do NOT reference a PR number.
+            Write your findings to `security-findings.md` as GitHub-flavoured
+            markdown, most severe first, each with the offending `file:line`
+            and a one-line fix.
+            If there are no findings, create no file. Do not invent findings
+            to fill the report.
+          claude_args: >-
+            --model claude-sonnet-5-5
+            --max-turns 15
+            --allowed-tools "Read,Grep,Glob,Write,Bash(git log:*),Bash(git show:*),Bash(git diff:*)"
+
+      - name: 🐛 File the security findings
+        if: steps.key.outputs.present == 'true' && hashFiles('security-findings.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "🔐 Weekly security audit — $(date -u +%Y-%m-%d)" \
+            --body-file security-findings.md
+          echo "✅ Security findings filed"
+
+  house-rules:
+    name: 📏 House rules audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: 🔑 Check for API key
+        id: key
+        run: echo "present=${{ secrets.ANTHROPIC_API_KEY != '' }}" >> "$GITHUB_OUTPUT"
+
+      - name: 📆 Measure the review window
+        id: window
+        run: |
+          COUNT=$(git log --since='7 days ago' --oneline main -- . ':(exclude)content' ':(exclude)public' ':(exclude)bun.lock' | wc -l | tr -d ' ')
+          echo "count=$COUNT" >> "$GITHUB_OUTPUT"
+          echo "🧮 $COUNT code commit(s) merged to main in the last 7 days"
+
+      # A checklist sweep against CLAUDE.md, so it runs on the cheap model. It
+      # stays a separate job so a failure in one audit doesn't mask the other.
+      - name: 🧹 House rules audit
+        if: steps.key.outputs.present == 'true' && steps.window.outputs.count != '0'
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: >-
+            Review every change merged to `main` in the last 7 days against
+            the conventions in `CLAUDE.md`. Scope yourself to that window:
+            `git log --since='7 days ago' --patch main -- . ':(exclude)content' ':(exclude)public' ':(exclude)bun.lock'`.
+
+            Report only what the toolchain cannot. `oxlint` (`.oxlintrc.json`),
+            `gale` (`gale.json`), `tsgo`, `oxfmt`, `typos`, and `actionlint`
+            all gate every pull request, so a finding one of them would flag
+            is wasted output. Read those configs before reporting a rule as
+            uncaught.
+
+            For TypeScript, sweep for: `as` casts and double casts, non-null
+            assertions outside test files, `any`, `enum`, `interface` where a
+            `type` would do, `for...of` and `for...in`, `||` used for a
+            default, optional chaining without a `??` fallback, functions with
+            several positional parameters, `else` after a returning branch,
+            mutation of inputs or shared values, floating promises (the linter
+            does not check these), default exports outside Next.js route
+            files, untrusted data used without a Zod schema at the boundary,
+            and comments that restate the code.
+
+            For SCSS, sweep for: margins used for spacing between children,
+            positional `grid-area` line spans in a fixed layout, a hardcoded
+            color, font, size, radius, or transition where a `--tkw-*`,
+            `--font-*`, `--fs-*`, `--lh-*`, or `--ls-*` token exists, a
+            hardcoded breakpoint instead of `styles/_breakpoints.scss`, an
+            animation or transition without a `prefers-reduced-motion` guard,
+            `:global()` without a comment explaining why, a relative
+            `*.module.scss` import, and styling by `id`.
+
+            Also flag a new `lib/` or `components/` module whose co-located
+            test is missing.
+
+            There is no pull request in this run, so do NOT try to post review
+            comments and do NOT reference a PR number.
+            Write your findings to `house-rules-findings.md` as
+            GitHub-flavoured markdown, each with the offending `file:line` and
+            the `CLAUDE.md` rule it breaks.
+            If there are no findings, create no file.
+          claude_args: >-
+            --model claude-haiku-4-5
+            --max-turns 15
+            --allowed-tools "Read,Grep,Glob,Write,Bash(git log:*),Bash(git show:*),Bash(git diff:*)"
+
+      - name: 🐛 File the house rules findings
+        if: steps.key.outputs.present == 'true' && hashFiles('house-rules-findings.md') != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "📏 Weekly house rules audit — $(date -u +%Y-%m-%d)" \
+            --body-file house-rules-findings.md
+          echo "✅ House rules findings filed"
