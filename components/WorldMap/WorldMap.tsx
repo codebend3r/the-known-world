@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { FocusEvent, KeyboardEvent } from "react";
+import type { FocusEvent, KeyboardEvent, PointerEvent } from "react";
 import Link from "next/link";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import {
@@ -23,6 +23,13 @@ const INITIAL_VIEW = { zoom: 5, x: -1495, y: -1940 };
 // printed seat icon — kept tight since neighbouring towns (Hayford and Rosby
 // by King's Landing, Lordsport by Pyke) sit only ~50-100 natural pixels away.
 const MARKER_RADIUS = 25;
+// The popover is a fixed-width card (see `.popover` in the module) anchored
+// on the hotspot. These mirror its CSS box so the card can be clamped inside
+// the stage and flipped below the pin when there is no room above it.
+const POPOVER_WIDTH = 288;
+const POPOVER_HEIGHT_ESTIMATE = 230;
+const POPOVER_EDGE_GUTTER = 12;
+const POPOVER_ID = "world-map-popover";
 
 type PanDirection = "up" | "down" | "left" | "right";
 
@@ -41,6 +48,61 @@ type Props = {
   markers: ReadonlyArray<WorldMapMarker>;
 };
 
+type PopoverProps = {
+  marker: WorldMapMarker;
+  anchor: { x: number; y: number };
+  stageWidth: number;
+};
+
+function MarkerPopover({ marker, anchor, stageWidth }: PopoverProps) {
+  const halfWidth = POPOVER_WIDTH / 2;
+  const lowest = Math.min(halfWidth + POPOVER_EDGE_GUTTER, stageWidth / 2);
+  const highest = Math.max(
+    stageWidth - halfWidth - POPOVER_EDGE_GUTTER,
+    stageWidth / 2,
+  );
+  const clampedX = Math.min(Math.max(anchor.x, lowest), highest);
+  const placement = anchor.y < POPOVER_HEIGHT_ESTIMATE ? "below" : "above";
+  const shift = clampedX - anchor.x;
+  // Clamping slides the card sideways; the arrow and the pop's origin slide
+  // back by the same amount so both still point at the pin.
+  const pinX = halfWidth - shift;
+
+  return (
+    <div
+      className={styles.anchor}
+      style={{ left: anchor.x, top: anchor.y }}
+      data-placement={placement}
+    >
+      <span className={styles.pulse} aria-hidden="true" />
+      <span className={cx(styles.pulse, styles.pulseLate)} aria-hidden="true" />
+      <div className={styles.shifter} style={{ translate: `${shift}px 0` }}>
+        <aside
+          id={POPOVER_ID}
+          role="tooltip"
+          className={styles.popover}
+          style={{
+            transformOrigin: `${pinX}px ${placement === "above" ? "100%" : "0"}`,
+          }}
+        >
+          <span
+            className={styles.arrow}
+            style={{ insetInlineStart: pinX }}
+            aria-hidden="true"
+          />
+          <p className={styles.eyebrow}>{marker.type}</p>
+          <h3 className={styles.title}>{marker.name}</h3>
+          {!!marker.house && <p className={styles.house}>{marker.house}</p>}
+          {!!marker.summary && (
+            <p className={styles.summary}>{marker.summary}</p>
+          )}
+          <p className={styles.cta}>Open the entry</p>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
 export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<UncontrolledReactSVGPanZoom | null>(null);
@@ -56,6 +118,8 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   );
   const [debugValue, setDebugValue] = useState(INITIAL_VIEW);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [activeSlug, setActiveSlug] = useState<string | null>(null);
+  const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
     if (!stageRef.current) return;
@@ -184,23 +248,75 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // leave focus on something invisible, so the view recentres on it at the
   // current zoom. A hotspot already on screen (the usual case for a mouse
   // click, which also focuses) is left where it is to avoid a jump.
-  const revealMarker = (marker: WorldMapMarker) => {
+  // Where a hotspot's centre currently sits on the stage, in screen pixels,
+  // after the viewer's pan and zoom.
+  const markerScreenPoint = (marker: WorldMapMarker) => {
     const inner = viewerRef.current?.Viewer;
-    if (!inner || !size) return;
+    if (!inner || !size) return null;
     const value = inner.getValue();
     const svgX = (size.w - drawnWidth) / 2 + marker.x * fitScale;
     const svgY = (size.h - drawnHeight) / 2 + marker.y * fitScale;
-    const screenX = value.a * svgX + value.e;
-    const screenY = value.a * svgY + value.f;
+    return {
+      svgX,
+      svgY,
+      screenX: value.a * svgX + value.e,
+      screenY: value.a * svgY + value.f,
+    };
+  };
+
+  const revealMarker = (marker: WorldMapMarker) => {
+    const inner = viewerRef.current?.Viewer;
+    const point = markerScreenPoint(marker);
+    if (!inner || !size || !point) return;
+    const value = inner.getValue();
     const isVisible =
-      screenX >= 0 && screenX <= size.w && screenY >= 0 && screenY <= size.h;
+      point.screenX >= 0 &&
+      point.screenX <= size.w &&
+      point.screenY >= 0 &&
+      point.screenY <= size.h;
     if (isVisible) return;
     inner.setValue({
       ...value,
-      e: size.w / 2 - value.a * svgX,
-      f: size.h / 2 - value.a * svgY,
+      e: size.w / 2 - value.a * point.svgX,
+      f: size.h / 2 - value.a * point.svgY,
     });
   };
+
+  const activeMarker = markers.find((marker) => marker.slug === activeSlug);
+
+  const showPopover = (marker: WorldMapMarker) => {
+    const point = markerScreenPoint(marker);
+    if (!point) return;
+    setAnchor({ x: point.screenX, y: point.screenY });
+    setActiveSlug(marker.slug);
+  };
+
+  const hidePopover = (marker: WorldMapMarker) => {
+    setActiveSlug((current) => (current === marker.slug ? null : current));
+  };
+
+  // The card follows its pin through wheel zoom and drag-pans, which the
+  // viewer applies without telling us, so the anchor is re-read each frame
+  // while a card is open (the same polling the debug overlay needs).
+  useEffect(() => {
+    if (!activeMarker) return;
+    let frame: number;
+    const tick = () => {
+      const point = markerScreenPoint(activeMarker);
+      if (point) {
+        setAnchor((prev) =>
+          prev?.x === point.screenX && prev?.y === point.screenY
+            ? prev
+            : { x: point.screenX, y: point.screenY },
+        );
+      }
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+    // `markerScreenPoint` closes over layout values already in this list.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeMarker, size, fitScale, drawnWidth, drawnHeight]);
 
   const zoomIn = () => viewerRef.current?.zoomOnViewerCenter(ZOOM_STEP);
   const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
@@ -299,13 +415,20 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
                   key={marker.slug}
                   href={marker.href}
                   aria-label={marker.name}
-                  title={marker.name}
                   className={styles.marker}
-                  onFocus={(event: FocusEvent) => {
-                    if (event.currentTarget === event.target) {
-                      revealMarker(marker);
-                    }
+                  aria-describedby={
+                    marker.slug === activeSlug ? POPOVER_ID : undefined
+                  }
+                  onPointerEnter={(event: PointerEvent) => {
+                    if (event.pointerType === "mouse") showPopover(marker);
                   }}
+                  onPointerLeave={() => hidePopover(marker)}
+                  onFocus={(event: FocusEvent) => {
+                    if (event.currentTarget !== event.target) return;
+                    revealMarker(marker);
+                    showPopover(marker);
+                  }}
+                  onBlur={() => hidePopover(marker)}
                 >
                   <circle
                     cx={(size.w - drawnWidth) / 2 + marker.x * fitScale}
@@ -316,6 +439,14 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
               ))}
             </svg>
           </UncontrolledReactSVGPanZoom>
+        )}
+        {!!activeMarker && !!anchor && !!size && (
+          <MarkerPopover
+            key={activeMarker.slug}
+            marker={activeMarker}
+            anchor={anchor}
+            stageWidth={size.w}
+          />
         )}
         {editMode && (
           <dl className={styles.debug} aria-hidden="true">

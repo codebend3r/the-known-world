@@ -28,6 +28,8 @@
   // No transforms, no scale.
   --tkw-lift: border-color 0.18s ease, box-shadow 0.18s ease;
   --tkw-fade: opacity 0.18s ease;
+  // Overshooting ease for things that pop into place (the map popover).
+  --tkw-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   // ── type ramp ──────────────────────────────────────────────────────
   --tkw-ink: #f4ecd6;

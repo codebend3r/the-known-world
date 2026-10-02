@@ -1,4 +1,4 @@
-import type { Battle, Castle, Coords, Event } from "@/lib/schemas";
+import type { Battle, Castle, Coords, Event, House } from "@/lib/schemas";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 type CastleType = Castle["type"];
@@ -31,6 +31,9 @@ export type WorldMapMarker = {
   href: string;
   x: number;
   y: number;
+  type: CastleType;
+  house?: string;
+  summary: string;
 };
 
 export const ALL_CASTLE_TYPES: CastleType[] = [
@@ -201,19 +204,52 @@ export function selectPlacements({
   ];
 }
 
+const SUMMARY_MAX_LENGTH = 180;
+
+/**
+ * The popover's blurb: the first prose paragraph of a castle body, flattened
+ * to plain text. Spoiler spans (`||death|...||`) are dropped outright, since a
+ * hover card has no spoiler toggle to hide them behind.
+ */
+export function summarizeBody(body: string): string {
+  const paragraph =
+    body
+      .split(/\n{2,}/)
+      .map((block) => block.trim())
+      .find((block) => !!block && !/^(#|[-*>|]|\d+\.)/.test(block)) ?? "";
+  const plain = paragraph
+    .replace(/\|\|[a-z-]+\|.*?\|\|/g, "")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/[*_`]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (plain.length <= SUMMARY_MAX_LENGTH) return plain;
+  const cut = plain.slice(0, SUMMARY_MAX_LENGTH);
+  const lastSpace = cut.lastIndexOf(" ");
+  return `${cut.slice(0, lastSpace > 0 ? lastSpace : SUMMARY_MAX_LENGTH).replace(/[,;:.\s]+$/, "")}…`;
+}
+
 /**
  * Every hotspot the `/maps` raster should draw. Drafts never place, because
  * `generateStaticParams` skips them and the pin would link into the void; a
- * castle with no `world-map` field is simply absent.
+ * castle with no `world-map` field is simply absent. A liege house that does
+ * not resolve simply leaves the popover without a house line.
  */
 export function selectWorldMapMarkers({
   castles,
+  houses,
 }: {
   castles: ReadonlyArray<Loaded<Castle>>;
+  houses: ReadonlyArray<Loaded<House>>;
 }): WorldMapMarker[] {
-  return castles.flatMap(({ frontmatter }) => {
+  const houseNames = new Map(
+    houses.map(({ frontmatter }) => [frontmatter.slug, frontmatter.name]),
+  );
+  return castles.flatMap(({ frontmatter, body }) => {
     const pixel = frontmatter["world-map"];
     if (frontmatter.draft || !pixel) return [];
+    const liege = frontmatter["liege-house"];
+    const house = liege ? houseNames.get(liege) : undefined;
     return [
       {
         slug: frontmatter.slug,
@@ -224,6 +260,9 @@ export function selectWorldMapMarkers({
         }),
         x: pixel.x,
         y: pixel.y,
+        type: frontmatter.type,
+        ...(house ? { house } : {}),
+        summary: summarizeBody(body),
       },
     ];
   });

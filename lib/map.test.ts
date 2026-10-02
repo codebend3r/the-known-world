@@ -12,9 +12,15 @@ import {
   selectPlacements,
   selectVisibleCastles,
   selectWorldMapMarkers,
+  summarizeBody,
   type MapLayer,
 } from "@/lib/map";
-import { BattleSchema, CastleSchema, EventSchema } from "@/lib/schemas";
+import {
+  BattleSchema,
+  CastleSchema,
+  EventSchema,
+  HouseSchema,
+} from "@/lib/schemas";
 
 function castle(over: Record<string, unknown>) {
   const slug = typeof over.slug === "string" ? over.slug : "x";
@@ -341,12 +347,31 @@ describe("isWithinWorldMapRaster", () => {
 });
 
 describe("selectWorldMapMarkers", () => {
-  const castles = [
-    castle({
-      slug: "kings-landing",
-      name: "King's Landing",
-      "world-map": { x: 1955, y: 4619 },
+  const stark = {
+    frontmatter: HouseSchema.parse({
+      slug: "stark",
+      name: "House Stark",
+      rank: "lordly",
+      seat: "winterfell",
+      liege: null,
+      words: "Winter is Coming",
+      status: "extant",
+      sigil: { description: "A direwolf", provenance: "canon" },
+      founded: { year: -8000, era: "age-of-heroes", precision: "legendary" },
     }),
+    body: "",
+    slug: "stark",
+  };
+  const houses = [stark];
+  const castles = [
+    {
+      ...castle({
+        slug: "kings-landing",
+        name: "King's Landing",
+        "world-map": { x: 1955, y: 4619 },
+      }),
+      body: "The capital of the Seven Kingdoms.\n\n## Detail\n\nMore.",
+    },
     castle({ slug: "winterfell", name: "Winterfell" }),
     castle({
       slug: "draft-seat",
@@ -358,18 +383,21 @@ describe("selectWorldMapMarkers", () => {
       slug: "lordsport",
       name: "Lordsport",
       type: "town",
+      "liege-house": "stark",
       "world-map": { x: 1100, y: 4030 },
     }),
   ];
 
   it("places only castles that carry a `world-map` pixel, linking by slug", () => {
-    expect(selectWorldMapMarkers({ castles })).toEqual([
+    expect(selectWorldMapMarkers({ castles, houses })).toEqual([
       {
         slug: "kings-landing",
         name: "King's Landing",
         href: "/castles/kings-landing/",
         x: 1955,
         y: 4619,
+        type: "castle",
+        summary: "The capital of the Seven Kingdoms.",
       },
       {
         slug: "lordsport",
@@ -377,16 +405,61 @@ describe("selectWorldMapMarkers", () => {
         href: "/castles/lordsport/",
         x: 1100,
         y: 4030,
+        type: "town",
+        house: "House Stark",
+        summary: "",
       },
     ]);
   });
 
+  it("leaves the house off when the liege does not resolve", () => {
+    const [marker] = selectWorldMapMarkers({
+      castles: [
+        castle({
+          slug: "orphan",
+          "liege-house": "nobody",
+          "world-map": { x: 5, y: 5 },
+        }),
+      ],
+      houses,
+    });
+    expect(marker?.house).toBeUndefined();
+  });
+
   it("drops drafts rather than linking to a page that is never built", () => {
-    const slugs = selectWorldMapMarkers({ castles }).map((m) => m.slug);
+    const slugs = selectWorldMapMarkers({ castles, houses }).map((m) => m.slug);
     expect(slugs).not.toContain("draft-seat");
   });
 
   it("returns nothing for an empty corpus", () => {
-    expect(selectWorldMapMarkers({ castles: [] })).toEqual([]);
+    expect(selectWorldMapMarkers({ castles: [], houses: [] })).toEqual([]);
+  });
+});
+
+describe("summarizeBody", () => {
+  it("takes the first prose paragraph and skips headings", () => {
+    expect(summarizeBody("## Heading\n\nFirst.\n\nSecond.")).toBe("First.");
+  });
+
+  it("flattens links and emphasis to plain text", () => {
+    expect(summarizeBody("A [keep](/x/) with *old* walls.")).toBe(
+      "A keep with old walls.",
+    );
+  });
+
+  it("drops spoiler spans", () => {
+    expect(summarizeBody("Built long ago. ||death|He died here.||")).toBe(
+      "Built long ago.",
+    );
+  });
+
+  it("truncates a long paragraph on a word boundary", () => {
+    const out = summarizeBody("word ".repeat(80));
+    expect(out.endsWith("…")).toBe(true);
+    expect(out.length).toBeLessThanOrEqual(181);
+  });
+
+  it("returns an empty string for an empty body", () => {
+    expect(summarizeBody("")).toBe("");
   });
 });

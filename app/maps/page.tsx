@@ -4,7 +4,7 @@ import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs";
 import { WorldMap, WorldMapSkeleton } from "@/components/WorldMap";
-import { loadAllCastles } from "@/lib/content";
+import { loadAllCastles, loadAllHouses } from "@/lib/content";
 import { WORLD_MAP_RASTER, selectWorldMapMarkers } from "@/lib/map";
 
 export const metadata: Metadata = {
@@ -13,8 +13,11 @@ export const metadata: Metadata = {
 };
 
 export default async function MapsPage() {
-  const castles = await loadAllCastles();
-  const markers = selectWorldMapMarkers({ castles });
+  const [castles, houses] = await Promise.all([
+    loadAllCastles(),
+    loadAllHouses(),
+  ]);
+  const markers = selectWorldMapMarkers({ castles, houses });
   return (
     <PlateLayout>
       <PageHeading
