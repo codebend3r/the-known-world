@@ -12,6 +12,7 @@ import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { renderWithNuqs } from "@/lib/testNuqs";
+import type { WorldMapMarker } from "@/lib/map";
 
 // `mock.module` is not hoisted in Bun, so plain consts suffice where Vitest
 // needed `vi.hoisted` to lift the spies above the hoisted factory.
@@ -168,13 +169,15 @@ const PAN_STEP_X = (800 * 0.2) / SEEDED_VIEW.zoom;
 const PAN_STEP_Y = (600 * 0.2) / SEEDED_VIEW.zoom;
 const NATURAL_SIZE = 7680;
 const MARKER_RADIUS = 25;
-const MARKERS = [
+const MARKERS: ReadonlyArray<WorldMapMarker> = [
   {
     slug: "kings-landing",
     name: "King's Landing",
     href: "/castles/kings-landing/",
     x: 1955,
     y: 4619,
+    type: "castle",
+    summary: "The capital of the Seven Kingdoms.",
   },
   {
     slug: "winterfell",
@@ -182,6 +185,9 @@ const MARKERS = [
     href: "/castles/winterfell/",
     x: 1630,
     y: 2892,
+    type: "castle",
+    house: "House Stark",
+    summary: "Ancient seat of the Kings of Winter.",
   },
 ];
 
@@ -447,6 +453,49 @@ describe("WorldMap", () => {
         6,
       );
     });
+  });
+
+  it("opens a popover with the seat's quick details on hover and closes it on leave", async () => {
+    const { findByTestId, getByRole, queryByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    expect(queryByRole("tooltip")).toBeNull();
+
+    const link = getByRole("link", { name: "Winterfell" });
+    fireEvent.pointerEnter(link, { pointerType: "mouse" });
+
+    const popover = getByRole("tooltip");
+    expect(popover.textContent).toContain("Winterfell");
+    expect(popover.textContent).toContain("House Stark");
+    expect(popover.textContent).toContain(
+      "Ancient seat of the Kings of Winter.",
+    );
+    expect(link.getAttribute("aria-describedby")).toBe(popover.id);
+
+    fireEvent.pointerLeave(link, { pointerType: "mouse" });
+    expect(queryByRole("tooltip")).toBeNull();
+    expect(link.getAttribute("aria-describedby")).toBeNull();
+  });
+
+  it("shows the popover for keyboard focus too, and hides it on blur", async () => {
+    const { findByTestId, getByRole, queryByRole } = renderMap();
+    await findByTestId("pan-zoom");
+
+    const link = getByRole("link", { name: "King's Landing" });
+    fireEvent.focus(link);
+    expect(getByRole("tooltip").textContent).toContain("King's Landing");
+
+    fireEvent.blur(link);
+    expect(queryByRole("tooltip")).toBeNull();
+  });
+
+  it("ignores touch pointers so a tap still just follows the link", async () => {
+    const { findByTestId, getByRole, queryByRole } = renderMap();
+    await findByTestId("pan-zoom");
+
+    fireEvent.pointerEnter(getByRole("link", { name: "Winterfell" }), {
+      pointerType: "touch",
+    });
+    expect(queryByRole("tooltip")).toBeNull();
   });
 
   it("recentres the view on a hotspot that receives focus while off screen", async () => {

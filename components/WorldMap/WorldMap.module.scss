@@ -80,6 +80,264 @@
   }
 }
 
+// Zero-size anchor pinned to the hotspot's screen point. The pulse rings and
+// the card are laid out relative to it, so panning only moves this one box.
+// It never takes the pointer: the card must not steal hover from the pin, or
+// it would flicker on and off under the cursor.
+.anchor {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.pulse {
+  position: absolute;
+  inset-block-start: -22px;
+  inset-inline-start: -22px;
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--tkw-gold-bright);
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse 1.1s ease-out 2 both;
+
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+.pulseLate {
+  animation-delay: 0.18s;
+}
+
+.shifter {
+  position: absolute;
+  inset-inline-start: calc(var(--popover-width) / -2);
+  width: var(--popover-width);
+  --popover-width: 288px;
+
+  [data-placement="above"] > & {
+    inset-block-end: 30px;
+  }
+
+  [data-placement="below"] > & {
+    inset-block-start: 30px;
+  }
+}
+
+.popover {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 4px;
+  padding: 16px 18px 14px;
+  border: 1px solid var(--tkw-gold);
+  border-radius: var(--tkw-radius);
+  background:
+    radial-gradient(
+      120% 90% at 0% 0%,
+      rgba(200, 162, 74, 0.16),
+      transparent 60%
+    ),
+    var(--tkw-surface-solid);
+  box-shadow:
+    var(--tkw-glow),
+    0 24px 48px -16px rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  animation: pop 0.52s var(--tkw-spring) both;
+
+  [data-placement="below"] & {
+    animation-name: popBelow;
+  }
+
+  // A single gilt glint that sweeps across the card as it lands.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 35%,
+      rgba(230, 193, 92, 0.34) 50%,
+      transparent 65%
+    );
+    transform: translateX(-120%);
+    animation: glint 0.9s ease-out 0.18s both;
+    pointer-events: none;
+  }
+
+  > :not(.arrow) {
+    animation: reveal 0.4s ease-out both;
+  }
+
+  > :nth-child(2) {
+    animation-delay: 0.16s;
+  }
+
+  > :nth-child(3) {
+    animation-delay: 0.22s;
+  }
+
+  > :nth-child(4) {
+    animation-delay: 0.28s;
+  }
+
+  > :nth-child(5) {
+    animation-delay: 0.34s;
+  }
+
+  > :nth-child(6) {
+    animation-delay: 0.4s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: fadeIn 0.18s ease both;
+
+    &::after {
+      display: none;
+    }
+
+    > :not(.arrow) {
+      animation: none;
+    }
+  }
+}
+
+.arrow {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  translate: -50% 0;
+  rotate: 45deg;
+  border: 1px solid var(--tkw-gold);
+  background: var(--tkw-surface-solid);
+
+  [data-placement="above"] & {
+    inset-block-end: -8px;
+    border-block-start-color: transparent;
+    border-inline-start-color: transparent;
+  }
+
+  [data-placement="below"] & {
+    inset-block-start: -8px;
+    border-block-end-color: transparent;
+    border-inline-end-color: transparent;
+  }
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-title);
+  color: var(--tkw-ink);
+}
+
+.house {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--tkw-gold-bright);
+}
+
+.summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  font-family: var(--font-body);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-meta);
+  color: var(--tkw-ink-body);
+  padding-block-start: 4px;
+}
+
+.cta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
+  padding-block-start: 6px;
+
+  &::after {
+    content: " \2192";
+    color: var(--tkw-gold);
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0.9;
+    transform: scale(0.3);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.55) rotate(-2.5deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes popBelow {
+  from {
+    opacity: 0;
+    transform: translateY(-14px) scale(0.55) rotate(2.5deg);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes glint {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .debug {
   position: absolute;
   inset-block-start: 0.75rem;
