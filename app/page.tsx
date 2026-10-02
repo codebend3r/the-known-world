@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <PlateLayout>
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>A chronicle of fire and blood</p>
+        <p className={styles.eyebrow}>A Chronicle of A Song of Ice and Fire</p>
         <h1 className={styles.title}>The Known World</h1>
         <p className={styles.rule} aria-hidden="true">
           <span className={styles.ruleLine} />
