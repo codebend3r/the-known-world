@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { useQueryState, parseAsStringLiteral } from "nuqs";
 import { ViewToggle, ListIcon, TreeChartIcon } from "@/components/ViewToggle";
 import { useIsMobile } from "@/lib/useIsMobile";
@@ -27,6 +27,12 @@ export function FamilyTreeViewSwitcher({ list, chart, headingId }: Props) {
     parseAsStringLiteral(TREE_MODES).withDefault("list"),
   );
   const isMobile = useIsMobile();
+  // The chart is the hidden view on desktop, and mounting it hidden still
+  // fetches a portrait for every node — 70-odd for the larger houses. It
+  // mounts on first selection instead, then stays so pan and zoom survive a
+  // round trip through the list.
+  const [hasOpenedChart, setHasOpenedChart] = useState(mode === "chart");
+  if (mode === "chart" && !hasOpenedChart) setHasOpenedChart(true);
 
   const onModeChange = (next: TreeViewMode) => {
     setMode(next);
@@ -64,7 +70,7 @@ export function FamilyTreeViewSwitcher({ list, chart, headingId }: Props) {
         {list}
       </div>
       <div className={styles.panel} hidden={mode !== "chart"}>
-        {chart}
+        {hasOpenedChart && chart}
       </div>
     </>
   );
