@@ -6,6 +6,15 @@ publish = "out"
 NODE_VERSION = "24"
 BUN_VERSION = "1.4.2"
 
+# Every file under `/_next/static/` is content-hashed, so a changed file gets a
+# new URL. Netlify's default `max-age=0, must-revalidate` would otherwise send a
+# revalidation request for each chunk and font on every page view.
+[[headers]]
+for = "/_next/static/*"
+
+[headers.values]
+Cache-Control = "public, max-age=31536000, immutable"
+
 [[redirects]]
 from = "/*"
 to = "/404.html"
