@@ -61,6 +61,7 @@ export default async function BattlesPage() {
         title="Battles"
         eyebrow="Collection 07"
         icon={sectionGlyphs.battles}
+        filigree="throne"
         subtitle="The wars, battles, and sieges of the Known World, from the Dawn Age to the wars of the Five Kings."
       />
       <div className={styles.groups}>

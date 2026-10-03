@@ -58,6 +58,7 @@ export default async function WeaponsPage() {
         title="Weapons"
         eyebrow="Collection 06"
         icon={sectionGlyphs.weapons}
+        filigree="throne"
         subtitle="Named blades, ancestral arms, and lost relics of the realm."
       />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search weapons…" />}>

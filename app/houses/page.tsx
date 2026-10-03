@@ -43,6 +43,7 @@ export default async function HousesPage() {
         title="Houses"
         eyebrow="Collection 03"
         icon={sectionGlyphs.houses}
+        filigree="lozenge"
         subtitle="The rolls of the great houses of the Seven Kingdoms."
       />
       <Suspense

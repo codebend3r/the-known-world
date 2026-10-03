@@ -1,10 +1,9 @@
-@use "breakpoints" as bp;
-
 .heading {
   display: grid;
-  justify-items: start;
+  justify-items: center;
   gap: 14px;
   width: 100%;
+  text-align: center;
 
   // The page lede sits between the title and the rule as narrative copy, so it
   // drops the gold italic treatment the `.subtitle` primitive carries for house
@@ -49,15 +48,7 @@
   }
 }
 
-// Reduced to a hairline: the 1px rule at 20% alpha does most of the work now,
-// with the flourish kept as a small gold centre mark.
 .rule {
   width: 100%;
-  max-width: 420px;
   padding-top: 2px;
-  opacity: 0.9;
-
-  @media (max-width: bp.$sm) {
-    max-width: 100%;
-  }
 }

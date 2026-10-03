@@ -82,36 +82,10 @@
 }
 
 .rule {
-  margin: 0;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  gap: 16px;
-  color: var(--tkw-gold);
-  font-size: 13px;
-  line-height: 1;
-}
-
-.ruleLine {
-  width: 110px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--tkw-gold));
-
-  &:last-child {
-    background: linear-gradient(90deg, var(--tkw-gold), transparent);
-  }
-
-  @media (max-width: bp.$sm) {
-    width: 64px;
-  }
-}
-
-.ruleMark {
-  font-family: var(--font-display);
+  width: min(100%, 320px);
 }
 
 .lede {
-  max-width: 590px;
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-body);
