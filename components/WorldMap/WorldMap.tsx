@@ -11,6 +11,7 @@ import {
 } from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
 import type { WorldMapMarker } from "@/lib/map";
+import netlifyImageLoader from "@/lib/netlify-image-loader";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
 
 const ZOOM_STEP = 1.5;
@@ -30,6 +31,12 @@ const POPOVER_WIDTH = 288;
 const POPOVER_HEIGHT_ESTIMATE = 230;
 const POPOVER_EDGE_GUTTER = 12;
 const POPOVER_ID = "world-map-popover";
+// The raster is an 11 MB, 10000px JPEG, and readers zoom deep into it, so it
+// is always requested in full, at once, and never through the CDN. A
+// CDN-resized copy this wide is drawn beneath it as a stand-in that lands in
+// a fraction of the time; once the full raster paints, it covers the copy.
+const PREVIEW_WIDTH = 2048;
+const PREVIEW_QUALITY = 70;
 
 type PanDirection = "up" | "down" | "left" | "right";
 
@@ -120,6 +127,11 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [activeSlug, setActiveSlug] = useState<string | null>(null);
   const [anchor, setAnchor] = useState<{ x: number; y: number } | null>(null);
+  const previewSrc = netlifyImageLoader({
+    src,
+    width: PREVIEW_WIDTH,
+    quality: PREVIEW_QUALITY,
+  });
 
   useEffect(() => {
     if (!stageRef.current) return;
@@ -402,6 +414,14 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
               role="group"
               aria-label="Map of the Known World"
             >
+              <image
+                href={previewSrc}
+                x={(size.w - drawnWidth) / 2}
+                y={(size.h - drawnHeight) / 2}
+                width={drawnWidth}
+                height={drawnHeight}
+                aria-hidden="true"
+              />
               <image
                 href={src}
                 x={(size.w - drawnWidth) / 2}
