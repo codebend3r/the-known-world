@@ -32,8 +32,20 @@ describe("FamilyTreeViewSwitcher", () => {
     unstubAllGlobals();
   });
 
-  it("shows the list view child by default", () => {
+  it("shows the list view child by default and leaves the chart unmounted", () => {
     renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />);
+    expect(hiddenAttr(screen.getByTestId("list").parentElement)).toBeNull();
+    expect(screen.queryByTestId("chart")).toBeNull();
+  });
+
+  it("mounts the chart on first selection and keeps it through a return to the list", async () => {
+    renderWithNuqs(<FamilyTreeViewSwitcher list={list} chart={chart} />);
+    fireEvent.click(screen.getByRole("button", { name: /chart view/i }));
+    await flushNuqs();
+    expect(hiddenAttr(screen.getByTestId("chart").parentElement)).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: /list view/i }));
+    await flushNuqs();
     expect(hiddenAttr(screen.getByTestId("list").parentElement)).toBeNull();
     expect(
       hiddenAttr(screen.getByTestId("chart").parentElement),
