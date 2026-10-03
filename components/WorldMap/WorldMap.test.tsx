@@ -242,11 +242,25 @@ describe("WorldMap", () => {
     const svg = container.querySelector("svg[width='800']");
     expect(svg?.getAttribute("height")).toBe("600");
     const image = container.querySelector("image");
-    expect(image?.getAttribute("href")).toBe("/map/test-map.jpg");
+    expect(image?.getAttribute("href")).toBe("/map/test-map.jpg?w=2048&q=70");
     expect(image?.getAttribute("x")).toBe("100");
     expect(image?.getAttribute("y")).toBe("0");
     expect(image?.getAttribute("width")).toBe("600");
     expect(image?.getAttribute("height")).toBe("600");
+  });
+
+  it("draws the untouched full raster over the preview from the start", async () => {
+    const { container, findByTestId } = renderMap();
+    await findByTestId("pan-zoom");
+    const images = container.querySelectorAll("image");
+    expect(images).toHaveLength(2);
+    const full = images[1];
+    expect(full?.getAttribute("href")).toBe("/map/test-map.jpg");
+    expect(full?.getAttribute("x")).toBe("100");
+    expect(full?.getAttribute("y")).toBe("0");
+    expect(full?.getAttribute("width")).toBe("600");
+    expect(full?.getAttribute("height")).toBe("600");
+    expect(full?.getAttribute("aria-hidden")).toBe("true");
   });
 
   it("zooms in and out from the buttons", async () => {
