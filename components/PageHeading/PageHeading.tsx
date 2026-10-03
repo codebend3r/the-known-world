@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { FiligreeRule } from "@/components/Filigree";
+import type { FiligreeVariant } from "@/components/Filigree";
 import { cx } from "@/lib/cx";
 import styles from "@/components/PageHeading/PageHeading.module.scss";
 
@@ -8,18 +9,20 @@ type Props = {
   subtitle?: ReactNode;
   eyebrow?: string;
   icon?: ReactNode;
+  filigree?: FiligreeVariant;
   className?: string;
 };
 
 // The page title block shared across `PlateLayout` index pages. Rule 05: the
 // plate opens with a mono eyebrow, then the display title, then a rule, then
 // content. The section glyph optionally leads the `h1`; the `FiligreeRule`
-// closes the block in place of a plain border.
+// closes the block in place of a plain border, in the section's own variant.
 export function PageHeading({
   title,
   subtitle,
   eyebrow,
   icon,
+  filigree,
   className,
 }: Props) {
   return (
@@ -34,7 +37,7 @@ export function PageHeading({
         {title}
       </h1>
       {!!subtitle && <p className="subtitle">{subtitle}</p>}
-      <FiligreeRule className={styles.rule} />
+      <FiligreeRule variant={filigree} fade="both" className={styles.rule} />
     </hgroup>
   );
 }

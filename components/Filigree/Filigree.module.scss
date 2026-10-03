@@ -22,13 +22,15 @@
 
 .rule {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  grid-template-areas: "lead mark tail";
+  grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr) auto;
+  grid-template-areas: "cap-start lead mark tail cap-end";
   align-items: center;
   color: var(--tkw-gold);
   line-height: 0;
-  opacity: 0.45;
   pointer-events: none;
+}
+
+.fadeEnd {
   -webkit-mask-image: linear-gradient(
     90deg,
     #000 0%,
@@ -38,18 +40,45 @@
   mask-image: linear-gradient(90deg, #000 0%, #000 72%, transparent 100%);
 }
 
-// Sized to match the original 420px rule: the 32×18 mark at 1.75× scale, and
-// a hairline matching its 1.1-unit stroke at that scale.
+.fadeBoth {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 18%,
+    #000 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 18%,
+    #000 82%,
+    transparent 100%
+  );
+}
+
 .mark {
   grid-area: mark;
   display: block;
-  width: 56px;
   height: auto;
 }
 
+.cap {
+  display: block;
+  width: 12px;
+  height: 12px;
+}
+
+.capStart {
+  grid-area: cap-start;
+}
+
+.capEnd {
+  grid-area: cap-end;
+}
+
 .line {
-  height: 2px;
-  border-radius: var(--tkw-radius);
+  height: 1px;
   background: currentColor;
 }
 
@@ -59,4 +88,97 @@
 
 .tail {
   grid-area: tail;
+}
+
+// Knocks a bevel out of the compass points in the ground colour.
+.cut {
+  fill: var(--tkw-bg);
+}
+
+.diamond {
+  .mark {
+    width: 56px;
+  }
+
+  .line {
+    height: 2px;
+    border-radius: var(--tkw-radius);
+  }
+}
+
+// Engraver's thick-and-thin rule.
+.lozenge {
+  .mark {
+    width: 68px;
+  }
+
+  .line {
+    height: 5px;
+    background:
+      linear-gradient(currentColor, currentColor) top / 100% 2px no-repeat,
+      linear-gradient(currentColor, currentColor) bottom / 100% 1px no-repeat;
+  }
+}
+
+.seven .mark {
+  width: 94px;
+}
+
+.scroll .mark {
+  width: 135px;
+}
+
+.chain .mark {
+  width: 105px;
+}
+
+// Map scale bar: the ticks count out from the mark, so the lead side runs its
+// gradients right-to-left and both sides read symmetrically.
+.scale {
+  .mark {
+    width: 48px;
+  }
+
+  .line {
+    height: 11px;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat,
+      repeating-linear-gradient(
+          var(--tick-direction),
+          currentColor 0 1px,
+          transparent 1px 12px
+        )
+        center / 100% 5px no-repeat,
+      repeating-linear-gradient(
+          var(--tick-direction),
+          currentColor 0 1px,
+          transparent 1px 60px
+        )
+        center / 100% 11px no-repeat;
+  }
+
+  .lead {
+    --tick-direction: 270deg;
+  }
+
+  .tail {
+    --tick-direction: 90deg;
+  }
+}
+
+// The fan of blades rises above the rule, so the line meets the mark at its
+// seat, not its vertical centre: 8 of the 33 viewBox units up from the foot,
+// 11.2px at this width, hence a 22.4px line with its stroke centred.
+.throne {
+  align-items: end;
+
+  .mark {
+    width: 56px;
+  }
+
+  .line {
+    height: 22.4px;
+    background: linear-gradient(currentColor, currentColor) center / 100% 1.5px
+      no-repeat;
+  }
 }
