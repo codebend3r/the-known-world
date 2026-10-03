@@ -21,7 +21,6 @@ export function CharacterPortrait({ image, video, alt }: Props) {
     const prefersReducedMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     if (prefersReducedMotion) return;
-    setIsPlaying(true);
     // play() rejects when the hover ends before playback starts; that
     // interruption is routine, not a failure worth surfacing.
     player.play().catch(() => {});
@@ -41,14 +40,18 @@ export function CharacterPortrait({ image, video, alt }: Props) {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      {/* preload="auto" fetches the clip on page load so the hover never
-          starts against an empty buffer. */}
+      {/* The clips run 6–50 MB, so nothing is fetched until the first hover —
+          touch readers, who can never hover, never pay for one. The still
+          only fades once frames are actually playing, so a cold hover holds
+          on the portrait while the clip buffers instead of revealing an
+          empty frame. */}
       {video && (
         <video
           ref={videoRef}
           className={styles.video}
           src={video}
-          preload="auto"
+          preload="none"
+          onPlaying={() => setIsPlaying(true)}
           muted
           loop
           playsInline
