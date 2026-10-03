@@ -26,25 +26,35 @@ describe("CharacterPortrait", () => {
     );
   });
 
-  it("renders the still on load with the clip preloading behind it", () => {
+  it("renders the still on load with the clip behind it, unfetched", () => {
     const { video, image } = renderPortrait();
     expect(image.getAttribute("src")).toBe(PROPS.image);
     expect(image.className).not.toContain("imagePlaying");
     expect(video.getAttribute("src")).toBe(PROPS.video);
-    expect(video.getAttribute("preload")).toBe("auto");
+    expect(video.getAttribute("preload")).toBe("none");
     expect(video.muted).toBe(true);
     expect(video.hasAttribute("loop")).toBe(true);
     expect(video.hasAttribute("playsinline")).toBe(true);
     expect(video.getAttribute("aria-hidden")).toBe("true");
   });
 
-  it("plays the clip and fades the still on hover", () => {
+  it("starts the clip on hover but holds the still until frames play", () => {
     const { media, video, image } = renderPortrait();
     const play = spyOn(video, "play").mockResolvedValue(undefined);
 
     fireEvent.mouseOver(media);
 
     expect(play).toHaveBeenCalledTimes(1);
+    expect(image.className).not.toContain("imagePlaying");
+  });
+
+  it("fades the still once the clip is playing", () => {
+    const { media, video, image } = renderPortrait();
+    spyOn(video, "play").mockResolvedValue(undefined);
+
+    fireEvent.mouseOver(media);
+    fireEvent.playing(video);
+
     expect(image.className).toContain("imagePlaying");
   });
 
@@ -54,6 +64,7 @@ describe("CharacterPortrait", () => {
     const pause = spyOn(video, "pause").mockImplementation(() => {});
 
     fireEvent.mouseOver(media);
+    fireEvent.playing(video);
     video.currentTime = 3;
     fireEvent.mouseOut(media);
 
