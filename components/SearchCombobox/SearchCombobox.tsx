@@ -4,18 +4,13 @@ import { useId, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
+import type { SearchIndexItem } from "@/lib/search-index";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/SearchCombobox/SearchCombobox.module.scss";
 
 const MAX_SUGGESTIONS = 8;
 
-export type ComboboxItem = {
-  slug: string;
-  name: string;
-  // The muted parenthetical beside the name: an alias, a region, a byname.
-  detail: string | null;
-  aliases: readonly string[];
-};
+export type ComboboxItem = SearchIndexItem;
 
 type Props = {
   items: readonly ComboboxItem[];
@@ -23,7 +18,12 @@ type Props = {
   basePath: string;
   placeholder: string;
   ariaLabel: string;
+  // Fired on hover and focus, ahead of any typing, so a caller that fetches
+  // `items` lazily can start the request before the first keystroke.
+  onIntent?: () => void;
 };
+
+const noop = () => {};
 
 // A jump-to-entry combobox: it owns its query, ranks matches with the same
 // `filterByName` the index lists use, and navigates to the chosen entry. The
@@ -34,6 +34,7 @@ export function SearchCombobox({
   basePath,
   placeholder,
   ariaLabel,
+  onIntent = noop,
 }: Props) {
   const router = useRouter();
   const listboxId = useId();
@@ -96,7 +97,11 @@ export function SearchCombobox({
           setOpen(true);
         }}
         onKeyDown={handleKeyDown}
-        onFocus={() => setOpen(true)}
+        onPointerEnter={onIntent}
+        onFocus={() => {
+          onIntent();
+          setOpen(true);
+        }}
         onBlur={() => setOpen(false)}
         aria-label={ariaLabel}
         aria-expanded={showList}

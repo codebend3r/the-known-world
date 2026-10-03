@@ -115,16 +115,6 @@ export default async function CharacterPage({
   const charactersBySlug = bySlug(allCharacters);
   const housesBySlug = bySlug(allHouses);
 
-  const characterSuggestions = allCharacters
-    .map((c) => c.frontmatter)
-    .filter((f) => !f.draft && !f.placeholder)
-    .map((f) => ({
-      slug: f.slug,
-      name: f.name,
-      alias: f.aliases[0] ?? null,
-      aliases: f.aliases,
-    }));
-
   const primaryHouse = fm["primary-house"]
     ? housesBySlug.get(fm["primary-house"])
     : undefined;
@@ -220,7 +210,7 @@ export default async function CharacterPage({
       </div>
 
       <div className={styles.search}>
-        <CharacterSearchInput autocomplete items={characterSuggestions} />
+        <CharacterSearchInput autocomplete />
       </div>
 
       <dl className={styles.meta}>
