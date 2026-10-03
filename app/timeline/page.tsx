@@ -34,6 +34,7 @@ export default async function TimelinePage() {
         title="Timeline"
         eyebrow="Collection 02"
         icon={sectionGlyphs.timeline}
+        filigree="chain"
         subtitle="Trace the centuries: the battles and great events of the Known World, laid out in time and place."
       />
       <div className={styles.chartBleed}>

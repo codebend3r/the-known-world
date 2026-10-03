@@ -61,6 +61,7 @@ export default async function CastlesPage() {
         title="Castles"
         eyebrow="Collection 04"
         icon={sectionGlyphs.castles}
+        filigree="lozenge"
         subtitle="The castles, towns, and strongholds of the Known World, and the houses that hold them."
       />
       <div className={styles.groups}>

@@ -45,6 +45,7 @@ export default async function DragonsPage() {
         title="Dragons"
         eyebrow="Collection 08"
         icon={sectionGlyphs.dragons}
+        filigree="scroll"
         subtitle="Of the dragons that were and the dragons that are."
       />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search dragons…" />}>

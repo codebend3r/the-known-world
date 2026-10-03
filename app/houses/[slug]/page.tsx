@@ -134,7 +134,7 @@ export default async function HousePage({
           {house.frontmatter.words && (
             <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
           )}
-          <FiligreeRule className={styles.divider} />
+          <FiligreeRule variant="lozenge" className={styles.divider} />
         </div>
         <div className={styles.search}>
           <HouseSearchInput items={houseSuggestions} />

@@ -50,6 +50,7 @@ export default async function CharactersPage() {
         title="Characters"
         eyebrow="Collection 05"
         icon={sectionGlyphs.characters}
+        filigree="seven"
         subtitle="The lords, ladies, knights, and smallfolk who shaped the Known World."
       />
       <Suspense

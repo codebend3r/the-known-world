@@ -24,6 +24,7 @@ export default async function MapsPage() {
         title="Maps"
         eyebrow="Collection 01"
         icon={sectionGlyphs.maps}
+        filigree="scale"
         subtitle="The Known World, from the Sunset Sea to the Shadow Lands."
       />
       <Suspense fallback={<WorldMapSkeleton />}>

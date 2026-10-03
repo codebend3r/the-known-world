@@ -50,6 +50,7 @@ export default async function EventsPage() {
         title="Events"
         eyebrow="Collection 09"
         icon={sectionGlyphs.events}
+        filigree="chain"
         subtitle="The weddings, treaties, betrayals, and omens that turned the Known World."
       />
       <Suspense fallback={<ListSearchSkeleton placeholder="Search events…" />}>
