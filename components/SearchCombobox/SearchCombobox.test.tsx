@@ -211,4 +211,46 @@ describe("SearchCombobox — accessibility contract", () => {
     });
     expect(screen.getByRole("status").textContent).toBe("1 result available");
   });
+
+  it("signals intent on hover and on focus so lazy items can start loading", () => {
+    const onIntent = jest.fn();
+    render(
+      <SearchCombobox
+        items={[]}
+        onIntent={onIntent}
+        basePath="/houses"
+        placeholder="Search houses…"
+        ariaLabel="Search houses"
+      />,
+    );
+    const input = screen.getByRole("combobox");
+    fireEvent.pointerEnter(input);
+    fireEvent.focus(input);
+    expect(onIntent).toHaveBeenCalledTimes(2);
+  });
+
+  it("picks up items that arrive after the query was typed", () => {
+    const { rerender } = render(
+      <SearchCombobox
+        items={[]}
+        basePath="/houses"
+        placeholder="Search houses…"
+        ariaLabel="Search houses"
+      />,
+    );
+    const input = screen.getByRole("combobox");
+    fireEvent.focus(input);
+    fireEvent.change(input, { target: { value: "mea" } });
+    expect(screen.queryByRole("listbox")).toBeNull();
+
+    rerender(
+      <SearchCombobox
+        items={items}
+        basePath="/houses"
+        placeholder="Search houses…"
+        ariaLabel="Search houses"
+      />,
+    );
+    expect(screen.getAllByRole("option")).toHaveLength(1);
+  });
 });

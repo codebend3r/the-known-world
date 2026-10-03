@@ -5,10 +5,12 @@ import {
   jest,
   mock,
   beforeEach,
+  afterEach,
   afterAll,
 } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
-import type { CharacterSuggestion } from "@/components/CharacterSearchInput";
+import type { SearchIndexItem } from "@/lib/search-index";
+import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 
 const push = jest.fn();
 
@@ -31,30 +33,48 @@ function asInput(el: HTMLElement): HTMLInputElement {
   return el;
 }
 
-const items: CharacterSuggestion[] = [
+const items: SearchIndexItem[] = [
   {
     slug: "naerys-targaryen",
     name: "Naerys Targaryen",
-    alias: null,
+    detail: null,
     aliases: [],
   },
   {
     slug: "aemon-targaryen",
     name: "Aemon Targaryen",
-    alias: "The Dragonknight",
+    detail: "The Dragonknight",
     aliases: ["The Dragonknight"],
   },
   {
     slug: "aegon-iv-targaryen",
     name: "Aegon IV Targaryen",
-    alias: "The Unworthy",
+    detail: "The Unworthy",
     aliases: ["The Unworthy"],
   },
 ];
 
+const fetchIndex = jest.fn(async () => Response.json(items));
+
 beforeEach(() => {
   push.mockClear();
+  fetchIndex.mockClear();
+  stubGlobal({ name: "fetch", value: fetchIndex });
 });
+
+afterEach(() => {
+  unstubAllGlobals();
+});
+
+// The roll arrives on first focus, so the field is focused and then given
+// time for that fetch to land before the query is typed.
+async function typeQuery(value: string): Promise<HTMLElement> {
+  const input = screen.getByRole("combobox");
+  fireEvent.focus(input);
+  fireEvent.change(input, { target: { value } });
+  await screen.findAllByRole("option");
+  return input;
+}
 
 describe("CharacterSearchInput — filter mode", () => {
   it("renders a controlled field and reports changes", () => {
@@ -75,27 +95,31 @@ describe("CharacterSearchInput — filter mode", () => {
 });
 
 describe("CharacterSearchInput — autocomplete mode", () => {
-  it("shows matching suggestions as the user types", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "aem" } });
+  it("fetches the character roll on first focus, not on render", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    expect(fetchIndex).not.toHaveBeenCalled();
+    await typeQuery("aem");
+    expect(fetchIndex).toHaveBeenCalledWith("/search-index/characters.json");
+  });
+
+  it("shows matching suggestions as the user types", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    await typeQuery("aem");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
     expect(options[0]?.textContent).toContain("Aemon Targaryen");
   });
 
-  it("navigates to the top match on Enter", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "aegon" } });
+  it("navigates to the top match on Enter", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    const input = await typeQuery("aegon");
     fireEvent.keyDown(input, { key: "Enter" });
     expect(push).toHaveBeenCalledWith("/characters/aegon-iv-targaryen/");
   });
 
-  it("navigates to the arrow-selected match on Enter", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "targaryen" } });
+  it("navigates to the arrow-selected match on Enter", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    const input = await typeQuery("targaryen");
     // Matches rank equally on " targaryen", so they keep source order:
     // Naerys, Aemon, Aegon. Two ArrowDowns lands on the second, Aemon.
     expect(screen.getAllByRole("option")).toHaveLength(3);
@@ -105,32 +129,29 @@ describe("CharacterSearchInput — autocomplete mode", () => {
     expect(push).toHaveBeenCalledWith("/characters/aemon-targaryen/");
   });
 
-  it("navigates on option click", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "naerys" } });
+  it("navigates on option click", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    await typeQuery("naerys");
     fireEvent.click(screen.getByText("Naerys Targaryen"));
     expect(push).toHaveBeenCalledWith("/characters/naerys-targaryen/");
   });
 
-  it("closes the listbox on Escape", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "aem" } });
+  it("closes the listbox on Escape", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    const input = await typeQuery("aem");
     expect(screen.queryByRole("listbox")).not.toBeNull();
     fireEvent.keyDown(input, { key: "Escape" });
     expect(screen.queryByRole("listbox")).toBeNull();
   });
 
   it("shows no listbox for an empty query", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
+    render(<CharacterSearchInput autocomplete />);
     expect(screen.queryByRole("listbox")).toBeNull();
   });
 
-  it("matches on alias when the query doesn't appear in the name", () => {
-    render(<CharacterSearchInput autocomplete items={items} />);
-    const input = screen.getByRole("combobox");
-    fireEvent.change(input, { target: { value: "dragonknight" } });
+  it("matches on alias when the query doesn't appear in the name", async () => {
+    render(<CharacterSearchInput autocomplete />);
+    await typeQuery("dragonknight");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
     expect(options[0]?.textContent).toContain("Aemon Targaryen");

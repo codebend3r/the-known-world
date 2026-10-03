@@ -36,7 +36,7 @@
     "SortToggle": "value: \"asc\" | \"desc\";\nonChange: (value: \"asc\" | \"desc\") => void;",
     "ViewToggle": "options: { value: string; label: string; icon: ReactNode }[];\nvalue: string;\nonChange: (next: string) => void;\nariaLabel?: string;",
     "MapLayerToggle": "enabled: Set<\"castle\" | \"town\" | \"ruin\" | \"watchtower\" | \"holdfast\">;\nonToggle: (type: \"castle\" | \"town\" | \"ruin\" | \"watchtower\" | \"holdfast\") => void;",
-    "CharacterSearchInput": "/** Filter mode (default) */\nvalue?: string;\nonChange?: (value: string) => void;\n/** Autocomplete mode: set autocomplete and pass items */\nautocomplete?: boolean;\nitems?: ReadonlyArray<{ slug: string; name: string; alias: string | null; aliases: string[] }>;\nplaceholder?: string;\nariaLabel?: string;",
+    "CharacterSearchInput": "/** Filter mode (default) */\nvalue?: string;\nonChange?: (value: string) => void;\n/** Autocomplete mode: set autocomplete; suggestions are fetched from /search-index/characters.json on first hover or focus */\nautocomplete?: boolean;\nplaceholder?: string;\nariaLabel?: string;",
     "MainMenuTile": "title: string;\nsubtitle: string;\nglyph: ReactNode;\nhref: string;\nplate?: string;\nvisible?: boolean;",
     "PlateLayout": "children: ReactNode;",
     "ComingSoonPage": "title: string;",

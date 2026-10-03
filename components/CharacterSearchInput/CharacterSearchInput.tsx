@@ -2,16 +2,10 @@
 
 import { SearchCombobox } from "@/components/SearchCombobox";
 import { ListSearchInput } from "@/components/ListSearchInput";
+import { useSearchIndex } from "@/lib/useSearchIndex";
 
 const DEFAULT_PLACEHOLDER = "Search characters…";
 const DEFAULT_ARIA_LABEL = "Search characters";
-
-export type CharacterSuggestion = {
-  slug: string;
-  name: string;
-  alias: string | null;
-  aliases: string[];
-};
 
 type CommonProps = {
   placeholder?: string;
@@ -26,7 +20,6 @@ type FilterProps = CommonProps & {
 
 type AutocompleteProps = CommonProps & {
   autocomplete: true;
-  items: readonly CharacterSuggestion[];
 };
 
 type Props = FilterProps | AutocompleteProps;
@@ -50,21 +43,14 @@ function FilterInput({ value, onChange, placeholder, ariaLabel }: FilterProps) {
 }
 
 // In autocomplete mode the shared combobox owns the query, ranks matches, and
-// navigates to the chosen character. The first alias is the muted datum beside
-// the name; the full array still feeds the ranking.
-function AutocompleteInput({
-  items,
-  placeholder,
-  ariaLabel,
-}: AutocompleteProps) {
+// navigates to the chosen character. The roll of characters is fetched on first
+// hover or focus rather than shipped with the page.
+function AutocompleteInput({ placeholder, ariaLabel }: AutocompleteProps) {
+  const { items, load } = useSearchIndex("characters");
   return (
     <SearchCombobox
-      items={items.map((c) => ({
-        slug: c.slug,
-        name: c.name,
-        detail: c.alias,
-        aliases: c.aliases,
-      }))}
+      items={items}
+      onIntent={load}
       basePath="/characters"
       placeholder={placeholder ?? DEFAULT_PLACEHOLDER}
       ariaLabel={ariaLabel ?? DEFAULT_ARIA_LABEL}

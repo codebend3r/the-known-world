@@ -19,15 +19,10 @@ import { enrichTreeWithPortraits } from "@/lib/family-tree-portraits";
 import { layoutFamilyTree } from "@/lib/family-tree-layout";
 import { findPortrait } from "@/lib/portraits";
 import { HouseInfobox } from "@/components/HouseInfobox";
-import {
-  HouseSearchInput,
-  type HouseSuggestion,
-} from "@/components/HouseSearchInput";
+import { HouseSearchInput } from "@/components/HouseSearchInput";
 import { buildFamilyTree } from "@/lib/family-tree";
 import { buildProseLinkIndex } from "@/lib/prose-links";
-import { bySlug, compareByName } from "@/lib/collections";
-import { regionForHouse, regionLabel } from "@/lib/regions";
-import { shortHouseName } from "@/lib/text";
+import { bySlug } from "@/lib/collections";
 import styles from "@/app/houses/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
@@ -86,16 +81,6 @@ export default async function HousePage({
     .map((d) => d.frontmatter)
     .filter((d) => d.house === slug && !d.draft);
 
-  const houseSuggestions: HouseSuggestion[] = allHouses
-    .map((h) => h.frontmatter)
-    .filter((h) => !h.draft)
-    .map((h) => ({
-      slug: h.slug,
-      name: shortHouseName(h.name),
-      region: regionLabel(regionForHouse(h.slug, housesBySlug)),
-    }))
-    .sort(compareByName);
-
   const proseLinks = buildProseLinkIndex({
     allCharacters: characters.map((c) => ({
       slug: c.slug,
@@ -137,7 +122,7 @@ export default async function HousePage({
           <FiligreeRule variant="lozenge" className={styles.divider} />
         </div>
         <div className={styles.search}>
-          <HouseSearchInput items={houseSuggestions} />
+          <HouseSearchInput />
         </div>
         <HouseInfobox
           house={house.frontmatter}
