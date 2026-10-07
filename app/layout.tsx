@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, JetBrains_Mono, Spectral } from "next/font/google";
+import localFont from "next/font/local";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "../styles/globals.scss";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -8,21 +8,47 @@ import { SiteFooter } from "@/components/SiteFooter";
 
 // Iron Throne v1 uses three faces and three jobs: display sets every title,
 // body sets every paragraph, mono sets every label, year, and datum.
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ["latin"],
+//
+// The faces are the Google Fonts latin subsets, vendored. `next/font/google`
+// fetches them at build time, and Google sometimes answers with
+// `/l/font?kit=…&skey=…` URLs whose unescaped `&` breaks Turbopack's font
+// resolver and fails the build.
+const cormorantGaramond = localFont({
+  src: "./fonts/cormorant-garamond-latin-500-700.woff2",
   variable: "--font-cormorant-garamond",
-  weight: ["500", "600", "700"],
+  weight: "500 700",
+  adjustFontFallback: "Times New Roman",
 });
-const spectral = Spectral({
-  subsets: ["latin"],
+const spectral = localFont({
+  src: [
+    {
+      path: "./fonts/spectral-latin-300-normal.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "./fonts/spectral-latin-400-normal.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/spectral-latin-300-italic.woff2",
+      weight: "300",
+      style: "italic",
+    },
+    {
+      path: "./fonts/spectral-latin-400-italic.woff2",
+      weight: "400",
+      style: "italic",
+    },
+  ],
   variable: "--font-spectral",
-  weight: ["300", "400"],
-  style: ["normal", "italic"],
+  adjustFontFallback: "Times New Roman",
 });
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: "./fonts/jetbrains-mono-latin-400-500.woff2",
   variable: "--font-jetbrains-mono",
-  weight: ["400", "500"],
+  weight: "400 500",
 });
 
 export const metadata: Metadata = {

@@ -5,7 +5,7 @@ Operating rules for this repo.
 ## Workflow
 
 - Do not commit anything until I tell you to. Finishing a change is not permission to commit it.
-- Do not push anything until I tell you to. Once I have told you to commit on a branch that already tracks a remote, push it in the same step — don't ask again.
+- Do not push anything until I tell you to. Once I have told you to commit on a branch that already tracks a remote, push it in the same step, don't ask again.
 - Do not merge anything until I tell you to.
 - Do not create a PR until I tell you to.
 

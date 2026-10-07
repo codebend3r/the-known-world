@@ -1,16 +1,11 @@
 import { describe, it, expect, mock, afterAll } from "bun:test";
 
-// `next/font/google` is a build-time loader that only resolves inside the Next
+// `next/font/local` is a build-time loader that only resolves inside the Next
 // bundler. The layout only uses the `variable` it returns, so a stub is enough
 // to get the module's `viewport` export under test.
-mock.module("next/font/google", () => {
-  const font = () => ({ variable: "font-variable", className: "font" });
-  return {
-    Cormorant_Garamond: font,
-    JetBrains_Mono: font,
-    Spectral: font,
-  };
-});
+mock.module("next/font/local", () => ({
+  default: () => ({ variable: "font-variable", className: "font" }),
+}));
 
 afterAll(() => {
   mock.restore();
