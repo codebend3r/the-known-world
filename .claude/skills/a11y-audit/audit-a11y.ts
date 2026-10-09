@@ -32,8 +32,6 @@ import { AA_TEXT, auditContrast } from "./contrast";
 
 const SOURCE_ROOTS = ["app", "components"] as const;
 
-// ── run ──────────────────────────────────────────────────────────────
-
 const json = Bun.argv.includes("--json");
 
 const files = (

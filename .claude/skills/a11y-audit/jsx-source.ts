@@ -42,8 +42,6 @@ export type SourceFile = {
   memos: ReadonlyMap<string, { start: number; end: number }>;
 };
 
-// ── source loading ───────────────────────────────────────────────────
-
 export async function walk(dir: string): Promise<string[]> {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   const nested = await Promise.all(
@@ -239,46 +237,46 @@ export function analyse({
     ),
   );
 
-  const parsed = [...source.matchAll(/<(\/?)([A-Za-z][A-Za-z0-9._-]*)/g)]
-    .flatMap((match) => {
-      const start = match.index ?? 0;
-      const isClose = match[1] === "/";
-      const name = match[2];
-      if (states.quoted[start] === 1) return [];
-      const previous = source[start - 1] ?? " ";
-      if (!isClose && /[A-Za-z0-9_$]/.test(previous)) return [];
+  const parsed = [
+    ...source.matchAll(/<(\/?)([A-Za-z][A-Za-z0-9._-]*)/g),
+  ].flatMap((match) => {
+    const start = match.index ?? 0;
+    const isClose = match[1] === "/";
+    const name = match[2];
+    if (states.quoted[start] === 1) return [];
+    const previous = source[start - 1] ?? " ";
+    if (!isClose && /[A-Za-z0-9_$]/.test(previous)) return [];
 
-      const tagDepth = states.depth[start];
-      const gt = closers.find(
-        (position) =>
-          position > start &&
-          states.depth[position] === tagDepth &&
-          states.quoted[position] === 0,
-      );
-      if (gt === undefined) return [];
-      const selfClosing = source[gt - 1] === "/";
-      if (!isClose && !selfClosing && !closedNames.has(name)) return [];
+    const tagDepth = states.depth[start];
+    const gt = closers.find(
+      (position) =>
+        position > start &&
+        states.depth[position] === tagDepth &&
+        states.quoted[position] === 0,
+    );
+    if (gt === undefined) return [];
+    const selfClosing = source[gt - 1] === "/";
+    if (!isClose && !selfClosing && !closedNames.has(name)) return [];
 
-      return [
-        {
-          name,
-          kind: isClose ? "close" : selfClosing ? "self" : "open",
-          start,
-          end: gt + 1,
-          attributes: isClose
-            ? new Map<string, AttributeValue>()
-            : parseAttributes({
-                source,
-                from: start + match[0].length,
-                to: selfClosing ? gt - 1 : gt,
-                states,
-                tagDepth,
-                closeBraces,
-              }),
-        } as const,
-      ];
-    })
-    .filter((tag) => tag.kind !== "close" || true);
+    return [
+      {
+        name,
+        kind: isClose ? "close" : selfClosing ? "self" : "open",
+        start,
+        end: gt + 1,
+        attributes: isClose
+          ? new Map<string, AttributeValue>()
+          : parseAttributes({
+              source,
+              from: start + match[0].length,
+              to: selfClosing ? gt - 1 : gt,
+              states,
+              tagDepth,
+              closeBraces,
+            }),
+      } as const,
+    ];
+  });
 
   // Second pass: pair opens with closes so every tag knows its ancestors and
   // where its children end.
