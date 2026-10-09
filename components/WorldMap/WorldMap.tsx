@@ -12,6 +12,7 @@ import {
 import { cx } from "@/lib/cx";
 import type { WorldMapMarker } from "@/lib/map";
 import netlifyImageLoader from "@/lib/netlify-image-loader";
+import { PAN_DIRECTIONS, type PanDirection } from "@/lib/pan-zoom";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
 
 const ZOOM_STEP = 1.5;
@@ -37,16 +38,6 @@ const POPOVER_ID = "world-map-popover";
 // a fraction of the time; once the full raster paints, it covers the copy.
 const PREVIEW_WIDTH = 2048;
 const PREVIEW_QUALITY = 70;
-
-type PanDirection = "up" | "down" | "left" | "right";
-
-// Signs are SVG-content deltas: panning the view up shifts the drawing down.
-const PAN_DIRECTIONS: Record<PanDirection, { x: number; y: number }> = {
-  up: { x: 0, y: 1 },
-  down: { x: 0, y: -1 },
-  left: { x: 1, y: 0 },
-  right: { x: -1, y: 0 },
-};
 
 type Props = {
   src: string;

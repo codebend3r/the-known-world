@@ -30,6 +30,8 @@ import {
   distance,
   midpoint,
   easeOutCubic,
+  PAN_DIRECTIONS,
+  type PanDirection,
   type Transform,
   type Pointer,
 } from "@/lib/pan-zoom";
@@ -52,16 +54,6 @@ const DRAG_THRESHOLD = 3; // px
 // `WorldMap` d-pad so both canvases answer the keyboard the same way.
 const KEY_PAN_RATIO = 0.2;
 const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
-
-type PanDirection = "up" | "down" | "left" | "right";
-
-// Signs are viewBox deltas: panning the view up shifts the drawing down.
-const PAN_DIRECTIONS: Record<PanDirection, { x: number; y: number }> = {
-  up: { x: 0, y: 1 },
-  down: { x: 0, y: -1 },
-  left: { x: 1, y: 0 },
-  right: { x: -1, y: 0 },
-};
 
 // Width matches DOT_R * 2 * devicePixelRatio for retina (~56 css px -> request 96 source px).
 // Netlify image CDN serves resized/compressed copies of the originals in `/public/characters/*`.
