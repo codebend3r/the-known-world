@@ -28,7 +28,11 @@
   &::after {
     content: "";
     height: 1px;
-    background: linear-gradient(90deg, rgba(200, 162, 74, 0.5), transparent);
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--tkw-gold) 50%, transparent),
+      transparent
+    );
   }
 }
 
@@ -61,7 +65,7 @@
 
   &:hover,
   &:focus-visible {
-    background-color: rgba(200, 162, 74, 0.06);
+    background-color: var(--tkw-wash);
     padding-left: 12px;
     outline: none;
   }

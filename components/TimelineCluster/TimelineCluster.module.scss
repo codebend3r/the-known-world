@@ -80,7 +80,7 @@
 
   &:hover,
   &:focus-visible {
-    background: rgba(200, 162, 74, 0.12);
+    background: color-mix(in srgb, var(--tkw-gold) 12%, transparent);
     color: var(--tkw-gold-bright);
     outline: none;
   }
