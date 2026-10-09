@@ -17,7 +17,7 @@ export type EventItem = {
   /** Free-text place, or null when the entry only carries map coordinates. */
   location: string | null;
   /** The `when` label carries a trailing asterisk, so the legend has to show. */
-  approximate: boolean;
+  isApproximate: boolean;
 };
 
 type Props = {
@@ -32,7 +32,7 @@ export function FilteredEventList({ items }: Props) {
   });
 
   const filtered = filterByName({ items, query: debounced });
-  const hasApproximate = filtered.some((item) => item.approximate);
+  const hasApproximate = filtered.some((item) => item.isApproximate);
 
   return (
     <>

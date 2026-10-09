@@ -23,13 +23,13 @@ export function SiteHeader() {
         </Link>
         <nav className={styles.nav} aria-label="Sections">
           {ITEMS.map((item) => {
-            const active = isActive({ pathname, href: item.href });
+            const isCurrent = isActive({ pathname, href: item.href });
             return (
               <Link
                 key={item.href}
                 href={item.href}
-                className={cx(styles.link, active && styles.linkActive)}
-                aria-current={active ? "page" : undefined}
+                className={cx(styles.link, isCurrent && styles.linkActive)}
+                aria-current={isCurrent ? "page" : undefined}
               >
                 {item.label}
               </Link>

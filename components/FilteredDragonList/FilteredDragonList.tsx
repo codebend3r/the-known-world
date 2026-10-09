@@ -74,7 +74,7 @@ export function FilteredDragonList({ items }: Props) {
                       name={item.name}
                       region={item.region}
                       size="6rem"
-                      decorative
+                      isDecorative
                     />
                   ) : (
                     <span className={styles.wildBadge} aria-hidden="true">

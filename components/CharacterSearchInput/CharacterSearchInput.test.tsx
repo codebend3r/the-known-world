@@ -93,14 +93,14 @@ describe("CharacterSearchInput — filter mode", () => {
 
 describe("CharacterSearchInput — autocomplete mode", () => {
   it("fetches the character roll on first focus, not on render", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     expect(fetchIndex).not.toHaveBeenCalled();
     await typeQuery("aem");
     expect(fetchIndex).toHaveBeenCalledWith("/search-index/characters.json");
   });
 
   it("shows matching suggestions as the user types", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     await typeQuery("aem");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
@@ -108,14 +108,14 @@ describe("CharacterSearchInput — autocomplete mode", () => {
   });
 
   it("navigates to the top match on Enter", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     const input = await typeQuery("aegon");
     fireEvent.keyDown(input, { key: "Enter" });
     expect(push).toHaveBeenCalledWith("/characters/aegon-iv-targaryen/");
   });
 
   it("navigates to the arrow-selected match on Enter", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     const input = await typeQuery("targaryen");
     // Matches rank equally on " targaryen", so they keep source order:
     // Naerys, Aemon, Aegon. Two ArrowDowns lands on the second, Aemon.
@@ -127,14 +127,14 @@ describe("CharacterSearchInput — autocomplete mode", () => {
   });
 
   it("navigates on option click", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     await typeQuery("naerys");
     fireEvent.click(screen.getByText("Naerys Targaryen"));
     expect(push).toHaveBeenCalledWith("/characters/naerys-targaryen/");
   });
 
   it("closes the listbox on Escape", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     const input = await typeQuery("aem");
     expect(screen.queryByRole("listbox")).not.toBeNull();
     fireEvent.keyDown(input, { key: "Escape" });
@@ -142,12 +142,12 @@ describe("CharacterSearchInput — autocomplete mode", () => {
   });
 
   it("shows no listbox for an empty query", () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     expect(screen.queryByRole("listbox")).toBeNull();
   });
 
   it("matches on alias when the query doesn't appear in the name", async () => {
-    render(<CharacterSearchInput autocomplete />);
+    render(<CharacterSearchInput hasAutocomplete />);
     await typeQuery("dragonknight");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);

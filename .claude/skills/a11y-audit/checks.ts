@@ -99,7 +99,7 @@ function isHidden(tag: Tag): boolean {
   const hidden = tag.attributes.get("aria-hidden");
   if (!hidden) return false;
   if (hidden.kind === "literal") return hidden.text !== "false";
-  // `aria-hidden={decorative || undefined}` and a bare `aria-hidden` both mean
+  // `aria-hidden={isDecorative || undefined}` and a bare `aria-hidden` both mean
   // "hidden at least some of the time"; treating them as hidden avoids
   // reporting a defect the author already reasoned about.
   return true;

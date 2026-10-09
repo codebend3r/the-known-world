@@ -8,8 +8,8 @@ function spouse(overrides: Partial<TreeSpouse> = {}): TreeSpouse {
     name: "Spouse",
     alias: null,
     sex: null,
-    placeholder: false,
-    inHouse: false,
+    isPlaceholder: false,
+    isInHouse: false,
     titles: [],
     ...overrides,
   };
@@ -21,8 +21,8 @@ function node(overrides: Partial<TreeNode> = {}): TreeNode {
     name: "Person",
     alias: null,
     sex: null,
-    placeholder: false,
-    external: false,
+    isPlaceholder: false,
+    isExternal: false,
     born: null,
     died: null,
     titles: [],
@@ -57,7 +57,7 @@ describe("enrichTreeWithPortraits", () => {
   it("returns null portrait for placeholder persons without calling findPortrait", async () => {
     const find = jest.fn();
     const tree: TreeNode[] = [
-      node({ slug: "unknown", name: "Unknown", placeholder: true }),
+      node({ slug: "unknown", name: "Unknown", isPlaceholder: true }),
     ];
     const [n] = await enrichTreeWithPortraits({
       roots: tree,
@@ -70,7 +70,7 @@ describe("enrichTreeWithPortraits", () => {
   it("returns null portrait for external persons without calling findPortrait", async () => {
     const find = jest.fn();
     const tree: TreeNode[] = [
-      node({ slug: "foreign", name: "Foreign", external: true }),
+      node({ slug: "foreign", name: "Foreign", isExternal: true }),
     ];
     const [n] = await enrichTreeWithPortraits({
       roots: tree,
@@ -88,8 +88,8 @@ describe("enrichTreeWithPortraits", () => {
       node({
         slug: "p",
         spouses: [
-          spouse({ slug: "in", name: "In", inHouse: true, sex: "f" }),
-          spouse({ slug: "out", name: "Out", inHouse: false, sex: "f" }),
+          spouse({ slug: "in", name: "In", isInHouse: true, sex: "f" }),
+          spouse({ slug: "out", name: "Out", isInHouse: false, sex: "f" }),
         ],
       }),
     ];
@@ -110,7 +110,7 @@ describe("enrichTreeWithPortraits", () => {
     const tree: TreeNode[] = [
       node({
         slug: "p",
-        spouses: [spouse({ slug: null, name: "Mystery", inHouse: false })],
+        spouses: [spouse({ slug: null, name: "Mystery", isInHouse: false })],
       }),
     ];
     const [n] = await enrichTreeWithPortraits({

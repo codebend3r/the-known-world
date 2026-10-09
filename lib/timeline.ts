@@ -105,8 +105,8 @@ function yearLabel(year: number): string {
 
 function yearSpanLabel({ from, to }: { from: number; to: number }): string {
   if (from === to) return yearLabel(from);
-  const sameEra = from < 0 === to < 0;
-  if (sameEra)
+  const isSameEra = from < 0 === to < 0;
+  if (isSameEra)
     return `${Math.abs(from)}–${Math.abs(to)} ${to < 0 ? "BC" : "AC"}`;
   return `${yearLabel(from)} – ${yearLabel(to)}`;
 }
@@ -127,9 +127,9 @@ function clusterColumn({
     const previous = group?.at(-1);
     const first = group?.at(0);
     if (!group || !previous || !first) return [...acc, [event]];
-    const tooFar = yFor(event.year) - yFor(previous.year) > CLUSTER_GAP_PX;
-    const tooWide = event.year - first.year > MAX_CLUSTER_SPAN_YEARS;
-    if (tooFar || tooWide) return [...acc, [event]];
+    const isTooFar = yFor(event.year) - yFor(previous.year) > CLUSTER_GAP_PX;
+    const isTooWide = event.year - first.year > MAX_CLUSTER_SPAN_YEARS;
+    if (isTooFar || isTooWide) return [...acc, [event]];
     return [...acc.slice(0, -1), [...group, event]];
   }, []);
 

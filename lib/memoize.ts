@@ -7,14 +7,14 @@ type LoadBySlug<T> = (slug: string) => Promise<T>;
 
 export function memoize<T>({
   load,
-  enabled,
+  isEnabled,
 }: {
   load: Load<T>;
-  enabled: boolean;
+  isEnabled: boolean;
 }): Load<T> {
   let cached: Promise<T> | undefined;
   return () => {
-    if (!enabled) return load();
+    if (!isEnabled) return load();
     cached ??= load();
     return cached;
   };
@@ -22,14 +22,14 @@ export function memoize<T>({
 
 export function memoizeBySlug<T>({
   load,
-  enabled,
+  isEnabled,
 }: {
   load: LoadBySlug<T>;
-  enabled: boolean;
+  isEnabled: boolean;
 }): LoadBySlug<T> {
   const cache = new Map<string, Promise<T>>();
   return (slug) => {
-    if (!enabled) return load(slug);
+    if (!isEnabled) return load(slug);
     const cached = cache.get(slug);
     if (cached) return cached;
     const pending = load(slug);

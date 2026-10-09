@@ -11,14 +11,16 @@ describe("resolveRelations", () => {
   it("maps known slugs to linkable refs with the character's name", () => {
     expect(
       resolveRelations({ slugs: ["eddard-stark"], charactersBySlug }),
-    ).toEqual([{ slug: "eddard-stark", name: "Eddard Stark", linkable: true }]);
+    ).toEqual([
+      { slug: "eddard-stark", name: "Eddard Stark", isLinkable: true },
+    ]);
   });
 
   it("marks placeholder characters as not linkable", () => {
     expect(
       resolveRelations({ slugs: ["rickard-stark"], charactersBySlug }),
     ).toEqual([
-      { slug: "rickard-stark", name: "Rickard Stark", linkable: false },
+      { slug: "rickard-stark", name: "Rickard Stark", isLinkable: false },
     ]);
   });
 
@@ -26,7 +28,7 @@ describe("resolveRelations", () => {
     expect(
       resolveRelations({ slugs: ["a-nameless-one"], charactersBySlug }),
     ).toEqual([
-      { slug: "a-nameless-one", name: "a-nameless-one", linkable: false },
+      { slug: "a-nameless-one", name: "a-nameless-one", isLinkable: false },
     ]);
   });
 
@@ -40,7 +42,7 @@ describe("resolveRelations", () => {
       "unknown-slug",
       "rickard-stark",
     ]);
-    expect(refs.map((r) => r.linkable)).toEqual([true, false, false]);
+    expect(refs.map((r) => r.isLinkable)).toEqual([true, false, false]);
   });
 
   it("returns an empty array for no slugs", () => {

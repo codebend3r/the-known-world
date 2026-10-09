@@ -60,7 +60,7 @@ export default async function CharactersPage() {
       />
       <Suspense
         fallback={
-          <ListSearchSkeleton placeholder="Search characters…" withControls />
+          <ListSearchSkeleton placeholder="Search characters…" hasControls />
         }
       >
         <FilteredCharacterList items={items} />

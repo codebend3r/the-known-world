@@ -60,7 +60,7 @@ export function MainMenu() {
         glyph={sectionGlyphs.dragons}
         href="/dragons/"
         plate="08"
-        visible={false}
+        isVisible={false}
       />
       <MainMenuTile
         title="Events"

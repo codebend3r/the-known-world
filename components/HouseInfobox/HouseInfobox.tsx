@@ -88,7 +88,7 @@ export function HouseInfobox({
             name={shortHouseName(house.name)}
             region={region}
             sizes="(max-width: 768px) 90vw, 400px"
-            decorative
+            isDecorative
             priority
             className={styles.sigilFill}
           />

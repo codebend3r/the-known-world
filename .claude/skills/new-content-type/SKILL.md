@@ -54,7 +54,7 @@ The `buildSlugSets` entry is the one people skip. It feeds `allEntitySlugs`, whi
 | #   | File                                         | Add                                                            | Audit id                                                               |
 | --- | -------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------- |
 | 9   | `components/SectionGlyphs/SectionGlyphs.tsx` | a 32x32 `currentColor` glyph keyed by the collection name      | `glyph`                                                                |
-| 10  | `lib/nav.ts`                                 | `{ href: "/<name>/", label, visible }` in `NAV_ITEMS`          | `nav`                                                                  |
+| 10  | `lib/nav.ts`                                 | `{ href: "/<name>/", label, isVisible }` in `NAV_ITEMS`        | `nav`                                                                  |
 | 11  | `components/MainMenu/MainMenu.tsx`           | a `<MainMenuTile>` with the next `plate` number                | `home-tile`                                                            |
 | 12  | `components/SiteMenu/SiteMenu.tsx`           | an `ART` entry keyed by href: `{ icon }`, `{ glyph }`, or both | `drawer-art`                                                           |
 | 13  | `app/page.tsx`                               | bump the `NN collections` count to the new visible-tile total  | not audited; it is one global counter, not a per-collection touchpoint |
@@ -73,7 +73,7 @@ These are real splits in the existing seven, not oversights. The audit reports t
 | `prose-links`      | characters, dragons, houses, weapons          | bodies should auto-link here; `ProseLinkTarget["kind"]` in `lib/prose-links.ts` has to gain the kind first |
 | `detail-back-link` | all but castles                               | always, in practice                                                                                        |
 | `menu-icon`        | battles, characters, dragons, houses, weapons | painted drawer art exists; otherwise pass only a `glyph`                                                   |
-| `nav-visible`      | all but dragons                               | the section is finished; `visible: false` parks a done section                                             |
+| `nav-visible`      | all but dragons                               | the section is finished; `isVisible: false` parks a done section                                           |
 
 ## Conventions each touchpoint enforces
 

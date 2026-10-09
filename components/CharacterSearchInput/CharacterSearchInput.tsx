@@ -13,19 +13,19 @@ type CommonProps = {
 };
 
 type FilterProps = CommonProps & {
-  autocomplete?: false;
+  hasAutocomplete?: false;
   value: string;
   onChange: (value: string) => void;
 };
 
 type AutocompleteProps = CommonProps & {
-  autocomplete: true;
+  hasAutocomplete: true;
 };
 
 type Props = FilterProps | AutocompleteProps;
 
 function isAutocomplete(props: Props): props is AutocompleteProps {
-  return props.autocomplete === true;
+  return props.hasAutocomplete === true;
 }
 
 // In filter mode the input is fully controlled by its parent (the characters

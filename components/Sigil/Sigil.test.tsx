@@ -66,7 +66,7 @@ describe("Sigil", () => {
 
   it("empties the alt text on a decorative sigil", () => {
     const { container } = render(
-      <Sigil slug="stark" name="Stark" decorative />,
+      <Sigil slug="stark" name="Stark" isDecorative />,
     );
     expect(screen.queryByRole("img", { name: /sigil of house/i })).toBeNull();
     expect(container.querySelector("img")?.getAttribute("alt")).toBe("");

@@ -10,8 +10,8 @@ function spouse(overrides: Partial<TreeSpouse> = {}): TreeSpouse {
     name: "Spouse",
     alias: null,
     sex: null,
-    placeholder: false,
-    inHouse: false,
+    isPlaceholder: false,
+    isInHouse: false,
     titles: [],
     ...overrides,
   };
@@ -23,8 +23,8 @@ function node(overrides: Partial<TreeNode> = {}): TreeNode {
     name: "Person",
     alias: null,
     sex: null,
-    placeholder: false,
-    external: false,
+    isPlaceholder: false,
+    isExternal: false,
     born: null,
     died: null,
     titles: [],
@@ -82,7 +82,7 @@ describe("FamilyTree", () => {
       <FamilyTree
         roots={[
           node({ slug: "real", name: "Real" }),
-          node({ slug: "ghost", name: "Ghost", placeholder: true }),
+          node({ slug: "ghost", name: "Ghost", isPlaceholder: true }),
         ]}
       />,
     );

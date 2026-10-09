@@ -10,7 +10,7 @@ type Props = {
   id: string;
   title: string;
   count?: number;
-  open: boolean;
+  isOpen: boolean;
   onToggle: () => void;
   headingLevel?: keyof typeof HEADINGS;
   children: ReactNode;
@@ -20,7 +20,7 @@ export function Accordion({
   id,
   title,
   count,
-  open,
+  isOpen,
   onToggle,
   headingLevel = 3,
   children,
@@ -36,18 +36,18 @@ export function Accordion({
           type="button"
           id={triggerId}
           className={styles.trigger}
-          aria-expanded={open}
+          aria-expanded={isOpen}
           aria-controls={panelId}
           onClick={onToggle}
         >
           <ChevronIcon
-            className={cx(styles.chevron, open && styles.chevronOpen)}
+            className={cx(styles.chevron, isOpen && styles.chevronOpen)}
           />
           <span className={styles.title}>{title}</span>
           {count !== undefined && <span className={styles.count}>{count}</span>}
         </button>
       </Heading>
-      {open && (
+      {isOpen && (
         <div
           id={panelId}
           role="region"

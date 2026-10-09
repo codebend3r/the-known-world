@@ -130,7 +130,7 @@ export function FilteredCharacterList({
     />
   );
 
-  const showPagination = filtered.length > MIN_PAGE_SIZE;
+  const shouldShowPagination = filtered.length > MIN_PAGE_SIZE;
 
   const listClass = cx(styles.list, view === "list" && styles.listView);
 
@@ -151,7 +151,7 @@ export function FilteredCharacterList({
         </p>
       ) : (
         <>
-          {showPagination && renderPagination("top")}
+          {shouldShowPagination && renderPagination("top")}
           <ul className={listClass}>
             {pageItems.map((item) => {
               const regionClass = item.region
@@ -182,7 +182,7 @@ export function FilteredCharacterList({
                         name={item.name}
                         region={item.region}
                         size={view === "list" ? "3.25rem" : "3rem"}
-                        decorative
+                        isDecorative
                         hasPlate={false}
                       />
                     </span>
@@ -193,7 +193,7 @@ export function FilteredCharacterList({
               );
             })}
           </ul>
-          {showPagination && renderPagination("bottom")}
+          {shouldShowPagination && renderPagination("bottom")}
         </>
       )}
     </>

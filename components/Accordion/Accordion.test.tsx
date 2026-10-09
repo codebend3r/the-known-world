@@ -5,7 +5,12 @@ import { Accordion } from "@/components/Accordion";
 describe("Accordion", () => {
   it("hides its children and marks the trigger collapsed when closed", () => {
     render(
-      <Accordion id="north" title="The North" open={false} onToggle={() => {}}>
+      <Accordion
+        id="north"
+        title="The North"
+        isOpen={false}
+        onToggle={() => {}}
+      >
         <p>hidden body</p>
       </Accordion>,
     );
@@ -16,7 +21,7 @@ describe("Accordion", () => {
 
   it("renders its children inside a labelled region when open", () => {
     render(
-      <Accordion id="north" title="The North" open onToggle={() => {}}>
+      <Accordion id="north" title="The North" isOpen onToggle={() => {}}>
         <p>visible body</p>
       </Accordion>,
     );
@@ -32,7 +37,12 @@ describe("Accordion", () => {
   it("calls onToggle when the trigger is clicked", () => {
     const onToggle = jest.fn();
     render(
-      <Accordion id="north" title="The North" open={false} onToggle={onToggle}>
+      <Accordion
+        id="north"
+        title="The North"
+        isOpen={false}
+        onToggle={onToggle}
+      >
         <p>body</p>
       </Accordion>,
     );
@@ -46,7 +56,7 @@ describe("Accordion", () => {
         id="north"
         title="The North"
         count={42}
-        open
+        isOpen
         onToggle={() => {}}
       >
         <p>body</p>
@@ -61,7 +71,7 @@ describe("Accordion", () => {
         id="north"
         title="The North"
         headingLevel={2}
-        open={false}
+        isOpen={false}
         onToggle={() => {}}
       >
         <p>body</p>

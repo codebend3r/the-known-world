@@ -8,7 +8,7 @@ export type MainMenuTileProps = {
   glyph: ReactNode;
   href: string;
   plate?: string;
-  visible?: boolean;
+  isVisible?: boolean;
 };
 
 // The collection card: a gold outline glyph and a mono plate number on one row,
@@ -19,9 +19,9 @@ export function MainMenuTile({
   glyph,
   href,
   plate,
-  visible = true,
+  isVisible = true,
 }: MainMenuTileProps) {
-  if (!visible) return null;
+  if (!isVisible) return null;
 
   return (
     <Link href={href} className={styles.tile}>
