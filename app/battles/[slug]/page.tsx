@@ -87,10 +87,10 @@ export default async function BattlePage({ params }: SlugPageProps) {
   return (
     <PlateLayout>
       <div className={styles.detail}>
-        <div className={styles.heading}>
+        <hgroup className={styles.heading}>
           <h1>{fm.name}</h1>
           <p className="subtitle">{subtitle}</p>
-        </div>
+        </hgroup>
         <BattleInfobox
           battle={fm}
           housesBySlug={housesBySlug}

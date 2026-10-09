@@ -116,7 +116,7 @@ export default async function HousePage({ params }: SlugPageProps) {
   return (
     <PlateLayout>
       <div className={styles.detail}>
-        <div className={styles.heading}>
+        <hgroup className={styles.heading}>
           <div className={styles.nameRow}>
             <h1>{house.frontmatter.name}</h1>
           </div>
@@ -126,7 +126,7 @@ export default async function HousePage({ params }: SlugPageProps) {
             </p>
           )}
           <FiligreeRule variant="lozenge" className={styles.divider} />
-        </div>
+        </hgroup>
         <div className={styles.search}>
           <HouseSearchInput />
         </div>

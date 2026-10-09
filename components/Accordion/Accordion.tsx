@@ -48,14 +48,13 @@ export function Accordion({
         </button>
       </Heading>
       {isOpen && (
-        <div
+        <section
           id={panelId}
-          role="region"
           aria-labelledby={triggerId}
           className={styles.panel}
         >
           {children}
-        </div>
+        </section>
       )}
     </div>
   );
