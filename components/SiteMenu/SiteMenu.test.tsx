@@ -46,7 +46,7 @@ describe("SiteMenu", () => {
       "/battles/",
       "/events/",
     ]);
-    expect(links.map((l) => l.textContent?.trim())).toEqual([
+    expect(links.map((l) => l.textContent?.trim() ?? "")).toEqual([
       "Maps",
       "Timeline",
       "Houses",

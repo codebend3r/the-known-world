@@ -39,7 +39,7 @@ describe("Sigil", () => {
       <Sigil slug="stark" name="Stark" region="north" />,
     );
     const plate = container.querySelector(".sigil");
-    expect(plate?.getAttribute("style")).toContain(
+    expect(plate?.getAttribute("style") ?? "").toContain(
       "--sigil-metal: var(--region-color-north)",
     );
   });
@@ -55,7 +55,9 @@ describe("Sigil", () => {
       <Sigil slug="stark" name="Stark" size="1.5rem" />,
     );
     const plate = container.querySelector(".sigil");
-    expect(plate?.getAttribute("style")).toContain("--sigil-size: 1.5rem");
+    expect(plate?.getAttribute("style") ?? "").toContain(
+      "--sigil-size: 1.5rem",
+    );
     expect(screen.getByRole("img").getAttribute("sizes")).toBe("1.5rem");
   });
 
@@ -69,21 +71,23 @@ describe("Sigil", () => {
       <Sigil slug="stark" name="Stark" isDecorative />,
     );
     expect(screen.queryByRole("img", { name: /sigil of house/i })).toBeNull();
-    expect(container.querySelector("img")?.getAttribute("alt")).toBe("");
+    expect(container.querySelector("img")?.getAttribute("alt") ?? null).toBe(
+      "",
+    );
   });
 
   it("drops the plate class when the shield ground is turned off", () => {
     const { container } = render(
       <Sigil slug="stark" name="Stark" hasPlate={false} />,
     );
-    expect(container.querySelector(".sigil")?.className).toBe(
+    expect(container.querySelector(".sigil")?.className ?? null).toBe(
       "sigil plateless",
     );
   });
 
   it("keeps the plate by default", () => {
     const { container } = render(<Sigil slug="stark" name="Stark" />);
-    expect(container.querySelector(".sigil")?.className).toBe("sigil");
+    expect(container.querySelector(".sigil")?.className ?? null).toBe("sigil");
   });
 
   it("merges a caller class onto the plate", () => {
@@ -91,6 +95,6 @@ describe("Sigil", () => {
       <Sigil slug="stark" name="Stark" className="shield" />,
     );
     const plate = container.querySelector(".sigil");
-    expect(plate?.className).toBe("sigil shield");
+    expect(plate?.className ?? null).toBe("sigil shield");
   });
 });
