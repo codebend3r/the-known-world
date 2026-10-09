@@ -6,9 +6,9 @@ import { ViewToggle, ListIcon, TreeChartIcon } from "@/components/ViewToggle";
 import { useIsMobile } from "@/lib/useIsMobile";
 import styles from "@/components/FamilyTreeViews/FamilyTreeViews.module.scss";
 
-export type TreeViewMode = "list" | "chart";
+const TREE_MODES = ["list", "chart"] as const;
 
-const TREE_MODES = ["list", "chart"] as const satisfies readonly TreeViewMode[];
+export type TreeViewMode = (typeof TREE_MODES)[number];
 
 const VIEW_OPTIONS = [
   { value: "list" as const, label: "List view", icon: <ListIcon /> },

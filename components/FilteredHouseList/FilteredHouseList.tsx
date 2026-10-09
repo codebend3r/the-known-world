@@ -7,7 +7,7 @@ import { Accordion } from "@/components/Accordion";
 import { ListPagination } from "@/components/ListPagination";
 import { ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
-import { SortToggle, type SortDirection } from "@/components/SortToggle";
+import { SortToggle } from "@/components/SortToggle";
 import {
   ViewToggle,
   GridIcon,
@@ -31,6 +31,7 @@ import {
   listSearchParsers,
   type PageSize,
   type Grouping,
+  type SortDirection,
 } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList/FilteredHouseList.module.scss";
