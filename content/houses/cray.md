@@ -1,7 +1,7 @@
 ---
 slug: cray
 name: House Cray
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

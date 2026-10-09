@@ -1,7 +1,7 @@
 ---
 slug: vikary
 name: House Vikary
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

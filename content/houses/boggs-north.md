@@ -1,7 +1,7 @@
 ---
 slug: boggs-north
 name: House Boggs of the Neck
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

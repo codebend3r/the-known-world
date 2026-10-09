@@ -1,7 +1,7 @@
 ---
 slug: wells-dorne
 name: House Wells of Dorne
-seat: ""
+seat: null
 liege: martell
 words: ""
 sigil:

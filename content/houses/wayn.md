@@ -1,7 +1,7 @@
 ---
 slug: wayn
 name: House Wayn
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

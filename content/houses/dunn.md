@@ -1,7 +1,7 @@
 ---
 slug: dunn
 name: House Dunn
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: keath
 name: House Keath
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

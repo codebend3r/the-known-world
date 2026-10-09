@@ -1,7 +1,7 @@
 ---
 slug: chambers
 name: House Chambers
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

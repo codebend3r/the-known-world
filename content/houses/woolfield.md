@@ -1,7 +1,7 @@
 ---
 slug: woolfield
 name: House Woolfield
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

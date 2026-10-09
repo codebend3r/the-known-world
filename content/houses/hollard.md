@@ -1,7 +1,7 @@
 ---
 slug: hollard
 name: House Hollard
-seat: ""
+seat: null
 liege: darklyn
 words: ""
 sigil:

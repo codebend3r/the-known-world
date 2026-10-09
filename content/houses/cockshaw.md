@@ -1,7 +1,7 @@
 ---
 slug: cockshaw
 name: House Cockshaw
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

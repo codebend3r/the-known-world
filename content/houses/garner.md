@@ -1,7 +1,7 @@
 ---
 slug: garner
 name: House Garner
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

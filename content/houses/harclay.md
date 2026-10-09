@@ -1,7 +1,7 @@
 ---
 slug: harclay
 name: House Harclay
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: whitehill
 name: House Whitehill
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

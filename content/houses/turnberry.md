@@ -1,7 +1,7 @@
 ---
 slug: turnberry
 name: House Turnberry
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

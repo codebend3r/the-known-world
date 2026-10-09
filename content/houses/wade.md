@@ -1,7 +1,7 @@
 ---
 slug: wade
 name: House Wade
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

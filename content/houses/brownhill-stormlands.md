@@ -1,7 +1,7 @@
 ---
 slug: brownhill-stormlands
 name: House Brownhill of Cape Wrath
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

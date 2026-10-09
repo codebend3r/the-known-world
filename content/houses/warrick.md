@@ -1,7 +1,7 @@
 ---
 slug: warrick
 name: House Warrick
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

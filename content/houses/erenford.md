@@ -1,7 +1,7 @@
 ---
 slug: erenford
 name: House Erenford
-seat: ""
+seat: null
 liege: frey
 words: ""
 sigil:

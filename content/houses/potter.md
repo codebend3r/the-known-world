@@ -1,7 +1,7 @@
 ---
 slug: potter
 name: House Potter
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

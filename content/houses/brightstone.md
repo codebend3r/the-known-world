@@ -1,7 +1,7 @@
 ---
 slug: brightstone
 name: House Brightstone
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: yew
 name: House Yew
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

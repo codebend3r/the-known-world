@@ -1,7 +1,7 @@
 ---
 slug: holt-north
 name: House Holt
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

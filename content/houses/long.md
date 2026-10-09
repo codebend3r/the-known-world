@@ -1,7 +1,7 @@
 ---
 slug: long
 name: House Long
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

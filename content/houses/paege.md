@@ -1,7 +1,7 @@
 ---
 slug: paege
 name: House Paege
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

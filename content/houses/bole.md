@@ -1,7 +1,7 @@
 ---
 slug: bole
 name: House Bole
-seat: ""
+seat: null
 liege: glover
 words: ""
 sigil:

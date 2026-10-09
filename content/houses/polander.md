@@ -1,7 +1,7 @@
 ---
 slug: polander
 name: House Polander
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

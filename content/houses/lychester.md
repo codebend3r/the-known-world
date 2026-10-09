@@ -1,7 +1,7 @@
 ---
 slug: lychester
 name: House Lychester
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

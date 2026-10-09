@@ -1,7 +1,7 @@
 ---
 slug: conklyn
 name: House Conklyn
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

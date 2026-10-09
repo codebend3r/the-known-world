@@ -1,7 +1,7 @@
 ---
 slug: cave
 name: House Cave
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

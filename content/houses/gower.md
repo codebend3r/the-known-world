@@ -1,7 +1,7 @@
 ---
 slug: gower
 name: House Gower
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

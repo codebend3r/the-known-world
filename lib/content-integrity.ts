@@ -222,6 +222,7 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         { to: "characters", read: (fm) => ref("commanders", fm.commanders) },
+        { to: "characters", read: (fm) => ref("casualties", fm.casualties) },
         { to: "houses", read: participantHouses },
         { to: "all", read: (fm) => ref("mentions", fm.mentions) },
       ],
@@ -231,6 +232,7 @@ function referenceErrors(collections: Collections): string[] {
       entries: collections.events,
       targets,
       rules: [
+        { to: "characters", read: (fm) => ref("casualties", fm.casualties) },
         { to: "houses", read: participantHouses },
         { to: "all", read: (fm) => ref("mentions", fm.mentions) },
       ],

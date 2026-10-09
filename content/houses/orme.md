@@ -1,7 +1,7 @@
 ---
 slug: orme
 name: House Orme
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

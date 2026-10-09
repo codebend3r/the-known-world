@@ -1,7 +1,7 @@
 ---
 slug: groves
 name: House Groves
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

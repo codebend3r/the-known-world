@@ -1,7 +1,7 @@
 ---
 slug: penny
 name: House Penny
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: rambton
 name: House Rambton
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

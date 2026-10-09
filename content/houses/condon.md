@@ -1,7 +1,7 @@
 ---
 slug: condon
 name: House Condon
-seat: ""
+seat: null
 liege: cerwyn
 words: ""
 sigil:

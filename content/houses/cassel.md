@@ -1,7 +1,7 @@
 ---
 slug: cassel
 name: House Cassel
-seat: ""
+seat: null
 liege: stark
 words: ""
 sigil:

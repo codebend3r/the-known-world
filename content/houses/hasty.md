@@ -1,7 +1,7 @@
 ---
 slug: hasty
 name: House Hasty
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

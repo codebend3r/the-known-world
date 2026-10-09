@@ -1,7 +1,7 @@
 ---
 slug: whitfield
 name: House Whitfield
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

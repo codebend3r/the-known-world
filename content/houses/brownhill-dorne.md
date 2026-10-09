@@ -1,7 +1,7 @@
 ---
 slug: brownhill-dorne
 name: House Brownhill of the Greenblood
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

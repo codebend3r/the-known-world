@@ -1,7 +1,7 @@
 ---
 slug: goode
 name: House Goode
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: chelsted
 name: House Chelsted
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

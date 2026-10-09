@@ -1,7 +1,7 @@
 ---
 slug: thorne
 name: House Thorne
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

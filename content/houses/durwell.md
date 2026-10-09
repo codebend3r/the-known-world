@@ -1,7 +1,7 @@
 ---
 slug: durwell
 name: House Durwell
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

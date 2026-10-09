@@ -1,7 +1,7 @@
 ---
 slug: norridge
 name: House Norridge
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

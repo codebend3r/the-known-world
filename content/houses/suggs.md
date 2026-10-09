@@ -1,7 +1,7 @@
 ---
 slug: suggs
 name: House Suggs
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: lolliston
 name: House Lolliston
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

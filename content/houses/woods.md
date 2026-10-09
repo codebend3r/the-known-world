@@ -1,7 +1,7 @@
 ---
 slug: woods
 name: House Woods
-seat: ""
+seat: null
 liege: glover
 words: ""
 sigil:

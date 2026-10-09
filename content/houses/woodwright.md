@@ -1,7 +1,7 @@
 ---
 slug: woodwright
 name: House Woodwright
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

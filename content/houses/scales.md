@@ -1,7 +1,7 @@
 ---
 slug: scales
 name: House Scales
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

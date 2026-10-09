@@ -1,7 +1,7 @@
 ---
 slug: frost
 name: House Frost
-seat: ""
+seat: null
 liege: stark
 words: ""
 sigil:

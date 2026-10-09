@@ -1,7 +1,7 @@
 ---
 slug: herston
 name: House Herston
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

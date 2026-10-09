@@ -1,7 +1,7 @@
 ---
 slug: baelish
 name: House Baelish
-seat: the-fingers
+seat: fingers
 liege: arryn
 words: ""
 sigil:

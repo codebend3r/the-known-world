@@ -1,7 +1,7 @@
 ---
 slug: mollen
 name: House Mollen
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

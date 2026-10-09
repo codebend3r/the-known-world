@@ -1,7 +1,7 @@
 ---
 slug: forrester
 name: House Forrester
-seat: ""
+seat: null
 liege: glover
 words: ""
 sigil:

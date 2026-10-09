@@ -1,7 +1,7 @@
 ---
 slug: netley
 name: House Netley
-seat: ""
+seat: null
 liege: greyjoy
 words: ""
 sigil:

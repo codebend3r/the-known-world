@@ -1,7 +1,7 @@
 ---
 slug: marsh
 name: House Marsh
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

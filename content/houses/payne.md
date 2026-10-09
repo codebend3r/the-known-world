@@ -1,7 +1,7 @@
 ---
 slug: payne
 name: House Payne
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

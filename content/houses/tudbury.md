@@ -1,7 +1,7 @@
 ---
 slug: tudbury
 name: House Tudbury
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

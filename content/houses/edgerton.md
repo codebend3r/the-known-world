@@ -1,7 +1,7 @@
 ---
 slug: edgerton
 name: House Edgerton
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: deddings
 name: House Deddings
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

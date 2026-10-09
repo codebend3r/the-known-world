@@ -1,7 +1,7 @@
 ---
 slug: ferren
 name: House Ferren
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

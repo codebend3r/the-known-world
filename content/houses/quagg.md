@@ -1,7 +1,7 @@
 ---
 slug: quagg
 name: House Quagg
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

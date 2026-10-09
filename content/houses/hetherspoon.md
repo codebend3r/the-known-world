@@ -1,7 +1,7 @@
 ---
 slug: hetherspoon
 name: House Hetherspoon
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

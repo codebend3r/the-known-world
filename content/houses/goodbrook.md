@@ -1,7 +1,7 @@
 ---
 slug: goodbrook
 name: House Goodbrook
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

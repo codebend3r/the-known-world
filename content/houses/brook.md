@@ -1,7 +1,7 @@
 ---
 slug: brook
 name: House Brook
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

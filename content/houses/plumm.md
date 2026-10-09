@@ -1,7 +1,7 @@
 ---
 slug: plumm
 name: House Plumm
-seat: ""
+seat: null
 liege: lannister
 words: "Come Try Me"
 sigil:

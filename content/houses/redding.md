@@ -1,7 +1,7 @@
 ---
 slug: redding
 name: House Redding
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

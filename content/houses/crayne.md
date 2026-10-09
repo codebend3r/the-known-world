@@ -1,7 +1,7 @@
 ---
 slug: crayne
 name: House Crayne
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

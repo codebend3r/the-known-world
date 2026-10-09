@@ -1,7 +1,7 @@
 ---
 slug: dargood
 name: House Dargood
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

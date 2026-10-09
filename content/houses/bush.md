@@ -1,7 +1,7 @@
 ---
 slug: bush
 name: House Bush
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

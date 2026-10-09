@@ -1,7 +1,7 @@
 ---
 slug: hawthorne
 name: House Hawthorne
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

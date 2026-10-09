@@ -1,7 +1,7 @@
 ---
 slug: wells-north
 name: House Wells of the North
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

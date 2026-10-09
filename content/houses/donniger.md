@@ -1,7 +1,7 @@
 ---
 slug: donniger
 name: House Donniger
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

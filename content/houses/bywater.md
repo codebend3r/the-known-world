@@ -1,7 +1,7 @@
 ---
 slug: bywater
 name: House Bywater
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

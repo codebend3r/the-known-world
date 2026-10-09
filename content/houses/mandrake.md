@@ -1,7 +1,7 @@
 ---
 slug: mandrake
 name: House Mandrake
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

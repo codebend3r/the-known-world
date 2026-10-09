@@ -1,7 +1,7 @@
 ---
 slug: woodhull
 name: House Woodhull
-seat: ""
+seat: null
 liege: elesham
 words: ""
 sigil:

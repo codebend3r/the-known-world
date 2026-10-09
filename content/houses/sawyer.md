@@ -1,7 +1,7 @@
 ---
 slug: sawyer
 name: House Sawyer
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

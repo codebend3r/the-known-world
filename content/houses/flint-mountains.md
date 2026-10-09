@@ -1,7 +1,7 @@
 ---
 slug: flint-mountains
 name: House Flint of the mountains
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

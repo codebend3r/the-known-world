@@ -1,7 +1,7 @@
 ---
 slug: cargyll
 name: House Cargyll
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

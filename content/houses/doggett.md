@@ -1,7 +1,7 @@
 ---
 slug: doggett
 name: House Doggett
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

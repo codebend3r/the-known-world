@@ -1,7 +1,7 @@
 ---
 slug: slynt
 name: House Slynt
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

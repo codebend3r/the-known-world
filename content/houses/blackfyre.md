@@ -1,7 +1,7 @@
 ---
 slug: blackfyre
 name: House Blackfyre
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

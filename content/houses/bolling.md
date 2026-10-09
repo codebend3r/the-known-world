@@ -1,7 +1,7 @@
 ---
 slug: bolling
 name: House Bolling
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

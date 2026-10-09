@@ -1,7 +1,7 @@
 ---
 slug: drox
 name: House Drox
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

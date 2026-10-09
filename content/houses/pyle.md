@@ -1,7 +1,7 @@
 ---
 slug: pyle
 name: House Pyle
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

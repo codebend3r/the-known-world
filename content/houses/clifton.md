@@ -1,7 +1,7 @@
 ---
 slug: clifton
 name: House Clifton
-seat: ""
+seat: null
 liege: farman
 words: ""
 sigil:

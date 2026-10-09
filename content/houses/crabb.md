@@ -1,7 +1,7 @@
 ---
 slug: crabb
 name: House Crabb
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

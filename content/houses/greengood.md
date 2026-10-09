@@ -1,7 +1,7 @@
 ---
 slug: greengood
 name: House Greengood
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

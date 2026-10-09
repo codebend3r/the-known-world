@@ -1,7 +1,7 @@
 ---
 slug: moss
 name: House Moss
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

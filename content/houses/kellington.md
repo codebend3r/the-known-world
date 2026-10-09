@@ -1,7 +1,7 @@
 ---
 slug: kellington
 name: House Kellington
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

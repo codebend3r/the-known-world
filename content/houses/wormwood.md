@@ -1,7 +1,7 @@
 ---
 slug: wormwood
 name: House Wormwood
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: broome
 name: House Broome
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

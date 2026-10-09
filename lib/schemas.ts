@@ -13,27 +13,31 @@ const EraSchema = z.enum([
   "BC",
 ]);
 
+// Cross-references between entries are slugs, so a field that names another
+// entry rejects display text and the empty string at the boundary.
+const SlugSchema = z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+
 const PrecisionSchema = z.enum(["exact", "year", "decade", "era", "legendary"]);
 
-const DateSchema = z.object({
+const DateSchema = z.strictObject({
   year: z.number().int(),
   era: EraSchema,
   precision: PrecisionSchema,
 });
 
-const SourceSchema = z.object({
+const SourceSchema = z.strictObject({
   type: z.enum(["awoiaf", "book", "show", "other"]),
   url: z.url().optional(),
   ref: z.string().optional(),
   license: z.string().optional(),
 });
 
-const CoordsSchema = z.object({
+const CoordsSchema = z.strictObject({
   x: z.number(),
   y: z.number(),
 });
 
-export const CastleSchema = z.object({
+export const CastleSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
   type: z.enum(["castle", "town", "ruin", "watchtower", "holdfast"]),
@@ -73,7 +77,7 @@ const MaterialSchema = z.enum([
 
 const WeaponStatusSchema = z.enum(["extant", "lost", "destroyed"]);
 
-export const WeaponSchema = z.object({
+export const WeaponSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
   type: WeaponTypeSchema,
@@ -99,7 +103,7 @@ const DragonSizeSchema = z.enum([
   "monstrous",
 ]);
 
-export const DragonSchema = z.object({
+export const DragonSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
   color: z.string().optional(),
@@ -115,9 +119,9 @@ export const DragonSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-const HouseInfoEntrySchema = z.object({
+const HouseInfoEntrySchema = z.strictObject({
   name: z.string().min(1),
-  slug: z.string().optional(),
+  slug: SlugSchema.optional(),
   note: z.string().optional(),
 });
 
@@ -136,13 +140,13 @@ export const SigilProvenanceSchema = z.enum([
   "invented",
 ]);
 
-export const HouseSchema = z.object({
+export const HouseSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
-  seat: z.string(),
+  seat: SlugSchema.nullable(),
   liege: z.string().nullable(),
   words: z.string(),
-  sigil: z.object({
+  sigil: z.strictObject({
     description: z.string(),
     provenance: SigilProvenanceSchema,
   }),
@@ -164,7 +168,7 @@ export const HouseSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-export const CharacterSchema = z.object({
+export const CharacterSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
   sex: z.enum(["m", "f"]).nullable().default(null),
@@ -188,14 +192,14 @@ export const CharacterSchema = z.object({
   draft: z.boolean().default(false),
 });
 
-const ParticipantSchema = z.object({
+const ParticipantSchema = z.strictObject({
   side: z.string(),
   houses: z.array(z.string()).default([]),
 });
 
 const LandmassSchema = z.enum(["westeros", "essos", "summer-isles"]);
 
-export const EventSchema = z.object({
+export const EventSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
   type: z.enum([
@@ -241,7 +245,7 @@ const BattleTypeSchema = z.enum([
   "other",
 ]);
 
-export const BattleSchema = z.object({
+export const BattleSchema = z.strictObject({
   slug: z.string().min(1),
   name: z.string().min(1),
   type: BattleTypeSchema,

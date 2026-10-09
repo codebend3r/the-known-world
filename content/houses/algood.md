@@ -1,7 +1,7 @@
 ---
 slug: algood
 name: House Algood
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

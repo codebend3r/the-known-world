@@ -1,7 +1,7 @@
 ---
 slug: pemford
 name: House Pemford
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: blanetree
 name: House Blanetree
-seat: ""
+seat: null
 liege: tully
 words: ""
 sigil:

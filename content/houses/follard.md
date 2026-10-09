@@ -1,7 +1,7 @@
 ---
 slug: follard
 name: House Follard
-seat: ""
+seat: null
 liege: baratheon
 words: "None so Wise"
 sigil:

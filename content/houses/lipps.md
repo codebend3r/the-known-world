@@ -1,7 +1,7 @@
 ---
 slug: lipps
 name: House Lipps
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

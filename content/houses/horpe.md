@@ -1,7 +1,7 @@
 ---
 slug: horpe
 name: House Horpe
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

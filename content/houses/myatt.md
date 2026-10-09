@@ -1,7 +1,7 @@
 ---
 slug: myatt
 name: House Myatt
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

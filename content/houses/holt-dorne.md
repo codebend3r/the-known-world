@@ -1,7 +1,7 @@
 ---
 slug: holt-dorne
 name: House Holt
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: leek
 name: House Leek
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

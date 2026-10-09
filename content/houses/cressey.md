@@ -1,7 +1,7 @@
 ---
 slug: cressey
 name: House Cressey
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

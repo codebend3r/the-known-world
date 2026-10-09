@@ -1,7 +1,7 @@
 ---
 slug: weatherwax
 name: House Weatherwax
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -30,7 +30,8 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
   }, new Map<string, string[]>());
 
   const houseBySeat = set.houses.reduce((acc, house) => {
-    acc.set(house.frontmatter.seat, house.frontmatter.slug);
+    const seat = house.frontmatter.seat;
+    if (seat !== null) acc.set(seat, house.frontmatter.slug);
     return acc;
   }, new Map<string, string>());
 
@@ -65,7 +66,7 @@ export function findOrphanSlugs(set: ContentSet): string[] {
   ]);
 
   const houseRefs = set.houses.flatMap((house) => [
-    house.frontmatter.seat,
+    ...(house.frontmatter.seat ? [house.frontmatter.seat] : []),
     ...(house.frontmatter.liege ? [house.frontmatter.liege] : []),
     ...house.frontmatter["sworn-from"],
     ...house.frontmatter["cadet-houses"],

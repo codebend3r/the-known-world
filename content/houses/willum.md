@@ -1,7 +1,7 @@
 ---
 slug: willum
 name: House Willum
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

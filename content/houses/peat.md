@@ -1,7 +1,7 @@
 ---
 slug: peat
 name: House Peat
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

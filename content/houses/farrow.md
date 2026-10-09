@@ -1,7 +1,7 @@
 ---
 slug: farrow
 name: House Farrow
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

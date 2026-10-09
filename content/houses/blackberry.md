@@ -1,7 +1,7 @@
 ---
 slug: blackberry
 name: House Blackberry
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

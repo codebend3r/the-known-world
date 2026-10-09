@@ -1,7 +1,7 @@
 ---
 slug: pommingham
 name: House Pommingham
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

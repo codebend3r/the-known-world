@@ -1,7 +1,7 @@
 ---
 slug: foxglove
 name: House Foxglove
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

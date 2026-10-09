@@ -1,7 +1,7 @@
 ---
 slug: kettleblack
 name: House Kettleblack
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

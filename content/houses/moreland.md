@@ -1,7 +1,7 @@
 ---
 slug: moreland
 name: House Moreland
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

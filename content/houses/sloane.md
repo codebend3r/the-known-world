@@ -1,7 +1,7 @@
 ---
 slug: sloane
 name: House Sloane
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

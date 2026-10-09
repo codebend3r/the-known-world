@@ -1,7 +1,7 @@
 ---
 slug: nutt
 name: House Nutt
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

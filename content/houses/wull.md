@@ -1,7 +1,7 @@
 ---
 slug: wull
 name: House Wull
-seat: West of the northern mountains, along the Bay of Ice
+seat: null
 liege: baratheon
 words: ""
 sigil:
