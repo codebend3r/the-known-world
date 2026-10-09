@@ -19,14 +19,15 @@ Not deferred work. Oxlint does not treat `role="application"` as interactive and
 
 CI is green on `bun lint:ts` and always will be. **The lint config is not the gate; it is the reason a gate is needed.**
 
-This directory is that gate, in four files:
+This directory is that gate, in four files plus a co-located test:
 
-| file            | what it holds                                                                  |
-| --------------- | ------------------------------------------------------------------------------ |
-| `audit-a11y.ts` | the CLI: walks the roots, runs the checks, prints or emits JSON                |
-| `jsx-source.ts` | the JSX reader — masks comments and strings, builds an ancestor-aware tag tree |
-| `checks.ts`     | the rules: images, SVG, interactions, combobox, headings, viewport             |
-| `contrast.ts`   | ink/ground token pairs from `styles/globals.scss`                              |
+| file             | what it holds                                                                  |
+| ---------------- | ------------------------------------------------------------------------------ |
+| `audit-a11y.ts`  | the CLI: walks the roots, runs the checks, prints or emits JSON                |
+| `jsx-source.ts`  | the JSX reader — masks comments and strings, builds an ancestor-aware tag tree |
+| `checks.ts`      | the rules: images, SVG, interactions, combobox, headings, viewport             |
+| `contrast.ts`    | ink/ground token pairs from `styles/globals.scss`                              |
+| `checks.test.ts` | rule tests, run by `bun run test`                                              |
 
 **It is read-only. It fixes nothing.**
 
