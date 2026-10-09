@@ -69,7 +69,7 @@
 // Rule 03: a place name on a plate is a label, so it is mono and letter-spaced.
 .label {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   fill: var(--tkw-ink-muted);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;

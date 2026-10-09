@@ -29,7 +29,7 @@
   max-width: 72ch;
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 16px;
+  font-size: var(--fs-meta);
   line-height: 1.6;
   color: var(--tkw-ink-muted);
   padding-bottom: 10px;
@@ -42,7 +42,7 @@
 
 .inlineCode {
   font-family: var(--font-mono);
-  font-size: 0.86em;
+  font-size: var(--fs-small);
   color: var(--tkw-gold-bright);
 }
 
@@ -90,14 +90,14 @@
 
 .swatchName {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: var(--fs-name);
   font-weight: 600;
   color: var(--tkw-ink);
 }
 
 .swatchHex {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: 0.8px;
   text-transform: uppercase;
   color: var(--tkw-gold);
@@ -105,7 +105,7 @@
 
 .swatchToken {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 0.6px;
   color: var(--tkw-ink-dim);
 }
@@ -113,7 +113,7 @@
 .swatchUse {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 13px;
+  font-size: var(--fs-caption);
   line-height: 1.45;
   color: var(--tkw-ink-muted);
 }
@@ -180,13 +180,13 @@
 
   width: 48px;
   height: 56px;
-  font-size: 24px;
+  font-size: var(--fs-h2);
   isolation: isolate;
 }
 
 .heraldryName {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: var(--fs-lead);
   font-weight: 600;
   color: var(--tkw-ink);
 }
@@ -218,7 +218,7 @@
 
 .faceRole {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
@@ -226,7 +226,7 @@
 
 .faceDisplay {
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: var(--fs-display-sm);
   font-weight: 600;
   line-height: 1.1;
   color: var(--tkw-ink);
@@ -234,7 +234,7 @@
 
 .faceBody {
   font-family: var(--font-body);
-  font-size: 32px;
+  font-size: var(--fs-h1-entry-sm);
   font-weight: 400;
   line-height: 1.15;
   color: var(--tkw-ink);
@@ -242,7 +242,7 @@
 
 .faceMono {
   font-family: var(--font-mono);
-  font-size: 25px;
+  font-size: var(--fs-wordmark);
   font-weight: 500;
   line-height: 1.2;
   color: var(--tkw-ink);
@@ -250,7 +250,7 @@
 
 .faceWeights {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: 0.6px;
   color: var(--tkw-gold);
 }
@@ -258,7 +258,7 @@
 .faceUse {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 13px;
+  font-size: var(--fs-caption);
   line-height: 1.45;
   color: var(--tkw-ink-muted);
 }
@@ -296,7 +296,7 @@
 
 .scaleToken code {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   color: var(--tkw-gold);
 }
@@ -309,7 +309,7 @@
 .scaleSpec {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: 0.6px;
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
@@ -318,7 +318,7 @@
 
 .sampleDisplay {
   font-family: var(--font-display);
-  font-size: 48px;
+  font-size: var(--fs-specimen-display);
   font-weight: 600;
   line-height: 1;
   color: var(--tkw-ink);
@@ -326,7 +326,7 @@
 
 .sampleH1 {
   font-family: var(--font-display);
-  font-size: 38px;
+  font-size: var(--fs-specimen-h1);
   font-weight: 600;
   line-height: 1;
   color: var(--tkw-ink);
@@ -394,7 +394,7 @@
 
 .demoLabel {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   font-weight: 400;
   letter-spacing: var(--ls-nav);
   text-transform: uppercase;
@@ -429,11 +429,11 @@
   height: 36px;
   border-radius: 50%;
   border: 1.5px solid var(--shield-metal);
-  font-size: 21px;
+  font-size: var(--fs-quote);
 }
 
 .bannerName {
-  font-size: 17px;
+  font-size: var(--fs-lead);
   color: var(--tkw-ink);
 }
 
@@ -441,7 +441,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 10px;
+  font-size: var(--fs-tag);
   text-align: center;
   color: var(--shield-ink);
 }
@@ -480,14 +480,14 @@
 .cardBlurb {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 14px;
+  font-size: var(--fs-small);
   line-height: 1.45;
   color: var(--tkw-ink-muted);
 }
 
 .cardEnter {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-gold);
@@ -511,7 +511,7 @@
   isolation: isolate;
   width: 52px;
   height: 60px;
-  font-size: 27px;
+  font-size: var(--fs-specimen-shield);
 }
 
 .rowBody {
@@ -538,7 +538,7 @@
 
 .rowRegion {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
@@ -548,14 +548,14 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 14px;
+  font-size: var(--fs-small);
   color: var(--tkw-gold);
 }
 
 .rowSeat {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 13px;
+  font-size: var(--fs-caption);
   color: var(--tkw-ink-muted);
 }
 
@@ -599,7 +599,7 @@
 
   dt {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: var(--fs-micro);
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
     color: var(--tkw-ink-dim);
@@ -609,7 +609,7 @@
     margin: 0;
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 15px;
+    font-size: var(--fs-section);
     color: var(--tkw-ink-body);
   }
 }
@@ -624,7 +624,7 @@
   padding: 8px 13px;
   border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   background: var(--tkw-surface);
@@ -642,7 +642,7 @@
   padding: 4px 9px;
   border-radius: 3px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   width: max-content;
@@ -691,7 +691,7 @@
   border-radius: 5px;
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 15px;
+  font-size: var(--fs-section);
   color: var(--tkw-ink-dim);
 }
 
@@ -707,14 +707,14 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 18px;
+  font-size: var(--fs-lead);
   line-height: 1.55;
   color: var(--tkw-ink);
 }
 
 .quoteCite {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   font-style: normal;
   letter-spacing: var(--ls-nav);
   text-transform: uppercase;
@@ -756,7 +756,7 @@
 
 .ruleNum {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 1.4px;
   color: var(--tkw-gold);
   font-variant-numeric: tabular-nums;
@@ -764,7 +764,7 @@
 
 .ruleTitle {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: var(--fs-quote);
   font-weight: 600;
   line-height: 1.15;
   color: var(--tkw-ink);
@@ -773,7 +773,7 @@
 .ruleBody {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 15px;
+  font-size: var(--fs-section);
   line-height: 1.55;
   color: var(--tkw-ink-muted);
 }
@@ -788,7 +788,7 @@
   border: 1px solid var(--tkw-hairline-firm);
   border-radius: 8px;
   font-family: var(--font-mono);
-  font-size: 12.5px;
+  font-size: var(--fs-eyebrow);
   line-height: 1.85;
   color: var(--tkw-ink-muted);
 
@@ -798,7 +798,7 @@
 
   @media (max-width: bp.$sm) {
     padding: 16px;
-    font-size: 11px;
+    font-size: var(--fs-label);
   }
 }
 
@@ -850,7 +850,7 @@
 
 .pageKind {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 1.4px;
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
@@ -858,7 +858,7 @@
 
 .pageTitle {
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: var(--fs-h2);
   font-weight: 600;
   color: var(--tkw-ink);
 }
@@ -866,7 +866,7 @@
 .pageBlurb {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 14px;
+  font-size: var(--fs-small);
   line-height: 1.45;
   color: var(--tkw-ink-muted);
 }

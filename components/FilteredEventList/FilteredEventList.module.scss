@@ -58,7 +58,7 @@
 .name {
   grid-area: name;
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: var(--fs-name);
   font-weight: 600;
   line-height: 1.15;
   color: var(--tkw-ink);
@@ -69,7 +69,7 @@
 .meta {
   grid-area: meta;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
@@ -79,7 +79,7 @@
 .when {
   grid-area: when;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   letter-spacing: 0.5px;
   color: var(--tkw-gold);
   white-space: nowrap;
@@ -89,7 +89,7 @@
 .legend {
   padding-top: 1.5rem;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);

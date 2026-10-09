@@ -10,7 +10,7 @@
 
   dt {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: var(--fs-micro);
     font-weight: 400;
     text-transform: uppercase;
     letter-spacing: var(--ls-label);
@@ -56,5 +56,5 @@
 .note {
   color: var(--tkw-ink-muted);
   font-style: italic;
-  font-size: 0.92em;
+  font-size: var(--fs-small);
 }

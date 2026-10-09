@@ -17,17 +17,17 @@
   border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-size: 62px;
+    font-size: var(--fs-h1-detail);
     font-weight: 600;
     line-height: var(--lh-title);
     letter-spacing: var(--ls-display);
 
     @media (max-width: bp.$lg) {
-      font-size: 44px;
+      font-size: var(--fs-h1-lg);
     }
 
     @media (max-width: bp.$sm) {
-      font-size: 34px;
+      font-size: var(--fs-h1-sm);
       padding-left: 0;
       padding-right: 0;
     }

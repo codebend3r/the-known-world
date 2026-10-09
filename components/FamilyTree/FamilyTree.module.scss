@@ -105,7 +105,7 @@
 
 .name {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: var(--fs-meta);
   color: var(--tkw-ink);
   font-weight: 600;
 }
@@ -148,7 +148,7 @@ a.name {
 
 .lifespan {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   color: var(--tkw-ink-dim);
   letter-spacing: 1px;
   font-variant-numeric: tabular-nums;
@@ -158,7 +158,7 @@ a.name {
   font-family: var(--font-body);
   font-style: italic;
   font-weight: 300;
-  font-size: 0.8rem;
+  font-size: var(--fs-caption);
   color: var(--tkw-ink-muted);
 }
 
@@ -170,11 +170,11 @@ a.name {
 
 .cross {
   color: var(--tkw-gold);
-  font-size: 0.95rem;
+  font-size: var(--fs-section);
 }
 
 .gender {
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   padding-right: 0.15rem;
 }
 
@@ -187,7 +187,7 @@ a.name {
 }
 
 .king {
-  font-size: 0.85rem;
+  font-size: var(--fs-small);
   color: var(--tkw-gold);
   padding-right: 0.15rem;
 }
