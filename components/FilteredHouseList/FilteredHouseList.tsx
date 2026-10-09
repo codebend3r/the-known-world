@@ -193,8 +193,8 @@ export function FilteredHouseList({
   });
 
   const sorted = useMemo(() => {
-    const arr = [...items].sort(compareByName);
-    return dir === "desc" ? arr.reverse() : arr;
+    const arr = items.toSorted(compareByName);
+    return dir === "desc" ? arr.toReversed() : arr;
   }, [items, dir]);
 
   const facetFiltered = useMemo(() => {

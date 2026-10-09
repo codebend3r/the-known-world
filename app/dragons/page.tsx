@@ -39,7 +39,7 @@ export default async function DragonsPage() {
         regionLabel: region ? regionLabel(region) : null,
       };
     })
-    .sort(compareByName);
+    .toSorted(compareByName);
 
   return (
     <PlateLayout>

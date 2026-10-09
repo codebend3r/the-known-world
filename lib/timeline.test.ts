@@ -219,7 +219,7 @@ describe("buildTimeline", () => {
     expect(labels).toContain("1000 BC");
     expect(labels).toContain("Aegon's Conquest");
     expect(labels).toContain("300 AC");
-    const sortedYs = [...model.ticks].sort((a, b) => a.y - b.y).map((t) => t.y);
+    const sortedYs = model.ticks.toSorted((a, b) => a.y - b.y).map((t) => t.y);
     expect(model.ticks.map((t) => t.y)).toEqual(sortedYs);
     expect(sortedYs.every((y) => y >= 0 && y <= model.height)).toBe(true);
   });

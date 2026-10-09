@@ -21,7 +21,7 @@ const SLUGS: SectionSlug[] = [
 
 describe("sectionGlyphs", () => {
   it("covers every section the site navigates to", () => {
-    expect(Object.keys(sectionGlyphs).sort()).toEqual([...SLUGS].sort());
+    expect(Object.keys(sectionGlyphs).toSorted()).toEqual(SLUGS.toSorted());
   });
 
   it.each(SLUGS)("renders %s as a 32x32 decorative svg", (slug) => {

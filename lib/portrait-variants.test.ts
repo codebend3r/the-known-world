@@ -74,7 +74,7 @@ describe("buildPortraitVariants", () => {
   });
 
   it("puts the primary first however the folder is listed", () => {
-    const reversed = build([...DUNCAN].reverse());
+    const reversed = build(DUNCAN.toReversed());
     expect(reversed[0]?.id ?? null).toBe("duncan-the-tall");
   });
 

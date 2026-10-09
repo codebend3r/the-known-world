@@ -50,7 +50,7 @@ export default async function CastlesPage() {
   const groups = TYPE_ORDER.filter((type) => byType.has(type)).map((type) => ({
     type,
     label: TYPE_LABELS[type],
-    items: [...(byType.get(type) ?? [])].sort((a, b) =>
+    items: (byType.get(type) ?? []).toSorted((a, b) =>
       a.frontmatter.name.localeCompare(b.frontmatter.name),
     ),
   }));
