@@ -11,7 +11,7 @@ import {
 import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { renderWithNuqs } from "@/lib/testNuqs";
+import { renderWithNuqs } from "@/test/testNuqs";
 import type { WorldMapMarker } from "@/lib/map";
 
 // `mock.module` is not hoisted in Bun, so plain consts suffice where Vitest
