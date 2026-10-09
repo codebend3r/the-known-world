@@ -66,7 +66,7 @@
 // The spine: a vertical gold rule at 35% alpha, with full-opacity nodes.
 .axisRail {
   grid-area: axis;
-  border-right: 2px solid rgba(200, 162, 74, 0.35);
+  border-right: 2px solid color-mix(in srgb, var(--tkw-gold) 35%, transparent);
 }
 
 %column {
@@ -116,7 +116,7 @@
   background: var(--tkw-bg);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   color: var(--tkw-gold);
   font-variant-numeric: tabular-nums;
 }
@@ -131,7 +131,7 @@
   grid-template-columns: var(--era-width) 1fr;
   align-items: center;
   justify-items: center;
-  background: rgba(200, 162, 74, 0.05);
+  background: color-mix(in srgb, var(--tkw-gold) 5%, transparent);
   border-top: 1px solid var(--tkw-hairline);
   border-bottom: 1px solid var(--tkw-hairline);
 }
@@ -141,8 +141,8 @@
   writing-mode: vertical-rl;
   transform: rotate(180deg);
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 2.4px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-caption);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
@@ -172,7 +172,7 @@
   padding: 8px 10px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   color: var(--tkw-ink);
   text-decoration: none;
   transition: var(--tkw-lift);
@@ -202,16 +202,16 @@
 .eventName {
   grid-area: name;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
-  line-height: 1.25;
+  line-height: var(--lh-compact);
 }
 
 .eventWhen {
   grid-area: when;
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-data);
   color: var(--tkw-ink-dim);
   font-variant-numeric: tabular-nums;
 }
@@ -224,6 +224,6 @@
 
   .tickLabel {
     padding-right: 0.75rem;
-    font-size: 10px;
+    font-size: var(--fs-tag);
   }
 }

@@ -17,17 +17,17 @@
   border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-size: 62px;
+    font-size: var(--fs-h1-detail);
     font-weight: 600;
     line-height: var(--lh-title);
     letter-spacing: var(--ls-display);
 
     @media (max-width: bp.$lg) {
-      font-size: 44px;
+      font-size: var(--fs-h1-lg);
     }
 
     @media (max-width: bp.$sm) {
-      font-size: 34px;
+      font-size: var(--fs-h1-sm);
       padding-left: 0;
       padding-right: 0;
     }
@@ -48,7 +48,9 @@
 
   &:hover,
   &:focus-visible {
-    filter: drop-shadow(0 0 10px rgba(200, 162, 74, 0.45));
+    filter: drop-shadow(
+      0 0 10px color-mix(in srgb, var(--tkw-gold) 45%, transparent)
+    );
     outline: none;
   }
 }
@@ -83,7 +85,7 @@
   display: grid;
   width: 100%;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   border: 1px solid var(--tkw-hairline-firm);
   background: var(--tkw-bg-deep);
 }
@@ -131,7 +133,7 @@
   padding: 16px 18px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 
   dt {
     font-family: var(--font-mono);
@@ -198,7 +200,7 @@
   padding: 16px 18px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 
   dt {
     font-family: var(--font-mono);
@@ -248,7 +250,7 @@
   padding-top: 1rem;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 1.4px;
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
 
   a {

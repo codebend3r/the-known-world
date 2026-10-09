@@ -45,15 +45,15 @@
   border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-size: 62px;
+    font-size: var(--fs-h1-detail);
     line-height: var(--lh-title);
 
     @media (max-width: bp.$lg) {
-      font-size: 44px;
+      font-size: var(--fs-h1-lg);
     }
 
     @media (max-width: bp.$sm) {
-      font-size: 34px;
+      font-size: var(--fs-h1-sm);
       padding-left: 0;
       padding-right: 0;
     }
@@ -64,10 +64,10 @@
   .words {
     border-bottom: none;
     padding-bottom: 0;
-    font-size: 23px;
+    font-size: var(--fs-h2);
 
     @media (max-width: bp.$sm) {
-      font-size: 19px;
+      font-size: var(--fs-body);
     }
   }
 }
@@ -110,11 +110,11 @@
     padding: 13px 15px;
     background: var(--tkw-surface);
     border: 1px solid var(--tkw-hairline);
-    border-radius: 6px;
+    border-radius: var(--tkw-radius);
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 15px;
-    line-height: 1.5;
+    font-size: var(--fs-section);
+    line-height: var(--lh-meta);
     color: var(--tkw-ink-body);
     transition: var(--tkw-lift);
 
@@ -132,14 +132,14 @@
 
 .notableName {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: var(--fs-body);
   font-weight: 600;
   color: var(--tkw-ink);
 }
 
 a.notableName {
   text-decoration: none;
-  transition: color 120ms ease;
+  transition: color var(--tkw-dur-fast) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {
@@ -163,7 +163,7 @@ a.notableName {
   padding-top: 1rem;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 1.4px;
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
 
   a {

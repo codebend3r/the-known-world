@@ -42,10 +42,10 @@
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 400;
-  letter-spacing: 0.6px;
+  letter-spacing: var(--ls-tight);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
-  line-height: 1.4;
+  line-height: var(--lh-blurb);
 }
 
 .plate {
@@ -78,7 +78,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  transition: color 0.18s ease;
+  transition: color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

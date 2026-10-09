@@ -12,7 +12,7 @@
   overflow: hidden;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   font-family: var(--font-body);
   color: var(--tkw-ink-body);
 
@@ -24,11 +24,7 @@
 
 .caption {
   padding: 14px 18px;
-  background: linear-gradient(
-    180deg,
-    rgba(200, 162, 74, 0.16),
-    rgba(200, 162, 74, 0.04)
-  );
+  background: var(--tkw-caption-wash);
   border-bottom: 1px solid var(--tkw-hairline-firm);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
@@ -36,7 +32,7 @@
   letter-spacing: var(--ls-caption);
   text-transform: uppercase;
   color: var(--tkw-gold-bright);
-  line-height: 1.35;
+  line-height: var(--lh-compact);
 }
 
 // The house banner: a variable-height plate clipped to the banner silhouette,

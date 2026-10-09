@@ -4,7 +4,7 @@
   height: clamp(500px, 75vh, 900px);
   overflow: hidden;
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   background: var(--tkw-bg-deep);
   touch-action: none;
   user-select: none;
@@ -46,7 +46,7 @@
 
 .label {
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   font-weight: 600;
   fill: var(--tkw-ink-body);
   text-anchor: middle;
@@ -60,7 +60,7 @@
 
 .cross {
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   fill: var(--tkw-gold);
   text-anchor: middle;
   pointer-events: none;
@@ -95,7 +95,7 @@
   padding: 0.4rem;
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   z-index: 1;
 }
 
@@ -111,9 +111,9 @@
   appearance: none;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   padding: 0.25rem 0.45rem;
@@ -121,9 +121,9 @@
   color: var(--tkw-ink-muted);
   cursor: pointer;
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease;
+    background var(--tkw-dur) var(--tkw-ease),
+    border-color var(--tkw-dur) var(--tkw-ease),
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

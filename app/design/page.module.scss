@@ -29,8 +29,8 @@
   max-width: 72ch;
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: var(--fs-meta);
+  line-height: var(--lh-lede);
   color: var(--tkw-ink-muted);
   padding-bottom: 10px;
 
@@ -42,7 +42,7 @@
 
 .inlineCode {
   font-family: var(--font-mono);
-  font-size: 0.86em;
+  font-size: var(--fs-small);
   color: var(--tkw-gold-bright);
 }
 
@@ -90,31 +90,31 @@
 
 .swatchName {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: var(--fs-name);
   font-weight: 600;
   color: var(--tkw-ink);
 }
 
 .swatchHex {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.8px;
+  font-size: var(--fs-tag);
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-gold);
 }
 
 .swatchToken {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.6px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-ink-dim);
 }
 
 .swatchUse {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 
@@ -169,7 +169,7 @@
     background: linear-gradient(
       180deg,
       var(--shield-bg),
-      color-mix(in srgb, var(--shield-bg) 45%, #000)
+      color-mix(in srgb, var(--shield-bg) 45%, var(--tkw-black))
     );
     z-index: -1;
   }
@@ -180,13 +180,13 @@
 
   width: 48px;
   height: 56px;
-  font-size: 24px;
+  font-size: var(--fs-h2);
   isolation: isolate;
 }
 
 .heraldryName {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: var(--fs-lead);
   font-weight: 600;
   color: var(--tkw-ink);
 }
@@ -218,48 +218,48 @@
 
 .faceRole {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1.4px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
 
 .faceDisplay {
   font-family: var(--font-display);
-  font-size: 40px;
+  font-size: var(--fs-display-sm);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
 .faceBody {
   font-family: var(--font-body);
-  font-size: 32px;
+  font-size: var(--fs-h1-entry-sm);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
 .faceMono {
   font-family: var(--font-mono);
-  font-size: 25px;
+  font-size: var(--fs-wordmark);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
 .faceWeights {
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.6px;
+  font-size: var(--fs-tag);
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-gold);
 }
 
 .faceUse {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 13px;
-  line-height: 1.45;
+  font-size: var(--fs-caption);
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 
@@ -269,7 +269,7 @@
   padding: 8px 26px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 
   @media (max-width: bp.$sm) {
     padding: 8px 16px;
@@ -296,7 +296,7 @@
 
 .scaleToken code {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   color: var(--tkw-gold);
 }
@@ -309,8 +309,8 @@
 .scaleSpec {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.6px;
+  font-size: var(--fs-tag);
+  letter-spacing: var(--ls-tight);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
   white-space: nowrap;
@@ -318,17 +318,17 @@
 
 .sampleDisplay {
   font-family: var(--font-display);
-  font-size: 48px;
+  font-size: var(--fs-specimen-display);
   font-weight: 600;
-  line-height: 1;
+  line-height: var(--lh-title);
   color: var(--tkw-ink);
 }
 
 .sampleH1 {
   font-family: var(--font-display);
-  font-size: 38px;
+  font-size: var(--fs-specimen-h1);
   font-weight: 600;
-  line-height: 1;
+  line-height: var(--lh-title);
   color: var(--tkw-ink);
 }
 
@@ -389,12 +389,12 @@
   padding: 22px;
   background: color-mix(in srgb, var(--tkw-bg) 60%, transparent);
   border: 1px dashed var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 }
 
 .demoLabel {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   font-weight: 400;
   letter-spacing: var(--ls-nav);
   text-transform: uppercase;
@@ -429,11 +429,11 @@
   height: 36px;
   border-radius: 50%;
   border: 1.5px solid var(--shield-metal);
-  font-size: 21px;
+  font-size: var(--fs-quote);
 }
 
 .bannerName {
-  font-size: 17px;
+  font-size: var(--fs-lead);
   color: var(--tkw-ink);
 }
 
@@ -441,7 +441,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 10px;
+  font-size: var(--fs-tag);
   text-align: center;
   color: var(--shield-ink);
 }
@@ -480,14 +480,14 @@
 .cardBlurb {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: var(--fs-small);
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 
 .cardEnter {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-gold);
@@ -511,7 +511,7 @@
   isolation: isolate;
   width: 52px;
   height: 60px;
-  font-size: 27px;
+  font-size: var(--fs-specimen-shield);
 }
 
 .rowBody {
@@ -538,8 +538,8 @@
 
 .rowRegion {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
@@ -548,14 +548,14 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 14px;
+  font-size: var(--fs-small);
   color: var(--tkw-gold);
 }
 
 .rowSeat {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 13px;
+  font-size: var(--fs-caption);
   color: var(--tkw-ink-muted);
 }
 
@@ -566,16 +566,12 @@
   overflow: hidden;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 }
 
 .infoboxCaption {
   padding: 12px 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(200, 162, 74, 0.16),
-    rgba(200, 162, 74, 0.04)
-  );
+  background: var(--tkw-caption-wash);
   border-bottom: 1px solid var(--tkw-hairline-firm);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
@@ -599,7 +595,7 @@
 
   dt {
     font-family: var(--font-mono);
-    font-size: 9px;
+    font-size: var(--fs-micro);
     letter-spacing: var(--ls-label);
     text-transform: uppercase;
     color: var(--tkw-ink-dim);
@@ -609,7 +605,7 @@
     margin: 0;
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 15px;
+    font-size: var(--fs-section);
     color: var(--tkw-ink-body);
   }
 }
@@ -622,9 +618,9 @@
 
 .chip {
   padding: 8px 13px;
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   background: var(--tkw-surface);
@@ -640,9 +636,9 @@
 
 .pill {
   padding: 4px 9px;
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   width: max-content;
@@ -678,21 +674,33 @@
   border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
 }
 
+// The glyph is an alpha mask over the gold token rather than a hex inside the
+// SVG. The specimen is a `<span>`, so it can host the pseudo-element the real
+// `<input>` field can't.
+$search-glyph: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23000' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
+
 .searchDemo {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
   width: 100%;
-  padding: 11px 16px 11px 38px;
+  padding: 11px 16px 11px 14px;
   background: var(--tkw-surface);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23c8a24a' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
-  background-repeat: no-repeat;
-  background-position: 14px 50%;
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 15px;
+  font-size: var(--fs-section);
   color: var(--tkw-ink-dim);
+
+  &::before {
+    content: "";
+    height: 16px;
+    background-color: var(--tkw-gold);
+    -webkit-mask: $search-glyph no-repeat;
+    mask: $search-glyph no-repeat;
+  }
 }
 
 .quote {
@@ -707,14 +715,14 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 18px;
-  line-height: 1.55;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lede);
   color: var(--tkw-ink);
 }
 
 .quoteCite {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   font-style: normal;
   letter-spacing: var(--ls-nav);
   text-transform: uppercase;
@@ -756,25 +764,25 @@
 
 .ruleNum {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1.4px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-kicker);
   color: var(--tkw-gold);
   font-variant-numeric: tabular-nums;
 }
 
 .ruleTitle {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: var(--fs-quote);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
 .ruleBody {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: var(--fs-section);
+  line-height: var(--lh-lede);
   color: var(--tkw-ink-muted);
 }
 
@@ -786,10 +794,10 @@
   overflow-x: auto;
   background: var(--tkw-bg-deep);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 1.85;
+  font-size: var(--fs-eyebrow);
+  line-height: var(--lh-code);
   color: var(--tkw-ink-muted);
 
   code {
@@ -798,7 +806,7 @@
 
   @media (max-width: bp.$sm) {
     padding: 16px;
-    font-size: 11px;
+    font-size: var(--fs-label);
   }
 }
 
@@ -850,15 +858,15 @@
 
 .pageKind {
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1.4px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
 
 .pageTitle {
   font-family: var(--font-display);
-  font-size: 23px;
+  font-size: var(--fs-h2);
   font-weight: 600;
   color: var(--tkw-ink);
 }
@@ -866,7 +874,7 @@
 .pageBlurb {
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: var(--fs-small);
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }

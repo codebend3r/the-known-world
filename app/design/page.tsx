@@ -3,6 +3,7 @@ import Link from "next/link";
 import { cx } from "@/lib/cx";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
+import { loadDesignTokens, type DesignTokens } from "@/lib/design-tokens";
 import styles from "@/app/design/page.module.scss";
 
 export const metadata: Metadata = {
@@ -11,150 +12,121 @@ export const metadata: Metadata = {
     "Iron Throne v1: the tokens, type, and components of the Known World, on a forge-black ground with one molten-gold accent.",
 };
 
-// This page is the in-repo source of truth for Iron Throne v1. Every value
-// below mirrors a token declared in `styles/globals.scss`; keep the two in step
-// when a token is added, retuned, or renamed there.
+// The in-repo catalogue of Iron Throne v1. Colour values, type specs, and the
+// token listing are read from `styles/globals.scss` at build time, so a retuned
+// token shows up here without an edit and a renamed one fails the build. Only
+// names, uses, and samples live in this file.
 
 type Swatch = {
   token: string;
-  hex: string;
   name: string;
   use: string;
 };
 
-const CORE_PALETTE: Swatch[] = [
+const CORE_PALETTE = [
   {
     name: "Forge Black",
-    hex: "#14100E",
     token: "--tkw-bg",
     use: "Page ground. Every screen starts here.",
   },
   {
     name: "Pitch",
-    hex: "#0C0A08",
     token: "--tkw-bg-deep",
     use: "Code blocks, map wells, page edges.",
   },
   {
     name: "Ember Surface",
-    hex: "rgba(29,24,19,.86)",
     token: "--tkw-surface",
     use: "Cards, infoboxes, chips, search fields.",
   },
   {
     name: "Molten Gold",
-    hex: "#C8A24A",
     token: "--tkw-gold",
     use: "The one accent: rules, labels, hairlines, links.",
   },
   {
     name: "Bright Gold",
-    hex: "#E6C15C",
     token: "--tkw-gold-bright",
     use: "Wordmark, active nav, hover state.",
   },
   {
     name: "Parchment",
-    hex: "#F4ECD6",
     token: "--tkw-ink",
     use: "Titles and primary text on dark.",
   },
   {
     name: "Vellum",
-    hex: "#DED6C4",
     token: "--tkw-ink-body",
     use: "Article body copy.",
   },
   {
     name: "Ash",
-    hex: "#9C937F",
     token: "--tkw-ink-muted",
     use: "Blurbs, secondary values, inactive nav.",
   },
-];
+] as const satisfies readonly Swatch[];
 
 type Heraldry = {
   name: string;
   initial: string;
   token: string;
-  metal: string;
-  ink: string;
 };
 
 // House colour is data, not decoration: it identifies a banner, shield, swatch,
-// or map pin and never themes a page.
-const HOUSE_PALETTE: Heraldry[] = [
+// or map pin and never themes a page. Each `token` has `-metal` and `-ink`
+// siblings for the shield rim and charge.
+const HOUSE_PALETTE = [
   {
     name: "Stark",
     initial: "S",
     token: "--house-stark",
-    metal: "rgba(255,255,255,.7)",
-    ink: "#fff",
   },
   {
     name: "Targaryen",
     initial: "T",
     token: "--house-targaryen",
-    metal: "#d13a3a",
-    ink: "#e05a5a",
   },
   {
     name: "Lannister",
     initial: "L",
     token: "--house-lannister",
-    metal: "#e6c15c",
-    ink: "#f0d79a",
   },
   {
     name: "Baratheon",
     initial: "B",
     token: "--house-baratheon",
-    metal: "#d4a017",
-    ink: "#e0b53a",
   },
   {
     name: "Tully",
     initial: "T",
     token: "--house-tully",
-    metal: "#e59a8f",
-    ink: "#fff",
   },
   {
     name: "Tyrell",
     initial: "T",
     token: "--house-tyrell",
-    metal: "#e6c15c",
-    ink: "#f0d79a",
   },
   {
     name: "Arryn",
     initial: "A",
     token: "--house-arryn",
-    metal: "#dbe6f0",
-    ink: "#fff",
   },
   {
     name: "Martell",
     initial: "M",
     token: "--house-martell",
-    metal: "#ffd79a",
-    ink: "#ffe0b0",
   },
   {
     name: "Greyjoy",
     initial: "G",
     token: "--house-greyjoy",
-    metal: "#c8a24a",
-    ink: "#e6c15c",
   },
   {
     name: "Bolton",
     initial: "B",
     token: "--house-bolton",
-    metal: "#e8d5c0",
-    ink: "#f2e3d2",
   },
-];
+] as const satisfies readonly Heraldry[];
 
 type Face = {
   role: string;
@@ -164,7 +136,7 @@ type Face = {
   className: string;
 };
 
-const FACES: Face[] = [
+const FACES = [
   {
     role: "Display",
     family: "Cormorant Garamond",
@@ -186,73 +158,107 @@ const FACES: Face[] = [
     use: "Eyebrows, nav, years, counts, status pills, plate numbers. Always uppercase, always letter-spaced.",
     className: styles.faceMono,
   },
-];
+] as const satisfies readonly Face[];
 
 type ScaleRow = {
-  token: string;
+  token: `--fs-${string}`;
   sample: string;
-  spec: string;
+  face: string;
+  lineHeight: `--lh-${string}` | null;
+  tracking: `--ls-${string}` | null;
   className: string;
 };
 
-const SCALE: ScaleRow[] = [
+const SCALE = [
   {
     token: "--fs-display",
     sample: "The Known World",
-    spec: "Cormorant 600 · 98px / .98",
+    face: "Cormorant 600",
+    lineHeight: "--lh-display",
+    tracking: null,
     className: styles.sampleDisplay,
   },
   {
     token: "--fs-h1",
     sample: "The Roll of Houses",
-    spec: "Cormorant 600 · 68px / 1",
+    face: "Cormorant 600",
+    lineHeight: "--lh-title",
+    tracking: null,
     className: styles.sampleH1,
   },
   {
     token: "--fs-h2",
     sample: "House Stark of Winterfell",
-    spec: "Cormorant 600 · 24px",
+    face: "Cormorant 600",
+    lineHeight: null,
+    tracking: null,
     className: styles.sampleH2,
   },
   {
     token: "--fs-section",
     sample: "▚ HISTORY",
-    spec: "JetBrains 500 · 15px · 2.6px",
+    face: "JetBrains 500",
+    lineHeight: null,
+    tracking: "--ls-section",
     className: styles.sampleSection,
   },
   {
     token: "--fs-body",
     sample: "House Stark is one of the Great Houses of Westeros.",
-    spec: "Spectral 300 · 19px / 1.75",
+    face: "Spectral 300",
+    lineHeight: "--lh-body",
+    tracking: null,
     className: styles.sampleBody,
   },
   {
     token: "--fs-quote",
     sample: "“Winter Is Coming”",
-    spec: "Spectral 300 italic · 21px",
+    face: "Spectral 300 italic",
+    lineHeight: null,
+    tracking: null,
     className: styles.sampleQuote,
   },
   {
     token: "--fs-label",
     sample: "SEAT · REGION · FOUNDED",
-    spec: "JetBrains 400 · 9 to 12px · 1.2px",
+    face: "JetBrains 400",
+    lineHeight: null,
+    tracking: "--ls-label",
     className: styles.sampleLabel,
   },
-];
+] as const satisfies readonly ScaleRow[];
+
+function scaleSpec({
+  row,
+  tokens,
+}: {
+  row: ScaleRow;
+  tokens: DesignTokens;
+}): string {
+  const size = tokens.value(row.token);
+  const sizing = row.lineHeight
+    ? `${size} / ${tokens.value(row.lineHeight)}`
+    : size;
+  return [
+    row.face,
+    sizing,
+    ...(row.tracking ? [tokens.value(row.tracking)] : []),
+  ].join(" · ");
+}
 
 type Status = { label: string; className: string };
 
-const STATUSES: Status[] = [
+const STATUSES = [
   { label: "Extant", className: styles.pillExtant },
   { label: "Deposed", className: styles.pillDeposed },
   { label: "Contested", className: styles.pillContested },
   { label: "Attainted", className: styles.pillAttainted },
   { label: "Extinct", className: styles.pillExtinct },
-];
+] as const satisfies readonly Status[];
 
 type Rule = { num: string; title: string; body: string };
 
-const RULES: Rule[] = [
+const RULES = [
   {
     num: "01",
     title: "One gold, many house colours",
@@ -283,63 +289,11 @@ const RULES: Rule[] = [
     title: "Shields are the motif",
     body: "The shield clip-path repeats at every scale, from a 14px swatch to a 154px hero banner.",
   },
-];
-
-const TOKEN_CSS = `:root {
-  /* ground & surface */
-  --tkw-bg:            #14100e;
-  --tkw-bg-deep:       #0c0a08;
-  --tkw-surface:       rgba(29, 24, 19, 0.86);
-  --tkw-surface-solid: #1d1813;
-
-  /* accent metal */
-  --tkw-gold:          #c8a24a;
-  --tkw-gold-bright:   #e6c15c;
-  --tkw-hairline:      rgba(200, 162, 74, 0.20);
-  --tkw-hairline-firm: rgba(200, 162, 74, 0.28);
-  --tkw-glow:          0 0 0 1px rgba(200,162,74,.35), 0 16px 34px -18px rgba(200,162,74,.55);
-
-  /* type ramp */
-  --tkw-ink:           #f4ecd6;
-  --tkw-ink-body:      #ded6c4;
-  --tkw-ink-muted:     #9c937f;
-  --tkw-ink-dim:       #6b6350;
-
-  /* status */
-  --tkw-extant:        #8fbf8a;
-  --tkw-deposed:       #e0904f;
-  --tkw-contested:     #e6c15c;
-  --tkw-attainted:     #b39ce0;
-  --tkw-extinct:       #d15c5c;
-
-  /* faces */
-  --font-display:      var(--font-cormorant-garamond), Georgia, serif;
-  --font-body:         var(--font-spectral), Georgia, serif;
-  --font-mono:         var(--font-jetbrains-mono), ui-monospace, monospace;
-
-  /* geometry */
-  --tkw-measure:       1240px;
-  --tkw-gutter:        56px;
-  --tkw-radius:        7px;
-  --tkw-shield:        polygon(0 0, 100% 0, 100% 74%, 50% 100%, 0 74%);
-  --tkw-banner:        polygon(0 0, 100% 0, 100% calc(100% - 16px), 50% 100%, 0 calc(100% - 16px));
-
-  /* house identity */
-  --house-stark:       #6d747c;
-  --house-targaryen:   #3a0d0d;
-  --house-lannister:   #8a1a28;
-  --house-baratheon:   #2a2620;
-  --house-tully:       #356197;
-  --house-tyrell:      #3f7a3a;
-  --house-arryn:       #4d7caa;
-  --house-martell:     #c8622a;
-  --house-greyjoy:     #2f4a44;
-  --house-bolton:      #7a2230;
-}`;
+] as const satisfies readonly Rule[];
 
 type PageEntry = { href: string; kind: string; title: string; blurb: string };
 
-const PAGES: PageEntry[] = [
+const PAGES = [
   {
     href: "/",
     kind: "Home",
@@ -394,9 +348,11 @@ const PAGES: PageEntry[] = [
     title: "Named Blades",
     blurb: "Search over a single-column register.",
   },
-];
+] as const satisfies readonly PageEntry[];
 
-export default function DesignPage() {
+export default async function DesignPage() {
+  const tokens = await loadDesignTokens();
+
   return (
     <PlateLayout>
       <PageHeading
@@ -421,7 +377,9 @@ export default function DesignPage() {
               />
               <span className={styles.swatchBody}>
                 <span className={styles.swatchName}>{swatch.name}</span>
-                <span className={styles.swatchHex}>{swatch.hex}</span>
+                <span className={styles.swatchHex}>
+                  {tokens.value(swatch.token)}
+                </span>
                 <code className={styles.swatchToken}>{swatch.token}</code>
                 <span className={styles.swatchUse}>{swatch.use}</span>
               </span>
@@ -444,8 +402,8 @@ export default function DesignPage() {
                 className={styles.shield}
                 style={{
                   "--shield-bg": `var(${house.token})`,
-                  "--shield-metal": house.metal,
-                  "--shield-ink": house.ink,
+                  "--shield-metal": `var(${house.token}-metal)`,
+                  "--shield-ink": `var(${house.token}-ink)`,
                 }}
                 aria-hidden="true"
               >
@@ -483,7 +441,7 @@ export default function DesignPage() {
               <dd className={styles.scaleSample}>
                 <span className={row.className}>{row.sample}</span>
               </dd>
-              <dd className={styles.scaleSpec}>{row.spec}</dd>
+              <dd className={styles.scaleSpec}>{scaleSpec({ row, tokens })}</dd>
             </div>
           ))}
         </dl>
@@ -506,8 +464,8 @@ export default function DesignPage() {
                 className={styles.banner}
                 style={{
                   "--shield-bg": "var(--house-stark)",
-                  "--shield-metal": "rgba(255,255,255,.75)",
-                  "--shield-ink": "#fff",
+                  "--shield-metal": "var(--house-stark-metal)",
+                  "--shield-ink": "var(--house-stark-ink)",
                 }}
               >
                 <span className={styles.bannerMark}>S</span>
@@ -518,8 +476,8 @@ export default function DesignPage() {
                 className={styles.banner}
                 style={{
                   "--shield-bg": "var(--house-lannister)",
-                  "--shield-metal": "#e6c15c",
-                  "--shield-ink": "#f0d79a",
+                  "--shield-metal": "var(--house-lannister-metal)",
+                  "--shield-ink": "var(--house-lannister-ink)",
                 }}
               >
                 <span className={styles.bannerMark}>L</span>
@@ -567,8 +525,8 @@ export default function DesignPage() {
                   className={styles.rowShield}
                   style={{
                     "--shield-bg": "var(--house-tully)",
-                    "--shield-metal": "#e59a8f",
-                    "--shield-ink": "#e59a8f",
+                    "--shield-metal": "var(--house-tully-metal)",
+                    "--shield-ink": "var(--house-tully-metal)",
                   }}
                 >
                   T
@@ -679,7 +637,7 @@ export default function DesignPage() {
           hard-code a hex in a module.
         </p>
         <pre className={styles.tokens}>
-          <code>{TOKEN_CSS}</code>
+          <code>{tokens.source}</code>
         </pre>
       </section>
 

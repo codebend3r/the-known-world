@@ -21,8 +21,8 @@
   padding: 0.35rem;
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 5px;
-  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.9);
+  border-radius: var(--tkw-radius-md);
+  box-shadow: var(--tkw-drop);
 }
 
 .zoomButton {
@@ -34,15 +34,15 @@
   padding: 0;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   color: var(--tkw-ink-muted);
   font-family: var(--font-mono);
-  font-size: 1.1rem;
-  line-height: 1;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-title);
   cursor: pointer;
   transition:
     var(--tkw-lift),
-    color 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
@@ -65,7 +65,7 @@
 .zoomLevel {
   min-width: 2.25rem;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);

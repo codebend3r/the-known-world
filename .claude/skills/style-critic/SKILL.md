@@ -107,13 +107,15 @@ anchor and brace keep them out.)
 ```bash
 grep -rnE "#[0-9a-fA-F]{3,8}\b|rgba?\(" components app --include="*.scss" | grep -v "var(--"
 grep -rn "font-size:" components app --include="*.scss" | grep -v "var(--fs"
-grep -rn "border-radius:" components app --include="*.scss" | grep -v "var(--tkw-radius)"
-grep -rnE "line-height: [0-9]|letter-spacing: [0-9.]" components app --include="*.scss"
+grep -rn "border-radius:" components app --include="*.scss" | grep -vE "var\(--tkw-radius(-[a-z]+)?\)|: (0|50%);"
+grep -rnE "line-height: [0-9]|letter-spacing: [0-9.]" components app --include="*.scss" | grep -v "line-height: 0;"
 ```
 
 Expected: empty. The token families are `--tkw-*`, `--font-*`, `--fs-*`,
-`--lh-*`, `--ls-*` in `styles/globals.scss`. If no token fits, extend the scale
-in `globals.scss` — never inline the value. **Exempt until a spacing scale
+`--lh-*`, `--ls-*` in `styles/globals.scss`; radius is the `--tkw-radius-*`
+scale around `--tkw-radius`. `0` resets and `50%` circles are not values on a
+scale. If no token fits, extend the scale in `globals.scss` — never inline the
+value. **Exempt until a spacing scale
 lands**: `gap` and `padding` values. Judgment call to surface rather than
 auto-flag: `#000`/`#fff` inside `mask-image` gradients are alpha stops, not
 visual color — report them, let the human rule.

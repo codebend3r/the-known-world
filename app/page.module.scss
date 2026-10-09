@@ -18,7 +18,7 @@
 .eyebrow {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-eyebrow);
   font-weight: 400;
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
@@ -31,15 +31,15 @@
   font-size: var(--fs-display);
   font-weight: 600;
   line-height: var(--lh-display);
-  letter-spacing: 0.5px;
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-ink);
   background-image: linear-gradient(
     100deg,
-    #cbbfa4 0%,
-    #e4dcc6 30%,
-    #fff 46%,
-    #e4dcc6 62%,
-    #cbbfa4 100%
+    var(--tkw-silver) 0%,
+    var(--tkw-silver-bright) 30%,
+    var(--tkw-white) 46%,
+    var(--tkw-silver-bright) 62%,
+    var(--tkw-silver) 100%
   );
   background-size: 260% 100%;
   background-position: 100% 0;
@@ -47,18 +47,18 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: heroSheathe 6.5s linear infinite;
+  animation: heroSheathe var(--tkw-sheathe);
 
   @media (max-width: bp.$xl) {
-    font-size: 76px;
+    font-size: var(--fs-display-xl);
   }
 
   @media (max-width: bp.$lg) {
-    font-size: 54px;
+    font-size: var(--fs-display-lg);
   }
 
   @media (max-width: bp.$sm) {
-    font-size: 40px;
+    font-size: var(--fs-display-sm);
     padding-left: 0;
     padding-right: 0;
   }
@@ -89,7 +89,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-body);
-  line-height: 1.6;
+  line-height: var(--lh-lede);
   color: var(--tkw-ink-muted);
 }
 
@@ -108,7 +108,7 @@
 .indexLabel {
   display: block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-eyebrow);
   font-weight: 500;
   letter-spacing: var(--ls-caption);
   text-transform: uppercase;
@@ -124,7 +124,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
   font-variant-numeric: tabular-nums;
