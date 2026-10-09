@@ -30,7 +30,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-meta);
-  line-height: 1.6;
+  line-height: var(--lh-lede);
   color: var(--tkw-ink-muted);
   padding-bottom: 10px;
 
@@ -98,7 +98,7 @@
 .swatchHex {
   font-family: var(--font-mono);
   font-size: var(--fs-tag);
-  letter-spacing: 0.8px;
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-gold);
 }
@@ -106,7 +106,7 @@
 .swatchToken {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 0.6px;
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-ink-dim);
 }
 
@@ -114,7 +114,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-caption);
-  line-height: 1.45;
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 
@@ -219,7 +219,7 @@
 .faceRole {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1.4px;
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
@@ -228,7 +228,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-display-sm);
   font-weight: 600;
-  line-height: 1.1;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
@@ -236,7 +236,7 @@
   font-family: var(--font-body);
   font-size: var(--fs-h1-entry-sm);
   font-weight: 400;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
@@ -244,14 +244,14 @@
   font-family: var(--font-mono);
   font-size: var(--fs-wordmark);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
 .faceWeights {
   font-family: var(--font-mono);
   font-size: var(--fs-tag);
-  letter-spacing: 0.6px;
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-gold);
 }
 
@@ -259,7 +259,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-caption);
-  line-height: 1.45;
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 
@@ -310,7 +310,7 @@
   margin: 0;
   font-family: var(--font-mono);
   font-size: var(--fs-tag);
-  letter-spacing: 0.6px;
+  letter-spacing: var(--ls-tight);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
   white-space: nowrap;
@@ -320,7 +320,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-specimen-display);
   font-weight: 600;
-  line-height: 1;
+  line-height: var(--lh-title);
   color: var(--tkw-ink);
 }
 
@@ -328,7 +328,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-specimen-h1);
   font-weight: 600;
-  line-height: 1;
+  line-height: var(--lh-title);
   color: var(--tkw-ink);
 }
 
@@ -481,7 +481,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-small);
-  line-height: 1.45;
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 
@@ -539,7 +539,7 @@
 .rowRegion {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
@@ -708,7 +708,7 @@
   font-weight: 300;
   font-style: italic;
   font-size: var(--fs-lead);
-  line-height: 1.55;
+  line-height: var(--lh-lede);
   color: var(--tkw-ink);
 }
 
@@ -757,7 +757,7 @@
 .ruleNum {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1.4px;
+  letter-spacing: var(--ls-kicker);
   color: var(--tkw-gold);
   font-variant-numeric: tabular-nums;
 }
@@ -766,7 +766,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-quote);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
@@ -774,7 +774,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-section);
-  line-height: 1.55;
+  line-height: var(--lh-lede);
   color: var(--tkw-ink-muted);
 }
 
@@ -789,7 +789,7 @@
   border-radius: var(--tkw-radius-lg);
   font-family: var(--font-mono);
   font-size: var(--fs-eyebrow);
-  line-height: 1.85;
+  line-height: var(--lh-code);
   color: var(--tkw-ink-muted);
 
   code {
@@ -851,7 +851,7 @@
 .pageKind {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1.4px;
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
@@ -867,6 +867,6 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-small);
-  line-height: 1.45;
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }

@@ -97,7 +97,7 @@
   grid-area: when;
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   color: var(--tkw-ink-dim);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;

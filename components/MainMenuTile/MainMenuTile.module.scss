@@ -57,7 +57,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
@@ -65,7 +65,7 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-small);
-  line-height: 1.45;
+  line-height: var(--lh-blurb);
   color: var(--tkw-ink-muted);
 }
 

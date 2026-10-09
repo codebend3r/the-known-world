@@ -36,7 +36,7 @@
   letter-spacing: var(--ls-caption);
   text-transform: uppercase;
   color: var(--tkw-gold-bright);
-  line-height: 1.35;
+  line-height: var(--lh-compact);
 }
 
 // The house banner: a variable-height plate clipped to the banner silhouette,

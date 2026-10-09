@@ -60,7 +60,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-name);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
   min-width: 0;
 }
@@ -80,7 +80,7 @@
   grid-area: when;
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 0.5px;
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-gold);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;

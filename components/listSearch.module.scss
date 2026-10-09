@@ -64,7 +64,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
   font-variant-numeric: tabular-nums;

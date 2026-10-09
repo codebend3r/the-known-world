@@ -150,7 +150,7 @@ a.name {
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
   color: var(--tkw-ink-dim);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   font-variant-numeric: tabular-nums;
 }
 
