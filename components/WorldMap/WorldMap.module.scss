@@ -193,7 +193,12 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    animation: fadeIn 0.18s ease both;
+    // The placement selector swaps in `popBelow` at a higher specificity than
+    // `.popover` alone, so the fade has to match it to win for every placement.
+    &,
+    [data-placement] & {
+      animation: fadeIn 0.18s ease both;
+    }
 
     &::after {
       display: none;

@@ -28,17 +28,6 @@
     "clean": "rm -rf .next",
     "system-check": "bun run --sequential clean typecheck lint:ts lint:scss lint:actions spellcheck test build"
   },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,mjs,cjs}": [
-      "oxlint --fix",
-      "oxfmt"
-    ],
-    "*.{css,scss}": [
-      "gale --fix",
-      "oxfmt"
-    ],
-    "*.{json,jsonc,json5,md,mdx,yml,yaml,toml,html}": "oxfmt"
-  },
   "dependencies": {
     "next": "16.3.5",
     "nuqs": "2.10.1",

@@ -168,7 +168,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
       >
         <PortraitVariants variants={portraits} name={fm.name} />
       </div>
-      <div className={styles.heading}>
+      <header className={styles.heading}>
         {primaryHouse && fm["primary-house"] ? (
           <Link
             href={`/houses/${fm["primary-house"]}/`}
@@ -200,7 +200,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
             <p className={styles.alias}>{fm.aliases[0]}</p>
           )}
         </hgroup>
-      </div>
+      </header>
 
       <div className={styles.search}>
         <CharacterSearchInput hasAutocomplete />
