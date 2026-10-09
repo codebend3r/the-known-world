@@ -15,7 +15,7 @@
   border: 1px solid var(--tkw-hairline-firm);
   border-radius: 4px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-gold);
@@ -89,14 +89,14 @@
 .name {
   grid-area: name;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: var(--fs-meta);
   font-weight: 600;
 }
 
 .linkWhen {
   grid-area: when;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 1px;
   color: var(--tkw-ink-dim);
   white-space: nowrap;

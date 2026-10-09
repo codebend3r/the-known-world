@@ -356,7 +356,7 @@
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   font-variant-numeric: tabular-nums;
   pointer-events: none;
@@ -446,7 +446,7 @@
 
 .hint {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   text-align: center;

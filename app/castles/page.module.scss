@@ -20,7 +20,7 @@
   align-items: center;
   gap: 16px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: var(--fs-label);
   font-weight: 500;
   letter-spacing: var(--ls-caption);
   text-transform: uppercase;
@@ -74,7 +74,7 @@
 
 .name {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: var(--fs-name);
   font-weight: 600;
   color: var(--tkw-ink);
   min-width: 0;
@@ -82,7 +82,7 @@
 
 .seat {
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--tkw-ink-dim);

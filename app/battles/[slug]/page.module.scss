@@ -34,15 +34,15 @@
   border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-size: 58px;
+    font-size: var(--fs-h1-entry);
     line-height: var(--lh-title);
 
     @media (max-width: bp.$lg) {
-      font-size: 42px;
+      font-size: var(--fs-h1-entry-lg);
     }
 
     @media (max-width: bp.$sm) {
-      font-size: 32px;
+      font-size: var(--fs-h1-entry-sm);
       padding-left: 0;
       padding-right: 0;
     }

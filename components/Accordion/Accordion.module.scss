@@ -74,7 +74,7 @@
 
 .count {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   font-weight: 400;
   letter-spacing: var(--ls-label);
   color: var(--tkw-ink-dim);

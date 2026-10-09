@@ -37,7 +37,7 @@
   border-radius: 4px;
   color: var(--tkw-ink-muted);
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: var(--fs-lead);
   line-height: 1;
   cursor: pointer;
   transition:
@@ -65,7 +65,7 @@
 .zoomLevel {
   min-width: 2.25rem;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);

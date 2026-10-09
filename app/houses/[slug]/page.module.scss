@@ -45,15 +45,15 @@
   border-bottom: 1px solid var(--tkw-hairline);
 
   h1 {
-    font-size: 62px;
+    font-size: var(--fs-h1-detail);
     line-height: var(--lh-title);
 
     @media (max-width: bp.$lg) {
-      font-size: 44px;
+      font-size: var(--fs-h1-lg);
     }
 
     @media (max-width: bp.$sm) {
-      font-size: 34px;
+      font-size: var(--fs-h1-sm);
       padding-left: 0;
       padding-right: 0;
     }
@@ -64,10 +64,10 @@
   .words {
     border-bottom: none;
     padding-bottom: 0;
-    font-size: 23px;
+    font-size: var(--fs-h2);
 
     @media (max-width: bp.$sm) {
-      font-size: 19px;
+      font-size: var(--fs-body);
     }
   }
 }
@@ -113,7 +113,7 @@
     border-radius: 6px;
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 15px;
+    font-size: var(--fs-section);
     line-height: 1.5;
     color: var(--tkw-ink-body);
     transition: var(--tkw-lift);
@@ -132,7 +132,7 @@
 
 .notableName {
   font-family: var(--font-display);
-  font-size: 19px;
+  font-size: var(--fs-body);
   font-weight: 600;
   color: var(--tkw-ink);
 }

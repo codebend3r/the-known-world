@@ -18,7 +18,7 @@
 .eyebrow {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-eyebrow);
   font-weight: 400;
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
@@ -50,15 +50,15 @@
   animation: heroSheathe 6.5s linear infinite;
 
   @media (max-width: bp.$xl) {
-    font-size: 76px;
+    font-size: var(--fs-display-xl);
   }
 
   @media (max-width: bp.$lg) {
-    font-size: 54px;
+    font-size: var(--fs-display-lg);
   }
 
   @media (max-width: bp.$sm) {
-    font-size: 40px;
+    font-size: var(--fs-display-sm);
     padding-left: 0;
     padding-right: 0;
   }
@@ -108,7 +108,7 @@
 .indexLabel {
   display: block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-eyebrow);
   font-weight: 500;
   letter-spacing: var(--ls-caption);
   text-transform: uppercase;

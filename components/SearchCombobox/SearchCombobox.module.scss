@@ -55,10 +55,10 @@
   color: var(--tkw-ink-body);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: var(--fs-lead);
 
   @media (max-width: bp.$md) {
-    font-size: 1.25rem;
+    font-size: var(--fs-quote);
   }
 }
 
@@ -76,6 +76,6 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 0.8rem;
+  font-size: var(--fs-caption);
   color: var(--tkw-ink-muted);
 }
