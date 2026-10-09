@@ -87,7 +87,6 @@ function clampScale(scale: number): number {
 }
 
 type ScreenToViewBox = {
-  /** Convert screen coordinates to viewBox coordinates. */
   point: (client: { clientX: number; clientY: number }) => {
     x: number;
     y: number;
