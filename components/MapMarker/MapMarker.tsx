@@ -113,5 +113,9 @@ function Glyph({
           points={`${centreX},${centreY - 7} ${centreX + 7},${centreY} ${centreX},${centreY + 7} ${centreX - 7},${centreY}`}
         />
       );
+    default: {
+      const unhandled: never = type;
+      throw new Error(`No map glyph for layer ${String(unhandled)}`);
+    }
   }
 }
