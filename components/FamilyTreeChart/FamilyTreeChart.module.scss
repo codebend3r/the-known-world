@@ -4,7 +4,7 @@
   height: clamp(500px, 75vh, 900px);
   overflow: hidden;
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   background: var(--tkw-bg-deep);
   touch-action: none;
   user-select: none;
@@ -95,7 +95,7 @@
   padding: 0.4rem;
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   z-index: 1;
 }
 
@@ -111,7 +111,7 @@
   appearance: none;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);

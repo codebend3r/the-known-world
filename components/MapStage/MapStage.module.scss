@@ -6,7 +6,7 @@
   justify-self: center;
   aspect-ratio: 4 / 7;
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   background: var(--tkw-bg-deep);
   position: relative;
   overflow: hidden;

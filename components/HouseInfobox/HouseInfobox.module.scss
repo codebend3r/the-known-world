@@ -12,7 +12,7 @@
   overflow: hidden;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   font-family: var(--font-body);
   color: var(--tkw-ink-body);
 

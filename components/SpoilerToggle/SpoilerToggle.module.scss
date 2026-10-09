@@ -58,7 +58,7 @@
   height: 18px;
   padding: 2px;
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 9px;
+  border-radius: var(--tkw-radius-pill);
   background: var(--tkw-surface);
   transition:
     background 0.18s ease,
