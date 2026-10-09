@@ -14,7 +14,7 @@ export const LAYOUT_CONSTANTS = {
 
 const { DOT_R, H_SPACING, V_SPACING, SPOUSE_GAP, PADDING } = LAYOUT_CONSTANTS;
 
-export interface LayoutPerson {
+export type LayoutPerson = {
   slug: string;
   characterSlug: string | null;
   name: string;
@@ -29,27 +29,27 @@ export interface LayoutPerson {
   x: number;
   y: number;
   isSpouse: boolean;
-}
+};
 
-export interface LayoutSpouseEdge {
+export type LayoutSpouseEdge = {
   personSlug: string;
   spouseSlug: string;
   midX: number;
   midY: number;
-}
+};
 
-export interface LayoutChildEdge {
+export type LayoutChildEdge = {
   from: { x: number; y: number };
   to: { x: number; y: number };
   busY: number;
-}
+};
 
-export interface LaidOutChart {
+export type LaidOutChart = {
   persons: LayoutPerson[];
   spouseEdges: LayoutSpouseEdge[];
   childEdges: LayoutChildEdge[];
   bounds: { width: number; height: number };
-}
+};
 
 export function childPath({ from, to, busY }: LayoutChildEdge): string {
   return `M ${from.x} ${from.y} V ${busY} H ${to.x} V ${to.y}`;
@@ -159,11 +159,11 @@ function placeSpouse(
   };
 }
 
-interface PlacementCtx {
+type PlacementCtx = {
   persons: LayoutPerson[];
   spouseEdges: LayoutSpouseEdge[];
   childEdges: LayoutChildEdge[];
-}
+};
 
 function placeSubtree(
   n: EnrichedTreeNode,

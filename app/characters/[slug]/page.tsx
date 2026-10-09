@@ -11,6 +11,7 @@ import {
   loadCharacter,
   renderMarkdown,
 } from "@/lib/content";
+import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { ageAtDeath } from "@/lib/age";
 import { findPortraitVariants } from "@/lib/portrait-variants";
@@ -47,12 +48,8 @@ export async function generateStaticParams() {
     .map((c) => ({ slug: c.frontmatter.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const character = await loadCharacter(slug).catch(() => null);
   if (!character) return { title: "Not found" };
   return {
@@ -81,12 +78,8 @@ function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
   );
 }
 
-export default async function CharacterPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function CharacterPage({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const character = await loadCharacter(slug).catch(() => null);
   if (!character) notFound();
 

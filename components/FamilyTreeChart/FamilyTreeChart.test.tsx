@@ -3,6 +3,7 @@ import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
+import { expectElement } from "@/test/dom";
 
 function mockMatchMedia(matches: boolean) {
   stubGlobal({
@@ -349,7 +350,10 @@ describe("FamilyTreeChart — pan", () => {
     const chart = chartWith([person({ slug: "a", x: 100, y: 100 })]);
     const { container } = render(<FamilyTreeChart chart={chart} />);
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const before = inner.getAttribute("transform") ?? "";
 
     fireEvent.pointerDown(svg, { pointerId: 1, clientX: 50, clientY: 50 });
@@ -371,7 +375,10 @@ describe("FamilyTreeChart — wheel zoom", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const initial = inner.getAttribute("transform") ?? "";
     fireEvent.wheel(svg, {
       deltaY: -500,
@@ -395,7 +402,10 @@ describe("FamilyTreeChart — wheel zoom", () => {
     };
     const wheelOnly = render(<FamilyTreeChart chart={chart} />);
     const svg1 = wheelOnly.container.querySelector("svg")!;
-    const inner1 = svg1.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner1 = expectElement({
+      element: svg1.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     fireEvent.wheel(svg1, { deltaY: -10, clientX: 200, clientY: 150 });
     const wheelScale = parseFloat(
       inner1.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/)![1],
@@ -404,7 +414,10 @@ describe("FamilyTreeChart — wheel zoom", () => {
 
     const pinch = render(<FamilyTreeChart chart={chart} />);
     const svg2 = pinch.container.querySelector("svg")!;
-    const inner2 = svg2.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner2 = expectElement({
+      element: svg2.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     fireEvent.wheel(svg2, {
       deltaY: -10,
       clientX: 200,
@@ -429,7 +442,10 @@ describe("FamilyTreeChart — pinch zoom", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
 
     fireEvent.pointerDown(svg, {
       pointerId: 1,
@@ -491,7 +507,10 @@ describe("FamilyTreeChart — control panel", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     fireEvent.click(screen.getByRole("button", { name: /200%/ }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const transform = inner.getAttribute("transform") ?? "";
     expect(transform).toMatch(/scale\(4(\.0+)?\)/);
   });
@@ -506,7 +525,10 @@ describe("FamilyTreeChart — control panel", () => {
     const { container } = render(<FamilyTreeChart chart={chart} />);
     fireEvent.click(screen.getByRole("button", { name: /200%/ }));
     fireEvent.click(screen.getByRole("button", { name: /100%/ }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     expect(inner.getAttribute("transform")).toMatch(/scale\(2(\.0+)?\)/);
     expect(
       screen.getByRole("button", { name: /100%/ }).getAttribute("aria-pressed"),
@@ -522,7 +544,10 @@ describe("FamilyTreeChart — control panel", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     fireEvent.click(screen.getByRole("button", { name: /zoom in/i }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
     expect(parseFloat(m![1])).toBeCloseTo(2.5, 2);
   });
@@ -537,7 +562,10 @@ describe("FamilyTreeChart — control panel", () => {
     const { container } = render(<FamilyTreeChart chart={chart} />);
     fireEvent.click(screen.getByRole("button", { name: /400%/ }));
     fireEvent.click(screen.getByRole("button", { name: /reset/i }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     expect(inner.getAttribute("transform")).toMatch(/scale\(2(\.0+)?\)/);
   });
 
@@ -550,7 +578,10 @@ describe("FamilyTreeChart — control panel", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     fireEvent.click(screen.getByRole("button", { name: /400%/ }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
     expect(parseFloat(m![1])).toBe(8);
   });
@@ -564,7 +595,10 @@ describe("FamilyTreeChart — control panel", () => {
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
     fireEvent.click(screen.getByRole("button", { name: /800%/ }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
     expect(parseFloat(m![1])).toBe(16);
   });
@@ -586,7 +620,10 @@ describe("FamilyTreeChart — mobile initial scale", () => {
     const { container } = await act(async () =>
       render(<FamilyTreeChart chart={chart} />),
     );
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
     expect(parseFloat(m![1])).toBe(4);
   });
@@ -604,7 +641,10 @@ describe("FamilyTreeChart — mobile initial scale", () => {
     );
     fireEvent.click(screen.getByRole("button", { name: /800%/ }));
     fireEvent.click(screen.getByRole("button", { name: /reset/i }));
-    const inner = container.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: container.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const m = inner.getAttribute("transform")!.match(/scale\(([0-9.]+)\)/);
     expect(parseFloat(m![1])).toBe(4);
   });
@@ -687,7 +727,10 @@ describe("FamilyTreeChart — click vs drag", () => {
     const chart = chartWith([person({ slug: "a", x: 100, y: 100 })]);
     const { container } = render(<FamilyTreeChart chart={chart} />);
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const before = inner.getAttribute("transform") ?? "";
     fireEvent.pointerDown(svg, { pointerId: 1, clientX: 50, clientY: 50 });
     fireEvent.pointerMove(svg, { pointerId: 1, clientX: 51, clientY: 51 });
@@ -699,7 +742,10 @@ describe("FamilyTreeChart — click vs drag", () => {
     const chart = chartWith([person({ slug: "a", x: 100, y: 100 })]);
     const { container } = render(<FamilyTreeChart chart={chart} />);
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const before = inner.getAttribute("transform") ?? "";
     fireEvent.pointerDown(svg, { pointerId: 1, clientX: 50, clientY: 50 });
     fireEvent.pointerMove(svg, { pointerId: 1, clientX: 130, clientY: 90 });
@@ -747,7 +793,10 @@ describe("FamilyTreeChart — accessibility contract", () => {
       <FamilyTreeChart chart={chartWith([person({ slug: "a" })])} />,
     );
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const before = inner.getAttribute("transform") ?? "";
     fireEvent.keyDown(svg, { key: "ArrowRight" });
     expect(inner.getAttribute("transform") ?? "").not.toBe(before);
@@ -759,7 +808,10 @@ describe("FamilyTreeChart — accessibility contract", () => {
       <FamilyTreeChart chart={chartWith([person({ slug: "a" })])} />,
     );
     const svg = container.querySelector("svg")!;
-    const inner = svg.querySelector("g[data-pan-root]") as SVGGElement;
+    const inner = expectElement({
+      element: svg.querySelector("g[data-pan-root]"),
+      type: SVGGElement,
+    });
     const initial = inner.getAttribute("transform") ?? "";
     fireEvent.keyDown(svg, { key: "+" });
     expect(inner.getAttribute("transform") ?? "").not.toBe(initial);

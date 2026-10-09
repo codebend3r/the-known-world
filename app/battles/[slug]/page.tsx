@@ -12,6 +12,7 @@ import {
   loadAllEvents,
   renderMarkdown,
 } from "@/lib/content";
+import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
@@ -28,12 +29,8 @@ export async function generateStaticParams() {
     .map((b) => ({ slug: b.frontmatter.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const battle = await loadBattle(slug).catch(() => null);
   if (!battle) return { title: "Not found" };
   return {
@@ -41,12 +38,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function BattlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function BattlePage({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const [
     battle,
     allHouses,

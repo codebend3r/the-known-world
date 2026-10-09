@@ -2,6 +2,7 @@ import { describe, it, expect } from "bun:test";
 import { render, screen, within } from "@testing-library/react";
 import { FamilyTree } from "@/components/FamilyTree";
 import type { TreeNode, TreeSpouse } from "@/lib/family-tree";
+import { expectElement } from "@/test/dom";
 
 function spouse(overrides: Partial<TreeSpouse> = {}): TreeSpouse {
   return {
@@ -175,7 +176,10 @@ describe("FamilyTree", () => {
         ]}
       />,
     );
-    const top = container.querySelector("ul.tree") as HTMLElement;
+    const top = expectElement({
+      element: container.querySelector("ul.tree"),
+      type: HTMLElement,
+    });
     expect(top).not.toBeNull();
     expect(within(top).getByText("Eddard")).toBeDefined();
     expect(within(top).getByText("Robb")).toBeDefined();
