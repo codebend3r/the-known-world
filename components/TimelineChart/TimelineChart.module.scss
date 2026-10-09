@@ -116,7 +116,7 @@
   background: var(--tkw-bg);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   color: var(--tkw-gold);
   font-variant-numeric: tabular-nums;
 }
@@ -142,7 +142,7 @@
   transform: rotate(180deg);
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 2.4px;
+  letter-spacing: var(--ls-caption);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
@@ -204,14 +204,14 @@
   font-family: var(--font-display);
   font-size: var(--fs-meta);
   font-weight: 600;
-  line-height: 1.25;
+  line-height: var(--lh-compact);
 }
 
 .eventWhen {
   grid-area: when;
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   color: var(--tkw-ink-dim);
   font-variant-numeric: tabular-nums;
 }

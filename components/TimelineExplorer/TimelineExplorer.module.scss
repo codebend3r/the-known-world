@@ -38,7 +38,7 @@
   color: var(--tkw-ink-muted);
   font-family: var(--font-mono);
   font-size: var(--fs-lead);
-  line-height: 1;
+  line-height: var(--lh-title);
   cursor: pointer;
   transition:
     var(--tkw-lift),

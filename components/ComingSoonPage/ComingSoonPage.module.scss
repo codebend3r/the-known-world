@@ -3,7 +3,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 400;
-  letter-spacing: 1.4px;
+  letter-spacing: var(--ls-kicker);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
 }
