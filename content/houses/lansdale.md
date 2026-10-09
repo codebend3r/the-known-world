@@ -1,7 +1,7 @@
 ---
 slug: lansdale
 name: House Lansdale
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: graves
 name: House Graves
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

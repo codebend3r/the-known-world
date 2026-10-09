@@ -1,7 +1,7 @@
 ---
 slug: waterman
 name: House Waterman
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

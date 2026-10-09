@@ -1,7 +1,7 @@
 ---
 slug: wode
 name: House Wode
-seat: ""
+seat: null
 liege: baelish
 words: "Touch Me Not"
 sigil:

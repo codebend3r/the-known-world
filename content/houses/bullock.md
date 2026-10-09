@@ -1,7 +1,7 @@
 ---
 slug: bullock
 name: House Bullock
-seat: ""
+seat: null
 liege: targaryen
 words: ""
 sigil:

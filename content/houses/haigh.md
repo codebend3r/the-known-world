@@ -1,7 +1,7 @@
 ---
 slug: haigh
 name: House Haigh
-seat: ""
+seat: null
 liege: frey
 words: ""
 sigil:

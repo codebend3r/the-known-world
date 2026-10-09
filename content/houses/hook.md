@@ -1,7 +1,7 @@
 ---
 slug: hook
 name: House Hook
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

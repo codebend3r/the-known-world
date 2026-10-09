@@ -1,7 +1,7 @@
 ---
 slug: humble
 name: House Humble
-seat: ""
+seat: null
 liege: greyjoy
 words: ""
 sigil:

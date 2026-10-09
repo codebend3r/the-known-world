@@ -1,7 +1,7 @@
 ---
 slug: lake-dorne
 name: House Lake
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

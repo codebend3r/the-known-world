@@ -1,7 +1,7 @@
 ---
 slug: overton
 name: House Overton
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

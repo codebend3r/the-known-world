@@ -1,7 +1,7 @@
 ---
 slug: bourney
 name: House Bourney
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: langward
 name: House Langward
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

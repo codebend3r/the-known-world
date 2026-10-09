@@ -1,7 +1,7 @@
 ---
 slug: wydman
 name: House Wydman
-seat: ""
+seat: null
 liege: arryn
 words: "Right Conquers Might"
 sigil:

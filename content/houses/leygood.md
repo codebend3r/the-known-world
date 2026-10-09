@@ -1,7 +1,7 @@
 ---
 slug: leygood
 name: House Leygood
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

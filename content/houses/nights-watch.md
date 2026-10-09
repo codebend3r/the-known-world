@@ -1,7 +1,7 @@
 ---
 slug: nights-watch
 name: The Night's Watch
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

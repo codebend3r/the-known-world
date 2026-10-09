@@ -1,7 +1,7 @@
 ---
 slug: swygert
 name: House Swygert
-seat: ""
+seat: null
 liege: baratheon
 words: "Truth Conquers"
 sigil:

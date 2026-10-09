@@ -1,7 +1,7 @@
 ---
 slug: cobb
 name: House Cobb
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

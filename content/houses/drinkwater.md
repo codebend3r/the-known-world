@@ -1,7 +1,7 @@
 ---
 slug: drinkwater
 name: House Drinkwater
-seat: ""
+seat: null
 liege: yronwood
 words: ""
 sigil:

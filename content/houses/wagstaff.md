@@ -1,7 +1,7 @@
 ---
 slug: wagstaff
 name: House Wagstaff
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

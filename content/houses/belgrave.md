@@ -1,7 +1,7 @@
 ---
 slug: belgrave
 name: House Belgrave
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

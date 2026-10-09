@@ -1,7 +1,7 @@
 ---
 slug: bigglestone
 name: House Bigglestone
-seat: ""
+seat: null
 liege: tully
 words: ""
 sigil:

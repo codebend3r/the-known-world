@@ -122,6 +122,44 @@ describe("HouseSchema", () => {
     };
     expect(() => HouseSchema.parse(input)).toThrow();
   });
+
+  const seatHouse = {
+    slug: "wull",
+    name: "House Wull",
+    liege: "baratheon",
+    words: "",
+    sigil: { description: "Three wooden buckets", provenance: "canon" },
+    rank: "other",
+    founded: { year: -6000, era: "age-of-heroes", precision: "legendary" },
+    status: "extant",
+  };
+
+  it("accepts a null seat for a house with no known seat", () => {
+    expect(HouseSchema.parse({ ...seatHouse, seat: null }).seat).toBeNull();
+  });
+
+  it("rejects a seat that is display text or empty rather than a slug", () => {
+    expect(() =>
+      HouseSchema.parse({ ...seatHouse, seat: "West of the mountains" }),
+    ).toThrow();
+    expect(() => HouseSchema.parse({ ...seatHouse, seat: "" })).toThrow();
+  });
+
+  it("rejects an infobox entry slug that is not kebab-case", () => {
+    expect(() =>
+      HouseSchema.parse({
+        ...seatHouse,
+        seat: null,
+        seats: [{ name: "The Arbor", slug: "The Arbor" }],
+      }),
+    ).toThrow();
+  });
+
+  it("rejects an unknown key instead of dropping it", () => {
+    expect(() =>
+      HouseSchema.parse({ ...seatHouse, seat: null, primary_house: "stark" }),
+    ).toThrow();
+  });
 });
 
 describe("CharacterSchema", () => {

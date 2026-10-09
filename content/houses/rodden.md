@@ -1,7 +1,7 @@
 ---
 slug: rodden
 name: House Rodden
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

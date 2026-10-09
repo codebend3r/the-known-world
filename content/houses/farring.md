@@ -1,7 +1,7 @@
 ---
 slug: farring
 name: House Farring
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

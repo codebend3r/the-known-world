@@ -1,7 +1,7 @@
 ---
 slug: fenn
 name: House Fenn
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

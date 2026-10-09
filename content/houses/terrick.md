@@ -1,7 +1,7 @@
 ---
 slug: terrick
 name: House Terrick
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

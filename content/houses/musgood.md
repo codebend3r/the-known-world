@@ -1,7 +1,7 @@
 ---
 slug: musgood
 name: House Musgood
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

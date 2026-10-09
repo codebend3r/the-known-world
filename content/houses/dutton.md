@@ -1,7 +1,7 @@
 ---
 slug: dutton
 name: House Dutton
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

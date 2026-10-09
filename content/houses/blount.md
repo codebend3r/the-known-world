@@ -1,7 +1,7 @@
 ---
 slug: blount
 name: House Blount
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

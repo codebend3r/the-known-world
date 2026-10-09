@@ -1,7 +1,7 @@
 ---
 slug: branch
 name: House Branch
-seat: ""
+seat: null
 liege: glover
 words: ""
 sigil:

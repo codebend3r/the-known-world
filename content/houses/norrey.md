@@ -1,7 +1,7 @@
 ---
 slug: norrey
 name: House Norrey
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

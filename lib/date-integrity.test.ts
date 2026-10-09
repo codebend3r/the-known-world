@@ -42,7 +42,7 @@ function character(frontmatter: Record<string, unknown>) {
 
 function house(frontmatter: Record<string, unknown>) {
   const parsed = HouseSchema.parse({
-    seat: "",
+    seat: null,
     liege: null,
     words: "",
     sigil: { description: "", provenance: "invented" },

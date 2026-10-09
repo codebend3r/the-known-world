@@ -1,7 +1,7 @@
 ---
 slug: yelshire
 name: House Yelshire
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: hardyng
 name: House Hardyng
-seat: ""
+seat: null
 liege: waynwood
 words: ""
 sigil:

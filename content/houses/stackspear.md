@@ -1,7 +1,7 @@
 ---
 slug: stackspear
 name: House Stackspear
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

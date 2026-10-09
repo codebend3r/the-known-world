@@ -1,7 +1,7 @@
 ---
 slug: ball
 name: House Ball
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

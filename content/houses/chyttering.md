@@ -1,7 +1,7 @@
 ---
 slug: chyttering
 name: House Chyttering
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

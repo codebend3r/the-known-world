@@ -1,7 +1,7 @@
 ---
 slug: norcross
 name: House Norcross
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

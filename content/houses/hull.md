@@ -1,7 +1,7 @@
 ---
 slug: hull
 name: House Hull
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

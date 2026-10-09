@@ -1,7 +1,7 @@
 ---
 slug: largent
 name: House Largent
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

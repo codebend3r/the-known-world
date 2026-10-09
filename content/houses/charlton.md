@@ -1,7 +1,7 @@
 ---
 slug: charlton
 name: House Charlton
-seat: ""
+seat: null
 liege: frey
 words: ""
 sigil:

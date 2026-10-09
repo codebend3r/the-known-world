@@ -1,7 +1,7 @@
 ---
 slug: moore
 name: House Moore
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

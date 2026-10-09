@@ -1,7 +1,7 @@
 ---
 slug: ambrose
 name: House Ambrose
-seat: ""
+seat: null
 liege: tyrell
 words: "Never Resting"
 sigil:

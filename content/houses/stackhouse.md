@@ -1,7 +1,7 @@
 ---
 slug: stackhouse
 name: House Stackhouse
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

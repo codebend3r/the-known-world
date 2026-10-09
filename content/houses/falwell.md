@@ -1,7 +1,7 @@
 ---
 slug: falwell
 name: House Falwell
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

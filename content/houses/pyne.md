@@ -1,7 +1,7 @@
 ---
 slug: pyne
 name: House Pyne
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

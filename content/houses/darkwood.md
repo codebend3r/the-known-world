@@ -1,7 +1,7 @@
 ---
 slug: darkwood
 name: House Darkwood
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

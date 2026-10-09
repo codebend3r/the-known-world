@@ -1,7 +1,7 @@
 ---
 slug: greenhill
 name: House Greenhill
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

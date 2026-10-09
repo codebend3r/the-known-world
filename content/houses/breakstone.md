@@ -1,7 +1,7 @@
 ---
 slug: breakstone
 name: House Breakstone
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

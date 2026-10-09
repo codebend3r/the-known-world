@@ -1,7 +1,7 @@
 ---
 slug: kyndall
 name: House Kyndall
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: lake-north
 name: House Lake
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

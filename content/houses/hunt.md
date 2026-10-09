@@ -1,7 +1,7 @@
 ---
 slug: hunt
 name: House Hunt
-seat: ""
+seat: null
 liege: tarly
 words: ""
 sigil:

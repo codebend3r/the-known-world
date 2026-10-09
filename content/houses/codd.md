@@ -1,7 +1,7 @@
 ---
 slug: codd
 name: House Codd
-seat: ""
+seat: null
 liege: greyjoy
 words: "Though All Men Do Despise Us"
 sigil:

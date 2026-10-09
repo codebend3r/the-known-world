@@ -1,7 +1,7 @@
 ---
 slug: redbeard
 name: House Redbeard
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

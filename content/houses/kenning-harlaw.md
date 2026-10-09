@@ -1,7 +1,7 @@
 ---
 slug: kenning-harlaw
 name: House Kenning of Harlaw
-seat: ""
+seat: null
 liege: harlaw
 words: ""
 sigil:

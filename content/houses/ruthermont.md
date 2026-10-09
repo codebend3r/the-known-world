@@ -1,7 +1,7 @@
 ---
 slug: ruthermont
 name: House Ruthermont
-seat: ""
+seat: null
 liege: arryn
 words: ""
 sigil:

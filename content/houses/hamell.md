@@ -1,7 +1,7 @@
 ---
 slug: hamell
 name: House Hamell
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

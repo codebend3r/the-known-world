@@ -1,7 +1,7 @@
 ---
 slug: justman
 name: House Justman
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

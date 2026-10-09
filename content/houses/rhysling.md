@@ -1,7 +1,7 @@
 ---
 slug: rhysling
 name: House Rhysling
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

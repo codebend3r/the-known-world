@@ -36,12 +36,17 @@ export function HouseInfobox({
   dragonsForHouse,
   className,
 }: Props) {
-  const seats: HouseInfoEntry[] = house.seats ?? [
-    {
-      slug: house.seat,
-      name: castlesBySlug.get(house.seat)?.name ?? humanizeSlug(house.seat),
-    },
-  ];
+  const seat = house.seat;
+  const seats: HouseInfoEntry[] =
+    house.seats ??
+    (seat === null
+      ? []
+      : [
+          {
+            slug: seat,
+            name: castlesBySlug.get(seat)?.name ?? humanizeSlug(seat),
+          },
+        ]);
 
   const heads = house.heads ?? [];
   const regions = house.regions ?? [];

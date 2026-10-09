@@ -1,7 +1,7 @@
 ---
 slug: lyberr
 name: House Lyberr
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: knott
 name: House Knott
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

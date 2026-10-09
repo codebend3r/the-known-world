@@ -1,7 +1,7 @@
 ---
 slug: stonetree
 name: House Stonetree of Harlaw
-seat: ""
+seat: null
 liege: harlaw
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: teague
 name: House Teague
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

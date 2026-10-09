@@ -1,7 +1,7 @@
 ---
 slug: strickland
 name: House Strickland
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

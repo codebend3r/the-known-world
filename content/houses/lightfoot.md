@@ -1,7 +1,7 @@
 ---
 slug: lightfoot
 name: House Lightfoot
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

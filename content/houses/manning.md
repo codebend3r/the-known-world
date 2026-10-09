@@ -1,7 +1,7 @@
 ---
 slug: manning
 name: House Manning
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

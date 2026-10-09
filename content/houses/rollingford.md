@@ -1,7 +1,7 @@
 ---
 slug: rollingford
 name: House Rollingford
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

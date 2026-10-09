@@ -1,7 +1,7 @@
 ---
 slug: redwyne
 name: House Redwyne
-seat: the-arbor
+seat: arbor
 liege: tyrell
 words: "Unknown"
 sigil:

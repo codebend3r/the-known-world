@@ -1,7 +1,7 @@
 ---
 slug: rankenfell
 name: House Rankenfell
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: boggs-crownlands
 name: House Boggs of Crackclaw Point
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: ladybright
 name: House Ladybright
-seat: ""
+seat: null
 liege: martell
 words: ""
 sigil:

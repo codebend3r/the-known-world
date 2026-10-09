@@ -1,7 +1,7 @@
 ---
 slug: ruttiger
 name: House Ruttiger
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

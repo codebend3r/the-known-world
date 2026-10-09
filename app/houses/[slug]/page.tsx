@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
+  loadCastle,
   loadHouse,
   loadAllHouses,
   loadAllCastles,
@@ -19,6 +20,7 @@ import { enrichTreeWithPortraits } from "@/lib/family-tree-portraits";
 import { layoutFamilyTree } from "@/lib/family-tree-layout";
 import { findPortrait } from "@/lib/portraits";
 import { HouseInfobox } from "@/components/HouseInfobox";
+import { humanizeSlug } from "@/lib/text";
 import { HouseSearchInput } from "@/components/HouseSearchInput";
 import { buildFamilyTree } from "@/lib/family-tree";
 import { buildProseLinkIndex } from "@/lib/prose-links";
@@ -40,9 +42,17 @@ export async function generateMetadata({
   const { slug } = await params;
   const house = await loadHouse(slug).catch(() => null);
   if (!house) return { title: "Not found" };
+  const { name, seat } = house.frontmatter;
+  const seatName =
+    seat === null
+      ? null
+      : ((await loadCastle(seat).catch(() => null))?.frontmatter.name ??
+        humanizeSlug(seat));
   return {
-    title: `${house.frontmatter.name} · Atlas of the Known World`,
-    description: `The roll of ${house.frontmatter.name}, seat at ${house.frontmatter.seat}.`,
+    title: `${name} · Atlas of the Known World`,
+    description: seatName
+      ? `The roll of ${name}, seat at ${seatName}.`
+      : `The roll of ${name}.`,
   };
 }
 

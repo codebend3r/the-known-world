@@ -1,7 +1,7 @@
 ---
 slug: oldflowers
 name: House Oldflowers
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

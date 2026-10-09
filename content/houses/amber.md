@@ -1,7 +1,7 @@
 ---
 slug: amber
 name: House Amber
-seat: ""
+seat: null
 liege: stark
 words: ""
 sigil:

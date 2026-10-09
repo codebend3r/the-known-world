@@ -1,7 +1,7 @@
 ---
 slug: middlebury
 name: House Middlebury
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

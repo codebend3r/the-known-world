@@ -1,7 +1,7 @@
 ---
 slug: longwaters
 name: House Longwaters
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

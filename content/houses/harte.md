@@ -1,7 +1,7 @@
 ---
 slug: harte
 name: House Harte
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

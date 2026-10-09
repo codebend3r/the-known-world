@@ -1,7 +1,7 @@
 ---
 slug: shell-vale
 name: House Shell of the Vale
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

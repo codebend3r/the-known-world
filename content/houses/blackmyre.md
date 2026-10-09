@@ -1,7 +1,7 @@
 ---
 slug: blackmyre
 name: House Blackmyre
-seat: ""
+seat: null
 liege: reed
 words: ""
 sigil:

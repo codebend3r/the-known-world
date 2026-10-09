@@ -1,7 +1,7 @@
 ---
 slug: cupps
 name: House Cupps
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

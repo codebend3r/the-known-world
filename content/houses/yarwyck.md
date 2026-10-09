@@ -1,7 +1,7 @@
 ---
 slug: yarwyck
 name: House Yarwyck
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

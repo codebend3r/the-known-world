@@ -1,7 +1,7 @@
 ---
 slug: burley
 name: House Burley
-seat: ""
+seat: null
 liege: stark
 words: ""
 sigil:

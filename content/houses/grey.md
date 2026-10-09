@@ -1,7 +1,7 @@
 ---
 slug: grey
 name: House Grey
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

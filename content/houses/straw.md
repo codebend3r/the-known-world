@@ -1,7 +1,7 @@
 ---
 slug: straw
 name: House Straw
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

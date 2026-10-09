@@ -1,7 +1,7 @@
 ---
 slug: ashwood
 name: House Ashwood
-seat: ""
+seat: null
 liege: stark
 words: ""
 sigil:

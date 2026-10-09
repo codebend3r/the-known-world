@@ -1,7 +1,7 @@
 ---
 slug: sharp
 name: House Sharp
-seat: ""
+seat: null
 liege: greyjoy
 words: ""
 sigil:

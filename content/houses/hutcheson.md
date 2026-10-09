@@ -1,7 +1,7 @@
 ---
 slug: hutcheson
 name: House Hutcheson
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

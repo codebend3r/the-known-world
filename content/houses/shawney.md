@@ -1,7 +1,7 @@
 ---
 slug: shawney
 name: House Shawney
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

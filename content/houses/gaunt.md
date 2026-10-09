@@ -1,7 +1,7 @@
 ---
 slug: gaunt
 name: House Gaunt
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

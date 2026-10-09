@@ -1,7 +1,7 @@
 ---
 slug: grell
 name: House Grell
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

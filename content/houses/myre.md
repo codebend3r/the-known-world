@@ -1,7 +1,7 @@
 ---
 slug: myre
 name: House Myre of Harlaw
-seat: ""
+seat: null
 liege: harlaw
 words: ""
 sigil:

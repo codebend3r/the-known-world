@@ -1,7 +1,7 @@
 ---
 slug: bettley
 name: House Bettley
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

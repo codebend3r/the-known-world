@@ -1,7 +1,7 @@
 ---
 slug: hastwyck
 name: House Hastwyck
-seat: ""
+seat: null
 liege: tyrell
 words: "None so Dutiful"
 sigil:

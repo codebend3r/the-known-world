@@ -1,7 +1,7 @@
 ---
 slug: hardy
 name: House Hardy
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

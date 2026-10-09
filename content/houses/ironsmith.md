@@ -1,7 +1,7 @@
 ---
 slug: ironsmith
 name: House Ironsmith
-seat: ""
+seat: null
 liege: bolton
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: shell-dorne
 name: House Shell of Dorne
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

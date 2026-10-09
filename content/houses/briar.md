@@ -1,7 +1,7 @@
 ---
 slug: briar
 name: House Briar
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

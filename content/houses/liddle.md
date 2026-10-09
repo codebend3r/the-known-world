@@ -1,7 +1,7 @@
 ---
 slug: liddle
 name: House Liddle
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

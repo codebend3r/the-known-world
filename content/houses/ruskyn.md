@@ -1,7 +1,7 @@
 ---
 slug: ruskyn
 name: House Ruskyn
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

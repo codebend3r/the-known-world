@@ -1,7 +1,7 @@
 ---
 slug: peckledon
 name: House Peckledon
-seat: ""
+seat: null
 liege: lannister
 words: "Unflinching"
 sigil:

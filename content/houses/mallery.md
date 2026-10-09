@@ -1,7 +1,7 @@
 ---
 slug: mallery
 name: House Mallery
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

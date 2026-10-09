@@ -1,7 +1,7 @@
 ---
 slug: jast
 name: House Jast
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

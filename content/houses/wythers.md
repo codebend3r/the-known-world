@@ -1,7 +1,7 @@
 ---
 slug: wythers
 name: House Wythers
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

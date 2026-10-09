@@ -1,7 +1,7 @@
 ---
 slug: byrch
 name: House Byrch
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

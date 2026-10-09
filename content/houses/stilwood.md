@@ -1,7 +1,7 @@
 ---
 slug: stilwood
 name: House Stilwood
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

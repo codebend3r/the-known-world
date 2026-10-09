@@ -1,7 +1,7 @@
 ---
 slug: lorch
 name: House Lorch
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

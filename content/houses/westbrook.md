@@ -1,7 +1,7 @@
 ---
 slug: westbrook
 name: House Westbrook
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

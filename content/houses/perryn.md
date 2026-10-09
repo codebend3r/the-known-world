@@ -1,7 +1,7 @@
 ---
 slug: perryn
 name: House Perryn
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

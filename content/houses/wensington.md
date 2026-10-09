@@ -1,7 +1,7 @@
 ---
 slug: wensington
 name: House Wensington
-seat: ""
+seat: null
 liege: baratheon
 words: "Sound The Charge"
 sigil:

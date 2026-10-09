@@ -1,7 +1,7 @@
 ---
 slug: serry
 name: House Serry of Southshield
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

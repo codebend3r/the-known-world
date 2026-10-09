@@ -1,7 +1,7 @@
 ---
 slug: weaver
 name: House Weaver
-seat: ""
+seat: null
 liege: greyjoy
 words: ""
 sigil:

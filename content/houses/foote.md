@@ -1,7 +1,7 @@
 ---
 slug: foote
 name: House Foote
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

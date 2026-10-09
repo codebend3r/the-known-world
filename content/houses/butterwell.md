@@ -1,7 +1,7 @@
 ---
 slug: butterwell
 name: House Butterwell
-seat: ""
+seat: null
 liege: tully
 words: ""
 sigil:

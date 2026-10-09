@@ -1,7 +1,7 @@
 ---
 slug: uffering
 name: House Uffering
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

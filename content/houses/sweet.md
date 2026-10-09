@@ -1,7 +1,7 @@
 ---
 slug: sweet
 name: House Sweet
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: shepherd
 name: House Shepherd
-seat: ""
+seat: null
 liege: greyjoy
 words: ""
 sigil:

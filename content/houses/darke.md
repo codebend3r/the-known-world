@@ -1,7 +1,7 @@
 ---
 slug: darke
 name: House Darke
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

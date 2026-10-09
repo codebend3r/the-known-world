@@ -1,7 +1,7 @@
 ---
 slug: thenn
 name: House Thenn
-seat: ""
+seat: null
 liege: baratheon
 words: ""
 sigil:

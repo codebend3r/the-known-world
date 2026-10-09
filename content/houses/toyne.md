@@ -1,7 +1,7 @@
 ---
 slug: toyne
 name: House Toyne
-seat: ""
+seat: null
 liege: baratheon
 words: "Fly High, Fly Far"
 sigil:

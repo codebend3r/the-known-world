@@ -1,7 +1,7 @@
 ---
 slug: elesham
 name: House Elesham of the Paps
-seat: the-paps
+seat: paps
 liege: arryn
 words: ""
 sigil:

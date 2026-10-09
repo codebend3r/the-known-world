@@ -1,7 +1,7 @@
 ---
 slug: others
 name: The Others
-seat: ""
+seat: null
 liege: null
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: vypren
 name: House Vypren
-seat: ""
+seat: null
 liege: baelish
 words: ""
 sigil:

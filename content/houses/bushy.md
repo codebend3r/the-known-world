@@ -1,7 +1,7 @@
 ---
 slug: bushy
 name: House Bushy
-seat: ""
+seat: null
 liege: tyrell
 words: ""
 sigil:

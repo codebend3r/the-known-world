@@ -1,7 +1,7 @@
 ---
 slug: parren
 name: House Parren
-seat: ""
+seat: null
 liege: lannister
 words: ""
 sigil:

@@ -1,7 +1,7 @@
 ---
 slug: ironmaker
 name: House Ironmaker
-seat: ""
+seat: null
 liege: greyjoy
 words: ""
 sigil:
