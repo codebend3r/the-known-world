@@ -54,27 +54,33 @@ describe("initialCenteredTransform", () => {
 
 describe("distance", () => {
   it("returns the Euclidean distance between two points", () => {
-    expect(distance({ x: 0, y: 0 }, { x: 3, y: 4 })).toBe(5);
+    expect(distance({ a: { x: 0, y: 0 }, b: { x: 3, y: 4 } })).toBe(5);
   });
 
   it("is symmetric", () => {
     const a = { x: 1, y: 2 };
     const b = { x: 4, y: 6 };
-    expect(distance(a, b)).toBe(distance(b, a));
+    expect(distance({ a, b })).toBe(distance({ a: b, b: a }));
   });
 
   it("returns 0 for coincident points", () => {
-    expect(distance({ x: 7, y: 7 }, { x: 7, y: 7 })).toBe(0);
+    expect(distance({ a: { x: 7, y: 7 }, b: { x: 7, y: 7 } })).toBe(0);
   });
 });
 
 describe("midpoint", () => {
   it("returns the average of two points", () => {
-    expect(midpoint({ x: 0, y: 0 }, { x: 10, y: 20 })).toEqual({ x: 5, y: 10 });
+    expect(midpoint({ a: { x: 0, y: 0 }, b: { x: 10, y: 20 } })).toEqual({
+      x: 5,
+      y: 10,
+    });
   });
 
   it("returns the point itself when both inputs are equal", () => {
-    expect(midpoint({ x: 3, y: 4 }, { x: 3, y: 4 })).toEqual({ x: 3, y: 4 });
+    expect(midpoint({ a: { x: 3, y: 4 }, b: { x: 3, y: 4 } })).toEqual({
+      x: 3,
+      y: 4,
+    });
   });
 });
 

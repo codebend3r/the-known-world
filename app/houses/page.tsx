@@ -25,7 +25,7 @@ export default async function HousesPage() {
 
   const items: HouseItem[] = visible
     .map((h) => {
-      const region = regionForHouse(h.frontmatter.slug, housesBySlug);
+      const region = regionForHouse({ slug: h.frontmatter.slug, housesBySlug });
       return {
         slug: h.frontmatter.slug,
         name: shortHouseName(h.frontmatter.name),

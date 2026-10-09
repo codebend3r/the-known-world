@@ -34,7 +34,9 @@ function node(overrides: Partial<TreeNode> = {}): TreeNode {
 
 describe("enrichTreeWithPortraits", () => {
   it("calls findPortrait for in-house, non-placeholder persons", async () => {
-    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(
+      async ({ slug }: { slug: string }) => `/characters/${slug}.png`,
+    );
     const tree: TreeNode[] = [
       node({
         slug: "eddard",
@@ -43,7 +45,10 @@ describe("enrichTreeWithPortraits", () => {
         children: [node({ slug: "robb", name: "Robb", sex: "m" })],
       }),
     ];
-    const [eddard] = await enrichTreeWithPortraits(tree, find);
+    const [eddard] = await enrichTreeWithPortraits({
+      roots: tree,
+      findPortrait: find,
+    });
     expect(eddard.portrait).toBe("/characters/eddard.png");
     expect(eddard.children[0].portrait).toBe("/characters/robb.png");
     expect(find).toHaveBeenCalledTimes(2);
@@ -54,7 +59,10 @@ describe("enrichTreeWithPortraits", () => {
     const tree: TreeNode[] = [
       node({ slug: "unknown", name: "Unknown", placeholder: true }),
     ];
-    const [n] = await enrichTreeWithPortraits(tree, find);
+    const [n] = await enrichTreeWithPortraits({
+      roots: tree,
+      findPortrait: find,
+    });
     expect(n.portrait).toBeNull();
     expect(find).not.toHaveBeenCalled();
   });
@@ -64,13 +72,18 @@ describe("enrichTreeWithPortraits", () => {
     const tree: TreeNode[] = [
       node({ slug: "foreign", name: "Foreign", external: true }),
     ];
-    const [n] = await enrichTreeWithPortraits(tree, find);
+    const [n] = await enrichTreeWithPortraits({
+      roots: tree,
+      findPortrait: find,
+    });
     expect(n.portrait).toBeNull();
     expect(find).not.toHaveBeenCalled();
   });
 
   it("calls findPortrait for any spouse with a valid slug, regardless of house", async () => {
-    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(
+      async ({ slug }: { slug: string }) => `/characters/${slug}.png`,
+    );
     const tree: TreeNode[] = [
       node({
         slug: "p",
@@ -80,27 +93,37 @@ describe("enrichTreeWithPortraits", () => {
         ],
       }),
     ];
-    const [n] = await enrichTreeWithPortraits(tree, find);
+    const [n] = await enrichTreeWithPortraits({
+      roots: tree,
+      findPortrait: find,
+    });
     expect(n.spouses[0].portrait).toBe("/characters/in.png");
     expect(n.spouses[1].portrait).toBe("/characters/out.png");
-    expect(find).toHaveBeenCalledWith("in", "f");
-    expect(find).toHaveBeenCalledWith("out", "f");
+    expect(find).toHaveBeenCalledWith({ slug: "in", sex: "f" });
+    expect(find).toHaveBeenCalledWith({ slug: "out", sex: "f" });
   });
 
   it("returns null portrait for a spouse with no slug (unnamed)", async () => {
-    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(
+      async ({ slug }: { slug: string }) => `/characters/${slug}.png`,
+    );
     const tree: TreeNode[] = [
       node({
         slug: "p",
         spouses: [spouse({ slug: null, name: "Mystery", inHouse: false })],
       }),
     ];
-    const [n] = await enrichTreeWithPortraits(tree, find);
+    const [n] = await enrichTreeWithPortraits({
+      roots: tree,
+      findPortrait: find,
+    });
     expect(n.spouses[0].portrait).toBeNull();
   });
 
   it("memoizes per-slug so duplicate slugs hit findPortrait once", async () => {
-    const find = jest.fn(async (slug: string) => `/characters/${slug}.png`);
+    const find = jest.fn(
+      async ({ slug }: { slug: string }) => `/characters/${slug}.png`,
+    );
     const tree: TreeNode[] = [
       node({
         slug: "p",
@@ -110,8 +133,8 @@ describe("enrichTreeWithPortraits", () => {
         ],
       }),
     ];
-    await enrichTreeWithPortraits(tree, find);
-    const sharedCalls = find.mock.calls.filter((c) => c[0] === "shared");
+    await enrichTreeWithPortraits({ roots: tree, findPortrait: find });
+    const sharedCalls = find.mock.calls.filter((c) => c[0].slug === "shared");
     expect(sharedCalls.length).toBe(1);
   });
 });

@@ -42,7 +42,7 @@ export function FilteredDragonList({ items }: Props) {
     commit: setUrlSearch,
   });
 
-  const filtered = filterByName(items, debounced);
+  const filtered = filterByName({ items, query: debounced });
 
   return (
     <>

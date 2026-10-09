@@ -10,17 +10,17 @@ const items = [
 
 describe("filterByName", () => {
   it("returns a copy of the list when the query is empty", () => {
-    const result = filterByName(items, "");
+    const result = filterByName({ items, query: "" });
     expect(result).toEqual(items);
     expect(result).not.toBe(items);
   });
 
   it("returns a copy of the list when the query is whitespace", () => {
-    expect(filterByName(items, "   ")).toEqual(items);
+    expect(filterByName({ items, query: "   " })).toEqual(items);
   });
 
   it("preserves input order when the query is empty", () => {
-    expect(filterByName(items, "").map((i) => i.name)).toEqual([
+    expect(filterByName({ items, query: "" }).map((i) => i.name)).toEqual([
       "House Stark",
       "Arya Stark",
       "Eddard Stark",
@@ -29,7 +29,7 @@ describe("filterByName", () => {
   });
 
   it("does case-insensitive substring matching on name", () => {
-    const names = filterByName(items, "STARK").map((i) => i.name);
+    const names = filterByName({ items, query: "STARK" }).map((i) => i.name);
     expect(names).toContain("House Stark");
     expect(names).toContain("Arya Stark");
     expect(names).toContain("Eddard Stark");
@@ -37,23 +37,23 @@ describe("filterByName", () => {
   });
 
   it("ranks prefix matches above mid-name substring matches", () => {
-    const result = filterByName(
-      [{ name: "Babar Khan" }, { name: "Arya Stark" }],
-      "a",
-    );
+    const result = filterByName({
+      items: [{ name: "Babar Khan" }, { name: "Arya Stark" }],
+      query: "a",
+    });
     expect(result[0].name).toBe("Arya Stark");
   });
 
   it("ranks word-start matches above mid-word substring matches", () => {
-    const result = filterByName(
-      [{ name: "Caster Black" }, { name: "Mance Rayder" }],
-      "r",
-    );
+    const result = filterByName({
+      items: [{ name: "Caster Black" }, { name: "Mance Rayder" }],
+      query: "r",
+    });
     expect(result[0].name).toBe("Mance Rayder");
   });
 
   it("preserves the original order for items at the same rank", () => {
-    const result = filterByName(items, "stark");
+    const result = filterByName({ items, query: "stark" });
     expect(result.map((i) => i.name)).toEqual([
       "House Stark",
       "Arya Stark",
@@ -66,7 +66,7 @@ describe("filterByName", () => {
       { name: "Jaime Lannister", aliases: ["The Kingslayer"] },
       { name: "Tywin Lannister", aliases: [] },
     ];
-    const result = filterByName(aliasItems, "kingslayer");
+    const result = filterByName({ items: aliasItems, query: "kingslayer" });
     expect(result.map((i) => i.name)).toEqual(["Jaime Lannister"]);
   });
 
@@ -75,7 +75,7 @@ describe("filterByName", () => {
       { name: "Sandor Clegane", aliases: ["The Hound"] },
       { name: "The Hound's Squire", aliases: [] },
     ];
-    const result = filterByName(aliasItems, "hound");
+    const result = filterByName({ items: aliasItems, query: "hound" });
     expect(result.map((i) => i.name)).toEqual([
       "The Hound's Squire",
       "Sandor Clegane",
@@ -83,7 +83,7 @@ describe("filterByName", () => {
   });
 
   it("still filters correctly when items have no aliases field at all", () => {
-    const result = filterByName(items, "stark");
+    const result = filterByName({ items, query: "stark" });
     expect(result.map((i) => i.name)).toEqual([
       "House Stark",
       "Arya Stark",

@@ -26,7 +26,7 @@ export default async function CastlePage({ params }: SlugPageProps) {
   const castle = await loadCastle(slug).catch(() => null);
   if (!castle) notFound();
 
-  const html = await renderMarkdown(castle.body);
+  const html = await renderMarkdown({ source: castle.body });
 
   return (
     <PlateLayout>

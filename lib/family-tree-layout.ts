@@ -66,7 +66,7 @@ export function isLinkable({
 }
 
 function personSlotWidth(name: string, titles: ReadonlyArray<string>): number {
-  return Math.max(DOT_R * 2, estimateLabelWidth(name, titles));
+  return Math.max(DOT_R * 2, estimateLabelWidth({ name, titles }));
 }
 
 function unitWidth(n: EnrichedTreeNode): number {

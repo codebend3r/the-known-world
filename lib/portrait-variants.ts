@@ -180,7 +180,7 @@ export async function findPortraitVariants({
   if (variants.length > 0) return variants;
 
   const [image, video] = await Promise.all([
-    findPortrait(slug, sex),
+    findPortrait({ slug, sex }),
     findPortraitVideo(slug),
   ]);
   return [{ id: slug, label: name, image, video, isPrimary: true }];

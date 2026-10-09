@@ -104,7 +104,7 @@ export function FilteredCharacterList({
     return dir === "desc" ? arr.reverse() : arr;
   }, [items, dir]);
 
-  const filtered = filterByName(sorted, debounced);
+  const filtered = filterByName({ items: sorted, query: debounced });
   const totalPages = Math.max(1, Math.ceil(filtered.length / size));
   const currentPage = Math.min(page, totalPages);
   const pageStart = (currentPage - 1) * size;
