@@ -51,14 +51,14 @@ describe("memoize", () => {
     expect(calls).toBe(1);
   });
 
-  it("propagates a rejection to the caller", () => {
+  it("propagates a rejection to the caller", async () => {
     const load = memoize({
       isEnabled: true,
       load: async () => {
         throw new Error("missing frontmatter");
       },
     });
-    expect(load()).rejects.toThrow("missing frontmatter");
+    await expect(load()).rejects.toThrow("missing frontmatter");
   });
 });
 
