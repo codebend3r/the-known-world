@@ -6,12 +6,11 @@ import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import { ListSearchInput } from "@/components/ListSearchInput";
 import { filterByName } from "@/lib/search";
 import { searchParser } from "@/lib/listSearchParams";
+import type { Event } from "@/lib/schemas";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredEventList/FilteredEventList.module.scss";
 
-export type EventItem = {
-  slug: string;
-  name: string;
+export type EventItem = Pick<Event, "slug" | "name"> & {
   typeLabel: string;
   when: string;
   /** Free-text place, or null when the entry only carries map coordinates. */

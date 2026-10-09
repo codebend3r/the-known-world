@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ComponentProps } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useQueryStates } from "nuqs";
@@ -20,6 +20,7 @@ import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
 import type { RegionSlug } from "@/lib/regions";
+import type { Character } from "@/lib/schemas";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -50,11 +51,8 @@ const VIEW_OPTIONS = [
 
 const VIEW_STORAGE_KEY = "gota:characters-view";
 
-export type CharacterItem = {
-  slug: string;
-  name: string;
+export type CharacterItem = Pick<Character, "slug" | "name" | "aliases"> & {
   alias: string | null;
-  aliases: string[];
   primaryHouseSlug: string | null;
   region: RegionSlug | null;
   portrait: string;
@@ -120,7 +118,9 @@ export function FilteredCharacterList({
     setParams({ dir: next, page: 1 });
   };
 
-  const renderPagination = (position: "top" | "bottom") => (
+  const renderPagination = (
+    position: ComponentProps<typeof ListPagination>["position"],
+  ) => (
     <ListPagination
       currentPage={currentPage}
       totalPages={totalPages}

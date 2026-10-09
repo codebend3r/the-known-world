@@ -8,12 +8,11 @@ import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { searchParser } from "@/lib/listSearchParams";
 import type { RegionSlug } from "@/lib/regions";
+import type { Weapon } from "@/lib/schemas";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredWeaponList/FilteredWeaponList.module.scss";
 
-export type WeaponItem = {
-  slug: string;
-  name: string;
+export type WeaponItem = Pick<Weapon, "slug" | "name"> & {
   houseSlug: string | null;
   region: RegionSlug | null;
   regionLabel: string | null;
