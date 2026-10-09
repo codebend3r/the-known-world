@@ -8,11 +8,8 @@ import {
 } from "@/lib/schemas";
 
 function castle(data: Parameters<typeof CastleSchema.parse>[0]) {
-  return {
-    frontmatter: CastleSchema.parse(data),
-    body: "",
-    slug: (data as { slug: string }).slug,
-  };
+  const frontmatter = CastleSchema.parse(data);
+  return { frontmatter, body: "", slug: frontmatter.slug };
 }
 
 function house(data: Record<string, unknown> & { slug: string }) {
@@ -24,19 +21,13 @@ function house(data: Record<string, unknown> & { slug: string }) {
 }
 
 function character(data: Parameters<typeof CharacterSchema.parse>[0]) {
-  return {
-    frontmatter: CharacterSchema.parse(data),
-    body: "",
-    slug: (data as { slug: string }).slug,
-  };
+  const frontmatter = CharacterSchema.parse(data);
+  return { frontmatter, body: "", slug: frontmatter.slug };
 }
 
 function event(data: Parameters<typeof EventSchema.parse>[0]) {
-  return {
-    frontmatter: EventSchema.parse(data),
-    body: "",
-    slug: (data as { slug: string }).slug,
-  };
+  const frontmatter = EventSchema.parse(data);
+  return { frontmatter, body: "", slug: frontmatter.slug };
 }
 
 const starkFounded = { year: 0, era: "AC", precision: "year" };

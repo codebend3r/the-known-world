@@ -26,12 +26,16 @@ export const REGION_SLUGS = [
   "crownlands",
 ] as const satisfies readonly RegionSlug[];
 
-const REGION_LABELS: Record<RegionSlug, string> = Object.fromEntries(
+const REGION_LABELS = new Map<RegionSlug, string>(
   Object.values(REGIONS).map((r) => [r.slug, r.name]),
-) as Record<RegionSlug, string>;
+);
+
+function isGreatHouseSlug(slug: string): slug is keyof typeof REGIONS {
+  return Object.hasOwn(REGIONS, slug);
+}
 
 export function regionLabel(slug: RegionSlug | null): string | null {
-  return slug ? REGION_LABELS[slug] : null;
+  return slug ? (REGION_LABELS.get(slug) ?? null) : null;
 }
 
 export function regionForHouse(
@@ -42,8 +46,8 @@ export function regionForHouse(
   let current: string | null = slug;
   while (current && !seen.has(current)) {
     seen.add(current);
-    if (current in REGIONS) {
-      return REGIONS[current as keyof typeof REGIONS].slug;
+    if (isGreatHouseSlug(current)) {
+      return REGIONS[current].slug;
     }
     const house = housesBySlug.get(current);
     if (!house) return null;

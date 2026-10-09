@@ -494,7 +494,7 @@ export function FamilyTreeChart({ chart }: Props) {
       // No pointer capture and no isDragging yet, wait for movement past
       // DRAG_THRESHOLD so taps still reach the underlying <a> as plain clicks.
     } else if (pointersRef.current.size === 2 && svgRef.current) {
-      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+      e.currentTarget.setPointerCapture?.(e.pointerId);
       const [a, b] = pointerListToArray(pointersRef.current);
       const m = midpoint(a, b);
       const { point } = getScreenToViewBox(svgRef.current, bounds);
@@ -545,7 +545,7 @@ export function FamilyTreeChart({ chart }: Props) {
       if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) {
         return;
       }
-      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+      e.currentTarget.setPointerCapture?.(e.pointerId);
       d.captured = true;
       setIsDragging(true);
     }
