@@ -76,12 +76,6 @@ type CharStates = {
   quoted: Uint8Array;
 };
 
-/**
- * One pass per file recording brace depth and quote state at every index. Tag
- * boundaries then fall out of it: the `>` that closes `<button onClick={() =>
- * go()}>` is the first `>` back at the tag's own depth, which no regex can find
- * on its own.
- */
 type ScanState = {
   depth: number;
   paren: number;
@@ -105,6 +99,12 @@ function advance({ scan, char }: { scan: ScanState; char: string }): ScanState {
   return scan;
 }
 
+/**
+ * One pass per file recording brace depth and quote state at every index. Tag
+ * boundaries then fall out of it: the `>` that closes `<button onClick={() =>
+ * go()}>` is the first `>` back at the tag's own depth, which no regex can find
+ * on its own.
+ */
 function scanCharStates(source: string): CharStates {
   // `split("")`, not `Array.from`: every consumer indexes by UTF-16 code unit.
   // The typed arrays are owned by the accumulator and filled in place, because
