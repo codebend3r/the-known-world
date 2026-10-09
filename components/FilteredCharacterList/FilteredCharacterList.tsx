@@ -19,6 +19,7 @@ import { filterByName } from "@/lib/search";
 import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
+import type { RegionSlug } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -29,7 +30,7 @@ import {
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredCharacterList/FilteredCharacterList.module.scss";
 
-const REGION_CARD_CLASS: Record<string, string | undefined> = {
+const REGION_CARD_CLASS = {
   north: styles.cardNorth,
   vale: styles.cardVale,
   riverlands: styles.cardRiverlands,
@@ -39,7 +40,7 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   dorne: styles.cardDorne,
   "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
-};
+} as const satisfies Record<RegionSlug, string>;
 
 const VIEW_OPTIONS = [
   { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },
@@ -54,7 +55,7 @@ export type CharacterItem = {
   alias: string | null;
   aliases: string[];
   primaryHouseSlug: string | null;
-  region: string | null;
+  region: RegionSlug | null;
   portrait: string;
 };
 

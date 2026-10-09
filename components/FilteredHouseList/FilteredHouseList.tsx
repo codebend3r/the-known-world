@@ -22,7 +22,7 @@ import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import type { HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
-import { REGION_SLUGS, regionLabel } from "@/lib/regions";
+import { REGION_SLUGS, regionLabel, type RegionSlug } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -38,7 +38,7 @@ import styles from "@/components/FilteredHouseList/FilteredHouseList.module.scss
 export type HouseItem = {
   slug: string;
   name: string;
-  region: string | null;
+  region: RegionSlug | null;
   regionLabel: string | null;
   isExtinct?: boolean;
   rank?: HouseRank;
@@ -57,7 +57,7 @@ const GROUPING_STORAGE_KEY = "gota:houses-grouping";
 // without negating lazy-loading for the rest of the list.
 const PRIORITY_COUNT = 8;
 
-const REGION_CARD_CLASS: Record<string, string | undefined> = {
+const REGION_CARD_CLASS = {
   north: styles.cardNorth,
   vale: styles.cardVale,
   riverlands: styles.cardRiverlands,
@@ -67,7 +67,7 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   dorne: styles.cardDorne,
   "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
-};
+} as const satisfies Record<RegionSlug, string>;
 
 const VIEW_OPTIONS = [
   { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },

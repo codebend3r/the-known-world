@@ -8,6 +8,7 @@ import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import { searchParser } from "@/lib/listSearchParams";
+import type { RegionSlug } from "@/lib/regions";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredDragonList/FilteredDragonList.module.scss";
 
@@ -15,7 +16,7 @@ export type DragonItem = {
   slug: string;
   name: string;
   houseSlug: string | null;
-  region: string | null;
+  region: RegionSlug | null;
   regionLabel: string | null;
 };
 
@@ -23,7 +24,7 @@ type Props = {
   items: DragonItem[];
 };
 
-const REGION_CARD_CLASS: Record<string, string | undefined> = {
+const REGION_CARD_CLASS = {
   north: styles.cardNorth,
   vale: styles.cardVale,
   riverlands: styles.cardRiverlands,
@@ -33,7 +34,7 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   dorne: styles.cardDorne,
   "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
-};
+} as const satisfies Record<RegionSlug, string>;
 
 export function FilteredDragonList({ items }: Props) {
   const [urlSearch, setUrlSearch] = useQueryState("search", searchParser);

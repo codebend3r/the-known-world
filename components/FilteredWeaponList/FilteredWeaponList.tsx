@@ -7,6 +7,7 @@ import { ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
 import { filterByName } from "@/lib/search";
 import { searchParser } from "@/lib/listSearchParams";
+import type { RegionSlug } from "@/lib/regions";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredWeaponList/FilteredWeaponList.module.scss";
 
@@ -14,7 +15,7 @@ export type WeaponItem = {
   slug: string;
   name: string;
   houseSlug: string | null;
-  region: string | null;
+  region: RegionSlug | null;
   regionLabel: string | null;
   hasImage: boolean;
 };

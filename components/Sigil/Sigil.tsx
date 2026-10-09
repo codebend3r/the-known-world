@@ -1,13 +1,14 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { cx } from "@/lib/cx";
+import type { RegionSlug } from "@/lib/regions";
 import { sigilFile } from "@/lib/sigil";
 import styles from "@/components/Sigil/Sigil.module.scss";
 
 type Props = {
   slug: string | null;
   name: string;
-  region?: string | null;
+  region?: RegionSlug | null;
   size?: string;
   sizes?: string;
   isDecorative?: boolean;
