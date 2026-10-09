@@ -192,7 +192,7 @@ const points: Stack[] = [
  */
 const stacks = points
   .filter((point) => point.members.length > 1)
-  .sort((a, b) => b.members.length - a.members.length);
+  .toSorted((a, b) => b.members.length - a.members.length);
 
 /**
  * Distinct points close enough that their markers overlap at every zoom.

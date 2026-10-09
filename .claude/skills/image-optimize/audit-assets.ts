@@ -163,7 +163,7 @@ const broken = [...literals].filter((href) => !onDisk.has(href));
 
 const heavy = audited
   .filter((asset) => !dead.includes(asset) && asset.bytes > HEAVY_BYTES)
-  .sort((a, b) => b.bytes - a.bytes);
+  .toSorted((a, b) => b.bytes - a.bytes);
 
 const mb = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)}MB`;
 const kb = (bytes: number) => `${Math.round(bytes / 1000)}KB`;
@@ -200,7 +200,7 @@ if (json) {
     new Map(),
   );
   [...byDir.entries()]
-    .sort(
+    .toSorted(
       (a, b) =>
         b[1].reduce((t, x) => t + x.bytes, 0) -
         a[1].reduce((t, x) => t + x.bytes, 0),
@@ -209,7 +209,7 @@ if (json) {
       const bytes = group.reduce((total, asset) => total + asset.bytes, 0);
       console.log(`  ${dir}/  ${group.length} files  ${mb(bytes)}`);
       group
-        .sort((a, b) => b.bytes - a.bytes)
+        .toSorted((a, b) => b.bytes - a.bytes)
         .slice(0, 6)
         .forEach((asset) =>
           console.log(`    ${kb(asset.bytes)}  ${asset.href}`),

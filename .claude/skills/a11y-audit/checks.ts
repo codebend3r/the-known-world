@@ -385,103 +385,104 @@ export function checkInteractions(file: SourceFile): Finding[] {
     // real Close button), which is a review question, not a static one.
     if (hiddenInTree({ tag, tags: file.tags })) return [];
 
-    const findings: Finding[] = [];
-
-    if (
-      pointer.length > 0 &&
-      !nativelyInteractive &&
-      !isComponent &&
-      !FOCUSABLE_ROLES.has(role) &&
-      !MANAGED_ROLES.has(role)
-    ) {
-      findings.push({
-        ...at,
-        code: "static-interaction",
-        severity: "error",
-        message: `${pointer.join(", ")} on a non-interactive element${
-          !!role ? ` carrying \`role="${role}"\`` : " with no role"
-        }. Use a \`<button>\`, or the canvas pattern: \`role="application"\`, \`tabIndex={0}\`, \`onKeyDown\`, \`aria-label\`.`,
-      });
-    }
-
-    if (
-      role === "application" &&
-      ![...KEY_HANDLERS].some((handler) => has({ tag, name: handler }))
-    ) {
-      findings.push({
-        ...at,
-        code: "canvas-not-operable",
-        severity: "error",
-        message:
-          '`role="application"` tells assistive tech to hand every keystroke to this element, and nothing here listens. Add an `onKeyDown`.',
-      });
-    }
-
-    if (
-      pointer.includes("onClick") &&
-      keys.length === 0 &&
-      !nativelyInteractive &&
-      !isComponent &&
-      !MANAGED_ROLES.has(role)
-    ) {
-      findings.push({
-        ...at,
-        code: "click-no-key",
-        severity: "error",
-        message:
-          "`onClick` with no keyboard equivalent. Mouse-only operation fails WCAG 2.1.1.",
-      });
-    }
-
-    if (
-      FOCUSABLE_ROLES.has(role) &&
-      !nativelyInteractive &&
-      !has({ tag, name: "tabIndex" })
-    ) {
-      findings.push({
-        ...at,
-        code: "role-not-focusable",
-        severity: "error",
-        message: `\`role="${role}"\` is not reachable by Tab. Add \`tabIndex={0}\`.`,
-      });
-    }
-
     const tabIndex = attributeText(tag.attributes.get("tabIndex"));
-    if (
-      has({ tag, name: "tabIndex" }) &&
-      !nativelyInteractive &&
-      !isComponent &&
-      !role &&
-      !/-1/.test(tabIndex)
-    ) {
-      findings.push({
-        ...at,
-        code: "noninteractive-tabindex",
-        severity: "warn",
-        message:
-          "`tabIndex` on an element with no role puts an unnamed stop in the tab order.",
-      });
-    }
-
     const wantsName =
       (nativelyInteractive && lower !== "input" && lower !== "option") ||
       FOCUSABLE_ROLES.has(role);
     const isLinkWithoutHref = lower === "a" && !has({ tag, name: "href" });
-    if (
-      wantsName &&
-      !isLinkWithoutHref &&
-      !accessibleName({ file, tag, index })
-    ) {
-      findings.push({
-        ...at,
-        code: "control-no-name",
-        severity: "error",
-        message:
-          "control has no accessible name. Add `aria-label`, or text content that is not `aria-hidden`.",
-      });
-    }
 
-    return findings;
+    const rules = [
+      {
+        isViolated:
+          pointer.length > 0 &&
+          !nativelyInteractive &&
+          !isComponent &&
+          !FOCUSABLE_ROLES.has(role) &&
+          !MANAGED_ROLES.has(role),
+        finding: {
+          ...at,
+          code: "static-interaction",
+          severity: "error",
+          message: `${pointer.join(", ")} on a non-interactive element${
+            !!role ? ` carrying \`role="${role}"\`` : " with no role"
+          }. Use a \`<button>\`, or the canvas pattern: \`role="application"\`, \`tabIndex={0}\`, \`onKeyDown\`, \`aria-label\`.`,
+        },
+      },
+      {
+        isViolated:
+          role === "application" &&
+          ![...KEY_HANDLERS].some((handler) => has({ tag, name: handler })),
+        finding: {
+          ...at,
+          code: "canvas-not-operable",
+          severity: "error",
+          message:
+            '`role="application"` tells assistive tech to hand every keystroke to this element, and nothing here listens. Add an `onKeyDown`.',
+        },
+      },
+      {
+        isViolated:
+          pointer.includes("onClick") &&
+          keys.length === 0 &&
+          !nativelyInteractive &&
+          !isComponent &&
+          !MANAGED_ROLES.has(role),
+        finding: {
+          ...at,
+          code: "click-no-key",
+          severity: "error",
+          message:
+            "`onClick` with no keyboard equivalent. Mouse-only operation fails WCAG 2.1.1.",
+        },
+      },
+      {
+        isViolated:
+          FOCUSABLE_ROLES.has(role) &&
+          !nativelyInteractive &&
+          !has({ tag, name: "tabIndex" }),
+        finding: {
+          ...at,
+          code: "role-not-focusable",
+          severity: "error",
+          message: `\`role="${role}"\` is not reachable by Tab. Add \`tabIndex={0}\`.`,
+        },
+      },
+      {
+        isViolated:
+          has({ tag, name: "tabIndex" }) &&
+          !nativelyInteractive &&
+          !isComponent &&
+          !role &&
+          !/-1/.test(tabIndex),
+        finding: {
+          ...at,
+          code: "noninteractive-tabindex",
+          severity: "warn",
+          message:
+            "`tabIndex` on an element with no role puts an unnamed stop in the tab order.",
+        },
+      },
+      {
+        isViolated:
+          wantsName &&
+          !isLinkWithoutHref &&
+          !accessibleName({ file, tag, index }),
+        finding: {
+          ...at,
+          code: "control-no-name",
+          severity: "error",
+          message:
+            "control has no accessible name. Add `aria-label`, or text content that is not `aria-hidden`.",
+        },
+      },
+    ] as const satisfies ReadonlyArray<{
+      isViolated: boolean;
+      finding: Finding;
+    }>;
+
+    return rules.flatMap(({ isViolated, finding }) =>
+      isViolated ? [finding] : [],
+    );
   });
 }
 

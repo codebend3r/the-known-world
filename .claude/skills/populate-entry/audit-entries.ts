@@ -166,7 +166,7 @@ function nonWhitespaceLength(body: string): number {
 
 function median(values: readonly number[]): number {
   if (values.length === 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
+  const sorted = values.toSorted((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
   return sorted.length % 2 === 0
     ? Math.round((sorted[middle - 1] + sorted[middle]) / 2)
@@ -401,7 +401,7 @@ const audits: CollectionAudit[] = [
 
 const ranked = audits
   .flatMap((audit) => audit.findings)
-  .sort(
+  .toSorted(
     (a, b) =>
       b.score - a.score ||
       a.bodyChars - b.bodyChars ||
