@@ -18,14 +18,14 @@ const listeners = new Set<() => void>();
 
 // Private browsing can refuse both reads and writes. The preference then lives
 // for the session only, which beats a switch that visibly refuses to move.
-let fallback = false;
+let isFallbackOn = false;
 
 function read(): boolean {
   if (typeof window === "undefined") return false;
   try {
     return window.localStorage.getItem(SPOILERS_STORAGE_KEY) === ON;
   } catch {
-    return fallback;
+    return isFallbackOn;
   }
 }
 
@@ -51,12 +51,12 @@ function getServerSnapshot(): boolean {
   return false;
 }
 
-export function setSpoilers(next: boolean): void {
-  fallback = next;
+export function setSpoilers(isOn: boolean): void {
+  isFallbackOn = isOn;
   try {
-    window.localStorage.setItem(SPOILERS_STORAGE_KEY, next ? ON : OFF);
+    window.localStorage.setItem(SPOILERS_STORAGE_KEY, isOn ? ON : OFF);
   } catch {
-    // Nothing to do: `fallback` already carries it for this session.
+    // Nothing to do: `isFallbackOn` already carries it for this session.
   }
   emit();
 }

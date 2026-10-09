@@ -5,7 +5,7 @@ describe("memoize", () => {
   it("runs the loader once across repeated calls when enabled", async () => {
     let calls = 0;
     const load = memoize({
-      enabled: true,
+      isEnabled: true,
       load: async () => {
         calls += 1;
         return calls;
@@ -18,7 +18,7 @@ describe("memoize", () => {
 
   it("returns the identical resolved reference on a hit", async () => {
     const value = { name: "House Stark" };
-    const load = memoize({ enabled: true, load: async () => value });
+    const load = memoize({ isEnabled: true, load: async () => value });
     expect(await load()).toBe(await load());
     expect(await load()).toBe(value);
   });
@@ -26,7 +26,7 @@ describe("memoize", () => {
   it("runs the loader on every call when disabled", async () => {
     let calls = 0;
     const load = memoize({
-      enabled: false,
+      isEnabled: false,
       load: async () => {
         calls += 1;
         return calls;
@@ -40,7 +40,7 @@ describe("memoize", () => {
   it("shares one in-flight load between concurrent callers", async () => {
     let calls = 0;
     const load = memoize({
-      enabled: true,
+      isEnabled: true,
       load: async () => {
         calls += 1;
         await Promise.resolve();
@@ -53,7 +53,7 @@ describe("memoize", () => {
 
   it("propagates a rejection to the caller", () => {
     const load = memoize({
-      enabled: true,
+      isEnabled: true,
       load: async () => {
         throw new Error("missing frontmatter");
       },
@@ -66,7 +66,7 @@ describe("memoizeBySlug", () => {
   it("caches each slug independently", async () => {
     const calls: string[] = [];
     const load = memoizeBySlug({
-      enabled: true,
+      isEnabled: true,
       load: async (slug: string) => {
         calls.push(slug);
         return slug.toUpperCase();
@@ -81,7 +81,7 @@ describe("memoizeBySlug", () => {
   it("runs the loader on every call when disabled", async () => {
     const calls: string[] = [];
     const load = memoizeBySlug({
-      enabled: false,
+      isEnabled: false,
       load: async (slug: string) => {
         calls.push(slug);
         return slug;
@@ -95,7 +95,7 @@ describe("memoizeBySlug", () => {
   it("shares one in-flight load per slug between concurrent callers", async () => {
     const calls: string[] = [];
     const load = memoizeBySlug({
-      enabled: true,
+      isEnabled: true,
       load: async (slug: string) => {
         calls.push(slug);
         await Promise.resolve();

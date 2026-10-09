@@ -85,8 +85,8 @@ function formatLabel(person: LayoutPerson): string {
 function dotClassName(p: LayoutPerson): string {
   return cx(
     styles.dot,
-    p.placeholder && styles.dotPlaceholder,
-    p.external && styles.dotExternal,
+    p.isPlaceholder && styles.dotPlaceholder,
+    p.isExternal && styles.dotExternal,
   );
 }
 
@@ -162,7 +162,7 @@ type DragState = {
   startClientY: number;
   startTx: number;
   startTy: number;
-  captured: boolean;
+  isCaptured: boolean;
 };
 
 type PinchState = {
@@ -294,7 +294,7 @@ export function FamilyTreeChart({ chart }: Props) {
           const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
           if (
             isLinkable({
-              placeholder: p.placeholder,
+              isPlaceholder: p.isPlaceholder,
               characterSlug: p.characterSlug,
             })
           ) {
@@ -500,7 +500,7 @@ export function FamilyTreeChart({ chart }: Props) {
         startClientY: e.clientY,
         startTx: transform.tx,
         startTy: transform.ty,
-        captured: false,
+        isCaptured: false,
       };
       // No pointer capture and no isDragging yet, wait for movement past
       // DRAG_THRESHOLD so taps still reach the underlying <a> as plain clicks.
@@ -552,12 +552,12 @@ export function FamilyTreeChart({ chart }: Props) {
     if (!d || d.pointerId !== e.pointerId) return;
     const dx = e.clientX - d.startClientX;
     const dy = e.clientY - d.startClientY;
-    if (!d.captured) {
+    if (!d.isCaptured) {
       if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) {
         return;
       }
       e.currentTarget.setPointerCapture?.(e.pointerId);
-      d.captured = true;
+      d.isCaptured = true;
       setIsDragging(true);
     }
     const { deltaScale } = getScreenToViewBox({ svg: svgRef.current, bounds });
@@ -579,7 +579,7 @@ export function FamilyTreeChart({ chart }: Props) {
         startClientY: remaining.y,
         startTx: transform.tx,
         startTy: transform.ty,
-        captured: true,
+        isCaptured: true,
       };
       setIsDragging(true);
       return;

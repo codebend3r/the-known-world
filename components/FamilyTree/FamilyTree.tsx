@@ -8,7 +8,7 @@ type NameProps = {
   slug: string | null;
   name: string;
   alias: string | null;
-  placeholder: boolean;
+  isPlaceholder: boolean;
   className: string;
 };
 
@@ -25,10 +25,10 @@ function CharacterName({
   slug,
   name,
   alias,
-  placeholder,
+  isPlaceholder,
   className,
 }: NameProps) {
-  if (slug && !placeholder) {
+  if (slug && !isPlaceholder) {
     return (
       <Link href={`/characters/${slug}/`} className={className}>
         <NameContent name={name} alias={alias} />
@@ -75,8 +75,8 @@ function PersonLabel({ node }: { node: TreeNode }) {
   const className = cx(
     styles.name,
     sexClass(node.sex),
-    node.placeholder && styles.namePlaceholder,
-    node.external && styles.nameExternal,
+    node.isPlaceholder && styles.namePlaceholder,
+    node.isExternal && styles.nameExternal,
   );
   return (
     <span className={styles.person}>
@@ -86,7 +86,7 @@ function PersonLabel({ node }: { node: TreeNode }) {
         slug={node.slug}
         name={node.name}
         alias={node.alias}
-        placeholder={node.placeholder}
+        isPlaceholder={node.isPlaceholder}
         className={className}
       />
       {lifespan && <span className={styles.lifespan}>{lifespan}</span>}
@@ -95,7 +95,7 @@ function PersonLabel({ node }: { node: TreeNode }) {
 }
 
 function NodeRow({ node }: { node: TreeNode }) {
-  const rowClass = cx(styles.row, node.placeholder && styles.rowPlaceholder);
+  const rowClass = cx(styles.row, node.isPlaceholder && styles.rowPlaceholder);
   return (
     <div className={rowClass}>
       <PersonLabel node={node} />
@@ -103,8 +103,8 @@ function NodeRow({ node }: { node: TreeNode }) {
         const className = cx(
           styles.name,
           sexClass(spouse.sex),
-          spouse.placeholder && styles.namePlaceholder,
-          !spouse.inHouse && styles.nameExternal,
+          spouse.isPlaceholder && styles.namePlaceholder,
+          !spouse.isInHouse && styles.nameExternal,
         );
         return (
           <span key={spouse.slug ?? spouse.name} className={styles.spouse}>
@@ -117,7 +117,7 @@ function NodeRow({ node }: { node: TreeNode }) {
               slug={spouse.slug}
               name={spouse.name}
               alias={spouse.alias}
-              placeholder={spouse.placeholder}
+              isPlaceholder={spouse.isPlaceholder}
               className={className}
             />
           </span>

@@ -31,7 +31,7 @@ export default async function HousesPage() {
         name: shortHouseName(h.frontmatter.name),
         region,
         regionLabel: regionLabel(region),
-        extinct: h.frontmatter.status === "extinct",
+        isExtinct: h.frontmatter.status === "extinct",
         rank: h.frontmatter.rank,
       };
     })
@@ -48,7 +48,7 @@ export default async function HousesPage() {
       />
       <Suspense
         fallback={
-          <ListSearchSkeleton placeholder="Search houses…" withControls />
+          <ListSearchSkeleton placeholder="Search houses…" hasControls />
         }
       >
         <FilteredHouseList items={items} />
