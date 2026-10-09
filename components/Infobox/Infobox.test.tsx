@@ -7,10 +7,13 @@ const ned: HouseInfoEntry = { slug: "eddard-stark", name: "Eddard Stark" };
 const benjen: HouseInfoEntry = { slug: "benjen-stark", name: "Benjen Stark" };
 const unnamed: HouseInfoEntry = { name: "The Ned's steward" };
 
-function renderEntry(
-  entry: HouseInfoEntry,
-  extra: Record<string, unknown> = {},
-) {
+function renderEntry({
+  entry,
+  extra = {},
+}: {
+  entry: HouseInfoEntry;
+  extra?: Record<string, unknown>;
+}) {
   return render(
     <ul>
       <InfoEntry entry={entry} {...extra} />
@@ -20,42 +23,51 @@ function renderEntry(
 
 describe("InfoEntry", () => {
   it("links an entry that has a slug and a prefix", () => {
-    renderEntry(ned, { hrefPrefix: "/characters" });
+    renderEntry({ entry: ned, extra: { hrefPrefix: "/characters" } });
     const link = screen.getByRole("link", { name: "Eddard Stark" });
     expect(link.getAttribute("href")).toBe("/characters/eddard-stark/");
   });
 
   it("renders plain text when no prefix is supplied", () => {
-    renderEntry(ned);
+    renderEntry({ entry: ned });
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.getByText("Eddard Stark")).toBeDefined();
   });
 
   it("renders plain text when the slug has no entry of its own", () => {
-    renderEntry(ned, { hrefPrefix: "/characters", exists: () => false });
+    renderEntry({
+      entry: ned,
+      extra: { hrefPrefix: "/characters", exists: () => false },
+    });
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.getByText("Eddard Stark")).toBeDefined();
   });
 
   it("renders plain text for a slugless entry", () => {
-    renderEntry(unnamed, { hrefPrefix: "/characters" });
+    renderEntry({ entry: unnamed, extra: { hrefPrefix: "/characters" } });
     expect(screen.queryByRole("link")).toBeNull();
     expect(screen.getByText("The Ned's steward")).toBeDefined();
   });
 
   it("hangs a parenthesised note beside the name", () => {
-    renderEntry({ ...ned, note: "beheaded" }, { hrefPrefix: "/characters" });
+    renderEntry({
+      entry: { ...ned, note: "beheaded" },
+      extra: { hrefPrefix: "/characters" },
+    });
     const note = screen.getByText("(beheaded)");
     expect(note.className).toBe("note");
   });
 
   it("passes the entry slug to the existence probe", () => {
     const asked: string[] = [];
-    renderEntry(ned, {
-      hrefPrefix: "/characters",
-      exists: (slug: string) => {
-        asked.push(slug);
-        return true;
+    renderEntry({
+      entry: ned,
+      extra: {
+        hrefPrefix: "/characters",
+        exists: (slug: string) => {
+          asked.push(slug);
+          return true;
+        },
       },
     });
     expect(asked).toEqual(["eddard-stark"]);

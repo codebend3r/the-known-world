@@ -11,9 +11,16 @@ function character(data: CharacterInput) {
 
 const baseDate = { year: 0, era: "AC", precision: "year" as const };
 
-function findNode(roots: TreeNode[], slug: string): TreeNode | null {
+function findNode({
+  roots,
+  slug,
+}: {
+  roots: TreeNode[];
+  slug: string;
+}): TreeNode | null {
   return roots.reduce<TreeNode | null>(
-    (found, r) => found ?? (r.slug === slug ? r : findNode(r.children, slug)),
+    (found, r) =>
+      found ?? (r.slug === slug ? r : findNode({ roots: r.children, slug })),
     null,
   );
 }
@@ -441,10 +448,13 @@ describe("buildFamilyTree", () => {
     const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("gerold");
-    const tywin = findNode(tree, "tywin");
+    const tywin = findNode({ roots: tree, slug: "tywin" });
     expect(tywin).not.toBeNull();
     expect(tywin?.spouses.map((s) => s.slug)).toEqual(["joanna"]);
-    const joannaUnderFather = findNode([tree[0].children[1]], "joanna");
+    const joannaUnderFather = findNode({
+      roots: [tree[0].children[1]],
+      slug: "joanna",
+    });
     expect(joannaUnderFather).toBeNull();
   });
 });

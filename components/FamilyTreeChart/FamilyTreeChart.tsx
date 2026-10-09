@@ -96,19 +96,25 @@ function clampScale(scale: number): number {
 
 type ScreenToViewBox = {
   /** Convert screen coordinates to viewBox coordinates. */
-  point: (clientX: number, clientY: number) => { x: number; y: number };
+  point: (client: { clientX: number; clientY: number }) => {
+    x: number;
+    y: number;
+  };
   /** Multiply a screen-pixel delta by this to get a viewBox-unit delta. */
   deltaScale: number;
 };
 
-function getScreenToViewBox(
-  svg: SVGSVGElement | null,
-  bounds: { width: number; height: number },
-): ScreenToViewBox {
+function getScreenToViewBox({
+  svg,
+  bounds,
+}: {
+  svg: SVGSVGElement | null;
+  bounds: { width: number; height: number };
+}): ScreenToViewBox {
   const rect = svg?.getBoundingClientRect();
   if (!rect || !rect.width || !rect.height) {
     return {
-      point: (clientX, clientY) => ({ x: clientX, y: clientY }),
+      point: ({ clientX, clientY }) => ({ x: clientX, y: clientY }),
       deltaScale: 1,
     };
   }
@@ -122,7 +128,7 @@ function getScreenToViewBox(
   const offsetY = (rect.height - renderedH) / 2;
   const deltaScale = 1 / renderedScale;
   return {
-    point: (clientX, clientY) => ({
+    point: ({ clientX, clientY }) => ({
       x: (clientX - rect.left - offsetX) * deltaScale,
       y: (clientY - rect.top - offsetY) * deltaScale,
     }),
@@ -320,8 +326,11 @@ export function FamilyTreeChart({ chart }: Props) {
     if (!svg) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
-      const { point } = getScreenToViewBox(svg, bounds);
-      const { x: viewBoxX, y: viewBoxY } = point(e.clientX, e.clientY);
+      const { point } = getScreenToViewBox({ svg, bounds });
+      const { x: viewBoxX, y: viewBoxY } = point({
+        clientX: e.clientX,
+        clientY: e.clientY,
+      });
       const sensitivity = e.ctrlKey
         ? PINCH_WHEEL_SENSITIVITY
         : WHEEL_SENSITIVITY;
@@ -499,8 +508,8 @@ export function FamilyTreeChart({ chart }: Props) {
       e.currentTarget.setPointerCapture?.(e.pointerId);
       const [a, b] = pointerListToArray(pointersRef.current);
       const m = midpoint({ a, b });
-      const { point } = getScreenToViewBox(svgRef.current, bounds);
-      const anchor = point(m.x, m.y);
+      const { point } = getScreenToViewBox({ svg: svgRef.current, bounds });
+      const anchor = point({ clientX: m.x, clientY: m.y });
       pinchRef.current = {
         startDistance: distance({ a, b }),
         startScale: transform.scale,
@@ -551,7 +560,7 @@ export function FamilyTreeChart({ chart }: Props) {
       d.captured = true;
       setIsDragging(true);
     }
-    const { deltaScale } = getScreenToViewBox(svgRef.current, bounds);
+    const { deltaScale } = getScreenToViewBox({ svg: svgRef.current, bounds });
     setTransform((t) => ({
       ...t,
       tx: d.startTx + dx * deltaScale,
