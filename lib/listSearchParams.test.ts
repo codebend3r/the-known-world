@@ -47,7 +47,7 @@ describe("searchParser", () => {
 describe("listSearchParsers", () => {
   it("builds the search/dir/size/page parser map with the given size default", () => {
     const parsers = listSearchParsers(48);
-    expect(Object.keys(parsers).sort()).toEqual([
+    expect(Object.keys(parsers).toSorted()).toEqual([
       "dir",
       "page",
       "search",

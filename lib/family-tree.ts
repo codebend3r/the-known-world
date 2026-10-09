@@ -64,7 +64,7 @@ export function buildFamilyTree({
 
   const roots = housePeople
     .filter((p) => p.parents.every((parent) => !houseSlugs.has(parent)))
-    .sort(compareRoots);
+    .toSorted(compareRoots);
 
   const visited = new Set<string>();
 

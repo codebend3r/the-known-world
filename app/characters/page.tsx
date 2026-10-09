@@ -47,7 +47,7 @@ export default async function CharactersPage() {
       }),
       portrait: portraits[i],
     }))
-    .sort(compareByName);
+    .toSorted(compareByName);
 
   return (
     <PlateLayout>

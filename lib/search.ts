@@ -35,7 +35,7 @@ export function filterByName<
       return { item, i, r: Math.min(nameRank, aliasRank) };
     })
     .filter((m) => m.r !== Infinity)
-    .sort((a, b) => {
+    .toSorted((a, b) => {
       if (a.r !== b.r) return a.r - b.r;
       return a.i - b.i;
     })

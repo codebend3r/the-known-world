@@ -91,7 +91,7 @@ describe("selectVisibleCastles", () => {
       castles,
       layers: new Set<MapLayer>(["castle", "ruin"]),
     });
-    expect(visible.map((entry) => entry.frontmatter.slug).sort()).toEqual([
+    expect(visible.map((entry) => entry.frontmatter.slug).toSorted()).toEqual([
       "a",
       "c",
     ]);

@@ -49,7 +49,7 @@ describe("compareByName", () => {
       { name: "Stark" },
       { name: "Arryn" },
       { name: "Lannister" },
-    ].sort(compareByName);
+    ].toSorted(compareByName);
     expect(sorted.map((item) => item.name)).toEqual([
       "Arryn",
       "Lannister",

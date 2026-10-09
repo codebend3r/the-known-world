@@ -119,7 +119,7 @@ function clusterColumn({
   events: TimelineEvent[];
   yFor: (year: number) => number;
 }): TimelineNode[] {
-  const sorted = [...events].sort(
+  const sorted = events.toSorted(
     (a, b) => a.year - b.year || a.name.localeCompare(b.name),
   );
 
