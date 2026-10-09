@@ -1,6 +1,12 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import { useQueryState, useQueryStates, parseAsStringLiteral } from "nuqs";
 import { Accordion } from "@/components/Accordion";
@@ -19,7 +25,7 @@ import {
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
-import type { HouseRank } from "@/lib/schemas";
+import type { House, HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
 import { exhaustiveList } from "@/lib/exhaustive-list";
@@ -37,9 +43,7 @@ import {
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList/FilteredHouseList.module.scss";
 
-export type HouseItem = {
-  slug: string;
-  name: string;
+export type HouseItem = Pick<House, "slug" | "name"> & {
   region: RegionSlug | null;
   regionLabel: string | null;
   isExtinct?: boolean;
@@ -50,6 +54,8 @@ type Props = {
   items: HouseItem[];
   pageSize?: number;
 };
+
+type CardArgs = { item: HouseItem; priority: boolean };
 
 const VIEW_STORAGE_KEY = "gota:houses-view";
 const GROUPING_STORAGE_KEY = "gota:houses-grouping";
@@ -241,13 +247,7 @@ export function FilteredHouseList({
 
   const listClass = cx(styles.list, view === "list" && styles.listView);
 
-  const renderCard = ({
-    item,
-    priority,
-  }: {
-    item: HouseItem;
-    priority: boolean;
-  }) => {
+  const renderCard = ({ item, priority }: CardArgs) => {
     const regionClass = item.region
       ? REGION_CARD_CLASS[item.region]
       : undefined;
@@ -289,7 +289,9 @@ export function FilteredHouseList({
     );
   };
 
-  const renderPagination = (position: "top" | "bottom") => (
+  const renderPagination = (
+    position: ComponentProps<typeof ListPagination>["position"],
+  ) => (
     <ListPagination
       currentPage={currentPage}
       totalPages={totalPages}
@@ -397,7 +399,7 @@ function RegionAccordion({
   isOpen: boolean;
   onToggle: () => void;
   listClass: string;
-  renderCard: (args: { item: HouseItem; priority: boolean }) => ReactNode;
+  renderCard: (args: CardArgs) => ReactNode;
 }) {
   const [query, setQuery] = useState("");
   const filtered = filterByName({ items: group.items, query });

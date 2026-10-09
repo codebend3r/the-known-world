@@ -9,12 +9,11 @@ import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
 import { searchParser } from "@/lib/listSearchParams";
 import type { RegionSlug } from "@/lib/regions";
+import type { Dragon } from "@/lib/schemas";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredDragonList/FilteredDragonList.module.scss";
 
-export type DragonItem = {
-  slug: string;
-  name: string;
+export type DragonItem = Pick<Dragon, "slug" | "name"> & {
   houseSlug: string | null;
   region: RegionSlug | null;
   regionLabel: string | null;
