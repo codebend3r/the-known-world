@@ -3,10 +3,12 @@
 import type { ReactNode } from "react";
 import styles from "@/components/ViewToggle/ViewToggle.module.scss";
 
-export type ViewMode = "grid" | "list";
+const VIEW_MODES = ["grid", "list"] as const;
+
+export type ViewMode = (typeof VIEW_MODES)[number];
 
 export function isViewMode(value: unknown): value is ViewMode {
-  return value === "grid" || value === "list";
+  return VIEW_MODES.some((mode) => mode === value);
 }
 
 type Option<T extends string> = {

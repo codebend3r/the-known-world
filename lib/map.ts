@@ -1,6 +1,7 @@
+import type { Loaded } from "@/lib/content";
+import { exhaustiveList } from "@/lib/exhaustive-list";
 import type { Battle, Castle, Coords, Event, House } from "@/lib/schemas";
 
-type Loaded<T> = { frontmatter: T; body: string; slug: string };
 type CastleType = Castle["type"];
 
 export type { Coords };
@@ -36,13 +37,13 @@ export type WorldMapMarker = {
   summary: string;
 };
 
-export const ALL_CASTLE_TYPES: CastleType[] = [
+export const ALL_CASTLE_TYPES = exhaustiveList<CastleType>()([
   "castle",
   "town",
   "ruin",
   "watchtower",
   "holdfast",
-];
+]);
 
 /**
  * One toggleable layer each. The five castle types keep their own layer so the

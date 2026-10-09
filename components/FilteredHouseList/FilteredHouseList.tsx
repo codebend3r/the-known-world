@@ -1,13 +1,19 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type ComponentProps,
+  type ReactNode,
+} from "react";
 import Link from "next/link";
 import { useQueryState, useQueryStates, parseAsStringLiteral } from "nuqs";
 import { Accordion } from "@/components/Accordion";
 import { ListPagination } from "@/components/ListPagination";
 import { ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
-import { SortToggle, type SortDirection } from "@/components/SortToggle";
+import { SortToggle } from "@/components/SortToggle";
 import {
   ViewToggle,
   GridIcon,
@@ -19,10 +25,11 @@ import {
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
 import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
-import type { HouseRank } from "@/lib/schemas";
+import type { House, HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
-import { REGION_SLUGS, regionLabel } from "@/lib/regions";
+import { exhaustiveList } from "@/lib/exhaustive-list";
+import { REGION_SLUGS, regionLabel, type RegionSlug } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
@@ -31,14 +38,13 @@ import {
   listSearchParsers,
   type PageSize,
   type Grouping,
+  type SortDirection,
 } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList/FilteredHouseList.module.scss";
 
-export type HouseItem = {
-  slug: string;
-  name: string;
-  region: string | null;
+export type HouseItem = Pick<House, "slug" | "name"> & {
+  region: RegionSlug | null;
   regionLabel: string | null;
   isExtinct?: boolean;
   rank?: HouseRank;
@@ -49,6 +55,8 @@ type Props = {
   pageSize?: number;
 };
 
+type CardArgs = { item: HouseItem; priority: boolean };
+
 const VIEW_STORAGE_KEY = "gota:houses-view";
 const GROUPING_STORAGE_KEY = "gota:houses-grouping";
 
@@ -57,7 +65,7 @@ const GROUPING_STORAGE_KEY = "gota:houses-grouping";
 // without negating lazy-loading for the rest of the list.
 const PRIORITY_COUNT = 8;
 
-const REGION_CARD_CLASS: Record<string, string | undefined> = {
+const REGION_CARD_CLASS = {
   north: styles.cardNorth,
   vale: styles.cardVale,
   riverlands: styles.cardRiverlands,
@@ -67,7 +75,7 @@ const REGION_CARD_CLASS: Record<string, string | undefined> = {
   dorne: styles.cardDorne,
   "iron-islands": styles.cardIronIslands,
   crownlands: styles.cardCrownlands,
-};
+} as const satisfies Record<RegionSlug, string>;
 
 const VIEW_OPTIONS = [
   { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },
@@ -83,16 +91,9 @@ const GROUP_OPTIONS = [
   },
 ];
 
-type RankFilter =
-  | "all"
-  | "royal"
-  | "lordly"
-  | "knightly"
-  | "other"
-  | "exiled"
-  | "extinct";
+type RankFilter = "all" | HouseRank;
 
-const RANK_FILTERS = [
+const RANK_FILTERS = exhaustiveList<RankFilter>()([
   "all",
   "royal",
   "lordly",
@@ -100,9 +101,9 @@ const RANK_FILTERS = [
   "other",
   "exiled",
   "extinct",
-] as const;
+]);
 
-const RANK_OPTIONS: { value: RankFilter; label: string }[] = [
+const RANK_OPTIONS = [
   { value: "all", label: "Any rank" },
   { value: "royal", label: "Royal" },
   { value: "lordly", label: "Lordly" },
@@ -110,18 +111,18 @@ const RANK_OPTIONS: { value: RankFilter; label: string }[] = [
   { value: "other", label: "Other" },
   { value: "exiled", label: "Exiled" },
   { value: "extinct", label: "Extinct" },
-];
+] as const satisfies ReadonlyArray<{ value: RankFilter; label: string }>;
 
 // Rank on a register row is categorical, so it renders as a mono datum rather
 // than the select's sentence-case option label.
-const RANK_LABEL: Record<HouseRank, string> = {
+const RANK_LABEL = {
   royal: "Royal house",
   lordly: "Lordly house",
   knightly: "Knightly house",
   other: "Minor house",
   exiled: "Exiled house",
   extinct: "Extinct line",
-};
+} as const satisfies Record<HouseRank, string>;
 
 function isRankFilter(value: string): value is RankFilter {
   return RANK_FILTERS.some((filter) => filter === value);
@@ -246,13 +247,7 @@ export function FilteredHouseList({
 
   const listClass = cx(styles.list, view === "list" && styles.listView);
 
-  const renderCard = ({
-    item,
-    priority,
-  }: {
-    item: HouseItem;
-    priority: boolean;
-  }) => {
+  const renderCard = ({ item, priority }: CardArgs) => {
     const regionClass = item.region
       ? REGION_CARD_CLASS[item.region]
       : undefined;
@@ -294,7 +289,9 @@ export function FilteredHouseList({
     );
   };
 
-  const renderPagination = (position: "top" | "bottom") => (
+  const renderPagination = (
+    position: ComponentProps<typeof ListPagination>["position"],
+  ) => (
     <ListPagination
       currentPage={currentPage}
       totalPages={totalPages}
@@ -402,7 +399,7 @@ function RegionAccordion({
   isOpen: boolean;
   onToggle: () => void;
   listClass: string;
-  renderCard: (args: { item: HouseItem; priority: boolean }) => ReactNode;
+  renderCard: (args: CardArgs) => ReactNode;
 }) {
   const [query, setQuery] = useState("");
   const filtered = filterByName({ items: group.items, query });

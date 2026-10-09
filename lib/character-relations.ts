@@ -1,13 +1,12 @@
+import type { Character } from "@/lib/schemas";
+
 export type RelationRef = {
   slug: string;
   name: string;
   isLinkable: boolean;
 };
 
-type RelationSource = {
-  name: string;
-  placeholder: boolean;
-};
+type RelationSource = Pick<Character, "name" | "placeholder">;
 
 export function resolveRelations({
   slugs,

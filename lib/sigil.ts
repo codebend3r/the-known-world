@@ -1,3 +1,5 @@
+import type { RegionSlug } from "@/lib/regions";
+
 export const SIGIL_SLUGS = new Set([
   "stark",
   "lannister",
@@ -148,7 +150,7 @@ export const SIGIL_SLUGS = new Set([
   "unknown",
 ]);
 
-const REGION_FILE: Record<string, string> = {
+const REGION_FILE = {
   north: "the-north",
   vale: "the-vale",
   riverlands: "the-riverlands",
@@ -158,7 +160,7 @@ const REGION_FILE: Record<string, string> = {
   dorne: "dorne",
   "iron-islands": "iron-islands",
   crownlands: "crownlands",
-};
+} as const satisfies Record<RegionSlug, string>;
 
 const SLUG_ALIASES: Record<string, string> = {
   durrandon: "baratheon",
@@ -171,9 +173,9 @@ export function sigilFile({
   region,
 }: {
   slug: string;
-  region?: string | null;
+  region?: RegionSlug | null;
 }): string {
   if (SIGIL_SLUGS.has(slug)) return SLUG_ALIASES[slug] ?? slug;
-  if (region && REGION_FILE[region]) return REGION_FILE[region];
+  if (region) return REGION_FILE[region];
   return "unknown-westeros";
 }

@@ -2,6 +2,16 @@ export type Transform = { scale: number; tx: number; ty: number };
 
 export type Pointer = { x: number; y: number };
 
+// Signs are content deltas: panning the view up shifts the drawing down.
+export const PAN_DIRECTIONS = {
+  up: { x: 0, y: 1 },
+  down: { x: 0, y: -1 },
+  left: { x: 1, y: 0 },
+  right: { x: -1, y: 0 },
+} as const satisfies Record<string, Pointer>;
+
+export type PanDirection = keyof typeof PAN_DIRECTIONS;
+
 export function zoomAtPoint({
   current,
   scale,

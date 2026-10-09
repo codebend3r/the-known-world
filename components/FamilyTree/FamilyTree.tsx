@@ -1,14 +1,13 @@
 import Link from "next/link";
-import type { TreeNode } from "@/lib/family-tree";
+import type { TreeNode, TreeSpouse } from "@/lib/family-tree";
 import { cx } from "@/lib/cx";
 import { formatLifespan, wasKing } from "@/lib/family-tree-label";
 import styles from "@/components/FamilyTree/FamilyTree.module.scss";
 
-type NameProps = {
-  slug: string | null;
-  name: string;
-  alias: string | null;
-  isPlaceholder: boolean;
+type NameProps = Pick<
+  TreeSpouse,
+  "slug" | "name" | "alias" | "isPlaceholder"
+> & {
   className: string;
 };
 
@@ -42,7 +41,7 @@ function CharacterName({
   );
 }
 
-function GenderGlyph({ sex }: { sex: "m" | "f" | null }) {
+function GenderGlyph({ sex }: { sex: TreeNode["sex"] }) {
   if (sex === null) return null;
   return (
     <span
@@ -66,7 +65,7 @@ function KingMark({ titles }: { titles: string[] }) {
   );
 }
 
-function sexClass(sex: "m" | "f" | null): string | false {
+function sexClass(sex: TreeNode["sex"]): string | false {
   return sex ? (sex === "m" ? styles.nameM : styles.nameF) : false;
 }
 

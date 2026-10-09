@@ -1,10 +1,11 @@
+import type { Loaded } from "@/lib/content";
 import type { Character } from "@/lib/schemas";
 
 export type TreeSpouse = {
   slug: string | null;
   name: string;
   alias: string | null;
-  sex: "m" | "f" | null;
+  sex: Character["sex"];
   isPlaceholder: boolean;
   isInHouse: boolean;
   titles: string[];
@@ -14,7 +15,7 @@ export type TreeNode = {
   slug: string;
   name: string;
   alias: string | null;
-  sex: "m" | "f" | null;
+  sex: Character["sex"];
   isPlaceholder: boolean;
   isExternal: boolean;
   born: number | null;
@@ -23,8 +24,6 @@ export type TreeNode = {
   spouses: TreeSpouse[];
   children: TreeNode[];
 };
-
-type LoadedCharacter = { frontmatter: Character; body: string; slug: string };
 
 function birthYear(p: Character): number | null {
   return p.born ? p.born.year : null;
@@ -53,7 +52,7 @@ export function buildFamilyTree({
   people,
 }: {
   houseSlug: string;
-  people: LoadedCharacter[];
+  people: Array<Loaded<Character>>;
 }): TreeNode[] {
   const peopleBySlug = new Map(
     people.map((p) => [p.frontmatter.slug, p.frontmatter]),

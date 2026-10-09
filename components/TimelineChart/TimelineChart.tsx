@@ -17,11 +17,11 @@ type TimelineChartProps = {
   bodyId?: string;
 };
 
-const COLUMN_CLASS: Record<Landmass, string> = {
+const COLUMN_CLASS = {
   westeros: styles.columnWesteros,
   essos: styles.columnEssos,
   "summer-isles": styles.columnSummerIsles,
-};
+} as const satisfies Record<Landmass, string>;
 
 function nodeKey(node: TimelineNode): string {
   switch (node.kind) {
