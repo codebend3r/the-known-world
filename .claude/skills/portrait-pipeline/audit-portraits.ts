@@ -181,8 +181,10 @@ function inboundReferences({
       ...frontmatter.mentions,
     ]),
     ...houses.flatMap(({ frontmatter }) => [
-      ...(frontmatter.heads ?? []).map((head) => head.slug),
-      ...(frontmatter["notable-members"] ?? []).map((member) => member.slug),
+      ...(frontmatter.heads ?? []).flatMap((head) => head.slug ?? []),
+      ...(frontmatter["notable-members"] ?? []).flatMap(
+        (member) => member.slug ?? [],
+      ),
       ...frontmatter.mentions,
     ]),
     ...weapons.flatMap(({ frontmatter }) => [
