@@ -249,7 +249,7 @@ const orphans = [...byStem.entries()]
       .map((entry) => measured.find((m) => m.file === entry.file))
       .filter((entry) => !!entry),
   }))
-  .sort((a, b) => a.stem.localeCompare(b.stem));
+  .toSorted((a, b) => a.stem.localeCompare(b.stem));
 
 const duplicates = [...byStem.entries()]
   .filter(([stem]) => characterSlugs.has(stem))
@@ -287,7 +287,7 @@ const oversized = resolved
       entry.bytes > HEAVY_BYTES ||
       (entry.dimensions?.width ?? 0) > widthCeiling,
   )
-  .sort((a, b) => b.bytes - a.bytes);
+  .toSorted((a, b) => b.bytes - a.bytes);
 
 const offAspect = resolved
   .filter((entry) => {
@@ -295,7 +295,7 @@ const offAspect = resolved
     const { width, height } = entry.dimensions;
     return Math.abs(width / height - TARGET_ASPECT) > ASPECT_TOLERANCE;
   })
-  .sort((a, b) => a.file.localeCompare(b.file));
+  .toSorted((a, b) => a.file.localeCompare(b.file));
 
 const unreadable = measured.filter((entry) => entry.dimensions === null);
 
@@ -315,7 +315,9 @@ const uncovered = rendered
     house: c.frontmatter["primary-house"],
     references: references.get(c.frontmatter.slug) ?? 0,
   }))
-  .sort((a, b) => b.references - a.references || a.slug.localeCompare(b.slug));
+  .toSorted(
+    (a, b) => b.references - a.references || a.slug.localeCompare(b.slug),
+  );
 
 const errors = portraitIntegrityErrors({ files, characterSlugs });
 

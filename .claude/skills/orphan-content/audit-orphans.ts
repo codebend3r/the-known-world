@@ -430,7 +430,7 @@ function proseEdges(collections: Collections): Edge[] {
     new Map(),
   );
 
-  const forms = [...formToKey.keys()].sort((a, b) => b.length - a.length);
+  const forms = [...formToKey.keys()].toSorted((a, b) => b.length - a.length);
   if (forms.length === 0) return [];
   const pattern = new RegExp(
     `\\b(${forms.map((form) => form.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\b`,
@@ -593,7 +593,7 @@ const rows: Row[] = entries
       prose: (prose.get(key) ?? []).length,
       sources: [
         ...new Set(typedEdgesIn.map((edge) => edge.field)),
-      ].sort() satisfies string[],
+      ].toSorted() satisfies string[],
     };
   })
   .filter((row) => only === null || row.collection === only);
@@ -661,7 +661,7 @@ if (json) {
     orphans.length === 0
       ? "  none"
       : formatTable(
-          [...orphans].sort(byKey).map((row) => [`  ${row.key}`, row.name]),
+          orphans.toSorted(byKey).map((row) => [`  ${row.key}`, row.name]),
         ),
   );
 
@@ -673,8 +673,8 @@ if (json) {
       ? "  none"
       : formatTable([
           ["  KEY", "PROSE", "NAME"],
-          ...[...proseOnly]
-            .sort((a, b) => a.prose - b.prose || byKey(a, b))
+          ...proseOnly
+            .toSorted((a, b) => a.prose - b.prose || byKey(a, b))
             .map((row) => [`  ${row.key}`, String(row.prose), row.name]),
         ]),
   );
@@ -686,9 +686,7 @@ if (json) {
     mentionsOnly.length === 0
       ? "  none"
       : formatTable(
-          [...mentionsOnly]
-            .sort(byKey)
-            .map((row) => [`  ${row.key}`, row.name]),
+          mentionsOnly.toSorted(byKey).map((row) => [`  ${row.key}`, row.name]),
         ),
   );
 

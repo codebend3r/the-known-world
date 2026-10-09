@@ -290,7 +290,7 @@ const ranked: Candidate[] = unpopulated
     };
   })
   .filter((candidate) => state === null || candidate.state === state)
-  .sort((a, b) => b.demand - a.demand || a.slug.localeCompare(b.slug));
+  .toSorted((a, b) => b.demand - a.demand || a.slug.localeCompare(b.slug));
 
 if (json) {
   console.log(JSON.stringify(ranked.slice(0, limit), null, 2));

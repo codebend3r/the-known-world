@@ -142,7 +142,7 @@ const defects = dateIntegrityDefects({
   weapons,
 })
   .filter((defect) => collection === null || defect.collection === collection)
-  .sort(
+  .toSorted(
     (a, b) =>
       DATE_DEFECT_CLASSES.indexOf(a.defect) -
         DATE_DEFECT_CLASSES.indexOf(b.defect) ||
