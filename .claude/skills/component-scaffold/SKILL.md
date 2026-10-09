@@ -327,12 +327,14 @@ printf 'export * from "@/components/Foo/Foo";\n' > components/Foo/index.ts
 # Verify. All four must pass before committing.
 bun install --frozen-lockfile
 bun format
-bun run check          # typecheck + lint:ts + lint:css + test
+bun run typecheck
+bun run lint
+bun run test
 bun run build
 
 # Narrower loops.
 bun test components/Foo
-bun run lint:css:fix
+bun run lint:scss:fix
 ```
 
 The audit exits 1 when it reports anything, so it can gate a hook or a CI step.

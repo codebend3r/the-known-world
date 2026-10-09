@@ -101,8 +101,10 @@ bun .claude/skills/new-content-type/audit-wiring.ts --json
 rg -n '"(battles|castles|characters|dragons|events|houses|weapons)"' lib/content.ts
 rg -n 'eyebrow="Collection' app
 
-# Verify. `check` is typecheck + lint:ts + lint:css + test.
-bun run check
+# Verify.
+bun run typecheck
+bun run lint
+bun run test
 bun run build      # the only thing that proves the new routes prerender
 ```
 
