@@ -1,4 +1,5 @@
 import { describe, it, expect } from "bun:test";
+import type { CalendarDate } from "@/lib/schemas";
 import {
   formatBattleWhen,
   isApproximate,
@@ -12,7 +13,7 @@ const d = ({
 }: {
   year: number;
   era: "AC" | "BC";
-  precision: "exact" | "year" | "decade" | "era" | "legendary";
+  precision: CalendarDate["precision"];
 }) => ({ year, era, precision });
 
 describe("formatBattleWhen", () => {

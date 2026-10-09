@@ -1,13 +1,9 @@
-import type { Castle, House, Character, Event } from "@/lib/schemas";
+import type { Collections } from "@/lib/content";
 
-type Loaded<T> = { frontmatter: T; body: string; slug: string };
-
-export type ContentSet = {
-  castles: Array<Loaded<Castle>>;
-  houses: Array<Loaded<House>>;
-  characters: Array<Loaded<Character>>;
-  events: Array<Loaded<Event>>;
-};
+export type ContentSet = Pick<
+  Collections,
+  "castles" | "houses" | "characters" | "events"
+>;
 
 export type RelationGraph = {
   castleByHouse: Map<string, string[]>; // house slug → castle slugs whose liege-house is this house
