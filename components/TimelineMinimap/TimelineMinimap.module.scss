@@ -45,8 +45,8 @@
   border-radius: var(--tkw-radius-xs);
   font-variant-numeric: tabular-nums;
   transition:
-    color 0.18s ease,
-    background 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease),
+    background var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

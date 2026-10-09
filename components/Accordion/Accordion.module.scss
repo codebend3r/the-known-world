@@ -42,7 +42,7 @@
   letter-spacing: var(--ls-section);
   text-transform: uppercase;
   text-align: left;
-  transition: color 0.18s ease;
+  transition: color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {
@@ -57,7 +57,7 @@
 
 .chevron {
   color: var(--tkw-gold);
-  transition: transform 150ms ease;
+  transition: transform var(--tkw-dur-fast) var(--tkw-ease);
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;

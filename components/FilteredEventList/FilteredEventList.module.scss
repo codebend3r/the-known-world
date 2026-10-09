@@ -32,8 +32,8 @@
   text-decoration: none;
   color: var(--tkw-ink-body);
   transition:
-    background-color 0.18s ease,
-    padding-left 0.18s ease;
+    background-color var(--tkw-dur) var(--tkw-ease),
+    padding-left var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {
