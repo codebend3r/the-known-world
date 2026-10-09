@@ -11,6 +11,7 @@ import {
   lastQueryString,
   lastSearchParams,
 } from "@/lib/testNuqs";
+import { expectElement } from "@/test/dom";
 
 const items: HouseItem[] = [
   { slug: "stark", name: "Stark", region: "north", regionLabel: "The North" },
@@ -225,7 +226,10 @@ describe("FilteredHouseList search persistence", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />, {
       searchParams: "?search=stark",
     });
-    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    const input = expectElement({
+      element: screen.getByRole("searchbox"),
+      type: HTMLInputElement,
+    });
     expect(input.value).toBe("stark");
     const cards = container.querySelectorAll(".item");
     expect(cards.length).toBe(1);
@@ -385,9 +389,9 @@ describe("FilteredHouseList pagination", () => {
 
   it("disables Next on the last page", () => {
     renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
-    const nextButtons = screen.getAllByRole("button", {
-      name: /next page/i,
-    }) as HTMLButtonElement[];
+    const nextButtons = screen
+      .getAllByRole("button", { name: /next page/i })
+      .map((element) => expectElement({ element, type: HTMLButtonElement }));
     fireEvent.click(nextButtons[0]);
     fireEvent.click(nextButtons[0]);
     expect(nextButtons.every((b) => b.disabled)).toBe(true);
@@ -430,9 +434,9 @@ describe("FilteredHouseList pagination", () => {
 describe("FilteredHouseList page size persistence", () => {
   it("renders the page-size selector with all four options and 24 selected by default", () => {
     renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     const optionLabels = Array.from(topSelect.options).map(
       (o) => o.textContent,
     );
@@ -446,9 +450,9 @@ describe("FilteredHouseList page size persistence", () => {
       { searchParams: "?size=48" },
     );
     expect(container.querySelectorAll(".item").length).toBe(48);
-    const selects = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const selects = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     expect(selects[0].value).toBe("48");
   });
 
@@ -456,9 +460,9 @@ describe("FilteredHouseList page size persistence", () => {
     const { onUrlUpdate } = renderWithNuqs(
       <FilteredHouseList items={manyItems(70)} pageSize={24} />,
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?size=48");
@@ -469,9 +473,9 @@ describe("FilteredHouseList page size persistence", () => {
       <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?size=48" },
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "24" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
@@ -479,13 +483,13 @@ describe("FilteredHouseList page size persistence", () => {
 
   it("keeps the top and bottom selectors in sync", () => {
     renderWithNuqs(<FilteredHouseList items={manyItems(70)} pageSize={24} />);
-    const selects = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const selects = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(selects[1], { target: { value: "120" } });
-    const after = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const after = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     expect(after[0].value).toBe("120");
     expect(after[1].value).toBe("120");
   });
@@ -495,9 +499,9 @@ describe("FilteredHouseList page size persistence", () => {
       <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?search=house" },
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastSearchParams(onUrlUpdate).get("search")).toBe("house");
@@ -566,9 +570,9 @@ describe("FilteredHouseList page persistence", () => {
       <FilteredHouseList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=2" },
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /houses per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /houses per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?size=48");
@@ -665,9 +669,10 @@ describe("FilteredHouseList rank filter", () => {
       searchParams: "?rank=lordly",
     });
     expect(screen.getAllByRole("link").length).toBe(2);
-    const select = screen.getByRole("combobox", {
-      name: /house rank/i,
-    }) as HTMLSelectElement;
+    const select = expectElement({
+      element: screen.getByRole("combobox", { name: /house rank/i }),
+      type: HTMLSelectElement,
+    });
     expect(select.value).toBe("lordly");
   });
 
