@@ -247,10 +247,6 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     return () => cancelAnimationFrame(frame);
   }, [isEditMode]);
 
-  // Tabbing to a hotspot that the current pan has scrolled out of view would
-  // leave focus on something invisible, so the view recentres on it at the
-  // current zoom. A hotspot already on screen (the usual case for a mouse
-  // click, which also focuses) is left where it is to avoid a jump.
   // Where a hotspot's centre currently sits on the stage, in screen pixels,
   // after the viewer's pan and zoom.
   const markerScreenPoint = (marker: WorldMapMarker) => {
@@ -267,6 +263,10 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     };
   };
 
+  // Tabbing to a hotspot that the current pan has scrolled out of view would
+  // leave focus on something invisible, so the view recentres on it at the
+  // current zoom. A hotspot already on screen (the usual case for a mouse
+  // click, which also focuses) is left where it is to avoid a jump.
   const revealMarker = (marker: WorldMapMarker) => {
     const inner = viewerRef.current?.Viewer ?? null;
     const point = markerScreenPoint(marker);

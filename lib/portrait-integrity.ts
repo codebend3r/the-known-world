@@ -130,7 +130,6 @@ export async function loadPortraitVariantDirs(): Promise<PortraitVariantDir[]> {
   );
 }
 
-/** Group every file on disk by the slug its name claims. */
 export function groupByStem(
   files: readonly PortraitFile[],
 ): Map<string, PortraitFile[]> {
