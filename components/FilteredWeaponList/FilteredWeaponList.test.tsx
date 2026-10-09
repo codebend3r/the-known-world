@@ -10,6 +10,7 @@ import {
   flushNuqs,
   lastQueryString,
 } from "@/lib/testNuqs";
+import { expectElement } from "@/test/dom";
 
 const items: WeaponItem[] = [
   {
@@ -103,7 +104,10 @@ describe("FilteredWeaponList", () => {
     renderWithNuqs(<FilteredWeaponList items={items} />, {
       searchParams: "?search=ice",
     });
-    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    const input = expectElement({
+      element: screen.getByRole("searchbox"),
+      type: HTMLInputElement,
+    });
     expect(input.value).toBe("ice");
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);

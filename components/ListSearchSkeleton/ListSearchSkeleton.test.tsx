@@ -1,11 +1,15 @@
 import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
+import { expectElement } from "@/test/dom";
 
 describe("ListSearchSkeleton", () => {
   it("renders a disabled search input with the given placeholder", () => {
     render(<ListSearchSkeleton placeholder="Search dragons…" />);
-    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    const input = expectElement({
+      element: screen.getByRole("searchbox"),
+      type: HTMLInputElement,
+    });
     expect(input.disabled).toBe(true);
     expect(input.placeholder).toBe("Search dragons…");
   });

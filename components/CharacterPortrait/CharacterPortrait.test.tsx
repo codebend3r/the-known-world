@@ -1,6 +1,7 @@
 import { describe, expect, it, spyOn } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { CharacterPortrait } from "@/components/CharacterPortrait";
+import { expectElement } from "@/test/dom";
 
 const PROPS = {
   image: "/characters/jon-snow.jpg",
@@ -10,8 +11,10 @@ const PROPS = {
 
 function renderPortrait() {
   const { container } = render(<CharacterPortrait {...PROPS} />);
-  const media = container.firstElementChild;
-  if (!(media instanceof HTMLElement)) throw new Error("expected a container");
+  const media = expectElement({
+    element: container.firstElementChild,
+    type: HTMLElement,
+  });
   const video = container.querySelector("video");
   if (!video) throw new Error("expected a video element");
   return { media, video, image: screen.getByAltText(PROPS.alt) };

@@ -9,6 +9,7 @@ import {
 } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { ComboboxItem } from "@/components/SearchCombobox";
+import { expectElement } from "@/test/dom";
 
 const push = jest.fn();
 
@@ -156,10 +157,12 @@ describe("SearchCombobox", () => {
 
   it("clears the query after navigating", () => {
     renderCombobox();
-    const input = screen.getByRole("combobox");
+    const input = expectElement({
+      element: screen.getByRole("combobox"),
+      type: HTMLInputElement,
+    });
     fireEvent.change(input, { target: { value: "stark" } });
     fireEvent.keyDown(input, { key: "Enter" });
-    if (!(input instanceof HTMLInputElement)) throw new Error("expected input");
     expect(input.value).toBe("");
   });
 });
