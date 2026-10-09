@@ -206,10 +206,13 @@ function indexFor(args: {
   });
 }
 
-async function renderWith(
-  source: string,
-  index: ProseLinkIndex,
-): Promise<string> {
+async function renderWith({
+  source,
+  index,
+}: {
+  source: string;
+  index: ProseLinkIndex;
+}): Promise<string> {
   return renderMarkdown({ source, proseLinks: index });
 }
 
@@ -218,10 +221,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "lyanna-stark" },
     });
-    const html = await renderWith(
-      "Betrothed to Catelyn Tully of Riverrun.",
+    const html = await renderWith({
+      source: "Betrothed to Catelyn Tully of Riverrun.",
       index,
-    );
+    });
     expect(html).toContain(
       '<a href="/characters/catelyn-tully/">Catelyn Tully</a>',
     );
@@ -231,10 +234,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith(
-      "Called *the Wild Wolf* for his temper.",
+    const html = await renderWith({
+      source: "Called *the Wild Wolf* for his temper.",
       index,
-    );
+    });
     expect(html).toContain(
       '<a href="/characters/brandon-stark/">the Wild Wolf</a>',
     );
@@ -245,7 +248,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith("Lord Rickard was burned alive.", index);
+    const html = await renderWith({
+      source: "Lord Rickard was burned alive.",
+      index,
+    });
     expect(html).not.toContain('<a href="/characters/rickard-stark/">');
     expect(html).toContain("Lord Rickard");
   });
@@ -258,7 +264,10 @@ describe("prose-links", () => {
         mentions: ["rickard-stark"],
       },
     });
-    const html = await renderWith("Lord Rickard was burned alive.", index);
+    const html = await renderWith({
+      source: "Lord Rickard was burned alive.",
+      index,
+    });
     expect(html).toContain('<a href="/characters/rickard-stark/">Rickard</a>');
   });
 
@@ -266,7 +275,7 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith("Stark of Winterfell.", index);
+    const html = await renderWith({ source: "Stark of Winterfell.", index });
     expect(html).not.toContain('<a href="/houses/stark/">');
   });
 
@@ -274,7 +283,7 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark", mentions: ["stark"] },
     });
-    const html = await renderWith("Stark of Winterfell.", index);
+    const html = await renderWith({ source: "Stark of Winterfell.", index });
     expect(html).toContain('<a href="/houses/stark/">Stark</a>');
   });
 
@@ -282,7 +291,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark", mentions: ["stark"] },
     });
-    const html = await renderWith("Brandon Stark rode south.", index);
+    const html = await renderWith({
+      source: "Brandon Stark rode south.",
+      index,
+    });
     expect(html).toContain(
       '<a href="/characters/brandon-stark/">Brandon Stark</a>',
     );
@@ -293,10 +305,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith(
-      "Catelyn Tully wed Eddard. Catelyn Tully was Lady of Winterfell.",
+    const html = await renderWith({
+      source: "Catelyn Tully wed Eddard. Catelyn Tully was Lady of Winterfell.",
       index,
-    );
+    });
     const matches = html.match(/href="\/characters\/catelyn-tully\/"/g) ?? [];
     expect(matches.length).toBe(1);
   });
@@ -305,7 +317,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "brandon-stark" },
     });
-    const html = await renderWith("Brandon Stark was the Wild Wolf.", index);
+    const html = await renderWith({
+      source: "Brandon Stark was the Wild Wolf.",
+      index,
+    });
     expect(html).not.toContain('<a href="/characters/brandon-stark/">');
   });
 
@@ -313,10 +328,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith(
-      "See [Catelyn Tully here](https://example.com).",
+    const html = await renderWith({
+      source: "See [Catelyn Tully here](https://example.com).",
       index,
-    );
+    });
     expect(html).not.toContain('href="/characters/catelyn-tully/"');
     expect(html).toContain('href="https://example.com"');
   });
@@ -325,10 +340,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith(
-      "The variable `Catelyn Tully` is reserved.",
+    const html = await renderWith({
+      source: "The variable `Catelyn Tully` is reserved.",
       index,
-    );
+    });
     expect(html).not.toContain('<a href="/characters/catelyn-tully/">');
     expect(html).toContain("<code>Catelyn Tully</code>");
   });
@@ -337,7 +352,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark" },
     });
-    const html = await renderWith("# Catelyn Tully\n\nA paragraph.", index);
+    const html = await renderWith({
+      source: "# Catelyn Tully\n\nA paragraph.",
+      index,
+    });
     expect(html).toContain("<h1>Catelyn Tully</h1>");
     expect(html).not.toContain('<a href="/characters/catelyn-tully/">');
   });
@@ -346,7 +364,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "eddard-stark", mentions: ["stark"] },
     });
-    const html = await renderWith("Stark's banner was raised.", index);
+    const html = await renderWith({
+      source: "Stark's banner was raised.",
+      index,
+    });
     expect(html).toContain('<a href="/houses/stark/">Stark</a>');
     expect(html).toContain("</a>'s banner");
   });
@@ -359,7 +380,10 @@ describe("prose-links", () => {
         mentions: ["rickard-stark", "made-up-slug", "another-fake"],
       },
     });
-    const html = await renderWith("Lord Rickard rode south.", index);
+    const html = await renderWith({
+      source: "Lord Rickard rode south.",
+      index,
+    });
     expect(html).toContain('<a href="/characters/rickard-stark/">Rickard</a>');
   });
 
@@ -367,7 +391,10 @@ describe("prose-links", () => {
     const index = indexFor({
       current: { kind: "character", slug: "brandon-stark" },
     });
-    const html = await renderWith("Put to death by Aerys II.", index);
+    const html = await renderWith({
+      source: "Put to death by Aerys II.",
+      index,
+    });
     expect(html).toContain(
       '<a href="/characters/aerys-ii-targaryen/">Aerys II</a>',
     );
@@ -389,7 +416,7 @@ describe("prose-links", () => {
     });
     const source =
       "Eldest son of Lord Rickard and heir to Winterfell, called *the Wild Wolf* for his hot blood and quick temper. Betrothed to Catelyn Tully of Riverrun, though they never wed. Rode south to King's Landing in 282 AC to demand satisfaction of Prince Rhaegar for the abduction of his sister Lyanna; was arrested for threatening a prince of the blood and put to death alongside his father by Aerys II.";
-    const html = await renderWith(source, index);
+    const html = await renderWith({ source, index });
     expect(html).toContain('<a href="/characters/rickard-stark/">Rickard</a>');
     expect(html).toContain(
       '<a href="/characters/catelyn-tully/">Catelyn Tully</a>',
@@ -419,10 +446,10 @@ describe("prose-links", () => {
       current: { kind: "character", slug: "eddard-stark" },
       characters: [draftChar, placeholderChar, RICKARD],
     });
-    const html = await renderWith(
-      "Rickard Stark, Ghost Author, and Unknown Mother walk in.",
+    const html = await renderWith({
+      source: "Rickard Stark, Ghost Author, and Unknown Mother walk in.",
       index,
-    );
+    });
     expect(html).toContain(
       '<a href="/characters/rickard-stark/">Rickard Stark</a>',
     );
@@ -554,10 +581,10 @@ describe("prose-links: castles, battles, and events", () => {
       current: { kind: "battle", slug: "burning-of-harrenhal" },
       castles: [HARRENHAL],
     });
-    const html = await renderWith(
-      "Harren's host sheltered inside Harrenhal.",
+    const html = await renderWith({
+      source: "Harren's host sheltered inside Harrenhal.",
       index,
-    );
+    });
     expect(html).toContain('<a href="/castles/harrenhal/">Harrenhal</a>');
   });
 
@@ -566,7 +593,10 @@ describe("prose-links: castles, battles, and events", () => {
       current: { kind: "event", slug: "the-purple-wedding" },
       castles: [TWINS],
     });
-    const html = await renderWith("Robb Stark rode for the Twins.", index);
+    const html = await renderWith({
+      source: "Robb Stark rode for the Twins.",
+      index,
+    });
     expect(html).toContain('the <a href="/castles/the-twins/">Twins</a>');
   });
 
@@ -576,10 +606,10 @@ describe("prose-links: castles, battles, and events", () => {
       houses: [DARRY_HOUSE],
       castles: [DARRY_CASTLE],
     });
-    const html = await renderWith(
-      "Lord Darry held the castle of Darry.",
+    const html = await renderWith({
+      source: "Lord Darry held the castle of Darry.",
       index,
-    );
+    });
     expect(html).toContain('<a href="/houses/darry/">Darry</a>');
     expect(html).not.toContain('href="/castles/darry/"');
   });
@@ -589,7 +619,10 @@ describe("prose-links: castles, battles, and events", () => {
       current: { kind: "character", slug: "robb-stark" },
       battles: [RED_WEDDING],
     });
-    const html = await renderWith("He was slain at the Red Wedding.", index);
+    const html = await renderWith({
+      source: "He was slain at the Red Wedding.",
+      index,
+    });
     expect(html).toContain(
       'the <a href="/battles/red-wedding/">Red Wedding</a>',
     );
@@ -600,10 +633,10 @@ describe("prose-links: castles, battles, and events", () => {
       current: { kind: "house", slug: "targaryen" },
       events: [DOOM],
     });
-    const html = await renderWith(
-      "They fled before the Doom of Valyria.",
+    const html = await renderWith({
+      source: "They fled before the Doom of Valyria.",
       index,
-    );
+    });
     expect(html).toContain(
       'the <a href="/events/doom-of-valyria/">Doom of Valyria</a>',
     );
@@ -614,10 +647,10 @@ describe("prose-links: castles, battles, and events", () => {
       current: { kind: "house", slug: "targaryen" },
       events: [DOOM],
     });
-    const html = await renderWith(
-      "After the Doom, Dragonstone stood alone.",
+    const html = await renderWith({
+      source: "After the Doom, Dragonstone stood alone.",
       index,
-    );
+    });
     expect(html).toContain('the <a href="/events/doom-of-valyria/">Doom</a>');
   });
 
@@ -627,7 +660,10 @@ describe("prose-links: castles, battles, and events", () => {
       castles: [ASHFORD],
       battles: [BATTLE_OF_ASHFORD],
     });
-    const html = await renderWith("He fell at the Battle of Ashford.", index);
+    const html = await renderWith({
+      source: "He fell at the Battle of Ashford.",
+      index,
+    });
     expect(html).toContain(
       '<a href="/battles/battle-of-ashford/">Battle of Ashford</a>',
     );
@@ -639,7 +675,10 @@ describe("prose-links: castles, battles, and events", () => {
       current: { kind: "battle", slug: "red-wedding" },
       battles: [RED_WEDDING],
     });
-    const html = await renderWith("The Red Wedding was a massacre.", index);
+    const html = await renderWith({
+      source: "The Red Wedding was a massacre.",
+      index,
+    });
     expect(html).not.toContain('href="/battles/red-wedding/"');
   });
 
@@ -649,7 +688,10 @@ describe("prose-links: castles, battles, and events", () => {
       castles: [PYKE],
       battles: [STORMING_OF_PYKE],
     });
-    const html = await renderWith("The walls of Pyke were breached.", index);
+    const html = await renderWith({
+      source: "The walls of Pyke were breached.",
+      index,
+    });
     expect(html).toContain('<a href="/castles/pyke/">Pyke</a>');
   });
 
@@ -659,10 +701,11 @@ describe("prose-links: castles, battles, and events", () => {
       castles: [PYKE],
       battles: [STORMING_OF_PYKE],
     });
-    const html = await renderWith(
-      "The Storming of Pyke ended the rebellion, and Pyke was left in ruins.",
+    const html = await renderWith({
+      source:
+        "The Storming of Pyke ended the rebellion, and Pyke was left in ruins.",
       index,
-    );
+    });
     expect(html).toContain('<a href="/battles/pyke/">The Storming of Pyke</a>');
     expect(html).toContain('<a href="/castles/pyke/">Pyke</a>');
   });
@@ -680,10 +723,10 @@ describe("prose-links: castles, battles, and events", () => {
         event({ slug: "ghost-feast", name: "The Ghost Feast", draft: true }),
       ],
     });
-    const html = await renderWith(
-      "Ghost Keep, the Ghost Fight, and the Ghost Feast.",
+    const html = await renderWith({
+      source: "Ghost Keep, the Ghost Fight, and the Ghost Feast.",
       index,
-    );
+    });
     expect(html).not.toContain("href=");
   });
 
@@ -725,10 +768,10 @@ describe("prose-links: shared names", () => {
       current: { kind: "dragon", slug: "meleys" },
       characters: [ELDER, YOUNGER],
     });
-    const html = await renderWith(
-      "Claimed by Princess Rhaenys Targaryen.",
+    const html = await renderWith({
+      source: "Claimed by Princess Rhaenys Targaryen.",
       index,
-    );
+    });
     expect(html).toContain(
       '<a href="/characters/rhaenys-targaryen/">Rhaenys Targaryen</a>',
     );
@@ -743,10 +786,10 @@ describe("prose-links: shared names", () => {
       },
       characters: [ELDER, YOUNGER],
     });
-    const html = await renderWith(
-      "Claimed by Princess Rhaenys Targaryen.",
+    const html = await renderWith({
+      source: "Claimed by Princess Rhaenys Targaryen.",
       index,
-    );
+    });
     expect(html).toContain(
       '<a href="/characters/rhaenys-targaryen-queen-who-never-was/">Rhaenys Targaryen</a>',
     );
