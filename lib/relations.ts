@@ -12,18 +12,26 @@ export type RelationGraph = {
   eventsByLocation: Map<string, string[]>; // castle slug → event slugs located there
 };
 
-function pushTo<K>(map: Map<K, string[]>, key: K, value: string) {
-  const existing = map.get(key) ?? [];
-  existing.push(value);
-  map.set(key, existing);
+function slugsByKey({
+  entries,
+}: {
+  entries: ReadonlyArray<{ key: string; slug: string }>;
+}): Map<string, string[]> {
+  return new Map(
+    [...Map.groupBy(entries, ({ key }) => key)].map(([key, group]) => [
+      key,
+      group.map(({ slug }) => slug),
+    ]),
+  );
 }
 
 export function buildRelationGraph(set: ContentSet): RelationGraph {
-  const castleByHouse = set.castles.reduce((acc, castle) => {
-    const houseSlug = castle.frontmatter["liege-house"];
-    if (houseSlug) pushTo(acc, houseSlug, castle.frontmatter.slug);
-    return acc;
-  }, new Map<string, string[]>());
+  const castleByHouse = slugsByKey({
+    entries: set.castles.flatMap(({ frontmatter }) => {
+      const houseSlug = frontmatter["liege-house"];
+      return houseSlug ? [{ key: houseSlug, slug: frontmatter.slug }] : [];
+    }),
+  });
 
   const houseBySeat = set.houses.reduce((acc, house) => {
     const seat = house.frontmatter.seat;
@@ -31,17 +39,23 @@ export function buildRelationGraph(set: ContentSet): RelationGraph {
     return acc;
   }, new Map<string, string>());
 
-  const membersByHouse = set.characters.reduce((acc, character) => {
-    const houseSlug = character.frontmatter["primary-house"];
-    if (houseSlug !== null) pushTo(acc, houseSlug, character.frontmatter.slug);
-    return acc;
-  }, new Map<string, string[]>());
+  const membersByHouse = slugsByKey({
+    entries: set.characters.flatMap(({ frontmatter }) => {
+      const houseSlug = frontmatter["primary-house"];
+      return houseSlug !== null
+        ? [{ key: houseSlug, slug: frontmatter.slug }]
+        : [];
+    }),
+  });
 
-  const eventsByLocation = set.events.reduce((acc, event) => {
-    const loc = event.frontmatter.location;
-    if (typeof loc === "string") pushTo(acc, loc, event.frontmatter.slug);
-    return acc;
-  }, new Map<string, string[]>());
+  const eventsByLocation = slugsByKey({
+    entries: set.events.flatMap(({ frontmatter }) => {
+      const loc = frontmatter.location;
+      return typeof loc === "string"
+        ? [{ key: loc, slug: frontmatter.slug }]
+        : [];
+    }),
+  });
 
   return { castleByHouse, houseBySeat, membersByHouse, eventsByLocation };
 }
