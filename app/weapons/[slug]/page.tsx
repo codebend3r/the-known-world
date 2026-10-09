@@ -14,6 +14,7 @@ import {
 } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { findWeaponImage } from "@/lib/weapon-image";
+import type { Weapon } from "@/lib/schemas";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: SlugPageProps) {
   };
 }
 
-const TYPE_NOUN: Record<string, string> = {
+const TYPE_NOUN = {
   sword: "sword",
   greatsword: "greatsword",
   longsword: "longsword",
@@ -47,15 +48,15 @@ const TYPE_NOUN: Record<string, string> = {
   bow: "bow",
   horn: "horn",
   other: "arm",
-};
+} as const satisfies Record<Weapon["type"], string>;
 
-const MATERIAL_ADJ: Record<string, string> = {
+const MATERIAL_ADJ = {
   "valyrian-steel": "Valyrian steel",
   dragonglass: "Dragonglass",
   dragonbone: "Dragonbone",
   steel: "Steel",
   other: "",
-};
+} as const satisfies Record<Weapon["material"], string>;
 
 export default async function WeaponPage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);

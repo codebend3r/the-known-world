@@ -15,7 +15,7 @@ type Props = {
   className?: string;
 };
 
-const TYPE_LABEL: Record<Weapon["type"], string> = {
+const TYPE_LABEL = {
   sword: "Sword",
   greatsword: "Greatsword",
   longsword: "Longsword",
@@ -25,27 +25,27 @@ const TYPE_LABEL: Record<Weapon["type"], string> = {
   bow: "Bow",
   horn: "Horn",
   other: "Other",
-};
+} as const satisfies Record<Weapon["type"], string>;
 
-const MATERIAL_LABEL: Record<Weapon["material"], string> = {
+const MATERIAL_LABEL = {
   "valyrian-steel": "Valyrian steel",
   dragonglass: "Dragonglass",
   dragonbone: "Dragonbone",
   steel: "Steel",
   other: "Other",
-};
+} as const satisfies Record<Weapon["material"], string>;
 
-const STATUS_LABEL: Record<Weapon["status"], string> = {
+const STATUS_LABEL = {
   extant: "Extant",
   lost: "Lost",
   destroyed: "Destroyed",
-};
+} as const satisfies Record<Weapon["status"], string>;
 
-const CURRENT_HOUSE_FALLBACK: Record<Weapon["status"], string> = {
+const CURRENT_HOUSE_FALLBACK = {
   extant: "—",
   lost: "Lost",
   destroyed: "Destroyed",
-};
+} as const satisfies Record<Weapon["status"], string>;
 
 export function WeaponInfobox({
   weapon,
