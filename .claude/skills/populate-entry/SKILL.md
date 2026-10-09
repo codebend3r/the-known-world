@@ -214,7 +214,8 @@ ls content/houses/<slug>.md          # confirm a house slug before referencing i
 ls content/characters/<slug>.md      # confirm a character slug
 
 bun run test                         # includes lib/content-integrity.test.ts
-bun run check                        # typecheck + lint:ts + lint:css + test
+bun run typecheck
+bun run lint
 bun run build                        # static export; run it after touching content/
 ```
 
