@@ -23,27 +23,46 @@ const COLUMN_CLASS: Record<Landmass, string> = {
   "summer-isles": styles.columnSummerIsles,
 };
 
-function ChartNode({ node }: { node: TimelineNode }) {
-  if (node.kind === "cluster") {
-    return (
-      <div className={styles.node} style={{ top: node.y }}>
-        <TimelineCluster
-          label={node.label}
-          when={node.when}
-          events={node.events}
-        />
-      </div>
-    );
+function nodeKey(node: TimelineNode): string {
+  switch (node.kind) {
+    case "single":
+      return node.event.slug;
+    case "cluster":
+      return `cluster-${node.y}`;
+    default: {
+      const unhandled: never = node;
+      throw new Error(`No timeline row for node ${JSON.stringify(unhandled)}`);
+    }
   }
-  return (
-    <div className={styles.node} style={{ top: node.y }}>
-      <Link href={node.event.href} className={styles.event}>
-        <span className={styles.marker} aria-hidden="true" />
-        <span className={styles.eventName}>{node.event.name}</span>
-        <span className={styles.eventWhen}>{node.event.when}</span>
-      </Link>
-    </div>
-  );
+}
+
+function ChartNode({ node }: { node: TimelineNode }) {
+  switch (node.kind) {
+    case "cluster":
+      return (
+        <div className={styles.node} style={{ top: node.y }}>
+          <TimelineCluster
+            label={node.label}
+            when={node.when}
+            events={node.events}
+          />
+        </div>
+      );
+    case "single":
+      return (
+        <div className={styles.node} style={{ top: node.y }}>
+          <Link href={node.event.href} className={styles.event}>
+            <span className={styles.marker} aria-hidden="true" />
+            <span className={styles.eventName}>{node.event.name}</span>
+            <span className={styles.eventWhen}>{node.event.when}</span>
+          </Link>
+        </div>
+      );
+    default: {
+      const unhandled: never = node;
+      throw new Error(`No timeline row for node ${JSON.stringify(unhandled)}`);
+    }
+  }
 }
 
 export function TimelineChart({ model, bodyId }: TimelineChartProps) {
@@ -91,14 +110,7 @@ export function TimelineChart({ model, bodyId }: TimelineChartProps) {
                   aria-label={LANDMASS_LABELS[landmass]}
                 >
                   {model.columns[landmass].map((node) => (
-                    <ChartNode
-                      key={
-                        node.kind === "single"
-                          ? node.event.slug
-                          : `cluster-${node.y}`
-                      }
-                      node={node}
-                    />
+                    <ChartNode key={nodeKey(node)} node={node} />
                   ))}
                 </section>
               ))}
