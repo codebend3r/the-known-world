@@ -180,6 +180,28 @@
   --house-martell: #c8622a;
   --house-greyjoy: #2f4a44;
   --house-bolton: #7a2230;
+  // Each house's heraldic metal (the shield rim) and ink (the charge drawn on
+  // it), for the specimen shields and banners on `/design`.
+  --house-stark-metal: rgba(255, 255, 255, 0.7);
+  --house-stark-ink: var(--tkw-white);
+  --house-targaryen-metal: #d13a3a;
+  --house-targaryen-ink: #e05a5a;
+  --house-lannister-metal: var(--tkw-gold-bright);
+  --house-lannister-ink: #f0d79a;
+  --house-baratheon-metal: #d4a017;
+  --house-baratheon-ink: #e0b53a;
+  --house-tully-metal: #e59a8f;
+  --house-tully-ink: var(--tkw-white);
+  --house-tyrell-metal: var(--tkw-gold-bright);
+  --house-tyrell-ink: #f0d79a;
+  --house-arryn-metal: #dbe6f0;
+  --house-arryn-ink: var(--tkw-white);
+  --house-martell-metal: #ffd79a;
+  --house-martell-ink: #ffe0b0;
+  --house-greyjoy-metal: var(--tkw-gold);
+  --house-greyjoy-ink: var(--tkw-gold-bright);
+  --house-bolton-metal: #e8d5c0;
+  --house-bolton-ink: #f2e3d2;
 
   // Regional heraldic tints, re-tinted for the dark ground. Same token
   // names as the parchment set, so `FilteredHouseList` and
