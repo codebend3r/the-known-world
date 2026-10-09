@@ -40,7 +40,9 @@ export default async function WeaponsPage() {
     .map((w): WeaponItem => {
       const houseSlug =
         w.frontmatter["current-house"] ?? w.frontmatter["origin-house"] ?? null;
-      const region = houseSlug ? regionForHouse(houseSlug, housesBySlug) : null;
+      const region = houseSlug
+        ? regionForHouse({ slug: houseSlug, housesBySlug })
+        : null;
       return {
         slug: w.frontmatter.slug,
         name: w.frontmatter.name,

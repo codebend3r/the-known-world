@@ -111,7 +111,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
   const primaryHouse = fm["primary-house"]
     ? housesBySlug.get(fm["primary-house"])
     : undefined;
-  const region = regionForHouse(fm["primary-house"], housesBySlug);
+  const region = regionForHouse({ slug: fm["primary-house"], housesBySlug });
   const alsoHouses = fm["also-of-houses"]
     .map((s) => ({ slug: s, house: housesBySlug.get(s) }))
     .filter(
@@ -155,7 +155,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
     current: { kind: "character", slug, mentions: fm.mentions },
   });
   const html = character.body.trim()
-    ? await renderMarkdown(character.body, { proseLinks })
+    ? await renderMarkdown({ source: character.body, proseLinks })
     : "";
 
   return (
@@ -217,7 +217,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
             <dd>
               {formatEraDate(fm.died)}
               {(() => {
-                const age = ageAtDeath(fm.born, fm.died);
+                const age = ageAtDeath({ born: fm.born, died: fm.died });
                 return age !== null ? ` (aged ${age})` : null;
               })()}
             </dd>

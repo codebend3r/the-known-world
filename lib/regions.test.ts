@@ -39,7 +39,9 @@ describe("regionForHouse", () => {
         liege: null,
       }),
     ]);
-    expect(regionForHouse("stark", houses)).toBe("north");
+    expect(regionForHouse({ slug: "stark", housesBySlug: houses })).toBe(
+      "north",
+    );
   });
 
   it("walks a single-hop liege chain to the great house", () => {
@@ -57,7 +59,9 @@ describe("regionForHouse", () => {
         liege: "stark",
       }),
     ]);
-    expect(regionForHouse("karstark", houses)).toBe("north");
+    expect(regionForHouse({ slug: "karstark", housesBySlug: houses })).toBe(
+      "north",
+    );
   });
 
   it("walks a multi-hop liege chain", () => {
@@ -81,7 +85,9 @@ describe("regionForHouse", () => {
         liege: "hightower",
       }),
     ]);
-    expect(regionForHouse("cadet", houses)).toBe("reach");
+    expect(regionForHouse({ slug: "cadet", housesBySlug: houses })).toBe(
+      "reach",
+    );
   });
 
   it("prefers an explicit `region` field over walking the liege chain", () => {
@@ -94,7 +100,9 @@ describe("regionForHouse", () => {
         region: "dorne",
       }),
     ]);
-    expect(regionForHouse("allyrion", houses)).toBe("dorne");
+    expect(regionForHouse({ slug: "allyrion", housesBySlug: houses })).toBe(
+      "dorne",
+    );
   });
 
   it("returns null when the chain leads to an unknown house", () => {
@@ -106,7 +114,7 @@ describe("regionForHouse", () => {
         liege: "ghost",
       }),
     ]);
-    expect(regionForHouse("orphan", houses)).toBeNull();
+    expect(regionForHouse({ slug: "orphan", housesBySlug: houses })).toBeNull();
   });
 
   it("returns null on a cycle that never reaches a great house", () => {
@@ -114,15 +122,19 @@ describe("regionForHouse", () => {
       house({ slug: "a", name: "House A", seat: "x", liege: "b" }),
       house({ slug: "b", name: "House B", seat: "y", liege: "a" }),
     ]);
-    expect(regionForHouse("a", houses)).toBeNull();
+    expect(regionForHouse({ slug: "a", housesBySlug: houses })).toBeNull();
   });
 
   it("returns null for a slug that is not in the index", () => {
-    expect(regionForHouse("ghost", mapOf([]))).toBeNull();
+    expect(
+      regionForHouse({ slug: "ghost", housesBySlug: mapOf([]) }),
+    ).toBeNull();
   });
 
   it("does not mistake an inherited object key for a great house", () => {
-    expect(regionForHouse("constructor", mapOf([]))).toBeNull();
+    expect(
+      regionForHouse({ slug: "constructor", housesBySlug: mapOf([]) }),
+    ).toBeNull();
   });
 });
 

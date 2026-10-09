@@ -216,7 +216,7 @@ export function prepareTimeline({
         name: battle.name,
         href: `/battles/${battle.slug}/`,
         year: absoluteYear(battle.start),
-        when: formatBattleWhen(battle.start, battle.end),
+        when: formatBattleWhen({ start: battle.start, end: battle.end }),
       },
     })),
     ...events.map((event) => ({
@@ -226,7 +226,7 @@ export function prepareTimeline({
         name: event.name,
         href: `/events/${event.slug}/`,
         year: absoluteYear(event.date),
-        when: formatBattleWhen(event.date, event.date),
+        when: formatBattleWhen({ start: event.date, end: event.date }),
       },
     })),
   ];

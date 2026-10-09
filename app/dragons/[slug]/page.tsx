@@ -86,7 +86,7 @@ export default async function DragonPage({ params }: SlugPageProps) {
     current: { kind: "dragon", slug, mentions: dragon.frontmatter.mentions },
   });
   const html = dragon.body.trim()
-    ? await renderMarkdown(dragon.body, { proseLinks })
+    ? await renderMarkdown({ source: dragon.body, proseLinks })
     : "";
   const house = fm.house ? housesBySlug.get(fm.house) : undefined;
   const subtitle = house

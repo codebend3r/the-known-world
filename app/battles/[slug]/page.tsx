@@ -78,9 +78,9 @@ export default async function BattlePage({ params }: SlugPageProps) {
     current: { kind: "battle", slug, mentions: fm.mentions },
   });
   const html = battle.body.trim()
-    ? await renderMarkdown(battle.body, { proseLinks })
+    ? await renderMarkdown({ source: battle.body, proseLinks })
     : "";
-  const subtitle = [formatBattleWhen(fm.start, fm.end), fm.war]
+  const subtitle = [formatBattleWhen({ start: fm.start, end: fm.end }), fm.war]
     .filter(Boolean)
     .join(" · ");
 

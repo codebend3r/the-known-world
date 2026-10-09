@@ -48,10 +48,13 @@ function compareRoots(a: Character, b: Character): number {
   return a.name.localeCompare(b.name);
 }
 
-export function buildFamilyTree(
-  houseSlug: string,
-  people: LoadedCharacter[],
-): TreeNode[] {
+export function buildFamilyTree({
+  houseSlug,
+  people,
+}: {
+  houseSlug: string;
+  people: LoadedCharacter[];
+}): TreeNode[] {
   const peopleBySlug = new Map(
     people.map((p) => [p.frontmatter.slug, p.frontmatter]),
   );

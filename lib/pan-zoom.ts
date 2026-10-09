@@ -37,11 +37,11 @@ export function initialCenteredTransform({
   });
 }
 
-export function distance(a: Pointer, b: Pointer): number {
+export function distance({ a, b }: { a: Pointer; b: Pointer }): number {
   return Math.hypot(b.x - a.x, b.y - a.y);
 }
 
-export function midpoint(a: Pointer, b: Pointer): Pointer {
+export function midpoint({ a, b }: { a: Pointer; b: Pointer }): Pointer {
   return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
 }
 
