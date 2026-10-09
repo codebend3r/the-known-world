@@ -10,7 +10,7 @@ import {
   flushNuqs,
   lastQueryString,
   lastSearchParams,
-} from "@/lib/testNuqs";
+} from "@/test/testNuqs";
 import { expectElement } from "@/test/dom";
 
 const items: CharacterItem[] = [
