@@ -9,10 +9,13 @@ import type { Character } from "@/lib/schemas";
  * as ten years apart. `absoluteYear` maps both onto the single signed axis
  * first, which is the same axis the timeline sorts on.
  */
-export function ageAtDeath(
-  born: Character["born"],
-  died: Character["died"],
-): number | null {
+export function ageAtDeath({
+  born,
+  died,
+}: {
+  born: Character["born"];
+  died: Character["died"];
+}): number | null {
   if (!born || !died) return null;
   if (born.era !== "AC" && born.era !== "BC") return null;
   if (died.era !== "AC" && died.era !== "BC") return null;

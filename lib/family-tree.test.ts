@@ -32,7 +32,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    expect(buildFamilyTree("targaryen", people)).toEqual([]);
+    expect(buildFamilyTree({ houseSlug: "targaryen", people })).toEqual([]);
   });
 
   it("treats a person as a root when their parents are not in the house", () => {
@@ -48,7 +48,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("gerold");
   });
@@ -76,7 +76,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("tytos");
     expect(tree[0].children).toHaveLength(1);
@@ -116,7 +116,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("targaryen", people);
+    const tree = buildFamilyTree({ houseSlug: "targaryen", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("jaehaerys");
     expect(tree[0].spouses.map((s) => s.slug)).toEqual(["shaera"]);
@@ -158,7 +158,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("tytos");
     expect(tree[0].spouses[0]).toMatchObject({ slug: "jeyne", inHouse: false });
@@ -198,7 +198,7 @@ describe("buildFamilyTree", () => {
         children: ["phantom"],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     const joffrey = tree[0].children[0];
     expect(joffrey.slug).toBe("joffrey");
@@ -253,7 +253,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree[0].sex).toBe("m");
     expect(tree[0].spouses[0].sex).toBe("f");
     expect(tree[0].children.find((c) => c.slug === "tywin")?.sex).toBe("m");
@@ -296,7 +296,7 @@ describe("buildFamilyTree", () => {
         aliases: ["King Aenys"],
       }),
     ];
-    const tree = buildFamilyTree("targaryen", people);
+    const tree = buildFamilyTree({ houseSlug: "targaryen", people });
     expect(tree[0].alias).toBe("The Conqueror");
     expect(tree[0].spouses[0].alias).toBeNull();
     expect(tree[0].children[0].alias).toBe("King Aenys");
@@ -336,7 +336,7 @@ describe("buildFamilyTree", () => {
         aliases: ["The Illborn King"],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     const joffrey = tree[0].children[0];
     expect(joffrey.external).toBe(true);
     expect(joffrey.alias).toBe("The Illborn King");
@@ -356,7 +356,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("stark", people);
+    const tree = buildFamilyTree({ houseSlug: "stark", people });
     expect(tree[0].spouses[0].slug).toBe("mystery-bride");
     expect(tree[0].spouses[0].sex).toBeNull();
   });
@@ -438,7 +438,7 @@ describe("buildFamilyTree", () => {
         children: [],
       }),
     ];
-    const tree = buildFamilyTree("lannister", people);
+    const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("gerold");
     const tywin = findNode(tree, "tywin");

@@ -79,7 +79,7 @@ function optimizedPortrait(path: string): string {
 }
 
 function formatLabel(person: LayoutPerson): string {
-  return formatLabelText(person.name, person.titles);
+  return formatLabelText({ name: person.name, titles: person.titles });
 }
 
 function dotClassName(p: LayoutPerson): string {
@@ -259,7 +259,9 @@ export function FamilyTreeChart({ chart }: Props) {
             </>
           );
           const labelText = formatLabel(p);
-          const labelWidth = Math.round(estimateLabelWidth(p.name, p.titles));
+          const labelWidth = Math.round(
+            estimateLabelWidth({ name: p.name, titles: p.titles }),
+          );
           const labelHeight = Math.round(LABEL_FONT_SIZE + 2);
           const labelCx = p.x;
           const labelBaseline = p.y - DOT_R - LABEL_GAP;
@@ -496,11 +498,11 @@ export function FamilyTreeChart({ chart }: Props) {
     } else if (pointersRef.current.size === 2 && svgRef.current) {
       e.currentTarget.setPointerCapture?.(e.pointerId);
       const [a, b] = pointerListToArray(pointersRef.current);
-      const m = midpoint(a, b);
+      const m = midpoint({ a, b });
       const { point } = getScreenToViewBox(svgRef.current, bounds);
       const anchor = point(m.x, m.y);
       pinchRef.current = {
-        startDistance: distance(a, b),
+        startDistance: distance({ a, b }),
         startScale: transform.scale,
         startTx: transform.tx,
         startTy: transform.ty,
@@ -520,7 +522,7 @@ export function FamilyTreeChart({ chart }: Props) {
     const pinch = pinchRef.current;
     if (pinch && pointersRef.current.size === 2) {
       const [a, b] = pointerListToArray(pointersRef.current);
-      const ratio = distance(a, b) / pinch.startDistance;
+      const ratio = distance({ a, b }) / pinch.startDistance;
       const nextScale = clampScale(pinch.startScale * ratio);
       setTransform(() =>
         zoomAtPoint({

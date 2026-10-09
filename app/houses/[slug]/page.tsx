@@ -106,9 +106,9 @@ export default async function HousePage({ params }: SlugPageProps) {
     allEvents,
     current: { kind: "house", slug, mentions: house.frontmatter.mentions },
   });
-  const html = await renderMarkdown(house.body, { proseLinks });
-  const tree = buildFamilyTree(slug, characters);
-  const enriched = await enrichTreeWithPortraits(tree, findPortrait);
+  const html = await renderMarkdown({ source: house.body, proseLinks });
+  const tree = buildFamilyTree({ houseSlug: slug, people: characters });
+  const enriched = await enrichTreeWithPortraits({ roots: tree, findPortrait });
   const chart = layoutFamilyTree(enriched);
   const notableMembers = house.frontmatter["notable-members"] ?? [];
 

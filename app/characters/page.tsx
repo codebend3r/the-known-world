@@ -29,7 +29,9 @@ export default async function CharactersPage() {
     (c) => !c.frontmatter.draft && !c.frontmatter.placeholder,
   );
   const portraits = await Promise.all(
-    visible.map((c) => findPortrait(c.frontmatter.slug, c.frontmatter.sex)),
+    visible.map((c) =>
+      findPortrait({ slug: c.frontmatter.slug, sex: c.frontmatter.sex }),
+    ),
   );
 
   const items: CharacterItem[] = visible
@@ -39,7 +41,10 @@ export default async function CharactersPage() {
       alias: c.frontmatter.aliases[0] ?? null,
       aliases: c.frontmatter.aliases,
       primaryHouseSlug: c.frontmatter["primary-house"],
-      region: regionForHouse(c.frontmatter["primary-house"], housesBySlug),
+      region: regionForHouse({
+        slug: c.frontmatter["primary-house"],
+        housesBySlug,
+      }),
       portrait: portraits[i],
     }))
     .sort(compareByName);

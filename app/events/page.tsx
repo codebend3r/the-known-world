@@ -38,7 +38,10 @@ export default async function EventsPage() {
       slug: frontmatter.slug,
       name: frontmatter.name,
       typeLabel: titleCase(frontmatter.type),
-      when: formatBattleWhen(frontmatter.date, frontmatter.date),
+      when: formatBattleWhen({
+        start: frontmatter.date,
+        end: frontmatter.date,
+      }),
       location:
         typeof frontmatter.location === "string" ? frontmatter.location : null,
       approximate: isApproximate(frontmatter.date),

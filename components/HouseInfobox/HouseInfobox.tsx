@@ -69,7 +69,7 @@ export function HouseInfobox({
   }));
 
   const liegeHouse = house.liege ? housesBySlug.get(house.liege) : null;
-  const region = regionForHouse(house.slug, housesBySlug);
+  const region = regionForHouse({ slug: house.slug, housesBySlug });
   // Heraldic colour as data: the banner takes the region's tint, the rest of
   // the plate stays gold. An unknown region falls back inside the module.
   const tint: CSSProperties = region

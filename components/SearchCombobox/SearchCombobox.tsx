@@ -45,7 +45,7 @@ export function SearchCombobox({
   const suggestions = useMemo(() => {
     const q = query.trim();
     if (!q) return [];
-    return filterByName(items, q).slice(0, MAX_SUGGESTIONS);
+    return filterByName({ items, query: q }).slice(0, MAX_SUGGESTIONS);
   }, [items, query]);
 
   const showList = open && suggestions.length > 0;

@@ -31,7 +31,7 @@ export function FilteredEventList({ items }: Props) {
     commit: setUrlSearch,
   });
 
-  const filtered = filterByName(items, debounced);
+  const filtered = filterByName({ items, query: debounced });
   const hasApproximate = filtered.some((item) => item.approximate);
 
   return (

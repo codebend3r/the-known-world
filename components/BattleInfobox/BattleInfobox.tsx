@@ -73,7 +73,7 @@ export function BattleInfobox({
         )}
         <div className={styles.row}>
           <dt>When</dt>
-          <dd>{formatBattleWhen(battle.start, battle.end)}</dd>
+          <dd>{formatBattleWhen({ start: battle.start, end: battle.end })}</dd>
         </div>
         {battle.location && (
           <div className={styles.row}>
@@ -89,7 +89,7 @@ export function BattleInfobox({
             <dd>
               <ul className={battleStyles.belligerents}>
                 {p.houses.map((slug) => {
-                  const region = regionForHouse(slug, housesBySlug);
+                  const region = regionForHouse({ slug, housesBySlug });
                   const tint: CSSProperties = region
                     ? { "--house-tint": `var(--region-color-${region})` }
                     : {};

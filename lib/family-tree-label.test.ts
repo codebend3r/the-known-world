@@ -9,23 +9,28 @@ import {
 
 describe("formatLabelText", () => {
   it("returns the first word for single-word names", () => {
-    expect(formatLabelText("Varys", [])).toBe("Varys");
+    expect(formatLabelText({ name: "Varys", titles: [] })).toBe("Varys");
   });
 
   it("returns 'First L.' for multi-word non-kings", () => {
-    expect(formatLabelText("Eddard Stark", [])).toBe("Eddard S.");
+    expect(formatLabelText({ name: "Eddard Stark", titles: [] })).toBe(
+      "Eddard S.",
+    );
   });
 
   it("includes the regnal numeral for kings", () => {
     expect(
-      formatLabelText("Aegon IV Targaryen", [
-        "King of the Andals, the Rhoynar, and the First Men",
-      ]),
+      formatLabelText({
+        name: "Aegon IV Targaryen",
+        titles: ["King of the Andals, the Rhoynar, and the First Men"],
+      }),
     ).toBe("Aegon IV T.");
   });
 
   it("does not include the numeral for non-kings even if a middle word matches", () => {
-    expect(formatLabelText("Some V Person", [])).toBe("Some P.");
+    expect(formatLabelText({ name: "Some V Person", titles: [] })).toBe(
+      "Some P.",
+    );
   });
 });
 
@@ -43,15 +48,21 @@ describe("wasKing", () => {
 
 describe("estimateLabelWidth", () => {
   it("scales with the rendered label length", () => {
-    const short = estimateLabelWidth("Eddard Stark", []);
-    const long = estimateLabelWidth("Daenerys Targaryen", []);
+    const short = estimateLabelWidth({ name: "Eddard Stark", titles: [] });
+    const long = estimateLabelWidth({ name: "Daenerys Targaryen", titles: [] });
     expect(long).toBeGreaterThan(short);
   });
 
   it("matches `formatLabelText(name).length * char-width + 2*padding`", () => {
-    const text = formatLabelText("Aegon IV Targaryen", ["King of the Andals"]);
+    const text = formatLabelText({
+      name: "Aegon IV Targaryen",
+      titles: ["King of the Andals"],
+    });
     expect(
-      estimateLabelWidth("Aegon IV Targaryen", ["King of the Andals"]),
+      estimateLabelWidth({
+        name: "Aegon IV Targaryen",
+        titles: ["King of the Andals"],
+      }),
     ).toBe(text.length * 5.5 + 12);
   });
 });

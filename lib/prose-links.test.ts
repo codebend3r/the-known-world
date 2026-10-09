@@ -210,7 +210,7 @@ async function renderWith(
   source: string,
   index: ProseLinkIndex,
 ): Promise<string> {
-  return renderMarkdown(source, { proseLinks: index });
+  return renderMarkdown({ source, proseLinks: index });
 }
 
 describe("prose-links", () => {

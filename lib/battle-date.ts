@@ -24,7 +24,13 @@ export function absoluteYear(d: BattleDate): number {
  * Human label for a battle's span. Single dates collapse to one year; ranges
  * read "282 to 283 AC". A trailing asterisk marks an approximate span.
  */
-export function formatBattleWhen(start: BattleDate, end: BattleDate): string {
+export function formatBattleWhen({
+  start,
+  end,
+}: {
+  start: BattleDate;
+  end: BattleDate;
+}): string {
   const approx = isApproximate(start) || isApproximate(end);
   const sameYear = start.year === end.year && start.era === end.era;
 
