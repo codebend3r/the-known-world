@@ -63,17 +63,17 @@ type Scope =
   | { kind: "collection"; collection: CollectionName }
   | { kind: "unknown"; requested: string };
 
-type Args = { json: boolean; scope: Scope };
+type Args = { shouldPrintJson: boolean; scope: Scope };
 
 function parseArgs(argv: readonly string[]): Args {
   const flag = argv.indexOf("--collection");
   const raw = flag === -1 ? null : (argv[flag + 1] ?? null);
-  const json = argv.includes("--json");
-  if (raw === null) return { json, scope: { kind: "all" } };
+  const shouldPrintJson = argv.includes("--json");
+  if (raw === null) return { shouldPrintJson, scope: { kind: "all" } };
   if (isCollectionName(raw)) {
-    return { json, scope: { kind: "collection", collection: raw } };
+    return { shouldPrintJson, scope: { kind: "collection", collection: raw } };
   }
-  return { json, scope: { kind: "unknown", requested: raw } };
+  return { shouldPrintJson, scope: { kind: "unknown", requested: raw } };
 }
 
 /** The collection to filter to, `null` for all, or exit 2 on an unknown name. */
@@ -118,7 +118,7 @@ function formatTable(rows: readonly DateDefect[]): string {
   return [line(header), ...body.map(line)].join("\n");
 }
 
-const { json, scope } = parseArgs(Bun.argv.slice(2));
+const { shouldPrintJson, scope } = parseArgs(Bun.argv.slice(2));
 const collection = selectedCollection(scope);
 
 const [battles, castles, characters, dragons, events, houses, weapons] =
@@ -151,7 +151,7 @@ const defects = dateIntegrityDefects({
       a.field.localeCompare(b.field),
   );
 
-if (json) {
+if (shouldPrintJson) {
   console.log(JSON.stringify(defects, null, 2));
 } else {
   const scope = collection ?? "all collections";

@@ -97,11 +97,11 @@ async function readSources(): Promise<string> {
   const perRoot = await Promise.all(
     SOURCE_ROOTS.map(async (root) => {
       const dir = path.join(process.cwd(), root);
-      const exists = await fs
+      const isPresent = await fs
         .access(dir)
         .then(() => true)
         .catch(() => false);
-      if (!exists) return [];
+      if (!isPresent) return [];
       const files = await walk(dir);
       // Test files cite fixture paths like `/characters/foo.jpeg` that were
       // never meant to exist on disk. Counting them produces phantom
@@ -127,7 +127,7 @@ function literalImageReferences(source: string): Set<string> {
   return new Set([...matches].map((match) => match[1]));
 }
 
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const [assets, source, characters, battles, weapons] = await Promise.all([
   collectAssets(),
@@ -169,7 +169,7 @@ const mb = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)}MB`;
 const kb = (bytes: number) => `${Math.round(bytes / 1000)}KB`;
 const deadBytes = dead.reduce((total, asset) => total + asset.bytes, 0);
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {
