@@ -110,7 +110,7 @@
     padding: 13px 15px;
     background: var(--tkw-surface);
     border: 1px solid var(--tkw-hairline);
-    border-radius: 6px;
+    border-radius: var(--tkw-radius);
     font-family: var(--font-body);
     font-weight: 300;
     font-size: var(--fs-section);

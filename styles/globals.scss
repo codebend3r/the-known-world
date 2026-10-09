@@ -107,7 +107,13 @@
   --tkw-measure: 1240px;
   --tkw-measure-wide: 1400px;
   --tkw-gutter: 56px;
+  --tkw-radius-xs: 3px;
+  --tkw-radius-sm: 4px;
+  --tkw-radius-md: 5px;
   --tkw-radius: 7px;
+  --tkw-radius-lg: 8px;
+  // Clamps to half the box height, so any track gets fully round ends.
+  --tkw-radius-pill: 999px;
   // Fixed-height shields (swatches, list rows, map pins).
   --tkw-shield: polygon(0 0, 100% 0, 100% 74%, 50% 100%, 0 74%);
   // Variable-height banners (hero, index rail).

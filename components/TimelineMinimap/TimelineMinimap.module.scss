@@ -12,7 +12,7 @@
   padding: 0.5rem 0.25rem;
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.9);
 
   @media (max-width: bp.$lg) {
@@ -42,7 +42,7 @@
   font-size: var(--fs-micro);
   letter-spacing: 1px;
   color: var(--tkw-ink-dim);
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   font-variant-numeric: tabular-nums;
   transition:
     color 0.18s ease,

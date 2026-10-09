@@ -17,7 +17,7 @@
   background-position: 14px 50%;
   color: var(--tkw-ink);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   outline: none;
   transition: var(--tkw-lift);
 
@@ -132,7 +132,7 @@
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   padding: 8px 13px;
   font-family: var(--font-mono);
   font-size: var(--fs-tag);
@@ -185,7 +185,7 @@
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   padding: 7px 1.7rem 7px 0.7rem;
   font-family: var(--font-mono);
   font-size: var(--fs-tag);

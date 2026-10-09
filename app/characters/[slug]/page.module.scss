@@ -83,7 +83,7 @@
   display: grid;
   width: 100%;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   border: 1px solid var(--tkw-hairline-firm);
   background: var(--tkw-bg-deep);
 }
@@ -131,7 +131,7 @@
   padding: 16px 18px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 
   dt {
     font-family: var(--font-mono);
@@ -198,7 +198,7 @@
   padding: 16px 18px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
 
   dt {
     font-family: var(--font-mono);
