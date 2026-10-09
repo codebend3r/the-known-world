@@ -129,10 +129,10 @@ export default async function WeaponPage({ params }: SlugPageProps) {
   return (
     <PlateLayout>
       <div className={styles.detail}>
-        <div className={styles.heading}>
+        <hgroup className={styles.heading}>
           <h1>{fm.name}</h1>
           {subtitle && <p className="subtitle">{subtitle}</p>}
-        </div>
+        </hgroup>
         {image && (
           <figure className={styles.figure}>
             <Image
