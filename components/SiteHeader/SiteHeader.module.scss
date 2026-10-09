@@ -68,14 +68,14 @@
   @media (max-width: bp.$xs) {
     width: 26px;
     height: 26px;
-    font-size: 13px;
+    font-size: var(--fs-caption);
   }
 }
 
 .title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 25px;
+  font-size: var(--fs-wordmark);
   letter-spacing: 1.5px;
   line-height: 1;
   white-space: nowrap;
@@ -100,7 +100,7 @@
   animation: sheathe 6.5s linear infinite;
 
   @media (max-width: bp.$xs) {
-    font-size: 20px;
+    font-size: var(--fs-name);
     letter-spacing: 1px;
   }
 

@@ -60,6 +60,36 @@
   --fs-meta: 16px;
   --fs-label: 11px;
 
+  // Steps between the roles, smallest first: mono data and kickers, blurbs,
+  // then the display names that head cards and register rows.
+  --fs-micro: 9px;
+  --fs-tag: 10px;
+  --fs-eyebrow: 12px;
+  --fs-caption: 13px;
+  --fs-small: 14px;
+  --fs-lead: 18px;
+  --fs-name: 20px;
+  --fs-wordmark: 25px;
+
+  // Title ramps, stepped down at each breakpoint. Index plates take `--fs-h1`,
+  // character and house plates `--fs-h1-detail`, and battle, dragon, event,
+  // and weapon plates `--fs-h1-entry`.
+  --fs-display-xl: 76px;
+  --fs-display-lg: 54px;
+  --fs-display-sm: 40px;
+  --fs-h1-detail: 62px;
+  --fs-h1-entry: 58px;
+  --fs-h1-lg: 44px;
+  --fs-h1-entry-lg: 42px;
+  --fs-h1-sm: 34px;
+  --fs-h1-entry-sm: 32px;
+
+  // Only the `/design` style guide draws at these: its scaled-down role
+  // samples and the register-row shield demo.
+  --fs-specimen-display: 48px;
+  --fs-specimen-h1: 38px;
+  --fs-specimen-shield: 27px;
+
   --lh-display: 0.98;
   --lh-title: 1;
   --lh-meta: 1.5;
@@ -135,6 +165,7 @@ body {
   color: var(--tkw-ink-body);
   font-family: var(--font-body);
   font-weight: 300;
+  // Literal on purpose: this is the rem base, not a step on the type scale.
   font-size: 16px;
   line-height: var(--lh-body);
   min-height: 100vh;
@@ -244,7 +275,7 @@ h3 {
 
 @media (max-width: bp.$lg) {
   h1 {
-    font-size: 44px;
+    font-size: var(--fs-h1-lg);
   }
 }
 

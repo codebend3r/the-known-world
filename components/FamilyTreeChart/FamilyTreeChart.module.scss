@@ -46,7 +46,7 @@
 
 .label {
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   font-weight: 600;
   fill: var(--tkw-ink-body);
   text-anchor: middle;
@@ -60,7 +60,7 @@
 
 .cross {
   font-family: var(--font-display);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   fill: var(--tkw-gold);
   text-anchor: middle;
   pointer-events: none;
@@ -113,7 +113,7 @@
   border: 1px solid var(--tkw-hairline-firm);
   border-radius: 3px;
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   padding: 0.25rem 0.45rem;
