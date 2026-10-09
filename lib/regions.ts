@@ -37,17 +37,21 @@ export function regionForHouse({
   slug: string | null;
   housesBySlug: Map<string, House>;
 }): RegionSlug | null {
-  const seen = new Set<string>();
-  let current: string | null = slug;
-  while (current && !seen.has(current)) {
-    seen.add(current);
+  const climb = ({
+    current,
+    seen,
+  }: {
+    current: string | null;
+    seen: ReadonlySet<string>;
+  }): RegionSlug | null => {
+    if (!current || seen.has(current)) return null;
     if (isGreatHouseSlug(current)) {
       return REGIONS[current].slug;
     }
     const house = housesBySlug.get(current);
     if (!house) return null;
     if (house.region) return house.region;
-    current = house.liege;
-  }
-  return null;
+    return climb({ current: house.liege, seen: new Set([...seen, current]) });
+  };
+  return climb({ current: slug, seen: new Set() });
 }
