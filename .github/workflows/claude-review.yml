@@ -7,6 +7,11 @@ name: 🤖 Weekly review
 # Requires an ANTHROPIC_API_KEY repository secret. Without it the review steps
 # skip rather than fail, so the workflow stays green until it is added.
 #
+# Both audit steps pass the job's own `github.token`. Without it the action
+# requests an OIDC token to swap for a Claude GitHub App token, which needs
+# `id-token: write` and the app installed. The audits only read git history and
+# write a local file, so the read-only job token is all they need.
+#
 # The window ignores `content/`, `public/`, and `bun.lock`: lore and image
 # drops make up most weeks here, the test suite already validates frontmatter,
 # and a lockfile diff would blow the context budget for no reviewable signal.
@@ -54,6 +59,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ github.token }}
           prompt: >-
             Audit every change merged to `main` in the last 7 days. Scope
             yourself to that window:
@@ -141,6 +147,7 @@ jobs:
         uses: anthropics/claude-code-action@v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ github.token }}
           prompt: >-
             Review every change merged to `main` in the last 7 days against
             the conventions in `CLAUDE.md`. Scope yourself to that window:
