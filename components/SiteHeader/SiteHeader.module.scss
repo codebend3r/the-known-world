@@ -63,7 +63,7 @@
   color: var(--tkw-gold-bright);
   font-family: var(--font-display);
   font-size: var(--fs-section);
-  line-height: 1;
+  line-height: var(--lh-title);
 
   @media (max-width: bp.$xs) {
     width: 26px;
@@ -76,8 +76,8 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: var(--fs-wordmark);
-  letter-spacing: 1.5px;
-  line-height: 1;
+  letter-spacing: var(--ls-nav);
+  line-height: var(--lh-title);
   white-space: nowrap;
   color: var(--tkw-gold-bright);
 
@@ -101,7 +101,7 @@
 
   @media (max-width: bp.$xs) {
     font-size: var(--fs-name);
-    letter-spacing: 1px;
+    letter-spacing: var(--ls-data);
   }
 
   @media (prefers-reduced-motion: reduce) {

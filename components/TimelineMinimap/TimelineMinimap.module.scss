@@ -40,7 +40,7 @@
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   color: var(--tkw-ink-dim);
   border-radius: var(--tkw-radius-xs);
   font-variant-numeric: tabular-nums;

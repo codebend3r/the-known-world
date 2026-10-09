@@ -94,7 +94,7 @@
 .when {
   font-family: var(--font-mono);
   font-size: var(--fs-label);
-  letter-spacing: 0.5px;
+  letter-spacing: var(--ls-tight);
   color: var(--tkw-gold);
   white-space: nowrap;
   font-variant-numeric: tabular-nums;
