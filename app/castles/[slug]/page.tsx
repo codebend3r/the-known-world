@@ -3,6 +3,7 @@ import { loadCastle, loadAllCastles, renderMarkdown } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
+import styles from "@/app/castles/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
   const castles = await loadAllCastles();
@@ -39,7 +40,10 @@ export default async function CastlePage({ params }: SlugPageProps) {
           <> &middot; Seat of House {castle.frontmatter["liege-house"]}</>
         )}
       </p>
-      <article dangerouslySetInnerHTML={{ __html: html }} />
+      <article
+        className={styles.body}
+        dangerouslySetInnerHTML={{ __html: html }}
+      />
       <Sources sources={castle.frontmatter.sources} />
     </PlateLayout>
   );
