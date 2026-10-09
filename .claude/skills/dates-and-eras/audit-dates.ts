@@ -44,7 +44,7 @@ const COLLECTION_NAMES = [
 
 type CollectionName = (typeof COLLECTION_NAMES)[number];
 
-const CLASS_SUMMARY: Record<DateDefectClass, string> = {
+const CLASS_SUMMARY = {
   sign: "AC or BC year stored non-positive, so absoluteYear() flips it",
   "era-range": "the era does not contain the year on the axis",
   ordering: "a terminal date falls before the date that opens it",
@@ -52,28 +52,47 @@ const CLASS_SUMMARY: Record<DateDefectClass, string> = {
   lineage: "a child predates a parent, or long outlives their death",
   status: "a terminal date on an entry whose status says it never ended",
   precision: 'precision "exact" claimed with nothing cited to support it',
-};
+} as const satisfies Record<DateDefectClass, string>;
 
 function isCollectionName(value: string): value is CollectionName {
   return COLLECTION_NAMES.some((name) => name === value);
 }
 
-type Args = {
-  json: boolean;
-  collection: CollectionName | null;
-  badCollection: string | null;
-};
+type Scope =
+  | { kind: "all" }
+  | { kind: "collection"; collection: CollectionName }
+  | { kind: "unknown"; requested: string };
+
+type Args = { shouldPrintJson: boolean; scope: Scope };
 
 function parseArgs(argv: readonly string[]): Args {
   const flag = argv.indexOf("--collection");
   const raw = flag === -1 ? null : (argv[flag + 1] ?? null);
-  const json = argv.includes("--json");
-  if (raw === null) return { json, collection: null, badCollection: null };
-  return {
-    json,
-    collection: isCollectionName(raw) ? raw : null,
-    badCollection: isCollectionName(raw) ? null : raw,
-  };
+  const shouldPrintJson = argv.includes("--json");
+  if (raw === null) return { shouldPrintJson, scope: { kind: "all" } };
+  if (isCollectionName(raw)) {
+    return { shouldPrintJson, scope: { kind: "collection", collection: raw } };
+  }
+  return { shouldPrintJson, scope: { kind: "unknown", requested: raw } };
+}
+
+/** The collection to filter to, `null` for all, or exit 2 on an unknown name. */
+function selectedCollection(scope: Scope): CollectionName | null {
+  switch (scope.kind) {
+    case "all":
+      return null;
+    case "collection":
+      return scope.collection;
+    case "unknown":
+      console.error(
+        `unknown --collection ${scope.requested}; expected one of ${COLLECTION_NAMES.join(", ")}`,
+      );
+      return process.exit(2);
+    default: {
+      const unhandled: never = scope;
+      throw new Error(`unhandled scope: ${JSON.stringify(unhandled)}`);
+    }
+  }
 }
 
 function formatTable(rows: readonly DateDefect[]): string {
@@ -99,14 +118,8 @@ function formatTable(rows: readonly DateDefect[]): string {
   return [line(header), ...body.map(line)].join("\n");
 }
 
-const { json, collection, badCollection } = parseArgs(Bun.argv.slice(2));
-
-if (badCollection !== null) {
-  console.error(
-    `unknown --collection ${badCollection}; expected one of ${COLLECTION_NAMES.join(", ")}`,
-  );
-  process.exit(2);
-}
+const { shouldPrintJson, scope } = parseArgs(Bun.argv.slice(2));
+const collection = selectedCollection(scope);
 
 const [battles, castles, characters, dragons, events, houses, weapons] =
   await Promise.all([
@@ -129,7 +142,7 @@ const defects = dateIntegrityDefects({
   weapons,
 })
   .filter((defect) => collection === null || defect.collection === collection)
-  .sort(
+  .toSorted(
     (a, b) =>
       DATE_DEFECT_CLASSES.indexOf(a.defect) -
         DATE_DEFECT_CLASSES.indexOf(b.defect) ||
@@ -138,7 +151,7 @@ const defects = dateIntegrityDefects({
       a.field.localeCompare(b.field),
   );
 
-if (json) {
+if (shouldPrintJson) {
   console.log(JSON.stringify(defects, null, 2));
 } else {
   const scope = collection ?? "all collections";

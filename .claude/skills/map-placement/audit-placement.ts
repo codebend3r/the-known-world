@@ -22,22 +22,25 @@
  * Bounds and the coordinate extraction rule come from `lib/map.ts` so the
  * audit, the renderer, and the CI integrity check cannot disagree.
  */
-import { loadAllBattles, loadAllCastles, loadAllEvents } from "@/lib/content";
+import {
+  loadAllBattles,
+  loadAllCastles,
+  loadAllEvents,
+  type ContentType,
+} from "@/lib/content";
 import { MAP_BOUNDS, entryCoords, isWithinMapBounds } from "@/lib/map";
-
-/**
- * Structurally the same as `Coords` in `lib/schemas.ts`, declared locally
- * because tsconfig `include` globs skip dot-directories: `.claude/**` is
- * outside the project, so `tsgo` and the type-aware lint cannot resolve a
- * `@/`-aliased type import from here. Runtime imports resolve fine through
- * Bun, which reads the same `paths` mapping.
- */
-type Coords = { x: number; y: number };
+import type { Coords } from "@/lib/schemas";
 
 /** Two markers closer than this in atlas units overlap at every zoom level. */
 const CLUSTER_RADIUS = 5;
 
-type CollectionName = "castles" | "battles" | "events";
+const COLLECTION_NAMES = [
+  "castles",
+  "battles",
+  "events",
+] as const satisfies readonly ContentType[];
+
+type CollectionName = (typeof COLLECTION_NAMES)[number];
 
 type Entry = {
   collection: CollectionName;
@@ -50,7 +53,7 @@ type Entry = {
 type Stack = {
   coords: Coords;
   members: string[];
-  anchored: boolean;
+  isAnchored: boolean;
 };
 
 type Pair = {
@@ -103,8 +106,8 @@ function namesWholeWord({
   );
 }
 
-function distance(a: Coords, b: Coords): number {
-  return Math.hypot(a.x - b.x, a.y - b.y);
+function distance({ from, to }: { from: Coords; to: Coords }): number {
+  return Math.hypot(from.x - to.x, from.y - to.y);
 }
 
 const [castles, battles, events] = await Promise.all([
@@ -140,9 +143,7 @@ const entries: Entry[] = [
   })),
 ];
 
-const collections: CollectionName[] = ["castles", "battles", "events"];
-
-const coverage = collections.map((collection) => {
+const coverage = COLLECTION_NAMES.map((collection) => {
   const group = entries.filter((entry) => entry.collection === collection);
   const placed = group.filter((entry) => !!entry.coords);
   return {
@@ -181,7 +182,7 @@ const points: Stack[] = [
 ].map((group) => ({
   coords: group[0].coords,
   members: group.map((entry) => entry.id),
-  anchored: group.some((entry) => entry.collection === "castles"),
+  isAnchored: group.some((entry) => entry.collection === "castles"),
 }));
 
 /**
@@ -191,7 +192,7 @@ const points: Stack[] = [
  */
 const stacks = points
   .filter((point) => point.members.length > 1)
-  .sort((a, b) => b.members.length - a.members.length);
+  .toSorted((a, b) => b.members.length - a.members.length);
 
 /**
  * Distinct points close enough that their markers overlap at every zoom.
@@ -200,7 +201,7 @@ const stacks = points
  */
 const clustered: Pair[] = points.flatMap((left, index) =>
   points.slice(index + 1).flatMap((right) => {
-    const gap = distance(left.coords, right.coords);
+    const gap = distance({ from: left.coords, to: right.coords });
     return gap > CLUSTER_RADIUS
       ? []
       : [
@@ -298,7 +299,7 @@ if (Bun.argv.includes("--json")) {
           .join("\n"),
   );
 
-  const unanchored = stacks.filter((stack) => !stack.anchored);
+  const unanchored = stacks.filter((stack) => !stack.isAnchored);
   console.log(
     `\nSTACKED POINTS (${stacks.length}, ${unanchored.length} with no castle to anchor them)`,
   );
@@ -307,8 +308,8 @@ if (Bun.argv.includes("--json")) {
       ? "  none"
       : stacks
           .map(
-            ({ coords, members, anchored }) =>
-              `  ${point(coords)} ${anchored ? "" : "UNANCHORED "}${members.length} entries\n    ${members.join("\n    ")}`,
+            ({ coords, members, isAnchored }) =>
+              `  ${point(coords)} ${isAnchored ? "" : "UNANCHORED "}${members.length} entries\n    ${members.join("\n    ")}`,
           )
           .join("\n"),
   );

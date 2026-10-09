@@ -66,13 +66,10 @@ const ASPECT_TOLERANCE = 0.05;
 
 type Dimensions = { width: number; height: number };
 
-type Measured = {
-  file: string;
-  stem: string;
-  extension: string;
+/** `dimensions` is `null` when the header is unreadable or reports a zero side. */
+type Measured = PortraitFile & {
   bytes: number;
-  width?: number;
-  height?: number;
+  dimensions: Dimensions | null;
 };
 
 const SOF_MARKERS = new Set([
@@ -86,7 +83,13 @@ function pngDimensions(view: DataView): Dimensions | null {
 }
 
 /** Walks JPEG segments to the first start-of-frame marker. */
-function jpegDimensionsAt(view: DataView, offset: number): Dimensions | null {
+function jpegDimensionsAt({
+  view,
+  offset,
+}: {
+  view: DataView;
+  offset: number;
+}): Dimensions | null {
   if (offset + 4 > view.byteLength) return null;
   if (view.getUint8(offset) !== 0xff) return null;
   const marker = view.getUint8(offset + 1);
@@ -96,7 +99,7 @@ function jpegDimensionsAt(view: DataView, offset: number): Dimensions | null {
     marker === 0x01 ||
     (marker >= 0xd0 && marker <= 0xd9)
   ) {
-    return jpegDimensionsAt(view, offset + 2);
+    return jpegDimensionsAt({ view, offset: offset + 2 });
   }
   if (SOF_MARKERS.has(marker)) {
     if (offset + 9 > view.byteLength) return null;
@@ -105,7 +108,10 @@ function jpegDimensionsAt(view: DataView, offset: number): Dimensions | null {
       width: view.getUint16(offset + 7),
     };
   }
-  return jpegDimensionsAt(view, offset + 2 + view.getUint16(offset + 2));
+  return jpegDimensionsAt({
+    view,
+    offset: offset + 2 + view.getUint16(offset + 2),
+  });
 }
 
 function webpDimensions(view: DataView): Dimensions | null {
@@ -155,8 +161,15 @@ async function measure(entry: PortraitFile): Promise<Measured> {
       ? pngDimensions(view)
       : entry.extension === "webp"
         ? webpDimensions(view)
-        : jpegDimensionsAt(view, 0);
-  return { ...entry, bytes: size, ...dimensions };
+        : jpegDimensionsAt({ view, offset: 0 });
+  return {
+    ...entry,
+    bytes: size,
+    dimensions:
+      !!dimensions && dimensions.width > 0 && dimensions.height > 0
+        ? dimensions
+        : null,
+  };
 }
 
 /** Every frontmatter field in the repo that points at a character slug. */
@@ -181,8 +194,10 @@ function inboundReferences({
       ...frontmatter.mentions,
     ]),
     ...houses.flatMap(({ frontmatter }) => [
-      ...(frontmatter.heads ?? []).map((head) => head.slug),
-      ...(frontmatter["notable-members"] ?? []).map((member) => member.slug),
+      ...(frontmatter.heads ?? []).flatMap((head) => head.slug ?? []),
+      ...(frontmatter["notable-members"] ?? []).flatMap(
+        (member) => member.slug ?? [],
+      ),
       ...frontmatter.mentions,
     ]),
     ...weapons.flatMap(({ frontmatter }) => [
@@ -201,7 +216,7 @@ function inboundReferences({
   );
 }
 
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const [files, characters, houses, weapons, dragons, battles] =
   await Promise.all([
@@ -228,13 +243,13 @@ const orphans = [...byStem.entries()]
   .filter(([stem]) => !characterSlugs.has(stem) && !PLACEHOLDER_STEMS.has(stem))
   .map(([stem, candidates]) => ({
     stem,
-    reserved: RESERVED_PORTRAITS.has(stem),
+    isReserved: RESERVED_PORTRAITS.has(stem),
     nearest: nearestSlug({ stem, characterSlugs, coveredSlugs: covered }),
     files: candidates
       .map((entry) => measured.find((m) => m.file === entry.file))
       .filter((entry) => !!entry),
   }))
-  .sort((a, b) => a.stem.localeCompare(b.stem));
+  .toSorted((a, b) => a.stem.localeCompare(b.stem));
 
 const duplicates = [...byStem.entries()]
   .filter(([stem]) => characterSlugs.has(stem))
@@ -260,28 +275,29 @@ const resolved = measured.filter(
   (entry) =>
     (characterSlugs.has(entry.stem) || PLACEHOLDER_STEMS.has(entry.stem)) &&
     isProbedExtension(entry.extension) &&
-    winningFile({ candidates: byStem.get(entry.stem) ?? [] })?.file ===
-      entry.file,
+    (winningFile({ candidates: byStem.get(entry.stem) ?? [] })?.file ??
+      null) === entry.file,
 );
 
 const widthCeiling = Math.round(MAX_RENDERED_WIDTH * WIDTH_TOLERANCE);
 
 const oversized = resolved
   .filter(
-    (entry) => entry.bytes > HEAVY_BYTES || (entry.width ?? 0) > widthCeiling,
+    (entry) =>
+      entry.bytes > HEAVY_BYTES ||
+      (entry.dimensions?.width ?? 0) > widthCeiling,
   )
-  .sort((a, b) => b.bytes - a.bytes);
+  .toSorted((a, b) => b.bytes - a.bytes);
 
 const offAspect = resolved
   .filter((entry) => {
-    if (!entry.width || !entry.height) return false;
-    return (
-      Math.abs(entry.width / entry.height - TARGET_ASPECT) > ASPECT_TOLERANCE
-    );
+    if (entry.dimensions === null) return false;
+    const { width, height } = entry.dimensions;
+    return Math.abs(width / height - TARGET_ASPECT) > ASPECT_TOLERANCE;
   })
-  .sort((a, b) => a.file.localeCompare(b.file));
+  .toSorted((a, b) => a.file.localeCompare(b.file));
 
-const unreadable = measured.filter((entry) => !entry.width || !entry.height);
+const unreadable = measured.filter((entry) => entry.dimensions === null);
 
 const references = inboundReferences({
   characters,
@@ -299,23 +315,29 @@ const uncovered = rendered
     house: c.frontmatter["primary-house"],
     references: references.get(c.frontmatter.slug) ?? 0,
   }))
-  .sort((a, b) => b.references - a.references || a.slug.localeCompare(b.slug));
+  .toSorted(
+    (a, b) => b.references - a.references || a.slug.localeCompare(b.slug),
+  );
 
 const errors = portraitIntegrityErrors({ files, characterSlugs });
 
 const kb = (bytes: number) => `${Math.round(bytes / 1000)}KB`;
 const mb = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)}MB`;
-const pct = (part: number, whole: number) =>
+const pct = ({ part, whole }: { part: number; whole: number }) =>
   `${((part / whole) * 100).toFixed(1)}%`;
-const box = (entry: Measured) =>
-  entry.width && entry.height ? `${entry.width}x${entry.height}` : "unreadable";
+const box = ({ dimensions }: Measured) =>
+  dimensions === null
+    ? "unreadable"
+    : `${dimensions.width}x${dimensions.height}`;
 const totalBytes = measured.reduce((sum, entry) => sum + entry.bytes, 0);
 const reclaimable = [
-  ...orphans.filter((group) => !group.reserved).flatMap((group) => group.files),
+  ...orphans
+    .filter((group) => !group.isReserved)
+    .flatMap((group) => group.files),
   ...duplicates.flatMap((group) => group.losers),
 ].reduce((sum, entry) => sum + entry.bytes, 0);
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {
@@ -329,13 +351,13 @@ if (json) {
         },
         orphans: orphans.map((group) => ({
           stem: group.stem,
-          reserved: group.reserved,
+          isReserved: group.isReserved,
           nearest: group.nearest,
           files: group.files.map((entry) => ({
             file: entry.file,
             bytes: entry.bytes,
-            width: entry.width ?? null,
-            height: entry.height ?? null,
+            width: entry.dimensions?.width ?? null,
+            height: entry.dimensions?.height ?? null,
           })),
         })),
         duplicates: duplicates.map((group) => ({
@@ -349,13 +371,13 @@ if (json) {
         oversized: oversized.map((entry) => ({
           file: entry.file,
           bytes: entry.bytes,
-          width: entry.width ?? null,
-          height: entry.height ?? null,
+          width: entry.dimensions?.width ?? null,
+          height: entry.dimensions?.height ?? null,
         })),
         offAspect: offAspect.map((entry) => ({
           file: entry.file,
-          width: entry.width ?? null,
-          height: entry.height ?? null,
+          width: entry.dimensions?.width ?? null,
+          height: entry.dimensions?.height ?? null,
         })),
         unreadable: unreadable.map((entry) => entry.file),
         uncovered,
@@ -370,7 +392,7 @@ if (json) {
   console.log(
     `COVERAGE\n` +
       `  ${renderedCovered.length}/${rendered.length} rendered characters ` +
-      `(${pct(renderedCovered.length, rendered.length)}) have dedicated art\n` +
+      `(${pct({ part: renderedCovered.length, whole: rendered.length })}) have dedicated art\n` +
       `  ${rendered.length - renderedCovered.length} fall back to the ` +
       `10-file placeholder pool\n` +
       `  ${characters.length} character entries total, ` +
@@ -388,7 +410,7 @@ if (json) {
               (sum, entry) => sum + entry.bytes,
               0,
             );
-            const verdict = group.reserved
+            const verdict = group.isReserved
               ? "RESERVED, staged ahead of its content entry"
               : group.nearest
                 ? `near miss, rename to ${group.nearest}`

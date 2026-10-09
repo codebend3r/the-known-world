@@ -24,6 +24,7 @@ import {
   loadAllDragons,
   loadAllEvents,
   loadAllWeapons,
+  type ContentType,
 } from "@/lib/content";
 import type { Battle, Castle, Dragon, Event, Weapon } from "@/lib/schemas";
 
@@ -55,7 +56,7 @@ const COLLECTION_NAMES = [
   "dragons",
   "events",
   "weapons",
-] as const;
+] as const satisfies readonly ContentType[];
 
 type CollectionName = (typeof COLLECTION_NAMES)[number];
 
@@ -85,7 +86,7 @@ type Finding = {
   name: string;
   bodyChars: number;
   bodyState: BodyState;
-  sourced: boolean;
+  isSourced: boolean;
   draft: boolean;
   gaps: string[];
   score: number;
@@ -99,15 +100,15 @@ type CollectionAudit = {
   findings: Finding[];
 };
 
-const CASTLE_PROBES: ReadonlyArray<FieldProbe<Castle>> = [
+const CASTLE_PROBES = [
   { field: "sub-region", filled: (fm) => !!fm["sub-region"] },
   { field: "liege-house", filled: (fm) => !!fm["liege-house"] },
   { field: "founded", filled: (fm) => !!fm.founded },
   { field: "features", filled: (fm) => fm.features.length > 0 },
   { field: "sworn-houses", filled: (fm) => fm["sworn-houses"].length > 0 },
-];
+] as const satisfies ReadonlyArray<FieldProbe<Castle>>;
 
-const BATTLE_PROBES: ReadonlyArray<FieldProbe<Battle>> = [
+const BATTLE_PROBES = [
   { field: "war", filled: (fm) => !!fm.war },
   { field: "location", filled: (fm) => !!fm.location },
   { field: "region", filled: (fm) => !!fm.region },
@@ -118,15 +119,15 @@ const BATTLE_PROBES: ReadonlyArray<FieldProbe<Battle>> = [
   { field: "casualties", filled: (fm) => fm.casualties.length > 0 },
   { field: "aliases", filled: (fm) => fm.aliases.length > 0 },
   { field: "mentions", filled: (fm) => fm.mentions.length > 0 },
-];
+] as const satisfies ReadonlyArray<FieldProbe<Battle>>;
 
-const EVENT_PROBES: ReadonlyArray<FieldProbe<Event>> = [
+const EVENT_PROBES = [
   { field: "participants", filled: (fm) => fm.participants.length > 0 },
   { field: "outcome", filled: (fm) => !!fm.outcome },
   { field: "casualties", filled: (fm) => fm.casualties.length > 0 },
-];
+] as const satisfies ReadonlyArray<FieldProbe<Event>>;
 
-const WEAPON_PROBES: ReadonlyArray<FieldProbe<Weapon>> = [
+const WEAPON_PROBES = [
   { field: "origin-house", filled: (fm) => !!fm["origin-house"] },
   {
     field: "current-house",
@@ -142,9 +143,9 @@ const WEAPON_PROBES: ReadonlyArray<FieldProbe<Weapon>> = [
   { field: "wielders", filled: (fm) => fm.wielders.length > 0 },
   { field: "aliases", filled: (fm) => fm.aliases.length > 0 },
   { field: "mentions", filled: (fm) => fm.mentions.length > 0 },
-];
+] as const satisfies ReadonlyArray<FieldProbe<Weapon>>;
 
-const DRAGON_PROBES: ReadonlyArray<FieldProbe<Dragon>> = [
+const DRAGON_PROBES = [
   { field: "color", filled: (fm) => !!fm.color },
   { field: "size", filled: (fm) => !!fm.size },
   { field: "hatched", filled: (fm) => !!fm.hatched },
@@ -157,7 +158,7 @@ const DRAGON_PROBES: ReadonlyArray<FieldProbe<Dragon>> = [
   { field: "riders", filled: (fm) => fm.riders.length > 0 },
   { field: "aliases", filled: (fm) => fm.aliases.length > 0 },
   { field: "mentions", filled: (fm) => fm.mentions.length > 0 },
-];
+] as const satisfies ReadonlyArray<FieldProbe<Dragon>>;
 
 function nonWhitespaceLength(body: string): number {
   return body.replace(/\s/g, "").length;
@@ -165,7 +166,7 @@ function nonWhitespaceLength(body: string): number {
 
 function median(values: readonly number[]): number {
   if (values.length === 0) return 0;
-  const sorted = [...values].sort((a, b) => a - b);
+  const sorted = values.toSorted((a, b) => a - b);
   const middle = Math.floor(sorted.length / 2);
   return sorted.length % 2 === 0
     ? Math.round((sorted[middle - 1] + sorted[middle]) / 2)
@@ -243,11 +244,11 @@ function auditCollection<T extends Auditable>({
         ? [field]
         : [],
     );
-    const sourced = entry.frontmatter.sources.length > 0;
+    const isSourced = entry.frontmatter.sources.length > 0;
     const draft = entry.frontmatter.draft;
     const score =
       bodyWeight(bodyState) +
-      (sourced ? 0 : WEIGHTS.unsourced) +
+      (isSourced ? 0 : WEIGHTS.unsourced) +
       (draft ? WEIGHTS.draft : 0) +
       gaps.length * WEIGHTS.gap;
     return score === 0
@@ -259,7 +260,7 @@ function auditCollection<T extends Auditable>({
             name: entry.frontmatter.name,
             bodyChars,
             bodyState,
-            sourced,
+            isSourced,
             draft,
             gaps,
             score,
@@ -289,7 +290,7 @@ function parseArgs(argv: readonly string[]) {
     collectionFlag === -1 ? null : (argv[collectionFlag + 1] ?? null);
   return {
     limit: limitFlag === -1 ? 25 : Number(argv[limitFlag + 1] ?? "25") || 25,
-    json: argv.includes("--json"),
+    shouldPrintJson: argv.includes("--json"),
     collection:
       !!rawCollection && isCollectionName(rawCollection) ? rawCollection : null,
   };
@@ -311,7 +312,13 @@ function formatTable(rows: ReadonlyArray<ReadonlyArray<string>>): string {
 }
 
 function summaryTable(audits: ReadonlyArray<CollectionAudit>): string {
-  const count = (audit: CollectionAudit, state: BodyState) =>
+  const count = ({
+    audit,
+    state,
+  }: {
+    audit: CollectionAudit;
+    state: BodyState;
+  }) =>
     String(
       audit.findings.filter((finding) => finding.bodyState === state).length,
     );
@@ -330,10 +337,10 @@ function summaryTable(audits: ReadonlyArray<CollectionAudit>): string {
       audit.collection,
       String(audit.entries),
       String(audit.medianBody),
-      count(audit, "empty"),
-      count(audit, "stub"),
-      count(audit, "thin"),
-      String(audit.findings.filter((finding) => !finding.sourced).length),
+      count({ audit, state: "empty" }),
+      count({ audit, state: "stub" }),
+      count({ audit, state: "thin" }),
+      String(audit.findings.filter((finding) => !finding.isSourced).length),
       String(audit.findings.filter((finding) => finding.draft).length),
     ]),
   ]);
@@ -348,13 +355,13 @@ function findingsTable(findings: ReadonlyArray<Finding>): string {
       finding.collection,
       `${finding.slug}${finding.bodyState === "ok" ? "" : ` (${finding.bodyState})`}`,
       String(finding.bodyChars),
-      finding.sourced ? "yes" : "NO",
+      finding.isSourced ? "yes" : "NO",
       finding.gaps.join(", ") || "-",
     ]),
   ]);
 }
 
-const { limit, json, collection } = parseArgs(Bun.argv.slice(2));
+const { limit, shouldPrintJson, collection } = parseArgs(Bun.argv.slice(2));
 
 const [battles, castles, dragons, events, weapons] = await Promise.all([
   loadAllBattles(),
@@ -394,14 +401,14 @@ const audits: CollectionAudit[] = [
 
 const ranked = audits
   .flatMap((audit) => audit.findings)
-  .sort(
+  .toSorted(
     (a, b) =>
       b.score - a.score ||
       a.bodyChars - b.bodyChars ||
       a.slug.localeCompare(b.slug),
   );
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {

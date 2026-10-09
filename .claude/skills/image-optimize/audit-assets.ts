@@ -97,11 +97,11 @@ async function readSources(): Promise<string> {
   const perRoot = await Promise.all(
     SOURCE_ROOTS.map(async (root) => {
       const dir = path.join(process.cwd(), root);
-      const exists = await fs
+      const isPresent = await fs
         .access(dir)
         .then(() => true)
         .catch(() => false);
-      if (!exists) return [];
+      if (!isPresent) return [];
       const files = await walk(dir);
       // Test files cite fixture paths like `/characters/foo.jpeg` that were
       // never meant to exist on disk. Counting them produces phantom
@@ -127,7 +127,7 @@ function literalImageReferences(source: string): Set<string> {
   return new Set([...matches].map((match) => match[1]));
 }
 
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const [assets, source, characters, battles, weapons] = await Promise.all([
   collectAssets(),
@@ -163,13 +163,13 @@ const broken = [...literals].filter((href) => !onDisk.has(href));
 
 const heavy = audited
   .filter((asset) => !dead.includes(asset) && asset.bytes > HEAVY_BYTES)
-  .sort((a, b) => b.bytes - a.bytes);
+  .toSorted((a, b) => b.bytes - a.bytes);
 
 const mb = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)}MB`;
 const kb = (bytes: number) => `${Math.round(bytes / 1000)}KB`;
 const deadBytes = dead.reduce((total, asset) => total + asset.bytes, 0);
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {
@@ -200,7 +200,7 @@ if (json) {
     new Map(),
   );
   [...byDir.entries()]
-    .sort(
+    .toSorted(
       (a, b) =>
         b[1].reduce((t, x) => t + x.bytes, 0) -
         a[1].reduce((t, x) => t + x.bytes, 0),
@@ -209,7 +209,7 @@ if (json) {
       const bytes = group.reduce((total, asset) => total + asset.bytes, 0);
       console.log(`  ${dir}/  ${group.length} files  ${mb(bytes)}`);
       group
-        .sort((a, b) => b.bytes - a.bytes)
+        .toSorted((a, b) => b.bytes - a.bytes)
         .slice(0, 6)
         .forEach((asset) =>
           console.log(`    ${kb(asset.bytes)}  ${asset.href}`),
