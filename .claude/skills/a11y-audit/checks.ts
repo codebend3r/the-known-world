@@ -131,13 +131,13 @@ function isAlwaysHidden(tag: Tag): boolean {
 function hiddenInTree({
   tag,
   tags,
-  strict = false,
+  isStrict = false,
 }: {
   tag: Tag;
   tags: readonly Tag[];
-  strict?: boolean;
+  isStrict?: boolean;
 }): boolean {
-  const test = strict ? isAlwaysHidden : isHidden;
+  const test = isStrict ? isAlwaysHidden : isHidden;
   return test(tag) || tag.ancestors.some((index) => test(tags[index]));
 }
 
@@ -188,11 +188,11 @@ function accessibleName({
   tag: Tag;
   index: number;
 }): boolean {
-  const labelled =
+  const isLabelled =
     !!attributeText(tag.attributes.get("aria-label")) ||
     has({ tag, name: "aria-labelledby" }) ||
     !!attributeText(tag.attributes.get("title"));
-  if (labelled) return true;
+  if (isLabelled) return true;
   if (tag.kind === "self") return false;
 
   const inner = file.source.slice(tag.end, tag.innerEnd);
@@ -202,10 +202,10 @@ function accessibleName({
   const visible = Array.from(inner)
     .map((char, offset) => {
       const absolute = tag.end + offset;
-      const covered = hiddenRanges.some(
+      const isCovered = hiddenRanges.some(
         ([from, to]) => absolute >= from && absolute <= to,
       );
-      return covered ? " " : char;
+      return isCovered ? " " : char;
     })
     .join("");
   const text = visible
@@ -255,7 +255,7 @@ export function checkImages(file: SourceFile): Finding[] {
     const text = attributeText(alt);
     if (!text) return [];
     if (
-      hiddenInTree({ tag: file.tags[index], tags: file.tags, strict: true })
+      hiddenInTree({ tag: file.tags[index], tags: file.tags, isStrict: true })
     ) {
       return [
         {
@@ -298,12 +298,12 @@ export function checkSvg(file: SourceFile): Finding[] {
     if (tag.name === "image") {
       if (hiddenInTree({ tag, tags: file.tags })) return [];
       if (has({ tag, name: "aria-label" })) return [];
-      const named = tag.ancestors.some((position) =>
+      const isNamed = tag.ancestors.some((position) =>
         childrenOf({ file, tag: file.tags[position], index: position }).some(
           (child) => child.name === "title",
         ),
       );
-      if (named) return [];
+      if (isNamed) return [];
       return [
         {
           ...at,
@@ -321,7 +321,7 @@ export function checkSvg(file: SourceFile): Finding[] {
     const role = roleOf(tag);
     const kids = childrenOf({ file, tag, index });
     const hasTitle = kids.some((child) => child.name === "title");
-    const named =
+    const isNamed =
       !!attributeText(tag.attributes.get("aria-label")) ||
       has({ tag, name: "aria-labelledby" }) ||
       hasTitle;
@@ -350,7 +350,7 @@ export function checkSvg(file: SourceFile): Finding[] {
         },
       ];
     }
-    if (NAMED_CONTAINER_ROLES.has(role) && !named) {
+    if (NAMED_CONTAINER_ROLES.has(role) && !isNamed) {
       return [
         {
           ...at,
@@ -370,7 +370,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
     const at = { file: file.path, line: tag.line, element: `<${tag.name}>` };
     const role = roleOf(tag);
     const lower = tag.name.toLowerCase();
-    const nativelyInteractive =
+    const isNativelyInteractive =
       INTERACTIVE_ELEMENTS.has(lower) && tag.name === lower;
     const pointer = [...POINTER_HANDLERS].filter((handler) =>
       has({ tag, name: handler }),
@@ -387,7 +387,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
 
     const tabIndex = attributeText(tag.attributes.get("tabIndex"));
     const wantsName =
-      (nativelyInteractive && lower !== "input" && lower !== "option") ||
+      (isNativelyInteractive && lower !== "input" && lower !== "option") ||
       FOCUSABLE_ROLES.has(role);
     const isLinkWithoutHref = lower === "a" && !has({ tag, name: "href" });
 
@@ -395,7 +395,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
       {
         isViolated:
           pointer.length > 0 &&
-          !nativelyInteractive &&
+          !isNativelyInteractive &&
           !isComponent &&
           !FOCUSABLE_ROLES.has(role) &&
           !MANAGED_ROLES.has(role),
@@ -424,7 +424,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
         isViolated:
           pointer.includes("onClick") &&
           keys.length === 0 &&
-          !nativelyInteractive &&
+          !isNativelyInteractive &&
           !isComponent &&
           !MANAGED_ROLES.has(role),
         finding: {
@@ -438,7 +438,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
       {
         isViolated:
           FOCUSABLE_ROLES.has(role) &&
-          !nativelyInteractive &&
+          !isNativelyInteractive &&
           !has({ tag, name: "tabIndex" }),
         finding: {
           ...at,
@@ -450,7 +450,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
       {
         isViolated:
           has({ tag, name: "tabIndex" }) &&
-          !nativelyInteractive &&
+          !isNativelyInteractive &&
           !isComponent &&
           !role &&
           !/-1/.test(tabIndex),
@@ -493,10 +493,10 @@ export function checkCombobox(file: SourceFile): Finding[] {
     const at = { file: file.path, line: tag.line, element: `<${tag.name}>` };
 
     if (role === "listbox") {
-      const named =
+      const isNamed =
         !!attributeText(tag.attributes.get("aria-label")) ||
         has({ tag, name: "aria-labelledby" });
-      return named
+      return isNamed
         ? []
         : [
             {
@@ -557,9 +557,9 @@ export function checkCombobox(file: SourceFile): Finding[] {
         attributeText(candidate.attributes.get("id")) === controls &&
         candidate.start !== tag.start,
     );
-    const guard =
+    const isGuarded =
       !!target && /(&&|\?)\s*\(?\s*$/.test(file.source.slice(0, target.start));
-    const dangling = guard
+    const dangling = isGuarded
       ? [
           {
             file: file.path,
