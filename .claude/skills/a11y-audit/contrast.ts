@@ -20,8 +20,6 @@ export type ContrastRow = {
   passesLarge: boolean;
 };
 
-// ── colour contrast ──────────────────────────────────────────────────
-
 const FOREGROUND_TOKENS = [
   "--tkw-ink",
   "--tkw-ink-body",

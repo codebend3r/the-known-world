@@ -83,8 +83,6 @@ export type Finding = {
   message: string;
 };
 
-// ── tag helpers ──────────────────────────────────────────────────────
-
 function attributeText(value: AttributeValue | undefined): string {
   if (!value) return "";
   return value.kind === "flag" ? "" : value.text;
@@ -211,8 +209,6 @@ function accessibleName({
         child.name === "title"),
   );
 }
-
-// ── checks ───────────────────────────────────────────────────────────
 
 const IMAGE_TAGS = new Set(["img", "Image"]);
 
@@ -566,8 +562,6 @@ export function checkCombobox(file: SourceFile): Finding[] {
   });
 }
 
-// ── heading order ────────────────────────────────────────────────────
-
 type HeadingSource =
   | { kind: "level"; level: number }
   | { kind: "component"; name: string };
@@ -674,8 +668,6 @@ export function checkHeadings({
     return [...structural, ...skips];
   });
 }
-
-// ── viewport zoom ────────────────────────────────────────────────────
 
 export function checkViewport(file: SourceFile): Finding[] {
   if (!/export const viewport/.test(file.source)) return [];
