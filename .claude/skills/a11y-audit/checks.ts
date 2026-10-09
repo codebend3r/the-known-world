@@ -85,7 +85,19 @@ export type Finding = {
 
 function attributeText(value: AttributeValue | undefined): string {
   if (!value) return "";
-  return value.kind === "flag" ? "" : value.text;
+  switch (value.kind) {
+    case "flag":
+      return "";
+    case "literal":
+    case "expression":
+      return value.text;
+    default: {
+      const unhandled: never = value;
+      throw new Error(
+        `unhandled attribute value: ${JSON.stringify(unhandled)}`,
+      );
+    }
+  }
 }
 
 function has({ tag, name }: { tag: Tag; name: string }): boolean {
@@ -605,15 +617,26 @@ function resolveLevels({
   seen: ReadonlySet<string>;
 }): number[] {
   return sources.flatMap((entry) => {
-    if (entry.kind === "level") return [entry.level];
-    if (seen.has(entry.name)) return [];
-    const nested = byComponent.get(entry.name);
-    if (!nested) return [];
-    return resolveLevels({
-      sources: nested,
-      byComponent,
-      seen: new Set([...seen, entry.name]),
-    });
+    switch (entry.kind) {
+      case "level":
+        return [entry.level];
+      case "component": {
+        if (seen.has(entry.name)) return [];
+        const nested = byComponent.get(entry.name);
+        if (!nested) return [];
+        return resolveLevels({
+          sources: nested,
+          byComponent,
+          seen: new Set([...seen, entry.name]),
+        });
+      }
+      default: {
+        const unhandled: never = entry;
+        throw new Error(
+          `unhandled heading source: ${JSON.stringify(unhandled)}`,
+        );
+      }
+    }
   });
 }
 

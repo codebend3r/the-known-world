@@ -66,13 +66,10 @@ const ASPECT_TOLERANCE = 0.05;
 
 type Dimensions = { width: number; height: number };
 
-type Measured = {
-  file: string;
-  stem: string;
-  extension: string;
+/** `dimensions` is `null` when the header is unreadable or reports a zero side. */
+type Measured = PortraitFile & {
   bytes: number;
-  width?: number;
-  height?: number;
+  dimensions: Dimensions | null;
 };
 
 const SOF_MARKERS = new Set([
@@ -156,7 +153,14 @@ async function measure(entry: PortraitFile): Promise<Measured> {
       : entry.extension === "webp"
         ? webpDimensions(view)
         : jpegDimensionsAt(view, 0);
-  return { ...entry, bytes: size, ...dimensions };
+  return {
+    ...entry,
+    bytes: size,
+    dimensions:
+      !!dimensions && dimensions.width > 0 && dimensions.height > 0
+        ? dimensions
+        : null,
+  };
 }
 
 /** Every frontmatter field in the repo that points at a character slug. */
@@ -270,20 +274,21 @@ const widthCeiling = Math.round(MAX_RENDERED_WIDTH * WIDTH_TOLERANCE);
 
 const oversized = resolved
   .filter(
-    (entry) => entry.bytes > HEAVY_BYTES || (entry.width ?? 0) > widthCeiling,
+    (entry) =>
+      entry.bytes > HEAVY_BYTES ||
+      (entry.dimensions?.width ?? 0) > widthCeiling,
   )
   .sort((a, b) => b.bytes - a.bytes);
 
 const offAspect = resolved
   .filter((entry) => {
-    if (!entry.width || !entry.height) return false;
-    return (
-      Math.abs(entry.width / entry.height - TARGET_ASPECT) > ASPECT_TOLERANCE
-    );
+    if (entry.dimensions === null) return false;
+    const { width, height } = entry.dimensions;
+    return Math.abs(width / height - TARGET_ASPECT) > ASPECT_TOLERANCE;
   })
   .sort((a, b) => a.file.localeCompare(b.file));
 
-const unreadable = measured.filter((entry) => !entry.width || !entry.height);
+const unreadable = measured.filter((entry) => entry.dimensions === null);
 
 const references = inboundReferences({
   characters,
@@ -309,8 +314,10 @@ const kb = (bytes: number) => `${Math.round(bytes / 1000)}KB`;
 const mb = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)}MB`;
 const pct = (part: number, whole: number) =>
   `${((part / whole) * 100).toFixed(1)}%`;
-const box = (entry: Measured) =>
-  entry.width && entry.height ? `${entry.width}x${entry.height}` : "unreadable";
+const box = ({ dimensions }: Measured) =>
+  dimensions === null
+    ? "unreadable"
+    : `${dimensions.width}x${dimensions.height}`;
 const totalBytes = measured.reduce((sum, entry) => sum + entry.bytes, 0);
 const reclaimable = [
   ...orphans.filter((group) => !group.reserved).flatMap((group) => group.files),
@@ -336,8 +343,8 @@ if (json) {
           files: group.files.map((entry) => ({
             file: entry.file,
             bytes: entry.bytes,
-            width: entry.width ?? null,
-            height: entry.height ?? null,
+            width: entry.dimensions?.width ?? null,
+            height: entry.dimensions?.height ?? null,
           })),
         })),
         duplicates: duplicates.map((group) => ({
@@ -351,13 +358,13 @@ if (json) {
         oversized: oversized.map((entry) => ({
           file: entry.file,
           bytes: entry.bytes,
-          width: entry.width ?? null,
-          height: entry.height ?? null,
+          width: entry.dimensions?.width ?? null,
+          height: entry.dimensions?.height ?? null,
         })),
         offAspect: offAspect.map((entry) => ({
           file: entry.file,
-          width: entry.width ?? null,
-          height: entry.height ?? null,
+          width: entry.dimensions?.width ?? null,
+          height: entry.dimensions?.height ?? null,
         })),
         unreadable: unreadable.map((entry) => entry.file),
         uncovered,

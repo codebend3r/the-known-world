@@ -27,7 +27,13 @@ import path from "node:path";
 const ROOT = process.cwd();
 
 /** Plurals that `slice(0, -1)` gets wrong. Empty while every name is regular. */
-const IRREGULAR_SINGULARS: Record<string, string> = {};
+const IRREGULAR_SINGULARS = {} as const satisfies Record<string, string>;
+
+function isIrregularPlural(
+  name: string,
+): name is keyof typeof IRREGULAR_SINGULARS {
+  return Object.hasOwn(IRREGULAR_SINGULARS, name);
+}
 
 const SHARED_SOURCES = [
   "lib/schemas.ts",
@@ -86,7 +92,7 @@ const filteredList = (c: Collection) =>
   `components/Filtered${c.pascalSingular}List`;
 const infobox = (c: Collection) => `components/${c.pascalSingular}Infobox`;
 
-const CHECKS: Check[] = [
+const CHECKS = [
   {
     id: "content-dir",
     tier: "required",
@@ -361,7 +367,7 @@ const CHECKS: Check[] = [
     test: ({ collection, has }) =>
       has(`public/menu-icons/${collection.name}.png`),
   },
-];
+] as const satisfies readonly Check[];
 
 async function readText(relative: string): Promise<[string, string]> {
   const contents = await fs
@@ -388,8 +394,9 @@ async function discoverCollections(): Promise<Collection[]> {
       .filter((entry) => entry.isDirectory())
       .map(async (entry): Promise<Collection> => {
         const files = await fs.readdir(path.join(contentRoot, entry.name));
-        const singular =
-          IRREGULAR_SINGULARS[entry.name] ?? entry.name.replace(/s$/, "");
+        const singular = isIrregularPlural(entry.name)
+          ? IRREGULAR_SINGULARS[entry.name]
+          : entry.name.replace(/s$/, "");
         return {
           name: entry.name,
           singular,

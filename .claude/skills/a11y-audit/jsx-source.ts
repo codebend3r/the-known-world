@@ -281,36 +281,48 @@ export function analyse({
   // Second pass: pair opens with closes so every tag knows its ancestors and
   // where its children end.
   const withNesting = parsed.reduce<{
-    stack: number[];
+    stack: readonly number[];
     ancestors: (readonly number[])[];
-    innerEnds: number[];
+    innerEnds: readonly number[];
   }>(
     (state, tag, index) => {
-      if (tag.kind === "close") {
-        const owner = state.stack.findLast(
-          (position) => parsed[position].name === tag.name,
-        );
-        if (owner === undefined) {
+      switch (tag.kind) {
+        case "close": {
+          const owner = state.stack.findLast(
+            (position) => parsed[position].name === tag.name,
+          );
+          if (owner === undefined) {
+            return {
+              ...state,
+              ancestors: [...state.ancestors, []],
+              innerEnds: [...state.innerEnds, tag.end],
+            };
+          }
+          const innerEnds = state.innerEnds.slice();
+          innerEnds[owner] = tag.start;
           return {
-            ...state,
+            stack: state.stack.slice(0, state.stack.indexOf(owner)),
             ancestors: [...state.ancestors, []],
-            innerEnds: [...state.innerEnds, tag.end],
+            innerEnds: [...innerEnds, tag.end],
           };
         }
-        const innerEnds = state.innerEnds.slice();
-        innerEnds[owner] = tag.start;
-        return {
-          stack: state.stack.slice(0, state.stack.indexOf(owner)),
-          ancestors: [...state.ancestors, []],
-          innerEnds: [...innerEnds, tag.end],
-        };
+        case "open":
+          return {
+            stack: [...state.stack, index],
+            ancestors: [...state.ancestors, state.stack],
+            innerEnds: [...state.innerEnds, tag.end],
+          };
+        case "self":
+          return {
+            ...state,
+            ancestors: [...state.ancestors, state.stack],
+            innerEnds: [...state.innerEnds, tag.end],
+          };
+        default: {
+          const unhandled: never = tag.kind;
+          throw new Error(`unhandled tag kind: ${String(unhandled)}`);
+        }
       }
-      const ancestors = state.stack.slice();
-      return {
-        stack: tag.kind === "open" ? [...state.stack, index] : state.stack,
-        ancestors: [...state.ancestors, ancestors],
-        innerEnds: [...state.innerEnds, tag.end],
-      };
     },
     { stack: [], ancestors: [], innerEnds: [] },
   );

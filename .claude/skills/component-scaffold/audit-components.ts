@@ -36,7 +36,7 @@ const TOKENS_FILE = path.join(ROOT, "styles", "globals.scss");
  * declaration belongs to the family the token was minted for: `--tkw-radius`
  * is 7px, but a `gap: 7px` is a coincidence, not a radius.
  */
-const LENGTH_FAMILIES: readonly { property: RegExp; token: RegExp }[] = [
+const LENGTH_FAMILIES = [
   { property: /^font-size$/, token: /^--fs-/ },
   { property: /^line-height$/, token: /^--lh-/ },
   { property: /^letter-spacing$/, token: /^--ls-/ },
@@ -46,7 +46,7 @@ const LENGTH_FAMILIES: readonly { property: RegExp; token: RegExp }[] = [
     property: /^(padding|gap|row-gap|column-gap|margin)(-[a-z]+)?$/,
     token: /^--tkw-gutter$/,
   },
-];
+] as const satisfies readonly { property: RegExp; token: RegExp }[];
 
 /**
  * Role guards. A token whose name states its role only substitutes where that
@@ -54,9 +54,9 @@ const LENGTH_FAMILIES: readonly { property: RegExp; token: RegExp }[] = [
  * are the same rgba by coincidence; binding the wash to the hairline token
  * would make retuning one silently move the other.
  */
-const ROLE_GUARDS: readonly { token: RegExp; property: RegExp }[] = [
+const ROLE_GUARDS = [
   { token: /^--tkw-hairline/, property: /^(border|outline)/ },
-];
+] as const satisfies readonly { token: RegExp; property: RegExp }[];
 
 /** `margin: 0` is a browser reset and `margin: 0 auto` centres a fixed width. */
 const MARGIN_RESET = /^0(\s+auto)?$/;
@@ -645,13 +645,23 @@ if (json) {
 
   section({
     title: "NO OWN STYLESHEET (advisory, conformant)",
-    lines: components.flatMap((report) => {
-      if (report.styles.kind === "shared") {
-        return [`  ${report.name}: shares ${report.styles.from.join(", ")}`];
+    lines: components.flatMap(({ name, styles }) => {
+      switch (styles.kind) {
+        case "shared":
+          return [`  ${name}: shares ${styles.from.join(", ")}`];
+        case "exempt":
+          return [`  ${name}: exempt, ${styles.reason}`];
+        // `none` is already reported under MISSING FILES.
+        case "own":
+        case "none":
+          return [];
+        default: {
+          const unhandled: never = styles;
+          throw new Error(
+            `unhandled style source: ${JSON.stringify(unhandled)}`,
+          );
+        }
       }
-      return report.styles.kind === "exempt"
-        ? [`  ${report.name}: exempt, ${report.styles.reason}`]
-        : [];
     }),
   });
 
