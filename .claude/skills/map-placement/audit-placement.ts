@@ -106,8 +106,8 @@ function namesWholeWord({
   );
 }
 
-function distance(a: Coords, b: Coords): number {
-  return Math.hypot(a.x - b.x, a.y - b.y);
+function distance({ from, to }: { from: Coords; to: Coords }): number {
+  return Math.hypot(from.x - to.x, from.y - to.y);
 }
 
 const [castles, battles, events] = await Promise.all([
@@ -201,7 +201,7 @@ const stacks = points
  */
 const clustered: Pair[] = points.flatMap((left, index) =>
   points.slice(index + 1).flatMap((right) => {
-    const gap = distance(left.coords, right.coords);
+    const gap = distance({ from: left.coords, to: right.coords });
     return gap > CLUSTER_RADIUS
       ? []
       : [

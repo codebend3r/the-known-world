@@ -519,7 +519,8 @@ if (Bun.argv.includes("--json")) {
   const variantIds = CHECKS.filter((check) => check.tier === "variant").map(
     (check) => check.id,
   );
-  const pad = (value: string, width: number) => value.padEnd(width);
+  const pad = ({ value, width }: { value: string; width: number }) =>
+    value.padEnd(width);
   const nameWidth = Math.max(
     10,
     ...report.map((entry) => entry.name.length + 2),
@@ -529,7 +530,7 @@ if (Bun.argv.includes("--json")) {
     `REQUIRED TOUCHPOINTS (${requiredCount} per collection, ${collections.length} collections)\n`,
   );
   console.log(
-    `${pad("COLLECTION", nameWidth)}${pad("ENTRIES", 9)}${pad("REQUIRED", 10)}MISSING`,
+    `${pad({ value: "COLLECTION", width: nameWidth })}${pad({ value: "ENTRIES", width: 9 })}${pad({ value: "REQUIRED", width: 10 })}MISSING`,
   );
   report.forEach((entry) => {
     const summary =
@@ -537,9 +538,11 @@ if (Bun.argv.includes("--json")) {
         ? "-"
         : entry.missing.map((result) => result.id).join(", ");
     console.log(
-      `${pad(entry.name, nameWidth)}${pad(String(entry.entries), 9)}${pad(
-        `${entry.passed}/${entry.total}`,
-        10,
+      `${pad({ value: entry.name, width: nameWidth })}${pad({ value: String(entry.entries), width: 9 })}${pad(
+        {
+          value: `${entry.passed}/${entry.total}`,
+          width: 10,
+        },
       )}${summary}`,
     );
   });
@@ -553,8 +556,12 @@ if (Bun.argv.includes("--json")) {
       .forEach((entry) => {
         console.log(`  ${entry.name}`);
         entry.missing.forEach((result) => {
-          console.log(`    ${pad(result.id, 22)}${result.where}`);
-          console.log(`    ${pad("", 22)}add: ${result.expects}`);
+          console.log(
+            `    ${pad({ value: result.id, width: 22 })}${result.where}`,
+          );
+          console.log(
+            `    ${pad({ value: "", width: 22 })}add: ${result.expects}`,
+          );
         });
       });
   }
@@ -562,18 +569,18 @@ if (Bun.argv.includes("--json")) {
   console.log(`\nVARIANT TOUCHPOINTS (not required, shown for shape)\n`);
   const variantWidth = Math.max(...variantIds.map((id) => id.length)) + 2;
   console.log(
-    `${pad("VARIANT", variantWidth)}${report
-      .map((entry) => pad(entry.name.slice(0, 10), 12))
+    `${pad({ value: "VARIANT", width: variantWidth })}${report
+      .map((entry) => pad({ value: entry.name.slice(0, 10), width: 12 }))
       .join("")}`,
   );
   variantIds.forEach((id) => {
     const cells = report
       .map((entry) => {
         const hit = entry.variants.find((variant) => variant.id === id);
-        return pad(hit?.ok ? "yes" : "-", 12);
+        return pad({ value: (hit?.ok ?? false) ? "yes" : "-", width: 12 });
       })
       .join("");
-    console.log(`${pad(id, variantWidth)}${cells}`);
+    console.log(`${pad({ value: id, width: variantWidth })}${cells}`);
   });
 }
 

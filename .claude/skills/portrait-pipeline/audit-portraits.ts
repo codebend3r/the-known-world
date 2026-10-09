@@ -83,7 +83,13 @@ function pngDimensions(view: DataView): Dimensions | null {
 }
 
 /** Walks JPEG segments to the first start-of-frame marker. */
-function jpegDimensionsAt(view: DataView, offset: number): Dimensions | null {
+function jpegDimensionsAt({
+  view,
+  offset,
+}: {
+  view: DataView;
+  offset: number;
+}): Dimensions | null {
   if (offset + 4 > view.byteLength) return null;
   if (view.getUint8(offset) !== 0xff) return null;
   const marker = view.getUint8(offset + 1);
@@ -93,7 +99,7 @@ function jpegDimensionsAt(view: DataView, offset: number): Dimensions | null {
     marker === 0x01 ||
     (marker >= 0xd0 && marker <= 0xd9)
   ) {
-    return jpegDimensionsAt(view, offset + 2);
+    return jpegDimensionsAt({ view, offset: offset + 2 });
   }
   if (SOF_MARKERS.has(marker)) {
     if (offset + 9 > view.byteLength) return null;
@@ -102,7 +108,10 @@ function jpegDimensionsAt(view: DataView, offset: number): Dimensions | null {
       width: view.getUint16(offset + 7),
     };
   }
-  return jpegDimensionsAt(view, offset + 2 + view.getUint16(offset + 2));
+  return jpegDimensionsAt({
+    view,
+    offset: offset + 2 + view.getUint16(offset + 2),
+  });
 }
 
 function webpDimensions(view: DataView): Dimensions | null {
@@ -152,7 +161,7 @@ async function measure(entry: PortraitFile): Promise<Measured> {
       ? pngDimensions(view)
       : entry.extension === "webp"
         ? webpDimensions(view)
-        : jpegDimensionsAt(view, 0);
+        : jpegDimensionsAt({ view, offset: 0 });
   return {
     ...entry,
     bytes: size,
@@ -266,8 +275,8 @@ const resolved = measured.filter(
   (entry) =>
     (characterSlugs.has(entry.stem) || PLACEHOLDER_STEMS.has(entry.stem)) &&
     isProbedExtension(entry.extension) &&
-    winningFile({ candidates: byStem.get(entry.stem) ?? [] })?.file ===
-      entry.file,
+    (winningFile({ candidates: byStem.get(entry.stem) ?? [] })?.file ??
+      null) === entry.file,
 );
 
 const widthCeiling = Math.round(MAX_RENDERED_WIDTH * WIDTH_TOLERANCE);
@@ -312,7 +321,7 @@ const errors = portraitIntegrityErrors({ files, characterSlugs });
 
 const kb = (bytes: number) => `${Math.round(bytes / 1000)}KB`;
 const mb = (bytes: number) => `${(bytes / 1_000_000).toFixed(1)}MB`;
-const pct = (part: number, whole: number) =>
+const pct = ({ part, whole }: { part: number; whole: number }) =>
   `${((part / whole) * 100).toFixed(1)}%`;
 const box = ({ dimensions }: Measured) =>
   dimensions === null
@@ -379,7 +388,7 @@ if (json) {
   console.log(
     `COVERAGE\n` +
       `  ${renderedCovered.length}/${rendered.length} rendered characters ` +
-      `(${pct(renderedCovered.length, rendered.length)}) have dedicated art\n` +
+      `(${pct({ part: renderedCovered.length, whole: rendered.length })}) have dedicated art\n` +
       `  ${rendered.length - renderedCovered.length} fall back to the ` +
       `10-file placeholder pool\n` +
       `  ${characters.length} character entries total, ` +
