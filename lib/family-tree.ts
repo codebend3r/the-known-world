@@ -119,8 +119,8 @@ export function buildFamilyTree(
     });
 
     const inHouseSpouseChildren = spouses
-      .filter((s) => s.inHouse && s.slug)
-      .flatMap((s) => peopleBySlug.get(s.slug!)?.children ?? []);
+      .filter((s): s is TreeSpouse & { slug: string } => s.inHouse && !!s.slug)
+      .flatMap((s) => peopleBySlug.get(s.slug)?.children ?? []);
     const childSlugs = uniq([...person.children, ...inHouseSpouseChildren]);
 
     const children = childSlugs

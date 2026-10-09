@@ -271,9 +271,9 @@ export function remarkProseLinks(index: ProseLinkIndex): Plugin<[], Root> {
         if (!parent) return;
         const replacements = scanText(node, compiled, usedKeys);
         if (replacements === null) return;
-        const idx = parent.children.indexOf(node as never);
+        const idx = parent.children.indexOf(node);
         if (idx === -1) return;
-        parent.children.splice(idx, 1, ...(replacements as never[]));
+        parent.children.splice(idx, 1, ...replacements);
         return [SKIP, idx + replacements.length];
       });
     };

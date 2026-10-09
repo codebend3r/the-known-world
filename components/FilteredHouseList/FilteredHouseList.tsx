@@ -124,7 +124,7 @@ const RANK_LABEL: Record<HouseRank, string> = {
 };
 
 function isRankFilter(value: string): value is RankFilter {
-  return (RANK_FILTERS as readonly string[]).includes(value);
+  return RANK_FILTERS.some((filter) => filter === value);
 }
 
 export function FilteredHouseList({
