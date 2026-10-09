@@ -15,20 +15,20 @@ type Props = {
   className?: string;
 };
 
-const STATUS_LABEL: Record<Dragon["status"], string> = {
+const STATUS_LABEL = {
   extant: "Extant",
   dead: "Dead",
   lost: "Lost",
   wild: "Wild",
-};
+} as const satisfies Record<Dragon["status"], string>;
 
-const SIZE_LABEL: Record<NonNullable<Dragon["size"]>, string> = {
+const SIZE_LABEL = {
   hatchling: "Hatchling",
   young: "Young",
   mature: "Mature",
   great: "Great",
   monstrous: "Monstrous",
-};
+} as const satisfies Record<NonNullable<Dragon["size"]>, string>;
 
 export function DragonInfobox({
   dragon,

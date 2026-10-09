@@ -9,11 +9,11 @@ export const LANDMASSES = [
   "summer-isles",
 ] as const satisfies readonly Landmass[];
 
-export const LANDMASS_LABELS: Record<Landmass, string> = {
+export const LANDMASS_LABELS = {
   westeros: "Westeros",
   essos: "Essos",
   "summer-isles": "Summer Isles",
-};
+} as const satisfies Record<Landmass, string>;
 
 export const PX_PER_YEAR = 2;
 export const CLUSTER_GAP_PX = 28;
@@ -80,7 +80,7 @@ export type TimelineModel = {
   height: number;
   ticks: TimelineTick[];
   eras: TimelineEra[];
-  columns: Record<Landmass, TimelineNode[]>;
+  columns: Record<Landmass, readonly TimelineNode[]>;
 };
 
 /**
@@ -149,11 +149,11 @@ function clusterColumn({
   });
 }
 
-const EMPTY_COLUMNS: Record<Landmass, TimelineNode[]> = {
+const EMPTY_COLUMNS = {
   westeros: [],
   essos: [],
   "summer-isles": [],
-};
+} as const satisfies Record<Landmass, readonly TimelineNode[]>;
 
 /** Pixel offset of a year within the chart body at a given vertical scale. */
 export function yForYear({

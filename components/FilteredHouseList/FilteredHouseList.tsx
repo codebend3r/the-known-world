@@ -102,7 +102,7 @@ const RANK_FILTERS = [
   "extinct",
 ] as const;
 
-const RANK_OPTIONS: { value: RankFilter; label: string }[] = [
+const RANK_OPTIONS = [
   { value: "all", label: "Any rank" },
   { value: "royal", label: "Royal" },
   { value: "lordly", label: "Lordly" },
@@ -110,18 +110,18 @@ const RANK_OPTIONS: { value: RankFilter; label: string }[] = [
   { value: "other", label: "Other" },
   { value: "exiled", label: "Exiled" },
   { value: "extinct", label: "Extinct" },
-];
+] as const satisfies ReadonlyArray<{ value: RankFilter; label: string }>;
 
 // Rank on a register row is categorical, so it renders as a mono datum rather
 // than the select's sentence-case option label.
-const RANK_LABEL: Record<HouseRank, string> = {
+const RANK_LABEL = {
   royal: "Royal house",
   lordly: "Lordly house",
   knightly: "Knightly house",
   other: "Minor house",
   exiled: "Exiled house",
   extinct: "Extinct line",
-};
+} as const satisfies Record<HouseRank, string>;
 
 function isRankFilter(value: string): value is RankFilter {
   return RANK_FILTERS.some((filter) => filter === value);
