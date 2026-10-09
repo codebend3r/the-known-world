@@ -101,7 +101,7 @@
   border: 2px solid var(--tkw-gold-bright);
   border-radius: 50%;
   opacity: 0;
-  animation: pulse 1.1s ease-out 2 both;
+  animation: pulse 1.1s var(--tkw-ease-out) 2 both;
 
   @media (prefers-reduced-motion: reduce) {
     display: none;
@@ -109,7 +109,7 @@
 }
 
 .pulseLate {
-  animation-delay: 0.18s;
+  animation-delay: var(--tkw-dur);
 }
 
 .shifter {
@@ -164,12 +164,12 @@
       transparent 65%
     );
     transform: translateX(-120%);
-    animation: glint 0.9s ease-out 0.18s both;
+    animation: glint 0.9s var(--tkw-ease-out) var(--tkw-dur) both;
     pointer-events: none;
   }
 
   > :not(.arrow) {
-    animation: reveal 0.4s ease-out both;
+    animation: reveal 0.4s var(--tkw-ease-out) both;
   }
 
   > :nth-child(2) {
@@ -197,7 +197,7 @@
     // `.popover` alone, so the fade has to match it to win for every placement.
     &,
     [data-placement] & {
-      animation: fadeIn 0.18s ease both;
+      animation: fadeIn var(--tkw-dur) var(--tkw-ease) both;
     }
 
     &::after {
@@ -429,7 +429,7 @@
   cursor: pointer;
   transition:
     var(--tkw-lift),
-    color 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

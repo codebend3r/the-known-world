@@ -97,7 +97,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: sheathe 6.5s linear infinite;
+  animation: sheathe var(--tkw-sheathe);
 
   @media (max-width: bp.$xs) {
     font-size: var(--fs-name);
@@ -147,7 +147,7 @@
   text-transform: uppercase;
   color: var(--tkw-ink-muted);
   text-decoration: none;
-  transition: color 0.18s ease;
+  transition: color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

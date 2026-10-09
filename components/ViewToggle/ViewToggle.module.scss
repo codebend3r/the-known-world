@@ -29,8 +29,8 @@
   color: var(--tkw-ink-muted);
   cursor: pointer;
   transition:
-    background 0.18s ease,
-    color 0.18s ease;
+    background var(--tkw-dur) var(--tkw-ease),
+    color var(--tkw-dur) var(--tkw-ease);
 
   & + & {
     border-left: 1px solid var(--tkw-hairline-firm);

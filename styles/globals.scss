@@ -32,12 +32,24 @@
   --tkw-glow:
     0 0 0 1px rgba(200, 162, 74, 0.35),
     0 16px 34px -18px rgba(200, 162, 74, 0.55);
-  // Rest is a hairline; hover promotes it to solid gold and adds the glow.
-  // No transforms, no scale.
-  --tkw-lift: border-color 0.18s ease, box-shadow 0.18s ease;
-  --tkw-fade: opacity 0.18s ease;
+
+  // ── motion ─────────────────────────────────────────────────────────
+  --tkw-dur-fast: 150ms;
+  --tkw-dur: 180ms;
+  --tkw-dur-slow: 240ms;
+  --tkw-ease: ease;
+  --tkw-ease-out: ease-out;
   // Overshooting ease for things that pop into place (the map popover).
   --tkw-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  // Rest is a hairline; hover promotes it to solid gold and adds the glow.
+  // No transforms, no scale.
+  --tkw-lift:
+    border-color var(--tkw-dur) var(--tkw-ease),
+    box-shadow var(--tkw-dur) var(--tkw-ease);
+  --tkw-fade: opacity var(--tkw-dur) var(--tkw-ease);
+  // One cycle for both sheathe sweeps, so the wordmark and the hero title
+  // stay in step.
+  --tkw-sheathe: 6.5s linear infinite;
 
   // ── sheen ──────────────────────────────────────────────────────────
   // The sheathe sweeps: a silver blade across the display title, a warm glint

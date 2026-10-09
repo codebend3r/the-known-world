@@ -47,7 +47,7 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: heroSheathe 6.5s linear infinite;
+  animation: heroSheathe var(--tkw-sheathe);
 
   @media (max-width: bp.$xl) {
     font-size: var(--fs-display-xl);

@@ -113,7 +113,7 @@
 a.name {
   text-decoration: none;
   cursor: pointer;
-  transition: color 120ms ease;
+  transition: color var(--tkw-dur-fast) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

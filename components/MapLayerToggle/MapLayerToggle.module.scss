@@ -29,8 +29,8 @@
     cursor: pointer;
     transition:
       var(--tkw-lift),
-      background 0.18s ease,
-      color 0.18s ease;
+      background var(--tkw-dur) var(--tkw-ease),
+      color var(--tkw-dur) var(--tkw-ease);
 
     &:hover,
     &:focus-within {

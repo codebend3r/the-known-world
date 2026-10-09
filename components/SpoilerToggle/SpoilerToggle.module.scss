@@ -13,7 +13,7 @@
   gap: 10px;
   cursor: pointer;
   color: var(--tkw-ink-muted);
-  transition: color 0.18s ease;
+  transition: color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {
@@ -61,9 +61,8 @@
   border-radius: var(--tkw-radius-pill);
   background: var(--tkw-surface);
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
+    var(--tkw-lift),
+    background var(--tkw-dur) var(--tkw-ease);
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
@@ -77,8 +76,8 @@
   background: var(--tkw-ink-dim);
   transform: translateX(0);
   transition:
-    transform 0.18s ease,
-    background 0.18s ease;
+    transform var(--tkw-dur) var(--tkw-ease),
+    background var(--tkw-dur) var(--tkw-ease);
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
