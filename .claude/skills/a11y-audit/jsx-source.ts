@@ -86,13 +86,13 @@ type ScanState = {
   depth: number;
   paren: number;
   quote: string | null;
-  escaped: boolean;
+  isEscaped: boolean;
 };
 
 function advance({ scan, char }: { scan: ScanState; char: string }): ScanState {
   if (scan.quote !== null) {
-    if (scan.escaped) return { ...scan, escaped: false };
-    if (char === "\\") return { ...scan, escaped: true };
+    if (scan.isEscaped) return { ...scan, isEscaped: false };
+    if (char === "\\") return { ...scan, isEscaped: true };
     return char === scan.quote ? { ...scan, quote: null } : scan;
   }
   if (char === '"' || char === "'" || char === "`") {
@@ -120,7 +120,7 @@ function scanCharStates(source: string): CharStates {
       return { scan: advance({ scan, char }), states };
     },
     {
-      scan: { depth: 0, paren: 0, quote: null, escaped: false },
+      scan: { depth: 0, paren: 0, quote: null, isEscaped: false },
       states: {
         depth: new Int32Array(source.length),
         paren: new Int32Array(source.length),
@@ -271,13 +271,13 @@ export function analyse({
         states.quoted[position] === 0,
     );
     if (gt === undefined) return [];
-    const selfClosing = source[gt - 1] === "/";
-    if (!isClose && !selfClosing && !closedNames.has(name)) return [];
+    const isSelfClosing = source[gt - 1] === "/";
+    if (!isClose && !isSelfClosing && !closedNames.has(name)) return [];
 
     return [
       {
         name,
-        kind: isClose ? "close" : selfClosing ? "self" : "open",
+        kind: isClose ? "close" : isSelfClosing ? "self" : "open",
         start,
         end: gt + 1,
         attributes: isClose
@@ -285,7 +285,7 @@ export function analyse({
           : parseAttributes({
               source,
               from: start + match[0].length,
-              to: selfClosing ? gt - 1 : gt,
+              to: isSelfClosing ? gt - 1 : gt,
               states,
               tagDepth,
               closeBraces,

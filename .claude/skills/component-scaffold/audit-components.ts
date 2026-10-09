@@ -272,27 +272,27 @@ function findRawValues({
   return parseDeclarations({ source, file }).flatMap((declaration) => {
     const { property, value, line, text } = declaration;
 
-    const allowed = (token: string) =>
+    const isAllowed = (token: string) =>
       ROLE_GUARDS.every(
         (guard) => !guard.token.test(token) || guard.property.test(property),
       );
 
     const colors = colorLiterals({ value }).flatMap((literal) => {
       const token = byColor.get(normalizeColor({ value: literal }));
-      return token !== undefined && allowed(token)
+      return token !== undefined && isAllowed(token)
         ? [{ file, line, text, property, value: literal, token }]
         : [];
     });
 
-    const reset = property === "line-height" && LINE_HEIGHT_RESET.test(value);
+    const isReset = property === "line-height" && LINE_HEIGHT_RESET.test(value);
     const family = LENGTH_FAMILIES.find((entry) =>
       entry.property.test(property),
     );
-    const lengths = (family && !reset ? tokens : [])
+    const lengths = (family && !isReset ? tokens : [])
       .filter(
         (token) =>
           (family?.token.test(token.name) ?? false) &&
-          allowed(token.name) &&
+          isAllowed(token.name) &&
           normalizeValue({ value: token.value }) === normalizeValue({ value }),
       )
       .map((token) => ({
@@ -543,7 +543,7 @@ function findingCount({ report }: { report: ComponentReport }): number {
   );
 }
 
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const tokens = await readTokens();
 const names = (await fs.readdir(COMPONENTS_DIR, { withFileTypes: true }))
@@ -575,7 +575,7 @@ const totals = {
   unclassedDivs: sum((report) => report.unclassedDivs.length),
 };
 
-if (json) {
+if (shouldPrintJson) {
   console.log(JSON.stringify({ totals, reports: flagged }, null, 2));
 } else {
   const section = ({

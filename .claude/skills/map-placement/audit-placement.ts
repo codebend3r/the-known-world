@@ -53,7 +53,7 @@ type Entry = {
 type Stack = {
   coords: Coords;
   members: string[];
-  anchored: boolean;
+  isAnchored: boolean;
 };
 
 type Pair = {
@@ -182,7 +182,7 @@ const points: Stack[] = [
 ].map((group) => ({
   coords: group[0].coords,
   members: group.map((entry) => entry.id),
-  anchored: group.some((entry) => entry.collection === "castles"),
+  isAnchored: group.some((entry) => entry.collection === "castles"),
 }));
 
 /**
@@ -299,7 +299,7 @@ if (Bun.argv.includes("--json")) {
           .join("\n"),
   );
 
-  const unanchored = stacks.filter((stack) => !stack.anchored);
+  const unanchored = stacks.filter((stack) => !stack.isAnchored);
   console.log(
     `\nSTACKED POINTS (${stacks.length}, ${unanchored.length} with no castle to anchor them)`,
   );
@@ -308,8 +308,8 @@ if (Bun.argv.includes("--json")) {
       ? "  none"
       : stacks
           .map(
-            ({ coords, members, anchored }) =>
-              `  ${point(coords)} ${anchored ? "" : "UNANCHORED "}${members.length} entries\n    ${members.join("\n    ")}`,
+            ({ coords, members, isAnchored }) =>
+              `  ${point(coords)} ${isAnchored ? "" : "UNANCHORED "}${members.length} entries\n    ${members.join("\n    ")}`,
           )
           .join("\n"),
   );

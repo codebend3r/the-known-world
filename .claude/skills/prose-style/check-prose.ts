@@ -253,8 +253,8 @@ function buildWeaponRules({
   return weapons.flatMap((weapon) =>
     [weapon.name, ...weapon.aliases].flatMap((form) => {
       const escaped = escapeForPattern(form);
-      const italicised = new RegExp(`_${escaped}_`).test(corpus);
-      if (!italicised) return [];
+      const isItalicised = new RegExp(`_${escaped}_`).test(corpus);
+      if (!isItalicised) return [];
       const collides = otherNames.some(
         (other) =>
           other !== form &&
@@ -365,7 +365,7 @@ function checkEntry({
 }
 
 const argv = Bun.argv;
-const asJson = argv.includes("--json");
+const shouldPrintJson = argv.includes("--json");
 const requested = readFlag({ argv, flag: "--collection" });
 
 if (requested !== null && !isCollection(requested)) {
@@ -456,7 +456,7 @@ const byCollection = selected
 const filesTouched = new Set(violations.map((violation) => violation.file))
   .size;
 
-if (asJson) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {

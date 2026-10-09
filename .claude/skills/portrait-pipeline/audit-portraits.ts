@@ -216,7 +216,7 @@ function inboundReferences({
   );
 }
 
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const [files, characters, houses, weapons, dragons, battles] =
   await Promise.all([
@@ -243,7 +243,7 @@ const orphans = [...byStem.entries()]
   .filter(([stem]) => !characterSlugs.has(stem) && !PLACEHOLDER_STEMS.has(stem))
   .map(([stem, candidates]) => ({
     stem,
-    reserved: RESERVED_PORTRAITS.has(stem),
+    isReserved: RESERVED_PORTRAITS.has(stem),
     nearest: nearestSlug({ stem, characterSlugs, coveredSlugs: covered }),
     files: candidates
       .map((entry) => measured.find((m) => m.file === entry.file))
@@ -331,11 +331,13 @@ const box = ({ dimensions }: Measured) =>
     : `${dimensions.width}x${dimensions.height}`;
 const totalBytes = measured.reduce((sum, entry) => sum + entry.bytes, 0);
 const reclaimable = [
-  ...orphans.filter((group) => !group.reserved).flatMap((group) => group.files),
+  ...orphans
+    .filter((group) => !group.isReserved)
+    .flatMap((group) => group.files),
   ...duplicates.flatMap((group) => group.losers),
 ].reduce((sum, entry) => sum + entry.bytes, 0);
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {
@@ -349,7 +351,7 @@ if (json) {
         },
         orphans: orphans.map((group) => ({
           stem: group.stem,
-          reserved: group.reserved,
+          isReserved: group.isReserved,
           nearest: group.nearest,
           files: group.files.map((entry) => ({
             file: entry.file,
@@ -408,7 +410,7 @@ if (json) {
               (sum, entry) => sum + entry.bytes,
               0,
             );
-            const verdict = group.reserved
+            const verdict = group.isReserved
               ? "RESERVED, staged ahead of its content entry"
               : group.nearest
                 ? `near miss, rename to ${group.nearest}`

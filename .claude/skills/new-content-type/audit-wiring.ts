@@ -377,11 +377,11 @@ async function readText(relative: string): Promise<[string, string]> {
 }
 
 async function pathExists(relative: string): Promise<[string, boolean]> {
-  const found = await fs
+  const isPresent = await fs
     .stat(path.join(ROOT, relative))
     .then(() => true)
     .catch(() => false);
-  return [relative, found];
+  return [relative, isPresent];
 }
 
 async function discoverCollections(): Promise<Collection[]> {
@@ -458,7 +458,7 @@ const loaderUnion = parseLoaderUnion(text("lib/content.ts"));
 type Result = {
   id: string;
   tier: Check["tier"];
-  ok: boolean;
+  isPassing: boolean;
   where: string;
   expects: string;
 };
@@ -468,7 +468,7 @@ const report = collections.map((collection) => {
   const results: Result[] = CHECKS.map((check) => ({
     id: check.id,
     tier: check.tier,
-    ok: check.test(ctx),
+    isPassing: check.test(ctx),
     where: check.where(collection),
     expects: check.expects,
   }));
@@ -476,9 +476,9 @@ const report = collections.map((collection) => {
   return {
     name: collection.name,
     entries: collection.entries,
-    passed: required.filter((result) => result.ok).length,
+    passed: required.filter((result) => result.isPassing).length,
     total: required.length,
-    missing: required.filter((result) => !result.ok),
+    missing: required.filter((result) => !result.isPassing),
     variants: results.filter((result) => result.tier === "variant"),
   };
 });
@@ -503,7 +503,7 @@ if (Bun.argv.includes("--json")) {
             expects,
           })),
           variants: entry.variants.reduce<Record<string, boolean>>(
-            (acc, variant) => ({ ...acc, [variant.id]: variant.ok }),
+            (acc, variant) => ({ ...acc, [variant.id]: variant.isPassing }),
             {},
           ),
         })),
@@ -577,7 +577,10 @@ if (Bun.argv.includes("--json")) {
     const cells = report
       .map((entry) => {
         const hit = entry.variants.find((variant) => variant.id === id);
-        return pad({ value: (hit?.ok ?? false) ? "yes" : "-", width: 12 });
+        return pad({
+          value: (hit?.isPassing ?? false) ? "yes" : "-",
+          width: 12,
+        });
       })
       .join("");
     console.log(`${pad({ value: id, width: variantWidth })}${cells}`);

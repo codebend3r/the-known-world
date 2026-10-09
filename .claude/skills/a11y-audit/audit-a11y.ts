@@ -32,17 +32,17 @@ import { AA_TEXT, auditContrast } from "./contrast";
 
 const SOURCE_ROOTS = ["app", "components"] as const;
 
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const files = (
   await Promise.all(
     SOURCE_ROOTS.map(async (root) => {
       const dir = path.join(process.cwd(), root);
-      const exists = await fs
+      const isPresent = await fs
         .access(dir)
         .then(() => true)
         .catch(() => false);
-      return exists ? walk(dir) : [];
+      return isPresent ? walk(dir) : [];
     }),
   )
 )
@@ -89,7 +89,7 @@ const byCode = findings.reduce<Map<string, Finding[]>>(
   new Map(),
 );
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {

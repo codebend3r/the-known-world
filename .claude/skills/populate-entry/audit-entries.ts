@@ -86,7 +86,7 @@ type Finding = {
   name: string;
   bodyChars: number;
   bodyState: BodyState;
-  sourced: boolean;
+  isSourced: boolean;
   draft: boolean;
   gaps: string[];
   score: number;
@@ -244,11 +244,11 @@ function auditCollection<T extends Auditable>({
         ? [field]
         : [],
     );
-    const sourced = entry.frontmatter.sources.length > 0;
+    const isSourced = entry.frontmatter.sources.length > 0;
     const draft = entry.frontmatter.draft;
     const score =
       bodyWeight(bodyState) +
-      (sourced ? 0 : WEIGHTS.unsourced) +
+      (isSourced ? 0 : WEIGHTS.unsourced) +
       (draft ? WEIGHTS.draft : 0) +
       gaps.length * WEIGHTS.gap;
     return score === 0
@@ -260,7 +260,7 @@ function auditCollection<T extends Auditable>({
             name: entry.frontmatter.name,
             bodyChars,
             bodyState,
-            sourced,
+            isSourced,
             draft,
             gaps,
             score,
@@ -290,7 +290,7 @@ function parseArgs(argv: readonly string[]) {
     collectionFlag === -1 ? null : (argv[collectionFlag + 1] ?? null);
   return {
     limit: limitFlag === -1 ? 25 : Number(argv[limitFlag + 1] ?? "25") || 25,
-    json: argv.includes("--json"),
+    shouldPrintJson: argv.includes("--json"),
     collection:
       !!rawCollection && isCollectionName(rawCollection) ? rawCollection : null,
   };
@@ -340,7 +340,7 @@ function summaryTable(audits: ReadonlyArray<CollectionAudit>): string {
       count({ audit, state: "empty" }),
       count({ audit, state: "stub" }),
       count({ audit, state: "thin" }),
-      String(audit.findings.filter((finding) => !finding.sourced).length),
+      String(audit.findings.filter((finding) => !finding.isSourced).length),
       String(audit.findings.filter((finding) => finding.draft).length),
     ]),
   ]);
@@ -355,13 +355,13 @@ function findingsTable(findings: ReadonlyArray<Finding>): string {
       finding.collection,
       `${finding.slug}${finding.bodyState === "ok" ? "" : ` (${finding.bodyState})`}`,
       String(finding.bodyChars),
-      finding.sourced ? "yes" : "NO",
+      finding.isSourced ? "yes" : "NO",
       finding.gaps.join(", ") || "-",
     ]),
   ]);
 }
 
-const { limit, json, collection } = parseArgs(Bun.argv.slice(2));
+const { limit, shouldPrintJson, collection } = parseArgs(Bun.argv.slice(2));
 
 const [battles, castles, dragons, events, weapons] = await Promise.all([
   loadAllBattles(),
@@ -408,7 +408,7 @@ const ranked = audits
       a.slug.localeCompare(b.slug),
   );
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {
