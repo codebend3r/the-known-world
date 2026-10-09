@@ -7,7 +7,7 @@ import { useQueryStates } from "nuqs";
 import { Sigil } from "@/components/Sigil";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { ListPagination } from "@/components/ListPagination";
-import { SortToggle, type SortDirection } from "@/components/SortToggle";
+import { SortToggle } from "@/components/SortToggle";
 import {
   ViewToggle,
   GridIcon,
@@ -26,6 +26,7 @@ import {
   isPageSize,
   listSearchParsers,
   type PageSize,
+  type SortDirection,
 } from "@/lib/listSearchParams";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredCharacterList/FilteredCharacterList.module.scss";

@@ -1,8 +1,7 @@
 "use client";
 
+import type { SortDirection } from "@/lib/listSearchParams";
 import styles from "@/components/SortToggle/SortToggle.module.scss";
-
-export type SortDirection = "asc" | "desc";
 
 type Props = {
   value: SortDirection;
