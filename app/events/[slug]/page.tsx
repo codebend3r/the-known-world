@@ -83,10 +83,10 @@ export default async function EventPage({ params }: SlugPageProps) {
   return (
     <PlateLayout>
       <div className={styles.detail}>
-        <div className={styles.heading}>
+        <hgroup className={styles.heading}>
           <h1>{fm.name}</h1>
           <p className="subtitle">{subtitle}</p>
-        </div>
+        </hgroup>
         <div className={styles.main}>
           {html && (
             <article
