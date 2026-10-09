@@ -36,13 +36,13 @@ describe("MapLayerToggle", () => {
         }),
       ]),
     );
-    expect(byType.get("castle")?.checked).toBe(true);
-    expect(byType.get("watchtower")?.checked).toBe(true);
-    expect(byType.get("town")?.checked).toBe(false);
-    expect(byType.get("ruin")?.checked).toBe(false);
-    expect(byType.get("holdfast")?.checked).toBe(false);
-    expect(byType.get("battle")?.checked).toBe(false);
-    expect(byType.get("event")?.checked).toBe(false);
+    expect(byType.get("castle")?.checked ?? null).toBe(true);
+    expect(byType.get("watchtower")?.checked ?? null).toBe(true);
+    expect(byType.get("town")?.checked ?? null).toBe(false);
+    expect(byType.get("ruin")?.checked ?? null).toBe(false);
+    expect(byType.get("holdfast")?.checked ?? null).toBe(false);
+    expect(byType.get("battle")?.checked ?? null).toBe(false);
+    expect(byType.get("event")?.checked ?? null).toBe(false);
   });
 
   it("checks the battle and event inputs when those layers are enabled", () => {
@@ -61,40 +61,22 @@ describe("MapLayerToggle", () => {
         }),
       ]),
     );
-    expect(byType.get("battle")?.checked).toBe(true);
-    expect(byType.get("event")?.checked).toBe(true);
-    expect(byType.get("castle")?.checked).toBe(false);
+    expect(byType.get("battle")?.checked ?? null).toBe(true);
+    expect(byType.get("event")?.checked ?? null).toBe(true);
+    expect(byType.get("castle")?.checked ?? null).toBe(false);
   });
 
   it("calls `onToggle` with the layer for the battle checkbox", () => {
     const onToggle = jest.fn();
-    const { container } = render(
-      <MapLayerToggle enabled={new Set()} onToggle={onToggle} />,
-    );
-    const battleLabel = Array.from(container.querySelectorAll("label")).find(
-      (label) => label.textContent === "battle",
-    );
-    const battleInput = expectElement({
-      element: battleLabel?.querySelector("input[type='checkbox']") ?? null,
-      type: HTMLInputElement,
-    });
-    fireEvent.click(battleInput);
+    render(<MapLayerToggle enabled={new Set()} onToggle={onToggle} />);
+    fireEvent.click(screen.getByRole("checkbox", { name: "battle" }));
     expect(onToggle).toHaveBeenCalledWith("battle");
   });
 
   it("calls `onToggle` with the type when its checkbox changes", () => {
     const onToggle = jest.fn();
-    const { container } = render(
-      <MapLayerToggle enabled={new Set()} onToggle={onToggle} />,
-    );
-    const ruinLabel = Array.from(container.querySelectorAll("label")).find(
-      (label) => label.textContent === "ruin",
-    );
-    const ruinInput = expectElement({
-      element: ruinLabel?.querySelector("input[type='checkbox']") ?? null,
-      type: HTMLInputElement,
-    });
-    fireEvent.click(ruinInput);
+    render(<MapLayerToggle enabled={new Set()} onToggle={onToggle} />);
+    fireEvent.click(screen.getByRole("checkbox", { name: "ruin" }));
     expect(onToggle).toHaveBeenCalledWith("ruin");
   });
 

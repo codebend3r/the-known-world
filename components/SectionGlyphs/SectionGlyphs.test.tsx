@@ -28,12 +28,12 @@ describe("sectionGlyphs", () => {
     const { container } = render(sectionGlyphs[slug]);
     const svg = container.querySelector("svg");
     expect(svg).not.toBeNull();
-    expect(svg?.getAttribute("viewBox")).toBe("0 0 32 32");
-    expect(svg?.getAttribute("width")).toBe("32");
-    expect(svg?.getAttribute("height")).toBe("32");
+    expect(svg?.getAttribute("viewBox") ?? null).toBe("0 0 32 32");
+    expect(svg?.getAttribute("width") ?? null).toBe("32");
+    expect(svg?.getAttribute("height") ?? null).toBe("32");
     // Decorative by construction: the glyph repeats a label the consumer
     // already renders as text.
-    expect(svg?.getAttribute("aria-hidden")).toBe("true");
+    expect(svg?.getAttribute("aria-hidden") ?? null).toBe("true");
   });
 
   it.each(SLUGS)(

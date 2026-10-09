@@ -40,7 +40,7 @@ describe("NAV_ITEMS", () => {
 
   it("keeps Dragons registered but hidden", () => {
     const dragons = NAV_ITEMS.find((item) => item.href === "/dragons/");
-    expect(dragons?.isVisible).toBe(false);
+    expect(dragons?.isVisible ?? null).toBe(false);
   });
 });
 

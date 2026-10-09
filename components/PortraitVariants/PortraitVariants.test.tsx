@@ -85,8 +85,8 @@ describe("PortraitVariants", () => {
     spoilersOn();
     renderVariants();
     const [primary, kingsguard] = screen.getAllByRole("tab");
-    expect(primary?.getAttribute("aria-selected")).toBe("true");
-    expect(kingsguard?.getAttribute("aria-selected")).toBe("false");
+    expect(primary?.getAttribute("aria-selected") ?? null).toBe("true");
+    expect(kingsguard?.getAttribute("aria-selected") ?? null).toBe("false");
   });
 
   it("swaps the still and the clip when a variant is chosen", () => {
@@ -98,7 +98,7 @@ describe("PortraitVariants", () => {
         .getByAltText("Portrait of Duncan the Tall — Kingsguard")
         .getAttribute("src"),
     ).toBe(KINGSGUARD.image);
-    expect(container.querySelector("video")?.getAttribute("src")).toBe(
+    expect(container.querySelector("video")?.getAttribute("src") ?? null).toBe(
       KINGSGUARD.video,
     );
   });
@@ -148,7 +148,7 @@ describe("PortraitVariants", () => {
     fireEvent.keyDown(screen.getByRole("tab", { name: "Kingsguard" }), {
       key: "ArrowRight",
     });
-    expect(selected()?.textContent).toBe("Duncan the Tall");
+    expect(selected()?.textContent ?? null).toBe("Duncan the Tall");
 
     fireEvent.keyDown(screen.getByRole("tab", { name: "Duncan the Tall" }), {
       key: "ArrowLeft",

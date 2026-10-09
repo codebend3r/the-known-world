@@ -98,7 +98,7 @@ describe("InfoRow", () => {
 
   it("wraps the pair in a row so the dl grid can place it", () => {
     const { container } = render(<InfoRow label="Heads" entries={[ned]} />);
-    expect(container.firstElementChild?.className).toBe("row");
+    expect(container.firstElementChild?.className ?? null).toBe("row");
   });
 
   it("applies the existence probe per entry", () => {

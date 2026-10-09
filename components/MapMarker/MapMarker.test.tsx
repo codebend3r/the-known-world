@@ -26,9 +26,9 @@ describe("MapMarker", () => {
       type: "castle",
     });
     const link = container.querySelector("a");
-    expect(link?.getAttribute("href")).toBe("/castles/winterfell/");
-    expect(link?.getAttribute("aria-label")).toBe("Winterfell");
-    expect(link?.getAttribute("tabindex")).toBe("0");
+    expect(link?.getAttribute("href") ?? null).toBe("/castles/winterfell/");
+    expect(link?.getAttribute("aria-label") ?? null).toBe("Winterfell");
+    expect(link?.getAttribute("tabindex") ?? null).toBe("0");
   });
 
   it("renders the name as the label text offset from the marker centre", () => {
@@ -40,9 +40,9 @@ describe("MapMarker", () => {
       cy: 60,
     });
     const text = container.querySelector("text");
-    expect(text?.textContent).toBe("Winterfell");
-    expect(text?.getAttribute("x")).toBe("60");
-    expect(text?.getAttribute("y")).toBe("64");
+    expect(text?.textContent ?? null).toBe("Winterfell");
+    expect(text?.getAttribute("x") ?? null).toBe("60");
+    expect(text?.getAttribute("y") ?? null).toBe("64");
   });
 
   it("renders a large gold circle for `castle`", () => {
@@ -52,15 +52,15 @@ describe("MapMarker", () => {
       type: "castle",
     });
     const circle = container.querySelector("circle");
-    expect(circle?.getAttribute("r")).toBe("6");
-    expect(circle?.getAttribute("class")).toContain("castle");
+    expect(circle?.getAttribute("r") ?? null).toBe("6");
+    expect(circle?.getAttribute("class") ?? "").toContain("castle");
   });
 
   it("renders a small muted circle for `town`", () => {
     const { container } = renderMarker({ slug: "x", name: "X", type: "town" });
     const circle = container.querySelector("circle");
-    expect(circle?.getAttribute("r")).toBe("4");
-    expect(circle?.getAttribute("class")).toContain("town");
+    expect(circle?.getAttribute("r") ?? null).toBe("4");
+    expect(circle?.getAttribute("class") ?? "").toContain("town");
   });
 
   it("renders a two-line cross for `ruin`", () => {
@@ -87,7 +87,7 @@ describe("MapMarker", () => {
     });
     const rects = container.querySelectorAll("rect");
     expect(rects).toHaveLength(1);
-    expect(rects[0]?.getAttribute("class")).toContain("holdfast");
+    expect(rects[0]?.getAttribute("class") ?? "").toContain("holdfast");
   });
 
   it("renders a triangle linking to the battle page for `battle`", () => {
@@ -99,10 +99,10 @@ describe("MapMarker", () => {
       cy: 645,
     });
     const link = container.querySelector("a");
-    expect(link?.getAttribute("href")).toBe("/battles/red-wedding/");
+    expect(link?.getAttribute("href") ?? null).toBe("/battles/red-wedding/");
     const polygon = container.querySelector("polygon");
-    expect(polygon?.getAttribute("class")).toContain("battle");
-    expect(polygon?.getAttribute("points")?.split(" ")).toHaveLength(3);
+    expect(polygon?.getAttribute("class") ?? "").toContain("battle");
+    expect(polygon?.getAttribute("points")?.split(" ") ?? []).toHaveLength(3);
   });
 
   it("renders a diamond linking to the event page for `event`", () => {
@@ -114,10 +114,12 @@ describe("MapMarker", () => {
       cy: 830,
     });
     const link = container.querySelector("a");
-    expect(link?.getAttribute("href")).toBe("/events/the-purple-wedding/");
+    expect(link?.getAttribute("href") ?? null).toBe(
+      "/events/the-purple-wedding/",
+    );
     const polygon = container.querySelector("polygon");
-    expect(polygon?.getAttribute("class")).toContain("event");
-    expect(polygon?.getAttribute("points")?.split(" ")).toHaveLength(4);
+    expect(polygon?.getAttribute("class") ?? "").toContain("event");
+    expect(polygon?.getAttribute("points")?.split(" ") ?? []).toHaveLength(4);
   });
 
   it("gives battle and event their own glyph shapes, not a castle circle", () => {

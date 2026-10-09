@@ -171,7 +171,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // to it, so this still lands in the wrapper's state.
   useEffect(() => {
     if (!size) return;
-    const inner = viewerRef.current?.Viewer;
+    const inner = viewerRef.current?.Viewer ?? null;
     if (!inner) return;
 
     if (!hasSeededViewRef.current) {
@@ -233,7 +233,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     if (!isEditMode) return;
     let frame: number;
     const tick = () => {
-      const value = viewerRef.current?.Viewer?.getValue();
+      const value = viewerRef.current?.Viewer?.getValue() ?? null;
       if (value) {
         setDebugValue((prev) =>
           prev.zoom === value.a && prev.x === value.e && prev.y === value.f
@@ -254,7 +254,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // Where a hotspot's centre currently sits on the stage, in screen pixels,
   // after the viewer's pan and zoom.
   const markerScreenPoint = (marker: WorldMapMarker) => {
-    const inner = viewerRef.current?.Viewer;
+    const inner = viewerRef.current?.Viewer ?? null;
     if (!inner || !size) return null;
     const value = inner.getValue();
     const svgX = (size.w - drawnWidth) / 2 + marker.x * fitScale;
@@ -268,7 +268,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   };
 
   const revealMarker = (marker: WorldMapMarker) => {
-    const inner = viewerRef.current?.Viewer;
+    const inner = viewerRef.current?.Viewer ?? null;
     const point = markerScreenPoint(marker);
     if (!inner || !size || !point) return;
     const value = inner.getValue();
@@ -308,7 +308,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
       const point = markerScreenPoint(activeMarker);
       if (point) {
         setAnchor((prev) =>
-          prev?.x === point.screenX && prev?.y === point.screenY
+          !!prev && prev.x === point.screenX && prev.y === point.screenY
             ? prev
             : { x: point.screenX, y: point.screenY },
         );

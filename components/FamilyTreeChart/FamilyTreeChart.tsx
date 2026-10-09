@@ -103,7 +103,7 @@ function getScreenToViewBox({
   svg: SVGSVGElement | null;
   bounds: { width: number; height: number };
 }): ScreenToViewBox {
-  const rect = svg?.getBoundingClientRect();
+  const rect = svg?.getBoundingClientRect() ?? null;
   if (!rect || !rect.width || !rect.height) {
     return {
       point: ({ clientX, clientY }) => ({ x: clientX, y: clientY }),

@@ -81,13 +81,15 @@ describe("HouseSearchInput", () => {
     await typeQuery("mall");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toBe("Mallister(The Riverlands)");
+    expect(options[0]?.textContent ?? null).toBe("Mallister(The Riverlands)");
   });
 
   it("omits the region when a house has none", async () => {
     render(<HouseSearchInput />);
     await typeQuery("manwoody");
-    expect(screen.getAllByRole("option")[0]?.textContent).toBe("Manwoody");
+    expect(screen.getAllByRole("option")[0]?.textContent ?? null).toBe(
+      "Manwoody",
+    );
   });
 
   it("navigates to the chosen house page", async () => {
