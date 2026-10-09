@@ -70,7 +70,7 @@ export function sigilIntegrityErrors({
 
   const unreferenced = [...images]
     .filter((file) => !reachable.has(file) && !RESERVED_IMAGES.has(file))
-    .sort()
+    .toSorted()
     .map((file) => {
       if (SIGIL_SLUGS.has(file)) {
         return `sigils/${file}.png: registered, but SLUG_ALIASES redirects it to ${sigilFile({ slug: file })}.png`;
@@ -86,7 +86,7 @@ export function sigilIntegrityErrors({
 
   const missing = [...reachable.entries()]
     .filter(([file]) => !images.has(file))
-    .sort(([a], [b]) => a.localeCompare(b))
+    .toSorted(([a], [b]) => a.localeCompare(b))
     .map(
       ([file, reason]) => `sigils/${file}.png: missing, required by ${reason}`,
     );
@@ -98,7 +98,7 @@ export function sigilIntegrityErrors({
         !characterSlugs.has(slug) &&
         !SENTINEL_SLUGS.has(slug),
     )
-    .sort()
+    .toSorted()
     .map(
       (slug) =>
         `SIGIL_SLUGS ${slug}: no houses/${slug} or characters/${slug} entry`,

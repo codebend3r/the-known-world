@@ -120,7 +120,7 @@ describe("loadWeapon round-trip", () => {
 describe("loadAllWeapons round-trip", () => {
   it("returns every seeded weapon", async () => {
     const all = await loadAllWeapons();
-    const slugs = all.map((w) => w.frontmatter.slug).sort();
+    const slugs = all.map((w) => w.frontmatter.slug).toSorted();
     expect(slugs).toEqual([
       "blackfyre",
       "brightroar",
