@@ -299,11 +299,11 @@ describe("winningFile", () => {
       portrait("a.webp"),
       portrait("a.png"),
     ];
-    expect(winningFile({ candidates })?.file).toBe("a.png");
+    expect(winningFile({ candidates })?.file ?? null).toBe("a.png");
     expect(
       winningFile({
         candidates: candidates.filter((entry) => entry.extension !== "png"),
-      })?.file,
+      })?.file ?? null,
     ).toBe("a.webp");
   });
 

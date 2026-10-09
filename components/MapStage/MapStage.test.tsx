@@ -106,7 +106,7 @@ describe("MapStage", () => {
     });
     await findByTestId("pan-zoom");
     const img = container.querySelector("image");
-    expect(img?.getAttribute("href")).toBe("/the-world.svg");
+    expect(img?.getAttribute("href") ?? null).toBe("/the-world.svg");
     expect(container.querySelector('[data-testid="child"]')).not.toBeNull();
   });
 
@@ -126,8 +126,8 @@ describe("MapStage", () => {
     });
     await findByTestId("pan-zoom");
     const svg = container.querySelector("svg");
-    expect(svg?.getAttribute("width")).toBe("800");
-    expect(svg?.getAttribute("height")).toBe("1400");
+    expect(svg?.getAttribute("width") ?? null).toBe("800");
+    expect(svg?.getAttribute("height") ?? null).toBe("1400");
   });
 
   it("disconnects the observer on unmount", () => {
@@ -185,8 +185,8 @@ describe("MapStage — accessibility contract", () => {
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("role")).toBe("group");
     expect(svg.getAttribute("aria-label")).toBe("Map of Westeros");
-    expect(container.querySelector("image")?.getAttribute("aria-hidden")).toBe(
-      "true",
-    );
+    expect(
+      container.querySelector("image")?.getAttribute("aria-hidden") ?? null,
+    ).toBe("true");
   });
 });

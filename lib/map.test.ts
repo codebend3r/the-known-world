@@ -423,7 +423,8 @@ describe("selectWorldMapMarkers", () => {
       ],
       houses,
     });
-    expect(marker?.house).toBeUndefined();
+    expect(marker).toBeDefined();
+    expect(marker).not.toHaveProperty("house");
   });
 
   it("drops drafts rather than linking to a page that is never built", () => {
