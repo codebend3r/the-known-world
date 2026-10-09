@@ -8,7 +8,7 @@
   // The page lede sits between the title and the rule as narrative copy, so it
   // drops the gold italic treatment the `.subtitle` primitive carries for house
   // words and takes the muted plate voice instead.
-  :global(.subtitle) {
+  .lede {
     border-bottom: none;
     padding-bottom: 0;
     max-width: 62ch;
