@@ -34,7 +34,7 @@ export async function enrichTreeWithPortraits({
 
   const enrichSpouse = async (s: TreeSpouse): Promise<EnrichedTreeSpouse> => {
     const portrait =
-      s.slug && !s.placeholder
+      s.slug && !s.isPlaceholder
         ? await lookup({ slug: s.slug, sex: s.sex })
         : null;
     return { ...s, portrait };
@@ -42,7 +42,7 @@ export async function enrichTreeWithPortraits({
 
   const enrichNode = async (n: TreeNode): Promise<EnrichedTreeNode> => {
     const portrait =
-      n.placeholder || n.external
+      n.isPlaceholder || n.isExternal
         ? null
         : await lookup({ slug: n.slug, sex: n.sex });
     const [spouses, children] = await Promise.all([

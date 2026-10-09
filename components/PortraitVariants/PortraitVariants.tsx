@@ -72,7 +72,6 @@ export function PortraitVariants({ variants, name }: Props) {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    const handled = true;
     switch (event.key) {
       case "ArrowRight":
       case "ArrowDown":
@@ -91,7 +90,7 @@ export function PortraitVariants({ variants, name }: Props) {
       default:
         return;
     }
-    if (handled) event.preventDefault();
+    event.preventDefault();
   };
 
   return (

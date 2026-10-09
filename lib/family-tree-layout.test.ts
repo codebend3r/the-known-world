@@ -20,8 +20,8 @@ function spouse(
     name: "Spouse",
     alias: null,
     sex: null,
-    placeholder: false,
-    inHouse: false,
+    isPlaceholder: false,
+    isInHouse: false,
     titles: [],
     portrait: null,
     ...overrides,
@@ -34,8 +34,8 @@ function node(overrides: Partial<EnrichedTreeNode> = {}): EnrichedTreeNode {
     name: "Person",
     alias: null,
     sex: null,
-    placeholder: false,
-    external: false,
+    isPlaceholder: false,
+    isExternal: false,
     born: null,
     died: null,
     titles: [],
@@ -100,7 +100,7 @@ describe("layoutFamilyTree", () => {
         children: [
           node({
             slug: "c1",
-            spouses: [spouse({ slug: "s1", name: "S1", inHouse: false })],
+            spouses: [spouse({ slug: "s1", name: "S1", isInHouse: false })],
           }),
           node({ slug: "c2" }),
         ],
@@ -120,7 +120,7 @@ describe("layoutFamilyTree", () => {
     const result = layoutFamilyTree([
       node({
         slug: "p",
-        spouses: [spouse({ slug: "ps", name: "PS", inHouse: false })],
+        spouses: [spouse({ slug: "ps", name: "PS", isInHouse: false })],
         children: [node({ slug: "c" })],
       }),
     ]);
@@ -136,8 +136,8 @@ describe("layoutFamilyTree", () => {
       node({
         slug: "p",
         children: [
-          node({ slug: "ph", placeholder: true }),
-          node({ slug: "ex", external: true }),
+          node({ slug: "ph", isPlaceholder: true }),
+          node({ slug: "ex", isExternal: true }),
         ],
       }),
     ]);
@@ -150,8 +150,8 @@ describe("layoutFamilyTree", () => {
       node({
         slug: "p",
         spouses: [
-          spouse({ slug: "s1", name: "S1", inHouse: false }),
-          spouse({ slug: "s2", name: "S2", inHouse: false }),
+          spouse({ slug: "s1", name: "S1", isInHouse: false }),
+          spouse({ slug: "s2", name: "S2", isInHouse: false }),
         ],
       }),
     ]);
@@ -170,7 +170,9 @@ describe("layoutFamilyTree", () => {
     const result = layoutFamilyTree([
       node({
         slug: "elia",
-        spouses: [spouse({ slug: "rhaegar", name: "Rhaegar", inHouse: false })],
+        spouses: [
+          spouse({ slug: "rhaegar", name: "Rhaegar", isInHouse: false }),
+        ],
       }),
     ]);
     const rhaegar = result.persons.find((p) => p.isSpouse);
@@ -181,7 +183,7 @@ describe("layoutFamilyTree", () => {
 
   it("characterSlug is null for placeholder persons", () => {
     const result = layoutFamilyTree([
-      node({ slug: "phantom", placeholder: true }),
+      node({ slug: "phantom", isPlaceholder: true }),
     ]);
     const phantom = result.persons.find((p) => p.slug === "phantom");
     expect(phantom!.characterSlug).toBeNull();
@@ -192,8 +194,8 @@ describe("layoutFamilyTree", () => {
       node({
         slug: "viserys",
         spouses: [
-          spouse({ slug: "aemma", name: "Aemma", inHouse: false }),
-          spouse({ slug: "alicent", name: "Alicent", inHouse: false }),
+          spouse({ slug: "aemma", name: "Aemma", isInHouse: false }),
+          spouse({ slug: "alicent", name: "Alicent", isInHouse: false }),
         ],
       }),
     ]);
@@ -228,18 +230,20 @@ describe("childPath", () => {
 
 describe("isLinkable", () => {
   it("is linkable for a real person with a character slug", () => {
-    expect(isLinkable({ placeholder: false, characterSlug: "jon-snow" })).toBe(
-      true,
-    );
+    expect(
+      isLinkable({ isPlaceholder: false, characterSlug: "jon-snow" }),
+    ).toBe(true);
   });
 
   it("is not linkable for a placeholder", () => {
-    expect(isLinkable({ placeholder: true, characterSlug: "jon-snow" })).toBe(
+    expect(isLinkable({ isPlaceholder: true, characterSlug: "jon-snow" })).toBe(
       false,
     );
   });
 
   it("is not linkable without a character slug", () => {
-    expect(isLinkable({ placeholder: false, characterSlug: null })).toBe(false);
+    expect(isLinkable({ isPlaceholder: false, characterSlug: null })).toBe(
+      false,
+    );
   });
 });

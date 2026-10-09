@@ -40,7 +40,7 @@ export type HouseItem = {
   name: string;
   region: string | null;
   regionLabel: string | null;
-  extinct?: boolean;
+  isExtinct?: boolean;
   rank?: HouseRank;
 };
 
@@ -207,9 +207,9 @@ export function FilteredHouseList({
   const matching = filtered.length;
   const hasQuery = debounced.trim().length > 0;
   const noun = total === 1 ? "house" : "houses";
-  const inRegionMode = grouping === "region";
+  const isInRegionMode = grouping === "region";
   const countLabel =
-    !inRegionMode && hasQuery
+    !isInRegionMode && hasQuery
       ? `${matching} of ${total} ${noun}`
       : `${total} ${noun}`;
 
@@ -259,7 +259,7 @@ export function FilteredHouseList({
     const cardClass = cx(styles.card, regionClass);
     const statusClass = cx(
       styles.status,
-      item.extinct ? styles.statusExtinct : styles.statusExtant,
+      item.isExtinct ? styles.statusExtinct : styles.statusExtant,
     );
     return (
       <li key={item.slug} className={styles.item}>
@@ -269,7 +269,7 @@ export function FilteredHouseList({
             name={item.name}
             region={item.region}
             sizes="84px"
-            decorative
+            isDecorative
             priority={priority}
             className={styles.shield}
           />
@@ -285,7 +285,7 @@ export function FilteredHouseList({
             )}
             <span className={styles.statusSlot}>
               <span className={statusClass}>
-                {item.extinct ? "Extinct" : "Extant"}
+                {item.isExtinct ? "Extinct" : "Extant"}
               </span>
             </span>
           </span>
@@ -306,12 +306,12 @@ export function FilteredHouseList({
     />
   );
 
-  const showPagination = filtered.length > MIN_PAGE_SIZE;
+  const shouldShowPagination = filtered.length > MIN_PAGE_SIZE;
 
   return (
     <>
       <div className={styles.controls}>
-        {!inRegionMode && (
+        {!isInRegionMode && (
           <ListSearchInput
             value={value}
             onChange={onChange}
@@ -353,13 +353,13 @@ export function FilteredHouseList({
       <p className={listSearch.count} aria-live="polite">
         {countLabel}
       </p>
-      {inRegionMode ? (
+      {isInRegionMode ? (
         <div className={styles.regions}>
           {regionGroups.map((group) => (
             <RegionAccordion
               key={group.slug}
               group={group}
-              open={openRegions.has(group.slug)}
+              isOpen={openRegions.has(group.slug)}
               onToggle={() => toggleRegion(group.slug)}
               listClass={listClass}
               renderCard={renderCard}
@@ -372,13 +372,13 @@ export function FilteredHouseList({
         </p>
       ) : (
         <>
-          {showPagination && renderPagination("top")}
+          {shouldShowPagination && renderPagination("top")}
           <ul className={listClass}>
             {pageItems.map((item, index) =>
               renderCard({ item, priority: index < PRIORITY_COUNT }),
             )}
           </ul>
-          {showPagination && renderPagination("bottom")}
+          {shouldShowPagination && renderPagination("bottom")}
         </>
       )}
     </>
@@ -393,13 +393,13 @@ type RegionGroup = {
 
 function RegionAccordion({
   group,
-  open,
+  isOpen,
   onToggle,
   listClass,
   renderCard,
 }: {
   group: RegionGroup;
-  open: boolean;
+  isOpen: boolean;
   onToggle: () => void;
   listClass: string;
   renderCard: (args: { item: HouseItem; priority: boolean }) => ReactNode;
@@ -412,7 +412,7 @@ function RegionAccordion({
       id={`region-${group.slug}`}
       title={group.label}
       count={group.items.length}
-      open={open}
+      isOpen={isOpen}
       onToggle={onToggle}
       headingLevel={2}
     >

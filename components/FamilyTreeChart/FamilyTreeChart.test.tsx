@@ -29,8 +29,8 @@ function person(overrides: Partial<LayoutPerson> = {}): LayoutPerson {
     name: "Person",
     alias: null,
     sex: null,
-    placeholder: false,
-    external: false,
+    isPlaceholder: false,
+    isExternal: false,
     portrait: null,
     titles: [],
     born: null,
@@ -146,7 +146,7 @@ describe("FamilyTreeChart — rendering", () => {
     const chart: LaidOutChart = {
       ...EMPTY,
       persons: [
-        person({ slug: "phantom", name: "Phantom", placeholder: true }),
+        person({ slug: "phantom", name: "Phantom", isPlaceholder: true }),
       ],
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
@@ -274,7 +274,7 @@ describe("FamilyTreeChart — rendering", () => {
           characterSlug: "rhaegar-targaryen",
           name: "Rhaegar Targaryen",
           isSpouse: true,
-          external: true,
+          isExternal: true,
           portrait: "/characters/rhaegar-targaryen.png",
         }),
       ],
@@ -293,7 +293,7 @@ describe("FamilyTreeChart — rendering", () => {
           characterSlug: "rhaegar-targaryen",
           name: "Rhaegar Targaryen",
           isSpouse: true,
-          external: true,
+          isExternal: true,
           portrait: "/characters/rhaegar-targaryen.png",
         }),
       ],
@@ -311,7 +311,7 @@ describe("FamilyTreeChart — rendering", () => {
           characterSlug: null,
           name: "Mystery",
           isSpouse: true,
-          external: true,
+          isExternal: true,
         }),
       ],
     };

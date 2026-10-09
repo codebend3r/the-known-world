@@ -289,7 +289,7 @@ function scanText(
   if (!value) return null;
   const out: (Text | Link)[] = [];
   let lastIndex = 0;
-  let produced = false;
+  let hasProduced = false;
   compiled.pattern.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = compiled.pattern.exec(value)) !== null) {
@@ -311,9 +311,9 @@ function scanText(
     });
     usedKeys.add(key);
     lastIndex = end;
-    produced = true;
+    hasProduced = true;
   }
-  if (!produced) return null;
+  if (!hasProduced) return null;
   if (lastIndex < value.length) {
     out.push({ type: "text", value: value.slice(lastIndex) });
   }

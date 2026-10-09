@@ -19,11 +19,11 @@ export function TimelineMinimap({ ticks, targetId }: TimelineMinimapProps) {
       window.scrollY +
       tick.y -
       SCROLL_OFFSET_PX;
-    const reduceMotion =
+    const shouldReduceMotion =
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
     window.scrollTo({
       top: Math.max(0, top),
-      behavior: reduceMotion ? "auto" : "smooth",
+      behavior: shouldReduceMotion ? "auto" : "smooth",
     });
   };
 

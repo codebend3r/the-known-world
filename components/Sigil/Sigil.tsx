@@ -10,7 +10,7 @@ type Props = {
   region?: string | null;
   size?: string;
   sizes?: string;
-  decorative?: boolean;
+  isDecorative?: boolean;
   hasPlate?: boolean;
   className?: string;
   priority?: boolean;
@@ -22,7 +22,7 @@ export function Sigil({
   region,
   size,
   sizes,
-  decorative = false,
+  isDecorative = false,
   hasPlate = true,
   className,
   priority = false,
@@ -41,11 +41,11 @@ export function Sigil({
     <span
       className={cx(styles.sigil, !hasPlate && styles.plateless, className)}
       style={style}
-      aria-hidden={decorative || undefined}
+      aria-hidden={isDecorative || undefined}
     >
       <Image
         src={`/sigils/${sigilFile({ slug, region })}.png`}
-        alt={decorative ? "" : `Sigil of House ${name}`}
+        alt={isDecorative ? "" : `Sigil of House ${name}`}
         fill
         sizes={sizes ?? size ?? "6rem"}
         priority={priority}

@@ -5,8 +5,8 @@ export type TreeSpouse = {
   name: string;
   alias: string | null;
   sex: "m" | "f" | null;
-  placeholder: boolean;
-  inHouse: boolean;
+  isPlaceholder: boolean;
+  isInHouse: boolean;
   titles: string[];
 };
 
@@ -15,8 +15,8 @@ export type TreeNode = {
   name: string;
   alias: string | null;
   sex: "m" | "f" | null;
-  placeholder: boolean;
-  external: boolean;
+  isPlaceholder: boolean;
+  isExternal: boolean;
   born: number | null;
   died: number | null;
   titles: string[];
@@ -75,16 +75,16 @@ export function buildFamilyTree({
     if (visited.has(slug)) return null;
     visited.add(slug);
 
-    const external = person["primary-house"] !== houseSlug;
+    const isExternal = person["primary-house"] !== houseSlug;
 
-    if (external) {
+    if (isExternal) {
       return {
         slug,
         name: person.name,
         alias: person.aliases[0] ?? null,
         sex: person.sex,
-        placeholder: person.placeholder,
-        external: true,
+        isPlaceholder: person.placeholder,
+        isExternal: true,
         born: birthYear(person),
         died: deathYear(person),
         titles: person.titles,
@@ -95,19 +95,19 @@ export function buildFamilyTree({
 
     const spouses: TreeSpouse[] = person.spouses.map((spouseSlug) => {
       const spouse = peopleBySlug.get(spouseSlug);
-      const inHouse = houseSlugs.has(spouseSlug);
+      const isInHouse = houseSlugs.has(spouseSlug);
       if (!spouse) {
         return {
           slug: spouseSlug,
           name: spouseSlug,
           alias: null,
           sex: null,
-          placeholder: true,
-          inHouse: false,
+          isPlaceholder: true,
+          isInHouse: false,
           titles: [],
         };
       }
-      if (inHouse && !visited.has(spouseSlug)) {
+      if (isInHouse && !visited.has(spouseSlug)) {
         visited.add(spouseSlug);
       }
       return {
@@ -115,14 +115,16 @@ export function buildFamilyTree({
         name: spouse.name,
         alias: spouse.aliases[0] ?? null,
         sex: spouse.sex,
-        placeholder: spouse.placeholder,
-        inHouse,
+        isPlaceholder: spouse.placeholder,
+        isInHouse,
         titles: spouse.titles,
       };
     });
 
     const inHouseSpouseChildren = spouses
-      .filter((s): s is TreeSpouse & { slug: string } => s.inHouse && !!s.slug)
+      .filter(
+        (s): s is TreeSpouse & { slug: string } => s.isInHouse && !!s.slug,
+      )
       .flatMap((s) => peopleBySlug.get(s.slug)?.children ?? []);
     const childSlugs = uniq([...person.children, ...inHouseSpouseChildren]);
 
@@ -135,8 +137,8 @@ export function buildFamilyTree({
       name: person.name,
       alias: person.aliases[0] ?? null,
       sex: person.sex,
-      placeholder: person.placeholder,
-      external: false,
+      isPlaceholder: person.placeholder,
+      isExternal: false,
       born: birthYear(person),
       died: deathYear(person),
       titles: person.titles,
