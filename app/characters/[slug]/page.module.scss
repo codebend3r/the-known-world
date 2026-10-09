@@ -48,7 +48,9 @@
 
   &:hover,
   &:focus-visible {
-    filter: drop-shadow(0 0 10px rgba(200, 162, 74, 0.45));
+    filter: drop-shadow(
+      0 0 10px color-mix(in srgb, var(--tkw-gold) 45%, transparent)
+    );
     outline: none;
   }
 }

@@ -169,7 +169,7 @@
     background: linear-gradient(
       180deg,
       var(--shield-bg),
-      color-mix(in srgb, var(--shield-bg) 45%, #000)
+      color-mix(in srgb, var(--shield-bg) 45%, var(--tkw-black))
     );
     z-index: -1;
   }
@@ -571,11 +571,7 @@
 
 .infoboxCaption {
   padding: 12px 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(200, 162, 74, 0.16),
-    rgba(200, 162, 74, 0.04)
-  );
+  background: var(--tkw-caption-wash);
   border-bottom: 1px solid var(--tkw-hairline-firm);
   font-family: var(--font-mono);
   font-size: var(--fs-label);
@@ -678,21 +674,33 @@
   border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
 }
 
+// The glyph is an alpha mask over the gold token rather than a hex inside the
+// SVG. The specimen is a `<span>`, so it can host the pseudo-element the real
+// `<input>` field can't.
+$search-glyph: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23000' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
+
 .searchDemo {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
   width: 100%;
-  padding: 11px 16px 11px 38px;
+  padding: 11px 16px 11px 14px;
   background: var(--tkw-surface);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23c8a24a' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
-  background-repeat: no-repeat;
-  background-position: 14px 50%;
   border: 1px solid var(--tkw-hairline-firm);
   border-radius: var(--tkw-radius-md);
   font-family: var(--font-body);
   font-weight: 300;
   font-size: var(--fs-section);
   color: var(--tkw-ink-dim);
+
+  &::before {
+    content: "";
+    height: 16px;
+    background-color: var(--tkw-gold);
+    -webkit-mask: $search-glyph no-repeat;
+    mask: $search-glyph no-repeat;
+  }
 }
 
 .quote {

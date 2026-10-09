@@ -13,7 +13,7 @@
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-hairline);
   border-radius: var(--tkw-radius-md);
-  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.9);
+  box-shadow: var(--tkw-drop);
 
   @media (max-width: bp.$lg) {
     display: none;
