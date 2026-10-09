@@ -90,7 +90,7 @@ jobs:
             4. Supply chain. A new or changed dependency in `package.json`
             that is not pinned to an exact version, looks like a typosquat, or
             ships an install script; changes to the build command or
-            environment in `netlify.toml` or to `netlify/plugins/`.
+            environment in `netlify.toml`.
 
             5. Secrets. A committed key or token, or a `NEXT_PUBLIC_` variable
             that would bake a secret into the static bundle.
