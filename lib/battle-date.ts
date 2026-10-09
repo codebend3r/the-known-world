@@ -34,17 +34,11 @@ export function formatBattleWhen({
   const isSpanApproximate = isApproximate(start) || isApproximate(end);
   const isSameYear = start.year === end.year && start.era === end.era;
 
-  let label: string;
-  if (isSameYear) {
-    label = eraYearLabel(start);
-  } else if (
-    (start.era === "AC" || start.era === "BC") &&
-    start.era === end.era
-  ) {
-    label = `${Math.abs(start.year)} to ${Math.abs(end.year)} ${end.era}`;
-  } else {
-    label = `${eraYearLabel(start)} to ${eraYearLabel(end)}`;
-  }
+  const asterisk = isSpanApproximate ? "*" : "";
 
-  return isSpanApproximate ? `${label}*` : label;
+  if (isSameYear) return `${eraYearLabel(start)}${asterisk}`;
+  if ((start.era === "AC" || start.era === "BC") && start.era === end.era) {
+    return `${Math.abs(start.year)} to ${Math.abs(end.year)} ${end.era}${asterisk}`;
+  }
+  return `${eraYearLabel(start)} to ${eraYearLabel(end)}${asterisk}`;
 }
