@@ -43,7 +43,13 @@ export function TimelineExplorer({ source }: TimelineExplorerProps) {
   const anchorRef = useRef<{ year: number; viewportY: number } | null>(null);
   const chartRef = useRef<HTMLDivElement | null>(null);
 
-  const zoomTo = (nextIndex: number, focalViewportY: number) => {
+  const zoomTo = ({
+    nextIndex,
+    focalViewportY,
+  }: {
+    nextIndex: number;
+    focalViewportY: number;
+  }) => {
     const index = clampZoom(nextIndex);
     if (index === zoomIndex) return;
     const body = document.getElementById(CHART_BODY_ID);
@@ -80,7 +86,10 @@ export function TimelineExplorer({ source }: TimelineExplorerProps) {
     const onWheel = (event: WheelEvent) => {
       if (!(event.ctrlKey || event.metaKey)) return;
       event.preventDefault();
-      zoomTo(zoomIndex + (event.deltaY < 0 ? 1 : -1), event.clientY);
+      zoomTo({
+        nextIndex: zoomIndex + (event.deltaY < 0 ? 1 : -1),
+        focalViewportY: event.clientY,
+      });
     };
     node.addEventListener("wheel", onWheel, { passive: false });
     return () => node.removeEventListener("wheel", onWheel);
@@ -105,7 +114,12 @@ export function TimelineExplorer({ source }: TimelineExplorerProps) {
         <button
           type="button"
           className={styles.zoomButton}
-          onClick={() => zoomTo(zoomIndex + 1, viewportCentre())}
+          onClick={() =>
+            zoomTo({
+              nextIndex: zoomIndex + 1,
+              focalViewportY: viewportCentre(),
+            })
+          }
           disabled={zoomIndex === MAX_ZOOM_INDEX}
           aria-label="Zoom in"
         >
@@ -117,7 +131,12 @@ export function TimelineExplorer({ source }: TimelineExplorerProps) {
         <button
           type="button"
           className={styles.zoomButton}
-          onClick={() => zoomTo(zoomIndex - 1, viewportCentre())}
+          onClick={() =>
+            zoomTo({
+              nextIndex: zoomIndex - 1,
+              focalViewportY: viewportCentre(),
+            })
+          }
           disabled={zoomIndex === 0}
           aria-label="Zoom out"
         >

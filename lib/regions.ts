@@ -38,10 +38,13 @@ export function regionLabel(slug: RegionSlug | null): string | null {
   return slug ? (REGION_LABELS.get(slug) ?? null) : null;
 }
 
-export function regionForHouse(
-  slug: string | null,
-  housesBySlug: Map<string, House>,
-): RegionSlug | null {
+export function regionForHouse({
+  slug,
+  housesBySlug,
+}: {
+  slug: string | null;
+  housesBySlug: Map<string, House>;
+}): RegionSlug | null {
   const seen = new Set<string>();
   let current: string | null = slug;
   while (current && !seen.has(current)) {

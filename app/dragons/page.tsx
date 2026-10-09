@@ -28,7 +28,9 @@ export default async function DragonsPage() {
   const items: DragonItem[] = visible
     .map((d): DragonItem => {
       const houseSlug = d.frontmatter.house;
-      const region = houseSlug ? regionForHouse(houseSlug, housesBySlug) : null;
+      const region = houseSlug
+        ? regionForHouse({ slug: houseSlug, housesBySlug })
+        : null;
       return {
         slug: d.frontmatter.slug,
         name: d.frontmatter.name,
