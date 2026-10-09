@@ -22,6 +22,7 @@ import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import type { HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
 import { compareByName } from "@/lib/collections";
+import { exhaustiveList } from "@/lib/exhaustive-list";
 import { REGION_SLUGS, regionLabel, type RegionSlug } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
@@ -84,16 +85,9 @@ const GROUP_OPTIONS = [
   },
 ];
 
-type RankFilter =
-  | "all"
-  | "royal"
-  | "lordly"
-  | "knightly"
-  | "other"
-  | "exiled"
-  | "extinct";
+type RankFilter = "all" | HouseRank;
 
-const RANK_FILTERS = [
+const RANK_FILTERS = exhaustiveList<RankFilter>()([
   "all",
   "royal",
   "lordly",
@@ -101,7 +95,7 @@ const RANK_FILTERS = [
   "other",
   "exiled",
   "extinct",
-] as const;
+]);
 
 const RANK_OPTIONS = [
   { value: "all", label: "Any rank" },
