@@ -82,37 +82,53 @@ type CharStates = {
  * go()}>` is the first `>` back at the tag's own depth, which no regex can find
  * on its own.
  */
+type ScanState = {
+  depth: number;
+  paren: number;
+  quote: string | null;
+  escaped: boolean;
+};
+
+function advance({ scan, char }: { scan: ScanState; char: string }): ScanState {
+  if (scan.quote !== null) {
+    if (scan.escaped) return { ...scan, escaped: false };
+    if (char === "\\") return { ...scan, escaped: true };
+    return char === scan.quote ? { ...scan, quote: null } : scan;
+  }
+  if (char === '"' || char === "'" || char === "`") {
+    return { ...scan, quote: char };
+  }
+  if (char === "{") return { ...scan, depth: scan.depth + 1 };
+  if (char === "}") return { ...scan, depth: scan.depth - 1 };
+  if (char === "(") return { ...scan, paren: scan.paren + 1 };
+  if (char === ")") return { ...scan, paren: scan.paren - 1 };
+  return scan;
+}
+
 function scanCharStates(source: string): CharStates {
-  const depth = new Int32Array(source.length);
-  const paren = new Int32Array(source.length);
-  const quoted = new Uint8Array(source.length);
-  Array.from(source).reduce<{
-    depth: number;
-    paren: number;
-    quote: string | null;
-    escaped: boolean;
+  // `split("")`, not `Array.from`: every consumer indexes by UTF-16 code unit.
+  // The typed arrays are owned by the accumulator and filled in place, because
+  // copying an n-length array per character would make the scan quadratic.
+  const { states } = source.split("").reduce<{
+    scan: ScanState;
+    states: CharStates;
   }>(
-    (state, char, index) => {
-      depth[index] = state.depth;
-      paren[index] = state.paren;
-      quoted[index] = state.quote === null ? 0 : 1;
-      if (state.quote !== null) {
-        if (state.escaped) return { ...state, escaped: false };
-        if (char === "\\") return { ...state, escaped: true };
-        return char === state.quote ? { ...state, quote: null } : state;
-      }
-      if (char === '"' || char === "'" || char === "`") {
-        return { ...state, quote: char };
-      }
-      if (char === "{") return { ...state, depth: state.depth + 1 };
-      if (char === "}") return { ...state, depth: state.depth - 1 };
-      if (char === "(") return { ...state, paren: state.paren + 1 };
-      if (char === ")") return { ...state, paren: state.paren - 1 };
-      return state;
+    ({ scan, states }, char, index) => {
+      states.depth[index] = scan.depth;
+      states.paren[index] = scan.paren;
+      states.quoted[index] = scan.quote === null ? 0 : 1;
+      return { scan: advance({ scan, char }), states };
     },
-    { depth: 0, paren: 0, quote: null, escaped: false },
+    {
+      scan: { depth: 0, paren: 0, quote: null, escaped: false },
+      states: {
+        depth: new Int32Array(source.length),
+        paren: new Int32Array(source.length),
+        quoted: new Uint8Array(source.length),
+      },
+    },
   );
-  return { depth, paren, quoted };
+  return states;
 }
 
 /** `const x = useMemo(` … the `)` that closes it, per identifier. */
@@ -298,12 +314,10 @@ export function analyse({
               innerEnds: [...state.innerEnds, tag.end],
             };
           }
-          const innerEnds = state.innerEnds.slice();
-          innerEnds[owner] = tag.start;
           return {
             stack: state.stack.slice(0, state.stack.indexOf(owner)),
             ancestors: [...state.ancestors, []],
-            innerEnds: [...innerEnds, tag.end],
+            innerEnds: [...state.innerEnds.with(owner, tag.start), tag.end],
           };
         }
         case "open":

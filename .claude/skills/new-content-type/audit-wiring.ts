@@ -406,7 +406,7 @@ async function discoverCollections(): Promise<Collection[]> {
         };
       }),
   );
-  return named.sort((a, b) => a.name.localeCompare(b.name));
+  return named.toSorted((a, b) => a.name.localeCompare(b.name));
 }
 
 function parseNavEntries(source: string): NavEntry[] {

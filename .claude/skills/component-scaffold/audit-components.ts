@@ -549,7 +549,7 @@ const tokens = await readTokens();
 const names = (await fs.readdir(COMPONENTS_DIR, { withFileTypes: true }))
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
-  .sort();
+  .toSorted();
 
 const [components, shared] = await Promise.all([
   Promise.all(names.map((name) => auditComponent({ name, tokens }))),

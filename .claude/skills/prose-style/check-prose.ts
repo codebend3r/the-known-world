@@ -172,7 +172,7 @@ async function readCollection({
   return Promise.all(
     names
       .filter((name) => name.endsWith(".md"))
-      .sort()
+      .toSorted()
       .map(async (name) => {
         const raw = await fs.readFile(path.join(dir, name), "utf-8");
         return {
@@ -361,7 +361,7 @@ function checkEntry({
     ...characterViolations,
     ...nonAsciiViolations,
     ...weaponViolations,
-  ].sort((a, b) => a.line - b.line || a.column - b.column);
+  ].toSorted((a, b) => a.line - b.line || a.column - b.column);
 }
 
 const argv = Bun.argv;
