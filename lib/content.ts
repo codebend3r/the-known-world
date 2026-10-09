@@ -58,7 +58,7 @@ export type Collections = {
 // whole corpus. Enabled only for production builds, where content is immutable:
 // `next dev` and tests keep reading from disk so edits show up without a
 // restart. Callers must not mutate a returned array, since a hit is shared.
-const enabled = process.env.NODE_ENV === "production";
+const isEnabled = process.env.NODE_ENV === "production";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
@@ -102,63 +102,63 @@ async function loadAll<K extends ContentType>(
 }
 
 export const loadCastle = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "castles", slug }),
 });
 export const loadHouse = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "houses", slug }),
 });
 export const loadCharacter = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "characters", slug }),
 });
 export const loadEvent = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "events", slug }),
 });
 
 export const loadAllCastles = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("castles"),
 });
 export const loadAllHouses = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("houses"),
 });
 export const loadAllCharacters = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("characters"),
 });
 export const loadAllEvents = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("events"),
 });
 
 export const loadWeapon = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "weapons", slug }),
 });
 export const loadDragon = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "dragons", slug }),
 });
 
 export const loadAllWeapons = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("weapons"),
 });
 export const loadAllDragons = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("dragons"),
 });
 
 export const loadBattle = memoizeBySlug({
-  enabled,
+  isEnabled,
   load: (slug: string) => loadFile({ type: "battles", slug }),
 });
 export const loadAllBattles = memoize({
-  enabled,
+  isEnabled,
   load: () => loadAll("battles"),
 });
 

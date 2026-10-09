@@ -153,10 +153,10 @@ export default async function HousePage({ params }: SlugPageProps) {
                   const character = member.slug
                     ? charactersBySlug.get(member.slug)
                     : undefined;
-                  const linkable = !!character && !character.placeholder;
+                  const isLinkable = !!character && !character.placeholder;
                   return (
                     <li key={member.slug ?? member.name}>
-                      {linkable ? (
+                      {isLinkable ? (
                         <Link
                           href={`/characters/${member.slug}/`}
                           className={styles.notableName}

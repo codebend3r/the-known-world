@@ -3,17 +3,17 @@ import { cx } from "@/lib/cx";
 import styles from "@/components/Filigree/Filigree.module.scss";
 
 type FlourishProps = {
-  mirrored?: boolean;
+  isMirrored?: boolean;
   className?: string;
 };
 
 export function FiligreeFlourish({
-  mirrored = false,
+  isMirrored = false,
   className,
 }: FlourishProps) {
   return (
     <span
-      className={cx(styles.flourish, mirrored && styles.mirrored, className)}
+      className={cx(styles.flourish, isMirrored && styles.mirrored, className)}
       aria-hidden="true"
     >
       <svg

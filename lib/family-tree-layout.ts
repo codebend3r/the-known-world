@@ -20,8 +20,8 @@ export type LayoutPerson = {
   name: string;
   alias: string | null;
   sex: "m" | "f" | null;
-  placeholder: boolean;
-  external: boolean;
+  isPlaceholder: boolean;
+  isExternal: boolean;
   portrait: string | null;
   titles: string[];
   born: number | null;
@@ -56,13 +56,13 @@ export function childPath({ from, to, busY }: LayoutChildEdge): string {
 }
 
 export function isLinkable({
-  placeholder,
+  isPlaceholder,
   characterSlug,
 }: {
-  placeholder: boolean;
+  isPlaceholder: boolean;
   characterSlug: string | null;
 }): boolean {
-  return !placeholder && characterSlug !== null;
+  return !isPlaceholder && characterSlug !== null;
 }
 
 function personSlotWidth(name: string, titles: ReadonlyArray<string>): number {
@@ -119,12 +119,12 @@ function placePerson(
 ): LayoutPerson {
   return {
     slug: n.slug,
-    characterSlug: n.placeholder ? null : n.slug,
+    characterSlug: n.isPlaceholder ? null : n.slug,
     name: n.name,
     alias: n.alias,
     sex: n.sex,
-    placeholder: n.placeholder,
-    external: n.external,
+    isPlaceholder: n.isPlaceholder,
+    isExternal: n.isExternal,
     portrait: n.portrait,
     titles: n.titles,
     born: n.born,
@@ -143,12 +143,12 @@ function placeSpouse(
 ): LayoutPerson {
   return {
     slug: identifier,
-    characterSlug: s.slug && !s.placeholder ? s.slug : null,
+    characterSlug: s.slug && !s.isPlaceholder ? s.slug : null,
     name: s.name,
     alias: s.alias,
     sex: s.sex,
-    placeholder: s.placeholder,
-    external: !s.inHouse,
+    isPlaceholder: s.isPlaceholder,
+    isExternal: !s.isInHouse,
     portrait: s.portrait,
     titles: s.titles,
     born: null,

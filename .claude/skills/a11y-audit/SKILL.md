@@ -115,7 +115,7 @@ with a `:focus-visible` ring in the module and `<image aria-hidden="true">` for 
 | `<li role="option">`  | `id` matching `aria-activedescendant`, `aria-selected`                         |
 | live region           | `role="status"` + `aria-live="polite"` with the result count                   |
 
-**Emit `aria-controls` only while the popup exists.** The listbox is behind `{showList && (…)}`, so a constant `aria-controls` dangles for the entire time the field is closed, which is most of its life. Options are never focused: the input keeps focus and `aria-activedescendant` moves. That is why `role="option"` is exempt from the `tabIndex` checks, and why the count needs its own live region.
+**Emit `aria-controls` only while the popup exists.** The listbox is behind `{shouldShowList && (…)}`, so a constant `aria-controls` dangles for the entire time the field is closed, which is most of its life. Options are never focused: the input keeps focus and `aria-activedescendant` moves. That is why `role="option"` is exempt from the `tabIndex` checks, and why the count needs its own live region.
 
 ### Toggle groups
 
@@ -161,7 +161,7 @@ Baseline run and what it changed: `docs/superpowers/baselines/a11y-audit.md`.
 | Adding `role="application"` without `onKeyDown`                  | It stops assistive tech handling keys and puts nothing in their place. Strictly worse than no role.                                                 |
 | Turning the disabled lint rules back on to "fix" this            | They fire on the sanctioned patterns too (`role="option"` without `tabIndex`, the `aria-hidden` backdrop). Noise, not signal.                       |
 | Fixing contrast by editing `styles/globals.scss`                 | Tokens are a design decision with 40-plus consumers. Report the ratio and the smallest token change; let the user pick.                             |
-| Assuming `aria-hidden` on a wrapper makes the child's `alt` moot | Only when the wrapper is unconditionally hidden. `aria-hidden={decorative \|\| undefined}` is not, and `Sigil` relies on that.                      |
+| Assuming `aria-hidden` on a wrapper makes the child's `alt` moot | Only when the wrapper is unconditionally hidden. `aria-hidden={isDecorative \|\| undefined}` is not, and `Sigil` relies on that.                    |
 | Reading `FamilyTreeChart`'s `<svg>` and seeing an empty canvas   | Its whole body is a `useMemo` declared above the return. Grep for `bodyMemo`, not for children.                                                     |
 | Adding a second `aria-label` inside a labelled canvas            | The stage already names it. A nested label just makes the announcement longer.                                                                      |
 | Testing a canvas through `MapStage`'s existing mock              | `ReactSVGPanZoom` is mocked there as a function component, so it holds no ref. Imperative pan/zoom is covered on `WorldMap`, whose mock is a class. |

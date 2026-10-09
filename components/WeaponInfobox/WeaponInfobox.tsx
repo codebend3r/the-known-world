@@ -85,7 +85,7 @@ export function WeaponInfobox({
             name={shortHouseName(originHouse.name)}
             region={regionForHouse({ slug: originHouse.slug, housesBySlug })}
             sizes="(max-width: 768px) 90vw, 400px"
-            decorative
+            isDecorative
             priority
             className={infoboxStyles.sigilFill}
           />

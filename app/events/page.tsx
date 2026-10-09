@@ -44,7 +44,7 @@ export default async function EventsPage() {
       }),
       location:
         typeof frontmatter.location === "string" ? frontmatter.location : null,
-      approximate: isApproximate(frontmatter.date),
+      isApproximate: isApproximate(frontmatter.date),
     }));
 
   return (

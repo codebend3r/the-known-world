@@ -19,7 +19,7 @@ const items: EventItem[] = [
     typeLabel: "Disaster",
     when: "114 BC*",
     location: "Valyria",
-    approximate: true,
+    isApproximate: true,
   },
   {
     slug: "the-red-wedding",
@@ -27,7 +27,7 @@ const items: EventItem[] = [
     typeLabel: "Wedding",
     when: "299 AC",
     location: "The Twins",
-    approximate: false,
+    isApproximate: false,
   },
   {
     slug: "the-tourney-at-harrenhal",
@@ -35,7 +35,7 @@ const items: EventItem[] = [
     typeLabel: "Other",
     when: "281 AC",
     location: null,
-    approximate: false,
+    isApproximate: false,
   },
 ];
 

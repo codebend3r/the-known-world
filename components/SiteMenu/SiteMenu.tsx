@@ -152,14 +152,14 @@ export function SiteMenu() {
         <nav className={styles.nav} aria-label="Primary">
           <ul className={styles.navList}>
             {ITEMS.map((item) => {
-              const active = isActive({ pathname, href: item.href });
+              const isCurrent = isActive({ pathname, href: item.href });
               const art = ART[item.href];
               return (
                 <li key={item.href} className={styles.navItem}>
                   <Link
                     href={item.href}
-                    className={cx(styles.link, active && styles.linkActive)}
-                    aria-current={active ? "page" : undefined}
+                    className={cx(styles.link, isCurrent && styles.linkActive)}
+                    aria-current={isCurrent ? "page" : undefined}
                     onClick={close}
                     tabIndex={isOpen ? 0 : -1}
                   >

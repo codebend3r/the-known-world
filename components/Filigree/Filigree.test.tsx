@@ -15,7 +15,7 @@ describe("Filigree", () => {
   });
 
   it("mirrors the flourish when requested", () => {
-    const { container } = render(<FiligreeFlourish mirrored />);
+    const { container } = render(<FiligreeFlourish isMirrored />);
     expect(container.querySelector("span")?.className).toMatch(/mirrored/);
   });
 
