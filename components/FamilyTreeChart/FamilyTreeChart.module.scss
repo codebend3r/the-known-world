@@ -121,9 +121,9 @@
   color: var(--tkw-ink-muted);
   cursor: pointer;
   transition:
-    background 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease;
+    background var(--tkw-dur) var(--tkw-ease),
+    border-color var(--tkw-dur) var(--tkw-ease),
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

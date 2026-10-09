@@ -42,7 +42,7 @@
   cursor: pointer;
   transition:
     var(--tkw-lift),
-    color 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
