@@ -1,6 +1,6 @@
 import type { Character } from "@/lib/schemas";
 
-export interface TreeSpouse {
+export type TreeSpouse = {
   slug: string | null;
   name: string;
   alias: string | null;
@@ -8,9 +8,9 @@ export interface TreeSpouse {
   placeholder: boolean;
   inHouse: boolean;
   titles: string[];
-}
+};
 
-export interface TreeNode {
+export type TreeNode = {
   slug: string;
   name: string;
   alias: string | null;
@@ -22,7 +22,7 @@ export interface TreeNode {
   titles: string[];
   spouses: TreeSpouse[];
   children: TreeNode[];
-}
+};
 
 type LoadedCharacter = { frontmatter: Character; body: string; slug: string };
 

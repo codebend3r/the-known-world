@@ -1,18 +1,15 @@
 import type { Character } from "@/lib/schemas";
 import type { TreeNode, TreeSpouse } from "@/lib/family-tree";
 
-export interface EnrichedTreeSpouse extends TreeSpouse {
+export type EnrichedTreeSpouse = TreeSpouse & {
   portrait: string | null;
-}
+};
 
-export interface EnrichedTreeNode extends Omit<
-  TreeNode,
-  "spouses" | "children"
-> {
+export type EnrichedTreeNode = Omit<TreeNode, "spouses" | "children"> & {
   portrait: string | null;
   spouses: EnrichedTreeSpouse[];
   children: EnrichedTreeNode[];
-}
+};
 
 export type FindPortrait = (
   slug: string,
