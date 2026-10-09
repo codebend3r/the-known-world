@@ -156,7 +156,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-function stubSize(el: HTMLElement, w: number, h: number) {
+function stubSize({ el, w, h }: { el: HTMLElement; w: number; h: number }) {
   Object.defineProperty(el, "clientWidth", { configurable: true, value: w });
   Object.defineProperty(el, "clientHeight", { configurable: true, value: h });
 }
@@ -197,11 +197,15 @@ function fitScaleFor(size: { w: number; h: number }) {
 
 // Inverts a pan/zoom transform back to the natural-map point currently
 // centered on screen, given the viewer size and fit scale it applies to.
-function centeredNaturalPoint(
-  value: { a: number; e: number; f: number },
-  size: { w: number; h: number },
-  fitScale: number,
-) {
+function centeredNaturalPoint({
+  value,
+  size,
+  fitScale,
+}: {
+  value: { a: number; e: number; f: number };
+  size: { w: number; h: number };
+  fitScale: number;
+}) {
   const drawnSize = NATURAL_SIZE * fitScale;
   const offsetX = (size.w - drawnSize) / 2;
   const offsetY = (size.h - drawnSize) / 2;
@@ -221,7 +225,7 @@ function renderMap(searchParams?: string) {
     { searchParams },
   );
   const stage = utils.getByRole("application");
-  stubSize(stage, 800, 600);
+  stubSize({ el: stage, w: 800, h: 600 });
   act(() => {
     observers[0].cb();
   });
@@ -408,11 +412,15 @@ describe("WorldMap", () => {
     const size1 = { w: 800, h: 600 };
     const fitScale1 = fitScaleFor(size1);
     const seeded = spies.setValue.mock.calls[0][0];
-    const naturalBefore = centeredNaturalPoint(seeded, size1, fitScale1);
+    const naturalBefore = centeredNaturalPoint({
+      value: seeded,
+      size: size1,
+      fitScale: fitScale1,
+    });
     const effectiveZoomBefore = seeded.a * fitScale1;
 
     const size2 = { w: 900, h: 700 };
-    stubSize(stage, size2.w, size2.h);
+    stubSize({ el: stage, w: size2.w, h: size2.h });
     act(() => {
       observers[0].cb();
     });
@@ -420,7 +428,11 @@ describe("WorldMap", () => {
     expect(spies.setValue).toHaveBeenCalledTimes(2);
     const resized = spies.setValue.mock.calls[1][0];
     const fitScale2 = fitScaleFor(size2);
-    const naturalAfter = centeredNaturalPoint(resized, size2, fitScale2);
+    const naturalAfter = centeredNaturalPoint({
+      value: resized,
+      size: size2,
+      fitScale: fitScale2,
+    });
     const effectiveZoomAfter = resized.a * fitScale2;
 
     expect(naturalAfter.x).toBeCloseTo(naturalBefore.x, 6);
@@ -433,7 +445,7 @@ describe("WorldMap", () => {
     await findByTestId("pan-zoom");
     expect(spies.setValue).toHaveBeenCalledTimes(1);
 
-    stubSize(stage, 800, 600);
+    stubSize({ el: stage, w: 800, h: 600 });
     act(() => {
       observers[0].cb();
     });
@@ -556,7 +568,7 @@ describe("WorldMap", () => {
       />,
     );
     const stage = utils.getByRole("application");
-    stubSize(stage, 800, 600);
+    stubSize({ el: stage, w: 800, h: 600 });
     act(() => {
       observers[0].cb();
     });
