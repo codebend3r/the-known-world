@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
-import { isActive, visibleNavItems } from "@/lib/nav";
+import { isActive, visibleNavItems, type NavHref } from "@/lib/nav";
 import { sectionGlyphs } from "@/components/SectionGlyphs";
 import styles from "@/components/SiteMenu/SiteMenu.module.scss";
 
@@ -19,7 +19,7 @@ type MenuArt = {
 
 // Drawer-only decoration, keyed by route. The nav list itself lives in
 // `lib/nav` so the header rail and this drawer stay in step.
-const ART: Record<string, MenuArt> = {
+const ART = {
   "/maps/": { icon: "/menu-icons/map.png" },
   "/timeline/": { icon: "/menu-icons/timeline.png" },
   "/houses/": { icon: "/menu-icons/houses.png" },
@@ -32,7 +32,7 @@ const ART: Record<string, MenuArt> = {
   },
   "/dragons/": { icon: "/menu-icons/dragons.png" },
   "/events/": { glyph: sectionGlyphs.events },
-};
+} as const satisfies Record<NavHref, MenuArt>;
 
 const ITEMS = visibleNavItems();
 
@@ -153,7 +153,7 @@ export function SiteMenu() {
           <ul className={styles.navList}>
             {ITEMS.map((item) => {
               const isCurrent = isActive({ pathname, href: item.href });
-              const art = ART[item.href];
+              const art: MenuArt = ART[item.href];
               return (
                 <li key={item.href} className={styles.navItem}>
                   <Link

@@ -14,21 +14,21 @@ export const metadata: Metadata = {
 type Loaded = Awaited<ReturnType<typeof loadAllCastles>>[number];
 type CastleType = Loaded["frontmatter"]["type"];
 
-const TYPE_ORDER: CastleType[] = [
+const TYPE_ORDER = [
   "castle",
   "town",
   "holdfast",
   "watchtower",
   "ruin",
-];
+] as const satisfies readonly CastleType[];
 
-const TYPE_LABELS: Record<CastleType, string> = {
+const TYPE_LABELS = {
   castle: "Castles",
   town: "Towns",
   holdfast: "Holdfasts",
   watchtower: "Watchtowers",
   ruin: "Ruins",
-};
+} as const satisfies Record<CastleType, string>;
 
 function formatHouse(slug: string): string {
   return slug

@@ -17,7 +17,7 @@ type Props = {
   className?: string;
 };
 
-const TYPE_LABEL: Record<Battle["type"], string> = {
+const TYPE_LABEL = {
   battle: "Battle",
   siege: "Siege",
   war: "War",
@@ -29,7 +29,7 @@ const TYPE_LABEL: Record<Battle["type"], string> = {
   mutiny: "Mutiny",
   skirmish: "Skirmish",
   other: "Other",
-};
+} as const satisfies Record<Battle["type"], string>;
 
 export function BattleInfobox({
   battle,

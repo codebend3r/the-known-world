@@ -39,10 +39,7 @@ export type DateDefect = {
  * ranges overlap on purpose: the Age of Heroes runs on through the Andal
  * invasion, so a year inside both is a judgement call, not an error.
  */
-export const ERA_YEAR_BOUNDS: Record<
-  CalendarDate["era"],
-  { from: number; to: number }
-> = {
+export const ERA_YEAR_BOUNDS = {
   "dawn-age": { from: -12000, to: -10000 },
   "age-of-heroes": { from: -10000, to: -2000 },
   "long-night": { from: -8100, to: -7600 },
@@ -52,7 +49,7 @@ export const ERA_YEAR_BOUNDS: Record<
   "game-of-thrones": { from: 298, to: 305 },
   BC: { from: -12000, to: -1 },
   AC: { from: 1, to: 320 },
-};
+} as const satisfies Record<CalendarDate["era"], { from: number; to: number }>;
 
 /**
  * How far either side of its stated year a date may really sit. Year-level
@@ -60,14 +57,13 @@ export const ERA_YEAR_BOUNDS: Record<
  * claims are band markers rather than years, so they only trip on gross
  * inversions.
  */
-export const PRECISION_SLACK_YEARS: Record<CalendarDate["precision"], number> =
-  {
-    exact: 0,
-    year: 0,
-    decade: 5,
-    era: 500,
-    legendary: 1000,
-  };
+export const PRECISION_SLACK_YEARS = {
+  exact: 0,
+  year: 0,
+  decade: 5,
+  era: 500,
+  legendary: 1000,
+} as const satisfies Record<CalendarDate["precision"], number>;
 
 /** Maester Aemon died at 102, the oldest age the corpus records. */
 export const MAX_LIFESPAN_YEARS = 110;
