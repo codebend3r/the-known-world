@@ -22,22 +22,25 @@
  * Bounds and the coordinate extraction rule come from `lib/map.ts` so the
  * audit, the renderer, and the CI integrity check cannot disagree.
  */
-import { loadAllBattles, loadAllCastles, loadAllEvents } from "@/lib/content";
+import {
+  loadAllBattles,
+  loadAllCastles,
+  loadAllEvents,
+  type ContentType,
+} from "@/lib/content";
 import { MAP_BOUNDS, entryCoords, isWithinMapBounds } from "@/lib/map";
-
-/**
- * Structurally the same as `Coords` in `lib/schemas.ts`, declared locally
- * because tsconfig `include` globs skip dot-directories: `.claude/**` is
- * outside the project, so `tsgo` and the type-aware lint cannot resolve a
- * `@/`-aliased type import from here. Runtime imports resolve fine through
- * Bun, which reads the same `paths` mapping.
- */
-type Coords = { x: number; y: number };
+import type { Coords } from "@/lib/schemas";
 
 /** Two markers closer than this in atlas units overlap at every zoom level. */
 const CLUSTER_RADIUS = 5;
 
-type CollectionName = "castles" | "battles" | "events";
+const COLLECTION_NAMES = [
+  "castles",
+  "battles",
+  "events",
+] as const satisfies readonly ContentType[];
+
+type CollectionName = (typeof COLLECTION_NAMES)[number];
 
 type Entry = {
   collection: CollectionName;
@@ -140,9 +143,7 @@ const entries: Entry[] = [
   })),
 ];
 
-const collections: CollectionName[] = ["castles", "battles", "events"];
-
-const coverage = collections.map((collection) => {
+const coverage = COLLECTION_NAMES.map((collection) => {
   const group = entries.filter((entry) => entry.collection === collection);
   const placed = group.filter((entry) => !!entry.coords);
   return {

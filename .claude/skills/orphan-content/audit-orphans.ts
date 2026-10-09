@@ -25,6 +25,7 @@ import {
   loadAllEvents,
   loadAllHouses,
   loadAllWeapons,
+  type ContentType,
 } from "@/lib/content";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { NAV_ITEMS } from "@/lib/nav";
@@ -41,7 +42,7 @@ const COLLECTION_NAMES = [
   "events",
   "houses",
   "weapons",
-] as const;
+] as const satisfies readonly ContentType[];
 
 type CollectionName = (typeof COLLECTION_NAMES)[number];
 
