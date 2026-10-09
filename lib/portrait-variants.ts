@@ -6,6 +6,7 @@ import {
   PORTRAIT_EXTENSIONS,
   PORTRAIT_VIDEO_EXTENSIONS,
 } from "@/lib/portraits";
+import type { PortraitFile } from "@/lib/portrait-integrity";
 import type { Character } from "@/lib/schemas";
 import { humanizeSlug } from "@/lib/text";
 
@@ -36,15 +37,9 @@ export type PortraitVariant = {
   isPrimary: boolean;
 };
 
-type VariantFile = {
-  file: string;
-  stem: string;
-  extension: string;
-};
-
 const PORTRAIT_DIR = path.join(process.cwd(), "public", "characters");
 
-function parse(file: string): VariantFile {
+function parse(file: string): PortraitFile {
   const dot = file.lastIndexOf(".");
   return {
     file,
@@ -58,10 +53,10 @@ function pick({
   entries,
   extensions,
 }: {
-  entries: readonly VariantFile[];
+  entries: readonly PortraitFile[];
   extensions: readonly string[];
-}): VariantFile | null {
-  return extensions.reduce<VariantFile | null>(
+}): PortraitFile | null {
+  return extensions.reduce<PortraitFile | null>(
     (winner, extension) =>
       winner ?? entries.find((entry) => entry.extension === extension) ?? null,
     null,
@@ -69,9 +64,9 @@ function pick({
 }
 
 function groupByStem(
-  entries: readonly VariantFile[],
-): Map<string, VariantFile[]> {
-  return entries.reduce<Map<string, VariantFile[]>>(
+  entries: readonly PortraitFile[],
+): Map<string, PortraitFile[]> {
+  return entries.reduce<Map<string, PortraitFile[]>>(
     (groups, entry) =>
       groups.set(entry.stem, [...(groups.get(entry.stem) ?? []), entry]),
     new Map(),

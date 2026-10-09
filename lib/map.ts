@@ -1,6 +1,6 @@
+import type { Loaded } from "@/lib/content";
 import type { Battle, Castle, Coords, Event, House } from "@/lib/schemas";
 
-type Loaded<T> = { frontmatter: T; body: string; slug: string };
 type CastleType = Castle["type"];
 
 export type { Coords };

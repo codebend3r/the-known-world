@@ -14,18 +14,20 @@ export const LAYOUT_CONSTANTS = {
 
 const { DOT_R, H_SPACING, V_SPACING, SPOUSE_GAP, PADDING } = LAYOUT_CONSTANTS;
 
-export type LayoutPerson = {
-  slug: string;
+export type LayoutPerson = Pick<
+  EnrichedTreeNode,
+  | "slug"
+  | "name"
+  | "alias"
+  | "sex"
+  | "isPlaceholder"
+  | "isExternal"
+  | "portrait"
+  | "titles"
+  | "born"
+  | "died"
+> & {
   characterSlug: string | null;
-  name: string;
-  alias: string | null;
-  sex: "m" | "f" | null;
-  isPlaceholder: boolean;
-  isExternal: boolean;
-  portrait: string | null;
-  titles: string[];
-  born: number | null;
-  died: number | null;
   x: number;
   y: number;
   isSpouse: boolean;
