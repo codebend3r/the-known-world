@@ -123,6 +123,26 @@ function flushRaf() {
 // `exitFullscreen()` are faked to track the current element and dispatch
 // `fullscreenchange`, matching real browser behavior closely enough to
 // drive `WorldMap`'s toggle state.
+const originalFullscreenApi = [
+  { target: document, key: "fullscreenElement" },
+  { target: HTMLElement.prototype, key: "requestFullscreen" },
+  { target: document, key: "exitFullscreen" },
+].map(({ target, key }) => ({
+  target,
+  key,
+  descriptor: Object.getOwnPropertyDescriptor(target, key),
+}));
+
+afterAll(() => {
+  originalFullscreenApi.forEach(({ target, key, descriptor }) => {
+    if (descriptor) {
+      Object.defineProperty(target, key, descriptor);
+      return;
+    }
+    Reflect.deleteProperty(target, key);
+  });
+});
+
 let fullscreenElement: Element | null = null;
 Object.defineProperty(document, "fullscreenElement", {
   configurable: true,
@@ -131,16 +151,18 @@ Object.defineProperty(document, "fullscreenElement", {
 function markFullscreenElement(el: Element | null) {
   fullscreenElement = el;
 }
-HTMLElement.prototype.requestFullscreen = jest.fn(function (this: HTMLElement) {
+const requestFullscreen = jest.fn(function (this: HTMLElement) {
   markFullscreenElement(this);
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
 });
-document.exitFullscreen = jest.fn(() => {
+const exitFullscreen = jest.fn(() => {
   fullscreenElement = null;
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
 });
+HTMLElement.prototype.requestFullscreen = requestFullscreen;
+document.exitFullscreen = exitFullscreen;
 
 beforeEach(() => {
   observers = [];
@@ -593,6 +615,37 @@ describe("WorldMap", () => {
     fireEvent.click(getByRole("button", { name: "Exit fullscreen" }));
     expect(document.exitFullscreen).toHaveBeenCalledTimes(1);
     expect(getByRole("button", { name: "Enter fullscreen" })).not.toBeNull();
+  });
+
+  it("stays on Enter fullscreen when the browser denies the request", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    requestFullscreen.mockImplementationOnce(() =>
+      Promise.reject(new Error("Permissions check failed")),
+    );
+
+    fireEvent.click(getByRole("button", { name: "Enter fullscreen" }));
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(requestFullscreen).toHaveBeenCalledTimes(1);
+    expect(getByRole("button", { name: "Enter fullscreen" })).not.toBeNull();
+  });
+
+  it("stays on Exit fullscreen when the browser denies leaving it", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    fireEvent.click(getByRole("button", { name: "Enter fullscreen" }));
+    exitFullscreen.mockImplementationOnce(() =>
+      Promise.reject(new Error("Document not active")),
+    );
+
+    fireEvent.click(getByRole("button", { name: "Exit fullscreen" }));
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(exitFullscreen).toHaveBeenCalledTimes(1);
+    expect(getByRole("button", { name: "Exit fullscreen" })).not.toBeNull();
   });
 });
 

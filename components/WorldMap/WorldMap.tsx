@@ -325,12 +325,15 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
   const fitView = () => viewerRef.current?.fitToViewer();
 
+  // The browser can deny either request (no user activation, a permissions
+  // policy, an iframe without `allowfullscreen`). The button follows
+  // `fullscreenchange`, which a denial never fires, so there is nothing to undo.
   const toggleFullscreen = () => {
     if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      stageRef.current?.requestFullscreen();
+      document.exitFullscreen().catch(() => {});
+      return;
     }
+    stageRef.current?.requestFullscreen().catch(() => {});
   };
 
   const panView = (direction: PanDirection) => {
