@@ -192,7 +192,7 @@
 // Status pill: mono 9px on the status hue at 16% with a 45% border.
 .status {
   padding: 4px 9px;
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
   font-weight: 400;

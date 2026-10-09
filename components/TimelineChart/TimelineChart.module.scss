@@ -172,7 +172,7 @@
   padding: 8px 10px;
   background: var(--tkw-surface);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   color: var(--tkw-ink);
   text-decoration: none;
   transition: var(--tkw-lift);

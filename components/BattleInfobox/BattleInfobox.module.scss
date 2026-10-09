@@ -33,7 +33,7 @@
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   padding: 4px 9px;
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   color: var(--tkw-extant);
   background: color-mix(in srgb, var(--tkw-extant) 16%, transparent);
   border: 1px solid color-mix(in srgb, var(--tkw-extant) 45%, transparent);

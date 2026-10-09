@@ -22,7 +22,7 @@
     aspect-ratio: 1 / 1;
   }
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 8px;
+  border-radius: var(--tkw-radius-lg);
   background: var(--tkw-bg-deep);
   overflow: hidden;
   display: grid;
@@ -352,7 +352,7 @@
   gap: 0.15rem 0.6rem;
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   font-family: var(--font-mono);
@@ -423,7 +423,7 @@
   height: 40px;
   padding: 0;
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   cursor: pointer;
