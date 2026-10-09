@@ -12,7 +12,9 @@
 
   &:hover .glyph,
   &:focus-visible .glyph {
-    filter: drop-shadow(0 0 6px rgba(200, 162, 74, 0.55));
+    filter: drop-shadow(
+      0 0 6px color-mix(in srgb, var(--tkw-gold) 55%, transparent)
+    );
   }
 
   &:focus-visible {

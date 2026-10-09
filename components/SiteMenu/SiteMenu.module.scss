@@ -50,7 +50,7 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(8, 6, 5, 0.72);
+  background: var(--tkw-scrim);
   opacity: 0;
   pointer-events: none;
   transition: opacity 220ms ease;
@@ -74,7 +74,7 @@
   width: min(20rem, 86vw);
   background: var(--tkw-surface-solid);
   border-right: 1px solid var(--tkw-hairline-firm);
-  box-shadow: 18px 0 44px -24px rgba(0, 0, 0, 0.9);
+  box-shadow: 18px 0 44px -24px var(--tkw-shadow);
   transform: translateX(-100%);
   transition: transform 240ms ease;
   z-index: 100;
@@ -103,11 +103,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 14px 18px;
-  background: linear-gradient(
-    180deg,
-    rgba(200, 162, 74, 0.16),
-    rgba(200, 162, 74, 0.04)
-  );
+  background: var(--tkw-caption-wash);
   border-bottom: 1px solid var(--tkw-hairline-firm);
 }
 
@@ -184,7 +180,7 @@
   &:hover,
   &:focus-visible {
     color: var(--tkw-gold-bright);
-    background: rgba(200, 162, 74, 0.08);
+    background: color-mix(in srgb, var(--tkw-gold) 8%, transparent);
     border-left-color: var(--tkw-gold);
     outline: none;
   }
@@ -231,5 +227,5 @@
 .linkActive {
   color: var(--tkw-gold-bright);
   border-left-color: var(--tkw-gold);
-  background: rgba(200, 162, 74, 0.12);
+  background: color-mix(in srgb, var(--tkw-gold) 12%, transparent);
 }

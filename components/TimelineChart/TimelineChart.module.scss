@@ -66,7 +66,7 @@
 // The spine: a vertical gold rule at 35% alpha, with full-opacity nodes.
 .axisRail {
   grid-area: axis;
-  border-right: 2px solid rgba(200, 162, 74, 0.35);
+  border-right: 2px solid color-mix(in srgb, var(--tkw-gold) 35%, transparent);
 }
 
 %column {
@@ -131,7 +131,7 @@
   grid-template-columns: var(--era-width) 1fr;
   align-items: center;
   justify-items: center;
-  background: rgba(200, 162, 74, 0.05);
+  background: color-mix(in srgb, var(--tkw-gold) 5%, transparent);
   border-top: 1px solid var(--tkw-hairline);
   border-bottom: 1px solid var(--tkw-hairline);
 }

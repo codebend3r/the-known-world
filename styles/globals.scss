@@ -21,6 +21,14 @@
   --tkw-hairline: rgba(200, 162, 74, 0.2);
   --tkw-hairline-firm: rgba(200, 162, 74, 0.28);
   --tkw-hairline-faint: rgba(200, 162, 74, 0.14);
+  // Hover ground for register rows, and the caption bar that opens every
+  // infobox-style plate.
+  --tkw-wash: rgba(200, 162, 74, 0.06);
+  --tkw-caption-wash: linear-gradient(
+    180deg,
+    rgba(200, 162, 74, 0.16),
+    rgba(200, 162, 74, 0.04)
+  );
   --tkw-glow:
     0 0 0 1px rgba(200, 162, 74, 0.35),
     0 16px 34px -18px rgba(200, 162, 74, 0.55);
@@ -30,6 +38,20 @@
   --tkw-fade: opacity 0.18s ease;
   // Overshooting ease for things that pop into place (the map popover).
   --tkw-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  // ── sheen ──────────────────────────────────────────────────────────
+  // The sheathe sweeps: a silver blade across the display title, a warm glint
+  // across the gold wordmark.
+  --tkw-silver: #cbbfa4;
+  --tkw-silver-bright: #e4dcc6;
+  --tkw-white: #fff;
+  --tkw-glint: #fff6df;
+
+  // ── shadow & scrim ─────────────────────────────────────────────────
+  --tkw-black: #000;
+  --tkw-shadow: rgba(0, 0, 0, 0.9);
+  --tkw-drop: 0 16px 34px -18px var(--tkw-shadow);
+  --tkw-scrim: rgba(8, 6, 5, 0.72);
 
   // ── type ramp ──────────────────────────────────────────────────────
   --tkw-ink: #f4ecd6;
@@ -208,37 +230,45 @@ body::after {
   z-index: 0;
 }
 
+// The damask tile and compass rose are alpha masks over one gold fill, so the
+// ornament takes its colour from the token rather than a hex inside the SVG.
+$damask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%23000' stroke-width='1.1'><circle cx='110' cy='110' r='46'/><path d='M110 56 L124 96 L164 110 L124 124 L110 164 L96 124 L56 110 L96 96 Z'/><circle cx='110' cy='110' r='13'/><path d='M0 0 L36 36 M220 0 L184 36 M0 220 L36 184 M220 220 L184 184'/></g></svg>");
+$compass-rose: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'><g fill='none' stroke='%23000' stroke-width='1.4'><circle cx='320' cy='320' r='300'/><circle cx='320' cy='320' r='232'/><circle cx='320' cy='320' r='86'/><path d='M320 8 L352 288 L632 320 L352 352 L320 632 L288 352 L8 320 L288 288 Z'/><path d='M108 108 L300 300 M532 108 L340 300 M108 532 L300 340 M532 532 L340 340'/></g></svg>");
+
 body::before {
   opacity: 0.045;
-  background-repeat: repeat, no-repeat;
-  background-size:
-    220px 220px,
-    640px 640px;
-  background-position:
-    0 0,
-    88% 78%;
-  background-image:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'><g fill='none' stroke='%23e6c15c' stroke-width='1.1'><circle cx='110' cy='110' r='46'/><path d='M110 56 L124 96 L164 110 L124 124 L110 164 L96 124 L56 110 L96 96 Z'/><circle cx='110' cy='110' r='13'/><path d='M0 0 L36 36 M220 0 L184 36 M0 220 L36 184 M220 220 L184 184'/></g></svg>"),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='640' height='640' viewBox='0 0 640 640'><g fill='none' stroke='%23c8a24a' stroke-width='1.4'><circle cx='320' cy='320' r='300'/><circle cx='320' cy='320' r='232'/><circle cx='320' cy='320' r='86'/><path d='M320 8 L352 288 L632 320 L352 352 L320 632 L288 352 L8 320 L288 288 Z'/><path d='M108 108 L300 300 M532 108 L340 300 M108 532 L300 340 M532 532 L340 340'/></g></svg>");
+  background-color: var(--tkw-gold);
+  -webkit-mask:
+    $damask 0 0 / 220px 220px repeat,
+    $compass-rose 88% 78% / 640px 640px no-repeat;
+  mask:
+    $damask 0 0 / 220px 220px repeat,
+    $compass-rose 88% 78% / 640px 640px no-repeat;
 }
 
+// `/` separates background position from size here, not Sass division.
 body::after {
   background:
-    linear-gradient(rgba(200, 162, 74, 0.018) 1px, transparent 1px) 0 0 / 64px
-      64px,
-    // `/` separates background position from size here, not Sass division.
-    // stylelint-disable-next-line scss/operator-no-newline-after
-    linear-gradient(90deg, rgba(200, 162, 74, 0.018) 1px, transparent 1px) 0 0 /
-      64px 64px,
+    linear-gradient(
+        color-mix(in srgb, var(--tkw-gold) 1.8%, transparent) 1px,
+        transparent 1px
+      )
+      0 0 / 64px 64px,
+    linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--tkw-gold) 1.8%, transparent) 1px,
+        transparent 1px
+      )
+      0 0 / 64px 64px,
     radial-gradient(
       ellipse 70% 40% at 50% -10%,
-      rgba(200, 162, 74, 0.16),
+      color-mix(in srgb, var(--tkw-gold) 16%, transparent),
       transparent 70%
     ),
     radial-gradient(
       ellipse 92% 78% at 50% 42%,
       transparent 45%,
-      rgba(8, 6, 5, 0.7) 100%
+      var(--tkw-scrim) 100%
     );
 }
 
