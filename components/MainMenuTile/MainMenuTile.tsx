@@ -11,8 +11,6 @@ export type MainMenuTileProps = {
   isVisible?: boolean;
 };
 
-// The collection card: a gold outline glyph and a mono plate number on one row,
-// then the display title, the Spectral blurb, and a mono gold entry line.
 export function MainMenuTile({
   title,
   subtitle,

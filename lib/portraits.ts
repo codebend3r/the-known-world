@@ -18,7 +18,6 @@ export const PORTRAIT_VIDEO_EXTENSIONS = ["mp4"] as const;
 /** Numbered placeholders per sex, `unknown-<sex>-01.jpg` through `-05.jpg`. */
 export const PLACEHOLDER_VARIANTS = 5;
 
-/** The extension every placeholder in the fallback pool is stored as. */
 export const PLACEHOLDER_EXTENSION = "jpg";
 
 function placeholderVariant(slug: string): number {

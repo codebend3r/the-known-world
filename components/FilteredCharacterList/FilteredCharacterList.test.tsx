@@ -10,7 +10,7 @@ import {
   flushNuqs,
   lastQueryString,
   lastSearchParams,
-} from "@/lib/testNuqs";
+} from "@/test/testNuqs";
 import { expectElement } from "@/test/dom";
 
 const items: CharacterItem[] = [
@@ -278,7 +278,7 @@ describe("FilteredCharacterList", () => {
     );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
-    const firstCardName = container.querySelector(".name")?.textContent;
+    const firstCardName = container.querySelector(".name")?.textContent ?? null;
     expect(firstCardName).toBe("Char 024");
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
   });
@@ -409,12 +409,12 @@ describe("FilteredCharacterList", () => {
     );
     const row = container.querySelector(".rowWithSort");
     expect(row).not.toBeNull();
-    expect(row?.querySelector("input")).not.toBeNull();
+    expect(row?.querySelector("input") ?? null).not.toBeNull();
     expect(
-      row?.querySelector('[role="group"][aria-label="Sort direction"]'),
+      row?.querySelector('[role="group"][aria-label="Sort direction"]') ?? null,
     ).not.toBeNull();
     expect(
-      row?.querySelector('[role="group"][aria-label="View"]'),
+      row?.querySelector('[role="group"][aria-label="View"]') ?? null,
     ).not.toBeNull();
   });
 
@@ -613,7 +613,7 @@ describe("FilteredCharacterList page persistence", () => {
     );
     expect(container.querySelectorAll(".item").length).toBe(22);
     expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
-    const firstCardName = container.querySelector(".name")?.textContent;
+    const firstCardName = container.querySelector(".name")?.textContent ?? null;
     expect(firstCardName).toBe("Char 048");
   });
 

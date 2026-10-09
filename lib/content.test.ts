@@ -5,9 +5,11 @@ import {
   renderMarkdown,
   loadAllWeapons,
   loadAllDragons,
+  loadAllBattles,
   loadWeapon,
   loadDragon,
 } from "@/lib/content";
+import { absoluteYear } from "@/lib/battle-date";
 
 describe("loadCastle", () => {
   it("loads Winterfell", async () => {
@@ -18,7 +20,7 @@ describe("loadCastle", () => {
   });
 
   it("throws on missing castle", async () => {
-    expect(loadCastle("does-not-exist")).rejects.toThrow();
+    await expect(loadCastle("does-not-exist")).rejects.toThrow();
   });
 });
 
@@ -92,14 +94,14 @@ describe("loadAllDragons", () => {
 });
 
 describe("loadWeapon", () => {
-  it("throws when the weapon slug does not exist", () => {
-    expect(loadWeapon("does-not-exist")).rejects.toThrow();
+  it("throws when the weapon slug does not exist", async () => {
+    await expect(loadWeapon("does-not-exist")).rejects.toThrow();
   });
 });
 
 describe("loadDragon", () => {
-  it("throws when the dragon slug does not exist", () => {
-    expect(loadDragon("does-not-exist")).rejects.toThrow();
+  it("throws when the dragon slug does not exist", async () => {
+    await expect(loadDragon("does-not-exist")).rejects.toThrow();
   });
 });
 
@@ -120,7 +122,7 @@ describe("loadWeapon round-trip", () => {
 describe("loadAllWeapons round-trip", () => {
   it("returns every seeded weapon", async () => {
     const all = await loadAllWeapons();
-    const slugs = all.map((w) => w.frontmatter.slug).sort();
+    const slugs = all.map((w) => w.frontmatter.slug).toSorted();
     expect(slugs).toEqual([
       "blackfyre",
       "brightroar",
@@ -185,5 +187,51 @@ describe("loadAllDragons round-trip", () => {
         "vhagar",
       ]),
     );
+  });
+});
+
+describe("battles content corpus", () => {
+  it("loads and validates every content/battles file against BattleSchema", async () => {
+    const all = await loadAllBattles();
+    expect(all.length).toBe(72);
+  });
+
+  it("keeps each file's frontmatter slug in sync with its filename", async () => {
+    const all = await loadAllBattles();
+    const mismatched = all.filter((b) => b.frontmatter.slug !== b.slug);
+    expect(mismatched.map((b) => b.slug)).toEqual([]);
+  });
+
+  it("groups every battle under a war and publishes every populated entry", async () => {
+    const all = await loadAllBattles();
+    const missingWar = all.filter((b) => !b.frontmatter.war);
+    const stillDraft = all.filter((b) => b.frontmatter.draft);
+    expect(missingWar.map((b) => b.slug)).toEqual([]);
+    expect(stillDraft.map((b) => b.slug)).toEqual([]);
+  });
+
+  it("gives every battle a populated prose body", async () => {
+    const all = await loadAllBattles();
+    const thin = all.filter((b) => b.body.trim().length < 200);
+    expect(thin.map((b) => b.slug)).toEqual([]);
+  });
+
+  it("never ends a battle before it starts when both dates are exact", async () => {
+    const all = await loadAllBattles();
+    const reversed = all.filter((b) => {
+      const { start, end } = b.frontmatter;
+      if (start.precision !== "exact" || end.precision !== "exact")
+        return false;
+      return absoluteYear(end) < absoluteYear(start);
+    });
+    expect(reversed.map((b) => b.slug)).toEqual([]);
+  });
+
+  it("carries approximate (non-exact precision) dates for legendary battles", async () => {
+    const all = await loadAllBattles();
+    const approximate = all.filter(
+      (b) => b.frontmatter.start.precision !== "exact",
+    );
+    expect(approximate.length).toBeGreaterThan(0);
   });
 });

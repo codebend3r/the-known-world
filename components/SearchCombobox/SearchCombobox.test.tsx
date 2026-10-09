@@ -59,7 +59,7 @@ describe("SearchCombobox", () => {
     fireEvent.change(input, { target: { value: "mea" } });
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toContain("Meadows");
+    expect(options[0]?.textContent ?? "").toContain("Meadows");
   });
 
   it("renders the detail datum beside the name", () => {
@@ -77,7 +77,9 @@ describe("SearchCombobox", () => {
     fireEvent.change(screen.getByRole("combobox"), {
       target: { value: "hol" },
     });
-    expect(screen.getAllByRole("option")[0]?.textContent).toBe("Hollow");
+    expect(screen.getAllByRole("option")[0]?.textContent ?? null).toBe(
+      "Hollow",
+    );
   });
 
   it("navigates to the top match on Enter, under the given base path", () => {
@@ -110,9 +112,9 @@ describe("SearchCombobox", () => {
     fireEvent.change(input, { target: { value: "s" } });
     fireEvent.keyDown(input, { key: "ArrowUp" });
     const options = screen.getAllByRole("option");
-    expect(options[options.length - 1]?.getAttribute("aria-selected")).toBe(
-      "true",
-    );
+    expect(
+      options[options.length - 1]?.getAttribute("aria-selected") ?? null,
+    ).toBe("true");
   });
 
   it("navigates on option click", () => {
@@ -204,7 +206,7 @@ describe("SearchCombobox — accessibility contract", () => {
     const active = input.getAttribute("aria-activedescendant");
     expect(active).not.toBeNull();
     const option = document.getElementById(active ?? "");
-    expect(option?.getAttribute("aria-selected")).toBe("true");
+    expect(option?.getAttribute("aria-selected") ?? null).toBe("true");
   });
 
   it("announces the result count in a live region", () => {

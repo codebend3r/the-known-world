@@ -74,8 +74,8 @@ describe("buildPortraitVariants", () => {
   });
 
   it("puts the primary first however the folder is listed", () => {
-    const reversed = build([...DUNCAN].reverse());
-    expect(reversed[0]?.id).toBe("duncan-the-tall");
+    const reversed = build(DUNCAN.toReversed());
+    expect(reversed[0]?.id ?? null).toBe("duncan-the-tall");
   });
 
   it("orders the remaining variants by label", () => {
@@ -97,13 +97,13 @@ describe("buildPortraitVariants", () => {
       "duncan-the-tall.png",
       "duncan-the-tall.jpg",
     ]);
-    expect(variants[0]?.image).toBe(
+    expect(variants[0]?.image ?? null).toBe(
       "/characters/duncan-the-tall/duncan-the-tall.png",
     );
   });
 
   it("leaves video null when a variant has no clip", () => {
-    expect(build(["duncan-the-tall.jpg"])[0]?.video).toBeNull();
+    expect(build(["duncan-the-tall.jpg"])[0]).toHaveProperty("video", null);
   });
 
   it("drops a clip with no still of its own", () => {
@@ -133,7 +133,7 @@ describe("buildPortraitVariants", () => {
       id: "duncan-the-tall-ashford",
       isPrimary: true,
     });
-    expect(variants[1]?.isPrimary).toBe(false);
+    expect(variants[1]?.isPrimary ?? null).toBe(false);
   });
 
   it("returns nothing for an empty folder", () => {
@@ -194,7 +194,9 @@ describe("findPortraitVariants", () => {
       name: "Nobody",
       sex: "f",
     });
-    expect(only?.image).toMatch(/^\/characters\/unknown-female-0[1-5]\.jpg$/);
-    expect(only?.isPrimary).toBe(true);
+    expect(only?.image ?? "").toMatch(
+      /^\/characters\/unknown-female-0[1-5]\.jpg$/,
+    );
+    expect(only?.isPrimary ?? null).toBe(true);
   });
 });

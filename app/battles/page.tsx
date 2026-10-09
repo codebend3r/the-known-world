@@ -37,7 +37,7 @@ export default async function BattlesPage() {
 
   const groups = Array.from(byWar.entries())
     .map(([war, items]) => {
-      const sorted = [...items].sort(
+      const sorted = items.toSorted(
         (a, b) =>
           absoluteYear(a.frontmatter.start) -
             absoluteYear(b.frontmatter.start) ||
@@ -49,7 +49,7 @@ export default async function BattlesPage() {
         earliest: absoluteYear(sorted[0].frontmatter.start),
       };
     })
-    .sort((a, b) => a.earliest - b.earliest);
+    .toSorted((a, b) => a.earliest - b.earliest);
 
   const hasApproximate = visible.some(
     (b) => b.frontmatter.start.precision !== "exact",

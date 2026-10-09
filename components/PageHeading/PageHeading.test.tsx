@@ -27,7 +27,7 @@ describe("PageHeading", () => {
 
   it("draws the rule in the section's filigree variant", () => {
     const { container } = render(<PageHeading title="Maps" filigree="scale" />);
-    expect(container.querySelector("hgroup > span")?.className).toContain(
+    expect(container.querySelector("hgroup > span")?.className ?? "").toContain(
       "scale",
     );
   });

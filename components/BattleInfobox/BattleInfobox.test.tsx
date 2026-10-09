@@ -146,7 +146,9 @@ describe("BattleInfobox", () => {
   it("title-cases the location, the victor, and each side label", () => {
     const { container } = renderBattle();
     expect(screen.getByText("The Whispering Wood")).toBeDefined();
-    expect(container.querySelector(".victor")?.textContent).toBe("Northmen");
+    expect(container.querySelector(".victor")?.textContent ?? null).toBe(
+      "Northmen",
+    );
     const sides = [...container.querySelectorAll("dt")].map(
       (node) => node.textContent,
     );
@@ -158,8 +160,8 @@ describe("BattleInfobox", () => {
     const { container } = renderBattle();
     const lists = [...container.querySelectorAll(".belligerents")];
     expect(lists).toHaveLength(2);
-    expect(lists[0]?.textContent).toBe("House Stark");
-    expect(lists[1]?.textContent).toBe("House LannisterHouse Clegane");
+    expect(lists[0]?.textContent ?? null).toBe("House Stark");
+    expect(lists[1]?.textContent ?? null).toBe("House LannisterHouse Clegane");
   });
 
   it("links a belligerent that has a house entry and leaves the rest as text", () => {
@@ -177,10 +179,10 @@ describe("BattleInfobox", () => {
   it("tints each belligerent swatch with its house's region", () => {
     const { container } = renderBattle();
     const swatches = [...container.querySelectorAll(".swatch")];
-    expect(swatches[0]?.getAttribute("style")).toContain(
+    expect(swatches[0]?.getAttribute("style") ?? "").toContain(
       "--house-tint: var(--region-color-north)",
     );
-    expect(swatches[1]?.getAttribute("style")).toContain(
+    expect(swatches[1]?.getAttribute("style") ?? "").toContain(
       "--house-tint: var(--region-color-westerlands)",
     );
     // No region resolves for `clegane`, so no tint is set.

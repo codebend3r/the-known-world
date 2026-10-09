@@ -171,7 +171,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // to it, so this still lands in the wrapper's state.
   useEffect(() => {
     if (!size) return;
-    const inner = viewerRef.current?.Viewer;
+    const inner = viewerRef.current?.Viewer ?? null;
     if (!inner) return;
 
     if (!hasSeededViewRef.current) {
@@ -233,7 +233,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     if (!isEditMode) return;
     let frame: number;
     const tick = () => {
-      const value = viewerRef.current?.Viewer?.getValue();
+      const value = viewerRef.current?.Viewer?.getValue() ?? null;
       if (value) {
         setDebugValue((prev) =>
           prev.zoom === value.a && prev.x === value.e && prev.y === value.f
@@ -247,14 +247,10 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     return () => cancelAnimationFrame(frame);
   }, [isEditMode]);
 
-  // Tabbing to a hotspot that the current pan has scrolled out of view would
-  // leave focus on something invisible, so the view recentres on it at the
-  // current zoom. A hotspot already on screen (the usual case for a mouse
-  // click, which also focuses) is left where it is to avoid a jump.
   // Where a hotspot's centre currently sits on the stage, in screen pixels,
   // after the viewer's pan and zoom.
   const markerScreenPoint = (marker: WorldMapMarker) => {
-    const inner = viewerRef.current?.Viewer;
+    const inner = viewerRef.current?.Viewer ?? null;
     if (!inner || !size) return null;
     const value = inner.getValue();
     const svgX = (size.w - drawnWidth) / 2 + marker.x * fitScale;
@@ -267,8 +263,12 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     };
   };
 
+  // Tabbing to a hotspot that the current pan has scrolled out of view would
+  // leave focus on something invisible, so the view recentres on it at the
+  // current zoom. A hotspot already on screen (the usual case for a mouse
+  // click, which also focuses) is left where it is to avoid a jump.
   const revealMarker = (marker: WorldMapMarker) => {
-    const inner = viewerRef.current?.Viewer;
+    const inner = viewerRef.current?.Viewer ?? null;
     const point = markerScreenPoint(marker);
     if (!inner || !size || !point) return;
     const value = inner.getValue();
@@ -308,7 +308,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
       const point = markerScreenPoint(activeMarker);
       if (point) {
         setAnchor((prev) =>
-          prev?.x === point.screenX && prev?.y === point.screenY
+          !!prev && prev.x === point.screenX && prev.y === point.screenY
             ? prev
             : { x: point.screenX, y: point.screenY },
         );
@@ -325,12 +325,15 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
   const fitView = () => viewerRef.current?.fitToViewer();
 
+  // The browser can deny either request (no user activation, a permissions
+  // policy, an iframe without `allowfullscreen`). The button follows
+  // `fullscreenchange`, which a denial never fires, so there is nothing to undo.
   const toggleFullscreen = () => {
     if (document.fullscreenElement) {
-      document.exitFullscreen();
-    } else {
-      stageRef.current?.requestFullscreen();
+      document.exitFullscreen().catch(() => {});
+      return;
     }
+    stageRef.current?.requestFullscreen().catch(() => {});
   };
 
   const panView = (direction: PanDirection) => {

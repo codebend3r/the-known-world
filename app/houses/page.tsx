@@ -35,7 +35,7 @@ export default async function HousesPage() {
         rank: h.frontmatter.rank,
       };
     })
-    .sort(compareByName);
+    .toSorted(compareByName);
 
   return (
     <PlateLayout>

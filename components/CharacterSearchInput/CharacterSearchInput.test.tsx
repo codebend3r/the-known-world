@@ -104,7 +104,7 @@ describe("CharacterSearchInput — autocomplete mode", () => {
     await typeQuery("aem");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toContain("Aemon Targaryen");
+    expect(options[0]?.textContent ?? "").toContain("Aemon Targaryen");
   });
 
   it("navigates to the top match on Enter", async () => {
@@ -151,6 +151,6 @@ describe("CharacterSearchInput — autocomplete mode", () => {
     await typeQuery("dragonknight");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toContain("Aemon Targaryen");
+    expect(options[0]?.textContent ?? "").toContain("Aemon Targaryen");
   });
 });
