@@ -5,7 +5,12 @@
  * combobox IDREFs, per-route heading order) or a rule Oxlint cannot run
  * without flagging correct markup. See `docs/tooling-rule-mapping.md`.
  */
-import type { AttributeValue, SourceFile, Tag } from "./jsx-source";
+import {
+  lineOf,
+  type AttributeValue,
+  type SourceFile,
+  type Tag,
+} from "./jsx-source";
 
 const INTERACTIVE_ELEMENTS = new Set([
   "a",
@@ -223,7 +228,7 @@ export function checkImages(file: SourceFile): Finding[] {
         .trim(),
     );
 
-  return file.tags.flatMap((tag, index) => {
+  return file.tags.flatMap((tag, index): Finding[] => {
     if (!IMAGE_TAGS.has(tag.name) || tag.kind === "close") return [];
     const at = { file: file.path, line: tag.line, element: `<${tag.name}>` };
     const alt = tag.attributes.get("alt");
