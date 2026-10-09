@@ -14,17 +14,9 @@ export const REGIONS = {
 
 export type RegionSlug = (typeof REGIONS)[keyof typeof REGIONS]["slug"];
 
-export const REGION_SLUGS = [
-  "north",
-  "vale",
-  "riverlands",
-  "westerlands",
-  "reach",
-  "stormlands",
-  "dorne",
-  "iron-islands",
-  "crownlands",
-] as const satisfies readonly RegionSlug[];
+export const REGION_SLUGS: readonly RegionSlug[] = Object.values(REGIONS).map(
+  ({ slug }) => slug,
+);
 
 const REGION_LABELS = new Map<RegionSlug, string>(
   Object.values(REGIONS).map((r) => [r.slug, r.name]),

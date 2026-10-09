@@ -1,13 +1,14 @@
 import type { Battle, Event, Landmass } from "@/lib/schemas";
 import { absoluteYear, formatBattleWhen } from "@/lib/battle-date";
+import { exhaustiveList } from "@/lib/exhaustive-list";
 
 export type { Landmass } from "@/lib/schemas";
 
-export const LANDMASSES = [
+export const LANDMASSES = exhaustiveList<Landmass>()([
   "westeros",
   "essos",
   "summer-isles",
-] as const satisfies readonly Landmass[];
+]);
 
 export const LANDMASS_LABELS = {
   westeros: "Westeros",
