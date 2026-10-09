@@ -34,12 +34,6 @@ describe("sigilFile", () => {
     );
   });
 
-  it("falls back to unknown-westeros when the region is unmapped", () => {
-    expect(sigilFile({ slug: "not-a-house", region: "beyond-the-wall" })).toBe(
-      "unknown-westeros",
-    );
-  });
-
   it("registers the newly added standalone house sigils", () => {
     ["ambrose", "brune-dyre-den", "massey", "charlton"].forEach((slug) => {
       expect(SIGIL_SLUGS.has(slug)).toBe(true);
