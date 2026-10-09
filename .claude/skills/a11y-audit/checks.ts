@@ -107,7 +107,8 @@ function has({ tag, name }: { tag: Tag; name: string }): boolean {
 /** `role="img"` gives `img`; `role={x}` gives the raw expression; absent gives `""`. */
 function roleOf(tag: Tag): string {
   const role = tag.attributes.get("role");
-  return role?.kind === "literal" ? role.text : "";
+  if (role === undefined || role.kind !== "literal") return "";
+  return role.text;
 }
 
 function isHidden(tag: Tag): boolean {

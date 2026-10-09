@@ -312,7 +312,13 @@ function formatTable(rows: ReadonlyArray<ReadonlyArray<string>>): string {
 }
 
 function summaryTable(audits: ReadonlyArray<CollectionAudit>): string {
-  const count = (audit: CollectionAudit, state: BodyState) =>
+  const count = ({
+    audit,
+    state,
+  }: {
+    audit: CollectionAudit;
+    state: BodyState;
+  }) =>
     String(
       audit.findings.filter((finding) => finding.bodyState === state).length,
     );
@@ -331,9 +337,9 @@ function summaryTable(audits: ReadonlyArray<CollectionAudit>): string {
       audit.collection,
       String(audit.entries),
       String(audit.medianBody),
-      count(audit, "empty"),
-      count(audit, "stub"),
-      count(audit, "thin"),
+      count({ audit, state: "empty" }),
+      count({ audit, state: "stub" }),
+      count({ audit, state: "thin" }),
       String(audit.findings.filter((finding) => !finding.sourced).length),
       String(audit.findings.filter((finding) => finding.draft).length),
     ]),
