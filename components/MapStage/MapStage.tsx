@@ -35,7 +35,7 @@ export function MapStage({ children, svgUrl, label = "Map" }: Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<ReactSVGPanZoom | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
-  const [value, setValue] = useState<Value>({} as Value);
+  const [value, setValue] = useState<Value | null>(null);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -51,7 +51,7 @@ export function MapStage({ children, svgUrl, label = "Map" }: Props) {
     const viewer = viewerRef.current;
     if (!viewer || !size) return;
     const { x, y } = PAN_DIRECTIONS[direction];
-    const scale = value.a ?? 1;
+    const scale = value?.a ?? 1;
     viewer.pan(
       (x * size.w * PAN_STEP_RATIO) / scale,
       (y * size.h * PAN_STEP_RATIO) / scale,

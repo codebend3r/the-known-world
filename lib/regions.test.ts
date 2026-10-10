@@ -120,6 +120,10 @@ describe("regionForHouse", () => {
   it("returns null for a slug that is not in the index", () => {
     expect(regionForHouse("ghost", mapOf([]))).toBeNull();
   });
+
+  it("does not mistake an inherited object key for a great house", () => {
+    expect(regionForHouse("constructor", mapOf([]))).toBeNull();
+  });
 });
 
 describe("regionLabel", () => {

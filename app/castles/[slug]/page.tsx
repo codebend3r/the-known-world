@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { loadCastle, loadAllCastles, renderMarkdown } from "@/lib/content";
+import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 
@@ -10,12 +11,8 @@ export async function generateStaticParams() {
     .map((c) => ({ slug: c.frontmatter.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const castle = await loadCastle(slug).catch(() => null);
   if (!castle) return { title: "Not found" };
   return {
@@ -24,12 +21,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function CastlePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function CastlePage({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const castle = await loadCastle(slug).catch(() => null);
   if (!castle) notFound();
 

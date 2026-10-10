@@ -10,6 +10,7 @@ import {
   flushNuqs,
   lastQueryString,
 } from "@/lib/testNuqs";
+import { expectElement } from "@/test/dom";
 
 const items: EventItem[] = [
   {
@@ -108,7 +109,10 @@ describe("FilteredEventList", () => {
     renderWithNuqs(<FilteredEventList items={items} />, {
       searchParams: "?search=doom",
     });
-    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    const input = expectElement({
+      element: screen.getByRole("searchbox"),
+      type: HTMLInputElement,
+    });
     expect(input.value).toBe("doom");
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);

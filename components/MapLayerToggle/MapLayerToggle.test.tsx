@@ -2,6 +2,7 @@ import { describe, it, expect, jest } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { MapLayerToggle } from "@/components/MapLayerToggle";
 import { MAP_LAYERS } from "@/lib/map";
+import { expectElement } from "@/test/dom";
 
 describe("MapLayerToggle", () => {
   it("renders one checkbox per layer, with the layer name as the label", () => {
@@ -29,7 +30,10 @@ describe("MapLayerToggle", () => {
     const byType = new Map<string, HTMLInputElement>(
       Array.from(container.querySelectorAll("label")).map((label) => [
         label.textContent ?? "",
-        label.querySelector("input[type='checkbox']") as HTMLInputElement,
+        expectElement({
+          element: label.querySelector("input[type='checkbox']"),
+          type: HTMLInputElement,
+        }),
       ]),
     );
     expect(byType.get("castle")?.checked).toBe(true);
@@ -51,7 +55,10 @@ describe("MapLayerToggle", () => {
     const byType = new Map<string, HTMLInputElement>(
       Array.from(container.querySelectorAll("label")).map((label) => [
         label.textContent ?? "",
-        label.querySelector("input[type='checkbox']") as HTMLInputElement,
+        expectElement({
+          element: label.querySelector("input[type='checkbox']"),
+          type: HTMLInputElement,
+        }),
       ]),
     );
     expect(byType.get("battle")?.checked).toBe(true);
@@ -67,9 +74,10 @@ describe("MapLayerToggle", () => {
     const battleLabel = Array.from(container.querySelectorAll("label")).find(
       (label) => label.textContent === "battle",
     );
-    const battleInput = battleLabel?.querySelector(
-      "input[type='checkbox']",
-    ) as HTMLInputElement;
+    const battleInput = expectElement({
+      element: battleLabel?.querySelector("input[type='checkbox']") ?? null,
+      type: HTMLInputElement,
+    });
     fireEvent.click(battleInput);
     expect(onToggle).toHaveBeenCalledWith("battle");
   });
@@ -82,9 +90,10 @@ describe("MapLayerToggle", () => {
     const ruinLabel = Array.from(container.querySelectorAll("label")).find(
       (label) => label.textContent === "ruin",
     );
-    const ruinInput = ruinLabel?.querySelector(
-      "input[type='checkbox']",
-    ) as HTMLInputElement;
+    const ruinInput = expectElement({
+      element: ruinLabel?.querySelector("input[type='checkbox']") ?? null,
+      type: HTMLInputElement,
+    });
     fireEvent.click(ruinInput);
     expect(onToggle).toHaveBeenCalledWith("ruin");
   });

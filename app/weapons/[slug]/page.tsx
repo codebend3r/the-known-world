@@ -12,6 +12,7 @@ import {
   loadAllCharacters,
   renderMarkdown,
 } from "@/lib/content";
+import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { findWeaponImage } from "@/lib/weapon-image";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { PlateLayout } from "@/components/PlateLayout";
@@ -27,12 +28,8 @@ export async function generateStaticParams() {
     .map((w) => ({ slug: w.frontmatter.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const weapon = await loadWeapon(slug).catch(() => null);
   if (!weapon) return { title: "Not found" };
   return {
@@ -60,12 +57,8 @@ const MATERIAL_ADJ: Record<string, string> = {
   other: "",
 };
 
-export default async function WeaponPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function WeaponPage({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const [
     weapon,
     allHouses,
@@ -115,10 +108,9 @@ export default async function WeaponPage({
     allEvents,
     current: { kind: "weapon", slug, mentions: weapon.frontmatter.mentions },
   });
-  const html =
-    fm && weapon.body.trim()
-      ? await renderMarkdown(weapon.body, { proseLinks })
-      : "";
+  const html = weapon.body.trim()
+    ? await renderMarkdown(weapon.body, { proseLinks })
+    : "";
   const originHouse = fm["origin-house"]
     ? housesBySlug.get(fm["origin-house"])
     : undefined;

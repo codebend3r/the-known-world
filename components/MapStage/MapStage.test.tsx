@@ -10,6 +10,7 @@ import {
 import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 import { act, render } from "@testing-library/react";
 import type { ReactNode } from "react";
+import { expectElement } from "@/test/dom";
 
 // Restoring keeps `react-svg-pan-zoom` mocked for this file only, even if the
 // suite is ever run without `--isolate`.
@@ -76,7 +77,10 @@ describe("MapStage", () => {
         <circle data-testid="child" />
       </MapStage>,
     );
-    const stageEl = container.querySelector(".stage") as HTMLElement;
+    const stageEl = expectElement({
+      element: container.querySelector(".stage"),
+      type: HTMLElement,
+    });
     stubSize(stageEl, 640, 1120);
     act(() => {
       observers[0].cb([]);
@@ -92,7 +96,10 @@ describe("MapStage", () => {
         <circle data-testid="child" />
       </MapStage>,
     );
-    const stageEl = container.querySelector(".stage") as HTMLElement;
+    const stageEl = expectElement({
+      element: container.querySelector(".stage"),
+      type: HTMLElement,
+    });
     stubSize(stageEl, 800, 1400);
     act(() => {
       observers[0].cb([]);
@@ -109,7 +116,10 @@ describe("MapStage", () => {
         <g />
       </MapStage>,
     );
-    const stageEl = container.querySelector(".stage") as HTMLElement;
+    const stageEl = expectElement({
+      element: container.querySelector(".stage"),
+      type: HTMLElement,
+    });
     stubSize(stageEl, 100, 100);
     act(() => {
       observers[0].cb([]);
@@ -142,7 +152,10 @@ describe("MapStage — accessibility contract", () => {
         <circle data-testid="child" />
       </MapStage>,
     );
-    const stageEl = container.querySelector(".stage") as HTMLElement;
+    const stageEl = expectElement({
+      element: container.querySelector(".stage"),
+      type: HTMLElement,
+    });
     stubSize(stageEl, 640, 1120);
     act(() => {
       observers[0].cb([]);
@@ -160,7 +173,10 @@ describe("MapStage — accessibility contract", () => {
         <circle data-testid="child" />
       </MapStage>,
     );
-    const stageEl = container.querySelector(".stage") as HTMLElement;
+    const stageEl = expectElement({
+      element: container.querySelector(".stage"),
+      type: HTMLElement,
+    });
     stubSize(stageEl, 640, 1120);
     act(() => {
       observers[0].cb([]);

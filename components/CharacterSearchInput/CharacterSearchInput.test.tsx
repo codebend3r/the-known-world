@@ -10,6 +10,7 @@ import {
 } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { SearchIndexItem } from "@/lib/search-index";
+import { expectElement } from "@/test/dom";
 import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
 
 const push = jest.fn();
@@ -27,11 +28,6 @@ afterAll(() => {
 
 const { CharacterSearchInput } =
   await import("@/components/CharacterSearchInput");
-
-function asInput(el: HTMLElement): HTMLInputElement {
-  if (!(el instanceof HTMLInputElement)) throw new Error("expected an input");
-  return el;
-}
 
 const items: SearchIndexItem[] = [
   {
@@ -80,9 +76,10 @@ describe("CharacterSearchInput — filter mode", () => {
   it("renders a controlled field and reports changes", () => {
     const onChange = jest.fn();
     render(<CharacterSearchInput value="ed" onChange={onChange} />);
-    const input = asInput(
-      screen.getByRole("searchbox", { name: "Search characters" }),
-    );
+    const input = expectElement({
+      element: screen.getByRole("searchbox", { name: "Search characters" }),
+      type: HTMLInputElement,
+    });
     expect(input.value).toBe("ed");
     fireEvent.change(input, { target: { value: "edd" } });
     expect(onChange).toHaveBeenCalledWith("edd");

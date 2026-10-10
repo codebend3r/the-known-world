@@ -12,6 +12,7 @@ import {
   loadAllEvents,
   renderMarkdown,
 } from "@/lib/content";
+import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { PlateLayout } from "@/components/PlateLayout";
 import { FiligreeRule } from "@/components/Filigree";
 import { Sources } from "@/components/Sources";
@@ -34,12 +35,8 @@ export async function generateStaticParams() {
     .map((h) => ({ slug: h.frontmatter.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const house = await loadHouse(slug).catch(() => null);
   if (!house) return { title: "Not found" };
   const { name, seat } = house.frontmatter;
@@ -56,12 +53,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function HousePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function HousePage({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const [
     house,
     allHouses,

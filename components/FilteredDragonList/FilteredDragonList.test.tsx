@@ -10,6 +10,7 @@ import {
   flushNuqs,
   lastQueryString,
 } from "@/lib/testNuqs";
+import { expectElement } from "@/test/dom";
 
 const items: DragonItem[] = [
   {
@@ -78,7 +79,10 @@ describe("FilteredDragonList", () => {
     renderWithNuqs(<FilteredDragonList items={items} />, {
       searchParams: "?search=cannibal",
     });
-    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    const input = expectElement({
+      element: screen.getByRole("searchbox"),
+      type: HTMLInputElement,
+    });
     expect(input.value).toBe("cannibal");
     const links = screen.getAllByRole("link");
     expect(links).toHaveLength(1);

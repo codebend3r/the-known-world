@@ -2,19 +2,19 @@ import type { Castle, House, Character, Event } from "@/lib/schemas";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
-export interface ContentSet {
+export type ContentSet = {
   castles: Array<Loaded<Castle>>;
   houses: Array<Loaded<House>>;
   characters: Array<Loaded<Character>>;
   events: Array<Loaded<Event>>;
-}
+};
 
-export interface RelationGraph {
+export type RelationGraph = {
   castleByHouse: Map<string, string[]>; // house slug → castle slugs whose liege-house is this house
   houseBySeat: Map<string, string>; // castle slug → house slug whose seat is this castle
   membersByHouse: Map<string, string[]>; // house slug → character slugs whose primary-house is this house
   eventsByLocation: Map<string, string[]>; // castle slug → event slugs located there
-}
+};
 
 function pushTo<K>(map: Map<K, string[]>, key: K, value: string) {
   const existing = map.get(key) ?? [];

@@ -11,6 +11,7 @@ import {
   loadAllEvents,
   renderMarkdown,
 } from "@/lib/content";
+import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
@@ -26,12 +27,8 @@ export async function generateStaticParams() {
     .map((d) => ({ slug: d.frontmatter.slug }));
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export async function generateMetadata({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const dragon = await loadDragon(slug).catch(() => null);
   if (!dragon) return { title: "Not found" };
   return {
@@ -39,12 +36,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function DragonPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function DragonPage({ params }: SlugPageProps) {
+  const slug = await slugFromParams(params);
   const [
     dragon,
     allHouses,
@@ -92,10 +85,9 @@ export default async function DragonPage({
     allEvents,
     current: { kind: "dragon", slug, mentions: dragon.frontmatter.mentions },
   });
-  const html =
-    fm && dragon.body.trim()
-      ? await renderMarkdown(dragon.body, { proseLinks })
-      : "";
+  const html = dragon.body.trim()
+    ? await renderMarkdown(dragon.body, { proseLinks })
+    : "";
   const house = fm.house ? housesBySlug.get(fm.house) : undefined;
   const subtitle = house
     ? `Of ${house.name}`

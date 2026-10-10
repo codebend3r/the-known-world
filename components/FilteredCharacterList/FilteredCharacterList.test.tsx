@@ -11,6 +11,7 @@ import {
   lastQueryString,
   lastSearchParams,
 } from "@/lib/testNuqs";
+import { expectElement } from "@/test/dom";
 
 const items: CharacterItem[] = [
   {
@@ -175,7 +176,7 @@ describe("FilteredCharacterList", () => {
       (el) => el.className,
     );
     expect(childClasses).toEqual(["portrait", "sigil", "name", "alias"]);
-    const img = card?.querySelector(".portrait img") as HTMLImageElement | null;
+    const img = card?.querySelector(".portrait img") ?? null;
     expect(img?.getAttribute("src") ?? "").toContain("aegon-i-targaryen.png");
   });
 
@@ -230,12 +231,12 @@ describe("FilteredCharacterList", () => {
     const navs = screen.getAllByRole("navigation", { name: /pagination/i });
     expect(navs.length).toBe(2);
     expect(navs[0].textContent).toMatch(/Page 1 of 1/);
-    const prevButtons = screen.getAllByRole("button", {
-      name: /previous page/i,
-    }) as HTMLButtonElement[];
-    const nextButtons = screen.getAllByRole("button", {
-      name: /next page/i,
-    }) as HTMLButtonElement[];
+    const prevButtons = screen
+      .getAllByRole("button", { name: /previous page/i })
+      .map((element) => expectElement({ element, type: HTMLButtonElement }));
+    const nextButtons = screen
+      .getAllByRole("button", { name: /next page/i })
+      .map((element) => expectElement({ element, type: HTMLButtonElement }));
     expect(prevButtons.every((b) => b.disabled)).toBe(true);
     expect(nextButtons.every((b) => b.disabled)).toBe(true);
     expect(
@@ -251,9 +252,9 @@ describe("FilteredCharacterList", () => {
     const navs = screen.getAllByRole("navigation", { name: /pagination/i });
     expect(navs.length).toBe(2);
     expect(navs[0].textContent).toMatch(/Page 1 of 3/);
-    const prevButtons = screen.getAllByRole("button", {
-      name: /previous page/i,
-    }) as HTMLButtonElement[];
+    const prevButtons = screen
+      .getAllByRole("button", { name: /previous page/i })
+      .map((element) => expectElement({ element, type: HTMLButtonElement }));
     expect(prevButtons.every((b) => b.disabled)).toBe(true);
   });
 
@@ -262,15 +263,11 @@ describe("FilteredCharacterList", () => {
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
     );
     const children = Array.from(container.children);
-    const list = children.find((el) => el.classList.contains("list"));
+    const listIndex = children.findIndex((el) => el.classList.contains("list"));
     const navs = children.filter((el) => el.classList.contains("pagination"));
     expect(navs.length).toBe(2);
-    expect(children.indexOf(navs[0])).toBeLessThan(
-      children.indexOf(list as Element),
-    );
-    expect(children.indexOf(navs[1])).toBeGreaterThan(
-      children.indexOf(list as Element),
-    );
+    expect(children.indexOf(navs[0])).toBeLessThan(listIndex);
+    expect(children.indexOf(navs[1])).toBeGreaterThan(listIndex);
     expect(navs[0].classList.contains("paginationTop")).toBe(true);
     expect(navs[1].classList.contains("paginationBottom")).toBe(true);
   });
@@ -290,9 +287,9 @@ describe("FilteredCharacterList", () => {
     renderWithNuqs(
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
     );
-    const nextButtons = screen.getAllByRole("button", {
-      name: /next page/i,
-    }) as HTMLButtonElement[];
+    const nextButtons = screen
+      .getAllByRole("button", { name: /next page/i })
+      .map((element) => expectElement({ element, type: HTMLButtonElement }));
     fireEvent.click(nextButtons[0]);
     fireEvent.click(nextButtons[0]);
     expect(nextButtons.every((b) => b.disabled)).toBe(true);
@@ -303,9 +300,9 @@ describe("FilteredCharacterList", () => {
     renderWithNuqs(
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     const optionLabels = Array.from(topSelect.options).map(
       (o) => o.textContent,
     );
@@ -317,9 +314,9 @@ describe("FilteredCharacterList", () => {
     const { container } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     expect(container.querySelectorAll(".item").length).toBe(48);
     expect(screen.getAllByText(/Page 1 of 2/).length).toBe(2);
@@ -332,9 +329,9 @@ describe("FilteredCharacterList", () => {
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     expect(screen.getAllByText(/Page 1 of 2/).length).toBe(2);
   });
@@ -343,13 +340,13 @@ describe("FilteredCharacterList", () => {
     renderWithNuqs(
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
     );
-    const selects = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const selects = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(selects[1], { target: { value: "120" } });
-    const after = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const after = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     expect(after[0].value).toBe("120");
     expect(after[1].value).toBe("120");
   });
@@ -359,7 +356,10 @@ describe("FilteredCharacterList", () => {
       <FilteredCharacterList items={items} />,
       { searchParams: "?search=arya" },
     );
-    const input = screen.getByRole("searchbox") as HTMLInputElement;
+    const input = expectElement({
+      element: screen.getByRole("searchbox"),
+      type: HTMLInputElement,
+    });
     expect(input.value).toBe("arya");
     const cards = container.querySelectorAll(".item");
     expect(cards.length).toBe(1);
@@ -540,9 +540,9 @@ describe("FilteredCharacterList page size persistence", () => {
       { searchParams: "?size=48" },
     );
     expect(container.querySelectorAll(".item").length).toBe(48);
-    const selects = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const selects = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     expect(selects[0].value).toBe("48");
   });
 
@@ -550,9 +550,9 @@ describe("FilteredCharacterList page size persistence", () => {
     const { onUrlUpdate } = renderWithNuqs(
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?size=48");
@@ -563,9 +563,9 @@ describe("FilteredCharacterList page size persistence", () => {
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?size=48" },
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "24" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("");
@@ -584,9 +584,9 @@ describe("FilteredCharacterList page size persistence", () => {
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?search=char" },
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastSearchParams(onUrlUpdate).get("search")).toBe("char");
@@ -666,9 +666,9 @@ describe("FilteredCharacterList page persistence", () => {
       <FilteredCharacterList items={manyItems(70)} pageSize={24} />,
       { searchParams: "?page=2" },
     );
-    const [topSelect] = screen.getAllByRole("combobox", {
-      name: /characters per page/i,
-    }) as HTMLSelectElement[];
+    const [topSelect] = screen
+      .getAllByRole("combobox", { name: /characters per page/i })
+      .map((element) => expectElement({ element, type: HTMLSelectElement }));
     fireEvent.change(topSelect, { target: { value: "48" } });
     await flushNuqs();
     expect(lastQueryString(onUrlUpdate)).toBe("?size=48");
