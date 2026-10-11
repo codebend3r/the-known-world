@@ -62,10 +62,13 @@ const enabled = process.env.NODE_ENV === "production";
 
 type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
-async function loadFile<K extends ContentType>(
-  type: K,
-  slug: string,
-): Promise<Loaded<Frontmatter[K]>> {
+async function loadFile<K extends ContentType>({
+  type,
+  slug,
+}: {
+  type: K;
+  slug: string;
+}): Promise<Loaded<Frontmatter[K]>> {
   const filePath = path.join(CONTENT_ROOT, type, `${slug}.md`);
   const raw = await fs.readFile(filePath, "utf-8");
   const parsed = parseFrontmatter(raw);
@@ -94,25 +97,25 @@ async function loadAll<K extends ContentType>(
   }
   const mdFiles = files.filter((f) => f.endsWith(".md"));
   return Promise.all(
-    mdFiles.map((f) => loadFile(type, f.replace(/\.md$/, ""))),
+    mdFiles.map((f) => loadFile({ type, slug: f.replace(/\.md$/, "") })),
   );
 }
 
 export const loadCastle = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("castles", slug),
+  load: (slug: string) => loadFile({ type: "castles", slug }),
 });
 export const loadHouse = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("houses", slug),
+  load: (slug: string) => loadFile({ type: "houses", slug }),
 });
 export const loadCharacter = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("characters", slug),
+  load: (slug: string) => loadFile({ type: "characters", slug }),
 });
 export const loadEvent = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("events", slug),
+  load: (slug: string) => loadFile({ type: "events", slug }),
 });
 
 export const loadAllCastles = memoize({
@@ -134,11 +137,11 @@ export const loadAllEvents = memoize({
 
 export const loadWeapon = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("weapons", slug),
+  load: (slug: string) => loadFile({ type: "weapons", slug }),
 });
 export const loadDragon = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("dragons", slug),
+  load: (slug: string) => loadFile({ type: "dragons", slug }),
 });
 
 export const loadAllWeapons = memoize({
@@ -152,19 +155,22 @@ export const loadAllDragons = memoize({
 
 export const loadBattle = memoizeBySlug({
   enabled,
-  load: (slug: string) => loadFile("battles", slug),
+  load: (slug: string) => loadFile({ type: "battles", slug }),
 });
 export const loadAllBattles = memoize({
   enabled,
   load: () => loadAll("battles"),
 });
 
-export async function renderMarkdown(
-  source: string,
-  opts?: { proseLinks?: ProseLinkIndex },
-): Promise<string> {
+export async function renderMarkdown({
+  source,
+  proseLinks,
+}: {
+  source: string;
+  proseLinks?: ProseLinkIndex;
+}): Promise<string> {
   const pipeline = remark();
-  if (opts?.proseLinks) pipeline.use(remarkProseLinks(opts.proseLinks));
+  if (proseLinks) pipeline.use(remarkProseLinks(proseLinks));
   const processed = await pipeline.use(remarkHtml).process(source);
   return processed.toString();
 }

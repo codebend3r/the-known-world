@@ -69,12 +69,12 @@ export default async function EventPage({ params }: SlugPageProps) {
     current: { kind: "event", slug, mentions: fm.mentions },
   });
   const html = event.body.trim()
-    ? await renderMarkdown(event.body, { proseLinks })
+    ? await renderMarkdown({ source: event.body, proseLinks })
     : "";
   const typeLabel = fm.type[0].toUpperCase() + fm.type.slice(1);
   const subtitle = [
     typeLabel,
-    formatBattleWhen(fm.date, fm.date),
+    formatBattleWhen({ start: fm.date, end: fm.date }),
     typeof fm.location === "string" ? fm.location : null,
   ]
     .filter(Boolean)

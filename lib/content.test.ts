@@ -44,18 +44,21 @@ describe("loadAllCastles", () => {
 
 describe("renderMarkdown", () => {
   it("converts Markdown body to HTML", async () => {
-    const html = await renderMarkdown("# Hello\n\nA **bold** word.");
+    const html = await renderMarkdown({
+      source: "# Hello\n\nA **bold** word.",
+    });
     expect(html).toContain("<h1>Hello</h1>");
     expect(html).toContain("<strong>bold</strong>");
   });
 
   it("leaves prose unlinked when no `proseLinks` index is passed", async () => {
-    const html = await renderMarkdown("Catelyn Tully of Riverrun.");
+    const html = await renderMarkdown({ source: "Catelyn Tully of Riverrun." });
     expect(html).not.toContain("<a ");
   });
 
   it("rewrites matched surface forms when a `proseLinks` index is passed", async () => {
-    const html = await renderMarkdown("Catelyn Tully of Riverrun.", {
+    const html = await renderMarkdown({
+      source: "Catelyn Tully of Riverrun.",
       proseLinks: {
         targets: [
           {

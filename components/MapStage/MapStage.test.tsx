@@ -65,7 +65,7 @@ afterEach(() => {
   unstubAllGlobals();
 });
 
-function stubSize(el: HTMLElement, w: number, h: number) {
+function stubSize({ el, w, h }: { el: HTMLElement; w: number; h: number }) {
   Object.defineProperty(el, "clientWidth", { configurable: true, value: w });
   Object.defineProperty(el, "clientHeight", { configurable: true, value: h });
 }
@@ -81,7 +81,7 @@ describe("MapStage", () => {
       element: container.querySelector(".stage"),
       type: HTMLElement,
     });
-    stubSize(stageEl, 640, 1120);
+    stubSize({ el: stageEl, w: 640, h: 1120 });
     act(() => {
       observers[0].cb([]);
     });
@@ -100,7 +100,7 @@ describe("MapStage", () => {
       element: container.querySelector(".stage"),
       type: HTMLElement,
     });
-    stubSize(stageEl, 800, 1400);
+    stubSize({ el: stageEl, w: 800, h: 1400 });
     act(() => {
       observers[0].cb([]);
     });
@@ -120,7 +120,7 @@ describe("MapStage", () => {
       element: container.querySelector(".stage"),
       type: HTMLElement,
     });
-    stubSize(stageEl, 100, 100);
+    stubSize({ el: stageEl, w: 100, h: 100 });
     act(() => {
       observers[0].cb([]);
     });
@@ -156,7 +156,7 @@ describe("MapStage — accessibility contract", () => {
       element: container.querySelector(".stage"),
       type: HTMLElement,
     });
-    stubSize(stageEl, 640, 1120);
+    stubSize({ el: stageEl, w: 640, h: 1120 });
     act(() => {
       observers[0].cb([]);
     });
@@ -177,7 +177,7 @@ describe("MapStage — accessibility contract", () => {
       element: container.querySelector(".stage"),
       type: HTMLElement,
     });
-    stubSize(stageEl, 640, 1120);
+    stubSize({ el: stageEl, w: 640, h: 1120 });
     act(() => {
       observers[0].cb([]);
     });

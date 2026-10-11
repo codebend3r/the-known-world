@@ -109,7 +109,7 @@ export default async function WeaponPage({ params }: SlugPageProps) {
     current: { kind: "weapon", slug, mentions: weapon.frontmatter.mentions },
   });
   const html = weapon.body.trim()
-    ? await renderMarkdown(weapon.body, { proseLinks })
+    ? await renderMarkdown({ source: weapon.body, proseLinks })
     : "";
   const originHouse = fm["origin-house"]
     ? housesBySlug.get(fm["origin-house"])

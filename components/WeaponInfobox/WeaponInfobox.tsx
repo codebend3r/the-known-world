@@ -83,7 +83,7 @@ export function WeaponInfobox({
           <Sigil
             slug={originHouse.slug}
             name={shortHouseName(originHouse.name)}
-            region={regionForHouse(originHouse.slug, housesBySlug)}
+            region={regionForHouse({ slug: originHouse.slug, housesBySlug })}
             sizes="(max-width: 768px) 90vw, 400px"
             decorative
             priority

@@ -50,7 +50,7 @@ export function buildHouseSearchIndex({
     .map((house) => ({
       slug: house.slug,
       name: shortHouseName(house.name),
-      detail: regionLabel(regionForHouse(house.slug, housesBySlug)),
+      detail: regionLabel(regionForHouse({ slug: house.slug, housesBySlug })),
       aliases: [],
     }))
     .toSorted(compareByName);

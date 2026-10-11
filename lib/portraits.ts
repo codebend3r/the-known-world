@@ -45,16 +45,27 @@ async function probe(file: string): Promise<string | null> {
  * the same probe and every caller that wants one portrait keeps working.
  * `lib/portrait-variants.ts` reads the rest of the folder.
  */
-function probePaths(slug: string, extension: string): string[] {
+function probePaths({
+  slug,
+  extension,
+}: {
+  slug: string;
+  extension: string;
+}): string[] {
   return [`${slug}.${extension}`, `${slug}/${slug}.${extension}`];
 }
 
-export async function findPortrait(
-  slug: string,
-  sex: Character["sex"],
-): Promise<string> {
+export async function findPortrait({
+  slug,
+  sex,
+}: {
+  slug: string;
+  sex: Character["sex"];
+}): Promise<string> {
   const candidates = await Promise.all(
-    PORTRAIT_EXTENSIONS.flatMap((ext) => probePaths(slug, ext).map(probe)),
+    PORTRAIT_EXTENSIONS.flatMap((ext) =>
+      probePaths({ slug, extension: ext }).map(probe),
+    ),
   );
 
   const dedicated = candidates.find((candidate) => !!candidate);
@@ -70,7 +81,7 @@ export async function findPortrait(
 export async function findPortraitVideo(slug: string): Promise<string | null> {
   const candidates = await Promise.all(
     PORTRAIT_VIDEO_EXTENSIONS.flatMap((ext) =>
-      probePaths(slug, ext).map(probe),
+      probePaths({ slug, extension: ext }).map(probe),
     ),
   );
   return candidates.find((candidate) => !!candidate) ?? null;

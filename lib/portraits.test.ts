@@ -26,7 +26,7 @@ describe("findPortrait", () => {
 
   it("returns the `.png` path when only the png exists", async () => {
     existing([`${process.cwd()}/public/characters/eddard-stark.png`]);
-    const result = await findPortrait("eddard-stark", "m");
+    const result = await findPortrait({ slug: "eddard-stark", sex: "m" });
     expect(result).toBe("/characters/eddard-stark.png");
   });
 
@@ -36,13 +36,13 @@ describe("findPortrait", () => {
       `${process.cwd()}/public/characters/eddard-stark.webp`,
       `${process.cwd()}/public/characters/eddard-stark.jpg`,
     ]);
-    const result = await findPortrait("eddard-stark", "m");
+    const result = await findPortrait({ slug: "eddard-stark", sex: "m" });
     expect(result).toBe("/characters/eddard-stark.png");
   });
 
   it("falls through extensions in order: png → webp → jpg → jpeg", async () => {
     existing([`${process.cwd()}/public/characters/foo.jpeg`]);
-    const result = await findPortrait("foo", "m");
+    const result = await findPortrait({ slug: "foo", sex: "m" });
     expect(result).toBe("/characters/foo.jpeg");
   });
 
@@ -50,7 +50,7 @@ describe("findPortrait", () => {
     existing([
       `${process.cwd()}/public/characters/duncan-the-tall/duncan-the-tall.jpg`,
     ]);
-    const result = await findPortrait("duncan-the-tall", "m");
+    const result = await findPortrait({ slug: "duncan-the-tall", sex: "m" });
     expect(result).toBe("/characters/duncan-the-tall/duncan-the-tall.jpg");
   });
 
@@ -59,32 +59,32 @@ describe("findPortrait", () => {
       `${process.cwd()}/public/characters/duncan-the-tall.jpg`,
       `${process.cwd()}/public/characters/duncan-the-tall/duncan-the-tall.jpg`,
     ]);
-    const result = await findPortrait("duncan-the-tall", "m");
+    const result = await findPortrait({ slug: "duncan-the-tall", sex: "m" });
     expect(result).toBe("/characters/duncan-the-tall.jpg");
   });
 
   it("falls back to a numbered male placeholder when no portrait exists", async () => {
     existing([]);
-    const result = await findPortrait("nobody", "m");
+    const result = await findPortrait({ slug: "nobody", sex: "m" });
     expect(result).toMatch(/^\/characters\/unknown-male-0[1-5]\.jpg$/);
   });
 
   it("falls back to a numbered female placeholder when no portrait exists", async () => {
     existing([]);
-    const result = await findPortrait("nobody", "f");
+    const result = await findPortrait({ slug: "nobody", sex: "f" });
     expect(result).toMatch(/^\/characters\/unknown-female-0[1-5]\.jpg$/);
   });
 
   it("treats unknown sex as male for the placeholder", async () => {
     existing([]);
-    const result = await findPortrait("nobody", null);
+    const result = await findPortrait({ slug: "nobody", sex: null });
     expect(result).toMatch(/^\/characters\/unknown-male-0[1-5]\.jpg$/);
   });
 
   it("assigns the same placeholder variant for a given slug every time", async () => {
     existing([]);
-    const first = await findPortrait("aelinor-penrose", "f");
-    const second = await findPortrait("aelinor-penrose", "f");
+    const first = await findPortrait({ slug: "aelinor-penrose", sex: "f" });
+    const second = await findPortrait({ slug: "aelinor-penrose", sex: "f" });
     expect(second).toBe(first);
   });
 
@@ -92,7 +92,7 @@ describe("findPortrait", () => {
     existing([]);
     const slugs = ["alpha", "bravo", "charlie", "delta", "echo", "foxtrot"];
     const variants = new Set(
-      await Promise.all(slugs.map((slug) => findPortrait(slug, "m"))),
+      await Promise.all(slugs.map((slug) => findPortrait({ slug, sex: "m" }))),
     );
     expect(variants.size).toBeGreaterThan(1);
   });
@@ -101,7 +101,7 @@ describe("findPortrait", () => {
     existing([]);
     const slugs = Array.from({ length: 50 }, (_, index) => `slug-${index}`);
     const results = await Promise.all(
-      slugs.map((slug) => findPortrait(slug, "f")),
+      slugs.map((slug) => findPortrait({ slug, sex: "f" })),
     );
     results.forEach((result) =>
       expect(result).toMatch(/^\/characters\/unknown-female-0[1-5]\.jpg$/),

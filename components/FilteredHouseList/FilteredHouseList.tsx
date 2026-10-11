@@ -202,7 +202,7 @@ export function FilteredHouseList({
       : sorted.filter((item) => item.rank === rank);
   }, [sorted, rank]);
 
-  const filtered = filterByName(facetFiltered, debounced);
+  const filtered = filterByName({ items: facetFiltered, query: debounced });
   const total = facetFiltered.length;
   const matching = filtered.length;
   const hasQuery = debounced.trim().length > 0;
@@ -405,7 +405,7 @@ function RegionAccordion({
   renderCard: (args: { item: HouseItem; priority: boolean }) => ReactNode;
 }) {
   const [query, setQuery] = useState("");
-  const filtered = filterByName(group.items, query);
+  const filtered = filterByName({ items: group.items, query });
 
   return (
     <Accordion

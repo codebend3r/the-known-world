@@ -83,7 +83,10 @@ export default async function BattlesPage() {
                       )}
                     </span>
                     <span className={styles.when}>
-                      {formatBattleWhen(b.frontmatter.start, b.frontmatter.end)}
+                      {formatBattleWhen({
+                        start: b.frontmatter.start,
+                        end: b.frontmatter.end,
+                      })}
                     </span>
                   </Link>
                 </li>

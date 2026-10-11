@@ -7,10 +7,13 @@ export function wasKing(titles: ReadonlyArray<string>): boolean {
   return titles.some((t) => t.startsWith("King "));
 }
 
-export function formatLabelText(
-  name: string,
-  titles: ReadonlyArray<string>,
-): string {
+export function formatLabelText({
+  name,
+  titles,
+}: {
+  name: string;
+  titles: ReadonlyArray<string>;
+}): string {
   const parts = name.trim().split(/\s+/);
   if (parts.length === 1) return parts[0];
   const last = parts[parts.length - 1];
@@ -22,11 +25,14 @@ export function formatLabelText(
   return `${parts[0]} ${lastInitial}`;
 }
 
-export function estimateLabelWidth(
-  name: string,
-  titles: ReadonlyArray<string>,
-): number {
-  const text = formatLabelText(name, titles);
+export function estimateLabelWidth({
+  name,
+  titles,
+}: {
+  name: string;
+  titles: ReadonlyArray<string>;
+}): number {
+  const text = formatLabelText({ name, titles });
   return text.length * LABEL_CHAR_WIDTH + LABEL_HORIZONTAL_PADDING * 2;
 }
 
