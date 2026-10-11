@@ -19,10 +19,10 @@ describe("NAV_ITEMS", () => {
     const checked = await Promise.all(
       NAV_ITEMS.map(async (item) => ({
         href: item.href,
-        exists: await routeExists(item.href),
+        hasRoute: await routeExists(item.href),
       })),
     );
-    expect(checked.filter((item) => !item.exists)).toEqual([]);
+    expect(checked.filter((item) => !item.hasRoute)).toEqual([]);
   });
 
   it("lists every browsable section, Events included", () => {
@@ -40,7 +40,7 @@ describe("NAV_ITEMS", () => {
 
   it("keeps Dragons registered but hidden", () => {
     const dragons = NAV_ITEMS.find((item) => item.href === "/dragons/");
-    expect(dragons?.visible).toBe(false);
+    expect(dragons?.isVisible).toBe(false);
   });
 });
 

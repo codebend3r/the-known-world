@@ -39,7 +39,7 @@ export function SearchCombobox({
   const router = useRouter();
   const listboxId = useId();
   const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(-1);
 
   const suggestions = useMemo(() => {
@@ -48,10 +48,10 @@ export function SearchCombobox({
     return filterByName({ items, query: q }).slice(0, MAX_SUGGESTIONS);
   }, [items, query]);
 
-  const showList = open && suggestions.length > 0;
+  const shouldShowList = isOpen && suggestions.length > 0;
 
   const go = (slug: string) => {
-    setOpen(false);
+    setIsOpen(false);
     setQuery("");
     setActiveIndex(-1);
     router.push(`${basePath}/${slug}/`);
@@ -61,11 +61,11 @@ export function SearchCombobox({
     if (suggestions.length === 0) return;
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setOpen(true);
+      setIsOpen(true);
       setActiveIndex((i) => (i + 1) % suggestions.length);
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setOpen(true);
+      setIsOpen(true);
       setActiveIndex((i) => (i <= 0 ? suggestions.length - 1 : i - 1));
     } else if (e.key === "Enter") {
       e.preventDefault();
@@ -73,13 +73,13 @@ export function SearchCombobox({
         activeIndex >= 0 ? suggestions[activeIndex] : suggestions[0];
       if (target) go(target.slug);
     } else if (e.key === "Escape") {
-      setOpen(false);
+      setIsOpen(false);
       setActiveIndex(-1);
     }
   };
 
   const activeId =
-    showList && activeIndex >= 0
+    shouldShowList && activeIndex >= 0
       ? `${listboxId}-opt-${activeIndex}`
       : undefined;
 
@@ -94,20 +94,20 @@ export function SearchCombobox({
         onChange={(e) => {
           setQuery(e.target.value);
           setActiveIndex(-1);
-          setOpen(true);
+          setIsOpen(true);
         }}
         onKeyDown={handleKeyDown}
         onPointerEnter={onIntent}
         onFocus={() => {
           onIntent();
-          setOpen(true);
+          setIsOpen(true);
         }}
-        onBlur={() => setOpen(false)}
+        onBlur={() => setIsOpen(false)}
         aria-label={ariaLabel}
-        aria-expanded={showList}
+        aria-expanded={shouldShowList}
         // The listbox only exists while it is open, so pointing at it the rest
         // of the time leaves a dangling IDREF that resolves to nothing.
-        aria-controls={showList ? listboxId : undefined}
+        aria-controls={shouldShowList ? listboxId : undefined}
         aria-autocomplete="list"
         aria-activedescendant={activeId}
         autoComplete="off"
@@ -116,11 +116,11 @@ export function SearchCombobox({
       {/* The count is the only cue a screen-reader user gets that typing
           changed the list; the options themselves are never focused. */}
       <span className={styles.status} role="status" aria-live="polite">
-        {showList
+        {shouldShowList
           ? `${suggestions.length} ${suggestions.length === 1 ? "result" : "results"} available`
           : ""}
       </span>
-      {showList && (
+      {shouldShowList && (
         <ul
           className={styles.listbox}
           id={listboxId}

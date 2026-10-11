@@ -127,7 +127,7 @@ describe("buildFamilyTree", () => {
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("jaehaerys");
     expect(tree[0].spouses.map((s) => s.slug)).toEqual(["shaera"]);
-    expect(tree[0].spouses[0].inHouse).toBe(true);
+    expect(tree[0].spouses[0].isInHouse).toBe(true);
     expect(tree[0].children.map((c) => c.slug)).toEqual(["aerys"]);
   });
 
@@ -168,7 +168,10 @@ describe("buildFamilyTree", () => {
     const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("tytos");
-    expect(tree[0].spouses[0]).toMatchObject({ slug: "jeyne", inHouse: false });
+    expect(tree[0].spouses[0]).toMatchObject({
+      slug: "jeyne",
+      isInHouse: false,
+    });
     expect(tree[0].children.map((c) => c.slug)).toEqual(["tywin"]);
   });
 
@@ -209,7 +212,7 @@ describe("buildFamilyTree", () => {
     expect(tree).toHaveLength(1);
     const joffrey = tree[0].children[0];
     expect(joffrey.slug).toBe("joffrey");
-    expect(joffrey.external).toBe(true);
+    expect(joffrey.isExternal).toBe(true);
     expect(joffrey.children).toEqual([]);
   });
 
@@ -345,7 +348,7 @@ describe("buildFamilyTree", () => {
     ];
     const tree = buildFamilyTree({ houseSlug: "lannister", people });
     const joffrey = tree[0].children[0];
-    expect(joffrey.external).toBe(true);
+    expect(joffrey.isExternal).toBe(true);
     expect(joffrey.alias).toBe("The Illborn King");
   });
 

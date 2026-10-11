@@ -3,15 +3,15 @@ import listSearch from "@/components/listSearch.module.scss";
 
 type Props = {
   placeholder: string;
-  withControls?: boolean;
+  hasControls?: boolean;
 };
 
 export function ListSearchSkeleton({
   placeholder,
-  withControls = false,
+  hasControls = false,
 }: Props) {
   return (
-    <div className={cx(withControls ? listSearch.rowWithSort : listSearch.row)}>
+    <div className={cx(hasControls ? listSearch.rowWithSort : listSearch.row)}>
       <input
         type="search"
         className={listSearch.input}

@@ -1,7 +1,7 @@
 export type RelationRef = {
   slug: string;
   name: string;
-  linkable: boolean;
+  isLinkable: boolean;
 };
 
 type RelationSource = {
@@ -19,12 +19,12 @@ export function resolveRelations({
   return slugs.map((slug) => {
     const character = charactersBySlug.get(slug);
     if (!character) {
-      return { slug, name: slug, linkable: false };
+      return { slug, name: slug, isLinkable: false };
     }
     return {
       slug,
       name: character.name,
-      linkable: !character.placeholder,
+      isLinkable: !character.placeholder,
     };
   });
 }

@@ -627,7 +627,7 @@ describe("FilteredHouseList rank filter", () => {
       region: "westerlands",
       regionLabel: "The Westerlands",
       rank: "lordly",
-      extinct: true,
+      isExtinct: true,
     },
   ];
 

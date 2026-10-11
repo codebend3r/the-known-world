@@ -68,7 +68,7 @@ export function FilteredWeaponList({ items }: Props) {
                       name={item.name}
                       region={item.region}
                       size="1.5rem"
-                      decorative
+                      isDecorative
                     />
                   </span>
                 )}

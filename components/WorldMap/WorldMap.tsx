@@ -119,7 +119,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     fitScale: number;
   } | null>(null);
   const [size, setSize] = useState<{ w: number; h: number } | null>(null);
-  const [editMode] = useQueryState(
+  const [isEditMode] = useQueryState(
     "editMode",
     parseAsBoolean.withDefault(false),
   );
@@ -239,7 +239,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // (it destructures it away in favor of its own internal handler), so the
   // live value can only be read by polling `Viewer.getValue()`.
   useEffect(() => {
-    if (!editMode) return;
+    if (!isEditMode) return;
     let frame: number;
     const tick = () => {
       const value = viewerRef.current?.Viewer?.getValue();
@@ -254,7 +254,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [editMode]);
+  }, [isEditMode]);
 
   // Tabbing to a hotspot that the current pan has scrolled out of view would
   // leave focus on something invisible, so the view recentres on it at the
@@ -468,7 +468,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
             stageWidth={size.w}
           />
         )}
-        {editMode && (
+        {isEditMode && (
           <dl className={styles.debug} aria-hidden="true">
             <dt>Zoom</dt>
             <dd>{debugValue.zoom.toFixed(2)}×</dd>

@@ -1,7 +1,7 @@
 // Bun's test runner has no equivalent of Vitest's `vi.stubGlobal`/`vi.stubEnv`,
 // so these record the original value on first stub and put it back on unstub.
 
-type GlobalStub = { existed: boolean; value: unknown };
+type GlobalStub = { hasExisted: boolean; value: unknown };
 
 const globalStubs = new Map<string, GlobalStub>();
 const envStubs = new Map<string, string | undefined>();
@@ -15,7 +15,7 @@ export function stubGlobal({
 }): void {
   if (!globalStubs.has(name)) {
     globalStubs.set(name, {
-      existed: name in globalThis,
+      hasExisted: name in globalThis,
       value: Reflect.get(globalThis, name),
     });
   }
@@ -23,8 +23,8 @@ export function stubGlobal({
 }
 
 export function unstubAllGlobals(): void {
-  globalStubs.forEach(({ existed, value }, name) => {
-    if (existed) {
+  globalStubs.forEach(({ hasExisted, value }, name) => {
+    if (hasExisted) {
       Reflect.set(globalThis, name, value);
     } else {
       Reflect.deleteProperty(globalThis, name);

@@ -53,7 +53,7 @@ type Collection = {
   entries: number;
 };
 
-type NavEntry = { href: string; label: string; visible: boolean };
+type NavEntry = { href: string; label: string; isVisible: boolean };
 
 type Ctx = {
   collection: Collection;
@@ -236,7 +236,7 @@ const CHECKS: Check[] = [
     id: "nav",
     tier: "required",
     where: () => "lib/nav.ts",
-    expects: '{ href: "/<name>/", label, visible } in NAV_ITEMS',
+    expects: '{ href: "/<name>/", label, isVisible } in NAV_ITEMS',
     test: ({ collection, navEntries }) =>
       navEntries.some((entry) => entry.href === `/${collection.name}/`),
   },
@@ -304,10 +304,10 @@ const CHECKS: Check[] = [
     id: "nav-visible",
     tier: "variant",
     where: () => "lib/nav.ts",
-    expects: "visible: true, so the header rail and drawer link the section",
+    expects: "isVisible: true, so the header rail and drawer link the section",
     test: ({ collection, navEntries }) =>
       navEntries.some(
-        (entry) => entry.href === `/${collection.name}/` && entry.visible,
+        (entry) => entry.href === `/${collection.name}/` && entry.isVisible,
       ),
   },
   {
@@ -404,12 +404,12 @@ async function discoverCollections(): Promise<Collection[]> {
 
 function parseNavEntries(source: string): NavEntry[] {
   const matches = source.matchAll(
-    /\{\s*href:\s*"([^"]+)",\s*label:\s*"([^"]+)",\s*visible:\s*(true|false)\s*\}/g,
+    /\{\s*href:\s*"([^"]+)",\s*label:\s*"([^"]+)",\s*isVisible:\s*(true|false)\s*\}/g,
   );
   return [...matches].map((match) => ({
     href: match[1],
     label: match[2],
-    visible: match[3] === "true",
+    isVisible: match[3] === "true",
   }));
 }
 

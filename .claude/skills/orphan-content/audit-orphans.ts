@@ -499,7 +499,7 @@ async function routeStatus(collection: CollectionName) {
     .then(() => true)
     .catch(() => false);
   const nav = NAV_ITEMS.some(
-    (item) => item.href === `/${collection}/` && item.visible,
+    (item) => item.href === `/${collection}/` && item.isVisible,
   );
   return { collection, index, nav };
 }

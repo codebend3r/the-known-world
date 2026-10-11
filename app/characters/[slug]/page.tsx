@@ -66,7 +66,7 @@ function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
         {refs.map((r, i) => (
           <span key={r.slug}>
             {i > 0 && ", "}
-            {r.linkable ? (
+            {r.isLinkable ? (
               <Link href={`/characters/${r.slug}/`}>{r.name}</Link>
             ) : (
               <span className={styles.placeholder}>{r.name}</span>
@@ -181,7 +181,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
               region={region}
               size="42px"
               hasPlate={false}
-              decorative
+              isDecorative
             />
           </Link>
         ) : (
@@ -191,7 +191,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
             region={region}
             size="6rem"
             hasPlate={false}
-            decorative
+            isDecorative
           />
         )}
         <hgroup className={styles.titleGroup}>
@@ -203,7 +203,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
       </div>
 
       <div className={styles.search}>
-        <CharacterSearchInput autocomplete />
+        <CharacterSearchInput hasAutocomplete />
       </div>
 
       <dl className={styles.meta}>

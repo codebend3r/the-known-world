@@ -21,14 +21,14 @@ describe("ListSearchSkeleton", () => {
     ).toBeDefined();
   });
 
-  it("uses the plain row by default and the sort row when withControls", () => {
+  it("uses the plain row by default and the sort row when hasControls", () => {
     const { container, rerender } = render(
       <ListSearchSkeleton placeholder="Search dragons…" />,
     );
     expect(container.querySelector(".row")).not.toBeNull();
     expect(container.querySelector(".rowWithSort")).toBeNull();
 
-    rerender(<ListSearchSkeleton placeholder="Search houses…" withControls />);
+    rerender(<ListSearchSkeleton placeholder="Search houses…" hasControls />);
     expect(container.querySelector(".rowWithSort")).not.toBeNull();
   });
 });
