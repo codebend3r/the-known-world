@@ -26,6 +26,7 @@ import { HouseSearchInput } from "@/components/HouseSearchInput";
 import { buildFamilyTree } from "@/lib/family-tree";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { bySlug } from "@/lib/collections";
+import { cx } from "@/lib/cx";
 import styles from "@/app/houses/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
@@ -115,15 +116,17 @@ export default async function HousePage({ params }: SlugPageProps) {
   return (
     <PlateLayout>
       <div className={styles.detail}>
-        <div className={styles.heading}>
+        <hgroup className={styles.heading}>
           <div className={styles.nameRow}>
             <h1>{house.frontmatter.name}</h1>
           </div>
           {house.frontmatter.words && (
-            <p className="subtitle">&ldquo;{house.frontmatter.words}&rdquo;</p>
+            <p className={cx("subtitle", styles.words)}>
+              &ldquo;{house.frontmatter.words}&rdquo;
+            </p>
           )}
           <FiligreeRule variant="lozenge" className={styles.divider} />
-        </div>
+        </hgroup>
         <div className={styles.search}>
           <HouseSearchInput />
         </div>

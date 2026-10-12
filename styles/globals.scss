@@ -115,19 +115,11 @@
   --region-color-dorne: #c8622a;
   --region-color-iron-islands: #2f4a44;
   --region-color-crownlands: #7a2230;
-
-  --bp-xs: 480px;
-  --bp-sm: 640px;
-  --bp-md: 768px;
-  --bp-lg: 1024px;
-  --bp-xl: 1280px;
 }
 
 // Desktop-first breakpoints — default styles target xl. Each @media rule
-// overrides at the named breakpoint AND below. The SCSS breakpoint
-// variables in `styles/_breakpoints.scss` (`bp.$xs`, `bp.$sm`, ...) are
-// the source of truth; the `--bp-*` CSS custom properties above are
-// design tokens exposed for any runtime/JS consumer that needs them.
+// overrides at the named breakpoint AND below, through the SCSS variables in
+// `styles/_breakpoints.scss` (`bp.$xs`, `bp.$sm`, ...).
 
 *,
 *::before,

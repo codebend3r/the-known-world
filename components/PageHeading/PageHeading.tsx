@@ -36,7 +36,7 @@ export function PageHeading({
         )}
         {title}
       </h1>
-      {!!subtitle && <p className="subtitle">{subtitle}</p>}
+      {!!subtitle && <p className={cx("subtitle", styles.lede)}>{subtitle}</p>}
       <FiligreeRule variant={filigree} fade="both" className={styles.rule} />
     </hgroup>
   );
