@@ -17,7 +17,7 @@
   background-position: 14px 50%;
   color: var(--tkw-ink);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   outline: none;
   transition: var(--tkw-lift);
 
@@ -44,7 +44,7 @@
   }
 
   @media (max-width: bp.$md) {
-    font-size: 16px;
+    font-size: var(--fs-meta);
   }
 }
 
@@ -64,7 +64,7 @@
   font-family: var(--font-mono);
   font-size: var(--fs-label);
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: var(--ls-data);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
   font-variant-numeric: tabular-nums;
@@ -77,7 +77,7 @@
   justify-content: center;
   gap: 1rem;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-muted);
@@ -132,17 +132,17 @@
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   padding: 8px 13px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   font-weight: 400;
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   cursor: pointer;
   transition:
     var(--tkw-lift),
-    color 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover:not(:disabled),
   &:focus-visible:not(:disabled) {
@@ -173,7 +173,7 @@
   align-items: center;
   gap: 0.5rem;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-dim);
@@ -185,10 +185,10 @@
   background: var(--tkw-surface);
   color: var(--tkw-ink-muted);
   border: 1px solid var(--tkw-hairline-firm);
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   padding: 7px 1.7rem 7px 0.7rem;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: var(--fs-tag);
   letter-spacing: var(--ls-label);
   cursor: pointer;
   background-image:
@@ -203,7 +203,7 @@
   background-repeat: no-repeat;
   transition:
     var(--tkw-lift),
-    color 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

@@ -47,7 +47,7 @@
   &:focus-visible {
     outline: 2px solid var(--tkw-gold);
     outline-offset: 6px;
-    border-radius: 2px;
+    border-radius: var(--tkw-radius-xs);
   }
 }
 
@@ -63,21 +63,21 @@
   color: var(--tkw-gold-bright);
   font-family: var(--font-display);
   font-size: var(--fs-section);
-  line-height: 1;
+  line-height: var(--lh-title);
 
   @media (max-width: bp.$xs) {
     width: 26px;
     height: 26px;
-    font-size: 13px;
+    font-size: var(--fs-caption);
   }
 }
 
 .title {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 25px;
-  letter-spacing: 1.5px;
-  line-height: 1;
+  font-size: var(--fs-wordmark);
+  letter-spacing: var(--ls-nav);
+  line-height: var(--lh-title);
   white-space: nowrap;
   color: var(--tkw-gold-bright);
 
@@ -87,7 +87,7 @@
     100deg,
     var(--tkw-gold-bright) 0%,
     var(--tkw-gold-bright) 38%,
-    #fff6df 48%,
+    var(--tkw-glint) 48%,
     var(--tkw-gold-bright) 58%,
     var(--tkw-gold-bright) 100%
   );
@@ -97,11 +97,11 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: sheathe 6.5s linear infinite;
+  animation: sheathe var(--tkw-sheathe);
 
   @media (max-width: bp.$xs) {
-    font-size: 20px;
-    letter-spacing: 1px;
+    font-size: var(--fs-name);
+    letter-spacing: var(--ls-data);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -147,7 +147,7 @@
   text-transform: uppercase;
   color: var(--tkw-ink-muted);
   text-decoration: none;
-  transition: color 0.18s ease;
+  transition: color var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

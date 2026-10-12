@@ -40,7 +40,7 @@
   overflow-y: auto;
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-gold);
-  border-radius: 5px;
+  border-radius: var(--tkw-radius-md);
   box-shadow: var(--tkw-glow);
 }
 
@@ -50,20 +50,20 @@
   align-items: baseline;
   gap: 0.5rem;
   padding: 0.5rem 0.7rem;
-  border-radius: 4px;
+  border-radius: var(--tkw-radius-sm);
   cursor: pointer;
   color: var(--tkw-ink-body);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1.15rem;
+  font-size: var(--fs-lead);
 
   @media (max-width: bp.$md) {
-    font-size: 1.25rem;
+    font-size: var(--fs-quote);
   }
 }
 
 .optionActive {
-  background: rgba(200, 162, 74, 0.14);
+  background: var(--tkw-hairline-faint);
   color: var(--tkw-gold-bright);
 }
 
@@ -76,6 +76,6 @@
   font-family: var(--font-body);
   font-weight: 300;
   font-style: italic;
-  font-size: 0.8rem;
+  font-size: var(--fs-caption);
   color: var(--tkw-ink-muted);
 }

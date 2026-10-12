@@ -12,8 +12,8 @@
   padding: 0.5rem 0.25rem;
   background: var(--tkw-surface-solid);
   border: 1px solid var(--tkw-hairline);
-  border-radius: 5px;
-  box-shadow: 0 16px 34px -18px rgba(0, 0, 0, 0.9);
+  border-radius: var(--tkw-radius-md);
+  box-shadow: var(--tkw-drop);
 
   @media (max-width: bp.$lg) {
     display: none;
@@ -39,14 +39,14 @@
   text-align: right;
   cursor: pointer;
   font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 1px;
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-data);
   color: var(--tkw-ink-dim);
-  border-radius: 3px;
+  border-radius: var(--tkw-radius-xs);
   font-variant-numeric: tabular-nums;
   transition:
-    color 0.18s ease,
-    background 0.18s ease;
+    color var(--tkw-dur) var(--tkw-ease),
+    background var(--tkw-dur) var(--tkw-ease);
 
   &:hover,
   &:focus-visible {

@@ -13,8 +13,8 @@
     padding-bottom: 0;
     max-width: 62ch;
     font-style: normal;
-    font-size: 18px;
-    line-height: 1.6;
+    font-size: var(--fs-lead);
+    line-height: var(--lh-lede);
     color: var(--tkw-ink-muted);
   }
 
@@ -29,7 +29,7 @@
 .eyebrow {
   margin: 0;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: var(--fs-eyebrow);
   font-weight: 400;
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;

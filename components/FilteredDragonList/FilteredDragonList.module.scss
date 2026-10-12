@@ -77,7 +77,7 @@
   font-family: var(--font-display);
   font-size: var(--fs-h2);
   font-weight: 600;
-  line-height: 1.15;
+  line-height: var(--lh-heading);
   color: var(--tkw-ink);
 }
 
@@ -93,7 +93,7 @@
   clip-path: var(--tkw-shield);
   background: color-mix(in srgb, var(--tkw-ink-dim) 40%, transparent);
   font-family: var(--font-mono);
-  font-size: 9px;
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
   color: var(--tkw-ink-muted);
