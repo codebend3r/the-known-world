@@ -96,39 +96,6 @@ function subtreeWidth(n: EnrichedTreeNode): number {
   return Math.max(own, childrenW);
 }
 
-function spousePositions({
-  personX,
-  personSlotW,
-  spouses,
-}: {
-  personX: number;
-  personSlotW: number;
-  spouses: ReadonlyArray<EnrichedTreeSpouse>;
-}): number[] {
-  return spouses.reduce<{ cursor: number; positions: number[] }>(
-    ({ cursor, positions }, s) => {
-      const sW = personSlotWidth(s);
-      return {
-        cursor: cursor + sW + SPOUSE_GAP,
-        positions: [...positions, cursor + sW / 2],
-      };
-    },
-    { cursor: personX + personSlotW / 2 + SPOUSE_GAP, positions: [] },
-  ).positions;
-}
-
-function pairMidpoint({
-  personX,
-  spouseXs,
-}: {
-  personX: number;
-  spouseXs: ReadonlyArray<number>;
-}): number {
-  const lastSpouseX = spouseXs.at(-1);
-  if (lastSpouseX === undefined) return personX;
-  return (personX + lastSpouseX) / 2;
-}
-
 function placePerson({
   n,
   isSpouse,
@@ -189,6 +156,53 @@ function placeSpouse({
 
 type Placement = Omit<LaidOutChart, "bounds">;
 
+type SpouseRow = Pick<Placement, "persons" | "spouseEdges"> & {
+  cursor: number;
+  lastX: number;
+};
+
+// Spouses line up to the right of the person, each edge joining a spouse to
+// the one before. `lastX` ends on the rightmost spouse, or the person if none.
+function placeSpouses({
+  n,
+  personX,
+  personSlotW,
+  y,
+}: {
+  n: EnrichedTreeNode;
+  personX: number;
+  personSlotW: number;
+  y: number;
+}): SpouseRow {
+  return n.spouses.reduce<SpouseRow>(
+    (row, s, i) => {
+      const sW = personSlotWidth(s);
+      const x = row.cursor + sW / 2;
+      const identifier = `${n.slug}::spouse::${i}`;
+      return {
+        cursor: row.cursor + sW + SPOUSE_GAP,
+        lastX: x,
+        persons: [...row.persons, placeSpouse({ s, identifier, x, y })],
+        spouseEdges: [
+          ...row.spouseEdges,
+          {
+            personSlug: n.slug,
+            spouseSlug: identifier,
+            midX: (row.lastX + x) / 2,
+            midY: y,
+          },
+        ],
+      };
+    },
+    {
+      cursor: personX + personSlotW / 2 + SPOUSE_GAP,
+      lastX: personX,
+      persons: [],
+      spouseEdges: [],
+    },
+  );
+}
+
 type PlacedSubtree = Placement & { centerX: number; rightX: number };
 
 function concatPlacements(placements: ReadonlyArray<Placement>): Placement {
@@ -248,28 +262,9 @@ function placeSubtree({
   const personSlotW = personSlotWidth(n);
   const personX = childCenterX - ownW / 2 + personSlotW / 2;
   const person = placePerson({ n, isSpouse: false, x: personX, y });
+  const spouses = placeSpouses({ n, personX, personSlotW, y });
 
-  const sPositions = spousePositions({
-    personX,
-    personSlotW,
-    spouses: n.spouses,
-  });
-  const spouses = n.spouses.map((s, i) => {
-    const sX = sPositions[i];
-    const identifier = `${n.slug}::spouse::${i}`;
-    const previousX = i === 0 ? personX : sPositions[i - 1];
-    return {
-      person: placeSpouse({ s, identifier, x: sX, y }),
-      edge: {
-        personSlug: n.slug,
-        spouseSlug: identifier,
-        midX: (previousX + sX) / 2,
-        midY: y,
-      },
-    };
-  });
-
-  const fromX = pairMidpoint({ personX, spouseXs: sPositions });
+  const fromX = (personX + spouses.lastX) / 2;
   const fromY = y + DOT_R;
   const busY = fromY + (V_SPACING - DOT_R * 2) / 2;
   const childEdges = children.map((c) => ({
@@ -280,8 +275,8 @@ function placeSubtree({
 
   const nested = concatPlacements(children);
   return {
-    persons: [...nested.persons, person, ...spouses.map((sp) => sp.person)],
-    spouseEdges: [...nested.spouseEdges, ...spouses.map((sp) => sp.edge)],
+    persons: [...nested.persons, person, ...spouses.persons],
+    spouseEdges: [...nested.spouseEdges, ...spouses.spouseEdges],
     childEdges: [...nested.childEdges, ...childEdges],
     centerX: personX,
     rightX: Math.max(rightX, personX + ownW / 2),
