@@ -17,6 +17,7 @@ import {
   type House,
   type Weapon,
 } from "@/lib/schemas";
+import { expectDefined } from "@/test/defined";
 
 type CharacterFixture = { slug: string; frontmatter: Character };
 type HouseFixture = { slug: string; frontmatter: House };
@@ -470,12 +471,16 @@ describe("buildProseLinkIndex", () => {
       allEvents: [],
       current: { kind: "character", slug: "self", mentions: ["rickard-stark"] },
     });
-    const rickard = out.targets.find((t) => t.slug === "rickard-stark");
-    const catelyn = out.targets.find((t) => t.slug === "catelyn-tully");
-    expect(rickard?.surfaceForms ?? []).toContain("Rickard");
-    expect(rickard?.surfaceForms ?? []).toContain("Rickard Stark");
-    expect(catelyn?.surfaceForms ?? []).not.toContain("Catelyn");
-    expect(catelyn?.surfaceForms ?? []).toContain("Catelyn Tully");
+    const rickard = expectDefined(
+      out.targets.find((t) => t.slug === "rickard-stark"),
+    );
+    const catelyn = expectDefined(
+      out.targets.find((t) => t.slug === "catelyn-tully"),
+    );
+    expect(rickard.surfaceForms).toContain("Rickard");
+    expect(rickard.surfaceForms).toContain("Rickard Stark");
+    expect(catelyn.surfaceForms).not.toContain("Catelyn");
+    expect(catelyn.surfaceForms).toContain("Catelyn Tully");
   });
 
   it("emits a bare-house form only when the slug is in `mentions`", () => {
@@ -489,12 +494,12 @@ describe("buildProseLinkIndex", () => {
       allEvents: [],
       current: { kind: "house", slug: "self", mentions: ["stark"] },
     });
-    const stark = out.targets.find((t) => t.slug === "stark");
-    const targ = out.targets.find((t) => t.slug === "targaryen");
-    expect(stark?.surfaceForms ?? []).toContain("Stark");
-    expect(stark?.surfaceForms ?? []).toContain("House Stark");
-    expect(targ?.surfaceForms ?? []).not.toContain("Targaryen");
-    expect(targ?.surfaceForms ?? []).toContain("House Targaryen");
+    const stark = expectDefined(out.targets.find((t) => t.slug === "stark"));
+    const targ = expectDefined(out.targets.find((t) => t.slug === "targaryen"));
+    expect(stark.surfaceForms).toContain("Stark");
+    expect(stark.surfaceForms).toContain("House Stark");
+    expect(targ.surfaceForms).not.toContain("Targaryen");
+    expect(targ.surfaceForms).toContain("House Targaryen");
   });
 });
 
@@ -539,9 +544,11 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
       allEvents: [],
       current: { kind: "house", slug: "targaryen", mentions: [] },
     });
-    const target = out.targets.find((t) => t.slug === "blackfyre");
-    expect(target?.href ?? null).toBe("/weapons/blackfyre/");
-    expect(target?.kind ?? null).toBe("weapon");
+    const target = expectDefined(
+      out.targets.find((t) => t.slug === "blackfyre"),
+    );
+    expect(target.href).toBe("/weapons/blackfyre/");
+    expect(target.kind).toBe("weapon");
   });
 
   it("emits dragon targets with `/dragons/<slug>/` hrefs", () => {
@@ -555,9 +562,9 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
       allEvents: [],
       current: { kind: "house", slug: "targaryen", mentions: [] },
     });
-    const target = out.targets.find((t) => t.slug === "vhagar");
-    expect(target?.href ?? null).toBe("/dragons/vhagar/");
-    expect(target?.kind ?? null).toBe("dragon");
+    const target = expectDefined(out.targets.find((t) => t.slug === "vhagar"));
+    expect(target.href).toBe("/dragons/vhagar/");
+    expect(target.kind).toBe("dragon");
   });
 
   it("does not link a weapon to itself when current.kind=weapon", () => {

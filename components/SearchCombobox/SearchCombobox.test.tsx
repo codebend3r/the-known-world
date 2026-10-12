@@ -10,6 +10,7 @@ import {
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { ComboboxItem } from "@/components/SearchCombobox";
 import { expectElement } from "@/test/dom";
+import { expectDefined } from "@/test/defined";
 
 const push = jest.fn();
 
@@ -59,7 +60,7 @@ describe("SearchCombobox", () => {
     fireEvent.change(input, { target: { value: "mea" } });
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent ?? "").toContain("Meadows");
+    expect(options[0].textContent).toContain("Meadows");
   });
 
   it("renders the detail datum beside the name", () => {
@@ -77,9 +78,7 @@ describe("SearchCombobox", () => {
     fireEvent.change(screen.getByRole("combobox"), {
       target: { value: "hol" },
     });
-    expect(screen.getAllByRole("option")[0]?.textContent ?? null).toBe(
-      "Hollow",
-    );
+    expect(screen.getAllByRole("option")[0].textContent).toBe("Hollow");
   });
 
   it("navigates to the top match on Enter, under the given base path", () => {
@@ -112,9 +111,9 @@ describe("SearchCombobox", () => {
     fireEvent.change(input, { target: { value: "s" } });
     fireEvent.keyDown(input, { key: "ArrowUp" });
     const options = screen.getAllByRole("option");
-    expect(
-      options[options.length - 1]?.getAttribute("aria-selected") ?? null,
-    ).toBe("true");
+    expect(options[options.length - 1].getAttribute("aria-selected")).toBe(
+      "true",
+    );
   });
 
   it("navigates on option click", () => {
@@ -203,10 +202,12 @@ describe("SearchCombobox — accessibility contract", () => {
     const input = screen.getByRole("combobox");
     fireEvent.change(input, { target: { value: "s" } });
     fireEvent.keyDown(input, { key: "ArrowDown" });
-    const active = input.getAttribute("aria-activedescendant");
-    expect(active).not.toBeNull();
-    const option = document.getElementById(active ?? "");
-    expect(option?.getAttribute("aria-selected") ?? null).toBe("true");
+    const active = expectDefined(input.getAttribute("aria-activedescendant"));
+    const option = expectElement({
+      element: document.getElementById(active),
+      type: HTMLElement,
+    });
+    expect(option.getAttribute("aria-selected")).toBe("true");
   });
 
   it("announces the result count in a live region", () => {

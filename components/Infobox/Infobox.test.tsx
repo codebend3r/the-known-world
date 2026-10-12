@@ -2,6 +2,7 @@ import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
 import { InfoEntry, InfoRow } from "@/components/Infobox";
 import type { HouseInfoEntry } from "@/lib/schemas";
+import { expectElement } from "@/test/dom";
 
 const ned: HouseInfoEntry = { slug: "eddard-stark", name: "Eddard Stark" };
 const benjen: HouseInfoEntry = { slug: "benjen-stark", name: "Benjen Stark" };
@@ -98,7 +99,10 @@ describe("InfoRow", () => {
 
   it("wraps the pair in a row so the dl grid can place it", () => {
     const { container } = render(<InfoRow label="Heads" entries={[ned]} />);
-    expect(container.firstElementChild?.className ?? null).toBe("row");
+    expect(
+      expectElement({ element: container.firstElementChild, type: HTMLElement })
+        .className,
+    ).toBe("row");
   });
 
   it("applies the existence probe per entry", () => {

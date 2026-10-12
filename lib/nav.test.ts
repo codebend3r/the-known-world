@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { describe, it, expect } from "bun:test";
 import { isActive, NAV_ITEMS, visibleNavItems } from "@/lib/nav";
+import { expectDefined } from "@/test/defined";
 
 async function routeExists(href: string): Promise<boolean> {
   const segment = href.replace(/^\/|\/$/g, "");
@@ -39,8 +40,10 @@ describe("NAV_ITEMS", () => {
   });
 
   it("keeps Dragons registered but hidden", () => {
-    const dragons = NAV_ITEMS.find((item) => item.href === "/dragons/");
-    expect(dragons?.isVisible ?? null).toBe(false);
+    const dragons = expectDefined(
+      NAV_ITEMS.find((item) => item.href === "/dragons/"),
+    );
+    expect(dragons.isVisible).toBe(false);
   });
 });
 

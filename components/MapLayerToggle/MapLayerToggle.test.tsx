@@ -4,6 +4,13 @@ import { MapLayerToggle } from "@/components/MapLayerToggle";
 import { MAP_LAYERS } from "@/lib/map";
 import { expectElement } from "@/test/dom";
 
+function checkbox(layer: string): HTMLInputElement {
+  return expectElement({
+    element: screen.getByRole("checkbox", { name: layer }),
+    type: HTMLInputElement,
+  });
+}
+
 describe("MapLayerToggle", () => {
   it("renders one checkbox per layer, with the layer name as the label", () => {
     render(<MapLayerToggle enabled={new Set()} onToggle={() => {}} />);
@@ -21,49 +28,31 @@ describe("MapLayerToggle", () => {
   });
 
   it("checks the input iff `enabled` includes that type", () => {
-    const { container } = render(
+    render(
       <MapLayerToggle
         enabled={new Set(["castle", "watchtower"])}
         onToggle={() => {}}
       />,
     );
-    const byType = new Map<string, HTMLInputElement>(
-      Array.from(container.querySelectorAll("label")).map((label) => [
-        label.textContent ?? "",
-        expectElement({
-          element: label.querySelector("input[type='checkbox']"),
-          type: HTMLInputElement,
-        }),
-      ]),
-    );
-    expect(byType.get("castle")?.checked ?? null).toBe(true);
-    expect(byType.get("watchtower")?.checked ?? null).toBe(true);
-    expect(byType.get("town")?.checked ?? null).toBe(false);
-    expect(byType.get("ruin")?.checked ?? null).toBe(false);
-    expect(byType.get("holdfast")?.checked ?? null).toBe(false);
-    expect(byType.get("battle")?.checked ?? null).toBe(false);
-    expect(byType.get("event")?.checked ?? null).toBe(false);
+    expect(checkbox("castle").checked).toBe(true);
+    expect(checkbox("watchtower").checked).toBe(true);
+    expect(checkbox("town").checked).toBe(false);
+    expect(checkbox("ruin").checked).toBe(false);
+    expect(checkbox("holdfast").checked).toBe(false);
+    expect(checkbox("battle").checked).toBe(false);
+    expect(checkbox("event").checked).toBe(false);
   });
 
   it("checks the battle and event inputs when those layers are enabled", () => {
-    const { container } = render(
+    render(
       <MapLayerToggle
         enabled={new Set(["battle", "event"])}
         onToggle={() => {}}
       />,
     );
-    const byType = new Map<string, HTMLInputElement>(
-      Array.from(container.querySelectorAll("label")).map((label) => [
-        label.textContent ?? "",
-        expectElement({
-          element: label.querySelector("input[type='checkbox']"),
-          type: HTMLInputElement,
-        }),
-      ]),
-    );
-    expect(byType.get("battle")?.checked ?? null).toBe(true);
-    expect(byType.get("event")?.checked ?? null).toBe(true);
-    expect(byType.get("castle")?.checked ?? null).toBe(false);
+    expect(checkbox("battle").checked).toBe(true);
+    expect(checkbox("event").checked).toBe(true);
+    expect(checkbox("castle").checked).toBe(false);
   });
 
   it("calls `onToggle` with the layer for the battle checkbox", () => {

@@ -14,6 +14,7 @@ import {
   winningFile,
   type PortraitFile,
 } from "@/lib/portrait-integrity";
+import { expectDefined } from "@/test/defined";
 
 async function loadPortraitSources() {
   const [files, variantDirs, characters] = await Promise.all([
@@ -299,11 +300,13 @@ describe("winningFile", () => {
       portrait("a.webp"),
       portrait("a.png"),
     ];
-    expect(winningFile({ candidates })?.file ?? null).toBe("a.png");
+    expect(expectDefined(winningFile({ candidates })).file).toBe("a.png");
     expect(
-      winningFile({
-        candidates: candidates.filter((entry) => entry.extension !== "png"),
-      })?.file ?? null,
+      expectDefined(
+        winningFile({
+          candidates: candidates.filter((entry) => entry.extension !== "png"),
+        }),
+      ).file,
     ).toBe("a.webp");
   });
 

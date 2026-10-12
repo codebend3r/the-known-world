@@ -13,6 +13,7 @@ import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { renderWithNuqs } from "@/test/testNuqs";
 import type { WorldMapMarker } from "@/lib/map";
+import { expectElement } from "@/test/dom";
 
 // `mock.module` is not hoisted in Bun, so plain consts suffice where Vitest
 // needed `vi.hoisted` to lift the spies above the hoisted factory.
@@ -258,16 +259,20 @@ describe("WorldMap", () => {
   it("draws the map centered at fit size inside a viewer-sized SVG", async () => {
     const { container, findByTestId } = renderMap();
     await findByTestId("pan-zoom");
-    const svg = container.querySelector("svg[width='800']");
-    expect(svg?.getAttribute("height") ?? null).toBe("600");
-    const image = container.querySelector("image");
-    expect(image?.getAttribute("href") ?? null).toBe(
-      "/map/test-map.jpg?w=2048&q=70",
-    );
-    expect(image?.getAttribute("x") ?? null).toBe("100");
-    expect(image?.getAttribute("y") ?? null).toBe("0");
-    expect(image?.getAttribute("width") ?? null).toBe("600");
-    expect(image?.getAttribute("height") ?? null).toBe("600");
+    const svg = expectElement({
+      element: container.querySelector("svg[width='800']"),
+      type: SVGSVGElement,
+    });
+    expect(svg.getAttribute("height")).toBe("600");
+    const image = expectElement({
+      element: container.querySelector("image"),
+      type: SVGImageElement,
+    });
+    expect(image.getAttribute("href")).toBe("/map/test-map.jpg?w=2048&q=70");
+    expect(image.getAttribute("x")).toBe("100");
+    expect(image.getAttribute("y")).toBe("0");
+    expect(image.getAttribute("width")).toBe("600");
+    expect(image.getAttribute("height")).toBe("600");
   });
 
   it("draws the untouched full raster over the preview from the start", async () => {
@@ -276,12 +281,12 @@ describe("WorldMap", () => {
     const images = container.querySelectorAll("image");
     expect(images).toHaveLength(2);
     const full = images[1];
-    expect(full?.getAttribute("href") ?? null).toBe("/map/test-map.jpg");
-    expect(full?.getAttribute("x") ?? null).toBe("100");
-    expect(full?.getAttribute("y") ?? null).toBe("0");
-    expect(full?.getAttribute("width") ?? null).toBe("600");
-    expect(full?.getAttribute("height") ?? null).toBe("600");
-    expect(full?.getAttribute("aria-hidden") ?? null).toBe("true");
+    expect(full.getAttribute("href")).toBe("/map/test-map.jpg");
+    expect(full.getAttribute("x")).toBe("100");
+    expect(full.getAttribute("y")).toBe("0");
+    expect(full.getAttribute("width")).toBe("600");
+    expect(full.getAttribute("height")).toBe("600");
+    expect(full.getAttribute("aria-hidden")).toBe("true");
   });
 
   it("zooms in and out from the buttons", async () => {
@@ -482,16 +487,19 @@ describe("WorldMap", () => {
     MARKERS.forEach((marker) => {
       const link = getByRole("link", { name: marker.name });
       expect(link.getAttribute("href")).toBe(marker.href);
-      const circle = link.querySelector("circle");
-      expect(Number(circle?.getAttribute("cx") ?? Number.NaN)).toBeCloseTo(
+      const circle = expectElement({
+        element: link.querySelector("circle"),
+        type: SVGCircleElement,
+      });
+      expect(Number(circle.getAttribute("cx"))).toBeCloseTo(
         offsetX + marker.x * fitScale,
         6,
       );
-      expect(Number(circle?.getAttribute("cy") ?? Number.NaN)).toBeCloseTo(
+      expect(Number(circle.getAttribute("cy"))).toBeCloseTo(
         offsetY + marker.y * fitScale,
         6,
       );
-      expect(Number(circle?.getAttribute("r") ?? Number.NaN)).toBeCloseTo(
+      expect(Number(circle.getAttribute("r"))).toBeCloseTo(
         MARKER_RADIUS * fitScale,
         6,
       );
@@ -670,7 +678,10 @@ describe("WorldMap — accessibility contract", () => {
     const { container, findByTestId } = renderMap();
     await findByTestId("pan-zoom");
     expect(
-      container.querySelector("image")?.getAttribute("aria-hidden") ?? null,
+      expectElement({
+        element: container.querySelector("image"),
+        type: SVGImageElement,
+      }).getAttribute("aria-hidden"),
     ).toBe("true");
     expect(
       container.querySelector('a[aria-label="King\'s Landing"]'),

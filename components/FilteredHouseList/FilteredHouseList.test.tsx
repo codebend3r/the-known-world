@@ -128,14 +128,16 @@ describe("FilteredHouseList", () => {
 
   it("renders the search input, sort toggle, and view toggle inside the same row", () => {
     const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
-    const row = container.querySelector(".controls");
-    expect(row).not.toBeNull();
-    expect(row?.querySelector("input") ?? null).not.toBeNull();
+    const row = expectElement({
+      element: container.querySelector(".controls"),
+      type: HTMLElement,
+    });
+    expect(row.querySelector("input")).not.toBeNull();
     expect(
-      row?.querySelector('[role="group"][aria-label="Sort direction"]') ?? null,
+      row.querySelector('[role="group"][aria-label="Sort direction"]'),
     ).not.toBeNull();
     expect(
-      row?.querySelector('[role="group"][aria-label="View"]') ?? null,
+      row.querySelector('[role="group"][aria-label="View"]'),
     ).not.toBeNull();
   });
 });
@@ -382,7 +384,10 @@ describe("FilteredHouseList pagination", () => {
     );
     const [topNext] = screen.getAllByRole("button", { name: /next page/i });
     fireEvent.click(topNext);
-    const firstCardName = container.querySelector(".name")?.textContent ?? null;
+    const firstCardName = expectElement({
+      element: container.querySelector(".name"),
+      type: HTMLElement,
+    }).textContent;
     expect(firstCardName).toBe("House 024");
     expect(screen.getAllByText(/Page 2 of 3/).length).toBe(2);
   });
@@ -517,7 +522,10 @@ describe("FilteredHouseList page persistence", () => {
     );
     expect(container.querySelectorAll(".item").length).toBe(22);
     expect(screen.getAllByText(/Page 3 of 3/).length).toBe(2);
-    const firstCardName = container.querySelector(".name")?.textContent ?? null;
+    const firstCardName = expectElement({
+      element: container.querySelector(".name"),
+      type: HTMLElement,
+    }).textContent;
     expect(firstCardName).toBe("House 048");
   });
 
