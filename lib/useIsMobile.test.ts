@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, jest } from "bun:test";
 import { act, renderHook } from "@testing-library/react";
 import { useIsMobile } from "@/lib/useIsMobile";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 type Listener = () => void;
 
@@ -37,7 +37,7 @@ function stubMatchMedia({ matches }: { matches: boolean }) {
 }
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 describe("useIsMobile", () => {

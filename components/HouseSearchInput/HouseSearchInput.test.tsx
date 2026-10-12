@@ -10,7 +10,7 @@ import {
 } from "bun:test";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { SearchIndexItem } from "@/lib/search-index";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 const push = jest.fn();
 
@@ -47,7 +47,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 // The roll arrives on first focus, so the field is focused and then given

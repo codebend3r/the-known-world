@@ -1,10 +1,36 @@
 // Bun's test runner has no equivalent of Vitest's `vi.stubGlobal`/`vi.stubEnv`,
-// so these record the original value on first stub and put it back on unstub.
+// so these record the original on first stub and put it back on unstub.
 
-type GlobalStub = { hasExisted: boolean; value: unknown };
+type PropertyStub = {
+  target: object;
+  key: PropertyKey;
+  original: PropertyDescriptor | undefined;
+};
 
-const globalStubs = new Map<string, GlobalStub>();
+const propertyStubs: PropertyStub[] = [];
 const envStubs = new Map<string, string | undefined>();
+
+export function stubProperty({
+  target,
+  key,
+  descriptor,
+}: {
+  target: object;
+  key: PropertyKey;
+  descriptor: PropertyDescriptor;
+}): void {
+  const isStubbed = propertyStubs.some(
+    (stub) => stub.target === target && stub.key === key,
+  );
+  if (!isStubbed) {
+    propertyStubs.push({
+      target,
+      key,
+      original: Object.getOwnPropertyDescriptor(target, key),
+    });
+  }
+  Object.defineProperty(target, key, { ...descriptor, configurable: true });
+}
 
 export function stubGlobal({
   name,
@@ -13,24 +39,23 @@ export function stubGlobal({
   name: string;
   value: unknown;
 }): void {
-  if (!globalStubs.has(name)) {
-    globalStubs.set(name, {
-      hasExisted: name in globalThis,
-      value: Reflect.get(globalThis, name),
-    });
-  }
-  Reflect.set(globalThis, name, value);
+  stubProperty({
+    target: globalThis,
+    key: name,
+    descriptor: { value, writable: true },
+  });
 }
 
-export function unstubAllGlobals(): void {
-  globalStubs.forEach(({ hasExisted, value }, name) => {
-    if (hasExisted) {
-      Reflect.set(globalThis, name, value);
-    } else {
-      Reflect.deleteProperty(globalThis, name);
+/** Puts back everything `stubProperty` and `stubGlobal` replaced. */
+export function unstubAllProperties(): void {
+  propertyStubs.forEach(({ target, key, original }) => {
+    if (original) {
+      Object.defineProperty(target, key, original);
+      return;
     }
+    Reflect.deleteProperty(target, key);
   });
-  globalStubs.clear();
+  propertyStubs.length = 0;
 }
 
 export function stubEnv({

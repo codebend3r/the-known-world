@@ -7,7 +7,7 @@ import {
   afterEach,
   afterAll,
 } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 import { act, render } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { expectElement } from "@/test/dom";
@@ -62,7 +62,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 function stubSize({ el, w, h }: { el: HTMLElement; w: number; h: number }) {

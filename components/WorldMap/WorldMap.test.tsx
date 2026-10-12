@@ -8,7 +8,7 @@ import {
   afterEach,
   afterAll,
 } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, stubProperty, unstubAllProperties } from "@/test/stubs";
 import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { renderWithNuqs } from "@/test/testNuqs";
@@ -123,31 +123,7 @@ function flushRaf() {
 // `exitFullscreen()` are faked to track the current element and dispatch
 // `fullscreenchange`, matching real browser behavior closely enough to
 // drive `WorldMap`'s toggle state.
-const originalFullscreenApi = [
-  { target: document, key: "fullscreenElement" },
-  { target: HTMLElement.prototype, key: "requestFullscreen" },
-  { target: document, key: "exitFullscreen" },
-].map(({ target, key }) => ({
-  target,
-  key,
-  descriptor: Object.getOwnPropertyDescriptor(target, key),
-}));
-
-afterAll(() => {
-  originalFullscreenApi.forEach(({ target, key, descriptor }) => {
-    if (descriptor) {
-      Object.defineProperty(target, key, descriptor);
-      return;
-    }
-    Reflect.deleteProperty(target, key);
-  });
-});
-
 let fullscreenElement: Element | null = null;
-Object.defineProperty(document, "fullscreenElement", {
-  configurable: true,
-  get: () => fullscreenElement,
-});
 function markFullscreenElement(el: Element | null) {
   fullscreenElement = el;
 }
@@ -161,20 +137,37 @@ const exitFullscreen = jest.fn(() => {
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
 });
-HTMLElement.prototype.requestFullscreen = requestFullscreen;
-document.exitFullscreen = exitFullscreen;
+
+function stubFullscreen() {
+  fullscreenElement = null;
+  stubProperty({
+    target: document,
+    key: "fullscreenElement",
+    descriptor: { get: () => fullscreenElement },
+  });
+  stubProperty({
+    target: HTMLElement.prototype,
+    key: "requestFullscreen",
+    descriptor: { value: requestFullscreen },
+  });
+  stubProperty({
+    target: document,
+    key: "exitFullscreen",
+    descriptor: { value: exitFullscreen },
+  });
+}
 
 beforeEach(() => {
   observers = [];
   rafCallbacks = [];
   mockViewerValue = { a: 0.5, e: 0, f: 0 };
-  fullscreenElement = null;
   stubGlobal({ name: "ResizeObserver", value: FakeResizeObserver });
   stubRaf();
+  stubFullscreen();
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
   jest.clearAllMocks();
 });
 

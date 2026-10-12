@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, jest } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 import { fireEvent, screen } from "@testing-library/react";
 import { FamilyTreeViewSwitcher } from "@/components/FamilyTreeViews/FamilyTreeViewSwitcher";
 import { renderWithNuqs, flushNuqs, lastQueryString } from "@/test/testNuqs";
@@ -29,7 +29,7 @@ const chart = <div data-testid="chart">chart</div>;
 
 describe("FamilyTreeViewSwitcher", () => {
   afterEach(() => {
-    unstubAllGlobals();
+    unstubAllProperties();
   });
 
   it("shows the list view child by default and leaves the chart unmounted", () => {

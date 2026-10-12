@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, jest } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
@@ -608,7 +608,7 @@ describe("FamilyTreeChart — control panel", () => {
 
 describe("FamilyTreeChart — mobile initial scale", () => {
   afterEach(() => {
-    unstubAllGlobals();
+    unstubAllProperties();
   });
 
   it("jumps to scale 4 after mount when matchMedia reports mobile", async () => {

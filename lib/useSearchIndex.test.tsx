@@ -4,7 +4,7 @@ import {
   useSearchIndex,
   type SearchIndexCollection,
 } from "@/lib/useSearchIndex";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 function Probe({ collection }: { collection: SearchIndexCollection }) {
   const { items, load } = useSearchIndex(collection);
@@ -21,7 +21,7 @@ function Probe({ collection }: { collection: SearchIndexCollection }) {
 const stark = { slug: "stark", name: "Stark", detail: null, aliases: [] };
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 describe("useSearchIndex", () => {
