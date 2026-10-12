@@ -12,13 +12,19 @@ export type RelationGraph = {
   eventsByLocation: Map<string, string[]>; // castle slug → event slugs located there
 };
 
-function slugsByKey({
-  entries,
+function slugsByKey<T extends { slug: string }>({
+  items,
+  keyOf,
 }: {
-  entries: ReadonlyArray<{ key: string; slug: string }>;
+  items: ReadonlyArray<{ frontmatter: T }>;
+  keyOf: (frontmatter: T) => string | null | undefined;
 }): Map<string, string[]> {
+  const keyed = items.flatMap(({ frontmatter }) => {
+    const key = keyOf(frontmatter);
+    return key ? [{ key, slug: frontmatter.slug }] : [];
+  });
   return new Map(
-    [...Map.groupBy(entries, ({ key }) => key)].map(([key, group]) => [
+    [...Map.groupBy(keyed, ({ key }) => key)].map(([key, group]) => [
       key,
       group.map(({ slug }) => slug),
     ]),
@@ -27,34 +33,24 @@ function slugsByKey({
 
 export function buildRelationGraph(set: ContentSet): RelationGraph {
   const castleByHouse = slugsByKey({
-    entries: set.castles.flatMap(({ frontmatter }) => {
-      const houseSlug = frontmatter["liege-house"];
-      return houseSlug ? [{ key: houseSlug, slug: frontmatter.slug }] : [];
-    }),
+    items: set.castles,
+    keyOf: (fm) => fm["liege-house"],
   });
 
-  const houseBySeat = set.houses.reduce((acc, house) => {
-    const seat = house.frontmatter.seat;
-    if (seat !== null) acc.set(seat, house.frontmatter.slug);
-    return acc;
-  }, new Map<string, string>());
+  const houseBySeat = new Map<string, string>(
+    set.houses.flatMap(({ frontmatter }) =>
+      frontmatter.seat === null ? [] : [[frontmatter.seat, frontmatter.slug]],
+    ),
+  );
 
   const membersByHouse = slugsByKey({
-    entries: set.characters.flatMap(({ frontmatter }) => {
-      const houseSlug = frontmatter["primary-house"];
-      return houseSlug !== null
-        ? [{ key: houseSlug, slug: frontmatter.slug }]
-        : [];
-    }),
+    items: set.characters,
+    keyOf: (fm) => fm["primary-house"],
   });
 
   const eventsByLocation = slugsByKey({
-    entries: set.events.flatMap(({ frontmatter }) => {
-      const loc = frontmatter.location;
-      return typeof loc === "string"
-        ? [{ key: loc, slug: frontmatter.slug }]
-        : [];
-    }),
+    items: set.events,
+    keyOf: (fm) => (typeof fm.location === "string" ? fm.location : null),
   });
 
   return { castleByHouse, houseBySeat, membersByHouse, eventsByLocation };
