@@ -17,7 +17,7 @@ type Props = {
   onSizeChange: (size: PageSize) => void;
   /** Rendered above and below the list; only the lower one announces. */
   position: "top" | "bottom";
-  /** Plural noun for the labels, e.g. `"Character"`. */
+  /** Singular noun for the labels, e.g. `"Character"`; pluralized with `s`. */
   noun: string;
 };
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { bySlug, compareByName } from "@/lib/collections";
+import { bySlug, compareByName, firstByKey } from "@/lib/collections";
 
 describe("bySlug", () => {
   it("indexes items by their top-level slug, keyed to their frontmatter", () => {
@@ -32,6 +32,27 @@ describe("bySlug", () => {
   });
 });
 
+describe("firstByKey", () => {
+  it("keeps the first item for each key, in first-appearance order", () => {
+    const items = [
+      { key: "b", n: 1 },
+      { key: "a", n: 2 },
+      { key: "b", n: 3 },
+      { key: "c", n: 4 },
+      { key: "a", n: 5 },
+    ];
+    expect(firstByKey({ items, keyOf: (item) => item.key })).toEqual([
+      { key: "b", n: 1 },
+      { key: "a", n: 2 },
+      { key: "c", n: 4 },
+    ]);
+  });
+
+  it("returns an empty list for an empty list", () => {
+    expect(firstByKey({ items: [], keyOf: String })).toEqual([]);
+  });
+});
+
 describe("compareByName", () => {
   it("orders two items alphabetically by name", () => {
     expect(compareByName({ name: "Arryn" }, { name: "Stark" })).toBeLessThan(0);
@@ -49,7 +70,7 @@ describe("compareByName", () => {
       { name: "Stark" },
       { name: "Arryn" },
       { name: "Lannister" },
-    ].sort(compareByName);
+    ].toSorted(compareByName);
     expect(sorted.map((item) => item.name)).toEqual([
       "Arryn",
       "Lannister",

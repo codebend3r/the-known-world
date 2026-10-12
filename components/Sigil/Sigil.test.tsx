@@ -1,6 +1,14 @@
 import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
 import { Sigil } from "@/components/Sigil";
+import { expectElement } from "@/test/dom";
+
+function sigilPlate(container: HTMLElement): HTMLElement {
+  return expectElement({
+    element: container.querySelector(".sigil"),
+    type: HTMLElement,
+  });
+}
 
 describe("Sigil", () => {
   it("renders nothing when the slug is null", () => {
@@ -38,24 +46,24 @@ describe("Sigil", () => {
     const { container } = render(
       <Sigil slug="stark" name="Stark" region="north" />,
     );
-    const plate = container.querySelector(".sigil");
-    expect(plate?.getAttribute("style")).toContain(
+    const plate = sigilPlate(container);
+    expect(plate.getAttribute("style")).toContain(
       "--sigil-metal: var(--region-color-north)",
     );
   });
 
   it("leaves the metal unset for an unknown region so the gold fallback applies", () => {
     const { container } = render(<Sigil slug="stark" name="Stark" />);
-    const plate = container.querySelector(".sigil");
-    expect(plate?.getAttribute("style") ?? "").not.toContain("--sigil-metal");
+    const plate = sigilPlate(container);
+    expect(plate.getAttribute("style") ?? "").not.toContain("--sigil-metal");
   });
 
   it("passes an explicit size through as the plate size and the image sizes hint", () => {
     const { container } = render(
       <Sigil slug="stark" name="Stark" size="1.5rem" />,
     );
-    const plate = container.querySelector(".sigil");
-    expect(plate?.getAttribute("style")).toContain("--sigil-size: 1.5rem");
+    const plate = sigilPlate(container);
+    expect(plate.getAttribute("style")).toContain("--sigil-size: 1.5rem");
     expect(screen.getByRole("img").getAttribute("sizes")).toBe("1.5rem");
   });
 
@@ -69,28 +77,31 @@ describe("Sigil", () => {
       <Sigil slug="stark" name="Stark" isDecorative />,
     );
     expect(screen.queryByRole("img", { name: /sigil of house/i })).toBeNull();
-    expect(container.querySelector("img")?.getAttribute("alt")).toBe("");
+    expect(
+      expectElement({
+        element: container.querySelector("img"),
+        type: HTMLImageElement,
+      }).getAttribute("alt"),
+    ).toBe("");
   });
 
   it("drops the plate class when the shield ground is turned off", () => {
     const { container } = render(
       <Sigil slug="stark" name="Stark" hasPlate={false} />,
     );
-    expect(container.querySelector(".sigil")?.className).toBe(
-      "sigil plateless",
-    );
+    expect(sigilPlate(container).className).toBe("sigil plateless");
   });
 
   it("keeps the plate by default", () => {
     const { container } = render(<Sigil slug="stark" name="Stark" />);
-    expect(container.querySelector(".sigil")?.className).toBe("sigil");
+    expect(sigilPlate(container).className).toBe("sigil");
   });
 
   it("merges a caller class onto the plate", () => {
     const { container } = render(
       <Sigil slug="stark" name="Stark" className="shield" />,
     );
-    const plate = container.querySelector(".sigil");
-    expect(plate?.className).toBe("sigil shield");
+    const plate = sigilPlate(container);
+    expect(plate.className).toBe("sigil shield");
   });
 });

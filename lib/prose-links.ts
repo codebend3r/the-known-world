@@ -10,6 +10,7 @@ import type {
   House,
   Weapon,
 } from "@/lib/schemas";
+import { firstByKey } from "@/lib/collections";
 
 export type ProseLinkKind =
   | "character"
@@ -69,13 +70,7 @@ function stripArticle(name: string): string {
 }
 
 function uniqueOrdered(forms: string[]): string[] {
-  const seen = new Set<string>();
-  return forms.reduce<string[]>((acc, f) => {
-    if (f.length < 2 || seen.has(f)) return acc;
-    seen.add(f);
-    acc.push(f);
-    return acc;
-  }, []);
+  return [...new Set(forms.filter((f) => f.length >= 2))];
 }
 
 function targetKey(target: { kind: ProseLinkKind; slug: string }): string {
@@ -149,8 +144,9 @@ export function buildProseLinkIndex(args: {
     forms: (fm) => {
       if (fm.placeholder) return [];
       const forms = [fm.name, ...fm.aliases];
-      if (mentioned.has(fm.slug)) forms.push(firstNameToken(fm.name));
-      return forms;
+      return mentioned.has(fm.slug)
+        ? [...forms, firstNameToken(fm.name)]
+        : forms;
     },
   });
 
@@ -159,12 +155,9 @@ export function buildProseLinkIndex(args: {
     entries: allHouses,
     mentioned,
     forms: (fm) => {
-      const forms = [fm.name];
-      if (mentioned.has(fm.slug)) {
-        const short = shortHouseName(fm.name);
-        if (short && short !== fm.name) forms.push(short);
-      }
-      return forms;
+      if (!mentioned.has(fm.slug)) return [fm.name];
+      const short = shortHouseName(fm.name);
+      return short && short !== fm.name ? [fm.name, short] : [fm.name];
     },
   });
 
@@ -238,19 +231,19 @@ type CompiledIndex = {
 
 function compileIndex(index: ProseLinkIndex): CompiledIndex | null {
   const selfKey = index.self ? targetKey(index.self) : null;
-  const formToTarget = new Map<string, ProseLinkTarget>();
-  const allForms = index.targets
+  const formTargets = index.targets
     .filter((t) => targetKey(t) !== selfKey)
-    .reduce<string[]>((acc, t) => {
-      t.surfaceForms.forEach((f) => {
-        if (formToTarget.has(f)) return;
-        formToTarget.set(f, t);
-        acc.push(f);
-      });
-      return acc;
-    }, []);
-  if (allForms.length === 0) return null;
-  allForms.sort((a, b) => b.length - a.length);
+    .flatMap((t) => t.surfaceForms.map((form) => ({ form, target: t })));
+  // The first target to register a surface form keeps it.
+  const formToTarget = new Map<string, ProseLinkTarget>(
+    firstByKey({ items: formTargets, keyOf: ({ form }) => form }).map(
+      ({ form, target }) => [form, target],
+    ),
+  );
+  if (formToTarget.size === 0) return null;
+  const allForms = [...formToTarget.keys()].toSorted(
+    (a, b) => b.length - a.length,
+  );
   const pattern = new RegExp(
     "\\b(" + allForms.map(escapeRegex).join("|") + ")\\b",
     "g",
@@ -258,64 +251,88 @@ function compileIndex(index: ProseLinkIndex): CompiledIndex | null {
   return { pattern, formToTarget };
 }
 
+type Mention = {
+  node: Text;
+  parent: Parent;
+  start: number;
+  matched: string;
+  target: ProseLinkTarget;
+};
+
 export function remarkProseLinks(index: ProseLinkIndex): Plugin<[], Root> {
   return function plugin() {
     const compiled = compileIndex(index);
     return function transformer(tree: Root) {
       if (!compiled) return;
-      const usedKeys = new Set<string>();
-
-      visitParents(tree, "text", (node: Text, ancestors: Parent[]) => {
-        if (ancestors.some((a) => SKIP_ANCESTOR_TYPES.has(a.type))) return SKIP;
-        const parent = ancestors[ancestors.length - 1];
-        if (!parent) return;
-        const replacements = scanText(node, compiled, usedKeys);
-        if (replacements === null) return;
-        const idx = parent.children.indexOf(node);
-        if (idx === -1) return;
-        parent.children.splice(idx, 1, ...replacements);
-        return [SKIP, idx + replacements.length];
+      const mentions = proseTextNodes(tree).flatMap(({ node, parent }) =>
+        findMentions({ node, parent, compiled }),
+      );
+      // A target links only at its first mention in the document.
+      const firstMentions = firstByKey({
+        items: mentions,
+        keyOf: (m) => targetKey(m.target),
       });
+      Map.groupBy(firstMentions, (m) => m.node).forEach(
+        (nodeMentions, node) => {
+          const { parent } = nodeMentions[0];
+          const idx = parent.children.indexOf(node);
+          if (idx === -1) return;
+          parent.children.splice(
+            idx,
+            1,
+            ...linkify({ value: node.value, mentions: nodeMentions }),
+          );
+        },
+      );
     };
   };
 }
 
-function scanText(
-  node: Text,
-  compiled: CompiledIndex,
-  usedKeys: Set<string>,
-): (Text | Link)[] | null {
-  const value = node.value;
-  if (!value) return null;
-  const out: (Text | Link)[] = [];
-  let lastIndex = 0;
-  let hasProduced = false;
-  compiled.pattern.lastIndex = 0;
-  let match: RegExpExecArray | null;
-  while ((match = compiled.pattern.exec(value)) !== null) {
+function proseTextNodes(tree: Root): { node: Text; parent: Parent }[] {
+  const found: { node: Text; parent: Parent }[] = [];
+  visitParents(tree, "text", (node: Text, ancestors: Parent[]) => {
+    if (ancestors.some((a) => SKIP_ANCESTOR_TYPES.has(a.type))) return SKIP;
+    const parent = ancestors.at(-1);
+    if (parent) found.push({ node, parent });
+  });
+  return found;
+}
+
+function findMentions({
+  node,
+  parent,
+  compiled,
+}: {
+  node: Text;
+  parent: Parent;
+  compiled: CompiledIndex;
+}): Mention[] {
+  return [...node.value.matchAll(compiled.pattern)].flatMap((match) => {
     const matched = match[1];
     const target = compiled.formToTarget.get(matched);
-    if (!target) continue;
-    const key = targetKey(target);
-    if (usedKeys.has(key)) continue;
-    const start = match.index;
-    const end = start + matched.length;
-    if (start > lastIndex) {
-      out.push({ type: "text", value: value.slice(lastIndex, start) });
-    }
-    out.push({
+    return target
+      ? [{ node, parent, start: match.index, matched, target }]
+      : [];
+  });
+}
+
+function linkify({
+  value,
+  mentions,
+}: {
+  value: string;
+  mentions: readonly Mention[];
+}): (Text | Link)[] {
+  const cuts = [0, ...mentions.map((m) => m.start + m.matched.length)];
+  const nodes = mentions.flatMap((m, i): (Text | Link)[] => [
+    { type: "text", value: value.slice(cuts[i], m.start) },
+    {
       type: "link",
-      url: target.href,
+      url: m.target.href,
       title: null,
-      children: [{ type: "text", value: matched }],
-    });
-    usedKeys.add(key);
-    lastIndex = end;
-    hasProduced = true;
-  }
-  if (!hasProduced) return null;
-  if (lastIndex < value.length) {
-    out.push({ type: "text", value: value.slice(lastIndex) });
-  }
-  return out;
+      children: [{ type: "text", value: m.matched }],
+    },
+  ]);
+  const tail: Text = { type: "text", value: value.slice(cuts.at(-1) ?? 0) };
+  return [...nodes, tail].filter((n) => n.type !== "text" || n.value !== "");
 }

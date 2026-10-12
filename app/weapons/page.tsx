@@ -52,7 +52,7 @@ export default async function WeaponsPage() {
         hasImage: withImage.has(w.frontmatter.slug),
       };
     })
-    .sort(compareByName);
+    .toSorted(compareByName);
 
   return (
     <PlateLayout>

@@ -8,11 +8,12 @@ import {
   afterEach,
   afterAll,
 } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, stubProperty, unstubAllProperties } from "@/test/stubs";
 import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
-import { renderWithNuqs } from "@/lib/testNuqs";
+import { renderWithNuqs } from "@/test/testNuqs";
 import type { WorldMapMarker } from "@/lib/map";
+import { expectElement } from "@/test/dom";
 
 // `mock.module` is not hoisted in Bun, so plain consts suffice where Vitest
 // needed `vi.hoisted` to lift the spies above the hoisted factory.
@@ -124,35 +125,50 @@ function flushRaf() {
 // `fullscreenchange`, matching real browser behavior closely enough to
 // drive `WorldMap`'s toggle state.
 let fullscreenElement: Element | null = null;
-Object.defineProperty(document, "fullscreenElement", {
-  configurable: true,
-  get: () => fullscreenElement,
-});
 function markFullscreenElement(el: Element | null) {
   fullscreenElement = el;
 }
-HTMLElement.prototype.requestFullscreen = jest.fn(function (this: HTMLElement) {
+const requestFullscreen = jest.fn(function (this: HTMLElement) {
   markFullscreenElement(this);
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
 });
-document.exitFullscreen = jest.fn(() => {
+const exitFullscreen = jest.fn(() => {
   fullscreenElement = null;
   document.dispatchEvent(new Event("fullscreenchange"));
   return Promise.resolve();
 });
+
+function stubFullscreen() {
+  fullscreenElement = null;
+  stubProperty({
+    target: document,
+    key: "fullscreenElement",
+    descriptor: { get: () => fullscreenElement },
+  });
+  stubProperty({
+    target: HTMLElement.prototype,
+    key: "requestFullscreen",
+    descriptor: { value: requestFullscreen },
+  });
+  stubProperty({
+    target: document,
+    key: "exitFullscreen",
+    descriptor: { value: exitFullscreen },
+  });
+}
 
 beforeEach(() => {
   observers = [];
   rafCallbacks = [];
   mockViewerValue = { a: 0.5, e: 0, f: 0 };
-  fullscreenElement = null;
   stubGlobal({ name: "ResizeObserver", value: FakeResizeObserver });
   stubRaf();
+  stubFullscreen();
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
   jest.clearAllMocks();
 });
 
@@ -243,14 +259,20 @@ describe("WorldMap", () => {
   it("draws the map centered at fit size inside a viewer-sized SVG", async () => {
     const { container, findByTestId } = renderMap();
     await findByTestId("pan-zoom");
-    const svg = container.querySelector("svg[width='800']");
-    expect(svg?.getAttribute("height")).toBe("600");
-    const image = container.querySelector("image");
-    expect(image?.getAttribute("href")).toBe("/map/test-map.jpg?w=2048&q=70");
-    expect(image?.getAttribute("x")).toBe("100");
-    expect(image?.getAttribute("y")).toBe("0");
-    expect(image?.getAttribute("width")).toBe("600");
-    expect(image?.getAttribute("height")).toBe("600");
+    const svg = expectElement({
+      element: container.querySelector("svg[width='800']"),
+      type: SVGSVGElement,
+    });
+    expect(svg.getAttribute("height")).toBe("600");
+    const image = expectElement({
+      element: container.querySelector("image"),
+      type: SVGImageElement,
+    });
+    expect(image.getAttribute("href")).toBe("/map/test-map.jpg?w=2048&q=70");
+    expect(image.getAttribute("x")).toBe("100");
+    expect(image.getAttribute("y")).toBe("0");
+    expect(image.getAttribute("width")).toBe("600");
+    expect(image.getAttribute("height")).toBe("600");
   });
 
   it("draws the untouched full raster over the preview from the start", async () => {
@@ -259,12 +281,12 @@ describe("WorldMap", () => {
     const images = container.querySelectorAll("image");
     expect(images).toHaveLength(2);
     const full = images[1];
-    expect(full?.getAttribute("href")).toBe("/map/test-map.jpg");
-    expect(full?.getAttribute("x")).toBe("100");
-    expect(full?.getAttribute("y")).toBe("0");
-    expect(full?.getAttribute("width")).toBe("600");
-    expect(full?.getAttribute("height")).toBe("600");
-    expect(full?.getAttribute("aria-hidden")).toBe("true");
+    expect(full.getAttribute("href")).toBe("/map/test-map.jpg");
+    expect(full.getAttribute("x")).toBe("100");
+    expect(full.getAttribute("y")).toBe("0");
+    expect(full.getAttribute("width")).toBe("600");
+    expect(full.getAttribute("height")).toBe("600");
+    expect(full.getAttribute("aria-hidden")).toBe("true");
   });
 
   it("zooms in and out from the buttons", async () => {
@@ -465,16 +487,19 @@ describe("WorldMap", () => {
     MARKERS.forEach((marker) => {
       const link = getByRole("link", { name: marker.name });
       expect(link.getAttribute("href")).toBe(marker.href);
-      const circle = link.querySelector("circle");
-      expect(Number(circle?.getAttribute("cx"))).toBeCloseTo(
+      const circle = expectElement({
+        element: link.querySelector("circle"),
+        type: SVGCircleElement,
+      });
+      expect(Number(circle.getAttribute("cx"))).toBeCloseTo(
         offsetX + marker.x * fitScale,
         6,
       );
-      expect(Number(circle?.getAttribute("cy"))).toBeCloseTo(
+      expect(Number(circle.getAttribute("cy"))).toBeCloseTo(
         offsetY + marker.y * fitScale,
         6,
       );
-      expect(Number(circle?.getAttribute("r"))).toBeCloseTo(
+      expect(Number(circle.getAttribute("r"))).toBeCloseTo(
         MARKER_RADIUS * fitScale,
         6,
       );
@@ -594,6 +619,37 @@ describe("WorldMap", () => {
     expect(document.exitFullscreen).toHaveBeenCalledTimes(1);
     expect(getByRole("button", { name: "Enter fullscreen" })).not.toBeNull();
   });
+
+  it("stays on Enter fullscreen when the browser denies the request", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    requestFullscreen.mockImplementationOnce(() =>
+      Promise.reject(new Error("Permissions check failed")),
+    );
+
+    fireEvent.click(getByRole("button", { name: "Enter fullscreen" }));
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(requestFullscreen).toHaveBeenCalledTimes(1);
+    expect(getByRole("button", { name: "Enter fullscreen" })).not.toBeNull();
+  });
+
+  it("stays on Exit fullscreen when the browser denies leaving it", async () => {
+    const { findByTestId, getByRole } = renderMap();
+    await findByTestId("pan-zoom");
+    fireEvent.click(getByRole("button", { name: "Enter fullscreen" }));
+    exitFullscreen.mockImplementationOnce(() =>
+      Promise.reject(new Error("Document not active")),
+    );
+
+    fireEvent.click(getByRole("button", { name: "Exit fullscreen" }));
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(exitFullscreen).toHaveBeenCalledTimes(1);
+    expect(getByRole("button", { name: "Exit fullscreen" })).not.toBeNull();
+  });
 });
 
 // Guards the `a11y-audit` canvas contract: the stage is the keyboard
@@ -621,9 +677,12 @@ describe("WorldMap — accessibility contract", () => {
   it("hides the raster map, leaving the pins as the only named content", async () => {
     const { container, findByTestId } = renderMap();
     await findByTestId("pan-zoom");
-    expect(container.querySelector("image")?.getAttribute("aria-hidden")).toBe(
-      "true",
-    );
+    expect(
+      expectElement({
+        element: container.querySelector("image"),
+        type: SVGImageElement,
+      }).getAttribute("aria-hidden"),
+    ).toBe("true");
     expect(
       container.querySelector('a[aria-label="King\'s Landing"]'),
     ).not.toBeNull();

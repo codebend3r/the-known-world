@@ -3,6 +3,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { PortraitVariants } from "@/components/PortraitVariants";
 import type { PortraitVariant } from "@/lib/portrait-variants";
 import { SPOILERS_STORAGE_KEY } from "@/lib/spoilers";
+import { expectDefined } from "@/test/defined";
+import { expectElement } from "@/test/dom";
 
 const PRIMARY: PortraitVariant = {
   id: "duncan-the-tall",
@@ -85,8 +87,8 @@ describe("PortraitVariants", () => {
     spoilersOn();
     renderVariants();
     const [primary, kingsguard] = screen.getAllByRole("tab");
-    expect(primary?.getAttribute("aria-selected")).toBe("true");
-    expect(kingsguard?.getAttribute("aria-selected")).toBe("false");
+    expect(primary.getAttribute("aria-selected")).toBe("true");
+    expect(kingsguard.getAttribute("aria-selected")).toBe("false");
   });
 
   it("swaps the still and the clip when a variant is chosen", () => {
@@ -98,9 +100,12 @@ describe("PortraitVariants", () => {
         .getByAltText("Portrait of Duncan the Tall — Kingsguard")
         .getAttribute("src"),
     ).toBe(KINGSGUARD.image);
-    expect(container.querySelector("video")?.getAttribute("src")).toBe(
-      KINGSGUARD.video,
-    );
+    expect(
+      expectElement({
+        element: container.querySelector("video"),
+        type: HTMLVideoElement,
+      }).getAttribute("src"),
+    ).toBe(KINGSGUARD.video);
   });
 
   it("drops the clip for a variant that has no video", () => {
@@ -134,7 +139,9 @@ describe("PortraitVariants", () => {
     spoilersOn();
     renderVariants();
     const selected = () =>
-      screen.getAllByRole("tab").find((tab) => tab.tabIndex === 0);
+      expectDefined(
+        screen.getAllByRole("tab").find((tab) => tab.tabIndex === 0),
+      );
 
     fireEvent.keyDown(screen.getByRole("tab", { name: "Duncan the Tall" }), {
       key: "ArrowRight",
@@ -148,7 +155,7 @@ describe("PortraitVariants", () => {
     fireEvent.keyDown(screen.getByRole("tab", { name: "Kingsguard" }), {
       key: "ArrowRight",
     });
-    expect(selected()?.textContent).toBe("Duncan the Tall");
+    expect(selected().textContent).toBe("Duncan the Tall");
 
     fireEvent.keyDown(screen.getByRole("tab", { name: "Duncan the Tall" }), {
       key: "ArrowLeft",

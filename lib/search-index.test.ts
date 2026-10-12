@@ -5,7 +5,7 @@ import {
   fetchSearchIndex,
 } from "@/lib/search-index";
 import { CharacterSchema, HouseSchema } from "@/lib/schemas";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 function character(frontmatter: Record<string, unknown>) {
   return CharacterSchema.parse({
@@ -99,7 +99,7 @@ describe("buildHouseSearchIndex", () => {
 
 describe("fetchSearchIndex", () => {
   afterEach(() => {
-    unstubAllGlobals();
+    unstubAllProperties();
   });
 
   const item = { slug: "stark", name: "Stark", detail: null, aliases: [] };

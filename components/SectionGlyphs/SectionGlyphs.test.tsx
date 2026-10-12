@@ -5,6 +5,7 @@ import {
   sectionGlyphs,
   type SectionSlug,
 } from "@/components/SectionGlyphs";
+import { expectElement } from "@/test/dom";
 
 // `it.each` takes a mutable tuple, so this cannot be `readonly`.
 const SLUGS: SectionSlug[] = [
@@ -21,19 +22,21 @@ const SLUGS: SectionSlug[] = [
 
 describe("sectionGlyphs", () => {
   it("covers every section the site navigates to", () => {
-    expect(Object.keys(sectionGlyphs).sort()).toEqual([...SLUGS].sort());
+    expect(Object.keys(sectionGlyphs).toSorted()).toEqual(SLUGS.toSorted());
   });
 
   it.each(SLUGS)("renders %s as a 32x32 decorative svg", (slug) => {
     const { container } = render(sectionGlyphs[slug]);
-    const svg = container.querySelector("svg");
-    expect(svg).not.toBeNull();
-    expect(svg?.getAttribute("viewBox")).toBe("0 0 32 32");
-    expect(svg?.getAttribute("width")).toBe("32");
-    expect(svg?.getAttribute("height")).toBe("32");
+    const svg = expectElement({
+      element: container.querySelector("svg"),
+      type: SVGSVGElement,
+    });
+    expect(svg.getAttribute("viewBox")).toBe("0 0 32 32");
+    expect(svg.getAttribute("width")).toBe("32");
+    expect(svg.getAttribute("height")).toBe("32");
     // Decorative by construction: the glyph repeats a label the consumer
     // already renders as text.
-    expect(svg?.getAttribute("aria-hidden")).toBe("true");
+    expect(svg.getAttribute("aria-hidden")).toBe("true");
   });
 
   it.each(SLUGS)(

@@ -9,7 +9,7 @@ import {
   renderWithNuqs,
   flushNuqs,
   lastQueryString,
-} from "@/lib/testNuqs";
+} from "@/test/testNuqs";
 import { expectElement } from "@/test/dom";
 
 const items: DragonItem[] = [

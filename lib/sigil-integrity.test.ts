@@ -63,7 +63,7 @@ describe("sigil integrity", () => {
 
   it("flags a reachable file with no image on disk", async () => {
     const sources = await loadSigilSources();
-    const [file] = [...reachableSigilFiles().keys()].sort();
+    const [file] = [...reachableSigilFiles().keys()].toSorted();
     if (!file) throw new Error("expected at least one reachable sigil file");
 
     const errors = sigilIntegrityErrors({

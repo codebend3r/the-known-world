@@ -105,7 +105,7 @@ function describeFiles(files: readonly string[]): PortraitFile[] {
       stem: path.basename(file, path.extname(file)),
       extension: path.extname(file).slice(1).toLowerCase(),
     }))
-    .sort((a, b) => a.file.localeCompare(b.file));
+    .toSorted((a, b) => a.file.localeCompare(b.file));
 }
 
 /** Flat portraits only. Variant folders come back from the loader below. */
@@ -121,7 +121,7 @@ export async function loadPortraitVariantDirs(): Promise<PortraitVariantDir[]> {
   const dirs = entries
     .filter((entry) => entry.isDirectory() && !entry.name.startsWith("."))
     .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b));
+    .toSorted((a, b) => a.localeCompare(b));
   return Promise.all(
     dirs.map(async (slug) => ({
       slug,
@@ -130,7 +130,6 @@ export async function loadPortraitVariantDirs(): Promise<PortraitVariantDir[]> {
   );
 }
 
-/** Group every file on disk by the slug its name claims. */
 export function groupByStem(
   files: readonly PortraitFile[],
 ): Map<string, PortraitFile[]> {
@@ -343,7 +342,7 @@ export function variantDirErrors({
     ...missingPrimary,
     ...strandedVideos,
     ...duplicates,
-  ].sort();
+  ].toSorted();
 }
 
 export function portraitIntegrityErrors({
@@ -410,7 +409,7 @@ export function portraitIntegrityErrors({
 
   const missing = [...PLACEHOLDER_FILES]
     .filter((file) => !onDisk.has(file))
-    .sort()
+    .toSorted()
     .map(
       (file) =>
         `characters/${file}: missing, required by the placeholder fallback`,
@@ -418,7 +417,7 @@ export function portraitIntegrityErrors({
 
   const staleReservations = [...RESERVED_PORTRAITS]
     .filter((stem) => characterSlugs.has(stem))
-    .sort()
+    .toSorted()
     .map(
       (stem) =>
         `RESERVED_PORTRAITS ${stem}: content/characters/${stem}.md now exists, drop it from the list`,
@@ -432,16 +431,16 @@ export function portraitIntegrityErrors({
       (dir) =>
         `characters/${dir.slug}/: shadowed by the flat characters/${dir.slug} file, which findPortrait returns first`,
     )
-    .sort();
+    .toSorted();
 
   const variants = variantDirs.flatMap((dir) =>
     variantDirErrors({ dir, characterSlugs }),
   );
 
   return [
-    ...unprobed.sort(),
-    ...orphans.sort(),
-    ...duplicates.sort(),
+    ...unprobed.toSorted(),
+    ...orphans.toSorted(),
+    ...duplicates.toSorted(),
     ...missing,
     ...staleReservations,
     ...shadowed,

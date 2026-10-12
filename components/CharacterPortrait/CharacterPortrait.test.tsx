@@ -1,7 +1,8 @@
-import { describe, expect, it, spyOn } from "bun:test";
+import { afterEach, describe, expect, it, spyOn } from "bun:test";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { CharacterPortrait } from "@/components/CharacterPortrait";
 import { expectElement } from "@/test/dom";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 const PROPS = {
   image: "/characters/jon-snow.jpg",
@@ -19,6 +20,10 @@ function renderPortrait() {
   if (!video) throw new Error("expected a video element");
   return { media, video, image: screen.getByAltText(PROPS.alt) };
 }
+
+afterEach(() => {
+  unstubAllProperties();
+});
 
 describe("CharacterPortrait", () => {
   it("renders only the still when the character has no video", () => {
@@ -86,21 +91,9 @@ describe("CharacterPortrait", () => {
   it("keeps the still in place when reduced motion is preferred", () => {
     const { media, video, image } = renderPortrait();
     const play = spyOn(video, "play").mockResolvedValue(undefined);
-    Object.defineProperty(window, "matchMedia", {
-      value: () => ({ matches: true }),
-      configurable: true,
-      writable: true,
-    });
+    stubGlobal({ name: "matchMedia", value: () => ({ matches: true }) });
 
-    try {
-      fireEvent.mouseOver(media);
-    } finally {
-      Object.defineProperty(window, "matchMedia", {
-        value: undefined,
-        configurable: true,
-        writable: true,
-      });
-    }
+    fireEvent.mouseOver(media);
 
     expect(play).not.toHaveBeenCalled();
     expect(image.className).not.toContain("imagePlaying");

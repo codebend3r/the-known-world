@@ -10,7 +10,7 @@ import {
 } from "bun:test";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { SearchIndexItem } from "@/lib/search-index";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 const push = jest.fn();
 
@@ -47,7 +47,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 // The roll arrives on first focus, so the field is focused and then given
@@ -81,13 +81,13 @@ describe("HouseSearchInput", () => {
     await typeQuery("mall");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toBe("Mallister(The Riverlands)");
+    expect(options[0].textContent).toBe("Mallister(The Riverlands)");
   });
 
   it("omits the region when a house has none", async () => {
     render(<HouseSearchInput />);
     await typeQuery("manwoody");
-    expect(screen.getAllByRole("option")[0]?.textContent).toBe("Manwoody");
+    expect(screen.getAllByRole("option")[0].textContent).toBe("Manwoody");
   });
 
   it("navigates to the chosen house page", async () => {

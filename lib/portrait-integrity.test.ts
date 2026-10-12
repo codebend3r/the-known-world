@@ -14,6 +14,7 @@ import {
   winningFile,
   type PortraitFile,
 } from "@/lib/portrait-integrity";
+import { expectDefined } from "@/test/defined";
 
 async function loadPortraitSources() {
   const [files, variantDirs, characters] = await Promise.all([
@@ -77,7 +78,7 @@ describe("portrait integrity", () => {
     const sources = await loadPortraitSources();
     const covered = coveredSlugs(sources);
     const slug = [...sources.characterSlugs]
-      .sort()
+      .toSorted()
       .find((candidate) => !covered.has(candidate) && candidate.length > 8);
     if (!slug) throw new Error("expected an uncovered character slug");
     const typo = `${slug.slice(0, -1)}x`;
@@ -157,7 +158,7 @@ describe("portrait integrity", () => {
 
   it("flags a missing placeholder variant", async () => {
     const sources = await loadPortraitSources();
-    const [dropped] = [...PLACEHOLDER_FILES].sort();
+    const [dropped] = [...PLACEHOLDER_FILES].toSorted();
     if (!dropped) throw new Error("expected a placeholder file");
 
     expect(
@@ -172,7 +173,7 @@ describe("portrait integrity", () => {
 
   it("flags a reservation whose content entry now exists", async () => {
     const sources = await loadPortraitSources();
-    const [reserved] = [...RESERVED_PORTRAITS].sort();
+    const [reserved] = [...RESERVED_PORTRAITS].toSorted();
     if (!reserved) throw new Error("expected a reserved portrait");
 
     expect(
@@ -299,11 +300,13 @@ describe("winningFile", () => {
       portrait("a.webp"),
       portrait("a.png"),
     ];
-    expect(winningFile({ candidates })?.file).toBe("a.png");
+    expect(expectDefined(winningFile({ candidates })).file).toBe("a.png");
     expect(
-      winningFile({
-        candidates: candidates.filter((entry) => entry.extension !== "png"),
-      })?.file,
+      expectDefined(
+        winningFile({
+          candidates: candidates.filter((entry) => entry.extension !== "png"),
+        }),
+      ).file,
     ).toBe("a.webp");
   });
 

@@ -12,7 +12,6 @@ type Props = {
   className?: string;
 };
 
-/** The plain styled filter field every list index shares. */
 export function ListSearchInput({
   value,
   onChange,

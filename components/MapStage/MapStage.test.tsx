@@ -7,7 +7,7 @@ import {
   afterEach,
   afterAll,
 } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 import { act, render } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { expectElement } from "@/test/dom";
@@ -62,7 +62,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 function stubSize({ el, w, h }: { el: HTMLElement; w: number; h: number }) {
@@ -105,8 +105,11 @@ describe("MapStage", () => {
       observers[0].cb([]);
     });
     await findByTestId("pan-zoom");
-    const img = container.querySelector("image");
-    expect(img?.getAttribute("href")).toBe("/the-world.svg");
+    const img = expectElement({
+      element: container.querySelector("image"),
+      type: SVGImageElement,
+    });
+    expect(img.getAttribute("href")).toBe("/the-world.svg");
     expect(container.querySelector('[data-testid="child"]')).not.toBeNull();
   });
 
@@ -125,9 +128,12 @@ describe("MapStage", () => {
       observers[0].cb([]);
     });
     await findByTestId("pan-zoom");
-    const svg = container.querySelector("svg");
-    expect(svg?.getAttribute("width")).toBe("800");
-    expect(svg?.getAttribute("height")).toBe("1400");
+    const svg = expectElement({
+      element: container.querySelector("svg"),
+      type: SVGSVGElement,
+    });
+    expect(svg.getAttribute("width")).toBe("800");
+    expect(svg.getAttribute("height")).toBe("1400");
   });
 
   it("disconnects the observer on unmount", () => {
@@ -185,8 +191,11 @@ describe("MapStage — accessibility contract", () => {
     const svg = container.querySelector("svg")!;
     expect(svg.getAttribute("role")).toBe("group");
     expect(svg.getAttribute("aria-label")).toBe("Map of Westeros");
-    expect(container.querySelector("image")?.getAttribute("aria-hidden")).toBe(
-      "true",
-    );
+    expect(
+      expectElement({
+        element: container.querySelector("image"),
+        type: SVGImageElement,
+      }).getAttribute("aria-hidden"),
+    ).toBe("true");
   });
 });

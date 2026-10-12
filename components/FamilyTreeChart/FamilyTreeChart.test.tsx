@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach, jest } from "bun:test";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { FamilyTreeChart } from "@/components/FamilyTreeChart";
 import type { LaidOutChart, LayoutPerson } from "@/lib/family-tree-layout";
@@ -138,8 +138,11 @@ describe("FamilyTreeChart — rendering", () => {
       persons: [person({ slug: "eddard", name: "Eddard Stark" })],
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
-    const a = container.querySelector("a[href]");
-    expect(a?.getAttribute("href")).toBe("/characters/eddard/");
+    const a = expectElement({
+      element: container.querySelector("a[href]"),
+      type: Element,
+    });
+    expect(a.getAttribute("href")).toBe("/characters/eddard/");
   });
 
   it("does not wrap placeholders in an anchor", () => {
@@ -280,8 +283,11 @@ describe("FamilyTreeChart — rendering", () => {
       ],
     };
     const { container } = render(<FamilyTreeChart chart={chart} />);
-    const a = container.querySelector("a[href]");
-    expect(a?.getAttribute("href")).toBe("/characters/rhaegar-targaryen/");
+    const a = expectElement({
+      element: container.querySelector("a[href]"),
+      type: Element,
+    });
+    expect(a.getAttribute("href")).toBe("/characters/rhaegar-targaryen/");
   });
 
   it("renders a portrait <image> for an external spouse when one is set", () => {
@@ -606,7 +612,7 @@ describe("FamilyTreeChart — control panel", () => {
 
 describe("FamilyTreeChart — mobile initial scale", () => {
   afterEach(() => {
-    unstubAllGlobals();
+    unstubAllProperties();
   });
 
   it("jumps to scale 4 after mount when matchMedia reports mobile", async () => {
@@ -833,8 +839,11 @@ describe("FamilyTreeChart — accessibility contract", () => {
     );
     const image = container.querySelector("image")!;
     expect(image.getAttribute("aria-hidden")).toBe("true");
-    expect(container.querySelector("title")?.textContent).toContain(
-      "Ann Stark",
-    );
+    expect(
+      expectElement({
+        element: container.querySelector("title"),
+        type: SVGTitleElement,
+      }).textContent,
+    ).toContain("Ann Stark");
   });
 });

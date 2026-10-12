@@ -378,7 +378,6 @@ function statusDefects(rows: readonly LifespanRow[]): DateDefect[] {
   });
 }
 
-/** Every mechanically detectable date defect in the corpus. */
 export function dateIntegrityDefects(
   collections: DateCollections,
 ): DateDefect[] {

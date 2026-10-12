@@ -29,7 +29,7 @@ export default async function EventsPage() {
   // re-ranks by relevance, so this only sets the resting order.
   const items: EventItem[] = events
     .filter((e) => !e.frontmatter.draft)
-    .sort(
+    .toSorted(
       (a, b) =>
         absoluteYear(a.frontmatter.date) - absoluteYear(b.frontmatter.date) ||
         a.frontmatter.name.localeCompare(b.frontmatter.name),

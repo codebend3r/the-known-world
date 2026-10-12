@@ -1,6 +1,7 @@
 import { describe, it, expect } from "bun:test";
 import { render, screen } from "@testing-library/react";
 import { PageHeading } from "@/components/PageHeading";
+import { expectElement } from "@/test/dom";
 
 describe("PageHeading", () => {
   it("renders the title as an h1", () => {
@@ -27,8 +28,11 @@ describe("PageHeading", () => {
 
   it("draws the rule in the section's filigree variant", () => {
     const { container } = render(<PageHeading title="Maps" filigree="scale" />);
-    expect(container.querySelector("hgroup > span")?.className).toContain(
-      "scale",
-    );
+    expect(
+      expectElement({
+        element: container.querySelector("hgroup > span"),
+        type: HTMLElement,
+      }).className,
+    ).toContain("scale");
   });
 });

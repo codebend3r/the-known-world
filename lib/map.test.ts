@@ -91,7 +91,7 @@ describe("selectVisibleCastles", () => {
       castles,
       layers: new Set<MapLayer>(["castle", "ruin"]),
     });
-    expect(visible.map((entry) => entry.frontmatter.slug).sort()).toEqual([
+    expect(visible.map((entry) => entry.frontmatter.slug).toSorted()).toEqual([
       "a",
       "c",
     ]);
@@ -423,7 +423,8 @@ describe("selectWorldMapMarkers", () => {
       ],
       houses,
     });
-    expect(marker?.house).toBeUndefined();
+    expect(marker).toBeDefined();
+    expect(marker).not.toHaveProperty("house");
   });
 
   it("drops drafts rather than linking to a page that is never built", () => {

@@ -1,6 +1,7 @@
 import { describe, it, expect } from "bun:test";
 import { buildFamilyTree, type TreeNode } from "@/lib/family-tree";
 import { CharacterSchema } from "@/lib/schemas";
+import { expectDefined } from "@/test/defined";
 
 type CharacterInput = Parameters<typeof CharacterSchema.parse>[0];
 
@@ -266,8 +267,12 @@ describe("buildFamilyTree", () => {
     const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree[0].sex).toBe("m");
     expect(tree[0].spouses[0].sex).toBe("f");
-    expect(tree[0].children.find((c) => c.slug === "tywin")?.sex).toBe("m");
-    expect(tree[0].children.find((c) => c.slug === "genna")?.sex).toBe("f");
+    expect(
+      expectDefined(tree[0].children.find((c) => c.slug === "tywin")).sex,
+    ).toBe("m");
+    expect(
+      expectDefined(tree[0].children.find((c) => c.slug === "genna")).sex,
+    ).toBe("f");
   });
 
   it("propagates the first alias onto the TreeNode and external children", () => {
@@ -451,9 +456,8 @@ describe("buildFamilyTree", () => {
     const tree = buildFamilyTree({ houseSlug: "lannister", people });
     expect(tree).toHaveLength(1);
     expect(tree[0].slug).toBe("gerold");
-    const tywin = findNode({ roots: tree, slug: "tywin" });
-    expect(tywin).not.toBeNull();
-    expect(tywin?.spouses.map((s) => s.slug)).toEqual(["joanna"]);
+    const tywin = expectDefined(findNode({ roots: tree, slug: "tywin" }));
+    expect(tywin.spouses.map((s) => s.slug)).toEqual(["joanna"]);
     const joannaUnderFather = findNode({
       roots: [tree[0].children[1]],
       slug: "joanna",

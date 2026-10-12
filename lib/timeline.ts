@@ -119,15 +119,15 @@ function clusterColumn({
   events: TimelineEvent[];
   yFor: (year: number) => number;
 }): TimelineNode[] {
-  const sorted = [...events].sort(
+  const sorted = events.toSorted(
     (a, b) => a.year - b.year || a.name.localeCompare(b.name),
   );
 
   const groups = sorted.reduce<TimelineEvent[][]>((acc, event) => {
-    const group = acc.at(-1);
-    const previous = group?.at(-1);
-    const first = group?.at(0);
-    if (!group || !previous || !first) return [...acc, [event]];
+    const group = acc.at(-1) ?? [];
+    const previous = group.at(-1);
+    const first = group.at(0);
+    if (!previous || !first) return [...acc, [event]];
     const isTooFar = yFor(event.year) - yFor(previous.year) > CLUSTER_GAP_PX;
     const isTooWide = event.year - first.year > MAX_CLUSTER_SPAN_YEARS;
     if (isTooFar || isTooWide) return [...acc, [event]];

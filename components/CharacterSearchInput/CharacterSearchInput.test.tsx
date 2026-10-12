@@ -11,7 +11,7 @@ import {
 import { fireEvent, render, screen } from "@testing-library/react";
 import type { SearchIndexItem } from "@/lib/search-index";
 import { expectElement } from "@/test/dom";
-import { stubGlobal, unstubAllGlobals } from "@/test/stubs";
+import { stubGlobal, unstubAllProperties } from "@/test/stubs";
 
 const push = jest.fn();
 
@@ -59,7 +59,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  unstubAllGlobals();
+  unstubAllProperties();
 });
 
 // The roll arrives on first focus, so the field is focused and then given
@@ -104,7 +104,7 @@ describe("CharacterSearchInput — autocomplete mode", () => {
     await typeQuery("aem");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toContain("Aemon Targaryen");
+    expect(options[0].textContent).toContain("Aemon Targaryen");
   });
 
   it("navigates to the top match on Enter", async () => {
@@ -151,6 +151,6 @@ describe("CharacterSearchInput — autocomplete mode", () => {
     await typeQuery("dragonknight");
     const options = screen.getAllByRole("option");
     expect(options).toHaveLength(1);
-    expect(options[0]?.textContent).toContain("Aemon Targaryen");
+    expect(options[0].textContent).toContain("Aemon Targaryen");
   });
 });

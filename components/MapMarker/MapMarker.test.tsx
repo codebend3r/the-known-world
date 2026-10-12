@@ -2,6 +2,8 @@ import { describe, it, expect } from "bun:test";
 import { render } from "@testing-library/react";
 import { MapMarker } from "@/components/MapMarker";
 import type { MapLayer } from "@/lib/map";
+import { expectDefined } from "@/test/defined";
+import { expectElement } from "@/test/dom";
 
 function renderMarker(props: {
   slug: string;
@@ -25,10 +27,13 @@ describe("MapMarker", () => {
       name: "Winterfell",
       type: "castle",
     });
-    const link = container.querySelector("a");
-    expect(link?.getAttribute("href")).toBe("/castles/winterfell/");
-    expect(link?.getAttribute("aria-label")).toBe("Winterfell");
-    expect(link?.getAttribute("tabindex")).toBe("0");
+    const link = expectElement({
+      element: container.querySelector("a"),
+      type: Element,
+    });
+    expect(link.getAttribute("href")).toBe("/castles/winterfell/");
+    expect(link.getAttribute("aria-label")).toBe("Winterfell");
+    expect(link.getAttribute("tabindex")).toBe("0");
   });
 
   it("renders the name as the label text offset from the marker centre", () => {
@@ -39,10 +44,13 @@ describe("MapMarker", () => {
       cx: 50,
       cy: 60,
     });
-    const text = container.querySelector("text");
-    expect(text?.textContent).toBe("Winterfell");
-    expect(text?.getAttribute("x")).toBe("60");
-    expect(text?.getAttribute("y")).toBe("64");
+    const text = expectElement({
+      element: container.querySelector("text"),
+      type: SVGTextElement,
+    });
+    expect(text.textContent).toBe("Winterfell");
+    expect(text.getAttribute("x")).toBe("60");
+    expect(text.getAttribute("y")).toBe("64");
   });
 
   it("renders a large gold circle for `castle`", () => {
@@ -51,16 +59,22 @@ describe("MapMarker", () => {
       name: "X",
       type: "castle",
     });
-    const circle = container.querySelector("circle");
-    expect(circle?.getAttribute("r")).toBe("6");
-    expect(circle?.getAttribute("class")).toContain("castle");
+    const circle = expectElement({
+      element: container.querySelector("circle"),
+      type: SVGCircleElement,
+    });
+    expect(circle.getAttribute("r")).toBe("6");
+    expect(circle.getAttribute("class")).toContain("castle");
   });
 
   it("renders a small muted circle for `town`", () => {
     const { container } = renderMarker({ slug: "x", name: "X", type: "town" });
-    const circle = container.querySelector("circle");
-    expect(circle?.getAttribute("r")).toBe("4");
-    expect(circle?.getAttribute("class")).toContain("town");
+    const circle = expectElement({
+      element: container.querySelector("circle"),
+      type: SVGCircleElement,
+    });
+    expect(circle.getAttribute("r")).toBe("4");
+    expect(circle.getAttribute("class")).toContain("town");
   });
 
   it("renders a two-line cross for `ruin`", () => {
@@ -87,7 +101,7 @@ describe("MapMarker", () => {
     });
     const rects = container.querySelectorAll("rect");
     expect(rects).toHaveLength(1);
-    expect(rects[0]?.getAttribute("class")).toContain("holdfast");
+    expect(rects[0].getAttribute("class")).toContain("holdfast");
   });
 
   it("renders a triangle linking to the battle page for `battle`", () => {
@@ -98,11 +112,19 @@ describe("MapMarker", () => {
       cx: 440,
       cy: 645,
     });
-    const link = container.querySelector("a");
-    expect(link?.getAttribute("href")).toBe("/battles/red-wedding/");
-    const polygon = container.querySelector("polygon");
-    expect(polygon?.getAttribute("class")).toContain("battle");
-    expect(polygon?.getAttribute("points")?.split(" ")).toHaveLength(3);
+    const link = expectElement({
+      element: container.querySelector("a"),
+      type: Element,
+    });
+    expect(link.getAttribute("href")).toBe("/battles/red-wedding/");
+    const polygon = expectElement({
+      element: container.querySelector("polygon"),
+      type: SVGPolygonElement,
+    });
+    expect(polygon.getAttribute("class")).toContain("battle");
+    expect(
+      expectDefined(polygon.getAttribute("points")).split(" "),
+    ).toHaveLength(3);
   });
 
   it("renders a diamond linking to the event page for `event`", () => {
@@ -113,11 +135,19 @@ describe("MapMarker", () => {
       cx: 590,
       cy: 830,
     });
-    const link = container.querySelector("a");
-    expect(link?.getAttribute("href")).toBe("/events/the-purple-wedding/");
-    const polygon = container.querySelector("polygon");
-    expect(polygon?.getAttribute("class")).toContain("event");
-    expect(polygon?.getAttribute("points")?.split(" ")).toHaveLength(4);
+    const link = expectElement({
+      element: container.querySelector("a"),
+      type: Element,
+    });
+    expect(link.getAttribute("href")).toBe("/events/the-purple-wedding/");
+    const polygon = expectElement({
+      element: container.querySelector("polygon"),
+      type: SVGPolygonElement,
+    });
+    expect(polygon.getAttribute("class")).toContain("event");
+    expect(
+      expectDefined(polygon.getAttribute("points")).split(" "),
+    ).toHaveLength(4);
   });
 
   it("gives battle and event their own glyph shapes, not a castle circle", () => {
