@@ -30,6 +30,28 @@ export function regionLabel(slug: RegionSlug | null): string | null {
   return slug ? (REGION_LABELS.get(slug) ?? null) : null;
 }
 
+// `seen` stops a liege cycle that never reaches a great house.
+function climbLieges({
+  slug,
+  housesBySlug,
+  seen,
+}: {
+  slug: string | null;
+  housesBySlug: Map<string, House>;
+  seen: ReadonlySet<string>;
+}): RegionSlug | null {
+  if (!slug || seen.has(slug)) return null;
+  if (isGreatHouseSlug(slug)) return REGIONS[slug].slug;
+  const house = housesBySlug.get(slug);
+  if (!house) return null;
+  if (house.region) return house.region;
+  return climbLieges({
+    slug: house.liege,
+    housesBySlug,
+    seen: new Set([...seen, slug]),
+  });
+}
+
 export function regionForHouse({
   slug,
   housesBySlug,
@@ -37,21 +59,5 @@ export function regionForHouse({
   slug: string | null;
   housesBySlug: Map<string, House>;
 }): RegionSlug | null {
-  const climb = ({
-    current,
-    seen,
-  }: {
-    current: string | null;
-    seen: ReadonlySet<string>;
-  }): RegionSlug | null => {
-    if (!current || seen.has(current)) return null;
-    if (isGreatHouseSlug(current)) {
-      return REGIONS[current].slug;
-    }
-    const house = housesBySlug.get(current);
-    if (!house) return null;
-    if (house.region) return house.region;
-    return climb({ current: house.liege, seen: new Set([...seen, current]) });
-  };
-  return climb({ current: slug, seen: new Set() });
+  return climbLieges({ slug, housesBySlug, seen: new Set() });
 }
