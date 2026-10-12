@@ -20,6 +20,22 @@ export function absoluteYear(d: BattleDate): number {
   return d.era === "BC" ? -d.year : d.year;
 }
 
+function spanLabel({
+  start,
+  end,
+}: {
+  start: BattleDate;
+  end: BattleDate;
+}): string {
+  if (start.year === end.year && start.era === end.era) {
+    return eraYearLabel(start);
+  }
+  if ((start.era === "AC" || start.era === "BC") && start.era === end.era) {
+    return `${Math.abs(start.year)} to ${Math.abs(end.year)} ${end.era}`;
+  }
+  return `${eraYearLabel(start)} to ${eraYearLabel(end)}`;
+}
+
 /**
  * Human label for a battle's span. Single dates collapse to one year; ranges
  * read "282 to 283 AC". A trailing asterisk marks an approximate span.
@@ -32,13 +48,5 @@ export function formatBattleWhen({
   end: BattleDate;
 }): string {
   const isSpanApproximate = isApproximate(start) || isApproximate(end);
-  const isSameYear = start.year === end.year && start.era === end.era;
-
-  const asterisk = isSpanApproximate ? "*" : "";
-
-  if (isSameYear) return `${eraYearLabel(start)}${asterisk}`;
-  if ((start.era === "AC" || start.era === "BC") && start.era === end.era) {
-    return `${Math.abs(start.year)} to ${Math.abs(end.year)} ${end.era}${asterisk}`;
-  }
-  return `${eraYearLabel(start)} to ${eraYearLabel(end)}${asterisk}`;
+  return `${spanLabel({ start, end })}${isSpanApproximate ? "*" : ""}`;
 }
