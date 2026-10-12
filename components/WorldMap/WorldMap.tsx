@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { FocusEvent, KeyboardEvent, PointerEvent } from "react";
+import type { FocusEvent, KeyboardEvent, PointerEvent, RefObject } from "react";
 import Link from "next/link";
 import { parseAsBoolean, useQueryState } from "nuqs";
 import {
   TOOL_AUTO,
   UncontrolledReactSVGPanZoom,
+  type ReactSVGPanZoom,
   type Value,
 } from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
@@ -101,6 +102,12 @@ function MarkerPopover({ marker, anchor, stageWidth }: PopoverProps) {
   );
 }
 
+function innerViewer(
+  viewerRef: RefObject<UncontrolledReactSVGPanZoom | null>,
+): ReactSVGPanZoom | null {
+  return viewerRef.current?.Viewer ?? null;
+}
+
 export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const viewerRef = useRef<UncontrolledReactSVGPanZoom | null>(null);
@@ -171,7 +178,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // to it, so this still lands in the wrapper's state.
   useEffect(() => {
     if (!size) return;
-    const inner = viewerRef.current?.Viewer ?? null;
+    const inner = innerViewer(viewerRef);
     if (!inner) return;
 
     if (!hasSeededViewRef.current) {
@@ -233,7 +240,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     if (!isEditMode) return;
     let frame: number;
     const tick = () => {
-      const value = viewerRef.current?.Viewer?.getValue() ?? null;
+      const value = innerViewer(viewerRef)?.getValue() ?? null;
       if (value) {
         setDebugValue((prev) =>
           prev.zoom === value.a && prev.x === value.e && prev.y === value.f
@@ -250,7 +257,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // Where a hotspot's centre currently sits on the stage, in screen pixels,
   // after the viewer's pan and zoom.
   const markerScreenPoint = (marker: WorldMapMarker) => {
-    const inner = viewerRef.current?.Viewer ?? null;
+    const inner = innerViewer(viewerRef);
     if (!inner || !size) return null;
     const value = inner.getValue();
     const svgX = (size.w - drawnWidth) / 2 + marker.x * fitScale;
@@ -268,7 +275,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // current zoom. A hotspot already on screen (the usual case for a mouse
   // click, which also focuses) is left where it is to avoid a jump.
   const revealMarker = (marker: WorldMapMarker) => {
-    const inner = viewerRef.current?.Viewer ?? null;
+    const inner = innerViewer(viewerRef);
     const point = markerScreenPoint(marker);
     if (!inner || !size || !point) return;
     const value = inner.getValue();
@@ -338,7 +345,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
 
   const panView = (direction: PanDirection) => {
     const viewer = viewerRef.current;
-    const inner = viewer?.Viewer ?? null;
+    const inner = innerViewer(viewerRef);
     if (!viewer || !inner) return;
     const { a, viewerWidth, viewerHeight } = inner.getValue();
     const { x, y } = PAN_DIRECTIONS[direction];
