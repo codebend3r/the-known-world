@@ -19,7 +19,7 @@ import { cx } from "@/lib/cx";
 import { shortHouseName } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
 import { bySlug } from "@/lib/collections";
-import { regionForHouse, regionLabel } from "@/lib/regions";
+import { regionForHouse, regionLabel, type RegionSlug } from "@/lib/regions";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PortraitVariants } from "@/components/PortraitVariants";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
@@ -29,7 +29,7 @@ import { SIGIL_SLUGS } from "@/lib/sigil";
 import { resolveRelations, type RelationRef } from "@/lib/character-relations";
 import styles from "@/app/characters/[slug]/page.module.scss";
 
-const REGION_PORTRAIT_CLASS: Record<string, string | undefined> = {
+const REGION_PORTRAIT_CLASS = {
   north: styles.portraitNorth,
   vale: styles.portraitVale,
   riverlands: styles.portraitRiverlands,
@@ -39,7 +39,7 @@ const REGION_PORTRAIT_CLASS: Record<string, string | undefined> = {
   dorne: styles.portraitDorne,
   "iron-islands": styles.portraitIronIslands,
   crownlands: styles.portraitCrownlands,
-};
+} as const satisfies Record<RegionSlug, string>;
 
 export async function generateStaticParams() {
   const characters = await loadAllCharacters();

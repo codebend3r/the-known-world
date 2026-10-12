@@ -7,7 +7,7 @@ export type NavItem = {
 // The primary nav in route order. Shared by the header rail (`SiteHeader`) and
 // the drawer (`SiteMenu`) so the two never drift; icons stay with the drawer,
 // which is the only consumer that draws them.
-export const NAV_ITEMS: NavItem[] = [
+export const NAV_ITEMS = [
   { href: "/maps/", label: "Maps", isVisible: true },
   { href: "/timeline/", label: "Timeline", isVisible: true },
   { href: "/houses/", label: "Houses", isVisible: true },
@@ -17,9 +17,11 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/battles/", label: "Battles", isVisible: true },
   { href: "/dragons/", label: "Dragons", isVisible: false },
   { href: "/events/", label: "Events", isVisible: true },
-];
+] as const satisfies readonly NavItem[];
 
-export function visibleNavItems(): NavItem[] {
+export type NavHref = (typeof NAV_ITEMS)[number]["href"];
+
+export function visibleNavItems(): Array<(typeof NAV_ITEMS)[number]> {
   return NAV_ITEMS.filter((item) => item.isVisible);
 }
 

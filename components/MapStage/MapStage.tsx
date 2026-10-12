@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { ReactSVGPanZoom, TOOL_AUTO, type Value } from "react-svg-pan-zoom";
 import type { KeyboardEvent, ReactNode } from "react";
 import { MAP_BOUNDS } from "@/lib/map";
+import { PAN_DIRECTIONS, type PanDirection } from "@/lib/pan-zoom";
 import styles from "@/components/MapStage/MapStage.module.scss";
 
 // The stage viewBox *is* atlas space: every `coords` pair in `content/` is an
@@ -13,16 +14,6 @@ const { width: VIEWBOX_WIDTH, height: VIEWBOX_HEIGHT } = MAP_BOUNDS;
 const ZOOM_STEP = 1.5;
 const PAN_STEP_RATIO = 0.2;
 const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
-
-type PanDirection = "up" | "down" | "left" | "right";
-
-// Signs are SVG-content deltas: panning the view up shifts the drawing down.
-const PAN_DIRECTIONS: Record<PanDirection, { x: number; y: number }> = {
-  up: { x: 0, y: 1 },
-  down: { x: 0, y: -1 },
-  left: { x: 1, y: 0 },
-  right: { x: -1, y: 0 },
-};
 
 type Props = {
   children: ReactNode;

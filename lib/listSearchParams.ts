@@ -4,13 +4,10 @@ import {
   parseAsString,
   parseAsStringLiteral,
 } from "nuqs";
-import type { SortDirection } from "@/components/SortToggle";
 
-export const SORT_DIRECTIONS = [
-  "asc",
-  "desc",
-] as const satisfies readonly SortDirection[];
-export const DEFAULT_DIR: SortDirection = "asc";
+export const SORT_DIRECTIONS = ["asc", "desc"] as const;
+export type SortDirection = (typeof SORT_DIRECTIONS)[number];
+export const DEFAULT_DIR = "asc" as const satisfies SortDirection;
 
 export const PAGE_SIZES = [24, 48, 72, 120] as const;
 export type PageSize = (typeof PAGE_SIZES)[number];
@@ -20,17 +17,19 @@ export const PAGE_SIZE_OPTIONS: ReadonlyArray<{
   label: string;
 }> = PAGE_SIZES.map((value) => ({ value, label: String(value) }));
 
-export const MIN_PAGE_SIZE: PageSize = 24;
-export const DEFAULT_PAGE_SIZE: PageSize = 24;
+export const MIN_PAGE_SIZE = 24 as const satisfies PageSize;
+export const DEFAULT_PAGE_SIZE = 24 as const satisfies PageSize;
 
 export function isPageSize(value: number): value is PageSize {
   return PAGE_SIZES.some((size) => size === value);
 }
 
-export type Grouping = "flat" | "region";
+const GROUPINGS = ["flat", "region"] as const;
+
+export type Grouping = (typeof GROUPINGS)[number];
 
 export function isGrouping(value: unknown): value is Grouping {
-  return value === "flat" || value === "region";
+  return GROUPINGS.some((grouping) => grouping === value);
 }
 
 export const searchParser = parseAsString.withDefault("");

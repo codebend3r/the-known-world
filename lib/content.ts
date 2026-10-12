@@ -60,7 +60,7 @@ export type Collections = {
 // restart. Callers must not mutate a returned array, since a hit is shared.
 const isEnabled = process.env.NODE_ENV === "production";
 
-type Loaded<T> = { frontmatter: T; body: string; slug: string };
+export type Loaded<T> = { frontmatter: T; body: string; slug: string };
 
 async function loadFile<K extends ContentType>({
   type,
