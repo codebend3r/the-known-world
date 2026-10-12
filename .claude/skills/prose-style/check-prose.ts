@@ -30,6 +30,7 @@ import {
   loadAllEvents,
   loadAllHouses,
   loadAllWeapons,
+  type ContentType,
 } from "@/lib/content";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
@@ -42,7 +43,7 @@ const COLLECTIONS = [
   "events",
   "houses",
   "weapons",
-] as const;
+] as const satisfies readonly ContentType[];
 
 type Collection = (typeof COLLECTIONS)[number];
 
@@ -100,10 +101,7 @@ const characterClass = (codePoints: readonly number[]): string =>
  * These rules run over frontmatter as well as body. A dash inside a
  * `sigil.description` string is still a dash.
  */
-const CHARACTER_RULES: ReadonlyArray<{
-  kind: ViolationKind;
-  pattern: RegExp;
-}> = [
+const CHARACTER_RULES = [
   { kind: "em-dash", pattern: new RegExp(character(EM_DASH), "gu") },
   { kind: "en-dash", pattern: new RegExp(character(EN_DASH), "gu") },
   {
@@ -112,7 +110,7 @@ const CHARACTER_RULES: ReadonlyArray<{
   },
   { kind: "double-space", pattern: /(?<=\S) {2,}(?=\S)/gu },
   { kind: "trailing-space", pattern: /[ \t]+$/gu },
-];
+] as const satisfies ReadonlyArray<{ kind: ViolationKind; pattern: RegExp }>;
 
 /** Punctuation already reported by a dedicated rule, so `non-ascii` skips it. */
 const REPORTED_ELSEWHERE = new RegExp(
@@ -174,7 +172,7 @@ async function readCollection({
   return Promise.all(
     names
       .filter((name) => name.endsWith(".md"))
-      .sort()
+      .toSorted()
       .map(async (name) => {
         const raw = await fs.readFile(path.join(dir, name), "utf-8");
         return {
@@ -255,8 +253,8 @@ function buildWeaponRules({
   return weapons.flatMap((weapon) =>
     [weapon.name, ...weapon.aliases].flatMap((form) => {
       const escaped = escapeForPattern(form);
-      const italicised = new RegExp(`_${escaped}_`).test(corpus);
-      if (!italicised) return [];
+      const isItalicised = new RegExp(`_${escaped}_`).test(corpus);
+      if (!isItalicised) return [];
       const collides = otherNames.some(
         (other) =>
           other !== form &&
@@ -363,11 +361,11 @@ function checkEntry({
     ...characterViolations,
     ...nonAsciiViolations,
     ...weaponViolations,
-  ].sort((a, b) => a.line - b.line || a.column - b.column);
+  ].toSorted((a, b) => a.line - b.line || a.column - b.column);
 }
 
 const argv = Bun.argv;
-const asJson = argv.includes("--json");
+const shouldPrintJson = argv.includes("--json");
 const requested = readFlag({ argv, flag: "--collection" });
 
 if (requested !== null && !isCollection(requested)) {
@@ -458,7 +456,7 @@ const byCollection = selected
 const filesTouched = new Set(violations.map((violation) => violation.file))
   .size;
 
-if (asJson) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {

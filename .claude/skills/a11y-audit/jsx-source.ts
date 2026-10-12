@@ -42,8 +42,6 @@ export type SourceFile = {
   memos: ReadonlyMap<string, { start: number; end: number }>;
 };
 
-// ── source loading ───────────────────────────────────────────────────
-
 export async function walk(dir: string): Promise<string[]> {
   const entries = await fs.readdir(dir, { withFileTypes: true });
   const nested = await Promise.all(
@@ -78,6 +76,29 @@ type CharStates = {
   quoted: Uint8Array;
 };
 
+type ScanState = {
+  depth: number;
+  paren: number;
+  quote: string | null;
+  isEscaped: boolean;
+};
+
+function advance({ scan, char }: { scan: ScanState; char: string }): ScanState {
+  if (scan.quote !== null) {
+    if (scan.isEscaped) return { ...scan, isEscaped: false };
+    if (char === "\\") return { ...scan, isEscaped: true };
+    return char === scan.quote ? { ...scan, quote: null } : scan;
+  }
+  if (char === '"' || char === "'" || char === "`") {
+    return { ...scan, quote: char };
+  }
+  if (char === "{") return { ...scan, depth: scan.depth + 1 };
+  if (char === "}") return { ...scan, depth: scan.depth - 1 };
+  if (char === "(") return { ...scan, paren: scan.paren + 1 };
+  if (char === ")") return { ...scan, paren: scan.paren - 1 };
+  return scan;
+}
+
 /**
  * One pass per file recording brace depth and quote state at every index. Tag
  * boundaries then fall out of it: the `>` that closes `<button onClick={() =>
@@ -85,36 +106,29 @@ type CharStates = {
  * on its own.
  */
 function scanCharStates(source: string): CharStates {
-  const depth = new Int32Array(source.length);
-  const paren = new Int32Array(source.length);
-  const quoted = new Uint8Array(source.length);
-  Array.from(source).reduce<{
-    depth: number;
-    paren: number;
-    quote: string | null;
-    escaped: boolean;
+  // `split("")`, not `Array.from`: every consumer indexes by UTF-16 code unit.
+  // The typed arrays are owned by the accumulator and filled in place, because
+  // copying an n-length array per character would make the scan quadratic.
+  const { states } = source.split("").reduce<{
+    scan: ScanState;
+    states: CharStates;
   }>(
-    (state, char, index) => {
-      depth[index] = state.depth;
-      paren[index] = state.paren;
-      quoted[index] = state.quote === null ? 0 : 1;
-      if (state.quote !== null) {
-        if (state.escaped) return { ...state, escaped: false };
-        if (char === "\\") return { ...state, escaped: true };
-        return char === state.quote ? { ...state, quote: null } : state;
-      }
-      if (char === '"' || char === "'" || char === "`") {
-        return { ...state, quote: char };
-      }
-      if (char === "{") return { ...state, depth: state.depth + 1 };
-      if (char === "}") return { ...state, depth: state.depth - 1 };
-      if (char === "(") return { ...state, paren: state.paren + 1 };
-      if (char === ")") return { ...state, paren: state.paren - 1 };
-      return state;
+    ({ scan, states }, char, index) => {
+      states.depth[index] = scan.depth;
+      states.paren[index] = scan.paren;
+      states.quoted[index] = scan.quote === null ? 0 : 1;
+      return { scan: advance({ scan, char }), states };
     },
-    { depth: 0, paren: 0, quote: null, escaped: false },
+    {
+      scan: { depth: 0, paren: 0, quote: null, isEscaped: false },
+      states: {
+        depth: new Int32Array(source.length),
+        paren: new Int32Array(source.length),
+        quoted: new Uint8Array(source.length),
+      },
+    },
   );
-  return { depth, paren, quoted };
+  return states;
 }
 
 /** `const x = useMemo(` … the `)` that closes it, per identifier. */
@@ -239,80 +253,90 @@ export function analyse({
     ),
   );
 
-  const parsed = [...source.matchAll(/<(\/?)([A-Za-z][A-Za-z0-9._-]*)/g)]
-    .flatMap((match) => {
-      const start = match.index ?? 0;
-      const isClose = match[1] === "/";
-      const name = match[2];
-      if (states.quoted[start] === 1) return [];
-      const previous = source[start - 1] ?? " ";
-      if (!isClose && /[A-Za-z0-9_$]/.test(previous)) return [];
+  const parsed = [
+    ...source.matchAll(/<(\/?)([A-Za-z][A-Za-z0-9._-]*)/g),
+  ].flatMap((match) => {
+    const start = match.index ?? 0;
+    const isClose = match[1] === "/";
+    const name = match[2];
+    if (states.quoted[start] === 1) return [];
+    const previous = source[start - 1] ?? " ";
+    if (!isClose && /[A-Za-z0-9_$]/.test(previous)) return [];
 
-      const tagDepth = states.depth[start];
-      const gt = closers.find(
-        (position) =>
-          position > start &&
-          states.depth[position] === tagDepth &&
-          states.quoted[position] === 0,
-      );
-      if (gt === undefined) return [];
-      const selfClosing = source[gt - 1] === "/";
-      if (!isClose && !selfClosing && !closedNames.has(name)) return [];
+    const tagDepth = states.depth[start];
+    const gt = closers.find(
+      (position) =>
+        position > start &&
+        states.depth[position] === tagDepth &&
+        states.quoted[position] === 0,
+    );
+    if (gt === undefined) return [];
+    const isSelfClosing = source[gt - 1] === "/";
+    if (!isClose && !isSelfClosing && !closedNames.has(name)) return [];
 
-      return [
-        {
-          name,
-          kind: isClose ? "close" : selfClosing ? "self" : "open",
-          start,
-          end: gt + 1,
-          attributes: isClose
-            ? new Map<string, AttributeValue>()
-            : parseAttributes({
-                source,
-                from: start + match[0].length,
-                to: selfClosing ? gt - 1 : gt,
-                states,
-                tagDepth,
-                closeBraces,
-              }),
-        } as const,
-      ];
-    })
-    .filter((tag) => tag.kind !== "close" || true);
+    return [
+      {
+        name,
+        kind: isClose ? "close" : isSelfClosing ? "self" : "open",
+        start,
+        end: gt + 1,
+        attributes: isClose
+          ? new Map<string, AttributeValue>()
+          : parseAttributes({
+              source,
+              from: start + match[0].length,
+              to: isSelfClosing ? gt - 1 : gt,
+              states,
+              tagDepth,
+              closeBraces,
+            }),
+      } as const,
+    ];
+  });
 
   // Second pass: pair opens with closes so every tag knows its ancestors and
   // where its children end.
   const withNesting = parsed.reduce<{
-    stack: number[];
+    stack: readonly number[];
     ancestors: (readonly number[])[];
-    innerEnds: number[];
+    innerEnds: readonly number[];
   }>(
     (state, tag, index) => {
-      if (tag.kind === "close") {
-        const owner = state.stack.findLast(
-          (position) => parsed[position].name === tag.name,
-        );
-        if (owner === undefined) {
+      switch (tag.kind) {
+        case "close": {
+          const owner = state.stack.findLast(
+            (position) => parsed[position].name === tag.name,
+          );
+          if (owner === undefined) {
+            return {
+              ...state,
+              ancestors: [...state.ancestors, []],
+              innerEnds: [...state.innerEnds, tag.end],
+            };
+          }
           return {
-            ...state,
+            stack: state.stack.slice(0, state.stack.indexOf(owner)),
             ancestors: [...state.ancestors, []],
-            innerEnds: [...state.innerEnds, tag.end],
+            innerEnds: [...state.innerEnds.with(owner, tag.start), tag.end],
           };
         }
-        const innerEnds = state.innerEnds.slice();
-        innerEnds[owner] = tag.start;
-        return {
-          stack: state.stack.slice(0, state.stack.indexOf(owner)),
-          ancestors: [...state.ancestors, []],
-          innerEnds: [...innerEnds, tag.end],
-        };
+        case "open":
+          return {
+            stack: [...state.stack, index],
+            ancestors: [...state.ancestors, state.stack],
+            innerEnds: [...state.innerEnds, tag.end],
+          };
+        case "self":
+          return {
+            ...state,
+            ancestors: [...state.ancestors, state.stack],
+            innerEnds: [...state.innerEnds, tag.end],
+          };
+        default: {
+          const unhandled: never = tag.kind;
+          throw new Error(`unhandled tag kind: ${String(unhandled)}`);
+        }
       }
-      const ancestors = state.stack.slice();
-      return {
-        stack: tag.kind === "open" ? [...state.stack, index] : state.stack,
-        ancestors: [...state.ancestors, ancestors],
-        innerEnds: [...state.innerEnds, tag.end],
-      };
     },
     { stack: [], ancestors: [], innerEnds: [] },
   );

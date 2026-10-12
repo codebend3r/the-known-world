@@ -5,7 +5,12 @@
  * combobox IDREFs, per-route heading order) or a rule Oxlint cannot run
  * without flagging correct markup. See `docs/tooling-rule-mapping.md`.
  */
-import type { AttributeValue, SourceFile, Tag } from "./jsx-source";
+import {
+  lineOf,
+  type AttributeValue,
+  type SourceFile,
+  type Tag,
+} from "./jsx-source";
 
 const INTERACTIVE_ELEMENTS = new Set([
   "a",
@@ -78,11 +83,21 @@ export type Finding = {
   message: string;
 };
 
-// ── tag helpers ──────────────────────────────────────────────────────
-
 function attributeText(value: AttributeValue | undefined): string {
   if (!value) return "";
-  return value.kind === "flag" ? "" : value.text;
+  switch (value.kind) {
+    case "flag":
+      return "";
+    case "literal":
+    case "expression":
+      return value.text;
+    default: {
+      const unhandled: never = value;
+      throw new Error(
+        `unhandled attribute value: ${JSON.stringify(unhandled)}`,
+      );
+    }
+  }
 }
 
 function has({ tag, name }: { tag: Tag; name: string }): boolean {
@@ -92,7 +107,8 @@ function has({ tag, name }: { tag: Tag; name: string }): boolean {
 /** `role="img"` gives `img`; `role={x}` gives the raw expression; absent gives `""`. */
 function roleOf(tag: Tag): string {
   const role = tag.attributes.get("role");
-  return role?.kind === "literal" ? role.text : "";
+  if (role === undefined || role.kind !== "literal") return "";
+  return role.text;
 }
 
 function isHidden(tag: Tag): boolean {
@@ -115,13 +131,13 @@ function isAlwaysHidden(tag: Tag): boolean {
 function hiddenInTree({
   tag,
   tags,
-  strict = false,
+  isStrict = false,
 }: {
   tag: Tag;
   tags: readonly Tag[];
-  strict?: boolean;
+  isStrict?: boolean;
 }): boolean {
-  const test = strict ? isAlwaysHidden : isHidden;
+  const test = isStrict ? isAlwaysHidden : isHidden;
   return test(tag) || tag.ancestors.some((index) => test(tags[index]));
 }
 
@@ -172,11 +188,11 @@ function accessibleName({
   tag: Tag;
   index: number;
 }): boolean {
-  const labelled =
+  const isLabelled =
     !!attributeText(tag.attributes.get("aria-label")) ||
     has({ tag, name: "aria-labelledby" }) ||
     !!attributeText(tag.attributes.get("title"));
-  if (labelled) return true;
+  if (isLabelled) return true;
   if (tag.kind === "self") return false;
 
   const inner = file.source.slice(tag.end, tag.innerEnd);
@@ -186,10 +202,10 @@ function accessibleName({
   const visible = Array.from(inner)
     .map((char, offset) => {
       const absolute = tag.end + offset;
-      const covered = hiddenRanges.some(
+      const isCovered = hiddenRanges.some(
         ([from, to]) => absolute >= from && absolute <= to,
       );
-      return covered ? " " : char;
+      return isCovered ? " " : char;
     })
     .join("");
   const text = visible
@@ -207,8 +223,6 @@ function accessibleName({
   );
 }
 
-// ── checks ───────────────────────────────────────────────────────────
-
 const IMAGE_TAGS = new Set(["img", "Image"]);
 
 export function checkImages(file: SourceFile): Finding[] {
@@ -223,7 +237,7 @@ export function checkImages(file: SourceFile): Finding[] {
         .trim(),
     );
 
-  return file.tags.flatMap((tag, index) => {
+  return file.tags.flatMap((tag, index): Finding[] => {
     if (!IMAGE_TAGS.has(tag.name) || tag.kind === "close") return [];
     const at = { file: file.path, line: tag.line, element: `<${tag.name}>` };
     const alt = tag.attributes.get("alt");
@@ -241,7 +255,7 @@ export function checkImages(file: SourceFile): Finding[] {
     const text = attributeText(alt);
     if (!text) return [];
     if (
-      hiddenInTree({ tag: file.tags[index], tags: file.tags, strict: true })
+      hiddenInTree({ tag: file.tags[index], tags: file.tags, isStrict: true })
     ) {
       return [
         {
@@ -284,12 +298,12 @@ export function checkSvg(file: SourceFile): Finding[] {
     if (tag.name === "image") {
       if (hiddenInTree({ tag, tags: file.tags })) return [];
       if (has({ tag, name: "aria-label" })) return [];
-      const named = tag.ancestors.some((position) =>
+      const isNamed = tag.ancestors.some((position) =>
         childrenOf({ file, tag: file.tags[position], index: position }).some(
           (child) => child.name === "title",
         ),
       );
-      if (named) return [];
+      if (isNamed) return [];
       return [
         {
           ...at,
@@ -307,7 +321,7 @@ export function checkSvg(file: SourceFile): Finding[] {
     const role = roleOf(tag);
     const kids = childrenOf({ file, tag, index });
     const hasTitle = kids.some((child) => child.name === "title");
-    const named =
+    const isNamed =
       !!attributeText(tag.attributes.get("aria-label")) ||
       has({ tag, name: "aria-labelledby" }) ||
       hasTitle;
@@ -336,7 +350,7 @@ export function checkSvg(file: SourceFile): Finding[] {
         },
       ];
     }
-    if (NAMED_CONTAINER_ROLES.has(role) && !named) {
+    if (NAMED_CONTAINER_ROLES.has(role) && !isNamed) {
       return [
         {
           ...at,
@@ -356,7 +370,7 @@ export function checkInteractions(file: SourceFile): Finding[] {
     const at = { file: file.path, line: tag.line, element: `<${tag.name}>` };
     const role = roleOf(tag);
     const lower = tag.name.toLowerCase();
-    const nativelyInteractive =
+    const isNativelyInteractive =
       INTERACTIVE_ELEMENTS.has(lower) && tag.name === lower;
     const pointer = [...POINTER_HANDLERS].filter((handler) =>
       has({ tag, name: handler }),
@@ -371,103 +385,104 @@ export function checkInteractions(file: SourceFile): Finding[] {
     // real Close button), which is a review question, not a static one.
     if (hiddenInTree({ tag, tags: file.tags })) return [];
 
-    const findings: Finding[] = [];
-
-    if (
-      pointer.length > 0 &&
-      !nativelyInteractive &&
-      !isComponent &&
-      !FOCUSABLE_ROLES.has(role) &&
-      !MANAGED_ROLES.has(role)
-    ) {
-      findings.push({
-        ...at,
-        code: "static-interaction",
-        severity: "error",
-        message: `${pointer.join(", ")} on a non-interactive element${
-          !!role ? ` carrying \`role="${role}"\`` : " with no role"
-        }. Use a \`<button>\`, or the canvas pattern: \`role="application"\`, \`tabIndex={0}\`, \`onKeyDown\`, \`aria-label\`.`,
-      });
-    }
-
-    if (
-      role === "application" &&
-      ![...KEY_HANDLERS].some((handler) => has({ tag, name: handler }))
-    ) {
-      findings.push({
-        ...at,
-        code: "canvas-not-operable",
-        severity: "error",
-        message:
-          '`role="application"` tells assistive tech to hand every keystroke to this element, and nothing here listens. Add an `onKeyDown`.',
-      });
-    }
-
-    if (
-      pointer.includes("onClick") &&
-      keys.length === 0 &&
-      !nativelyInteractive &&
-      !isComponent &&
-      !MANAGED_ROLES.has(role)
-    ) {
-      findings.push({
-        ...at,
-        code: "click-no-key",
-        severity: "error",
-        message:
-          "`onClick` with no keyboard equivalent. Mouse-only operation fails WCAG 2.1.1.",
-      });
-    }
-
-    if (
-      FOCUSABLE_ROLES.has(role) &&
-      !nativelyInteractive &&
-      !has({ tag, name: "tabIndex" })
-    ) {
-      findings.push({
-        ...at,
-        code: "role-not-focusable",
-        severity: "error",
-        message: `\`role="${role}"\` is not reachable by Tab. Add \`tabIndex={0}\`.`,
-      });
-    }
-
     const tabIndex = attributeText(tag.attributes.get("tabIndex"));
-    if (
-      has({ tag, name: "tabIndex" }) &&
-      !nativelyInteractive &&
-      !isComponent &&
-      !role &&
-      !/-1/.test(tabIndex)
-    ) {
-      findings.push({
-        ...at,
-        code: "noninteractive-tabindex",
-        severity: "warn",
-        message:
-          "`tabIndex` on an element with no role puts an unnamed stop in the tab order.",
-      });
-    }
-
     const wantsName =
-      (nativelyInteractive && lower !== "input" && lower !== "option") ||
+      (isNativelyInteractive && lower !== "input" && lower !== "option") ||
       FOCUSABLE_ROLES.has(role);
     const isLinkWithoutHref = lower === "a" && !has({ tag, name: "href" });
-    if (
-      wantsName &&
-      !isLinkWithoutHref &&
-      !accessibleName({ file, tag, index })
-    ) {
-      findings.push({
-        ...at,
-        code: "control-no-name",
-        severity: "error",
-        message:
-          "control has no accessible name. Add `aria-label`, or text content that is not `aria-hidden`.",
-      });
-    }
 
-    return findings;
+    const rules = [
+      {
+        isViolated:
+          pointer.length > 0 &&
+          !isNativelyInteractive &&
+          !isComponent &&
+          !FOCUSABLE_ROLES.has(role) &&
+          !MANAGED_ROLES.has(role),
+        finding: {
+          ...at,
+          code: "static-interaction",
+          severity: "error",
+          message: `${pointer.join(", ")} on a non-interactive element${
+            !!role ? ` carrying \`role="${role}"\`` : " with no role"
+          }. Use a \`<button>\`, or the canvas pattern: \`role="application"\`, \`tabIndex={0}\`, \`onKeyDown\`, \`aria-label\`.`,
+        },
+      },
+      {
+        isViolated:
+          role === "application" &&
+          ![...KEY_HANDLERS].some((handler) => has({ tag, name: handler })),
+        finding: {
+          ...at,
+          code: "canvas-not-operable",
+          severity: "error",
+          message:
+            '`role="application"` tells assistive tech to hand every keystroke to this element, and nothing here listens. Add an `onKeyDown`.',
+        },
+      },
+      {
+        isViolated:
+          pointer.includes("onClick") &&
+          keys.length === 0 &&
+          !isNativelyInteractive &&
+          !isComponent &&
+          !MANAGED_ROLES.has(role),
+        finding: {
+          ...at,
+          code: "click-no-key",
+          severity: "error",
+          message:
+            "`onClick` with no keyboard equivalent. Mouse-only operation fails WCAG 2.1.1.",
+        },
+      },
+      {
+        isViolated:
+          FOCUSABLE_ROLES.has(role) &&
+          !isNativelyInteractive &&
+          !has({ tag, name: "tabIndex" }),
+        finding: {
+          ...at,
+          code: "role-not-focusable",
+          severity: "error",
+          message: `\`role="${role}"\` is not reachable by Tab. Add \`tabIndex={0}\`.`,
+        },
+      },
+      {
+        isViolated:
+          has({ tag, name: "tabIndex" }) &&
+          !isNativelyInteractive &&
+          !isComponent &&
+          !role &&
+          !/-1/.test(tabIndex),
+        finding: {
+          ...at,
+          code: "noninteractive-tabindex",
+          severity: "warn",
+          message:
+            "`tabIndex` on an element with no role puts an unnamed stop in the tab order.",
+        },
+      },
+      {
+        isViolated:
+          wantsName &&
+          !isLinkWithoutHref &&
+          !accessibleName({ file, tag, index }),
+        finding: {
+          ...at,
+          code: "control-no-name",
+          severity: "error",
+          message:
+            "control has no accessible name. Add `aria-label`, or text content that is not `aria-hidden`.",
+        },
+      },
+    ] as const satisfies ReadonlyArray<{
+      isViolated: boolean;
+      finding: Finding;
+    }>;
+
+    return rules.flatMap(({ isViolated, finding }) =>
+      isViolated ? [finding] : [],
+    );
   });
 }
 
@@ -478,10 +493,10 @@ export function checkCombobox(file: SourceFile): Finding[] {
     const at = { file: file.path, line: tag.line, element: `<${tag.name}>` };
 
     if (role === "listbox") {
-      const named =
+      const isNamed =
         !!attributeText(tag.attributes.get("aria-label")) ||
         has({ tag, name: "aria-labelledby" });
-      return named
+      return isNamed
         ? []
         : [
             {
@@ -542,9 +557,9 @@ export function checkCombobox(file: SourceFile): Finding[] {
         attributeText(candidate.attributes.get("id")) === controls &&
         candidate.start !== tag.start,
     );
-    const guard =
+    const isGuarded =
       !!target && /(&&|\?)\s*\(?\s*$/.test(file.source.slice(0, target.start));
-    const dangling = guard
+    const dangling = isGuarded
       ? [
           {
             file: file.path,
@@ -560,8 +575,6 @@ export function checkCombobox(file: SourceFile): Finding[] {
     return [...structural, ...dangling];
   });
 }
-
-// ── heading order ────────────────────────────────────────────────────
 
 type HeadingSource =
   | { kind: "level"; level: number }
@@ -606,15 +619,26 @@ function resolveLevels({
   seen: ReadonlySet<string>;
 }): number[] {
   return sources.flatMap((entry) => {
-    if (entry.kind === "level") return [entry.level];
-    if (seen.has(entry.name)) return [];
-    const nested = byComponent.get(entry.name);
-    if (!nested) return [];
-    return resolveLevels({
-      sources: nested,
-      byComponent,
-      seen: new Set([...seen, entry.name]),
-    });
+    switch (entry.kind) {
+      case "level":
+        return [entry.level];
+      case "component": {
+        if (seen.has(entry.name)) return [];
+        const nested = byComponent.get(entry.name);
+        if (!nested) return [];
+        return resolveLevels({
+          sources: nested,
+          byComponent,
+          seen: new Set([...seen, entry.name]),
+        });
+      }
+      default: {
+        const unhandled: never = entry;
+        throw new Error(
+          `unhandled heading source: ${JSON.stringify(unhandled)}`,
+        );
+      }
+    }
   });
 }
 
@@ -669,8 +693,6 @@ export function checkHeadings({
     return [...structural, ...skips];
   });
 }
-
-// ── viewport zoom ────────────────────────────────────────────────────
 
 export function checkViewport(file: SourceFile): Finding[] {
   if (!/export const viewport/.test(file.source)) return [];

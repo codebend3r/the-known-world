@@ -25,6 +25,7 @@ import {
   loadAllEvents,
   loadAllHouses,
   loadAllWeapons,
+  type ContentType,
 } from "@/lib/content";
 import { buildProseLinkIndex } from "@/lib/prose-links";
 import { NAV_ITEMS } from "@/lib/nav";
@@ -41,7 +42,7 @@ const COLLECTION_NAMES = [
   "events",
   "houses",
   "weapons",
-] as const;
+] as const satisfies readonly ContentType[];
 
 type CollectionName = (typeof COLLECTION_NAMES)[number];
 
@@ -49,13 +50,13 @@ type CollectionName = (typeof COLLECTION_NAMES)[number];
 type EntryKey = string;
 
 /**
- * `mutual` marks a field the app also reads backwards. `weapons.wielders` is
+ * `isMutual` marks a field the app also reads backwards. `weapons.wielders` is
  * declared on the weapon, but `app/characters/[slug]` filters every weapon by
  * `wielders.includes(slug)` and renders the result, so the character page links
  * the weapon and the weapon page links the character. Counting such a field in
  * one direction only reports live, linked entries as orphans.
  */
-type Edge = { from: EntryKey; field: string; to: EntryKey; mutual?: boolean };
+type Edge = { from: EntryKey; field: string; to: EntryKey; isMutual?: boolean };
 
 type Row = {
   key: EntryKey;
@@ -84,7 +85,11 @@ type Report = {
   proseOnly: Row[];
   mentionsOnly: Row[];
   asymmetries: ReciprocalAsymmetry[];
-  unrouted: Array<{ collection: CollectionName; index: boolean; nav: boolean }>;
+  unrouted: Array<{
+    collection: CollectionName;
+    hasIndexRoute: boolean;
+    isInNav: boolean;
+  }>;
 };
 
 function isCollectionName(value: string): value is CollectionName {
@@ -95,7 +100,7 @@ function parseArgs(argv: readonly string[]) {
   const collectionFlag = argv.indexOf("--collection");
   const raw = collectionFlag === -1 ? null : (argv[collectionFlag + 1] ?? "");
   return {
-    json: argv.includes("--json"),
+    shouldPrintJson: argv.includes("--json"),
     collection: raw !== null && isCollectionName(raw) ? raw : null,
   };
 }
@@ -150,7 +155,7 @@ function typedEdges(collections: Collections): Edge[] {
             from,
             field: "primary-house",
             to,
-            mutual: treeHouses.has(to) && !frontmatter["exclude-from-tree"],
+            isMutual: treeHouses.has(to) && !frontmatter["exclude-from-tree"],
           }),
         ),
         ...toHouses(frontmatter["also-of-houses"]).map((to) => ({
@@ -249,7 +254,7 @@ function typedEdges(collections: Collections): Edge[] {
         from,
         field: "wielders",
         to,
-        mutual: true,
+        isMutual: true,
       })),
     ];
   });
@@ -261,13 +266,13 @@ function typedEdges(collections: Collections): Edge[] {
         from,
         field: "house",
         to,
-        mutual: true,
+        isMutual: true,
       })),
       ...toChars(frontmatter.riders).map((to) => ({
         from,
         field: "riders",
         to,
-        mutual: true,
+        isMutual: true,
       })),
     ];
   });
@@ -429,7 +434,7 @@ function proseEdges(collections: Collections): Edge[] {
     new Map(),
   );
 
-  const forms = [...formToKey.keys()].sort((a, b) => b.length - a.length);
+  const forms = [...formToKey.keys()].toSorted((a, b) => b.length - a.length);
   if (forms.length === 0) return [];
   const pattern = new RegExp(
     `\\b(${forms.map((form) => form.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\b`,
@@ -494,21 +499,23 @@ type Collections = {
 };
 
 async function routeStatus(collection: CollectionName) {
-  const index = await fs
+  const hasIndexRoute = await fs
     .access(path.join(process.cwd(), "app", collection, "page.tsx"))
     .then(() => true)
     .catch(() => false);
-  const nav = NAV_ITEMS.some(
+  const isInNav = NAV_ITEMS.some(
     (item) => item.href === `/${collection}/` && item.isVisible,
   );
-  return { collection, index, nav };
+  return { collection, hasIndexRoute, isInNav };
 }
 
 /** Buckets edges under the entry they make reachable, both ways when mutual. */
 function countBy(edges: readonly Edge[]): Map<EntryKey, Edge[]> {
   return edges
     .flatMap((edge) =>
-      edge.mutual ? [edge, { ...edge, from: edge.to, to: edge.from }] : [edge],
+      edge.isMutual
+        ? [edge, { ...edge, from: edge.to, to: edge.from }]
+        : [edge],
     )
     .reduce<Map<EntryKey, Edge[]>>(
       (map, edge) => map.set(edge.to, [...(map.get(edge.to) ?? []), edge]),
@@ -531,7 +538,7 @@ function formatTable(rows: readonly string[][]): string {
     .join("\n");
 }
 
-const { json, collection: only } = parseArgs(Bun.argv.slice(2));
+const { shouldPrintJson, collection: only } = parseArgs(Bun.argv.slice(2));
 
 const [battles, castles, characters, dragons, events, houses, weapons] =
   await Promise.all([
@@ -592,7 +599,7 @@ const rows: Row[] = entries
       prose: (prose.get(key) ?? []).length,
       sources: [
         ...new Set(typedEdgesIn.map((edge) => edge.field)),
-      ].sort() satisfies string[],
+      ].toSorted() satisfies string[],
     };
   })
   .filter((row) => only === null || row.collection === only);
@@ -614,7 +621,9 @@ const routes = await Promise.all(
     routeStatus,
   ),
 );
-const unrouted = routes.filter((route) => !route.index || !route.nav);
+const unrouted = routes.filter(
+  (route) => !route.hasIndexRoute || !route.isInNav,
+);
 
 const totals = COLLECTION_NAMES.filter(
   (name) => only === null || name === only,
@@ -636,7 +645,7 @@ const report: Report = {
   unrouted,
 };
 
-if (json) {
+if (shouldPrintJson) {
   console.log(JSON.stringify(report, null, 2));
 } else {
   const byKey = (a: Row, b: Row) => a.key.localeCompare(b.key);
@@ -660,7 +669,7 @@ if (json) {
     orphans.length === 0
       ? "  none"
       : formatTable(
-          [...orphans].sort(byKey).map((row) => [`  ${row.key}`, row.name]),
+          orphans.toSorted(byKey).map((row) => [`  ${row.key}`, row.name]),
         ),
   );
 
@@ -672,8 +681,8 @@ if (json) {
       ? "  none"
       : formatTable([
           ["  KEY", "PROSE", "NAME"],
-          ...[...proseOnly]
-            .sort((a, b) => a.prose - b.prose || byKey(a, b))
+          ...proseOnly
+            .toSorted((a, b) => a.prose - b.prose || byKey(a, b))
             .map((row) => [`  ${row.key}`, String(row.prose), row.name]),
         ]),
   );
@@ -685,9 +694,7 @@ if (json) {
     mentionsOnly.length === 0
       ? "  none"
       : formatTable(
-          [...mentionsOnly]
-            .sort(byKey)
-            .map((row) => [`  ${row.key}`, row.name]),
+          mentionsOnly.toSorted(byKey).map((row) => [`  ${row.key}`, row.name]),
         ),
   );
 
@@ -713,8 +720,8 @@ if (json) {
       : formatTable(
           unrouted.map((route) => [
             `  ${route.collection}`,
-            route.index ? "has /index" : "NO /index route",
-            route.nav ? "in nav" : "NOT in nav",
+            route.hasIndexRoute ? "has /index" : "NO /index route",
+            route.isInNav ? "in nav" : "NOT in nav",
           ]),
         ),
   );

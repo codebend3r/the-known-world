@@ -32,25 +32,23 @@ import { AA_TEXT, auditContrast } from "./contrast";
 
 const SOURCE_ROOTS = ["app", "components"] as const;
 
-// ── run ──────────────────────────────────────────────────────────────
-
-const json = Bun.argv.includes("--json");
+const shouldPrintJson = Bun.argv.includes("--json");
 
 const files = (
   await Promise.all(
     SOURCE_ROOTS.map(async (root) => {
       const dir = path.join(process.cwd(), root);
-      const exists = await fs
+      const isPresent = await fs
         .access(dir)
         .then(() => true)
         .catch(() => false);
-      return exists ? walk(dir) : [];
+      return isPresent ? walk(dir) : [];
     }),
   )
 )
   .flat()
   .filter((file) => file.endsWith(".tsx") && !file.endsWith(".test.tsx"))
-  .sort();
+  .toSorted();
 
 const sources: SourceFile[] = await Promise.all(
   files.map(async (file) => {
@@ -80,7 +78,7 @@ const findings = [
   ...sources.flatMap(checkCombobox),
   ...sources.flatMap(checkViewport),
   ...checkHeadings({ routes, byComponent }),
-].sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
+].toSorted((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
 
 const contrast = await auditContrast();
 const contrastFailures = contrast.filter((row) => !row.passesText);
@@ -91,7 +89,7 @@ const byCode = findings.reduce<Map<string, Finding[]>>(
   new Map(),
 );
 
-if (json) {
+if (shouldPrintJson) {
   console.log(
     JSON.stringify(
       {
@@ -114,7 +112,7 @@ if (json) {
     console.log("  no findings");
   } else {
     [...byCode.entries()]
-      .sort((a, b) => b[1].length - a[1].length)
+      .toSorted((a, b) => b[1].length - a[1].length)
       .forEach(([code, group]) => {
         console.log(`${code.toUpperCase()} (${group.length})`);
         group.forEach((finding) => {
@@ -129,7 +127,7 @@ if (json) {
     `CONTRAST · ${contrast.length} token pairs · ${contrastFailures.length} below AA text (${AA_TEXT}:1)`,
   );
   contrastFailures
-    .sort((a, b) => a.ratio - b.ratio)
+    .toSorted((a, b) => a.ratio - b.ratio)
     .forEach((row) => {
       const verdict = row.passesLarge ? "large text only" : "fails all AA";
       console.log(

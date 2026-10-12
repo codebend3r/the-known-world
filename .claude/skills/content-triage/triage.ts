@@ -38,7 +38,7 @@ type Candidate = {
   /** Other entries whose prose names this character but cannot link to it. */
   prose: number;
   /** Sits in a family tree, so the stub renders as a node others traverse. */
-  inTree: boolean;
+  isInTree: boolean;
   demand: number;
 };
 
@@ -156,7 +156,7 @@ function parseArgs(argv: readonly string[]) {
   const rawState = stateFlag === -1 ? null : (argv[stateFlag + 1] ?? null);
   return {
     limit: limitFlag === -1 ? 25 : Number(argv[limitFlag + 1] ?? "25") || 25,
-    json: argv.includes("--json"),
+    shouldPrintJson: argv.includes("--json"),
     state: rawState === "empty" || rawState === "stub" ? rawState : null,
   };
 }
@@ -168,7 +168,7 @@ function formatTable(rows: readonly Candidate[]): string {
     String(row.demand),
     String(row.structured),
     String(row.prose),
-    row.inTree ? "yes" : "-",
+    row.isInTree ? "yes" : "-",
     `${row.slug}${row.state === "empty" ? "" : " (stub)"}`,
     row.house ?? "-",
   ]);
@@ -186,7 +186,7 @@ function formatTable(rows: readonly Candidate[]): string {
   return [line(header), ...body.map(line)].join("\n");
 }
 
-const { limit, json, state } = parseArgs(Bun.argv.slice(2));
+const { limit, shouldPrintJson, state } = parseArgs(Bun.argv.slice(2));
 
 const [characters, houses, weapons, dragons, battles, castles, events] =
   await Promise.all([
@@ -281,7 +281,7 @@ const ranked: Candidate[] = unpopulated
       placeholder: frontmatter.placeholder,
       structured: structuredCount,
       prose: proseCount,
-      inTree:
+      isInTree:
         frontmatter.parents.length +
           frontmatter.children.length +
           frontmatter.spouses.length >
@@ -290,9 +290,9 @@ const ranked: Candidate[] = unpopulated
     };
   })
   .filter((candidate) => state === null || candidate.state === state)
-  .sort((a, b) => b.demand - a.demand || a.slug.localeCompare(b.slug));
+  .toSorted((a, b) => b.demand - a.demand || a.slug.localeCompare(b.slug));
 
-if (json) {
+if (shouldPrintJson) {
   console.log(JSON.stringify(ranked.slice(0, limit), null, 2));
 } else {
   const empty = ranked.filter((row) => row.state === "empty").length;
