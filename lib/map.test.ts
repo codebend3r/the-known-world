@@ -3,7 +3,9 @@ import {
   ALL_CASTLE_TYPES,
   MAP_BOUNDS,
   MAP_LAYERS,
+  WORLD_MAP_MARKER_RADIUS,
   WORLD_MAP_RASTER,
+  doWorldMapHotspotsOverlap,
   entryCoords,
   isCoords,
   isWithinMapBounds,
@@ -342,6 +344,40 @@ describe("isWithinWorldMapRaster", () => {
     ).toBe(false);
     expect(
       isWithinWorldMapRaster({ x: 10, y: WORLD_MAP_RASTER.height + 1 }),
+    ).toBe(false);
+  });
+});
+
+describe("doWorldMapHotspotsOverlap", () => {
+  const diameter = 2 * WORLD_MAP_MARKER_RADIUS;
+
+  it("flags centres closer than one diameter, in any direction", () => {
+    expect(
+      doWorldMapHotspotsOverlap({
+        a: { x: 100, y: 100 },
+        b: { x: 100 + diameter - 1, y: 100 },
+      }),
+    ).toBe(true);
+    expect(
+      doWorldMapHotspotsOverlap({
+        a: { x: 100, y: 100 },
+        b: { x: 130, y: 130 },
+      }),
+    ).toBe(true);
+  });
+
+  it("allows circles that only touch or sit further apart", () => {
+    expect(
+      doWorldMapHotspotsOverlap({
+        a: { x: 100, y: 100 },
+        b: { x: 100, y: 100 + diameter },
+      }),
+    ).toBe(false);
+    expect(
+      doWorldMapHotspotsOverlap({
+        a: { x: 100, y: 100 },
+        b: { x: 140, y: 140 },
+      }),
     ).toBe(false);
   });
 });

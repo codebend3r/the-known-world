@@ -10,6 +10,9 @@ features:
 coords:
   x: 390
   y: 810
+world-map:
+  x: 1295
+  y: 4309
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Golden_Tooth

@@ -14,6 +14,9 @@ features:
 coords:
   x: 490
   y: 400
+world-map:
+  x: 2053
+  y: 2822
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Dreadfort

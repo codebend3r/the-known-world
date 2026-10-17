@@ -9,6 +9,9 @@ features: []
 coords:
   x: 270
   y: 800
+world-map:
+  x: 1084
+  y: 4219
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Crag

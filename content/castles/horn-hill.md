@@ -10,6 +10,9 @@ features:
 coords:
   x: 400
   y: 1150
+world-map:
+  x: 1263
+  y: 5200
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Horn_Hill

@@ -10,6 +10,9 @@ features:
 coords:
   x: 480
   y: 940
+world-map:
+  x: 1588
+  y: 4819
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Bitterbridge

@@ -13,6 +13,9 @@ features: []
 coords:
   x: 470
   y: 155
+world-map:
+  x: 1957
+  y: 2512
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Last_Hearth

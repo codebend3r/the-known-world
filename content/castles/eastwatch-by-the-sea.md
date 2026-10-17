@@ -10,6 +10,9 @@ features:
 coords:
   x: 615
   y: 118
+world-map:
+  x: 2073
+  y: 2245
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Eastwatch-by-the-Sea

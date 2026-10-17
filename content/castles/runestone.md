@@ -13,6 +13,9 @@ features: []
 coords:
   x: 665
   y: 720
+world-map:
+  x: 2427
+  y: 4027
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Runestone

@@ -15,6 +15,9 @@ features:
 coords:
   x: 440
   y: 645
+world-map:
+  x: 1587
+  y: 3835
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/The_Twins

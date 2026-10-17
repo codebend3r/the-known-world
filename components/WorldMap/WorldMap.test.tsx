@@ -12,7 +12,7 @@ import { stubGlobal, stubProperty, unstubAllProperties } from "@/test/stubs";
 import { act, fireEvent } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { renderWithNuqs } from "@/test/testNuqs";
-import type { WorldMapMarker } from "@/lib/map";
+import { WORLD_MAP_MARKER_RADIUS, type WorldMapMarker } from "@/lib/map";
 import { expectElement } from "@/test/dom";
 
 // `mock.module` is not hoisted in Bun, so plain consts suffice where Vitest
@@ -184,7 +184,6 @@ const SEEDED_VIEW = { zoom: 5, x: -1495, y: -1940 };
 const PAN_STEP_X = (800 * 0.2) / SEEDED_VIEW.zoom;
 const PAN_STEP_Y = (600 * 0.2) / SEEDED_VIEW.zoom;
 const NATURAL_SIZE = 7680;
-const MARKER_RADIUS = 25;
 const MARKERS: ReadonlyArray<WorldMapMarker> = [
   {
     slug: "kings-landing",
@@ -500,7 +499,7 @@ describe("WorldMap", () => {
         6,
       );
       expect(Number(circle.getAttribute("r"))).toBeCloseTo(
-        MARKER_RADIUS * fitScale,
+        WORLD_MAP_MARKER_RADIUS * fitScale,
         6,
       );
     });

@@ -10,6 +10,9 @@ features:
 coords:
   x: 610
   y: 755
+world-map:
+  x: 2070
+  y: 4313
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Maidenpool

@@ -13,6 +13,9 @@ features: []
 coords:
   x: 600
   y: 1120
+world-map:
+  x: 1784
+  y: 5396
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Yronwood

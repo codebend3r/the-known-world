@@ -14,6 +14,9 @@ features:
 coords:
   x: 100
   y: 325
+world-map:
+  x: 1278
+  y: 2488
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Bear_Island

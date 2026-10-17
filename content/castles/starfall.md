@@ -14,6 +14,9 @@ features:
 coords:
   x: 450
   y: 1230
+world-map:
+  x: 1295
+  y: 5487
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Starfall

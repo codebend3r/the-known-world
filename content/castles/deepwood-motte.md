@@ -16,6 +16,9 @@ features:
 coords:
   x: 250
   y: 470
+world-map:
+  x: 1378
+  y: 2653
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Deepwood_Motte

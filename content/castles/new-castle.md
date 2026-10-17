@@ -10,6 +10,9 @@ features:
 coords:
   x: 500
   y: 545
+world-map:
+  x: 1852
+  y: 3307
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/New_Castle
