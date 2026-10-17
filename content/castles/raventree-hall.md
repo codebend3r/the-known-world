@@ -14,6 +14,9 @@ features:
 coords:
   x: 470
   y: 715
+world-map:
+  x: 1548
+  y: 4087
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Raventree_Hall

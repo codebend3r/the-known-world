@@ -17,6 +17,9 @@ features:
 coords:
   x: 420
   y: 600
+world-map:
+  x: 1670
+  y: 3391
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Moat_Cailin

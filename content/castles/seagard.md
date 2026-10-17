@@ -10,6 +10,9 @@ features:
 coords:
   x: 410
   y: 660
+world-map:
+  x: 1504
+  y: 3900
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Seagard

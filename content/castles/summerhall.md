@@ -13,6 +13,9 @@ features: []
 coords:
   x: 555
   y: 1060
+world-map:
+  x: 1910
+  y: 5020
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Summerhall

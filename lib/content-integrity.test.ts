@@ -12,7 +12,11 @@ import {
   contentIntegrityErrors,
   reciprocalAsymmetries,
 } from "@/lib/content-integrity";
-import { MAP_BOUNDS, WORLD_MAP_RASTER } from "@/lib/map";
+import {
+  MAP_BOUNDS,
+  WORLD_MAP_MARKER_RADIUS,
+  WORLD_MAP_RASTER,
+} from "@/lib/map";
 import {
   BattleSchema,
   CastleSchema,
@@ -133,17 +137,19 @@ function emptyCollections() {
 }
 
 function placedCastle({
+  slug = "off-map",
   coords,
   worldMap,
 }: {
+  slug?: string;
   coords: { x: number; y: number };
   worldMap?: { x: number; y: number };
 }) {
   return {
     body: "",
-    slug: "off-map",
+    slug,
     frontmatter: CastleSchema.parse({
-      slug: "off-map",
+      slug,
       name: "Off Map",
       type: "castle",
       coords,
@@ -323,6 +329,47 @@ describe("content integrity", () => {
         placedCastle({
           coords: { x: 10, y: 10 },
           worldMap: { x: WORLD_MAP_RASTER.width, y: WORLD_MAP_RASTER.height },
+        }),
+      ],
+    });
+    expect(errors).toEqual([]);
+  });
+
+  it("flags two castles whose `world-map` hotspots overlap", () => {
+    const diameter = 2 * WORLD_MAP_MARKER_RADIUS;
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      castles: [
+        placedCastle({
+          slug: "eyrie",
+          coords: { x: 10, y: 10 },
+          worldMap: { x: 1000, y: 1000 },
+        }),
+        placedCastle({
+          slug: "gates-of-the-moon",
+          coords: { x: 20, y: 20 },
+          worldMap: { x: 1000, y: 1000 + diameter - 1 },
+        }),
+      ],
+    });
+    expect(errors).toEqual([
+      `castles/eyrie.world-map: hotspot overlaps castles/gates-of-the-moon (under ${diameter} natural pixels apart)`,
+    ]);
+  });
+
+  it("accepts `world-map` hotspots exactly one diameter apart", () => {
+    const errors = contentIntegrityErrors({
+      ...emptyCollections(),
+      castles: [
+        placedCastle({
+          slug: "eyrie",
+          coords: { x: 10, y: 10 },
+          worldMap: { x: 1000, y: 1000 },
+        }),
+        placedCastle({
+          slug: "gates-of-the-moon",
+          coords: { x: 20, y: 20 },
+          worldMap: { x: 1000, y: 1000 + 2 * WORLD_MAP_MARKER_RADIUS },
         }),
       ],
     });

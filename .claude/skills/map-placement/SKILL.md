@@ -19,7 +19,7 @@ They are not two scales of one picture. As a fraction of image width, atlas King
 Consequences that drive everything below:
 
 - **Atlas space covers Westeros only.** All 146 castles fall in `x 100..800`, `y 105..1230`. Nothing on Essos or the Summer Isles can be placed, which is why 22 of 53 events are permanently unplaceable rather than merely unwritten.
-- **`WorldMap` is not the layer surface.** It renders the raster plus one hotspot per castle that carries a `world-map` field, in natural pixels. `selectWorldMapMarkers()` in `lib/map.ts` picks them; `WORLD_MAP_RASTER` bounds them, gated by the same integrity test. Read a new pixel off a gridded crop of the raster, never by scaling `coords`.
+- **`WorldMap` is not the layer surface.** It renders the raster plus one hotspot per castle that carries a `world-map` field, in natural pixels. `selectWorldMapMarkers()` in `lib/map.ts` picks them; `WORLD_MAP_RASTER` bounds them and `doWorldMapHotspotsOverlap()` keeps them one `WORLD_MAP_MARKER_RADIUS` diameter apart, both gated by the same integrity test. Read a new pixel off a gridded crop of the raster, never by scaling `coords`.
 - **`MapStage` is the layer surface** and draws atlas space 1:1 into its viewBox, so `coords` go straight through with no projection.
 
 ## The coordinate rules

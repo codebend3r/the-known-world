@@ -16,6 +16,9 @@ features:
 coords:
   x: 330
   y: 1180
+world-map:
+  x: 1031
+  y: 5359
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Hightower

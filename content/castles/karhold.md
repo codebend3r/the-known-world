@@ -13,6 +13,9 @@ features: []
 coords:
   x: 560
   y: 230
+world-map:
+  x: 2332
+  y: 2683
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Karhold

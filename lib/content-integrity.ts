@@ -1,6 +1,8 @@
 import {
   MAP_BOUNDS,
+  WORLD_MAP_MARKER_RADIUS,
   WORLD_MAP_RASTER,
+  doWorldMapHotspotsOverlap,
   entryCoords,
   isWithinMapBounds,
   isWithinWorldMapRaster,
@@ -363,17 +365,30 @@ function placementErrors(collections: Collections): string[] {
 }
 
 /**
- * Raster bounds for the `/maps` hotspots. Same failure mode as the atlas: an
- * off-raster pixel draws nothing and nobody notices.
+ * The `/maps` hotspots. Same failure mode as the atlas: an off-raster pixel
+ * draws nothing, and an overlapping pair quietly steals clicks from one seat.
  */
 function worldMapErrors(collections: Collections): string[] {
-  return collections.castles.flatMap(({ slug, frontmatter }) => {
+  const pins = collections.castles.flatMap(({ slug, frontmatter }) => {
     const pixel = frontmatter["world-map"];
-    if (!pixel || isWithinWorldMapRaster(pixel)) return [];
-    return [
-      `castles/${slug}.world-map: (${pixel.x}, ${pixel.y}) is outside the ${WORLD_MAP_RASTER.width}x${WORLD_MAP_RASTER.height} raster`,
-    ];
+    return pixel ? [{ slug, pixel }] : [];
   });
+  const offRaster = pins
+    .filter(({ pixel }) => !isWithinWorldMapRaster(pixel))
+    .map(
+      ({ slug, pixel }) =>
+        `castles/${slug}.world-map: (${pixel.x}, ${pixel.y}) is outside the ${WORLD_MAP_RASTER.width}x${WORLD_MAP_RASTER.height} raster`,
+    );
+  const overlapping = pins.flatMap((a, index) =>
+    pins
+      .slice(index + 1)
+      .filter((b) => doWorldMapHotspotsOverlap({ a: a.pixel, b: b.pixel }))
+      .map(
+        (b) =>
+          `castles/${a.slug}.world-map: hotspot overlaps castles/${b.slug} (under ${2 * WORLD_MAP_MARKER_RADIUS} natural pixels apart)`,
+      ),
+  );
+  return [...offRaster, ...overlapping];
 }
 
 function asymmetryErrors(collections: Collections): string[] {

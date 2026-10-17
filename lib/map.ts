@@ -25,6 +25,13 @@ export const WORLD_MAP_RASTER = {
   height: 8300,
 } as const;
 
+/**
+ * Radius, in natural pixels, of the (invisible) click target around each
+ * printed seat icon — kept tight since neighbouring towns (Hayford and Rosby
+ * by King's Landing, Lordsport by Pyke) sit only ~50-100 natural pixels away.
+ */
+export const WORLD_MAP_MARKER_RADIUS = 25;
+
 /** A hotspot on the `/maps` raster: natural pixels plus where it links. */
 export type WorldMapMarker = {
   slug: string;
@@ -105,6 +112,20 @@ export function isWithinWorldMapRaster({ x, y }: Coords): boolean {
     y >= 0 &&
     y <= WORLD_MAP_RASTER.height
   );
+}
+
+/**
+ * Hotspots closer than one diameter share pixels, and whichever paints last
+ * takes every click in the overlap, so the other seat is partly unclickable.
+ */
+export function doWorldMapHotspotsOverlap({
+  a,
+  b,
+}: {
+  a: Coords;
+  b: Coords;
+}): boolean {
+  return Math.hypot(a.x - b.x, a.y - b.y) < 2 * WORLD_MAP_MARKER_RADIUS;
 }
 
 /**

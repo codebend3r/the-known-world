@@ -11,6 +11,9 @@ features:
 coords:
   x: 215
   y: 655
+world-map:
+  x: 1184
+  y: 3958
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Ten_Towers

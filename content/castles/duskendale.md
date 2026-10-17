@@ -15,6 +15,9 @@ features:
 coords:
   x: 615
   y: 790
+world-map:
+  x: 2108
+  y: 4482
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Duskendale

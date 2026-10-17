@@ -9,6 +9,9 @@ features: []
 coords:
   x: 715
   y: 920
+world-map:
+  x: 2412
+  y: 4918
 sources:
   - type: awoiaf
     url: https://awoiaf.westeros.org/index.php/Evenfall_Hall

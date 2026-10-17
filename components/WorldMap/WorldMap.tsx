@@ -11,7 +11,7 @@ import {
   type Value,
 } from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
-import type { WorldMapMarker } from "@/lib/map";
+import { WORLD_MAP_MARKER_RADIUS, type WorldMapMarker } from "@/lib/map";
 import netlifyImageLoader from "@/lib/netlify-image-loader";
 import { PAN_DIRECTIONS, type PanDirection } from "@/lib/pan-zoom";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
@@ -22,10 +22,6 @@ const PAN_STEP_RATIO = 0.2;
 // rather than leaving the visible hint line as the only place they exist.
 const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
 const INITIAL_VIEW = { zoom: 5, x: -1495, y: -1940 };
-// Radius, in natural pixels, of the (invisible) click target around each
-// printed seat icon — kept tight since neighbouring towns (Hayford and Rosby
-// by King's Landing, Lordsport by Pyke) sit only ~50-100 natural pixels away.
-const MARKER_RADIUS = 25;
 // The popover is a fixed-width card (see `.popover` in the module) anchored
 // on the hotspot. These mirror its CSS box so the card can be clamped inside
 // the stage and flipped below the pin when there is no room above it.
@@ -454,7 +450,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
                   <circle
                     cx={(size.w - drawnWidth) / 2 + marker.x * fitScale}
                     cy={(size.h - drawnHeight) / 2 + marker.y * fitScale}
-                    r={MARKER_RADIUS * fitScale}
+                    r={WORLD_MAP_MARKER_RADIUS * fitScale}
                   />
                 </Link>
               ))}
