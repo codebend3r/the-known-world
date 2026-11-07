@@ -1648,17 +1648,17 @@ git commit -m "feat: homepage listing castles in the North"
 
 ```toml
 [build]
-  command = "bun run build"
-  publish = "out"
+command = "bun run build"
+publish = "out"
 
 [build.environment]
-  NODE_VERSION = "20"
-  PNPM_VERSION = "9"
+NODE_VERSION = "20"
+PNPM_VERSION = "9"
 
 [[redirects]]
-  from = "/*"
-  to = "/404.html"
-  status = 404
+from = "/*"
+to = "/404.html"
+status = 404
 ```
 
 - [ ] **Step 2: Commit**

@@ -344,8 +344,8 @@ Sections it prints: `MISSING FILES`, `BARRELS`, `NO CO-LOCATED TEST`,
 
 **`bun run typecheck` does not cover this script.** `tsconfig.json` includes
 `**/*.ts`, but TypeScript wildcards skip directories starting with `.`, so
-nothing under `.claude/` enters the program. `oxlint --type-aware` does read it.
-Editing the script means running it, not trusting `bun run check`.
+nothing under `.claude/` enters the program. `oxlint` lints it but does no type
+checking. Editing the script means running it, not trusting `bun run check`.
 
 ## Common mistakes
 
