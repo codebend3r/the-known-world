@@ -63,7 +63,7 @@ Operating rules for this repo.
 - `const` by default. Use `let` only when reassignment is required; never `var`.
 - Don't mutate inputs or shared values. Prefer the non-mutating operations: spread, `toSorted`, `toReversed`, `with`.
 - Use `??` for defaults, not `||`, unless coercing every falsy value is the actual intent.
-- Never leave a promise floating: `await` it or handle rejection explicitly. The linter does not catch this (`no-floating-promises` is off), so it is on you.
+- Never leave a promise floating: `await` it or handle rejection explicitly. The linter does not catch this (`oxlint` runs no type-aware rules), so it is on you.
 - Throw only `Error` instances (or subclasses) — never strings or plain objects.
 - Prefer named exports. Default exports only where Next.js requires them (`page.tsx`, `layout.tsx`, and the other route files).
 - Name booleans as predicates: `is`, `has`, `should`, `can`.

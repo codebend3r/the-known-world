@@ -8,7 +8,7 @@
 
 ## 1. Summary
 
-Replace ESLint, Prettier, and Vitest with a Rust/Go-based toolchain: Oxlint (linting + type-aware rules), Oxfmt (formatting, including SCSS), tsgo (type checking), Gale (SCSS/CSS lint rules), and Bun test (unit testing). The goal is a dramatically faster local feedback loop and CI pipeline with no loss of code-quality coverage.
+Replace ESLint, Prettier, and Vitest with a Rust/Go-based toolchain: Oxlint (linting), Oxfmt (formatting, including SCSS), tsgo (type checking), Gale (SCSS/CSS lint rules), and Bun test (unit testing). The goal is a dramatically faster local feedback loop and CI pipeline with no loss of code-quality coverage.
 
 ## 2. Background and Problem Statement
 
@@ -40,15 +40,14 @@ A new generation of tooling written in Rust and Go (Oxc project, TypeScript 7 / 
 
 ## 5. Proposed Toolchain
 
-| Concern                | Current                      | Target                                  | Notes                                                                                                                                                                                |
-| ---------------------- | ---------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| JS/TS linting          | ESLint + plugins             | Oxlint                                  | Rust. Supports most eslint, typescript-eslint, react, jsx-a11y, import, unicorn rules natively.                                                                                      |
-| Type-aware linting     | typescript-eslint            | oxlint-tsgolint (`oxlint --type-aware`) | Backed by tsgo.                                                                                                                                                                      |
-| Type checking          | tsc                          | tsgo (`@typescript/native-preview`)     | Go port of the TypeScript compiler. Can also run via `oxlint --type-aware --type-check`.                                                                                             |
-| Formatting (all langs) | Prettier                     | Oxfmt                                   | Rust. Passes 100% of Prettier JS/TS conformance tests. Formats JS/TS/JSX/TSX, JSON, YAML, TOML, HTML, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL. Tailwind class sorting built in. |
-| SCSS/CSS linting       | Stylelint                    | Gale                                    | Rust. Drop-in Stylelint replacement: reads existing `.stylelintrc`, honors `stylelint-disable` comments, 260+ rules, LSP server. `.sass` (indented) not supported.                   |
-| Unit testing           | Vitest                       | Bun test                                | Zig. Jest-compatible API. See risks in Section 10.                                                                                                                                   |
-| Editor integration     | ESLint + Prettier extensions | Oxc VS Code extension, Gale LSP         | Format-on-save and inline diagnostics.                                                                                                                                               |
+| Concern                | Current                      | Target                              | Notes                                                                                                                                                                                |
+| ---------------------- | ---------------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| JS/TS linting          | ESLint + plugins             | Oxlint                              | Rust. Supports most eslint, typescript-eslint, react, jsx-a11y, import, unicorn rules natively.                                                                                      |
+| Type checking          | tsc                          | tsgo (`@typescript/native-preview`) | Go port of the TypeScript compiler. Sole type checker; Oxlint does no type checking.                                                                                                 |
+| Formatting (all langs) | Prettier                     | Oxfmt                               | Rust. Passes 100% of Prettier JS/TS conformance tests. Formats JS/TS/JSX/TSX, JSON, YAML, TOML, HTML, Vue, CSS, SCSS, Less, Markdown, MDX, GraphQL. Tailwind class sorting built in. |
+| SCSS/CSS linting       | Stylelint                    | Gale                                | Rust. Drop-in Stylelint replacement: reads existing `.stylelintrc`, honors `stylelint-disable` comments, 260+ rules, LSP server. `.sass` (indented) not supported.                   |
+| Unit testing           | Vitest                       | Bun test                            | Zig. Jest-compatible API. See risks in Section 10.                                                                                                                                   |
+| Editor integration     | ESLint + Prettier extensions | Oxc VS Code extension, Gale LSP     | Format-on-save and inline diagnostics.                                                                                                                                               |
 
 ### 5.1 Framework Coverage: React and Next.js
 
@@ -75,7 +74,6 @@ This migration assumes a React/Next.js codebase and the toolchain covers it as f
 **FR-1: Linting**
 
 - Oxlint replaces ESLint as the required lint gate in CI and pre-commit.
-- Type-aware rules enabled via `oxlint --type-aware` with `oxlint-tsgolint` installed.
 - Rule mapping documented: every currently enforced ESLint rule maps to an Oxlint rule, a Gale rule, or a documented exception.
 - `oxlint --fix` supported in the pre-commit hook.
 
@@ -90,7 +88,6 @@ This migration assumes a React/Next.js codebase and the toolchain covers it as f
 
 - tsgo replaces tsc for `typecheck` scripts and CI.
 - tsc is retained in the repo for a two-sprint parallel-run period; any output discrepancies are filed as blockers.
-- The tsgo version is kept in sync with the tsgolint shim version used by Oxlint.
 
 **FR-4: SCSS linting**
 
@@ -141,7 +138,7 @@ This migration assumes a React/Next.js codebase and the toolchain covers it as f
 ### Phase 2: Linting (1 sprint)
 
 - Add Oxlint; run the oxc migration tooling against the existing ESLint config.
-- Complete the rule-mapping doc; enable type-aware rules with oxlint-tsgolint.
+- Complete the rule-mapping doc.
 - Run ESLint and Oxlint in parallel in CI for one week (Oxlint blocking, ESLint informational).
 - Add Gale for SCSS using the existing `.stylelintrc`; verify rule parity on a sample of known violations.
 - Remove ESLint, its plugins, and Stylelint (or scope Stylelint down per FR-4).
@@ -185,7 +182,7 @@ Some capabilities may not have a 1:1 replacement (custom ESLint rules, niche Sty
 | Next.js module mocking under Bun test (`mock.module` semantics differ from `vi.mock`: no hoisting, possible cross-file leakage) | High       | High   | Phase 0 mock inventory sizes the problem; centralize Next mocks in shared preload files; if mock volume is high, keep Vitest (fallback per Open Question 1).                                                          |
 | Oxlint nextjs plugin gaps versus `eslint-config-next`                                                                           | Medium     | Medium | Rule-mapping diff in Phase 2; parallel ESLint run catches misses; file gaps upstream or accept via exception process.                                                                                                 |
 | Oxlint missing a rule the team relies on                                                                                        | Medium     | Medium | Rule-mapping doc in Phase 2 plus one week of parallel ESLint runs; Oxlint supports custom rules via its plugin system for gaps worth keeping.                                                                         |
-| tsgo diagnostic differences from tsc                                                                                            | Medium     | High   | Two-sprint parallel run; tsgo version pinned and synced with tsgolint.                                                                                                                                                |
+| tsgo diagnostic differences from tsc                                                                                            | Medium     | High   | Two-sprint parallel run; tsgo version pinned.                                                                                                                                                                         |
 | Oxfmt output differs from Prettier in edge cases                                                                                | Low        | Low    | Conformance is at 100% for JS/TS; single reformat commit absorbs any drift; report divergences upstream.                                                                                                              |
 | Gale gaps versus Stylelint plugins                                                                                              | Medium     | Medium | FR-4 inventory; Stylelint can remain scoped to unsupported rules temporarily.                                                                                                                                         |
 | Tool immaturity / breaking changes (Oxfmt is newly out of beta)                                                                 | Medium     | Medium | Pin exact versions with `--save-exact`; upgrade deliberately, not automatically.                                                                                                                                      |

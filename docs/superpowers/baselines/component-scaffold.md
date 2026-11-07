@@ -251,10 +251,10 @@ begins with `.`, so nothing under `.claude/` enters the program. Verified by
 appending `const broken: string = 42;` to the script: `tsgo --noEmit` passed,
 and `tsgo --listFiles | grep -c audit-components` returned `0`.
 
-`oxlint --type-aware` **does** read it (the same experiment produced
-`no-unused-vars` on that line), so the script is linted but not fully
-typechecked. Treat a green `bun run check` as covering lint only for anything
-in `.claude/`; run the script itself to exercise it.
+`oxlint` **does** read it (the same experiment produced `no-unused-vars` on
+that line), so the script is linted but not typechecked. Treat a green
+`bun run check` as covering lint only for anything in `.claude/`; run the
+script itself to exercise it.
 
 ## Verification
 
