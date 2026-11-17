@@ -3,7 +3,6 @@ import { loadAllCharacters } from "@/lib/content";
 import {
   coveredSlugs,
   editDistance,
-  groupByStem,
   loadPortraitFiles,
   loadPortraitVariantDirs,
   nearestSlug,
@@ -12,8 +11,8 @@ import {
   RESERVED_PORTRAITS,
   variantDirErrors,
   winningFile,
-  type PortraitFile,
 } from "@/lib/portrait-integrity";
+import { groupByStem, type PortraitFile } from "@/lib/portrait-files";
 import { expectDefined } from "@/test/defined";
 
 async function loadPortraitSources() {

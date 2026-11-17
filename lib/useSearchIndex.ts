@@ -4,7 +4,7 @@ import type { SearchIndexItem } from "@/lib/search-index";
 // Kept out of `lib/search-index` so importing a path never pulls the fetcher
 // and its validator into the page bundle. Each file is emitted by the route
 // handler at the same path under `app/`.
-export const SEARCH_INDEX_PATHS = {
+const SEARCH_INDEX_PATHS = {
   characters: "/search-index/characters.json",
   houses: "/search-index/houses.json",
 } as const;

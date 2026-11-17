@@ -1,5 +1,4 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import { findPublicAsset } from "@/lib/public-asset";
 
 const BATTLE_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
 
@@ -8,17 +7,8 @@ const BATTLE_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
  * `public/battles/<slug>.<ext>`, or null when the battle has no image.
  */
 export async function findBattleImage(slug: string): Promise<string | null> {
-  const candidates = await Promise.all(
-    BATTLE_IMAGE_EXTENSIONS.map(async (ext) => {
-      try {
-        await fs.access(
-          path.join(process.cwd(), "public", "battles", `${slug}.${ext}`),
-        );
-        return `/battles/${slug}.${ext}`;
-      } catch {
-        return null;
-      }
-    }),
-  );
-  return candidates.find((candidate) => !!candidate) ?? null;
+  return findPublicAsset({
+    dir: "battles",
+    files: BATTLE_IMAGE_EXTENSIONS.map((ext) => `${slug}.${ext}`),
+  });
 }

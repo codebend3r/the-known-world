@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { House } from "@/lib/schemas";
 
 export const REGIONS = {
@@ -28,6 +29,19 @@ function isGreatHouseSlug(slug: string): slug is keyof typeof REGIONS {
 
 export function regionLabel(slug: RegionSlug | null): string | null {
   return slug ? (REGION_LABELS.get(slug) ?? null) : null;
+}
+
+// Heraldic colour travels into a component's module as a custom property, so
+// the module keeps the token and the caller only names the region. No region
+// leaves the property unset and the module's own fallback applies.
+export function regionColorStyle({
+  region,
+  property,
+}: {
+  region: RegionSlug | null;
+  property: `--${string}`;
+}): CSSProperties {
+  return region ? { [property]: `var(--region-color-${region})` } : {};
 }
 
 // `seen` stops a liege cycle that never reaches a great house.

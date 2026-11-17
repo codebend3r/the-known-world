@@ -394,13 +394,7 @@ function mentionEdges({
  */
 function proseEdges(collections: Collections): Edge[] {
   const index = buildProseLinkIndex({
-    allCharacters: collections.characters,
-    allHouses: collections.houses,
-    allWeapons: collections.weapons,
-    allDragons: collections.dragons,
-    allCastles: collections.castles,
-    allBattles: collections.battles,
-    allEvents: collections.events,
+    collections,
     current: { kind: "character", slug: "", mentions: [] },
   });
 

@@ -101,17 +101,22 @@ export function entryCoords(frontmatter: {
   return isCoords(location) ? location : null;
 }
 
-export function isWithinMapBounds({ x, y }: Coords): boolean {
-  return x >= 0 && x <= MAP_BOUNDS.width && y >= 0 && y <= MAP_BOUNDS.height;
+function isWithin({
+  point: { x, y },
+  bounds,
+}: {
+  point: Coords;
+  bounds: { width: number; height: number };
+}): boolean {
+  return x >= 0 && x <= bounds.width && y >= 0 && y <= bounds.height;
 }
 
-export function isWithinWorldMapRaster({ x, y }: Coords): boolean {
-  return (
-    x >= 0 &&
-    x <= WORLD_MAP_RASTER.width &&
-    y >= 0 &&
-    y <= WORLD_MAP_RASTER.height
-  );
+export function isWithinMapBounds(point: Coords): boolean {
+  return isWithin({ point, bounds: MAP_BOUNDS });
+}
+
+export function isWithinWorldMapRaster(point: Coords): boolean {
+  return isWithin({ point, bounds: WORLD_MAP_RASTER });
 }
 
 /**
@@ -288,4 +293,139 @@ export function selectWorldMapMarkers({
       },
     ];
   });
+}
+
+/** A viewer's size on screen, in CSS pixels. */
+export type ViewerSize = { w: number; h: number };
+
+/** The raster's natural pixel size. */
+export type NaturalSize = { width: number; height: number };
+
+/**
+ * Where the raster sits inside a viewer that draws it fitted and centred:
+ * `fitScale` is natural-to-viewer pixels, `offsetX`/`offsetY` the letterbox.
+ */
+export type FitGeometry = {
+  fitScale: number;
+  drawnWidth: number;
+  drawnHeight: number;
+  offsetX: number;
+  offsetY: number;
+};
+
+/** No viewer yet (not measured) collapses everything to zero. */
+export function fitGeometry({
+  viewer,
+  natural,
+}: {
+  viewer: ViewerSize | null;
+  natural: NaturalSize;
+}): FitGeometry {
+  if (!viewer) {
+    return {
+      fitScale: 0,
+      drawnWidth: 0,
+      drawnHeight: 0,
+      offsetX: 0,
+      offsetY: 0,
+    };
+  }
+  const fitScale = Math.min(
+    viewer.w / natural.width,
+    viewer.h / natural.height,
+  );
+  const drawnWidth = natural.width * fitScale;
+  const drawnHeight = natural.height * fitScale;
+  return {
+    fitScale,
+    drawnWidth,
+    drawnHeight,
+    offsetX: (viewer.w - drawnWidth) / 2,
+    offsetY: (viewer.h - drawnHeight) / 2,
+  };
+}
+
+/** A natural-pixel point on the raster, in the fitted viewer's SVG space. */
+export function naturalToViewer({
+  geometry,
+  point,
+}: {
+  geometry: FitGeometry;
+  point: Coords;
+}): Coords {
+  return {
+    x: geometry.offsetX + point.x * geometry.fitScale,
+    y: geometry.offsetY + point.y * geometry.fitScale,
+  };
+}
+
+/** The pan/zoom matrix entries that matter: uniform scale `a`, offset `e`/`f`. */
+export type ViewMatrix = { a: number; e: number; f: number };
+
+/**
+ * When the viewer resizes, the fitted raster re-centres itself but the pan/zoom
+ * matrix does not, so the view would jump. This keeps the same natural-pixel
+ * point at the viewer's centre, at the same effective zoom.
+ */
+export function recenterOnResize({
+  current,
+  prev,
+  next,
+  natural,
+}: {
+  current: ViewMatrix;
+  prev: { size: ViewerSize; fitScale: number };
+  next: { size: ViewerSize; fitScale: number };
+  natural: NaturalSize;
+}): ViewMatrix {
+  const prevOffsetX = (prev.size.w - natural.width * prev.fitScale) / 2;
+  const prevOffsetY = (prev.size.h - natural.height * prev.fitScale) / 2;
+  const centeredSVGX = (prev.size.w / 2 - current.e) / current.a;
+  const centeredSVGY = (prev.size.h / 2 - current.f) / current.a;
+  const centeredNaturalX = (centeredSVGX - prevOffsetX) / prev.fitScale;
+  const centeredNaturalY = (centeredSVGY - prevOffsetY) / prev.fitScale;
+
+  const drawnWidth = natural.width * next.fitScale;
+  const drawnHeight = natural.height * next.fitScale;
+  const nextZoom = current.a * (prev.fitScale / next.fitScale);
+  const nextSVGX =
+    (next.size.w - drawnWidth) / 2 + centeredNaturalX * next.fitScale;
+  const nextSVGY =
+    (next.size.h - drawnHeight) / 2 + centeredNaturalY * next.fitScale;
+
+  return {
+    a: nextZoom,
+    e: next.size.w / 2 - nextZoom * nextSVGX,
+    f: next.size.h / 2 - nextZoom * nextSVGY,
+  };
+}
+
+/**
+ * Places a fixed-width card anchored on a pin: slid sideways to stay inside
+ * the stage (`shift`), flipped below the pin when there is no room above, and
+ * with the arrow offset (`pinX`) slid back so it still points at the pin.
+ */
+export function popoverPlacement({
+  anchor,
+  stageWidth,
+  width,
+  heightEstimate,
+  gutter,
+}: {
+  anchor: Coords;
+  stageWidth: number;
+  width: number;
+  heightEstimate: number;
+  gutter: number;
+}): { shift: number; pinX: number; placement: "above" | "below" } {
+  const halfWidth = width / 2;
+  const lowest = Math.min(halfWidth + gutter, stageWidth / 2);
+  const highest = Math.max(stageWidth - halfWidth - gutter, stageWidth / 2);
+  const clampedX = Math.min(Math.max(anchor.x, lowest), highest);
+  const shift = clampedX - anchor.x;
+  return {
+    shift,
+    pinX: halfWidth - shift,
+    placement: anchor.y < heightEstimate ? "below" : "above",
+  };
 }

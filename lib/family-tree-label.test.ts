@@ -4,6 +4,7 @@ import {
   formatLabelText,
   formatLifespan,
   formatTitle,
+  labelBox,
   wasKing,
 } from "@/lib/family-tree-label";
 
@@ -64,6 +65,26 @@ describe("estimateLabelWidth", () => {
         titles: ["King of the Andals"],
       }),
     ).toBe(text.length * 5.5 + 12);
+  });
+});
+
+describe("labelBox", () => {
+  it("sets the label above the dot with a rect snapped around it", () => {
+    // "Eddard S." is 9 chars: 9 * 5.5 + 12 = 61.5, rounded to 62.
+    expect(
+      labelBox({
+        x: 100,
+        y: 50,
+        dotRadius: 28,
+        name: "Eddard Stark",
+        titles: [],
+      }),
+    ).toEqual({
+      text: "Eddard S.",
+      x: 100,
+      baseline: 14,
+      rect: { x: 69, y: 6, width: 62, height: 11 },
+    });
   });
 });
 

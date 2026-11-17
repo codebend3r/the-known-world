@@ -18,7 +18,7 @@ export const LANDMASS_LABELS = {
 
 export const PX_PER_YEAR = 2;
 export const CLUSTER_GAP_PX = 28;
-export const MAX_CLUSTER_SPAN_YEARS = 10;
+const MAX_CLUSTER_SPAN_YEARS = 10;
 
 /**
  * Zoom multipliers applied to `PX_PER_YEAR`. A larger multiplier spreads
@@ -150,11 +150,17 @@ function clusterColumn({
   });
 }
 
-const EMPTY_COLUMNS = {
-  westeros: [],
-  essos: [],
-  "summer-isles": [],
-} as const satisfies Record<Landmass, readonly TimelineNode[]>;
+function mapColumns<T>(read: (landmass: Landmass) => T): Record<Landmass, T> {
+  return {
+    westeros: read("westeros"),
+    essos: read("essos"),
+    "summer-isles": read("summer-isles"),
+  };
+}
+
+function emptyColumns<T>(): Record<Landmass, T[]> {
+  return mapColumns<T[]>(() => []);
+}
 
 /** Pixel offset of a year within the chart body at a given vertical scale. */
 export function yForYear({
@@ -198,7 +204,7 @@ export function prepareTimeline({
     return {
       minYear: 0,
       maxYear: 0,
-      columns: { westeros: [], essos: [], "summer-isles": [] },
+      columns: emptyColumns(),
     };
   }
 
@@ -237,7 +243,7 @@ export function prepareTimeline({
       ...acc,
       [landmass]: [...acc[landmass], event],
     }),
-    { westeros: [], essos: [], "summer-isles": [] },
+    emptyColumns(),
   );
 
   return { minYear, maxYear, columns };
@@ -260,7 +266,7 @@ export function layoutTimeline({
     (landmass) => source.columns[landmass].length === 0,
   );
   if (isEmpty) {
-    return { height: 0, ticks: [], eras: [], columns: { ...EMPTY_COLUMNS } };
+    return { height: 0, ticks: [], eras: [], columns: emptyColumns() };
   }
 
   const yFor = (year: number): number => yForYear({ year, minYear, pxPerYear });
@@ -294,14 +300,9 @@ export function layoutTimeline({
     };
   });
 
-  const columns: Record<Landmass, TimelineNode[]> = {
-    westeros: clusterColumn({ events: source.columns.westeros, yFor }),
-    essos: clusterColumn({ events: source.columns.essos, yFor }),
-    "summer-isles": clusterColumn({
-      events: source.columns["summer-isles"],
-      yFor,
-    }),
-  };
+  const columns = mapColumns((landmass) =>
+    clusterColumn({ events: source.columns[landmass], yFor }),
+  );
 
   return { height, ticks, eras, columns };
 }

@@ -6,6 +6,13 @@ import {
   PORTRAIT_EXTENSIONS,
   PORTRAIT_VIDEO_EXTENSIONS,
 } from "@/lib/portraits";
+import {
+  describeFiles,
+  groupByStem,
+  isStemOfSlug,
+  pickByExtension,
+  type PortraitFile,
+} from "@/lib/portrait-files";
 
 /**
  * `findPortrait` and `findPortraitVideo` probe `public/characters/<slug>.<ext>`
@@ -67,15 +74,6 @@ export const RESERVED_PORTRAITS: ReadonlySet<string> = new Set([
  */
 const NEAR_MISS_RATIO = 0.3;
 
-export type PortraitFile = {
-  /** Filename as it sits in its directory, e.g. `jon-snow.jpg`. */
-  file: string;
-  /** Basename without the extension, compared against character slugs. */
-  stem: string;
-  /** Lowercased extension without the dot. */
-  extension: string;
-};
-
 /** One `public/characters/<slug>/` folder and everything inside it. */
 export type PortraitVariantDir = {
   /** The folder name, which must be a character slug. */
@@ -93,19 +91,8 @@ export function isProbedExtension(extension: string): boolean {
   return PORTRAIT_EXTENSIONS.some((candidate) => candidate === extension);
 }
 
-export function isVideoExtension(extension: string): boolean {
+function isVideoExtension(extension: string): boolean {
   return PORTRAIT_VIDEO_EXTENSIONS.some((candidate) => candidate === extension);
-}
-
-function describeFiles(files: readonly string[]): PortraitFile[] {
-  return files
-    .filter((file) => !file.startsWith("."))
-    .map((file) => ({
-      file,
-      stem: path.basename(file, path.extname(file)),
-      extension: path.extname(file).slice(1).toLowerCase(),
-    }))
-    .toSorted((a, b) => a.file.localeCompare(b.file));
 }
 
 /** Flat portraits only. Variant folders come back from the loader below. */
@@ -130,29 +117,13 @@ export async function loadPortraitVariantDirs(): Promise<PortraitVariantDir[]> {
   );
 }
 
-export function groupByStem(
-  files: readonly PortraitFile[],
-): Map<string, PortraitFile[]> {
-  return files.reduce<Map<string, PortraitFile[]>>(
-    (groups, entry) =>
-      groups.set(entry.stem, [...(groups.get(entry.stem) ?? []), entry]),
-    new Map(),
-  );
-}
-
 /** The candidate `findPortrait` returns first, or null when none is probed. */
 export function winningFile({
   candidates,
 }: {
   candidates: readonly PortraitFile[];
 }): PortraitFile | null {
-  return PORTRAIT_EXTENSIONS.reduce<PortraitFile | null>(
-    (winner, extension) =>
-      winner ??
-      candidates.find((entry) => entry.extension === extension) ??
-      null,
-    null,
-  );
+  return pickByExtension({ candidates, extensions: PORTRAIT_EXTENSIONS });
 }
 
 /**
@@ -278,9 +249,7 @@ export function variantDirErrors({
   }
 
   const misnamed = files
-    .filter(
-      (entry) => entry.stem !== slug && !entry.stem.startsWith(`${slug}-`),
-    )
+    .filter((entry) => !isStemOfSlug({ slug, stem: entry.stem }))
     .map(
       (entry) =>
         `characters/${slug}/${entry.file}: stem is neither ${slug} nor ${slug}-<variant>, no variant can ever return it`,
@@ -297,8 +266,8 @@ export function variantDirErrors({
         `characters/${slug}/${entry.file}: extension .${entry.extension} is in neither PORTRAIT_EXTENSIONS nor PORTRAIT_VIDEO_EXTENSIONS, no finder can ever return it`,
     );
 
-  const named = files.filter(
-    (entry) => entry.stem === slug || entry.stem.startsWith(`${slug}-`),
+  const named = files.filter((entry) =>
+    isStemOfSlug({ slug, stem: entry.stem }),
   );
   const byStem = groupByStem(named);
 

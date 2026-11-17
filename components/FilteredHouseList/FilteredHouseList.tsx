@@ -1,17 +1,11 @@
 "use client";
 
-import {
-  useEffect,
-  useMemo,
-  useState,
-  type ComponentProps,
-  type ReactNode,
-} from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
-import { useQueryState, useQueryStates, parseAsStringLiteral } from "nuqs";
+import { useQueryState, parseAsStringLiteral } from "nuqs";
 import { Accordion } from "@/components/Accordion";
 import { ListPagination } from "@/components/ListPagination";
-import { ListSearchInput } from "@/components/ListSearchInput";
+import { ListSearchEmpty, ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
 import { SortToggle } from "@/components/SortToggle";
 import {
@@ -24,22 +18,20 @@ import {
   type ViewMode,
 } from "@/components/ViewToggle";
 import { filterByName } from "@/lib/search";
-import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
 import type { House, HouseRank } from "@/lib/schemas";
 import { cx } from "@/lib/cx";
-import { compareByName } from "@/lib/collections";
 import { exhaustiveList } from "@/lib/exhaustive-list";
-import { REGION_SLUGS, regionLabel, type RegionSlug } from "@/lib/regions";
+import { groupHousesByRegion, type RegionGroup } from "@/lib/houses";
+import { regionColorStyle, type RegionSlug } from "@/lib/regions";
 import {
   DEFAULT_PAGE_SIZE,
   MIN_PAGE_SIZE,
-  isPageSize,
   isGrouping,
-  listSearchParsers,
-  type PageSize,
+  paginate,
   type Grouping,
-  type SortDirection,
 } from "@/lib/listSearchParams";
+import { useListQuery } from "@/lib/useListQuery";
+import { usePersistedChoice } from "@/lib/usePersistedChoice";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredHouseList/FilteredHouseList.module.scss";
 
@@ -55,8 +47,6 @@ type Props = {
   pageSize?: number;
 };
 
-type CardArgs = { item: HouseItem; priority: boolean };
-
 const VIEW_STORAGE_KEY = "gota:houses-view";
 const GROUPING_STORAGE_KEY = "gota:houses-grouping";
 
@@ -64,18 +54,6 @@ const GROUPING_STORAGE_KEY = "gota:houses-grouping";
 // `--bleed-width` track). Eagerly loading these covers the LCP candidate
 // without negating lazy-loading for the rest of the list.
 const PRIORITY_COUNT = 8;
-
-const REGION_CARD_CLASS = {
-  north: styles.cardNorth,
-  vale: styles.cardVale,
-  riverlands: styles.cardRiverlands,
-  westerlands: styles.cardWesterlands,
-  reach: styles.cardReach,
-  stormlands: styles.cardStormlands,
-  dorne: styles.cardDorne,
-  "iron-islands": styles.cardIronIslands,
-  crownlands: styles.cardCrownlands,
-} as const satisfies Record<RegionSlug, string>;
 
 const VIEW_OPTIONS = [
   { value: "grid" as const, label: "Grid view", icon: <GridIcon /> },
@@ -103,15 +81,20 @@ const RANK_FILTERS = exhaustiveList<RankFilter>()([
   "extinct",
 ]);
 
-const RANK_OPTIONS = [
-  { value: "all", label: "Any rank" },
-  { value: "royal", label: "Royal" },
-  { value: "lordly", label: "Lordly" },
-  { value: "knightly", label: "Knightly" },
-  { value: "other", label: "Other" },
-  { value: "exiled", label: "Exiled" },
-  { value: "extinct", label: "Extinct" },
-] as const satisfies ReadonlyArray<{ value: RankFilter; label: string }>;
+const RANK_FILTER_LABEL = {
+  all: "Any rank",
+  royal: "Royal",
+  lordly: "Lordly",
+  knightly: "Knightly",
+  other: "Other",
+  exiled: "Exiled",
+  extinct: "Extinct",
+} as const satisfies Record<RankFilter, string>;
+
+const RANK_OPTIONS = RANK_FILTERS.map((value) => ({
+  value,
+  label: RANK_FILTER_LABEL[value],
+}));
 
 // Rank on a register row is categorical, so it renders as a mono datum rather
 // than the select's sentence-case option label.
@@ -132,186 +115,90 @@ export function FilteredHouseList({
   items,
   pageSize = DEFAULT_PAGE_SIZE,
 }: Props) {
-  const sizeDefault: PageSize = isPageSize(pageSize)
-    ? pageSize
-    : DEFAULT_PAGE_SIZE;
-  const parsers = useMemo(() => listSearchParsers(sizeDefault), [sizeDefault]);
-  const [{ search, dir, size, page: rawPage }, setParams] =
-    useQueryStates(parsers);
-  const page = Math.max(1, rawPage);
+  const query = useListQuery({ items, pageSize });
   const [rank, setRank] = useQueryState(
     "rank",
     parseAsStringLiteral(RANK_FILTERS).withDefault("all"),
   );
 
-  const [view, setView] = useState<ViewMode>("grid");
-  const [grouping, setGrouping] = useState<Grouping>("flat");
-  const [openRegions, setOpenRegions] = useState<Set<string>>(new Set());
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const storedView = window.localStorage.getItem(VIEW_STORAGE_KEY);
-    const storedGrouping = window.localStorage.getItem(GROUPING_STORAGE_KEY);
-    // Hydrating client-only state from `localStorage` is exactly the case
-    // an after-mount effect exists for: the server can't read it, and a
-    // lazy `useState` initializer would diverge from the server snapshot.
-    /* eslint-disable react-hooks/set-state-in-effect */
-    if (isViewMode(storedView)) setView(storedView);
-    if (isGrouping(storedGrouping)) setGrouping(storedGrouping);
-    /* eslint-enable react-hooks/set-state-in-effect */
-  }, []);
-
-  const handleViewChange = (next: ViewMode) => {
-    setView(next);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(VIEW_STORAGE_KEY, next);
-    }
-  };
-
-  const handleGroupingChange = (next: Grouping) => {
-    setGrouping(next);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(GROUPING_STORAGE_KEY, next);
-    }
-  };
+  const [view, setView] = usePersistedChoice<ViewMode>({
+    key: VIEW_STORAGE_KEY,
+    fallback: "grid",
+    isChoice: isViewMode,
+  });
+  const [grouping, setGrouping] = usePersistedChoice<Grouping>({
+    key: GROUPING_STORAGE_KEY,
+    fallback: "flat",
+    isChoice: isGrouping,
+  });
+  const [openRegions, setOpenRegions] = useState<ReadonlySet<string>>(
+    new Set(),
+  );
 
   const toggleRegion = (slug: string) => {
     setOpenRegions((prev) => {
-      const next = new Set(prev);
-      if (next.has(slug)) {
-        next.delete(slug);
-      } else {
-        next.add(slug);
+      if (prev.has(slug)) {
+        return new Set([...prev].filter((open) => open !== slug));
       }
-      return next;
+      return new Set([...prev, slug]);
     });
   };
 
-  const { value, debounced, onChange } = useDebouncedSearch({
-    urlValue: search,
-    commit: (next) => setParams({ search: next, page: 1 }),
+  const facetFiltered = useMemo(
+    () =>
+      rank === "all"
+        ? query.sorted
+        : query.sorted.filter((item) => item.rank === rank),
+    [query.sorted, rank],
+  );
+  const regionGroups = useMemo(
+    () => groupHousesByRegion({ houses: facetFiltered }),
+    [facetFiltered],
+  );
+
+  const filtered = filterByName({
+    items: facetFiltered,
+    query: query.debounced,
   });
-
-  const sorted = useMemo(() => {
-    const arr = items.toSorted(compareByName);
-    return dir === "desc" ? arr.toReversed() : arr;
-  }, [items, dir]);
-
-  const facetFiltered = useMemo(() => {
-    return rank === "all"
-      ? sorted
-      : sorted.filter((item) => item.rank === rank);
-  }, [sorted, rank]);
-
-  const filtered = filterByName({ items: facetFiltered, query: debounced });
   const total = facetFiltered.length;
-  const matching = filtered.length;
-  const hasQuery = debounced.trim().length > 0;
+  const hasQuery = query.debounced.trim().length > 0;
   const noun = total === 1 ? "house" : "houses";
   const isInRegionMode = grouping === "region";
   const countLabel =
     !isInRegionMode && hasQuery
-      ? `${matching} of ${total} ${noun}`
+      ? `${filtered.length} of ${total} ${noun}`
       : `${total} ${noun}`;
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / size));
-  const currentPage = Math.min(page, totalPages);
-  const pageStart = (currentPage - 1) * size;
-  const pageItems = filtered.slice(pageStart, pageStart + size);
-
-  const regionGroups = useMemo(() => {
-    const known = REGION_SLUGS.map((slug) => ({
-      slug,
-      label: regionLabel(slug) ?? slug,
-      items: facetFiltered.filter((item) => item.region === slug),
-    })).filter((group) => group.items.length > 0);
-    const other = facetFiltered.filter((item) => item.region === null);
-    return other.length > 0
-      ? [...known, { slug: "other", label: "Other Houses", items: other }]
-      : known;
-  }, [facetFiltered]);
-
-  const writePage = (next: number) => {
-    setParams({ page: next });
-  };
-
-  const handleDirChange = (next: SortDirection) => {
-    setParams({ dir: next, page: 1 });
-  };
+  const { totalPages, currentPage, pageItems } = paginate({
+    items: filtered,
+    page: query.page,
+    size: query.size,
+  });
 
   const handleRankChange = (next: string) => {
     if (!isRankFilter(next)) return;
     setRank(next === "all" ? null : next);
-    setParams({ page: 1 });
+    query.resetPage();
   };
 
   const listClass = cx(styles.list, view === "list" && styles.listView);
-
-  const renderCard = ({ item, priority }: CardArgs) => {
-    const regionClass = item.region
-      ? REGION_CARD_CLASS[item.region]
-      : undefined;
-    const cardClass = cx(styles.card, regionClass);
-    const statusClass = cx(
-      styles.status,
-      item.isExtinct ? styles.statusExtinct : styles.statusExtant,
-    );
-    return (
-      <li key={item.slug} className={styles.item}>
-        <Link href={`/houses/${item.slug}/`} className={cardClass}>
-          <Sigil
-            slug={item.slug}
-            name={item.name}
-            region={item.region}
-            sizes="84px"
-            isDecorative
-            priority={priority}
-            className={styles.shield}
-          />
-          <span className={styles.body}>
-            <span className={styles.titleRow}>
-              <span className={styles.name}>{item.name}</span>
-              {!!item.regionLabel && (
-                <span className={styles.region}>{item.regionLabel}</span>
-              )}
-            </span>
-            {!!item.rank && (
-              <span className={styles.rank}>{RANK_LABEL[item.rank]}</span>
-            )}
-            <span className={styles.statusSlot}>
-              <span className={statusClass}>
-                {item.isExtinct ? "Extinct" : "Extant"}
-              </span>
-            </span>
-          </span>
-        </Link>
-      </li>
-    );
-  };
-
-  const renderPagination = (
-    position: ComponentProps<typeof ListPagination>["position"],
-  ) => (
-    <ListPagination
-      currentPage={currentPage}
-      totalPages={totalPages}
-      size={size}
-      onPageChange={writePage}
-      onSizeChange={(next) => setParams({ size: next, page: 1 })}
-      position={position}
-      noun="House"
-    />
-  );
-
   const shouldShowPagination = filtered.length > MIN_PAGE_SIZE;
+  const pagination = {
+    currentPage,
+    totalPages,
+    size: query.size,
+    onPageChange: query.setPage,
+    onSizeChange: query.setSize,
+    noun: "House",
+  };
 
   return (
     <>
       <div className={styles.controls}>
         {!isInRegionMode && (
           <ListSearchInput
-            value={value}
-            onChange={onChange}
+            value={query.value}
+            onChange={query.onChange}
             placeholder="Search houses…"
             ariaLabel="Search houses"
             className={styles.searchInput}
@@ -333,16 +220,12 @@ export function FilteredHouseList({
               ))}
             </select>
           </label>
-          <SortToggle value={dir} onChange={handleDirChange} />
-          <ViewToggle
-            options={VIEW_OPTIONS}
-            value={view}
-            onChange={handleViewChange}
-          />
+          <SortToggle value={query.dir} onChange={query.setDir} />
+          <ViewToggle options={VIEW_OPTIONS} value={view} onChange={setView} />
           <ViewToggle
             options={GROUP_OPTIONS}
             value={grouping}
-            onChange={handleGroupingChange}
+            onChange={setGrouping}
             ariaLabel="Grouping"
           />
         </div>
@@ -359,47 +242,89 @@ export function FilteredHouseList({
               isOpen={openRegions.has(group.slug)}
               onToggle={() => toggleRegion(group.slug)}
               listClass={listClass}
-              renderCard={renderCard}
             />
           ))}
         </div>
       ) : filtered.length === 0 ? (
-        <p className={listSearch.empty}>
-          No houses match &ldquo;{debounced}&rdquo;.
-        </p>
+        <ListSearchEmpty noun="houses" query={query.debounced} />
       ) : (
         <>
-          {shouldShowPagination && renderPagination("top")}
+          {shouldShowPagination && (
+            <ListPagination {...pagination} position="top" />
+          )}
           <ul className={listClass}>
-            {pageItems.map((item, index) =>
-              renderCard({ item, priority: index < PRIORITY_COUNT }),
-            )}
+            {pageItems.map((item, index) => (
+              <HouseCard
+                key={item.slug}
+                item={item}
+                priority={index < PRIORITY_COUNT}
+              />
+            ))}
           </ul>
-          {shouldShowPagination && renderPagination("bottom")}
+          {shouldShowPagination && (
+            <ListPagination {...pagination} position="bottom" />
+          )}
         </>
       )}
     </>
   );
 }
 
-type RegionGroup = {
-  slug: string;
-  label: string;
-  items: HouseItem[];
-};
+function HouseCard({ item, priority }: { item: HouseItem; priority: boolean }) {
+  const statusClass = cx(
+    styles.status,
+    item.isExtinct ? styles.statusExtinct : styles.statusExtant,
+  );
+  return (
+    <li className={styles.item}>
+      <Link
+        href={`/houses/${item.slug}/`}
+        className={styles.card}
+        style={regionColorStyle({
+          region: item.region,
+          property: "--card-region",
+        })}
+      >
+        <Sigil
+          slug={item.slug}
+          name={item.name}
+          region={item.region}
+          sizes="84px"
+          isDecorative
+          priority={priority}
+          className={styles.shield}
+        />
+        <span className={styles.body}>
+          <span className={styles.titleRow}>
+            <span className={styles.name}>{item.name}</span>
+            {!!item.regionLabel && (
+              <span className={styles.region}>{item.regionLabel}</span>
+            )}
+          </span>
+          {!!item.rank && (
+            <span className={styles.rank}>{RANK_LABEL[item.rank]}</span>
+          )}
+          <span className={styles.statusSlot}>
+            <span className={statusClass}>
+              {item.isExtinct ? "Extinct" : "Extant"}
+            </span>
+          </span>
+        </span>
+      </Link>
+    </li>
+  );
+}
 
 function RegionAccordion({
   group,
   isOpen,
   onToggle,
   listClass,
-  renderCard,
 }: {
-  group: RegionGroup;
+  group: RegionGroup<HouseItem>;
   isOpen: boolean;
   onToggle: () => void;
   listClass: string;
-  renderCard: (args: CardArgs) => ReactNode;
 }) {
   const [query, setQuery] = useState("");
   const filtered = filterByName({ items: group.items, query });
@@ -421,12 +346,12 @@ function RegionAccordion({
         className={styles.regionSearch}
       />
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>
-          No houses match &ldquo;{query}&rdquo;.
-        </p>
+        <ListSearchEmpty noun="houses" query={query} />
       ) : (
         <ul className={listClass}>
-          {filtered.map((item) => renderCard({ item, priority: false }))}
+          {filtered.map((item) => (
+            <HouseCard key={item.slug} item={item} priority={false} />
+          ))}
         </ul>
       )}
     </Accordion>

@@ -1,31 +1,32 @@
-import { notFound } from "next/navigation";
 import { loadCastle, loadAllCastles, renderMarkdown } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
+import {
+  entryMetadata,
+  loadEntryOr404,
+  publishedSlugParams,
+} from "@/lib/entry-route";
 import { PlateLayout } from "@/components/PlateLayout";
 import { Sources } from "@/components/Sources";
 import styles from "@/app/castles/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
-  const castles = await loadAllCastles();
-  return castles
-    .filter((c) => !c.frontmatter.draft)
-    .map((c) => ({ slug: c.frontmatter.slug }));
+  return publishedSlugParams({ loadAll: loadAllCastles });
 }
 
 export async function generateMetadata({ params }: SlugPageProps) {
-  const slug = await slugFromParams(params);
-  const castle = await loadCastle(slug).catch(() => null);
-  if (!castle) return { title: "Not found" };
-  return {
-    title: `${castle.frontmatter.name} · Atlas of the North`,
-    description: `${castle.frontmatter.name}, ${castle.frontmatter.type} in the North.`,
-  };
+  return entryMetadata({
+    params,
+    load: loadCastle,
+    metadata: (castle) => ({
+      title: `${castle.frontmatter.name} · Atlas of the North`,
+      description: `${castle.frontmatter.name}, ${castle.frontmatter.type} in the North.`,
+    }),
+  });
 }
 
 export default async function CastlePage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);
-  const castle = await loadCastle(slug).catch(() => null);
-  if (!castle) notFound();
+  const castle = await loadEntryOr404({ load: loadCastle, slug });
 
   const html = await renderMarkdown({ source: castle.body });
 

@@ -4,6 +4,8 @@ import { loadAllCastles } from "@/lib/content";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
 import { sectionGlyphs } from "@/components/SectionGlyphs";
+import { humanizeSlug } from "@/lib/text";
+import type { Castle } from "@/lib/schemas";
 import styles from "@/app/castles/page.module.scss";
 
 export const metadata: Metadata = {
@@ -11,8 +13,7 @@ export const metadata: Metadata = {
   description: "The castles, towns, and strongholds of the Known World.",
 };
 
-type Loaded = Awaited<ReturnType<typeof loadAllCastles>>[number];
-type CastleType = Loaded["frontmatter"]["type"];
+type CastleType = Castle["type"];
 
 const TYPE_ORDER = [
   "castle",
@@ -30,22 +31,11 @@ const TYPE_LABELS = {
   ruin: "Ruins",
 } as const satisfies Record<CastleType, string>;
 
-function formatHouse(slug: string): string {
-  return slug
-    .split("-")
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
 export default async function CastlesPage() {
   const castles = await loadAllCastles();
   const visible = castles.filter((c) => !c.frontmatter.draft);
 
-  const byType = visible.reduce((acc, c) => {
-    const type = c.frontmatter.type;
-    acc.set(type, [...(acc.get(type) ?? []), c]);
-    return acc;
-  }, new Map<CastleType, Loaded[]>());
+  const byType = Map.groupBy(visible, (c) => c.frontmatter.type);
 
   const groups = TYPE_ORDER.filter((type) => byType.has(type)).map((type) => ({
     type,
@@ -77,7 +67,7 @@ export default async function CastlesPage() {
                       <span className={styles.name}>{c.frontmatter.name}</span>
                       {!!liege && (
                         <span className={styles.seat}>
-                          House {formatHouse(liege)}
+                          House {humanizeSlug(liege)}
                         </span>
                       )}
                     </Link>

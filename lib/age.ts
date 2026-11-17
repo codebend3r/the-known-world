@@ -1,5 +1,13 @@
-import { absoluteYear } from "@/lib/battle-date";
-import type { Character } from "@/lib/schemas";
+import { absoluteYear, isReckonedEra } from "@/lib/battle-date";
+import type { CalendarDate, Character } from "@/lib/schemas";
+
+/** Only a single reckoned year (AC or BC, exact or year precision) can be aged. */
+export function yieldsAge(date: CalendarDate): boolean {
+  return (
+    isReckonedEra(date.era) &&
+    (date.precision === "year" || date.precision === "exact")
+  );
+}
 
 /**
  * Years lived, or null when the dates cannot support a number.
@@ -17,10 +25,7 @@ export function ageAtDeath({
   died: Character["died"];
 }): number | null {
   if (!born || !died) return null;
-  if (born.era !== "AC" && born.era !== "BC") return null;
-  if (died.era !== "AC" && died.era !== "BC") return null;
-  if (born.precision !== "year" && born.precision !== "exact") return null;
-  if (died.precision !== "year" && died.precision !== "exact") return null;
+  if (!yieldsAge(born) || !yieldsAge(died)) return null;
   const age = absoluteYear(died) - absoluteYear(born);
   if (age < 0) return null;
   return age;

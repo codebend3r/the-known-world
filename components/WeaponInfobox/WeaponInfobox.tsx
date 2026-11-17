@@ -1,12 +1,11 @@
 import { Sigil } from "@/components/Sigil";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
-import { houseLabel, humanizeSlug, shortHouseName } from "@/lib/text";
+import { houseLabel, shortHouseName } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
-import { InfoRow } from "@/components/Infobox";
+import { CharacterInfoRow, InfoField, InfoRow } from "@/components/Infobox";
 import type { Weapon, House, Character, HouseInfoEntry } from "@/lib/schemas";
-import infoboxStyles from "@/components/HouseInfobox/HouseInfobox.module.scss";
-import styles from "@/components/Infobox/Infobox.module.scss";
+import infoboxStyles from "@/components/Infobox/Infobox.module.scss";
 
 type Props = {
   weapon: Weapon;
@@ -65,11 +64,6 @@ export function WeaponInfobox({
     ? [{ slug: current, name: houseLabel({ slug: current, housesBySlug }) }]
     : [];
 
-  const wielders: HouseInfoEntry[] = weapon.wielders.map((slug) => ({
-    slug,
-    name: charactersBySlug.get(slug)?.name ?? humanizeSlug(slug),
-  }));
-
   const aliases: HouseInfoEntry[] = weapon.aliases.map((a) => ({ name: a }));
 
   return (
@@ -93,30 +87,17 @@ export function WeaponInfobox({
       )}
 
       <dl className={infoboxStyles.rows}>
-        <div className={styles.row}>
-          <dt>Type</dt>
-          <dd>{TYPE_LABEL[weapon.type]}</dd>
-        </div>
-        <div className={styles.row}>
-          <dt>Material</dt>
-          <dd>{MATERIAL_LABEL[weapon.material]}</dd>
-        </div>
-        {weapon.forged && (
-          <div className={styles.row}>
-            <dt>Forged</dt>
-            <dd>{formatEraDate(weapon.forged)}</dd>
-          </div>
-        )}
-        {weapon.destroyed && (
-          <div className={styles.row}>
-            <dt>Destroyed</dt>
-            <dd>{formatEraDate(weapon.destroyed)}</dd>
-          </div>
-        )}
-        <div className={styles.row}>
-          <dt>Status</dt>
-          <dd>{STATUS_LABEL[weapon.status]}</dd>
-        </div>
+        <InfoField label="Type">{TYPE_LABEL[weapon.type]}</InfoField>
+        <InfoField label="Material">
+          {MATERIAL_LABEL[weapon.material]}
+        </InfoField>
+        <InfoField label="Forged">
+          {weapon.forged ? formatEraDate(weapon.forged) : null}
+        </InfoField>
+        <InfoField label="Destroyed">
+          {weapon.destroyed ? formatEraDate(weapon.destroyed) : null}
+        </InfoField>
+        <InfoField label="Status">{STATUS_LABEL[weapon.status]}</InfoField>
         <InfoRow
           label="Origin house"
           entries={originEntries}
@@ -131,19 +112,14 @@ export function WeaponInfobox({
             exists={(s) => housesBySlug.has(s)}
           />
         ) : (
-          <div className={styles.row}>
-            <dt>Current house</dt>
-            <dd>{CURRENT_HOUSE_FALLBACK[weapon.status]}</dd>
-          </div>
+          <InfoField label="Current house">
+            {CURRENT_HOUSE_FALLBACK[weapon.status]}
+          </InfoField>
         )}
-        <InfoRow
-          label={wielders.length === 1 ? "Wielder" : "Wielders"}
-          entries={wielders}
-          hrefPrefix="/characters"
-          exists={(s) => {
-            const c = charactersBySlug.get(s);
-            return !!c && !c.placeholder;
-          }}
+        <CharacterInfoRow
+          label={weapon.wielders.length === 1 ? "Wielder" : "Wielders"}
+          slugs={weapon.wielders}
+          charactersBySlug={charactersBySlug}
         />
         <InfoRow label="Aliases" entries={aliases} />
       </dl>

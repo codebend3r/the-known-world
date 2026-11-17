@@ -1,12 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useQueryState } from "nuqs";
-import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
-import { ListSearchInput } from "@/components/ListSearchInput";
+import { ListSearchEmpty, ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
-import { filterByName } from "@/lib/search";
-import { searchParser } from "@/lib/listSearchParams";
+import { useUrlSearchFilter } from "@/lib/useUrlSearchFilter";
 import type { RegionSlug } from "@/lib/regions";
 import type { Weapon } from "@/lib/schemas";
 import listSearch from "@/components/listSearch.module.scss";
@@ -15,7 +12,6 @@ import styles from "@/components/FilteredWeaponList/FilteredWeaponList.module.sc
 export type WeaponItem = Pick<Weapon, "slug" | "name"> & {
   houseSlug: string | null;
   region: RegionSlug | null;
-  regionLabel: string | null;
   hasImage: boolean;
 };
 
@@ -24,13 +20,9 @@ type Props = {
 };
 
 export function FilteredWeaponList({ items }: Props) {
-  const [urlSearch, setUrlSearch] = useQueryState("search", searchParser);
-  const { value, debounced, onChange } = useDebouncedSearch({
-    urlValue: urlSearch,
-    commit: setUrlSearch,
+  const { value, debounced, onChange, filtered } = useUrlSearchFilter({
+    items,
   });
-
-  const filtered = filterByName({ items, query: debounced });
 
   return (
     <>
@@ -43,9 +35,7 @@ export function FilteredWeaponList({ items }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>
-          No weapons match &ldquo;{debounced}&rdquo;.
-        </p>
+        <ListSearchEmpty noun="weapons" query={debounced} />
       ) : (
         <ul className={styles.list}>
           {filtered.map((item) => (

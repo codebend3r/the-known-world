@@ -92,10 +92,12 @@ describe("FilteredHouseList", () => {
     expect(screen.getByText(/no houses match/i)).toBeDefined();
   });
 
-  it("applies the region-tinted class to each card", () => {
-    const { container } = renderWithNuqs(<FilteredHouseList items={items} />);
-    expect(container.querySelector(".cardNorth")).not.toBeNull();
-    expect(container.querySelector(".cardWesterlands")).not.toBeNull();
+  it("tints each card with its region's colour", () => {
+    renderWithNuqs(<FilteredHouseList items={items} />);
+    const stark = screen.getByRole("link", { name: /stark/i });
+    expect(stark.style.getPropertyValue("--card-region")).toBe(
+      "var(--region-color-north)",
+    );
   });
 
   it("shows the total house count across all pages", () => {

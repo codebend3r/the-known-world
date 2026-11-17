@@ -6,7 +6,12 @@ import {
   PORTRAIT_EXTENSIONS,
   PORTRAIT_VIDEO_EXTENSIONS,
 } from "@/lib/portraits";
-import type { PortraitFile } from "@/lib/portrait-integrity";
+import {
+  describeFiles,
+  groupByStem,
+  isStemOfSlug,
+  pickByExtension,
+} from "@/lib/portrait-files";
 import type { Character } from "@/lib/schemas";
 import { humanizeSlug } from "@/lib/text";
 
@@ -39,40 +44,6 @@ export type PortraitVariant = {
 
 const PORTRAIT_DIR = path.join(process.cwd(), "public", "characters");
 
-function parse(file: string): PortraitFile {
-  const dot = file.lastIndexOf(".");
-  return {
-    file,
-    stem: dot === -1 ? file : file.slice(0, dot),
-    extension: dot === -1 ? "" : file.slice(dot + 1).toLowerCase(),
-  };
-}
-
-/** The first entry matching the probe order, mirroring `findPortrait`. */
-function pick({
-  entries,
-  extensions,
-}: {
-  entries: readonly PortraitFile[];
-  extensions: readonly string[];
-}): PortraitFile | null {
-  return extensions.reduce<PortraitFile | null>(
-    (winner, extension) =>
-      winner ?? entries.find((entry) => entry.extension === extension) ?? null,
-    null,
-  );
-}
-
-function groupByStem(
-  entries: readonly PortraitFile[],
-): Map<string, PortraitFile[]> {
-  return entries.reduce<Map<string, PortraitFile[]>>(
-    (groups, entry) =>
-      groups.set(entry.stem, [...(groups.get(entry.stem) ?? []), entry]),
-    new Map(),
-  );
-}
-
 /**
  * Everything after `<slug>-`, humanised: `kingsguard` → `Kingsguard`.
  *
@@ -104,22 +75,19 @@ export function buildPortraitVariants({
   name: string;
   files: readonly string[];
 }): PortraitVariant[] {
-  const entries = files
-    .filter((file) => !file.startsWith("."))
-    .map(parse)
-    .filter(
-      (entry) => entry.stem === slug || entry.stem.startsWith(`${slug}-`),
-    );
+  const entries = describeFiles(files).filter((entry) =>
+    isStemOfSlug({ slug, stem: entry.stem }),
+  );
 
   const variants = [...groupByStem(entries).entries()].flatMap(
     ([stem, candidates]) => {
-      const image = pick({
-        entries: candidates,
+      const image = pickByExtension({
+        candidates,
         extensions: PORTRAIT_EXTENSIONS,
       });
       if (!image) return [];
-      const video = pick({
-        entries: candidates,
+      const video = pickByExtension({
+        candidates,
         extensions: PORTRAIT_VIDEO_EXTENSIONS,
       });
       const isPrimary = stem === slug;

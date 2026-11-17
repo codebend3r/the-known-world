@@ -1,14 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useQueryState } from "nuqs";
-import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
-import { ListSearchInput } from "@/components/ListSearchInput";
+import { ListSearchEmpty, ListSearchInput } from "@/components/ListSearchInput";
 import { Sigil } from "@/components/Sigil";
-import { filterByName } from "@/lib/search";
 import { cx } from "@/lib/cx";
-import { searchParser } from "@/lib/listSearchParams";
-import type { RegionSlug } from "@/lib/regions";
+import { regionColorStyle, type RegionSlug } from "@/lib/regions";
+import { useUrlSearchFilter } from "@/lib/useUrlSearchFilter";
 import type { Dragon } from "@/lib/schemas";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredDragonList/FilteredDragonList.module.scss";
@@ -16,33 +13,16 @@ import styles from "@/components/FilteredDragonList/FilteredDragonList.module.sc
 export type DragonItem = Pick<Dragon, "slug" | "name"> & {
   houseSlug: string | null;
   region: RegionSlug | null;
-  regionLabel: string | null;
 };
 
 type Props = {
   items: DragonItem[];
 };
 
-const REGION_CARD_CLASS = {
-  north: styles.cardNorth,
-  vale: styles.cardVale,
-  riverlands: styles.cardRiverlands,
-  westerlands: styles.cardWesterlands,
-  reach: styles.cardReach,
-  stormlands: styles.cardStormlands,
-  dorne: styles.cardDorne,
-  "iron-islands": styles.cardIronIslands,
-  crownlands: styles.cardCrownlands,
-} as const satisfies Record<RegionSlug, string>;
-
 export function FilteredDragonList({ items }: Props) {
-  const [urlSearch, setUrlSearch] = useQueryState("search", searchParser);
-  const { value, debounced, onChange } = useDebouncedSearch({
-    urlValue: urlSearch,
-    commit: setUrlSearch,
+  const { value, debounced, onChange, filtered } = useUrlSearchFilter({
+    items,
   });
-
-  const filtered = filterByName({ items, query: debounced });
 
   return (
     <>
@@ -55,37 +35,36 @@ export function FilteredDragonList({ items }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>
-          No dragons match &ldquo;{debounced}&rdquo;.
-        </p>
+        <ListSearchEmpty noun="dragons" query={debounced} />
       ) : (
         <ul className={styles.list}>
-          {filtered.map((item) => {
-            const regionClass = item.region
-              ? REGION_CARD_CLASS[item.region]
-              : styles.cardWild;
-            const cardClass = cx(styles.card, regionClass);
-            return (
-              <li key={item.slug} className={styles.item}>
-                <Link href={`/dragons/${item.slug}/`} className={cardClass}>
-                  {item.houseSlug ? (
-                    <Sigil
-                      slug={item.houseSlug}
-                      name={item.name}
-                      region={item.region}
-                      size="6rem"
-                      isDecorative
-                    />
-                  ) : (
-                    <span className={styles.wildBadge} aria-hidden="true">
-                      Wild
-                    </span>
-                  )}
-                  <span className={styles.name}>{item.name}</span>
-                </Link>
-              </li>
-            );
-          })}
+          {filtered.map((item) => (
+            <li key={item.slug} className={styles.item}>
+              <Link
+                href={`/dragons/${item.slug}/`}
+                className={cx(styles.card, !item.region && styles.cardWild)}
+                style={regionColorStyle({
+                  region: item.region,
+                  property: "--region-wash",
+                })}
+              >
+                {item.houseSlug ? (
+                  <Sigil
+                    slug={item.houseSlug}
+                    name={item.name}
+                    region={item.region}
+                    size="6rem"
+                    isDecorative
+                  />
+                ) : (
+                  <span className={styles.wildBadge} aria-hidden="true">
+                    Wild
+                  </span>
+                )}
+                <span className={styles.name}>{item.name}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
       )}
     </>

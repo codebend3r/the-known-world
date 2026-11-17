@@ -123,7 +123,6 @@ When you do need to check AWOIAF, direct `WebFetch` is Cloudflare-blocked and 40
 | Treating the orphan count as the number to drive down             | 125 of the 439 are battles and events, which no body can link to at all. The count is a triage input, not a target.                                                             |
 | Fixing an asymmetry by deleting the declaration                   | That destroys a fact to silence a check. Add the missing reciprocal instead.                                                                                                    |
 | Completing a reciprocal into a duplicate entry                    | `jason-lannister` duplicated `jason-lannister-dance`; agreeing with it would have rendered the same man twice as Loreon's parent. Check for a same-name twin before completing. |
-| Assuming `lib/relations.ts` already does this                     | `findOrphanSlugs` there finds _dangling_ slugs, not orphans, and nothing outside its own test imports the module.                                                               |
 | Reporting `houses.seat` / `castles.liege-house` drift as a defect | 22 seats mismatch and all 22 are correct; Harrenhal alone has five former holders. One-to-many on purpose.                                                                      |
 
 ## Related skills

@@ -1,22 +1,25 @@
-import type { Battle } from "@/lib/schemas";
+import type { CalendarDate } from "@/lib/schemas";
+import { humanizeSlug } from "@/lib/text";
 
-type BattleDate = Battle["start"];
+type ReckonedEra = Extract<CalendarDate["era"], "AC" | "BC">;
 
-function eraYearLabel(d: BattleDate): string {
-  if (d.era === "AC" || d.era === "BC") return `${Math.abs(d.year)} ${d.era}`;
-  return d.era
-    .split("-")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
+/** AC and BC count years from the Conquest; every other era is a named age. */
+export function isReckonedEra(era: CalendarDate["era"]): era is ReckonedEra {
+  return era === "AC" || era === "BC";
+}
+
+function eraYearLabel(d: CalendarDate): string {
+  if (isReckonedEra(d.era)) return `${Math.abs(d.year)} ${d.era}`;
+  return humanizeSlug(d.era);
 }
 
 /** A date is approximate (and rendered with an asterisk) unless it is exact. */
-export function isApproximate(d: BattleDate): boolean {
+export function isApproximate(d: CalendarDate): boolean {
   return d.precision !== "exact";
 }
 
 /** Absolute year on a single axis (BC negative), for chronological sorting. */
-export function absoluteYear(d: BattleDate): number {
+export function absoluteYear(d: CalendarDate): number {
   return d.era === "BC" ? -d.year : d.year;
 }
 
@@ -24,13 +27,13 @@ function spanLabel({
   start,
   end,
 }: {
-  start: BattleDate;
-  end: BattleDate;
+  start: CalendarDate;
+  end: CalendarDate;
 }): string {
   if (start.year === end.year && start.era === end.era) {
     return eraYearLabel(start);
   }
-  if ((start.era === "AC" || start.era === "BC") && start.era === end.era) {
+  if (isReckonedEra(start.era) && start.era === end.era) {
     return `${Math.abs(start.year)} to ${Math.abs(end.year)} ${end.era}`;
   }
   return `${eraYearLabel(start)} to ${eraYearLabel(end)}`;
@@ -44,8 +47,8 @@ export function formatBattleWhen({
   start,
   end,
 }: {
-  start: BattleDate;
-  end: BattleDate;
+  start: CalendarDate;
+  end: CalendarDate;
 }): string {
   const isSpanApproximate = isApproximate(start) || isApproximate(end);
   return `${spanLabel({ start, end })}${isSpanApproximate ? "*" : ""}`;

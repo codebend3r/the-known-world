@@ -21,11 +21,11 @@ The research half of the job is identical across all five: one AWOIAF article, o
 
 **The core insight: an empty field is not automatically a gap.** Several schema fields are empty on every entry in their collection because nothing renders them, so filling one in is noise, not progress:
 
-| Field                  | Filled | Why it stays empty                                                                  |
-| ---------------------- | ------ | ----------------------------------------------------------------------------------- |
-| `castles.sworn-houses` | 0/146  | Only `lib/relations.ts` reads it, and nothing in `app/` calls `buildRelationGraph`. |
-| `events.participants`  | 0/53   | The event page renders subtitle, body, and sources. Nothing else.                   |
-| `events.casualties`    | 0/53   | Same.                                                                               |
+| Field                  | Filled | Why it stays empty                                                                |
+| ---------------------- | ------ | --------------------------------------------------------------------------------- |
+| `castles.sworn-houses` | 0/146  | Only `lib/content-integrity.ts` reads it, to check slugs; nothing in `app/` does. |
+| `events.participants`  | 0/53   | The event page renders subtitle, body, and sources. Nothing else.                 |
+| `events.casualties`    | 0/53   | Same.                                                                             |
 
 `audit-entries.ts` encodes this: a field only counts against an entry when the rest of its own collection fills it. Score is deviation from the collection norm, not distance from the schema.
 
@@ -133,7 +133,7 @@ The most complex frontmatter in the repo, and every field below renders in `Batt
 | `aliases`  | no       | Prose-link surface forms for the event, written without a leading article.                                                   |
 | `mentions` | no       | Same rule as battles: first-name characters and bare-name houses the body uses. One character per first name.                |
 
-`buildRelationGraph` in `lib/relations.ts` keys `eventsByLocation` off `location` as though it were a castle slug. No entry stores a slug there, so that map is empty. Do not "fix" one entry to a slug; the page prints `location` verbatim in the subtitle.
+Nothing reads `location` as a castle slug, and no entry stores one there. Do not "fix" one entry to a slug; the page prints `location` verbatim in the subtitle.
 
 ### weapons (`WeaponSchema`)
 

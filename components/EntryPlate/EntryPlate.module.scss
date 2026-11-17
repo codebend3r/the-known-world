@@ -1,19 +1,16 @@
 @use "breakpoints" as bp;
 
-.body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
-}
-
 .detail {
   display: grid;
+  align-items: start;
+}
+
+.sidebar {
   grid-template-columns: minmax(0, 1fr) 372px;
   grid-template-areas:
     "heading heading"
     "main    infobox";
   gap: 32px 44px;
-  align-items: start;
 
   @media (max-width: bp.$lg) {
     grid-template-columns: minmax(0, 1fr);
@@ -23,6 +20,33 @@
       "main";
     gap: 26px;
   }
+}
+
+.banner {
+  grid-template-columns: minmax(0, 1fr) 372px;
+  grid-template-areas:
+    "heading heading"
+    "banner  banner"
+    "main    infobox";
+  gap: 32px 44px;
+
+  @media (max-width: bp.$lg) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "heading"
+      "banner"
+      "infobox"
+      "main";
+    gap: 26px;
+  }
+}
+
+.narrow {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "heading"
+    "main";
+  gap: 32px;
 }
 
 .heading {
@@ -49,6 +73,14 @@
   }
 }
 
+.bannerSlot {
+  grid-area: banner;
+}
+
+.infobox {
+  grid-area: infobox;
+}
+
 .main {
   grid-area: main;
   display: grid;
@@ -57,10 +89,17 @@
   align-content: start;
 }
 
-.infobox {
-  grid-area: infobox;
+.measure {
+  width: min(100%, 46rem);
 }
 
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+// The plate's way back: a mono breadcrumb, not a sentence.
 .back {
   padding-top: 1rem;
   font-family: var(--font-mono);

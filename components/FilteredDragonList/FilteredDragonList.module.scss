@@ -43,36 +43,6 @@
   }
 }
 
-// Heraldic colour as data: the shield's metal takes the rider house's region
-// tint. Colours live in `globals.scss` as `--region-color-*` tokens.
-.cardNorth {
-  --region-wash: var(--region-color-north);
-}
-.cardVale {
-  --region-wash: var(--region-color-vale);
-}
-.cardRiverlands {
-  --region-wash: var(--region-color-riverlands);
-}
-.cardWesterlands {
-  --region-wash: var(--region-color-westerlands);
-}
-.cardReach {
-  --region-wash: var(--region-color-reach);
-}
-.cardStormlands {
-  --region-wash: var(--region-color-stormlands);
-}
-.cardDorne {
-  --region-wash: var(--region-color-dorne);
-}
-.cardIronIslands {
-  --region-wash: var(--region-color-iron-islands);
-}
-.cardCrownlands {
-  --region-wash: var(--region-color-crownlands);
-}
-
 .name {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
@@ -81,6 +51,9 @@
   color: var(--tkw-ink);
 }
 
+// Heraldic colour as data: a rider house's region tint arrives inline as
+// `--region-wash`, pointing at a `--region-color-*` token from `globals.scss`;
+// a wild dragon takes the dim ink instead.
 .cardWild {
   --region-wash: var(--tkw-ink-dim);
 }

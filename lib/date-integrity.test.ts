@@ -1,11 +1,11 @@
 import { describe, expect, it } from "bun:test";
+import type { Collections } from "@/lib/content";
 import { contentIntegrityErrors } from "@/lib/content-integrity";
 import {
   dateIntegrityDefects,
   dateIntegrityErrors,
   ERA_YEAR_BOUNDS,
   MAX_LIFESPAN_YEARS,
-  type DateCollections,
   type DateDefectClass,
 } from "@/lib/date-integrity";
 import {
@@ -18,7 +18,7 @@ import {
   WeaponSchema,
 } from "@/lib/schemas";
 
-function emptyCollections(): DateCollections {
+function emptyCollections(): Collections {
   return {
     battles: [],
     castles: [],
@@ -104,7 +104,7 @@ function y(year: number) {
   return { year, era: "AC", precision: "year" };
 }
 
-function classesOf(collections: DateCollections): DateDefectClass[] {
+function classesOf(collections: Collections): DateDefectClass[] {
   return dateIntegrityDefects(collections).map((defect) => defect.defect);
 }
 

@@ -1,0 +1,25 @@
+// Rule 06: one clip-path, every scale. The plate carries the metal, the inner
+// face carries the house colour, so the rim survives the clipped diagonals.
+%shieldPlate {
+  position: relative;
+  display: grid;
+  place-items: center;
+  clip-path: var(--tkw-shield);
+  background: var(--shield-metal);
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--shield-ink);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    clip-path: var(--tkw-shield);
+    background: linear-gradient(
+      180deg,
+      var(--shield-bg),
+      color-mix(in srgb, var(--shield-bg) 45%, var(--tkw-black))
+    );
+    z-index: -1;
+  }
+}

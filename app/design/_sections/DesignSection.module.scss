@@ -1,0 +1,52 @@
+// The in-repo catalogue of Iron Throne v1. Everything here is drawn with the
+// same tokens the app uses, so the page fails visibly if a token is retuned.
+
+.section {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+  padding-top: 26px;
+  border-top: 1px solid var(--tkw-hairline);
+}
+
+.sectionHeading {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-section);
+  font-weight: 500;
+  letter-spacing: var(--ls-section);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+
+  &::before {
+    content: "▚ ";
+  }
+}
+
+.sectionLede {
+  max-width: 72ch;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-meta);
+  line-height: var(--lh-lede);
+  color: var(--tkw-ink-muted);
+  padding-bottom: 10px;
+
+  em {
+    font-style: italic;
+    color: var(--tkw-ink-body);
+  }
+}
+
+.inlineCode {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--tkw-gold-bright);
+}
+
+.swatchToken {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-tight);
+  color: var(--tkw-ink-dim);
+}

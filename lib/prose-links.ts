@@ -11,6 +11,7 @@ import type {
   Weapon,
 } from "@/lib/schemas";
 import { firstByKey } from "@/lib/collections";
+import { shortHouseName } from "@/lib/text";
 
 export type ProseLinkKind =
   | "character"
@@ -43,7 +44,6 @@ const KIND_PATH = {
   event: "events",
 } as const satisfies Record<ProseLinkKind, string>;
 
-const HOUSE_PREFIX = /^House\s+/i;
 const ARTICLE_PREFIX = /^The\s+/;
 const SKIP_ANCESTOR_TYPES = new Set([
   "link",
@@ -57,10 +57,6 @@ function firstNameToken(name: string): string {
   const trimmed = name.trim();
   const idx = trimmed.search(/\s/);
   return idx === -1 ? trimmed : trimmed.slice(0, idx);
-}
-
-function shortHouseName(name: string): string {
-  return name.replace(HOUSE_PREFIX, "");
 }
 
 // The match is case-sensitive and prose writes "the Twins", so a name that
@@ -111,30 +107,41 @@ function targetsOf<T extends { slug: string; draft: boolean }>({
   });
 }
 
-export function buildProseLinkIndex(args: {
-  allCharacters: ReadonlyArray<{ slug: string; frontmatter: Character }>;
-  allHouses: ReadonlyArray<{ slug: string; frontmatter: House }>;
-  allWeapons: ReadonlyArray<{ slug: string; frontmatter: Weapon }>;
-  allDragons: ReadonlyArray<{ slug: string; frontmatter: Dragon }>;
-  allCastles: ReadonlyArray<{ slug: string; frontmatter: Castle }>;
-  allBattles: ReadonlyArray<{ slug: string; frontmatter: Battle }>;
-  allEvents: ReadonlyArray<{ slug: string; frontmatter: Event }>;
-  current: {
-    kind: ProseLinkKind;
-    slug: string;
-    mentions: readonly string[];
-  };
+type Entries<T> = ReadonlyArray<{ slug: string; frontmatter: T }>;
+
+/** The collections an index draws its targets from; `Collections` satisfies it. */
+export type ProseLinkCollections = {
+  battles: Entries<Battle>;
+  castles: Entries<Castle>;
+  characters: Entries<Character>;
+  dragons: Entries<Dragon>;
+  events: Entries<Event>;
+  houses: Entries<House>;
+  weapons: Entries<Weapon>;
+};
+
+export type ProseLinkCurrent = {
+  kind: ProseLinkKind;
+  slug: string;
+  mentions: readonly string[];
+};
+
+export function buildProseLinkIndex({
+  collections,
+  current,
+}: {
+  collections: ProseLinkCollections;
+  current: ProseLinkCurrent;
 }): ProseLinkIndex {
   const {
-    allCharacters,
-    allHouses,
-    allWeapons,
-    allDragons,
-    allCastles,
-    allBattles,
-    allEvents,
-    current,
-  } = args;
+    characters: allCharacters,
+    houses: allHouses,
+    weapons: allWeapons,
+    dragons: allDragons,
+    castles: allCastles,
+    battles: allBattles,
+    events: allEvents,
+  } = collections;
   const mentioned = new Set(current.mentions);
 
   const characterTargets = targetsOf({

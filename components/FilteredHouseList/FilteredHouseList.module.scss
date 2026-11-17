@@ -89,7 +89,8 @@
 
 // The register row: shield on the left, the house's particulars on the right.
 // `--card-region` carries the region's heraldic tint through the border and the
-// hover glow; houses with no region keep the gold default.
+// hover glow. The tint arrives inline, pointing at a `--region-color-*` token
+// from `globals.scss`; houses with no region keep the gold default.
 .card {
   --card-region: var(--tkw-gold);
 
@@ -211,37 +212,6 @@
   color: var(--tkw-extinct);
   background: color-mix(in srgb, var(--tkw-extinct) 16%, transparent);
   border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
-}
-
-// Heraldic colour as data: the row takes its region's own tint for the resting
-// border and the hover glow. Colours live in `globals.scss` as
-// `--region-color-*` tokens (shared with `FilteredCharacterList`).
-.cardNorth {
-  --card-region: var(--region-color-north);
-}
-.cardVale {
-  --card-region: var(--region-color-vale);
-}
-.cardRiverlands {
-  --card-region: var(--region-color-riverlands);
-}
-.cardWesterlands {
-  --card-region: var(--region-color-westerlands);
-}
-.cardReach {
-  --card-region: var(--region-color-reach);
-}
-.cardStormlands {
-  --card-region: var(--region-color-stormlands);
-}
-.cardDorne {
-  --card-region: var(--region-color-dorne);
-}
-.cardIronIslands {
-  --card-region: var(--region-color-iron-islands);
-}
-.cardCrownlands {
-  --card-region: var(--region-color-crownlands);
 }
 
 // List view: same `<ul>`, one register row per line across the full measure.

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { regionForHouse, regionLabel } from "@/lib/regions";
+import { regionColorStyle, regionForHouse, regionLabel } from "@/lib/regions";
 import { HouseSchema, type House } from "@/lib/schemas";
 
 const founded = { year: 0, era: "AC", precision: "year" };
@@ -147,5 +147,19 @@ describe("regionLabel", () => {
 
   it("returns null when the slug is null", () => {
     expect(regionLabel(null)).toBeNull();
+  });
+});
+
+describe("regionColorStyle", () => {
+  it("points the named property at the region's colour token", () => {
+    expect(
+      regionColorStyle({ region: "iron-islands", property: "--card-region" }),
+    ).toEqual({ "--card-region": "var(--region-color-iron-islands)" });
+  });
+
+  it("leaves the property unset when there is no region", () => {
+    expect(
+      regionColorStyle({ region: null, property: "--card-region" }),
+    ).toEqual({});
   });
 });

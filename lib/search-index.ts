@@ -11,7 +11,7 @@ import { shortHouseName } from "@/lib/text";
 //
 // `zod/mini` rather than `zod`: this runs in the browser, and the full build
 // would outweigh the payload it validates.
-export const searchIndexItemSchema = z.object({
+const searchIndexItemSchema = z.object({
   slug: z.string(),
   name: z.string(),
   // The muted parenthetical beside the name: an alias, a region, a byname.

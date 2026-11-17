@@ -13,8 +13,6 @@ export const metadata: Metadata = {
   description: "The wars, battles, and sieges of the Known World.",
 };
 
-type Loaded = Awaited<ReturnType<typeof loadAllBattles>>[number];
-
 export default async function BattlesPage() {
   const battles = await loadAllBattles();
   const visible = battles.filter((b) => !b.frontmatter.draft);
@@ -29,11 +27,7 @@ export default async function BattlesPage() {
     imaged.filter((entry) => entry.hasImage).map((entry) => entry.slug),
   );
 
-  const byWar = visible.reduce((acc, b) => {
-    const war = b.frontmatter.war ?? "Other";
-    acc.set(war, [...(acc.get(war) ?? []), b]);
-    return acc;
-  }, new Map<string, Loaded[]>());
+  const byWar = Map.groupBy(visible, (b) => b.frontmatter.war ?? "Other");
 
   const groups = Array.from(byWar.entries())
     .map(([war, items]) => {

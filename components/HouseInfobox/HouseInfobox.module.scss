@@ -1,40 +1,3 @@
-@use "breakpoints" as bp;
-
-// The shared infobox shell: one surfaced plate on a firm hairline, opened by a
-// gold caption bar. `BattleInfobox`, `DragonInfobox`, and `WeaponInfobox` all
-// borrow these classes, so anything house-specific stays out of here.
-.infobox {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  align-content: start;
-  gap: 0;
-  width: 100%;
-  overflow: hidden;
-  background: var(--tkw-surface);
-  border: 1px solid var(--tkw-hairline-firm);
-  border-radius: var(--tkw-radius-lg);
-  font-family: var(--font-body);
-  color: var(--tkw-ink-body);
-
-  @media (max-width: bp.$md) {
-    width: 100%;
-    justify-self: stretch;
-  }
-}
-
-.caption {
-  padding: 14px 18px;
-  background: var(--tkw-caption-wash);
-  border-bottom: 1px solid var(--tkw-hairline-firm);
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  font-weight: 400;
-  letter-spacing: var(--ls-caption);
-  text-transform: uppercase;
-  color: var(--tkw-gold-bright);
-  line-height: var(--lh-compact);
-}
-
 // The house banner: a variable-height plate clipped to the banner silhouette,
 // washed with the region's heraldic tint. It sits above the caption bar so the
 // house identifies itself before the plate names it.
@@ -51,45 +14,4 @@
     ),
     var(--tkw-bg-deep);
   clip-path: var(--tkw-banner);
-}
-
-// Zero side padding so the sigil's `100cqw` square measures the full banner
-// width; the artwork carries its own margin, so the plate needs none.
-.sigil {
-  container-type: inline-size;
-  justify-items: center;
-  display: grid;
-  padding: 8px 0 0;
-}
-
-// Passed to `<Sigil className=...>` so the sigil fills its container.
-// `100cqw` resolves against `.sigil` (the established container), avoiding
-// the circular trap of percentage sizes.
-// Doubled class selector raises specificity above `.sigil` in
-// `Sigil.module.scss` so the override holds regardless of stylesheet
-// insertion order (Next.js client-side navigation appends CSS chunks
-// in a different order than SSR, which would otherwise let `.sigil`'s
-// `6rem` win).
-.sigilFill.sigilFill {
-  --sigil-size: 100cqw;
-}
-
-// The artwork already draws its own rimmed shield, so the gold plate behind it
-// is dropped and the shield clip-path with it, leaving the PNG's silhouette to
-// read on the banner ground. Matches the house register.
-.sigilFill.sigilFill::before {
-  content: none;
-}
-
-.sigilFill.sigilFill img {
-  clip-path: none;
-  transform: none;
-}
-
-.rows {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
-  margin: 0;
-  padding: 16px 18px 20px;
 }

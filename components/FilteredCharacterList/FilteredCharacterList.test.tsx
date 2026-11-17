@@ -88,12 +88,17 @@ describe("FilteredCharacterList", () => {
     ).toBeDefined();
   });
 
-  it("applies a region-tinted modifier class per card", () => {
+  it("tints each card with its region's colour", () => {
     const { container } = renderWithNuqs(
       <FilteredCharacterList items={items} />,
     );
-    expect(container.querySelector(".cardNorth")).not.toBeNull();
-    expect(container.querySelector(".cardWesterlands")).not.toBeNull();
+    const card = container.querySelector<HTMLElement>(
+      'a[href="/characters/eddard-stark/"]',
+    );
+    expect(card?.classList.contains("cardRegion") ?? false).toBe(true);
+    expect(card?.style.getPropertyValue("--region-wash") ?? "").toBe(
+      "var(--region-color-north)",
+    );
   });
 
   it("falls back to the base card class when no region is known", () => {
@@ -112,7 +117,7 @@ describe("FilteredCharacterList", () => {
       <FilteredCharacterList items={noRegion} />,
     );
     expect(container.querySelector(".card")).not.toBeNull();
-    expect(container.querySelector("[data-region]")).toBeNull();
+    expect(container.querySelector(".cardRegion")).toBeNull();
   });
 
   it("renders the alias in brackets when present", () => {

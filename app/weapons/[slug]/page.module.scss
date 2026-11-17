@@ -1,66 +1,4 @@
-@use "breakpoints" as bp;
-
-.body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
-}
-
-.detail {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 372px;
-  grid-template-areas:
-    "heading heading"
-    "image   image"
-    "main    infobox";
-  gap: 32px 44px;
-  align-items: start;
-
-  @media (max-width: bp.$lg) {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "heading"
-      "image"
-      "infobox"
-      "main";
-    gap: 26px;
-  }
-}
-
-.heading {
-  grid-area: heading;
-  display: grid;
-  justify-items: start;
-  gap: 14px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--tkw-hairline);
-
-  h1 {
-    font-size: var(--fs-h1-entry);
-    line-height: var(--lh-title);
-
-    @media (max-width: bp.$lg) {
-      font-size: var(--fs-h1-entry-lg);
-    }
-
-    @media (max-width: bp.$sm) {
-      font-size: var(--fs-h1-entry-sm);
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-}
-
-.main {
-  grid-area: main;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 22px;
-  align-content: start;
-}
-
 .figure {
-  grid-area: image;
   display: grid;
   width: 100%;
   overflow: hidden;
@@ -72,27 +10,5 @@
   img {
     width: 100%;
     height: auto;
-  }
-}
-
-.infobox {
-  grid-area: infobox;
-}
-
-.back {
-  padding-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: var(--ls-kicker);
-  text-transform: uppercase;
-
-  a {
-    color: var(--tkw-ink-dim);
-    text-decoration: none;
-
-    &:hover,
-    &:focus-visible {
-      color: var(--tkw-gold-bright);
-    }
   }
 }

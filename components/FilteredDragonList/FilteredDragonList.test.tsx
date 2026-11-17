@@ -18,21 +18,18 @@ const items: DragonItem[] = [
     name: "Balerion",
     houseSlug: "targaryen",
     region: "crownlands",
-    regionLabel: "The Crownlands",
   },
   {
     slug: "vhagar",
     name: "Vhagar",
     houseSlug: "targaryen",
     region: "crownlands",
-    regionLabel: "The Crownlands",
   },
   {
     slug: "cannibal",
     name: "The Cannibal",
     houseSlug: null,
     region: null,
-    regionLabel: null,
   },
 ];
 

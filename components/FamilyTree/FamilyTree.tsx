@@ -15,7 +15,7 @@ function NameContent({ name, alias }: { name: string; alias: string | null }) {
   return (
     <>
       {name}
-      {alias && <span className={styles.alias}> ({alias})</span>}
+      {!!alias && <span className={styles.alias}> ({alias})</span>}
     </>
   );
 }
@@ -88,7 +88,7 @@ function PersonLabel({ node }: { node: TreeNode }) {
         isPlaceholder={node.isPlaceholder}
         className={className}
       />
-      {lifespan && <span className={styles.lifespan}>{lifespan}</span>}
+      {!!lifespan && <span className={styles.lifespan}>{lifespan}</span>}
     </span>
   );
 }

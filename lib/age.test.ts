@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { ageAtDeath } from "@/lib/age";
+import { ageAtDeath, yieldsAge } from "@/lib/age";
 
 describe("ageAtDeath", () => {
   it("subtracts year-precision AC dates", () => {
@@ -72,5 +72,19 @@ describe("ageAtDeath", () => {
         died: { year: 280, era: "AC", precision: "year" },
       }),
     ).toBeNull();
+  });
+});
+
+describe("yieldsAge", () => {
+  it("accepts a reckoned era at year or exact precision", () => {
+    expect(yieldsAge({ year: 1, era: "AC", precision: "exact" })).toBe(true);
+    expect(yieldsAge({ year: 1, era: "BC", precision: "year" })).toBe(true);
+  });
+
+  it("rejects a named age or a coarse precision", () => {
+    expect(yieldsAge({ year: 1, era: "long-night", precision: "year" })).toBe(
+      false,
+    );
+    expect(yieldsAge({ year: 1, era: "AC", precision: "decade" })).toBe(false);
   });
 });
