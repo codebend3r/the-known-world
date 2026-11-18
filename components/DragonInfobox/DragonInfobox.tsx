@@ -1,12 +1,11 @@
 import { Sigil } from "@/components/Sigil";
 import { cx } from "@/lib/cx";
 import { regionForHouse } from "@/lib/regions";
-import { humanizeSlug, shortHouseName } from "@/lib/text";
+import { houseLabel, shortHouseName } from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
-import { InfoRow } from "@/components/Infobox";
+import { CharacterInfoRow, InfoField, InfoRow } from "@/components/Infobox";
 import type { Dragon, House, Character, HouseInfoEntry } from "@/lib/schemas";
-import infoboxStyles from "@/components/HouseInfobox/HouseInfobox.module.scss";
-import sharedStyles from "@/components/Infobox/Infobox.module.scss";
+import infoboxStyles from "@/components/Infobox/Infobox.module.scss";
 
 type Props = {
   dragon: Dragon;
@@ -42,15 +41,10 @@ export function DragonInfobox({
     ? [
         {
           slug: dragon.house,
-          name: house?.name ?? `House ${humanizeSlug(dragon.house)}`,
+          name: houseLabel({ slug: dragon.house, housesBySlug }),
         },
       ]
     : [];
-
-  const riders: HouseInfoEntry[] = dragon.riders.map((slug) => ({
-    slug,
-    name: charactersBySlug.get(slug)?.name ?? humanizeSlug(slug),
-  }));
 
   const aliases: HouseInfoEntry[] = dragon.aliases.map((a) => ({ name: a }));
 
@@ -75,34 +69,17 @@ export function DragonInfobox({
       )}
 
       <dl className={infoboxStyles.rows}>
-        {dragon.color && (
-          <div className={sharedStyles.row}>
-            <dt>Color</dt>
-            <dd>{dragon.color}</dd>
-          </div>
-        )}
-        {dragon.size && (
-          <div className={sharedStyles.row}>
-            <dt>Size</dt>
-            <dd>{SIZE_LABEL[dragon.size]}</dd>
-          </div>
-        )}
-        {dragon.hatched && (
-          <div className={sharedStyles.row}>
-            <dt>Hatched</dt>
-            <dd>{formatEraDate(dragon.hatched)}</dd>
-          </div>
-        )}
-        {dragon.died && (
-          <div className={sharedStyles.row}>
-            <dt>Died</dt>
-            <dd>{formatEraDate(dragon.died)}</dd>
-          </div>
-        )}
-        <div className={sharedStyles.row}>
-          <dt>Status</dt>
-          <dd>{STATUS_LABEL[dragon.status]}</dd>
-        </div>
+        <InfoField label="Color">{dragon.color}</InfoField>
+        <InfoField label="Size">
+          {dragon.size ? SIZE_LABEL[dragon.size] : null}
+        </InfoField>
+        <InfoField label="Hatched">
+          {dragon.hatched ? formatEraDate(dragon.hatched) : null}
+        </InfoField>
+        <InfoField label="Died">
+          {dragon.died ? formatEraDate(dragon.died) : null}
+        </InfoField>
+        <InfoField label="Status">{STATUS_LABEL[dragon.status]}</InfoField>
         {dragon.house ? (
           <InfoRow
             label="House"
@@ -111,19 +88,12 @@ export function DragonInfobox({
             exists={(s) => housesBySlug.has(s)}
           />
         ) : (
-          <div className={sharedStyles.row}>
-            <dt>House</dt>
-            <dd>Wild</dd>
-          </div>
+          <InfoField label="House">Wild</InfoField>
         )}
-        <InfoRow
-          label={riders.length === 1 ? "Rider" : "Riders"}
-          entries={riders}
-          hrefPrefix="/characters"
-          exists={(s) => {
-            const c = charactersBySlug.get(s);
-            return !!c && !c.placeholder;
-          }}
+        <CharacterInfoRow
+          label={dragon.riders.length === 1 ? "Rider" : "Riders"}
+          slugs={dragon.riders}
+          charactersBySlug={charactersBySlug}
         />
         <InfoRow label="Aliases" entries={aliases} />
       </dl>

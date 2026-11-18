@@ -1,5 +1,7 @@
+import type { ReactNode } from "react";
 import Link from "next/link";
-import type { HouseInfoEntry } from "@/lib/schemas";
+import { humanizeSlug } from "@/lib/text";
+import type { Character, HouseInfoEntry } from "@/lib/schemas";
 import styles from "@/components/Infobox/Infobox.module.scss";
 
 type EntryProps = {
@@ -18,7 +20,7 @@ export function InfoEntry({ entry, hrefPrefix, exists }: EntryProps) {
       ) : (
         <span>{entry.name}</span>
       )}
-      {entry.note && <span className={styles.note}> ({entry.note})</span>}
+      {!!entry.note && <span className={styles.note}> ({entry.note})</span>}
     </li>
   );
 }
@@ -48,5 +50,57 @@ export function InfoRow({ label, entries, hrefPrefix, exists }: RowProps) {
         </ul>
       </dd>
     </div>
+  );
+}
+
+type FieldProps = {
+  label: string;
+  /** Nothing to show (`null`, `undefined`, `false`, `""`) drops the row. */
+  children: ReactNode;
+};
+
+function isEmptyField(children: ReactNode): boolean {
+  return (
+    children === null ||
+    children === undefined ||
+    children === false ||
+    children === ""
+  );
+}
+
+export function InfoField({ label, children }: FieldProps) {
+  if (isEmptyField(children)) return null;
+  return (
+    <div className={styles.row}>
+      <dt>{label}</dt>
+      <dd>{children}</dd>
+    </div>
+  );
+}
+
+type CharacterRowProps = {
+  label: string;
+  charactersBySlug: Map<string, Character>;
+} & ({ slugs: readonly string[] } | { entries: HouseInfoEntry[] });
+
+export function CharacterInfoRow(props: CharacterRowProps) {
+  const { label, charactersBySlug } = props;
+  const entries =
+    "slugs" in props
+      ? props.slugs.map((slug) => ({
+          slug,
+          name: charactersBySlug.get(slug)?.name ?? humanizeSlug(slug),
+        }))
+      : props.entries;
+  return (
+    <InfoRow
+      label={label}
+      entries={entries}
+      hrefPrefix="/characters"
+      exists={(slug) => {
+        const character = charactersBySlug.get(slug);
+        return !!character && !character.placeholder;
+      }}
+    />
   );
 }

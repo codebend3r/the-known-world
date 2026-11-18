@@ -13,7 +13,12 @@ import {
   DragonSchema,
   BattleSchema,
 } from "@/lib/schemas";
-import { remarkProseLinks, type ProseLinkIndex } from "@/lib/prose-links";
+import {
+  buildProseLinkIndex,
+  remarkProseLinks,
+  type ProseLinkCurrent,
+  type ProseLinkIndex,
+} from "@/lib/prose-links";
 import { memoize, memoizeBySlug } from "@/lib/memoize";
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
@@ -161,6 +166,41 @@ export const loadAllBattles = memoize({
   isEnabled,
   load: () => loadAll("battles"),
 });
+
+export async function loadCollections(): Promise<Collections> {
+  const [battles, castles, characters, dragons, events, houses, weapons] =
+    await Promise.all([
+      loadAllBattles(),
+      loadAllCastles(),
+      loadAllCharacters(),
+      loadAllDragons(),
+      loadAllEvents(),
+      loadAllHouses(),
+      loadAllWeapons(),
+    ]);
+  return { battles, castles, characters, dragons, events, houses, weapons };
+}
+
+export async function loadProseLinkIndex({
+  current,
+}: {
+  current: ProseLinkCurrent;
+}): Promise<ProseLinkIndex> {
+  const collections = await loadCollections();
+  return buildProseLinkIndex({ collections, current });
+}
+
+export async function renderEntryBody({
+  body,
+  current,
+}: {
+  body: string;
+  current: ProseLinkCurrent;
+}): Promise<string> {
+  if (!body.trim()) return "";
+  const proseLinks = await loadProseLinkIndex({ current });
+  return renderMarkdown({ source: body, proseLinks });
+}
 
 export async function renderMarkdown({
   source,

@@ -8,6 +8,7 @@ import {
   isGrouping,
   searchParser,
   listSearchParsers,
+  paginate,
 } from "@/lib/listSearchParams";
 
 describe("isPageSize", () => {
@@ -71,5 +72,37 @@ describe("isGrouping", () => {
     expect(isGrouping(null)).toBe(false);
     expect(isGrouping(undefined)).toBe(false);
     expect(isGrouping(1)).toBe(false);
+  });
+});
+
+describe("paginate", () => {
+  const items = Array.from({ length: 10 }, (_, i) => i);
+
+  it("slices the requested page", () => {
+    expect(paginate({ items, page: 2, size: 4 })).toEqual({
+      totalPages: 3,
+      currentPage: 2,
+      pageItems: [4, 5, 6, 7],
+    });
+  });
+
+  it("clamps a page past the end to the last page", () => {
+    const result = paginate({ items, page: 9, size: 4 });
+    expect(result.currentPage).toBe(3);
+    expect(result.pageItems).toEqual([8, 9]);
+  });
+
+  it("clamps a page below one to the first page", () => {
+    const result = paginate({ items, page: -2, size: 4 });
+    expect(result.currentPage).toBe(1);
+    expect(result.pageItems).toEqual([0, 1, 2, 3]);
+  });
+
+  it("reports one empty page for an empty list", () => {
+    expect(paginate({ items: [], page: 1, size: 4 })).toEqual({
+      totalPages: 1,
+      currentPage: 1,
+      pageItems: [],
+    });
   });
 });

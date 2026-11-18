@@ -42,3 +42,22 @@ export function listSearchParsers(pageSizeDefault: PageSize) {
     page: parseAsInteger.withDefault(1),
   };
 }
+
+export function paginate<T>({
+  items,
+  page,
+  size,
+}: {
+  items: readonly T[];
+  page: number;
+  size: number;
+}): { totalPages: number; currentPage: number; pageItems: T[] } {
+  const totalPages = Math.max(1, Math.ceil(items.length / size));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const pageStart = (currentPage - 1) * size;
+  return {
+    totalPages,
+    currentPage,
+    pageItems: items.slice(pageStart, pageStart + size),
+  };
+}

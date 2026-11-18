@@ -1,79 +1,39 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
-import {
-  loadEvent,
-  loadAllEvents,
-  loadAllHouses,
-  loadAllCharacters,
-  loadAllWeapons,
-  loadAllDragons,
-  loadAllCastles,
-  loadAllBattles,
-  renderMarkdown,
-} from "@/lib/content";
+import { loadEvent, loadAllEvents, renderEntryBody } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
-import { buildProseLinkIndex } from "@/lib/prose-links";
-import { PlateLayout } from "@/components/PlateLayout";
-import { Sources } from "@/components/Sources";
+import {
+  entryMetadata,
+  loadEntryOr404,
+  publishedSlugParams,
+} from "@/lib/entry-route";
+import { EntryPlate } from "@/components/EntryPlate";
 import { formatBattleWhen } from "@/lib/battle-date";
-import styles from "@/app/events/[slug]/page.module.scss";
+import { titleCase } from "@/lib/text";
 
 export async function generateStaticParams() {
-  const events = await loadAllEvents();
-  return events
-    .filter((e) => !e.frontmatter.draft)
-    .map((e) => ({ slug: e.frontmatter.slug }));
+  return publishedSlugParams({ loadAll: loadAllEvents });
 }
 
 export async function generateMetadata({ params }: SlugPageProps) {
-  const slug = await slugFromParams(params);
-  const event = await loadEvent(slug).catch(() => null);
-  if (!event) return { title: "Not found" };
-  return {
-    title: `${event.frontmatter.name} · Atlas of the Known World`,
-  };
+  return entryMetadata({
+    params,
+    load: loadEvent,
+    metadata: (event) => ({
+      title: `${event.frontmatter.name} · Atlas of the Known World`,
+    }),
+  });
 }
 
 export default async function EventPage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);
-  const [
-    event,
-    allHouses,
-    allCharacters,
-    allWeapons,
-    allDragons,
-    allCastles,
-    allBattles,
-    allEvents,
-  ] = await Promise.all([
-    loadEvent(slug).catch(() => null),
-    loadAllHouses(),
-    loadAllCharacters(),
-    loadAllWeapons(),
-    loadAllDragons(),
-    loadAllCastles(),
-    loadAllBattles(),
-    loadAllEvents(),
-  ]);
-  if (!event) notFound();
+  const event = await loadEntryOr404({ load: loadEvent, slug });
 
   const fm = event.frontmatter;
-  const proseLinks = buildProseLinkIndex({
-    allCharacters,
-    allHouses,
-    allWeapons,
-    allDragons,
-    allCastles,
-    allBattles,
-    allEvents,
+  const html = await renderEntryBody({
+    body: event.body,
     current: { kind: "event", slug, mentions: fm.mentions },
   });
-  const html = event.body.trim()
-    ? await renderMarkdown({ source: event.body, proseLinks })
-    : "";
-  const typeLabel = fm.type[0].toUpperCase() + fm.type.slice(1);
   const subtitle = [
-    typeLabel,
+    titleCase(fm.type),
     formatBattleWhen({ start: fm.date, end: fm.date }),
     typeof fm.location === "string" ? fm.location : null,
   ]
@@ -81,25 +41,13 @@ export default async function EventPage({ params }: SlugPageProps) {
     .join(" · ");
 
   return (
-    <PlateLayout>
-      <div className={styles.detail}>
-        <hgroup className={styles.heading}>
-          <h1>{fm.name}</h1>
-          <p className="subtitle">{subtitle}</p>
-        </hgroup>
-        <div className={styles.main}>
-          {html && (
-            <article
-              className={styles.body}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          )}
-          <p className={styles.back}>
-            <Link href="/events/">← All Events</Link>
-          </p>
-          <Sources sources={fm.sources} />
-        </div>
-      </div>
-    </PlateLayout>
+    <EntryPlate
+      layout="narrow"
+      title={fm.name}
+      subtitle={subtitle}
+      html={html}
+      back={{ href: "/events/", label: "All Events" }}
+      sources={fm.sources}
+    />
   );
 }

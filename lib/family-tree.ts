@@ -37,6 +37,25 @@ function uniq<T>(items: T[]): T[] {
   return Array.from(new Set(items));
 }
 
+function identityFields({ slug, person }: { slug: string; person: Character }) {
+  return {
+    slug,
+    name: person.name,
+    alias: person.aliases[0] ?? null,
+    sex: person.sex,
+    isPlaceholder: person.placeholder,
+    titles: person.titles,
+  };
+}
+
+function nodeFields({ slug, person }: { slug: string; person: Character }) {
+  return {
+    ...identityFields({ slug, person }),
+    born: birthYear(person),
+    died: deathYear(person),
+  };
+}
+
 function compareRoots(a: Character, b: Character): number {
   if (a.placeholder !== b.placeholder) return a.placeholder ? 1 : -1;
   const ay = birthYear(a);
@@ -78,15 +97,8 @@ export function buildFamilyTree({
 
     if (isExternal) {
       return {
-        slug,
-        name: person.name,
-        alias: person.aliases[0] ?? null,
-        sex: person.sex,
-        isPlaceholder: person.placeholder,
+        ...nodeFields({ slug, person }),
         isExternal: true,
-        born: birthYear(person),
-        died: deathYear(person),
-        titles: person.titles,
         spouses: [],
         children: [],
       };
@@ -106,17 +118,10 @@ export function buildFamilyTree({
           titles: [],
         };
       }
-      if (isInHouse && !visited.has(spouseSlug)) {
-        visited.add(spouseSlug);
-      }
+      if (isInHouse) visited.add(spouseSlug);
       return {
-        slug: spouseSlug,
-        name: spouse.name,
-        alias: spouse.aliases[0] ?? null,
-        sex: spouse.sex,
-        isPlaceholder: spouse.placeholder,
+        ...identityFields({ slug: spouseSlug, person: spouse }),
         isInHouse,
-        titles: spouse.titles,
       };
     });
 
@@ -132,15 +137,8 @@ export function buildFamilyTree({
       .filter((c): c is TreeNode => c !== null);
 
     return {
-      slug,
-      name: person.name,
-      alias: person.aliases[0] ?? null,
-      sex: person.sex,
-      isPlaceholder: person.placeholder,
+      ...nodeFields({ slug, person }),
       isExternal: false,
-      born: birthYear(person),
-      died: deathYear(person),
-      titles: person.titles,
       spouses,
       children,
     };

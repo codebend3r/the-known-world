@@ -7,10 +7,14 @@ import {
   WORLD_MAP_RASTER,
   doWorldMapHotspotsOverlap,
   entryCoords,
+  fitGeometry,
   isCoords,
   isWithinMapBounds,
   isWithinWorldMapRaster,
+  naturalToViewer,
   placementHref,
+  popoverPlacement,
+  recenterOnResize,
   selectPlacements,
   selectVisibleCastles,
   selectWorldMapMarkers,
@@ -498,5 +502,124 @@ describe("summarizeBody", () => {
 
   it("returns an empty string for an empty body", () => {
     expect(summarizeBody("")).toBe("");
+  });
+});
+
+describe("fitGeometry", () => {
+  it("fits the raster inside the viewer and centres the letterbox", () => {
+    expect(
+      fitGeometry({
+        viewer: { w: 1000, h: 400 },
+        natural: { width: 2000, height: 1000 },
+      }),
+    ).toEqual({
+      fitScale: 0.4,
+      drawnWidth: 800,
+      drawnHeight: 400,
+      offsetX: 100,
+      offsetY: 0,
+    });
+  });
+
+  it("collapses to zero before the viewer is measured", () => {
+    expect(
+      fitGeometry({ viewer: null, natural: { width: 10, height: 10 } }),
+    ).toEqual({
+      fitScale: 0,
+      drawnWidth: 0,
+      drawnHeight: 0,
+      offsetX: 0,
+      offsetY: 0,
+    });
+  });
+});
+
+describe("naturalToViewer", () => {
+  it("scales a natural pixel and adds the letterbox offset", () => {
+    const geometry = fitGeometry({
+      viewer: { w: 1000, h: 400 },
+      natural: { width: 2000, height: 1000 },
+    });
+    expect(naturalToViewer({ geometry, point: { x: 500, y: 250 } })).toEqual({
+      x: 300,
+      y: 100,
+    });
+  });
+});
+
+describe("recenterOnResize", () => {
+  const natural = { width: 2000, height: 1000 };
+
+  it("leaves the view unchanged when nothing changed size", () => {
+    const size = { w: 1000, h: 500 };
+    const current = { a: 3, e: -400, f: -200 };
+    expect(
+      recenterOnResize({
+        current,
+        prev: { size, fitScale: 0.5 },
+        next: { size, fitScale: 0.5 },
+        natural,
+      }),
+    ).toEqual(current);
+  });
+
+  it("keeps the same natural point centred at the same effective zoom", () => {
+    const prevSize = { w: 1000, h: 500 };
+    const nextSize = { w: 2000, h: 1000 };
+    const current = { a: 2, e: -500, f: -250 };
+    const next = recenterOnResize({
+      current,
+      prev: { size: prevSize, fitScale: 0.5 },
+      next: { size: nextSize, fitScale: 1 },
+      natural,
+    });
+    expect(next.a).toBe(1);
+    // Natural (1000, 500) sat at the old centre; it sits at the new one.
+    expect(next.a * 1000 + next.e).toBe(nextSize.w / 2);
+    expect(next.a * 500 + next.f).toBe(nextSize.h / 2);
+  });
+});
+
+describe("popoverPlacement", () => {
+  const box = { width: 200, heightEstimate: 100, gutter: 10 };
+
+  it("leaves a card with room on both sides where it is", () => {
+    expect(
+      popoverPlacement({
+        anchor: { x: 500, y: 300 },
+        stageWidth: 1000,
+        ...box,
+      }),
+    ).toEqual({ shift: 0, pinX: 100, placement: "above" });
+  });
+
+  it("slides a card off the left edge back in and the arrow back out", () => {
+    expect(
+      popoverPlacement({ anchor: { x: 40, y: 300 }, stageWidth: 1000, ...box }),
+    ).toEqual({ shift: 70, pinX: 30, placement: "above" });
+  });
+
+  it("slides a card off the right edge back in", () => {
+    expect(
+      popoverPlacement({
+        anchor: { x: 980, y: 300 },
+        stageWidth: 1000,
+        ...box,
+      }),
+    ).toEqual({ shift: -90, pinX: 190, placement: "above" });
+  });
+
+  it("flips below the pin when there is no room above", () => {
+    expect(
+      popoverPlacement({ anchor: { x: 500, y: 50 }, stageWidth: 1000, ...box })
+        .placement,
+    ).toBe("below");
+  });
+
+  it("centres the card on a stage narrower than the card", () => {
+    expect(
+      popoverPlacement({ anchor: { x: 10, y: 300 }, stageWidth: 100, ...box })
+        .shift,
+    ).toBe(40);
   });
 });

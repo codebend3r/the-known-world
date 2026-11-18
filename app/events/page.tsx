@@ -9,7 +9,7 @@ import {
 import { titleCase } from "@/lib/text";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
-import { sectionGlyphs } from "@/components/SectionGlyphs/SectionGlyphs";
+import { sectionGlyphs } from "@/components/SectionGlyphs";
 import { ListSearchSkeleton } from "@/components/ListSearchSkeleton";
 import {
   FilteredEventList,

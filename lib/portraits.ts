@@ -1,5 +1,4 @@
-import fs from "node:fs/promises";
-import path from "node:path";
+import { findPublicAsset } from "@/lib/public-asset";
 import type { Character } from "@/lib/schemas";
 
 /**
@@ -28,15 +27,6 @@ function placeholderVariant(slug: string): number {
   return (hash % PLACEHOLDER_VARIANTS) + 1;
 }
 
-async function probe(file: string): Promise<string | null> {
-  try {
-    await fs.access(path.join(process.cwd(), "public", "characters", file));
-    return `/characters/${file}`;
-  } catch {
-    return null;
-  }
-}
-
 /**
  * A character whose art has grown past a single picture keeps every version in
  * `public/characters/<slug>/` instead of a flat file. The one inside that
@@ -61,16 +51,13 @@ export async function findPortrait({
   slug: string;
   sex: Character["sex"];
 }): Promise<string> {
-  const candidates = await Promise.all(
-    PORTRAIT_EXTENSIONS.flatMap((ext) =>
-      probePaths({ slug, extension: ext }).map(probe),
+  const dedicated = await findPublicAsset({
+    dir: "characters",
+    files: PORTRAIT_EXTENSIONS.flatMap((extension) =>
+      probePaths({ slug, extension }),
     ),
-  );
-
-  const dedicated = candidates.find((candidate) => !!candidate);
-  if (dedicated) {
-    return dedicated;
-  }
+  });
+  if (dedicated) return dedicated;
 
   const gender = sex === "f" ? "female" : "male";
   const variant = String(placeholderVariant(slug)).padStart(2, "0");
@@ -78,10 +65,10 @@ export async function findPortrait({
 }
 
 export async function findPortraitVideo(slug: string): Promise<string | null> {
-  const candidates = await Promise.all(
-    PORTRAIT_VIDEO_EXTENSIONS.flatMap((ext) =>
-      probePaths({ slug, extension: ext }).map(probe),
+  return findPublicAsset({
+    dir: "characters",
+    files: PORTRAIT_VIDEO_EXTENSIONS.flatMap((extension) =>
+      probePaths({ slug, extension }),
     ),
-  );
-  return candidates.find((candidate) => !!candidate) ?? null;
+  });
 }

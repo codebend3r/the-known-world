@@ -245,21 +245,3 @@
   display: grid;
   gap: 0.25rem;
 }
-
-.back {
-  padding-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: var(--ls-kicker);
-  text-transform: uppercase;
-
-  a {
-    color: var(--tkw-ink-dim);
-    text-decoration: none;
-
-    &:hover,
-    &:focus-visible {
-      color: var(--tkw-gold-bright);
-    }
-  }
-}

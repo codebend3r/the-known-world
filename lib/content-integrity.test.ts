@@ -1,13 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import {
-  loadAllBattles,
-  loadAllCastles,
-  loadAllCharacters,
-  loadAllDragons,
-  loadAllEvents,
-  loadAllHouses,
-  loadAllWeapons,
-} from "@/lib/content";
+import { loadAllCharacters, loadCollections } from "@/lib/content";
 import {
   contentIntegrityErrors,
   reciprocalAsymmetries,
@@ -257,28 +249,8 @@ describe("outbound references", () => {
 
 describe("content integrity", () => {
   it("has matching, unique slugs and resolvable cross-references", async () => {
-    const [battles, castles, characters, dragons, events, houses, weapons] =
-      await Promise.all([
-        loadAllBattles(),
-        loadAllCastles(),
-        loadAllCharacters(),
-        loadAllDragons(),
-        loadAllEvents(),
-        loadAllHouses(),
-        loadAllWeapons(),
-      ]);
-
-    expect(
-      contentIntegrityErrors({
-        battles,
-        castles,
-        characters,
-        dragons,
-        events,
-        houses,
-        weapons,
-      }),
-    ).toEqual([]);
+    const collections = await loadCollections();
+    expect(contentIntegrityErrors(collections)).toEqual([]);
   });
 
   it("flags a castle, battle, or event placed outside the atlas bounds", () => {

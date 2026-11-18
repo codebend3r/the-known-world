@@ -1,41 +1,37 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import {
   loadWeapon,
   loadAllWeapons,
-  loadAllDragons,
-  loadAllCastles,
-  loadAllBattles,
-  loadAllEvents,
   loadAllHouses,
   loadAllCharacters,
-  renderMarkdown,
+  renderEntryBody,
 } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
+import {
+  entryMetadata,
+  loadEntryOr404,
+  publishedSlugParams,
+} from "@/lib/entry-route";
 import { findWeaponImage } from "@/lib/weapon-image";
 import type { Weapon } from "@/lib/schemas";
-import { buildProseLinkIndex } from "@/lib/prose-links";
-import { PlateLayout } from "@/components/PlateLayout";
-import { Sources } from "@/components/Sources";
+import { EntryPlate } from "@/components/EntryPlate";
 import { WeaponInfobox } from "@/components/WeaponInfobox";
 import { bySlug } from "@/lib/collections";
+import { cx } from "@/lib/cx";
 import styles from "@/app/weapons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
-  const weapons = await loadAllWeapons();
-  return weapons
-    .filter((w) => !w.frontmatter.draft)
-    .map((w) => ({ slug: w.frontmatter.slug }));
+  return publishedSlugParams({ loadAll: loadAllWeapons });
 }
 
 export async function generateMetadata({ params }: SlugPageProps) {
-  const slug = await slugFromParams(params);
-  const weapon = await loadWeapon(slug).catch(() => null);
-  if (!weapon) return { title: "Not found" };
-  return {
-    title: `${weapon.frontmatter.name} · Atlas of the Known World`,
-  };
+  return entryMetadata({
+    params,
+    load: loadWeapon,
+    metadata: (weapon) => ({
+      title: `${weapon.frontmatter.name} · Atlas of the Known World`,
+    }),
+  });
 }
 
 const TYPE_NOUN = {
@@ -60,58 +56,21 @@ const MATERIAL_ADJ = {
 
 export default async function WeaponPage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);
-  const [
-    weapon,
-    allHouses,
-    allCharacters,
-    allWeapons,
-    allDragons,
-    allCastles,
-    allBattles,
-    allEvents,
-    image,
-  ] = await Promise.all([
-    loadWeapon(slug).catch(() => null),
+  const [weapon, allHouses, allCharacters, image] = await Promise.all([
+    loadEntryOr404({ load: loadWeapon, slug }),
     loadAllHouses(),
     loadAllCharacters(),
-    loadAllWeapons(),
-    loadAllDragons(),
-    loadAllCastles(),
-    loadAllBattles(),
-    loadAllEvents(),
     findWeaponImage(slug),
   ]);
-  if (!weapon) notFound();
 
   const housesBySlug = bySlug(allHouses);
   const charactersBySlug = bySlug(allCharacters);
 
   const fm = weapon.frontmatter;
-  const proseLinks = buildProseLinkIndex({
-    allCharacters: allCharacters.map((c) => ({
-      slug: c.slug,
-      frontmatter: c.frontmatter,
-    })),
-    allHouses: allHouses.map((h) => ({
-      slug: h.slug,
-      frontmatter: h.frontmatter,
-    })),
-    allWeapons: allWeapons.map((w) => ({
-      slug: w.slug,
-      frontmatter: w.frontmatter,
-    })),
-    allDragons: allDragons.map((d) => ({
-      slug: d.slug,
-      frontmatter: d.frontmatter,
-    })),
-    allCastles,
-    allBattles,
-    allEvents,
-    current: { kind: "weapon", slug, mentions: weapon.frontmatter.mentions },
+  const html = await renderEntryBody({
+    body: weapon.body,
+    current: { kind: "weapon", slug, mentions: fm.mentions },
   });
-  const html = weapon.body.trim()
-    ? await renderMarkdown({ source: weapon.body, proseLinks })
-    : "";
   const originHouse = fm["origin-house"]
     ? housesBySlug.get(fm["origin-house"])
     : undefined;
@@ -127,14 +86,17 @@ export default async function WeaponPage({ params }: SlugPageProps) {
     .join(", ");
 
   return (
-    <PlateLayout>
-      <div className={styles.detail}>
-        <hgroup className={styles.heading}>
-          <h1>{fm.name}</h1>
-          {subtitle && <p className="subtitle">{subtitle}</p>}
-        </hgroup>
-        {image && (
-          <figure className={styles.figure}>
+    <EntryPlate
+      layout="banner"
+      title={fm.name}
+      // An empty string drops the subtitle line entirely on this page.
+      subtitle={subtitle || undefined}
+      html={html}
+      back={{ href: "/weapons/", label: "All Weapons" }}
+      sources={fm.sources}
+      banner={({ className }) =>
+        image && (
+          <figure className={cx(className, styles.figure)}>
             <Image
               src={image}
               alt={`Depiction of ${fm.name}`}
@@ -144,26 +106,16 @@ export default async function WeaponPage({ params }: SlugPageProps) {
               priority
             />
           </figure>
-        )}
+        )
+      }
+      infobox={({ className }) => (
         <WeaponInfobox
           weapon={fm}
           housesBySlug={housesBySlug}
           charactersBySlug={charactersBySlug}
-          className={styles.infobox}
+          className={className}
         />
-        <div className={styles.main}>
-          {html && (
-            <article
-              className={styles.body}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          )}
-          <p className={styles.back}>
-            <Link href="/weapons/">← All Weapons</Link>
-          </p>
-          <Sources sources={fm.sources} />
-        </div>
-      </div>
-    </PlateLayout>
+      )}
+    />
   );
 }

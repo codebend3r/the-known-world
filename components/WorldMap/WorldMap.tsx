@@ -11,16 +11,34 @@ import {
   type Value,
 } from "react-svg-pan-zoom";
 import { cx } from "@/lib/cx";
-import { WORLD_MAP_MARKER_RADIUS, type WorldMapMarker } from "@/lib/map";
+import {
+  WORLD_MAP_MARKER_RADIUS,
+  fitGeometry,
+  naturalToViewer,
+  popoverPlacement,
+  recenterOnResize,
+  type FitGeometry,
+  type WorldMapMarker,
+} from "@/lib/map";
 import netlifyImageLoader from "@/lib/netlify-image-loader";
-import { PAN_DIRECTIONS, type PanDirection } from "@/lib/pan-zoom";
+import {
+  CANVAS_KEY_SHORTCUTS,
+  canvasKeyAction,
+  panStep,
+  type PanDirection,
+} from "@/lib/pan-zoom";
+import { useAnimationFrameLoop } from "@/components/WorldMap/useAnimationFrameLoop";
+import {
+  ChevronIcon,
+  CompressIcon,
+  ExpandIcon,
+  MinusIcon,
+  PlusIcon,
+  ResetIcon,
+} from "@/components/WorldMap/WorldMapIcons";
 import styles from "@/components/WorldMap/WorldMap.module.scss";
 
 const ZOOM_STEP = 1.5;
-const PAN_STEP_RATIO = 0.2;
-// Advertised on the stage so assistive tech can list the canvas shortcuts
-// rather than leaving the visible hint line as the only place they exist.
-const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
 const INITIAL_VIEW = { zoom: 5, x: -1495, y: -1940 };
 // The popover is a fixed-width card (see `.popover` in the module) anchored
 // on the hotspot. These mirror its CSS box so the card can be clamped inside
@@ -50,18 +68,15 @@ type PopoverProps = {
 };
 
 function MarkerPopover({ marker, anchor, stageWidth }: PopoverProps) {
-  const halfWidth = POPOVER_WIDTH / 2;
-  const lowest = Math.min(halfWidth + POPOVER_EDGE_GUTTER, stageWidth / 2);
-  const highest = Math.max(
-    stageWidth - halfWidth - POPOVER_EDGE_GUTTER,
-    stageWidth / 2,
-  );
-  const clampedX = Math.min(Math.max(anchor.x, lowest), highest);
-  const placement = anchor.y < POPOVER_HEIGHT_ESTIMATE ? "below" : "above";
-  const shift = clampedX - anchor.x;
   // Clamping slides the card sideways; the arrow and the pop's origin slide
   // back by the same amount so both still point at the pin.
-  const pinX = halfWidth - shift;
+  const { shift, pinX, placement } = popoverPlacement({
+    anchor,
+    stageWidth,
+    width: POPOVER_WIDTH,
+    heightEstimate: POPOVER_HEIGHT_ESTIMATE,
+    gutter: POPOVER_EDGE_GUTTER,
+  });
 
   return (
     <div
@@ -157,11 +172,9 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // The SVG viewbox matches the viewer and the map image is drawn centered
   // at fitted size within it, so the library's default view (identity
   // matrix) shows the whole map: scale 1 = fit.
-  const fitScale = !!size
-    ? Math.min(size.w / naturalWidth, size.h / naturalHeight)
-    : 0;
-  const drawnWidth = naturalWidth * fitScale;
-  const drawnHeight = naturalHeight * fitScale;
+  const natural = { width: naturalWidth, height: naturalHeight };
+  const geometry = fitGeometry({ viewer: size, natural });
+  const { fitScale, drawnWidth, drawnHeight, offsetX, offsetY } = geometry;
 
   // Opens on a specific region instead of the fit-to-viewer default on first
   // paint. On every later resize (e.g. entering/exiting fullscreen), the
@@ -205,50 +218,40 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     // authoritative, so it's used directly below instead of trusting the
     // spread for those two fields.
     const current = inner.getValue();
-    const prevOffsetX = (prev.size.w - naturalWidth * prev.fitScale) / 2;
-    const prevOffsetY = (prev.size.h - naturalHeight * prev.fitScale) / 2;
-    const centeredSVGX = (prev.size.w / 2 - current.e) / current.a;
-    const centeredSVGY = (prev.size.h / 2 - current.f) / current.a;
-    const centeredNaturalX = (centeredSVGX - prevOffsetX) / prev.fitScale;
-    const centeredNaturalY = (centeredSVGY - prevOffsetY) / prev.fitScale;
-
-    const nextZoom = current.a * (prev.fitScale / fitScale);
-    const nextSVGX = (size.w - drawnWidth) / 2 + centeredNaturalX * fitScale;
-    const nextSVGY = (size.h - drawnHeight) / 2 + centeredNaturalY * fitScale;
-
+    const { a, e, f } = recenterOnResize({
+      current,
+      prev,
+      next: { size, fitScale },
+      natural: { width: naturalWidth, height: naturalHeight },
+    });
     const value: Value = {
       ...current,
       viewerWidth: size.w,
       viewerHeight: size.h,
-      a: nextZoom,
-      d: nextZoom,
-      e: size.w / 2 - nextZoom * nextSVGX,
-      f: size.h / 2 - nextZoom * nextSVGY,
+      a,
+      d: a,
+      e,
+      f,
     };
     inner.setValue(value);
     geometryRef.current = { size, fitScale };
-  }, [size, naturalWidth, naturalHeight, fitScale, drawnWidth, drawnHeight]);
+  }, [size, naturalWidth, naturalHeight, fitScale]);
 
   // `UncontrolledReactSVGPanZoom` swallows a consumer `onChangeValue` prop
   // (it destructures it away in favor of its own internal handler), so the
   // live value can only be read by polling `Viewer.getValue()`.
-  useEffect(() => {
-    if (!isEditMode) return;
-    let frame: number;
-    const tick = () => {
+  useAnimationFrameLoop({
+    isActive: isEditMode,
+    onFrame: () => {
       const value = innerViewer(viewerRef)?.getValue() ?? null;
-      if (value) {
-        setDebugValue((prev) =>
-          prev.zoom === value.a && prev.x === value.e && prev.y === value.f
-            ? prev
-            : { zoom: value.a, x: value.e, y: value.f },
-        );
-      }
-      frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [isEditMode]);
+      if (!value) return;
+      setDebugValue((prev) =>
+        prev.zoom === value.a && prev.x === value.e && prev.y === value.f
+          ? prev
+          : { zoom: value.a, x: value.e, y: value.f },
+      );
+    },
+  });
 
   // Where a hotspot's centre currently sits on the stage, in screen pixels,
   // after the viewer's pan and zoom.
@@ -256,8 +259,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     const inner = innerViewer(viewerRef);
     if (!inner || !size) return null;
     const value = inner.getValue();
-    const svgX = (size.w - drawnWidth) / 2 + marker.x * fitScale;
-    const svgY = (size.h - drawnHeight) / 2 + marker.y * fitScale;
+    const { x: svgX, y: svgY } = naturalToViewer({ geometry, point: marker });
     return {
       svgX,
       svgY,
@@ -304,29 +306,31 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   // The card follows its pin through wheel zoom and drag-pans, which the
   // viewer applies without telling us, so the anchor is re-read each frame
   // while a card is open (the same polling the debug overlay needs).
-  useEffect(() => {
-    if (!activeMarker) return;
-    let frame: number;
-    const tick = () => {
+  useAnimationFrameLoop({
+    isActive: !!activeMarker,
+    onFrame: () => {
+      if (!activeMarker) return;
       const point = markerScreenPoint(activeMarker);
-      if (point) {
-        setAnchor((prev) =>
-          !!prev && prev.x === point.screenX && prev.y === point.screenY
-            ? prev
-            : { x: point.screenX, y: point.screenY },
-        );
-      }
-      frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-    // `markerScreenPoint` closes over layout values already in this list.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeMarker, size, fitScale, drawnWidth, drawnHeight]);
+      if (!point) return;
+      setAnchor((prev) =>
+        !!prev && prev.x === point.screenX && prev.y === point.screenY
+          ? prev
+          : { x: point.screenX, y: point.screenY },
+      );
+    },
+  });
 
-  const zoomIn = () => viewerRef.current?.zoomOnViewerCenter(ZOOM_STEP);
-  const zoomOut = () => viewerRef.current?.zoomOnViewerCenter(1 / ZOOM_STEP);
-  const fitView = () => viewerRef.current?.fitToViewer();
+  const withViewer =
+    (run: (viewer: UncontrolledReactSVGPanZoom) => void) => () => {
+      const viewer = viewerRef.current;
+      if (!viewer) return;
+      run(viewer);
+    };
+  const zoomIn = withViewer((viewer) => viewer.zoomOnViewerCenter(ZOOM_STEP));
+  const zoomOut = withViewer((viewer) =>
+    viewer.zoomOnViewerCenter(1 / ZOOM_STEP),
+  );
+  const fitView = withViewer((viewer) => viewer.fitToViewer());
 
   // The browser can deny either request (no user activation, a permissions
   // policy, an iframe without `allowfullscreen`). The button follows
@@ -336,7 +340,9 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
       document.exitFullscreen().catch(() => {});
       return;
     }
-    stageRef.current?.requestFullscreen().catch(() => {});
+    const stage = stageRef.current;
+    if (!stage) return;
+    stage.requestFullscreen().catch(() => {});
   };
 
   const panView = (direction: PanDirection) => {
@@ -344,25 +350,20 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
     const inner = innerViewer(viewerRef);
     if (!viewer || !inner) return;
     const { a, viewerWidth, viewerHeight } = inner.getValue();
-    const { x, y } = PAN_DIRECTIONS[direction];
-    viewer.pan(
-      (x * viewerWidth * PAN_STEP_RATIO) / a,
-      (y * viewerHeight * PAN_STEP_RATIO) / a,
-    );
+    const { x, y } = panStep({
+      direction,
+      width: viewerWidth,
+      height: viewerHeight,
+      scale: a,
+    });
+    viewer.pan(x, y);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const actions: Record<string, (() => void) | undefined> = {
-      "+": zoomIn,
-      "=": zoomIn,
-      "-": zoomOut,
-      "0": fitView,
-      ArrowUp: () => panView("up"),
-      ArrowDown: () => panView("down"),
-      ArrowLeft: () => panView("left"),
-      ArrowRight: () => panView("right"),
-    };
-    const action = actions[event.key];
+    const action = canvasKeyAction({
+      key: event.key,
+      handlers: { zoomIn, zoomOut, reset: fitView, pan: panView },
+    });
     if (!action) return;
     event.preventDefault();
     action();
@@ -375,7 +376,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
         className={styles.stage}
         role="application"
         aria-label="Interactive map of the Known World"
-        aria-keyshortcuts={KEY_SHORTCUTS}
+        aria-keyshortcuts={CANVAS_KEY_SHORTCUTS}
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >
@@ -413,16 +414,16 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
             >
               <image
                 href={previewSrc}
-                x={(size.w - drawnWidth) / 2}
-                y={(size.h - drawnHeight) / 2}
+                x={offsetX}
+                y={offsetY}
                 width={drawnWidth}
                 height={drawnHeight}
                 aria-hidden="true"
               />
               <image
                 href={src}
-                x={(size.w - drawnWidth) / 2}
-                y={(size.h - drawnHeight) / 2}
+                x={offsetX}
+                y={offsetY}
                 width={drawnWidth}
                 height={drawnHeight}
                 aria-hidden="true"
@@ -447,11 +448,7 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
                   }}
                   onBlur={() => hidePopover(marker)}
                 >
-                  <circle
-                    cx={(size.w - drawnWidth) / 2 + marker.x * fitScale}
-                    cy={(size.h - drawnHeight) / 2 + marker.y * fitScale}
-                    r={WORLD_MAP_MARKER_RADIUS * fitScale}
-                  />
+                  <MarkerHotspot geometry={geometry} marker={marker} />
                 </Link>
               ))}
             </svg>
@@ -570,134 +567,15 @@ export function WorldMap({ src, naturalWidth, naturalHeight, markers }: Props) {
   );
 }
 
-function ChevronIcon({ rotation }: { rotation: number }) {
+function MarkerHotspot({
+  geometry,
+  marker,
+}: {
+  geometry: FitGeometry;
+  marker: WorldMapMarker;
+}) {
+  const { x, y } = naturalToViewer({ geometry, point: marker });
   return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M4 10 L8 6 L12 10"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        transform={`rotate(${rotation} 8 8)`}
-      />
-    </svg>
-  );
-}
-
-function PlusIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M8 3 L8 13 M3 8 L13 8"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function MinusIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M3 8 L13 8"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function ResetIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <circle
-        cx="8"
-        cy="8"
-        r="2"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-      />
-      <path
-        d="M8 1.5 V4.5 M8 11.5 V14.5 M1.5 8 H4.5 M11.5 8 H14.5"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function ExpandIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M2 6 V2 H6 M14 6 V2 H10 M2 10 V14 H6 M14 10 V14 H10"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function CompressIcon() {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="16"
-      height="16"
-      aria-hidden
-      focusable="false"
-    >
-      <path
-        d="M6 2 V6 H2 M10 2 V6 H14 M6 14 V10 H2 M10 14 V10 H14"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+    <circle cx={x} cy={y} r={WORLD_MAP_MARKER_RADIUS * geometry.fitScale} />
   );
 }

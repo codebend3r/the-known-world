@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { loadAllWeapons, loadAllHouses } from "@/lib/content";
 import { findWeaponImage } from "@/lib/weapon-image";
-import { regionForHouse, regionLabel } from "@/lib/regions";
+import { regionForHouse } from "@/lib/regions";
 import { bySlug, compareByName } from "@/lib/collections";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
@@ -40,15 +40,13 @@ export default async function WeaponsPage() {
     .map((w): WeaponItem => {
       const houseSlug =
         w.frontmatter["current-house"] ?? w.frontmatter["origin-house"] ?? null;
-      const region = houseSlug
-        ? regionForHouse({ slug: houseSlug, housesBySlug })
-        : null;
       return {
         slug: w.frontmatter.slug,
         name: w.frontmatter.name,
         houseSlug,
-        region,
-        regionLabel: region ? regionLabel(region) : null,
+        region: houseSlug
+          ? regionForHouse({ slug: houseSlug, housesBySlug })
+          : null,
         hasImage: withImage.has(w.frontmatter.slug),
       };
     })

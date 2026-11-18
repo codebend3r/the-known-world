@@ -1,11 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useQueryState } from "nuqs";
-import { useDebouncedSearch } from "@/lib/useDebouncedSearch";
-import { ListSearchInput } from "@/components/ListSearchInput";
-import { filterByName } from "@/lib/search";
-import { searchParser } from "@/lib/listSearchParams";
+import { ListSearchEmpty, ListSearchInput } from "@/components/ListSearchInput";
+import { useUrlSearchFilter } from "@/lib/useUrlSearchFilter";
 import type { Event } from "@/lib/schemas";
 import listSearch from "@/components/listSearch.module.scss";
 import styles from "@/components/FilteredEventList/FilteredEventList.module.scss";
@@ -24,13 +21,9 @@ type Props = {
 };
 
 export function FilteredEventList({ items }: Props) {
-  const [urlSearch, setUrlSearch] = useQueryState("search", searchParser);
-  const { value, debounced, onChange } = useDebouncedSearch({
-    urlValue: urlSearch,
-    commit: setUrlSearch,
+  const { value, debounced, onChange, filtered } = useUrlSearchFilter({
+    items,
   });
-
-  const filtered = filterByName({ items, query: debounced });
   const hasApproximate = filtered.some((item) => item.isApproximate);
 
   return (
@@ -44,9 +37,7 @@ export function FilteredEventList({ items }: Props) {
         />
       </div>
       {filtered.length === 0 ? (
-        <p className={listSearch.empty}>
-          No events match &ldquo;{debounced}&rdquo;.
-        </p>
+        <ListSearchEmpty noun="events" query={debounced} />
       ) : (
         <ul className={styles.list}>
           {filtered.map((item) => (

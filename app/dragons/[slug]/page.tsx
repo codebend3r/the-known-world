@@ -1,126 +1,71 @@
-import { notFound } from "next/navigation";
-import Link from "next/link";
 import {
   loadDragon,
   loadAllDragons,
-  loadAllWeapons,
   loadAllHouses,
   loadAllCharacters,
-  loadAllCastles,
-  loadAllBattles,
-  loadAllEvents,
-  renderMarkdown,
+  renderEntryBody,
 } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
-import { buildProseLinkIndex } from "@/lib/prose-links";
-import { PlateLayout } from "@/components/PlateLayout";
-import { Sources } from "@/components/Sources";
+import {
+  entryMetadata,
+  loadEntryOr404,
+  publishedSlugParams,
+} from "@/lib/entry-route";
+import { EntryPlate } from "@/components/EntryPlate";
 import { DragonInfobox } from "@/components/DragonInfobox";
-import { humanizeSlug } from "@/lib/text";
+import { houseLabel } from "@/lib/text";
 import { bySlug } from "@/lib/collections";
-import styles from "@/app/dragons/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
-  const dragons = await loadAllDragons();
-  return dragons
-    .filter((d) => !d.frontmatter.draft)
-    .map((d) => ({ slug: d.frontmatter.slug }));
+  return publishedSlugParams({ loadAll: loadAllDragons });
 }
 
 export async function generateMetadata({ params }: SlugPageProps) {
-  const slug = await slugFromParams(params);
-  const dragon = await loadDragon(slug).catch(() => null);
-  if (!dragon) return { title: "Not found" };
-  return {
-    title: `${dragon.frontmatter.name} · Atlas of the Known World`,
-  };
+  return entryMetadata({
+    params,
+    load: loadDragon,
+    metadata: (dragon) => ({
+      title: `${dragon.frontmatter.name} · Atlas of the Known World`,
+    }),
+  });
 }
 
 export default async function DragonPage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);
-  const [
-    dragon,
-    allHouses,
-    allCharacters,
-    allWeapons,
-    allDragons,
-    allCastles,
-    allBattles,
-    allEvents,
-  ] = await Promise.all([
-    loadDragon(slug).catch(() => null),
+  const [dragon, allHouses, allCharacters] = await Promise.all([
+    loadEntryOr404({ load: loadDragon, slug }),
     loadAllHouses(),
     loadAllCharacters(),
-    loadAllWeapons(),
-    loadAllDragons(),
-    loadAllCastles(),
-    loadAllBattles(),
-    loadAllEvents(),
   ]);
-  if (!dragon) notFound();
 
   const housesBySlug = bySlug(allHouses);
   const charactersBySlug = bySlug(allCharacters);
 
   const fm = dragon.frontmatter;
-  const proseLinks = buildProseLinkIndex({
-    allCharacters: allCharacters.map((c) => ({
-      slug: c.slug,
-      frontmatter: c.frontmatter,
-    })),
-    allHouses: allHouses.map((h) => ({
-      slug: h.slug,
-      frontmatter: h.frontmatter,
-    })),
-    allWeapons: allWeapons.map((w) => ({
-      slug: w.slug,
-      frontmatter: w.frontmatter,
-    })),
-    allDragons: allDragons.map((d) => ({
-      slug: d.slug,
-      frontmatter: d.frontmatter,
-    })),
-    allCastles,
-    allBattles,
-    allEvents,
-    current: { kind: "dragon", slug, mentions: dragon.frontmatter.mentions },
+  const html = await renderEntryBody({
+    body: dragon.body,
+    current: { kind: "dragon", slug, mentions: fm.mentions },
   });
-  const html = dragon.body.trim()
-    ? await renderMarkdown({ source: dragon.body, proseLinks })
-    : "";
-  const house = fm.house ? housesBySlug.get(fm.house) : undefined;
-  const subtitle = house
-    ? `Of ${house.name}`
-    : fm.house
-      ? `Of House ${humanizeSlug(fm.house)}`
-      : "A wild dragon";
+  const subtitle = fm.house
+    ? `Of ${houseLabel({ slug: fm.house, housesBySlug })}`
+    : "A wild dragon";
 
   return (
-    <PlateLayout>
-      <div className={styles.detail}>
-        <hgroup className={styles.heading}>
-          <h1>{fm.name}</h1>
-          <p className="subtitle">{subtitle}</p>
-        </hgroup>
+    <EntryPlate
+      layout="sidebar"
+      title={fm.name}
+      subtitle={subtitle}
+      html={html}
+      back={{ href: "/dragons/", label: "All Dragons" }}
+      sources={fm.sources}
+      infobox={({ className }) => (
         <DragonInfobox
           dragon={fm}
           housesBySlug={housesBySlug}
           charactersBySlug={charactersBySlug}
-          className={styles.infobox}
+          className={className}
         />
-        <div className={styles.main}>
-          {html && (
-            <article
-              className={styles.body}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-          )}
-          <p className={styles.back}>
-            <Link href="/dragons/">← All Dragons</Link>
-          </p>
-          <Sources sources={fm.sources} />
-        </div>
-      </div>
-    </PlateLayout>
+      )}
+    />
   );
 }

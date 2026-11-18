@@ -1,11 +1,15 @@
-import type { CSSProperties } from "react";
 import Link from "next/link";
-import { InfoRow } from "@/components/Infobox";
+import { CharacterInfoRow, InfoField, InfoRow } from "@/components/Infobox";
 import { Sigil } from "@/components/Sigil";
 import { cx } from "@/lib/cx";
-import { humanizeSlug, shortHouseName, titleCase } from "@/lib/text";
+import {
+  houseLabel,
+  humanizeSlug,
+  shortHouseName,
+  titleCase,
+} from "@/lib/text";
 import { formatEraDate } from "@/lib/era-date";
-import { regionForHouse } from "@/lib/regions";
+import { regionColorStyle, regionForHouse } from "@/lib/regions";
 import type {
   House,
   Castle,
@@ -65,24 +69,25 @@ export function HouseInfobox({
 
   const cadets: HouseInfoEntry[] = house["cadet-houses"].map((slug) => ({
     slug,
-    name: housesBySlug.get(slug)?.name ?? `House ${humanizeSlug(slug)}`,
+    name: houseLabel({ slug, housesBySlug }),
   }));
 
   const liegeHouse = house.liege ? housesBySlug.get(house.liege) : null;
   const region = regionForHouse({ slug: house.slug, housesBySlug });
-  // Heraldic colour as data: the banner takes the region's tint, the rest of
-  // the plate stays gold. An unknown region falls back inside the module.
-  const tint: CSSProperties = region
-    ? { "--house-tint": `var(--region-color-${region})` }
-    : {};
 
   return (
     <aside
-      className={cx(styles.infobox, className)}
+      className={cx(infoboxStyles.infobox, className)}
       aria-label={`${house.name} infobox`}
     >
-      <div className={styles.banner} style={tint}>
-        <div className={styles.sigil}>
+      {/* Heraldic colour as data: the banner takes the region's tint, the rest
+          of the plate stays gold. An unknown region falls back inside the
+          module. */}
+      <div
+        className={styles.banner}
+        style={regionColorStyle({ region, property: "--house-tint" })}
+      >
+        <div className={infoboxStyles.sigil}>
           <Sigil
             slug={house.slug}
             name={shortHouseName(house.name)}
@@ -90,29 +95,20 @@ export function HouseInfobox({
             sizes="(max-width: 768px) 90vw, 400px"
             isDecorative
             priority
-            className={styles.sigilFill}
+            className={infoboxStyles.sigilFill}
           />
         </div>
       </div>
-      <p className={styles.caption}>{house.name}</p>
+      <p className={infoboxStyles.caption}>{house.name}</p>
 
-      <dl className={styles.rows}>
-        {house.sigil.description && (
-          <div className={infoboxStyles.row}>
-            <dt>Coat of arms</dt>
-            <dd>{house.sigil.description}</dd>
-          </div>
-        )}
+      <dl className={infoboxStyles.rows}>
+        <InfoField label="Coat of arms">{house.sigil.description}</InfoField>
 
-        <div className={infoboxStyles.row}>
-          <dt>Provenance</dt>
-          <dd>{titleCase(house.sigil.provenance)}</dd>
-        </div>
+        <InfoField label="Provenance">
+          {titleCase(house.sigil.provenance)}
+        </InfoField>
 
-        <div className={infoboxStyles.row}>
-          <dt>Rank</dt>
-          <dd>{titleCase(house.rank)}</dd>
-        </div>
+        <InfoField label="Rank">{titleCase(house.rank)}</InfoField>
 
         <InfoRow
           label="Seats"
@@ -121,34 +117,25 @@ export function HouseInfobox({
           exists={(s) => castlesBySlug.has(s)}
         />
 
-        <InfoRow
+        <CharacterInfoRow
           label="Heads"
           entries={heads}
-          hrefPrefix="/characters"
-          exists={(s) => {
-            const c = charactersBySlug.get(s);
-            return !!c && !c.placeholder;
-          }}
+          charactersBySlug={charactersBySlug}
         />
 
         <InfoRow label="Regions" entries={regions} />
 
         <InfoRow label="Titles" entries={titles} />
 
-        <div className={infoboxStyles.row}>
-          <dt>Overlord</dt>
-          <dd>
-            {liegeHouse ? (
-              <Link href={`/houses/${liegeHouse.slug}/`}>
-                {liegeHouse.name}
-              </Link>
-            ) : house.liege ? (
-              <span>{house.liege}</span>
-            ) : (
-              <span>None; sovereign</span>
-            )}
-          </dd>
-        </div>
+        <InfoField label="Overlord">
+          {liegeHouse ? (
+            <Link href={`/houses/${liegeHouse.slug}/`}>{liegeHouse.name}</Link>
+          ) : house.liege ? (
+            <span>{house.liege}</span>
+          ) : (
+            <span>None; sovereign</span>
+          )}
+        </InfoField>
 
         {cadets.length > 0 && (
           <InfoRow
@@ -173,17 +160,11 @@ export function HouseInfobox({
           exists={(s) => dragonsForHouse.some((d) => d.slug === s)}
         />
 
-        <div className={infoboxStyles.row}>
-          <dt>Founded</dt>
-          <dd>{formatEraDate(house.founded)}</dd>
-        </div>
+        <InfoField label="Founded">{formatEraDate(house.founded)}</InfoField>
 
-        {house.extinct && (
-          <div className={infoboxStyles.row}>
-            <dt>Extinct</dt>
-            <dd>{formatEraDate(house.extinct)}</dd>
-          </div>
-        )}
+        <InfoField label="Extinct">
+          {house.extinct ? formatEraDate(house.extinct) : null}
+        </InfoField>
       </dl>
     </aside>
   );

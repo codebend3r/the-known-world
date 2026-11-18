@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { cx } from "@/lib/cx";
-import type { RegionSlug } from "@/lib/regions";
+import { regionColorStyle, type RegionSlug } from "@/lib/regions";
 import { sigilFile } from "@/lib/sigil";
 import styles from "@/components/Sigil/Sigil.module.scss";
 
@@ -35,7 +35,7 @@ export function Sigil({
   // module's gold fallback applies.
   const style: CSSProperties = {
     ...(size ? { "--sigil-size": size } : {}),
-    ...(region ? { "--sigil-metal": `var(--region-color-${region})` } : {}),
+    ...regionColorStyle({ region: region ?? null, property: "--sigil-metal" }),
   };
 
   return (

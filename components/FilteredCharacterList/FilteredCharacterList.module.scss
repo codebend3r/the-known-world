@@ -97,60 +97,15 @@ a.card {
 }
 
 // Heraldic colour as data: the card's ground carries a whisper of the region's
-// tint along its top edge. Colours live in `globals.scss` as `--region-color-*`
-// tokens (shared with `FilteredHouseList`).
-%regionWash {
+// tint along its top edge. The tint arrives inline as `--region-wash`, pointing
+// at a `--region-color-*` token from `globals.scss` (shared with
+// `FilteredHouseList`).
+.cardRegion {
   background-image: linear-gradient(
     180deg,
     color-mix(in srgb, var(--region-wash) 22%, transparent),
     transparent 120px
   );
-}
-
-.cardNorth {
-  --region-wash: var(--region-color-north);
-
-  @extend %regionWash;
-}
-.cardVale {
-  --region-wash: var(--region-color-vale);
-
-  @extend %regionWash;
-}
-.cardRiverlands {
-  --region-wash: var(--region-color-riverlands);
-
-  @extend %regionWash;
-}
-.cardWesterlands {
-  --region-wash: var(--region-color-westerlands);
-
-  @extend %regionWash;
-}
-.cardReach {
-  --region-wash: var(--region-color-reach);
-
-  @extend %regionWash;
-}
-.cardStormlands {
-  --region-wash: var(--region-color-stormlands);
-
-  @extend %regionWash;
-}
-.cardDorne {
-  --region-wash: var(--region-color-dorne);
-
-  @extend %regionWash;
-}
-.cardIronIslands {
-  --region-wash: var(--region-color-iron-islands);
-
-  @extend %regionWash;
-}
-.cardCrownlands {
-  --region-wash: var(--region-color-crownlands);
-
-  @extend %regionWash;
 }
 
 // List view: the register row grammar, with a portrait plate where the house

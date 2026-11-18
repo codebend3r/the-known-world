@@ -18,7 +18,6 @@ const items: WeaponItem[] = [
     name: "Blackfyre",
     houseSlug: "targaryen",
     region: "crownlands",
-    regionLabel: "The Crownlands",
     hasImage: true,
   },
   {
@@ -26,7 +25,6 @@ const items: WeaponItem[] = [
     name: "Heartsbane",
     houseSlug: "tarly",
     region: "reach",
-    regionLabel: "The Reach",
     hasImage: false,
   },
   {
@@ -34,7 +32,6 @@ const items: WeaponItem[] = [
     name: "Ice",
     houseSlug: "stark",
     region: "north",
-    regionLabel: "The North",
     hasImage: false,
   },
 ];
@@ -86,7 +83,6 @@ describe("FilteredWeaponList", () => {
       name: "Dawn",
       houseSlug: null,
       region: null,
-      regionLabel: null,
       hasImage: false,
     };
     const { container } = renderWithNuqs(

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { loadAllDragons, loadAllHouses } from "@/lib/content";
-import { regionForHouse, regionLabel } from "@/lib/regions";
+import { regionForHouse } from "@/lib/regions";
 import { bySlug, compareByName } from "@/lib/collections";
 import { PlateLayout } from "@/components/PlateLayout";
 import { PageHeading } from "@/components/PageHeading";
@@ -28,15 +28,13 @@ export default async function DragonsPage() {
   const items: DragonItem[] = visible
     .map((d): DragonItem => {
       const houseSlug = d.frontmatter.house;
-      const region = houseSlug
-        ? regionForHouse({ slug: houseSlug, housesBySlug })
-        : null;
       return {
         slug: d.frontmatter.slug,
         name: d.frontmatter.name,
         houseSlug,
-        region,
-        regionLabel: region ? regionLabel(region) : null,
+        region: houseSlug
+          ? regionForHouse({ slug: houseSlug, housesBySlug })
+          : null,
       };
     })
     .toSorted(compareByName);

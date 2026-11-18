@@ -157,22 +157,3 @@ a.notableName {
   font-style: italic;
   color: var(--tkw-ink-muted);
 }
-
-// The plate's way back: a mono breadcrumb, not a sentence.
-.back {
-  padding-top: 1rem;
-  font-family: var(--font-mono);
-  font-size: var(--fs-label);
-  letter-spacing: var(--ls-kicker);
-  text-transform: uppercase;
-
-  a {
-    color: var(--tkw-ink-dim);
-    text-decoration: none;
-
-    &:hover,
-    &:focus-visible {
-      color: var(--tkw-gold-bright);
-    }
-  }
-}

@@ -1,10 +1,14 @@
-import { describe, it, expect } from "bun:test";
+import { describe, it, expect, jest } from "bun:test";
 import {
   zoomAtPoint,
   initialCenteredTransform,
   distance,
   midpoint,
   easeOutCubic,
+  canvasKeyAction,
+  panStep,
+  CANVAS_KEY_SHORTCUTS,
+  type CanvasKeyHandlers,
 } from "@/lib/pan-zoom";
 
 describe("zoomAtPoint", () => {
@@ -99,5 +103,67 @@ describe("easeOutCubic", () => {
 
   it("increases monotonically", () => {
     expect(easeOutCubic(0.25)).toBeLessThan(easeOutCubic(0.75));
+  });
+});
+
+describe("panStep", () => {
+  it("moves a fifth of the viewport, divided by the current scale", () => {
+    expect(
+      panStep({ direction: "up", width: 500, height: 400, scale: 2 }),
+    ).toEqual({ x: 0, y: 40 });
+    expect(
+      panStep({ direction: "right", width: 500, height: 400, scale: 1 }),
+    ).toEqual({ x: -100, y: 0 });
+  });
+});
+
+describe("canvasKeyAction", () => {
+  function handlers(): CanvasKeyHandlers {
+    return {
+      zoomIn: jest.fn(),
+      zoomOut: jest.fn(),
+      reset: jest.fn(),
+      pan: jest.fn(),
+    };
+  }
+
+  it("maps + and = to zoom in, - to zoom out, and 0 to reset", () => {
+    const h = handlers();
+    ["+", "=", "-", "0"].forEach((key) => {
+      canvasKeyAction({ key, handlers: h })?.();
+    });
+    expect(h.zoomIn).toHaveBeenCalledTimes(2);
+    expect(h.zoomOut).toHaveBeenCalledTimes(1);
+    expect(h.reset).toHaveBeenCalledTimes(1);
+  });
+
+  it("maps each arrow key to a pan in its direction", () => {
+    const h = handlers();
+    ["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].forEach((key) => {
+      canvasKeyAction({ key, handlers: h })?.();
+    });
+    expect(h.pan).toHaveBeenNthCalledWith(1, "up");
+    expect(h.pan).toHaveBeenNthCalledWith(2, "down");
+    expect(h.pan).toHaveBeenNthCalledWith(3, "left");
+    expect(h.pan).toHaveBeenNthCalledWith(4, "right");
+  });
+
+  it("returns null for keys that are not shortcuts", () => {
+    expect(canvasKeyAction({ key: "a", handlers: handlers() })).toBeNull();
+    expect(
+      canvasKeyAction({ key: "toString", handlers: handlers() }),
+    ).toBeNull();
+  });
+
+  it("advertises every arrow plus the zoom and reset keys", () => {
+    expect(CANVAS_KEY_SHORTCUTS.split(" ")).toEqual([
+      "ArrowUp",
+      "ArrowDown",
+      "ArrowLeft",
+      "ArrowRight",
+      "+",
+      "-",
+      "0",
+    ]);
   });
 });

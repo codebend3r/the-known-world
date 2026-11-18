@@ -1,6 +1,7 @@
 import { describe, it, expect } from "bun:test";
 import {
   buildProseLinkIndex,
+  type ProseLinkCollections,
   type ProseLinkIndex,
   type ProseLinkKind,
 } from "@/lib/prose-links";
@@ -26,6 +27,16 @@ type DragonFixture = { slug: string; frontmatter: Dragon };
 type CastleFixture = { slug: string; frontmatter: Castle };
 type BattleFixture = { slug: string; frontmatter: Battle };
 type EventFixture = { slug: string; frontmatter: Event };
+
+const NO_COLLECTIONS: ProseLinkCollections = {
+  battles: [],
+  castles: [],
+  characters: [],
+  dragons: [],
+  events: [],
+  houses: [],
+  weapons: [],
+};
 
 function character(
   partial: Partial<Character> & Pick<Character, "slug" | "name">,
@@ -189,20 +200,22 @@ function indexFor(args: {
   events?: EventFixture[];
 }): ProseLinkIndex {
   return buildProseLinkIndex({
-    allCharacters: args.characters ?? [
-      RICKARD,
-      CATELYN,
-      RHAEGAR,
-      LYANNA,
-      BRANDON,
-      AERYS_II,
-    ],
-    allHouses: args.houses ?? [STARK, TARGARYEN],
-    allWeapons: args.weapons ?? [],
-    allDragons: args.dragons ?? [],
-    allCastles: args.castles ?? [],
-    allBattles: args.battles ?? [],
-    allEvents: args.events ?? [],
+    collections: {
+      characters: args.characters ?? [
+        RICKARD,
+        CATELYN,
+        RHAEGAR,
+        LYANNA,
+        BRANDON,
+        AERYS_II,
+      ],
+      houses: args.houses ?? [STARK, TARGARYEN],
+      weapons: args.weapons ?? [],
+      dragons: args.dragons ?? [],
+      castles: args.castles ?? [],
+      battles: args.battles ?? [],
+      events: args.events ?? [],
+    },
     current: { ...args.current, mentions: args.current.mentions ?? [] },
   });
 }
@@ -462,13 +475,7 @@ describe("prose-links", () => {
 describe("buildProseLinkIndex", () => {
   it("emits a first-name form only when the slug is in `mentions`", () => {
     const out = buildProseLinkIndex({
-      allCharacters: [RICKARD, CATELYN],
-      allHouses: [],
-      allWeapons: [],
-      allDragons: [],
-      allCastles: [],
-      allBattles: [],
-      allEvents: [],
+      collections: { ...NO_COLLECTIONS, characters: [RICKARD, CATELYN] },
       current: { kind: "character", slug: "self", mentions: ["rickard-stark"] },
     });
     const rickard = expectDefined(
@@ -485,13 +492,7 @@ describe("buildProseLinkIndex", () => {
 
   it("emits a bare-house form only when the slug is in `mentions`", () => {
     const out = buildProseLinkIndex({
-      allCharacters: [],
-      allHouses: [STARK, TARGARYEN],
-      allWeapons: [],
-      allDragons: [],
-      allCastles: [],
-      allBattles: [],
-      allEvents: [],
+      collections: { ...NO_COLLECTIONS, houses: [STARK, TARGARYEN] },
       current: { kind: "house", slug: "self", mentions: ["stark"] },
     });
     const stark = expectDefined(out.targets.find((t) => t.slug === "stark"));
@@ -535,13 +536,10 @@ const dragonBase: Dragon = {
 describe("buildProseLinkIndex (weapons and dragons)", () => {
   it("emits weapon targets with `/weapons/<slug>/` hrefs", () => {
     const out = buildProseLinkIndex({
-      allCharacters: [],
-      allHouses: [],
-      allWeapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
-      allDragons: [],
-      allCastles: [],
-      allBattles: [],
-      allEvents: [],
+      collections: {
+        ...NO_COLLECTIONS,
+        weapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
+      },
       current: { kind: "house", slug: "targaryen", mentions: [] },
     });
     const target = expectDefined(
@@ -553,13 +551,10 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
 
   it("emits dragon targets with `/dragons/<slug>/` hrefs", () => {
     const out = buildProseLinkIndex({
-      allCharacters: [],
-      allHouses: [],
-      allWeapons: [],
-      allDragons: [{ slug: "vhagar", frontmatter: dragonBase }],
-      allCastles: [],
-      allBattles: [],
-      allEvents: [],
+      collections: {
+        ...NO_COLLECTIONS,
+        dragons: [{ slug: "vhagar", frontmatter: dragonBase }],
+      },
       current: { kind: "house", slug: "targaryen", mentions: [] },
     });
     const target = expectDefined(out.targets.find((t) => t.slug === "vhagar"));
@@ -569,13 +564,10 @@ describe("buildProseLinkIndex (weapons and dragons)", () => {
 
   it("does not link a weapon to itself when current.kind=weapon", () => {
     const out = buildProseLinkIndex({
-      allCharacters: [],
-      allHouses: [],
-      allWeapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
-      allDragons: [],
-      allCastles: [],
-      allBattles: [],
-      allEvents: [],
+      collections: {
+        ...NO_COLLECTIONS,
+        weapons: [{ slug: "blackfyre", frontmatter: weaponBase }],
+      },
       current: { kind: "weapon", slug: "blackfyre", mentions: [] },
     });
     expect(out.self).toEqual({ kind: "weapon", slug: "blackfyre" });
@@ -739,13 +731,12 @@ describe("prose-links: castles, battles, and events", () => {
 
   it("emits article-stripped forms for castles, battles, and events", () => {
     const out = buildProseLinkIndex({
-      allCharacters: [],
-      allHouses: [],
-      allWeapons: [],
-      allDragons: [],
-      allCastles: [TWINS],
-      allBattles: [RED_WEDDING],
-      allEvents: [DOOM],
+      collections: {
+        ...NO_COLLECTIONS,
+        castles: [TWINS],
+        battles: [RED_WEDDING],
+        events: [DOOM],
+      },
       current: { kind: "battle", slug: "nobody", mentions: [] },
     });
     expect(out.targets.map((t) => [t.kind, t.href, t.surfaceForms])).toEqual([

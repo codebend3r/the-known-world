@@ -1,11 +1,9 @@
-import { absoluteYear } from "@/lib/battle-date";
+import { yieldsAge } from "@/lib/age";
+import { absoluteYear, isReckonedEra } from "@/lib/battle-date";
 import type { Collections } from "@/lib/content";
 import type { CalendarDate } from "@/lib/schemas";
 
-/** The date checks read every collection, so this is just `Collections`. */
-export type DateCollections = Collections;
-
-export type DateCollectionName = keyof DateCollections;
+export type DateCollectionName = keyof Collections;
 
 export const DATE_DEFECT_CLASSES = [
   "sign",
@@ -68,9 +66,9 @@ export const PRECISION_SLACK_YEARS = {
 /** Maester Aemon died at 102, the oldest age the corpus records. */
 export const MAX_LIFESPAN_YEARS = 110;
 /** Youngest plausible age at which a character fathers or bears a child. */
-export const MIN_PARENT_AGE_YEARS = 12;
+const MIN_PARENT_AGE_YEARS = 12;
 /** A child may be born posthumously, but not a year and more after. */
-export const MAX_POSTHUMOUS_YEARS = 1;
+const MAX_POSTHUMOUS_YEARS = 1;
 
 type DatedField = {
   collection: DateCollectionName;
@@ -82,16 +80,6 @@ type DatedField = {
 
 function slack(date: CalendarDate): number {
   return PRECISION_SLACK_YEARS[date.precision];
-}
-
-/** True when the date names a single year rather than an era-wide band. */
-function isYearClaim(date: CalendarDate): boolean {
-  return date.precision === "exact" || date.precision === "year";
-}
-
-/** Mirrors the gate in `lib/age.ts`: only these dates yield a printed age. */
-function yieldsAge(date: CalendarDate): boolean {
-  return (date.era === "AC" || date.era === "BC") && isYearClaim(date);
 }
 
 function describe(date: CalendarDate): string {
@@ -152,7 +140,7 @@ function rowsFor<T extends { sources: readonly unknown[] }>({
  * no span to order and no status to contradict; one with no `endStatus` has a
  * terminal date that implies nothing about its status field.
  */
-function lifespanRows(collections: DateCollections): LifespanRow[] {
+function lifespanRows(collections: Collections): LifespanRow[] {
   const byCollection = {
     characters: rowsFor({
       collection: "characters",
@@ -243,7 +231,7 @@ function fieldDefects(field: DatedField): DateDefect[] {
         ]
       : [];
 
-  if ((date.era === "AC" || date.era === "BC") && date.year <= 0) {
+  if (isReckonedEra(date.era) && date.year <= 0) {
     return [
       {
         ...at,
@@ -292,7 +280,7 @@ function orderingDefects(rows: readonly LifespanRow[]): DateDefect[] {
  * Guards the number `ageAtDeath` prints on a character page, so the gate here
  * is the gate there: both dates on the AC/BC axis, both naming a year.
  */
-function lifespanDefects(collections: DateCollections): DateDefect[] {
+function lifespanDefects(collections: Collections): DateDefect[] {
   return collections.characters.flatMap(({ slug, frontmatter }) => {
     const { born, died } = frontmatter;
     if (!born || !died) return [];
@@ -311,7 +299,7 @@ function lifespanDefects(collections: DateCollections): DateDefect[] {
   });
 }
 
-function lineageDefects(collections: DateCollections): DateDefect[] {
+function lineageDefects(collections: Collections): DateDefect[] {
   const bySlug = new Map(
     collections.characters.map(({ frontmatter }) => [
       frontmatter.slug,
@@ -378,9 +366,7 @@ function statusDefects(rows: readonly LifespanRow[]): DateDefect[] {
   });
 }
 
-export function dateIntegrityDefects(
-  collections: DateCollections,
-): DateDefect[] {
+export function dateIntegrityDefects(collections: Collections): DateDefect[] {
   const rows = lifespanRows(collections);
   return [
     ...datedFields(rows).flatMap(fieldDefects),
@@ -392,7 +378,7 @@ export function dateIntegrityDefects(
 }
 
 /** The same findings as one string per defect, for `contentIntegrityErrors`. */
-export function dateIntegrityErrors(collections: DateCollections): string[] {
+export function dateIntegrityErrors(collections: Collections): string[] {
   return dateIntegrityDefects(collections).map(
     ({ collection, slug, field, defect, detail }) =>
       `${collection}/${slug}.${field}: [${defect}] ${detail}`,

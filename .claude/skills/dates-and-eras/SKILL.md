@@ -18,7 +18,7 @@ There are 1,325 dates across seven collections. `lib/date-integrity.ts` encodes 
 `absoluteYear` in `lib/battle-date.ts` is the whole ordering model:
 
 ```ts
-export function absoluteYear(d: BattleDate): number {
+export function absoluteYear(d: CalendarDate): number {
   return d.era === "BC" ? -d.year : d.year;
 }
 ```

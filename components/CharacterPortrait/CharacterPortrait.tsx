@@ -45,7 +45,7 @@ export function CharacterPortrait({ image, video, alt }: Props) {
           only fades once frames are actually playing, so a cold hover holds
           on the portrait while the clip buffers instead of revealing an
           empty frame. */}
-      {video && (
+      {!!video && (
         <video
           ref={videoRef}
           className={styles.video}

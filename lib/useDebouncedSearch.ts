@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export const SEARCH_DEBOUNCE_MS = 300;
+const SEARCH_DEBOUNCE_MS = 300;
 
 /**
  * The list pages' search box: type freely, write to the URL on a pause.

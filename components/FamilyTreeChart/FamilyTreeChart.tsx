@@ -1,44 +1,35 @@
 "use client";
 
-import {
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { cx } from "@/lib/cx";
-import {
-  LABEL_FONT_SIZE,
-  estimateLabelWidth,
-  formatLabelText,
-  formatTitle,
-} from "@/lib/family-tree-label";
 import {
   LAYOUT_CONSTANTS,
   childPath,
-  isLinkable,
   type LaidOutChart,
-  type LayoutPerson,
 } from "@/lib/family-tree-layout";
 import { clamp } from "@/lib/math";
 import { useIsMobile } from "@/lib/useIsMobile";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import {
+  CANVAS_KEY_SHORTCUTS,
+  canvasKeyAction,
   zoomAtPoint,
   initialCenteredTransform,
   distance,
   midpoint,
   easeOutCubic,
-  PAN_DIRECTIONS,
+  panStep,
   type PanDirection,
   type Transform,
   type Pointer,
 } from "@/lib/pan-zoom";
+import {
+  PersonNode,
+  portraitClipId,
+} from "@/components/FamilyTreeChart/PersonNode";
 import styles from "@/components/FamilyTreeChart/FamilyTreeChart.module.scss";
 
 const { DOT_R } = LAYOUT_CONSTANTS;
-const LABEL_GAP = 8;
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 16;
 const WHEEL_SENSITIVITY = 0.0015;
@@ -50,37 +41,6 @@ const MOBILE_INITIAL_SCALE = 4; // viewBox shrinks to fit narrow viewports, so s
 const SCALE_EPSILON = 0.001;
 const ANIM_MS = 200;
 const DRAG_THRESHOLD = 3; // px
-// One arrow press moves the view a fifth of the visible box, matching the
-// `WorldMap` d-pad so both canvases answer the keyboard the same way.
-const KEY_PAN_RATIO = 0.2;
-const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
-
-// Width matches DOT_R * 2 * devicePixelRatio for retina (~56 css px -> request 96 source px).
-// Netlify image CDN serves resized/compressed copies of the originals in `/public/characters/*`.
-const PORTRAIT_SOURCE_WIDTH = 96;
-const PORTRAIT_QUALITY = 75;
-
-function optimizedPortrait(path: string): string {
-  if (process.env.NODE_ENV !== "production") return path;
-  const params = new URLSearchParams({
-    url: path,
-    w: String(PORTRAIT_SOURCE_WIDTH),
-    q: String(PORTRAIT_QUALITY),
-  });
-  return `/.netlify/images?${params.toString()}`;
-}
-
-function formatLabel(person: LayoutPerson): string {
-  return formatLabelText({ name: person.name, titles: person.titles });
-}
-
-function dotClassName(p: LayoutPerson): string {
-  return cx(
-    styles.dot,
-    p.isPlaceholder && styles.dotPlaceholder,
-    p.isExternal && styles.dotExternal,
-  );
-}
 
 function clampScale(scale: number): number {
   return clamp({ value: scale, min: MIN_SCALE, max: MAX_SCALE });
@@ -131,20 +91,16 @@ function pointerListToArray(map: Map<number, Pointer>): Pointer[] {
   return Array.from(map.values());
 }
 
-function subscribeReducedMotion(onChange: () => void): () => void {
-  if (typeof window === "undefined" || !window.matchMedia) return () => {};
-  const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-  mql.addEventListener("change", onChange);
-  return () => mql.removeEventListener("change", onChange);
-}
-
-function getReducedMotionSnapshot(): boolean {
-  if (typeof window === "undefined" || !window.matchMedia) return true;
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-}
-
-function getReducedMotionServerSnapshot(): boolean {
-  return true;
+// Not every engine implements pointer capture; the drag still works without it.
+function capturePointer({
+  element,
+  pointerId,
+}: {
+  element: Element;
+  pointerId: number;
+}): void {
+  if (typeof element.setPointerCapture !== "function") return;
+  element.setPointerCapture(pointerId);
 }
 
 type DragState = {
@@ -181,11 +137,7 @@ export function FamilyTreeChart({ chart }: Props) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const svgRef = useRef<SVGSVGElement | null>(null);
   const animationRef = useRef<number | null>(null);
-  const prefersReducedMotion = useSyncExternalStore(
-    subscribeReducedMotion,
-    getReducedMotionSnapshot,
-    getReducedMotionServerSnapshot,
-  );
+  const prefersReducedMotion = usePrefersReducedMotion();
   const isMobile = useIsMobile();
   const didApplyMobileInitialRef = useRef(false);
 
@@ -197,8 +149,8 @@ export function FamilyTreeChart({ chart }: Props) {
         .filter((p) => p.portrait !== null)
         .map((p) => (
           <clipPath
-            id={`${clipPrefix}-clip-${p.slug}`}
-            key={`${clipPrefix}-clip-${p.slug}`}
+            id={portraitClipId({ clipPrefix, slug: p.slug })}
+            key={portraitClipId({ clipPrefix, slug: p.slug })}
           >
             <circle cx={p.x} cy={p.y} r={DOT_R - 1} />
           </clipPath>
@@ -228,85 +180,13 @@ export function FamilyTreeChart({ chart }: Props) {
             ⚭
           </text>
         ))}
-        {chart.persons.map((p) => {
-          const dotEl = (
-            <>
-              <circle
-                data-person
-                cx={p.x}
-                cy={p.y}
-                r={DOT_R}
-                className={dotClassName(p)}
-              />
-              {p.portrait !== null && (
-                <image
-                  href={optimizedPortrait(p.portrait)}
-                  x={p.x - DOT_R}
-                  y={p.y - DOT_R}
-                  width={DOT_R * 2}
-                  height={DOT_R * 2}
-                  preserveAspectRatio="xMidYMid slice"
-                  clipPath={`url(#${clipPrefix}-clip-${p.slug})`}
-                  // The `<title>` beside it already names the person; an
-                  // unhidden `<image>` would announce a second, nameless
-                  // graphic on every node.
-                  aria-hidden="true"
-                />
-              )}
-            </>
-          );
-          const labelText = formatLabel(p);
-          const labelWidth = Math.round(
-            estimateLabelWidth({ name: p.name, titles: p.titles }),
-          );
-          const labelHeight = Math.round(LABEL_FONT_SIZE + 2);
-          const labelCx = p.x;
-          const labelBaseline = p.y - DOT_R - LABEL_GAP;
-          const labelRectX = Math.round(labelCx - labelWidth / 2);
-          const labelRectY = Math.round(labelBaseline - LABEL_FONT_SIZE + 1);
-          const label = (
-            <text className={styles.label} x={labelCx} y={labelBaseline}>
-              {labelText}
-            </text>
-          );
-          const labelBg = (
-            <rect
-              className={styles.labelBg}
-              x={labelRectX}
-              y={labelRectY}
-              width={labelWidth}
-              height={labelHeight}
-              data-label-bg
-            />
-          );
-          const title = (
-            <title>{formatTitle({ name: p.name, alias: p.alias })}</title>
-          );
-          const key = `${p.slug}-${p.isSpouse ? "s" : "n"}`;
-          if (
-            isLinkable({
-              isPlaceholder: p.isPlaceholder,
-              characterSlug: p.characterSlug,
-            })
-          ) {
-            return (
-              <a key={key} href={`/characters/${p.characterSlug}/`}>
-                {title}
-                {dotEl}
-                {labelBg}
-                {label}
-              </a>
-            );
-          }
-          return (
-            <g key={key}>
-              {title}
-              {dotEl}
-              {labelBg}
-              {label}
-            </g>
-          );
-        })}
+        {chart.persons.map((p) => (
+          <PersonNode
+            key={`${p.slug}-${p.isSpouse ? "s" : "n"}`}
+            person={p}
+            clipPrefix={clipPrefix}
+          />
+        ))}
       </>
     ),
     [chart, clipPrefix],
@@ -421,19 +301,6 @@ export function FamilyTreeChart({ chart }: Props) {
     y: bounds.height / 2,
   });
 
-  const zoomBy = (factor: number) => {
-    const c = boxCenter();
-    const next = clampScale(transform.scale * factor);
-    animateTo(
-      zoomAtPoint({
-        current: transform,
-        scale: next,
-        anchorX: c.x,
-        anchorY: c.y,
-      }),
-    );
-  };
-
   const zoomTo = (scale: number) => {
     const c = boxCenter();
     animateTo(
@@ -446,18 +313,23 @@ export function FamilyTreeChart({ chart }: Props) {
     );
   };
 
+  const zoomBy = (factor: number) => zoomTo(transform.scale * factor);
+
   const reset = () => {
     const scale = isMobile ? MOBILE_INITIAL_SCALE : INITIAL_SCALE;
     animateTo(initialCenteredTransform({ bounds, scale }));
   };
 
   const panView = (direction: PanDirection) => {
-    const { x, y } = PAN_DIRECTIONS[direction];
-    setTransform((t) => ({
-      ...t,
-      tx: t.tx + (x * bounds.width * KEY_PAN_RATIO) / t.scale,
-      ty: t.ty + (y * bounds.height * KEY_PAN_RATIO) / t.scale,
-    }));
+    setTransform((t) => {
+      const { x, y } = panStep({
+        direction,
+        width: bounds.width,
+        height: bounds.height,
+        scale: t.scale,
+      });
+      return { ...t, tx: t.tx + x, ty: t.ty + y };
+    });
   };
 
   // The canvas is a `role="application"` surface, so it must answer the same
@@ -465,17 +337,15 @@ export function FamilyTreeChart({ chart }: Props) {
   // every character link inside it is only reachable by Tab through an
   // off-screen node.
   const onKeyDown = (e: React.KeyboardEvent<SVGSVGElement>) => {
-    const actions: Record<string, (() => void) | undefined> = {
-      "+": () => zoomBy(BUTTON_STEP),
-      "=": () => zoomBy(BUTTON_STEP),
-      "-": () => zoomBy(1 / BUTTON_STEP),
-      "0": reset,
-      ArrowUp: () => panView("up"),
-      ArrowDown: () => panView("down"),
-      ArrowLeft: () => panView("left"),
-      ArrowRight: () => panView("right"),
-    };
-    const action = actions[e.key];
+    const action = canvasKeyAction({
+      key: e.key,
+      handlers: {
+        zoomIn: () => zoomBy(BUTTON_STEP),
+        zoomOut: () => zoomBy(1 / BUTTON_STEP),
+        reset,
+        pan: panView,
+      },
+    });
     if (!action) return;
     e.preventDefault();
     action();
@@ -496,7 +366,7 @@ export function FamilyTreeChart({ chart }: Props) {
       // No pointer capture and no isDragging yet, wait for movement past
       // DRAG_THRESHOLD so taps still reach the underlying <a> as plain clicks.
     } else if (pointersRef.current.size === 2 && svgRef.current) {
-      e.currentTarget.setPointerCapture?.(e.pointerId);
+      capturePointer({ element: e.currentTarget, pointerId: e.pointerId });
       const [a, b] = pointerListToArray(pointersRef.current);
       const m = midpoint({ a, b });
       const { point } = getScreenToViewBox({ svg: svgRef.current, bounds });
@@ -547,7 +417,7 @@ export function FamilyTreeChart({ chart }: Props) {
       if (Math.abs(dx) < DRAG_THRESHOLD && Math.abs(dy) < DRAG_THRESHOLD) {
         return;
       }
-      e.currentTarget.setPointerCapture?.(e.pointerId);
+      capturePointer({ element: e.currentTarget, pointerId: e.pointerId });
       d.isCaptured = true;
       setIsDragging(true);
     }
@@ -598,7 +468,7 @@ export function FamilyTreeChart({ chart }: Props) {
         // letting the screen reader eat them.
         role="application"
         aria-label="Family tree chart"
-        aria-keyshortcuts={KEY_SHORTCUTS}
+        aria-keyshortcuts={CANVAS_KEY_SHORTCUTS}
         tabIndex={0}
         onKeyDown={onKeyDown}
         onPointerDown={onPointerDown}

@@ -1,0 +1,364 @@
+@use "breakpoints" as bp;
+@use "shield-plate";
+
+.demoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+
+  @media (max-width: bp.$md) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+// A dashed well marks a specimen stage, so a demo never reads as chrome.
+.demo {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  padding: 22px;
+  background: color-mix(in srgb, var(--tkw-bg) 60%, transparent);
+  border: 1px dashed var(--tkw-hairline-firm);
+  border-radius: var(--tkw-radius-lg);
+}
+
+.demoLabel {
+  font-family: var(--font-mono);
+  font-size: var(--fs-tag);
+  font-weight: 400;
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+}
+
+.demoStage {
+  display: grid;
+  gap: 18px;
+  justify-items: start;
+}
+
+.banner {
+  @extend %shieldPlate;
+
+  isolation: isolate;
+  width: 120px;
+  clip-path: var(--tkw-banner);
+  padding: 14px 8px 30px;
+  align-content: start;
+  gap: 7px;
+
+  &::before {
+    clip-path: var(--tkw-banner);
+  }
+}
+
+.bannerMark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--shield-metal);
+  font-size: var(--fs-quote);
+}
+
+.bannerName {
+  font-size: var(--fs-lead);
+  color: var(--tkw-ink);
+}
+
+.bannerWords {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: var(--fs-tag);
+  text-align: center;
+  color: var(--shield-ink);
+}
+
+.card {
+  display: grid;
+  gap: 10px;
+  max-width: 270px;
+  padding: 20px 18px 22px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+}
+
+.cardHead {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--tkw-gold);
+}
+
+.cardPlate {
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  color: var(--tkw-ink-dim);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+.cardBlurb {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-small);
+  line-height: var(--lh-blurb);
+  color: var(--tkw-ink-muted);
+}
+
+.cardEnter {
+  font-family: var(--font-mono);
+  font-size: var(--fs-tag);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--tkw-gold);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+  width: 100%;
+  padding: 18px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline);
+  border-radius: var(--tkw-radius);
+}
+
+.rowShield {
+  @extend %shieldPlate;
+
+  isolation: isolate;
+  width: 52px;
+  height: 60px;
+  font-size: var(--fs-specimen-shield);
+}
+
+.rowBody {
+  display: grid;
+  gap: 5px;
+  justify-items: start;
+  min-width: 0;
+}
+
+.rowTitle {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 8px;
+  width: 100%;
+}
+
+.rowName {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: 600;
+  color: var(--tkw-ink);
+}
+
+.rowRegion {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-data);
+  text-transform: uppercase;
+  color: var(--tkw-ink-dim);
+}
+
+.rowWords {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: var(--fs-small);
+  color: var(--tkw-gold);
+}
+
+.rowSeat {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-caption);
+  color: var(--tkw-ink-muted);
+}
+
+.infobox {
+  display: grid;
+  width: 100%;
+  max-width: 300px;
+  overflow: hidden;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: var(--tkw-radius-lg);
+}
+
+.infoboxCaption {
+  padding: 12px 16px;
+  background: var(--tkw-caption-wash);
+  border-bottom: 1px solid var(--tkw-hairline-firm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-caption);
+  text-transform: uppercase;
+  color: var(--tkw-gold-bright);
+}
+
+.infoboxRows {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 14px 16px;
+}
+
+.infoboxRow {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px 14px;
+  align-items: center;
+
+  dt {
+    font-family: var(--font-mono);
+    font-size: var(--fs-micro);
+    letter-spacing: var(--ls-label);
+    text-transform: uppercase;
+    color: var(--tkw-ink-dim);
+  }
+
+  dd {
+    margin: 0;
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: var(--fs-section);
+    color: var(--tkw-ink-body);
+  }
+}
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  padding: 8px 13px;
+  border-radius: var(--tkw-radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-tag);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  color: var(--tkw-ink-muted);
+}
+
+.chipOn {
+  background: var(--tkw-gold);
+  border-color: var(--tkw-gold);
+  color: var(--tkw-bg);
+}
+
+.pill {
+  padding: 4px 9px;
+  border-radius: var(--tkw-radius-xs);
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  width: max-content;
+}
+
+.pillExtant {
+  color: var(--tkw-extant);
+  background: color-mix(in srgb, var(--tkw-extant) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extant) 45%, transparent);
+}
+
+.pillDeposed {
+  color: var(--tkw-deposed);
+  background: color-mix(in srgb, var(--tkw-deposed) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-deposed) 45%, transparent);
+}
+
+.pillContested {
+  color: var(--tkw-contested);
+  background: color-mix(in srgb, var(--tkw-contested) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-contested) 45%, transparent);
+}
+
+.pillAttainted {
+  color: var(--tkw-attainted);
+  background: color-mix(in srgb, var(--tkw-attainted) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-attainted) 45%, transparent);
+}
+
+.pillExtinct {
+  color: var(--tkw-extinct);
+  background: color-mix(in srgb, var(--tkw-extinct) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tkw-extinct) 45%, transparent);
+}
+
+// The glyph is an alpha mask over the gold token rather than a hex inside the
+// SVG. The specimen is a `<span>`, so it can host the pseudo-element the real
+// `<input>` field can't.
+$search-glyph: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><g fill='none' stroke='%23000' stroke-width='1.4'><circle cx='7' cy='7' r='4.6'/><path d='M10.4 10.4 L14 14' stroke-linecap='round'/></g></svg>");
+
+.searchDemo {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px 16px 11px 14px;
+  background: var(--tkw-surface);
+  border: 1px solid var(--tkw-hairline-firm);
+  border-radius: var(--tkw-radius-md);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: var(--fs-section);
+  color: var(--tkw-ink-dim);
+
+  &::before {
+    content: "";
+    height: 16px;
+    background-color: var(--tkw-gold);
+    -webkit-mask: $search-glyph no-repeat;
+    mask: $search-glyph no-repeat;
+  }
+}
+
+.quote {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 4px 0 4px 18px;
+  border-left: 2px solid var(--tkw-gold);
+}
+
+.quoteText {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-style: italic;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lede);
+  color: var(--tkw-ink);
+}
+
+.quoteCite {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-style: normal;
+  letter-spacing: var(--ls-nav);
+  text-transform: uppercase;
+  color: var(--tkw-ink-muted);
+
+  &::before {
+    content: "— ";
+  }
+}

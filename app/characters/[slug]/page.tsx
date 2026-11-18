@@ -1,18 +1,18 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   loadAllCharacters,
   loadAllHouses,
   loadAllWeapons,
   loadAllDragons,
-  loadAllCastles,
-  loadAllBattles,
-  loadAllEvents,
   loadCharacter,
-  renderMarkdown,
+  renderEntryBody,
 } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
-import { buildProseLinkIndex } from "@/lib/prose-links";
+import {
+  entryMetadata,
+  loadEntryOr404,
+  publishedSlugParams,
+} from "@/lib/entry-route";
 import { ageAtDeath } from "@/lib/age";
 import { findPortraitVariants } from "@/lib/portrait-variants";
 import { cx } from "@/lib/cx";
@@ -21,6 +21,7 @@ import { formatEraDate } from "@/lib/era-date";
 import { bySlug } from "@/lib/collections";
 import { regionForHouse, regionLabel, type RegionSlug } from "@/lib/regions";
 import { PlateLayout } from "@/components/PlateLayout";
+import { EntryBackLink } from "@/components/EntryPlate";
 import { PortraitVariants } from "@/components/PortraitVariants";
 import { CharacterSearchInput } from "@/components/CharacterSearchInput";
 import { Sigil } from "@/components/Sigil";
@@ -42,19 +43,20 @@ const REGION_PORTRAIT_CLASS = {
 } as const satisfies Record<RegionSlug, string>;
 
 export async function generateStaticParams() {
-  const characters = await loadAllCharacters();
-  return characters
-    .filter((c) => !c.frontmatter.draft && !c.frontmatter.placeholder)
-    .map((c) => ({ slug: c.frontmatter.slug }));
+  return publishedSlugParams({
+    loadAll: loadAllCharacters,
+    isListed: (c) => !c.frontmatter.draft && !c.frontmatter.placeholder,
+  });
 }
 
 export async function generateMetadata({ params }: SlugPageProps) {
-  const slug = await slugFromParams(params);
-  const character = await loadCharacter(slug).catch(() => null);
-  if (!character) return { title: "Not found" };
-  return {
-    title: `${character.frontmatter.name} · Atlas of the Known World`,
-  };
+  return entryMetadata({
+    params,
+    load: loadCharacter,
+    metadata: (character) => ({
+      title: `${character.frontmatter.name} · Atlas of the Known World`,
+    }),
+  });
 }
 
 function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
@@ -78,46 +80,54 @@ function RelationRow({ label, refs }: { label: string; refs: RelationRef[] }) {
   );
 }
 
+function HouseValue({
+  primary,
+  houseSlug,
+}: {
+  primary: { slug: string; house: { name: string } } | null;
+  houseSlug: string | null;
+}) {
+  if (primary) {
+    return <Link href={`/houses/${primary.slug}/`}>{primary.house.name}</Link>;
+  }
+  if (houseSlug !== null) return houseSlug;
+  return <span className={styles.unaffiliated}>Unaffiliated</span>;
+}
+
 export default async function CharacterPage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);
-  const character = await loadCharacter(slug).catch(() => null);
-  if (!character) notFound();
+  const character = await loadEntryOr404({ load: loadCharacter, slug });
 
   const fm = character.frontmatter;
 
-  const [
-    allCharacters,
-    allHouses,
-    allWeapons,
-    allDragons,
-    allCastles,
-    allBattles,
-    allEvents,
-    portraits,
-  ] = await Promise.all([
-    loadAllCharacters(),
-    loadAllHouses(),
-    loadAllWeapons(),
-    loadAllDragons(),
-    loadAllCastles(),
-    loadAllBattles(),
-    loadAllEvents(),
-    findPortraitVariants({ slug, name: fm.name, sex: fm.sex }),
-  ]);
+  const [allCharacters, allHouses, allWeapons, allDragons, portraits] =
+    await Promise.all([
+      loadAllCharacters(),
+      loadAllHouses(),
+      loadAllWeapons(),
+      loadAllDragons(),
+      findPortraitVariants({ slug, name: fm.name, sex: fm.sex }),
+    ]);
 
   const charactersBySlug = bySlug(allCharacters);
   const housesBySlug = bySlug(allHouses);
 
-  const primaryHouse = fm["primary-house"]
-    ? housesBySlug.get(fm["primary-house"])
+  const primaryHouseSlug = fm["primary-house"];
+  const primaryHouse = primaryHouseSlug
+    ? housesBySlug.get(primaryHouseSlug)
     : undefined;
-  const region = regionForHouse({ slug: fm["primary-house"], housesBySlug });
-  const alsoHouses = fm["also-of-houses"]
-    .map((s) => ({ slug: s, house: housesBySlug.get(s) }))
-    .filter(
-      (x): x is { slug: string; house: NonNullable<typeof x.house> } =>
-        x.house !== undefined,
-    );
+  const primary =
+    primaryHouseSlug && primaryHouse
+      ? { slug: primaryHouseSlug, house: primaryHouse }
+      : null;
+  const region = regionForHouse({ slug: primaryHouseSlug, housesBySlug });
+  const alsoHouses = fm["also-of-houses"].flatMap((s) => {
+    const house = housesBySlug.get(s);
+    return house ? [{ slug: s, house }] : [];
+  });
+  const deathAge = fm.died
+    ? ageAtDeath({ born: fm.born, died: fm.died })
+    : null;
 
   const parents = resolveRelations({ slugs: fm.parents, charactersBySlug });
   const spouses = resolveRelations({ slugs: fm.spouses, charactersBySlug });
@@ -132,31 +142,10 @@ export default async function CharacterPage({ params }: SlugPageProps) {
     .map((d) => d.frontmatter)
     .filter((d) => !d.draft && d.riders.includes(slug));
 
-  const proseLinks = buildProseLinkIndex({
-    allCharacters: allCharacters.map((c) => ({
-      slug: c.slug,
-      frontmatter: c.frontmatter,
-    })),
-    allHouses: allHouses.map((h) => ({
-      slug: h.slug,
-      frontmatter: h.frontmatter,
-    })),
-    allWeapons: allWeapons.map((w) => ({
-      slug: w.slug,
-      frontmatter: w.frontmatter,
-    })),
-    allDragons: allDragons.map((d) => ({
-      slug: d.slug,
-      frontmatter: d.frontmatter,
-    })),
-    allCastles,
-    allBattles,
-    allEvents,
+  const html = await renderEntryBody({
+    body: character.body,
     current: { kind: "character", slug, mentions: fm.mentions },
   });
-  const html = character.body.trim()
-    ? await renderMarkdown({ source: character.body, proseLinks })
-    : "";
 
   return (
     <PlateLayout>
@@ -169,15 +158,15 @@ export default async function CharacterPage({ params }: SlugPageProps) {
         <PortraitVariants variants={portraits} name={fm.name} />
       </div>
       <header className={styles.heading}>
-        {primaryHouse && fm["primary-house"] ? (
+        {primary ? (
           <Link
-            href={`/houses/${fm["primary-house"]}/`}
+            href={`/houses/${primary.slug}/`}
             className={styles.sigilLink}
-            aria-label={`House ${shortHouseName(primaryHouse.name)}`}
+            aria-label={`House ${shortHouseName(primary.house.name)}`}
           >
             <Sigil
-              slug={fm["primary-house"]}
-              name={shortHouseName(primaryHouse.name)}
+              slug={primary.slug}
+              name={shortHouseName(primary.house.name)}
               region={region}
               size="42px"
               hasPlate={false}
@@ -216,25 +205,14 @@ export default async function CharacterPage({ params }: SlugPageProps) {
             <dt>Died</dt>
             <dd>
               {formatEraDate(fm.died)}
-              {(() => {
-                const age = ageAtDeath({ born: fm.born, died: fm.died });
-                return age !== null ? ` (aged ${age})` : null;
-              })()}
+              {deathAge !== null && ` (aged ${deathAge})`}
             </dd>
           </div>
         )}
         <div className={styles.metaRow}>
           <dt>House</dt>
           <dd>
-            {primaryHouse ? (
-              <Link href={`/houses/${fm["primary-house"]}/`}>
-                {primaryHouse.name}
-              </Link>
-            ) : fm["primary-house"] !== null ? (
-              fm["primary-house"]
-            ) : (
-              <span className={styles.unaffiliated}>Unaffiliated</span>
-            )}
+            <HouseValue primary={primary} houseSlug={primaryHouseSlug} />
           </dd>
         </div>
         {region && (
@@ -317,9 +295,7 @@ export default async function CharacterPage({ params }: SlugPageProps) {
         </section>
       )}
 
-      <p className={styles.back}>
-        <Link href="/characters/">← All Characters</Link>
-      </p>
+      <EntryBackLink href="/characters/" label="All Characters" />
 
       <Sources sources={fm.sources} />
     </PlateLayout>

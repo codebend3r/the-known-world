@@ -1,8 +1,7 @@
 "use client";
 
-import { SearchCombobox } from "@/components/SearchCombobox";
+import { EntitySearchInput } from "@/components/EntitySearchInput";
 import { ListSearchInput } from "@/components/ListSearchInput";
-import { useSearchIndex } from "@/lib/useSearchIndex";
 
 const DEFAULT_PLACEHOLDER = "Search characters…";
 const DEFAULT_ARIA_LABEL = "Search characters";
@@ -42,26 +41,15 @@ function FilterInput({ value, onChange, placeholder, ariaLabel }: FilterProps) {
   );
 }
 
-// In autocomplete mode the shared combobox owns the query, ranks matches, and
-// navigates to the chosen character. The roll of characters is fetched on first
-// hover or focus rather than shipped with the page.
-function AutocompleteInput({ placeholder, ariaLabel }: AutocompleteProps) {
-  const { items, load } = useSearchIndex("characters");
-  return (
-    <SearchCombobox
-      items={items}
-      onIntent={load}
-      basePath="/characters"
-      placeholder={placeholder ?? DEFAULT_PLACEHOLDER}
-      ariaLabel={ariaLabel ?? DEFAULT_ARIA_LABEL}
-    />
-  );
-}
-
 export function CharacterSearchInput(props: Props) {
-  return isAutocomplete(props) ? (
-    <AutocompleteInput {...props} />
-  ) : (
-    <FilterInput {...props} />
-  );
+  if (isAutocomplete(props)) {
+    return (
+      <EntitySearchInput
+        collection="characters"
+        placeholder={props.placeholder}
+        ariaLabel={props.ariaLabel}
+      />
+    );
+  }
+  return <FilterInput {...props} />;
 }

@@ -4,7 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { ReactSVGPanZoom, TOOL_AUTO, type Value } from "react-svg-pan-zoom";
 import type { KeyboardEvent, ReactNode } from "react";
 import { MAP_BOUNDS } from "@/lib/map";
-import { PAN_DIRECTIONS, type PanDirection } from "@/lib/pan-zoom";
+import {
+  CANVAS_KEY_SHORTCUTS,
+  canvasKeyAction,
+  panStep,
+  type PanDirection,
+} from "@/lib/pan-zoom";
 import styles from "@/components/MapStage/MapStage.module.scss";
 
 // The stage viewBox *is* atlas space: every `coords` pair in `content/` is an
@@ -12,8 +17,6 @@ import styles from "@/components/MapStage/MapStage.module.scss";
 const { width: VIEWBOX_WIDTH, height: VIEWBOX_HEIGHT } = MAP_BOUNDS;
 
 const ZOOM_STEP = 1.5;
-const PAN_STEP_RATIO = 0.2;
-const KEY_SHORTCUTS = "ArrowUp ArrowDown ArrowLeft ArrowRight + - 0";
 
 type Props = {
   children: ReactNode;
@@ -41,30 +44,35 @@ export function MapStage({ children, svgUrl, label = "Map" }: Props) {
   const panView = (direction: PanDirection) => {
     const viewer = viewerRef.current;
     if (!viewer || !size) return;
-    const { x, y } = PAN_DIRECTIONS[direction];
-    const scale = value?.a ?? 1;
-    viewer.pan(
-      (x * size.w * PAN_STEP_RATIO) / scale,
-      (y * size.h * PAN_STEP_RATIO) / scale,
-    );
+    const { x, y } = panStep({
+      direction,
+      width: size.w,
+      height: size.h,
+      scale: value?.a ?? 1,
+    });
+    viewer.pan(x, y);
   };
 
   // Pan and zoom are functionality, not decoration, so WCAG 2.1.1 puts them on
   // the keyboard too. The library owns the transform, so this drives its own
   // imperative handles rather than rebuilding a `Value` by hand.
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const viewer = viewerRef.current;
-    const actions: Record<string, (() => void) | undefined> = {
-      "+": () => viewer?.zoomOnViewerCenter(ZOOM_STEP),
-      "=": () => viewer?.zoomOnViewerCenter(ZOOM_STEP),
-      "-": () => viewer?.zoomOnViewerCenter(1 / ZOOM_STEP),
-      "0": () => viewer?.fitToViewer(),
-      ArrowUp: () => panView("up"),
-      ArrowDown: () => panView("down"),
-      ArrowLeft: () => panView("left"),
-      ArrowRight: () => panView("right"),
+    const withViewer = (run: (viewer: ReactSVGPanZoom) => void) => () => {
+      const viewer = viewerRef.current;
+      if (!viewer) return;
+      run(viewer);
     };
-    const action = actions[event.key];
+    const action = canvasKeyAction({
+      key: event.key,
+      handlers: {
+        zoomIn: withViewer((viewer) => viewer.zoomOnViewerCenter(ZOOM_STEP)),
+        zoomOut: withViewer((viewer) =>
+          viewer.zoomOnViewerCenter(1 / ZOOM_STEP),
+        ),
+        reset: withViewer((viewer) => viewer.fitToViewer()),
+        pan: panView,
+      },
+    });
     if (!action) return;
     event.preventDefault();
     action();
@@ -76,7 +84,7 @@ export function MapStage({ children, svgUrl, label = "Map" }: Props) {
         className={styles.inner}
         role="application"
         aria-label={label}
-        aria-keyshortcuts={KEY_SHORTCUTS}
+        aria-keyshortcuts={CANVAS_KEY_SHORTCUTS}
         tabIndex={0}
         onKeyDown={handleKeyDown}
       >

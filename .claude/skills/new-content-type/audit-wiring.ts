@@ -347,17 +347,20 @@ const CHECKS = [
     id: "detail-back-link",
     tier: "variant",
     where: detailRoute,
-    expects: '<Link href="/<name>/">← All <Names></Link>',
+    expects:
+      'back={{ href: "/<name>/", ... }} or <EntryBackLink href="/<name>/" ... />',
     test: ({ collection, text }) =>
-      text(detailRoute(collection)).includes(`href="/${collection.name}/"`),
+      [`href="/${collection.name}/"`, `href: "/${collection.name}/"`].some(
+        (needle) => text(detailRoute(collection)).includes(needle),
+      ),
   },
   {
     id: "prose-links",
     tier: "variant",
     where: detailRoute,
-    expects: "buildProseLinkIndex, so bodies auto-link to other entries",
+    expects: "renderEntryBody, so bodies auto-link to other entries",
     test: ({ collection, text }) =>
-      text(detailRoute(collection)).includes("buildProseLinkIndex"),
+      text(detailRoute(collection)).includes("renderEntryBody"),
   },
   {
     id: "menu-icon",

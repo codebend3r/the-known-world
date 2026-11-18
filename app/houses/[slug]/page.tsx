@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   loadCastle,
@@ -8,11 +7,15 @@ import {
   loadAllCharacters,
   loadAllWeapons,
   loadAllDragons,
-  loadAllBattles,
-  loadAllEvents,
-  renderMarkdown,
+  renderEntryBody,
 } from "@/lib/content";
 import { slugFromParams, type SlugPageProps } from "@/lib/route-params";
+import {
+  entryMetadata,
+  loadEntryOr404,
+  publishedSlugParams,
+} from "@/lib/entry-route";
+import { EntryBackLink } from "@/components/EntryPlate";
 import { PlateLayout } from "@/components/PlateLayout";
 import { FiligreeRule } from "@/components/Filigree";
 import { Sources } from "@/components/Sources";
@@ -24,58 +27,46 @@ import { HouseInfobox } from "@/components/HouseInfobox";
 import { humanizeSlug } from "@/lib/text";
 import { HouseSearchInput } from "@/components/HouseSearchInput";
 import { buildFamilyTree } from "@/lib/family-tree";
-import { buildProseLinkIndex } from "@/lib/prose-links";
 import { bySlug } from "@/lib/collections";
 import { cx } from "@/lib/cx";
 import styles from "@/app/houses/[slug]/page.module.scss";
 
 export async function generateStaticParams() {
-  const houses = await loadAllHouses();
-  return houses
-    .filter((h) => !h.frontmatter.draft)
-    .map((h) => ({ slug: h.frontmatter.slug }));
+  return publishedSlugParams({ loadAll: loadAllHouses });
 }
 
 export async function generateMetadata({ params }: SlugPageProps) {
-  const slug = await slugFromParams(params);
-  const house = await loadHouse(slug).catch(() => null);
-  if (!house) return { title: "Not found" };
-  const { name, seat } = house.frontmatter;
-  const seatName =
-    seat === null
-      ? null
-      : ((await loadCastle(seat).catch(() => null))?.frontmatter.name ??
-        humanizeSlug(seat));
-  return {
-    title: `${name} · Atlas of the Known World`,
-    description: seatName
-      ? `The roll of ${name}, seat at ${seatName}.`
-      : `The roll of ${name}.`,
-  };
+  return entryMetadata({
+    params,
+    load: loadHouse,
+    metadata: async (house) => {
+      const { name, seat } = house.frontmatter;
+      const seatName =
+        seat === null
+          ? null
+          : ((await loadCastle(seat).catch(() => null))?.frontmatter.name ??
+            humanizeSlug(seat));
+      return {
+        title: `${name} · Atlas of the Known World`,
+        description: seatName
+          ? `The roll of ${name}, seat at ${seatName}.`
+          : `The roll of ${name}.`,
+      };
+    },
+  });
 }
 
 export default async function HousePage({ params }: SlugPageProps) {
   const slug = await slugFromParams(params);
-  const [
-    house,
-    allHouses,
-    castles,
-    characters,
-    allWeapons,
-    allDragons,
-    allBattles,
-    allEvents,
-  ] = await Promise.all([
-    loadHouse(slug).catch(() => null),
-    loadAllHouses(),
-    loadAllCastles(),
-    loadAllCharacters(),
-    loadAllWeapons(),
-    loadAllDragons(),
-    loadAllBattles(),
-    loadAllEvents(),
-  ]);
-  if (!house) notFound();
+  const [house, allHouses, castles, characters, allWeapons, allDragons] =
+    await Promise.all([
+      loadEntryOr404({ load: loadHouse, slug }),
+      loadAllHouses(),
+      loadAllCastles(),
+      loadAllCharacters(),
+      loadAllWeapons(),
+      loadAllDragons(),
+    ]);
 
   const housesBySlug = bySlug(allHouses);
   const castlesBySlug = bySlug(castles);
@@ -85,29 +76,10 @@ export default async function HousePage({ params }: SlugPageProps) {
     .map((d) => d.frontmatter)
     .filter((d) => d.house === slug && !d.draft);
 
-  const proseLinks = buildProseLinkIndex({
-    allCharacters: characters.map((c) => ({
-      slug: c.slug,
-      frontmatter: c.frontmatter,
-    })),
-    allHouses: allHouses.map((h) => ({
-      slug: h.slug,
-      frontmatter: h.frontmatter,
-    })),
-    allWeapons: allWeapons.map((w) => ({
-      slug: w.slug,
-      frontmatter: w.frontmatter,
-    })),
-    allDragons: allDragons.map((d) => ({
-      slug: d.slug,
-      frontmatter: d.frontmatter,
-    })),
-    allCastles: castles,
-    allBattles,
-    allEvents,
+  const html = await renderEntryBody({
+    body: house.body,
     current: { kind: "house", slug, mentions: house.frontmatter.mentions },
   });
-  const html = await renderMarkdown({ source: house.body, proseLinks });
   const tree = buildFamilyTree({ houseSlug: slug, people: characters });
   const enriched = await enrichTreeWithPortraits({ roots: tree, findPortrait });
   const chart = layoutFamilyTree(enriched);
@@ -195,9 +167,7 @@ export default async function HousePage({ params }: SlugPageProps) {
             </section>
           )}
 
-          <p className={styles.back}>
-            <Link href="/houses/">← All Houses</Link>
-          </p>
+          <EntryBackLink href="/houses/" label="All Houses" />
 
           <Sources sources={house.frontmatter.sources} />
         </div>

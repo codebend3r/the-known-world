@@ -30,7 +30,6 @@ import {
 } from "@/lib/content";
 import {
   coveredSlugs,
-  groupByStem,
   isProbedExtension,
   loadPortraitFiles,
   nearestSlug,
@@ -38,8 +37,8 @@ import {
   portraitIntegrityErrors,
   RESERVED_PORTRAITS,
   winningFile,
-  type PortraitFile,
 } from "@/lib/portrait-integrity";
+import { groupByStem, type PortraitFile } from "@/lib/portrait-files";
 
 const PORTRAIT_DIR = path.join(process.cwd(), "public", "characters");
 

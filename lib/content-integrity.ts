@@ -79,10 +79,22 @@ type Reference = { field: string; value: string };
 /** Where a reference must resolve: a named collection, or any entry at all. */
 type ReferenceTarget = CollectionName | "all";
 
-type ReferenceRule<T> = {
-  to: ReferenceTarget;
-  read: (frontmatter: T) => Reference[];
-};
+/**
+ * Most rules read one field; `custom` is for fields whose name varies per
+ * value, such as `participants[0].houses`.
+ */
+type ReferenceRule<T> =
+  | {
+      kind: "field";
+      to: ReferenceTarget;
+      field: string;
+      values: (frontmatter: T) => ReadonlyArray<string | null | undefined>;
+    }
+  | {
+      kind: "custom";
+      to: ReferenceTarget;
+      read: (frontmatter: T) => Reference[];
+    };
 
 /**
  * Pairs a field name with the slugs it holds, dropping the absent ones so a
@@ -98,6 +110,25 @@ function ref({
   return values.flatMap((value) => (value ? [{ field, value }] : []));
 }
 
+function readRule<T>({
+  rule,
+  frontmatter,
+}: {
+  rule: ReferenceRule<T>;
+  frontmatter: T;
+}): Reference[] {
+  switch (rule.kind) {
+    case "field":
+      return ref({ field: rule.field, values: rule.values(frontmatter) });
+    case "custom":
+      return rule.read(frontmatter);
+    default: {
+      const exhaustive: never = rule;
+      return exhaustive;
+    }
+  }
+}
+
 function checkRefs<T>({
   name,
   entries,
@@ -111,13 +142,11 @@ function checkRefs<T>({
 }): string[] {
   return entries.flatMap(({ slug, frontmatter }) =>
     rules.flatMap((rule) =>
-      rule
-        .read(frontmatter)
-        .flatMap(({ field, value }) =>
-          targets[rule.to].has(value)
-            ? []
-            : [`${name}/${slug}.${field}: missing ${value}`],
-        ),
+      readRule({ rule, frontmatter }).flatMap(({ field, value }) =>
+        targets[rule.to].has(value)
+          ? []
+          : [`${name}/${slug}.${field}: missing ${value}`],
+      ),
     ),
   );
 }
@@ -144,30 +173,40 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "houses",
-          read: (fm) =>
-            ref({ field: "primary-house", values: [fm["primary-house"]] }),
+          field: "primary-house",
+          values: (fm) => [fm["primary-house"]],
         },
         {
+          kind: "field",
           to: "houses",
-          read: (fm) =>
-            ref({ field: "also-of-houses", values: fm["also-of-houses"] }),
+          field: "also-of-houses",
+          values: (fm) => fm["also-of-houses"],
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "parents", values: fm.parents }),
+          field: "parents",
+          values: (fm) => fm.parents,
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "spouses", values: fm.spouses }),
+          field: "spouses",
+          values: (fm) => fm.spouses,
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "children", values: fm.children }),
+          field: "children",
+          values: (fm) => fm.children,
         },
         {
+          kind: "field",
           to: "all",
-          read: (fm) => ref({ field: "mentions", values: fm.mentions }),
+          field: "mentions",
+          values: (fm) => fm.mentions,
         },
       ],
     }),
@@ -177,47 +216,47 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "houses",
-          read: (fm) => ref({ field: "liege", values: [fm.liege] }),
+          field: "liege",
+          values: (fm) => [fm.liege],
         },
         {
+          kind: "field",
           to: "houses",
-          read: (fm) => ref({ field: "sworn-from", values: fm["sworn-from"] }),
+          field: "sworn-from",
+          values: (fm) => fm["sworn-from"],
         },
         {
+          kind: "field",
           to: "houses",
-          read: (fm) =>
-            ref({ field: "cadet-houses", values: fm["cadet-houses"] }),
+          field: "cadet-houses",
+          values: (fm) => fm["cadet-houses"],
         },
         {
+          kind: "field",
           to: "weapons",
-          read: (fm) =>
-            ref({
-              field: "ancestral-weapons",
-              values: fm["ancestral-weapons"] ?? [],
-            }),
+          field: "ancestral-weapons",
+          values: (fm) => fm["ancestral-weapons"] ?? [],
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) =>
-            ref({
-              field: "heads",
-              values: (fm.heads ?? []).map((head) => head.slug),
-            }),
+          field: "heads",
+          values: (fm) => (fm.heads ?? []).map((head) => head.slug),
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) =>
-            ref({
-              field: "notable-members",
-              values: (fm["notable-members"] ?? []).map(
-                (member) => member.slug,
-              ),
-            }),
+          field: "notable-members",
+          values: (fm) =>
+            (fm["notable-members"] ?? []).map((member) => member.slug),
         },
         {
+          kind: "field",
           to: "all",
-          read: (fm) => ref({ field: "mentions", values: fm.mentions }),
+          field: "mentions",
+          values: (fm) => fm.mentions,
         },
       ],
     }),
@@ -227,14 +266,16 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "houses",
-          read: (fm) =>
-            ref({ field: "liege-house", values: [fm["liege-house"]] }),
+          field: "liege-house",
+          values: (fm) => [fm["liege-house"]],
         },
         {
+          kind: "field",
           to: "houses",
-          read: (fm) =>
-            ref({ field: "sworn-houses", values: fm["sworn-houses"] }),
+          field: "sworn-houses",
+          values: (fm) => fm["sworn-houses"],
         },
       ],
     }),
@@ -244,20 +285,22 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "houses",
-          read: (fm) =>
-            ref({
-              field: "houses",
-              values: [fm["origin-house"], fm["current-house"]],
-            }),
+          field: "houses",
+          values: (fm) => [fm["origin-house"], fm["current-house"]],
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "wielders", values: fm.wielders }),
+          field: "wielders",
+          values: (fm) => fm.wielders,
         },
         {
+          kind: "field",
           to: "all",
-          read: (fm) => ref({ field: "mentions", values: fm.mentions }),
+          field: "mentions",
+          values: (fm) => fm.mentions,
         },
       ],
     }),
@@ -267,16 +310,22 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "houses",
-          read: (fm) => ref({ field: "house", values: [fm.house] }),
+          field: "house",
+          values: (fm) => [fm.house],
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "riders", values: fm.riders }),
+          field: "riders",
+          values: (fm) => fm.riders,
         },
         {
+          kind: "field",
           to: "all",
-          read: (fm) => ref({ field: "mentions", values: fm.mentions }),
+          field: "mentions",
+          values: (fm) => fm.mentions,
         },
       ],
     }),
@@ -286,17 +335,23 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "commanders", values: fm.commanders }),
+          field: "commanders",
+          values: (fm) => fm.commanders,
         },
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "casualties", values: fm.casualties }),
+          field: "casualties",
+          values: (fm) => fm.casualties,
         },
-        { to: "houses", read: participantHouses },
+        { kind: "custom", to: "houses", read: participantHouses },
         {
+          kind: "field",
           to: "all",
-          read: (fm) => ref({ field: "mentions", values: fm.mentions }),
+          field: "mentions",
+          values: (fm) => fm.mentions,
         },
       ],
     }),
@@ -306,13 +361,17 @@ function referenceErrors(collections: Collections): string[] {
       targets,
       rules: [
         {
+          kind: "field",
           to: "characters",
-          read: (fm) => ref({ field: "casualties", values: fm.casualties }),
+          field: "casualties",
+          values: (fm) => fm.casualties,
         },
-        { to: "houses", read: participantHouses },
+        { kind: "custom", to: "houses", read: participantHouses },
         {
+          kind: "field",
           to: "all",
-          read: (fm) => ref({ field: "mentions", values: fm.mentions }),
+          field: "mentions",
+          values: (fm) => fm.mentions,
         },
       ],
     }),
